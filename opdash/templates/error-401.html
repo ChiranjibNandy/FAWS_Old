@@ -1,0 +1,6 @@
+{% extends "_error-base.html" %}
+
+{% block status_code %}401{% endblock %}
+{% block error_title %}Restricted Access{% endblock %}
+{% block error_description %}You are not authorized to view this page. Please contact your admin if you need access.{% endblock %}
+{% block error_image %}<img src="/static/img/grumpy_cloud.png" alt="grumpy cloud" />{% endblock %}

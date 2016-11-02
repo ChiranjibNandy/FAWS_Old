@@ -1,0 +1,66 @@
+{% macro javascript(filename) %}<script type="text/javascript" src="/static/js/{{ filename }}?rev={{config['GIT_HASH']}}"></script>{% endmacro %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>{% block title %}{% endblock %} - Rackspace Cloud Backup</title>
+
+  {% if config.DEBUG %}
+
+    {# DEBUG VERSIONS FOR DEV - UNCOMPRESSED %}
+
+    {# CANON STYLES #}
+    <link rel="stylesheet" type="text/css" media="screen" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/css/style.css?rev={{config['GIT_HASH']}}">
+
+    {{ javascript('angular_1.5.8.js') }}
+
+  {% else %}
+
+    {# COMPRESSED FILES FOR PROD #}
+
+    {# CANON STYLES #}
+    <link rel="stylesheet" type="text/css" media="screen" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/css/style.css?rev={{config['GIT_HASH']}}">
+
+    {{ javascript('angular_1.5.8.min.js') }}
+
+  {% endif %}
+
+</head>
+
+<body class="rs-fixed">
+  <div class="rs-wrapper">
+    <!-- HEADER START -->
+    {% block header %}
+      {% include '_header.html' %}
+    {% endblock %}
+    <!-- HEADER END -->
+    <div class="rs-body">
+      <div class="rs-inner">
+        <div class="rs-container">
+          {% block content %}
+          <div class="rs-main">
+            <div class="rs-content rs-panel">
+              <div class="rs-inner">
+                {% block main %}
+                  <h2 class="rs-page-title">Base Template</h2>
+                {% endblock %}
+              </div>
+            </div>
+          </div>
+          {% endblock %}
+        </div>
+      </div>
+      <div class="rs-push"></div>
+  </div>
+  </div>
+  <div class="rs-nav-footer">
+    {% block footer %}
+      {% include '_footer.html' %}
+    {% endblock %}
+  </div>
+</body>
+</html>

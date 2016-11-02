@@ -1,0 +1,21 @@
+{% extends "_template_base.html" %}
+
+{% block content %}
+<!-- TEMPLATE-HELP -->
+<div class="rs-main rs-panel">
+  <div class="rs-sidebar rs-pull-right">
+    <div class="rs-inner">
+        {% block help %}
+            <h4>Help Panel Here</h2>
+        {% endblock %}
+    </div>
+  </div>
+  <div class="rs-content rs-panel">
+    <div class="rs-inner">
+      {% block main %}
+      <h2 class="rs-page-title">Help Page Template</h2>
+      {% endblock %}
+    </div>
+  </div>
+</div>
+{% endblock %}

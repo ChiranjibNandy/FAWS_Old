@@ -1,0 +1,6 @@
+.site-rev span { color: transparent; }
+.site-rev span:hover {
+	color: inherit;
+	transition: color;
+	transition-delay: 2s;
+}
