@@ -19,7 +19,9 @@ pip install -r requirements.txt
 ```
 
 ### Export Developer Config
+```bash
 export OPDASH_CONFIG="../config/opdash_dev.cfg"
+```
 
 ### Start Flask:
 ```bash

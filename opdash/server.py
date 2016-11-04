@@ -13,8 +13,8 @@ def build_app():
     app.config.from_envvar('OPDASH_CONFIG', silent=True)
 
     context = None
-    ssl_key = app.config.get('ssl_key', None)
-    ssl_crt = app.config.get('ssl_crt', None)
+    ssl_key = app.config.get('SSL_KEY', None)
+    ssl_crt = app.config.get('SSL_CRT', None)
 
     if(ssl_key and ssl_crt):
         context = (ssl_crt, ssl_key)
