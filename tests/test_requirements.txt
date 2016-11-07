@@ -1,9 +1,5 @@
 pytest
-mock
-nose
-testtools
 flake8
-pep8
-discover
+mock
 coverage
 requests-mock
