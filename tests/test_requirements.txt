@@ -1,0 +1,9 @@
+pytest
+mock
+nose
+testtools
+flake8
+pep8
+discover
+coverage
+requests-mock

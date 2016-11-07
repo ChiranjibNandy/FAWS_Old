@@ -1,4 +1,4 @@
-from flask import redirect, request, render_template
+from flask import request, render_template
 
 
 class ErrorHandlers(object):
@@ -14,7 +14,6 @@ class ErrorHandlers(object):
             """
             logger.error('%s: Unauthorized access attempt.' % error_code)
             return render_template("error-401.html"), 401
-            #return redirect("login-page-here.html")
 
         @app.errorhandler(403)
         def forbidden(error_code):

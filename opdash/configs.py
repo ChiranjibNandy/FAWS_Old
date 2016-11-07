@@ -1,5 +1,6 @@
 from uuid import uuid4
 
+
 class BaseConfig(object):
     HOST = '0.0.0.0'
     PORT = 8080
