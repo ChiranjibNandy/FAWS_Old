@@ -2,6 +2,7 @@ from uuid import uuid4
 
 
 class BaseConfig(object):
+    """Set default configuration values"""
     HOST = '0.0.0.0'
     PORT = 8080
     DEBUG = False

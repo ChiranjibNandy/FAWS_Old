@@ -3,7 +3,7 @@ import requests
 import json
 
 
-class Identity:
+class Identity(object):
 
     def __init__(self, identity_url):
 
@@ -11,8 +11,8 @@ class Identity:
 
     def auth_username_and_password(self, username, password):
         """
-            This function authenticates the user using the
-            a username and password. Returns service_catalog.
+            Authenticates the user using a username and password.
+            Returns the service catalog.
 
             :params username
             :params password
@@ -38,7 +38,7 @@ class Identity:
 
         service_catalog = None
 
-        if(response.status_code == requests.codes.ok):
+        if response.status_code == requests.codes.ok:
             service_catalog = response.text
         else:
             current_app.logger.error(
@@ -48,7 +48,14 @@ class Identity:
 
         return service_catalog
 
-    def auth_tenantid_and_token(self, tenant_id, token):
+    def auth_tenant_id_and_token(self, tenant_id, token):
+        """
+            Authenticates the user using the tenant_id and authtoken.
+            Returns the service catalog.
+
+            :params tenant_id
+            :params token
+        """
 
         data = {
             "auth": {
@@ -70,7 +77,7 @@ class Identity:
 
         service_catalog = None
 
-        if(response.status_code == requests.codes.ok):
+        if response.status_code == requests.codes.ok:
             service_catalog = response.text
         else:
             current_app.logger.error(
@@ -80,6 +87,15 @@ class Identity:
         return service_catalog
 
     def auth_username_and_apikey(self, username, apikey, tenant_id=None):
+        """
+            Authenticates the user using the username, api_key.
+            The tenant_id is optional. (Some services may require it.)
+            Returns the service catalog.
+
+            :params username
+            :params apikey
+            :params tenant_id (default None)
+        """
 
         data = {
             "auth": {
@@ -103,7 +119,7 @@ class Identity:
 
         service_catalog = None
 
-        if(response.status_code == requests.codes.ok):
+        if response.status_code == requests.codes.ok:
             service_catalog = response.text
         else:
             current_app.logger.error(
