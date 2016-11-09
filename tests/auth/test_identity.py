@@ -48,7 +48,7 @@ class TestIdentity(unittest.TestCase):
 
     @requests_mock.Mocker()
     def test_auth_username_and_apikey(self, m):
-
+        """Test auth using username and apikey"""
         expected_result = "{'service':'catalog'}"
         m.register_uri(
             'POST',
