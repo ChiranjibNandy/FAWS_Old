@@ -1,0 +1,6 @@
+exclude .git*
+
+include README.md
+include requirements.txt
+
+recursive-include opdash *
