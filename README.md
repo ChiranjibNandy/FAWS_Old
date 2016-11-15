@@ -18,12 +18,12 @@ virtualenv .venv
 pip install -r requirements.txt
 ```
 
-### Export Developer Config
+### Export Development Debug Configuration
 ```bash
-export OPDASH_CONFIG="../config/opdash_dev.cfg"
+export UI_DEPLOY_ENVIRON="DebugConfig"
 ```
 
 ### Start Flask:
 ```bash
-python run.py
+python application.py
 ```
