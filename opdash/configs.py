@@ -1,20 +1,41 @@
 from uuid import uuid4
+from os import environ
+
+
+def load_configuration(app):
+
+    app.config.from_object('opdash.configs.BaseConfig')
+
+    # Loads source-control storable default values for
+    # the current deployment environment
+    deploy_environ = environ.get('UI_DEPLOY_ENVIRON', None)
+    if deploy_environ:
+        app.config.from_object('opdash.configs.' + deploy_environ)
+
+    # Load Secret Values from environent variables
+    app.config['SSL_KEY'] = environ.get('UI_SSL_KEY', None)
+    app.config['SSL_CRT'] = environ.get('UI_SSL_CERT', None)
+    app.config['CSRF_SESSION_KEY'] = environ.get(
+        'UI_CSRF_SESSION_KEY', uuid4())
+    app.config['SECRET_COOKIE_KEY'] = environ.get(
+        'UI_SECRET_COOKIE_KEY', uuid4())
 
 
 class BaseConfig(object):
-    """Set default configuration values"""
+    """
+        Base configuration object.
+        Secret values should be set by environmental variables
+    """
+
     HOST = '0.0.0.0'
-    PORT = 8080
+    PORT = 8000
     DEBUG = False
     USE_RELOADER = False
 
-    SSL_CRT = None
-    SSL_KEY = None
-
-    # Used as a cache buster, and so we can tell what
-    # version of the code we are looking at
-    GIT_BRANCH = 'UNKNOWN'
-    GIT_HASH = uuid4().hex
+    API_BASE_URL = environ.get(
+        'API_BASE_URL',
+        'http://opdash-api-dev.us-east-1.elasticbeanstalk.com'
+    )
 
     # Application threads. A common general assumption is using 2 per available
     # processor core - to handle incoming requests using one and performing
@@ -23,7 +44,9 @@ class BaseConfig(object):
 
     # Enable protection against Cross-site Request Forgery
     CSRF_ENABLED = True
-    CSRF_SESSION_KEY = 'Crazy Key Goes Here'
 
-    # Secret key for signing cookies
-    SECRET_KEY = 'Awesome Secret Here'
+
+class DebugConfig(object):
+    DEBUG = True
+    USE_RELOADER = True
+    # API_BASE_URL = 'http://0.0.0.0:9000'
