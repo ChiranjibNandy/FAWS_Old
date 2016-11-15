@@ -5,4 +5,6 @@
 {% block main %}
   <h2 class="rs-page-title">FAWS Operational Dashboard</h2>
   <h4>Debug is {{config.get('DEBUG', None)}}
+  <h4>CSRF_SESSION_KEY is {{config.get('CSRF_SESSION_KEY', None)}}
+
 {% endblock %}
