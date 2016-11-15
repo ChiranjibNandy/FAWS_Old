@@ -1,6 +1,7 @@
 from uuid import uuid4
 from os import environ
 
+
 def load_configuration(app):
 
     app.config.from_object('opdash.configs.BaseConfig')
@@ -44,7 +45,8 @@ class BaseConfig(object):
     # Enable protection against Cross-site Request Forgery
     CSRF_ENABLED = True
 
+
 class DebugConfig(object):
     DEBUG = True
     USE_RELOADER = True
-    #API_BASE_URL = 'http://0.0.0.0:9000'
+    # API_BASE_URL = 'http://0.0.0.0:9000'

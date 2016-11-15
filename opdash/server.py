@@ -1,10 +1,8 @@
-from flask import Flask, render_template, current_app, request
+from flask import Flask
 from opdash.controllers.errors import register_error_handlers
 from opdash.controllers.proxy import register_api_proxy
 from opdash.controllers.unsecure import register_unsecure_routes
 from configs import load_configuration
-
-from flask import Response
 
 
 def build_app():

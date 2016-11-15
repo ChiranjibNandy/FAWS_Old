@@ -1,6 +1,7 @@
 from flask import request, Response
 import requests
 
+
 def register_api_proxy(app):
 
     @app.route('/api/<path>')
@@ -37,10 +38,9 @@ def register_api_proxy(app):
             'connection'
         ]
 
-        headers = [
-            (name, value) for (name, value) in resp.raw.headers.items()
-                if name.lower() not in excluded_headers
-        ]
+        headers = [(name, value)
+                   for (name, value) in resp.raw.headers.items()
+                   if name.lower() not in excluded_headers]
 
         response = Response(resp.content, resp.status_code, headers)
 
