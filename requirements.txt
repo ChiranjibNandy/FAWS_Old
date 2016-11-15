@@ -1,5 +1,2 @@
 flask
 requests
-boto3
-simpleflow
-psutil
