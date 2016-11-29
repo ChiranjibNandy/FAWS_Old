@@ -4,6 +4,8 @@ from opdash.controllers.proxy import register_api_proxy
 from opdash.controllers.unsecure import register_unsecure_routes
 from opdash.configs import load_configuration
 
+import opdash.session_managers as session_managers
+
 
 def build_app():
     """Build the flask application"""
@@ -22,6 +24,8 @@ def build_app():
     register_api_proxy(app)
     register_error_handlers(app)
     register_unsecure_routes(app)
+
+    session_managers.configure_session_provider(app)
 
     return app, context
 
