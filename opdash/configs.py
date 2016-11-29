@@ -34,7 +34,7 @@ class BaseConfig(object):
 
     API_BASE_URL = environ.get(
         'API_BASE_URL',
-        'http://opdash-api-dev.us-east-1.elasticbeanstalk.com'
+        'http://migrator-ops-api-dev.us-east-1'
     )
 
     # Application threads. A common general assumption is using 2 per available
@@ -49,4 +49,9 @@ class BaseConfig(object):
 class DebugConfig(object):
     DEBUG = True
     USE_RELOADER = True
-    # API_BASE_URL = 'http://0.0.0.0:9000'
+
+
+class LocalConfig(object):
+    DEBUG = True
+    USE_RELOADER = True
+    API_BASE_URL = 'http://0.0.0.0:5000'
