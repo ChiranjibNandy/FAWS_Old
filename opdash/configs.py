@@ -34,7 +34,7 @@ class BaseConfig(object):
 
     API_BASE_URL = environ.get(
         'API_BASE_URL',
-        'http://migrator-ops-api-dev.us-east-1/'
+        'http://migrator-ops-api-dev.us-east-1'
     )
 
     # Application threads. A common general assumption is using 2 per available
