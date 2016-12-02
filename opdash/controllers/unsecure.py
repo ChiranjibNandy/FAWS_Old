@@ -27,3 +27,18 @@ def register_unsecure_routes(app):
     def index():
         """Show index page"""
         return render_template('index.html')
+
+    @app.route('/angular_demo')
+    def angular_demo():
+        """Show index page"""
+        return render_template('TestIndex.html')
+
+    @app.route('/angular_app')
+    def angular_app():
+        """Show index page"""
+        return render_template('AngIndex.html')
+
+    @app.route('/tenant_id')
+    def tenant_id():
+        """Show index page"""
+        return render_template('tenant_id.html')

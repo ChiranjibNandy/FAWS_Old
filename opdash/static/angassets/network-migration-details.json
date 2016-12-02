@@ -1,0 +1,38 @@
+[{
+  "id": 1001,
+  "name": "Network 1",
+  "desc": "Some description",
+  "status": "Migration Status Description",
+  "progress": 93
+}, {
+  "id": 1002,
+  "name": "Network 2",
+  "desc": "Some description",
+  "status": "Migration Status Description",
+  "progress": 98
+}, {
+  "id": 1003,
+  "name": "Network 3",
+  "desc": "Some description",
+  "status": "Migration Status Description",
+  "progress": 85
+}, {
+  "id": 1004,
+  "name": "Network 4",
+  "desc": "Some description",
+  "status": "Migration Status Description",
+  "progress": 66
+}, {
+  "id": 1005,
+  "name": "Network 5",
+  "desc": "Some description",
+  "status": "Migration Status Description",
+  "progress": 45
+}, {
+  "id": 1006,
+  "name": "Network 6",
+  "desc": "Some description",
+  "status": "Migration Status Description",
+  "progress": 96
+
+}]
