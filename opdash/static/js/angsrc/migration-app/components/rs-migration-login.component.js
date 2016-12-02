@@ -4,6 +4,6 @@
     // defining component to display all migration items
     angular.module("migrationApp")
         .component("rsMigrationLogin", {
-            templateUrl: "/static/AngTemplates/migration/login.html"
+            templateUrl: "/static/angTemplates/migration/login.html"
         });
 })();

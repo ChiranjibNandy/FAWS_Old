@@ -8,7 +8,7 @@
         return {
             // get all server items from backend
             getAll: function () {
-                var url = "/static/Angassets/servers-list.json";
+                var url = "/static/angassets/servers-list.json";
 
                 if (!loaded) {
                     var serversList = [];
@@ -48,7 +48,7 @@
 
             // get server details of specific items
             getMigrationDetails: function (ids) {
-                var url = "/static/Angassets/server-migration-details.json";
+                var url = "/static/angassets/server-migration-details.json";
                 return $http.get(url)
                     .then(function (response) {
                         var data = response.data.filter(function (item) { return ids.indexOf(item.id) >= 0 });

@@ -4,7 +4,7 @@
     // defining component to display details of a migration item
     angular.module("migrationApp")
         .component("rsEquipmentDetails", {
-            templateUrl: "/static/angtemplates/migration/equipment-details.html",
+            templateUrl: "/static/angTemplates/migration/equipment-details.html",
             controllerAs: "vm",
             controller: ["migrationItemDataService", function (ds) {
                 var vm = this;
