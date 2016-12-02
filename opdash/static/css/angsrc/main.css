@@ -1,0 +1,58 @@
+button{
+    outline: none;
+}
+
+th{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    white-space: nowrap;
+}
+
+.rs-row [class*=span-]{
+    margin: 0;
+}
+
+.rs-facet-item .rs-status-disabled {
+    background-color: transparent;
+    background-image: url(https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/icons.png);
+    background-position: -1px -677px;
+    background-repeat: no-repeat;
+    width: 13px;
+    height: 13px;
+}
+
+.migration-item{
+    margin-bottom: 200px;
+}
+
+.migration-item:last-child,
+.migration-item-details:last-child,
+.migration-details-container{
+    margin-bottom: 55px;
+}
+
+.migration-item-header{
+    padding: 20px 0;
+    overflow: auto;
+}
+
+.migration-item-type{
+    text-transform: capitalize;
+}
+
+.rs-content{
+    padding: 20px;
+}
+
+.action-footer{
+    padding: 15px 0;
+    margin: 0;
+    overflow: auto;
+}
+
+.rs-mig-nopad{
+    padding: 0px;
+}
+.rs-mig-nomar{
+    margin: 0px;
+}

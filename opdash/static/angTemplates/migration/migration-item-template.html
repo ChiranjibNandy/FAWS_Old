@@ -1,0 +1,92 @@
+<div class="rs-row migration-item">
+    <div class="migration-item-header">
+        <h2 class="rs-page-title migration-item-type span-8">{{vm.type}}s</h2>
+        <input type="text" class="rs-input-large span-3" placeholder="Search {{vm.items.length}} {{vm.type}}s by name">
+    </div>
+    <div class="span-3">
+        <div class="rs-inner" id="facets-example">
+            <div class="rs-facet-header">
+                <div class="rs-facet-clear-link rs-hidden">clear all</div>
+                <div class="rs-facet-title">Filter {{vm.type}}s</div>
+            </div>
+            <div class="rs-facet-section">
+                <div class="rs-facet-section-header">
+                <div class="rs-facet-clear-link rs-hidden">clear</div>
+                <div class="rs-facet-section-title">Status</div>
+                </div>
+                <div class="rs-facet-section-body">
+                <ul class="rs-facet-list">
+                    <li class="rs-facet-item">
+                        <i class="rs-status-ok"></i>
+                        <div class="rs-facet-label">Completed</div>
+                        <div class="rs-facet-count">({{vm.getCountByStatus('ACTIVE')}})</div>
+                    </li>
+                    <li class="rs-facet-item">
+                        <i class="rs-status-warning"></i>
+                        <div class="rs-facet-label">In Progress</div>
+                        <div class="rs-facet-count">({{vm.getCountByStatus(1)}})</div>
+                    </li>
+                    <li class="rs-facet-item">
+                        <i class="rs-status-error"></i>
+                        <div class="rs-facet-label">Error</div>
+                        <div class="rs-facet-count">({{vm.getCountByStatus(2)}})</div>
+                    </li>
+                    <li class="rs-facet-item">
+                        <i class="rs-status-disabled"></i>
+                        <div class="rs-facet-label">Disabled</div>
+                        <div class="rs-facet-count">({{vm.getCountByStatus(3)}})</div>
+                    </li>
+                </ul>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <div class="span-8">
+        <div class="rs-inner">
+            <div class="rs-embedded-list-table-wrapper rs-embedded-medium">
+                <table class="rs-list-table rs-embedded-list-table">
+                    <thead>
+                        <tr>
+                            <th class="rs-table-status"></th>
+                            <th class="rs-table-checkbox">
+                                <input type="checkbox" ng-model="vm.isAllselected" ng-change="vm.changeItemSelection()" />
+                            </th>
+                            <th>
+                                <a href="#" class="rs-table-sort rs-table-sort-desc">
+                                <span class="rs-table-sort-text">{{vm.labels[0]}}</span>
+                                <span class="rs-table-sort-indicator"></span>
+                                </a>
+                            </th>
+                            <th>
+                                <a href="#" class="rs-table-sort">
+                                <span class="rs-table-sort-text">{{vm.labels[1]}}</span>
+                                </a>
+                            </th>
+                            <th>
+                                <a href="#" class="rs-table-sort">
+                                <span class="rs-table-sort-text">{{vm.labels[2]}}</span>
+                                <span class="rs-table-sort-indicator"></span>
+                                </a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in ::vm.items">
+                            <td class="rs-table-status" ng-class="{'rs-table-status-ok': item.status=='ACTIVE'}"></td>
+                            <td class="rs-table-checkbox"><input type="checkbox" ng-model="item.selected" ng-change="vm.changeSelectAll()" /></td>
+                            <td class="rs-table-link"><a href="#" ng-link="['EquipmentDetails', {type: vm.type, id: item.id}]">{{item.name}}</a></td>
+                            <td class="rs-table-link">{{item.tenant_id}}</td>
+                            <td class="rs-table-text">{{item.ip_address}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="action-footer">
+                <div class="rs-pull-right">
+                    <button class="rs-btn rs-btn-primary" ng-click="vm.migrate({type: vm.type})">Migrate</button>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
