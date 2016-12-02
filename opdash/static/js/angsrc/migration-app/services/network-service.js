@@ -9,7 +9,7 @@
             return {
                 // get all network items from backend
                 getAll: function () {
-                    var url = "/static/Angassets/networks-list.json";
+                    var url = "/static/angassets/networks-list.json";
 
                     if (!loaded) {
                         return $http.get(url)
@@ -28,7 +28,7 @@
 
                 // get network details of specific items
                 getMigrationDetails: function (ids) {
-                    var url = "/static/Angassets/network-migration-details.json";
+                    var url = "/static/angassets/network-migration-details.json";
                     return $http.get(url)
                         .then(function (response) {
                             var data = response.data.filter(function (item) { return ids.indexOf(item.id) >= 0 });
