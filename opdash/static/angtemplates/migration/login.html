@@ -5,21 +5,21 @@
     </div>
     <div id="main-login-block" class="login-block">
         <h1>Welcome to FAWS Migration Dashboard</h1>
-        <form method="POST" class="rs-form-small">
+        <form name="loginForm" method="POST" class="rs-form-small">
             <fieldset>
                 <div class="rs-control-group ">
                     <label for="username">Username</label>
-                    <input autofocus="" class="rs-input-large" id="username" name="username" type="text" value="" ng-model="vm.username">
+                    <input autofocus="" class="rs-input-large" id="username" name="username" type="text" value="" ng-model="$ctrl.username">
                 </div>
                 <div class="rs-control-group ">
                     <label for="password">SSO</label>
-                    <input autocomplete="off" class="rs-input-large" id="password" name="password" type="password" value="" ng-model="password">
+                    <input autocomplete="off" class="rs-input-large" id="password" name="password" type="password" value="" ng-model="$ctrl.password">
                 </div>
                 <div class="rs-control-group ">
                     <input id="type" name="type" type="hidden" value="password">
                 </div>
                 <div class="login-action">
-                    <button ng-click="$ctrl.login()" type="submit" class="rs-btn rs-btn-login">Log In</button>
+                    <button ng-click="$ctrl.onSubmit()" type="submit" class="rs-btn rs-btn-login">Log In</button>
                 </div>
             </fieldset>
         </form>
