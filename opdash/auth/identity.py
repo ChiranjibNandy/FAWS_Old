@@ -1,4 +1,3 @@
-#from flask import current_app
 import requests
 import json
 import logging
@@ -172,16 +171,16 @@ class Identity(object):
 
         return service_catalog
 
-    def impersonate_user(self, authtoken, username, expiration_seconds=10800):
+    def impersonate_user(self, username, authtoken, token_expiration_seconds=10800):
         """
             Impersonates a user. Requires an authtoken for the impersonator,
             and the username of the user you want to impersonate.
             (REQUIRES RACKSPACE INTERNAL IDENTITY)
             Returns impersonation response.
 
-            :params authtoken
             :params username
-            :params expiration_seconds (default 10800)
+            :params authtoken
+            :params token_expiration_seconds (default 10800)
         """
 
         data = {
@@ -189,47 +188,7 @@ class Identity(object):
                 "user": {
                     "username": username
                 },
-                "expire-in-seconds": expiration_seconds
-            }
-        }
-
-        response = requests.post(
-            "{identity_url}/RAX-AUTH/impersonation-tokens".format(
-                identity_url=self._identity_url),
-            data=json.dumps(data),
-            headers={
-                "X-Auth-Token": authtoken,
-                "Content-Type": "application/json"
-            }
-        )
-
-        response_text = None
-
-        if response.status_code == requests.codes.ok:
-            response_text = response.text
-        else:
-            self.logger.error(
-                "impersonate_user - " +
-                "identity returned:{status}".format(
-                    status=response.status_code))
-
-        return response_text
-
-    def get_username_for_tenant_id(self, tenant_id):
-        """
-            Lookup a user name by tenant id.
-            (REQUIRES RACKSPACE INTERNAL IDENTITY)
-            Returns username if found.
-
-            :params tenant_id
-        """
-------- HERE
-        data = {
-            "RAX-AUTH:impersonation": {
-                "user": {
-                    "username": username
-                },
-                "expire-in-seconds": expiration_seconds
+                "expire-in-seconds": token_expiration_seconds
             }
         }
 

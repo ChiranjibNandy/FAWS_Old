@@ -1,5 +1,5 @@
-from flask import render_template
-
+from flask import render_template, request, redirect, session
+from opdash.auth.identity import Identity
 
 def register_unsecure_routes(app):
 
@@ -23,15 +23,37 @@ def register_unsecure_routes(app):
         """Show full template"""
         return render_template('_template_full.html')
 
-    @app.route('/')
-    def index():
-        """Show index page"""
-        return render_template('index.html')
-
-    @app.route('/login')
-    def login():
+    @app.route('/login', methods=['GET'])
+    def login_get():
         """Show index page"""
         return render_template('login.html')
+
+    @app.route('/login', methods=['POST'])
+    def login_post():
+        """Show index page"""
+        app.logger.debug('USERNAME:{0}'.format(request.form['username']))
+        app.logger.debug('PASSWORD:{0}'.format(request.form['password']))
+
+        username =request.form['username']
+        password = request.form['password']
+
+        error_message = "Login was not correct."
+
+        if username and password:
+
+            identity = Identity(app.config["IDENTITY_URL"])
+            result = identity.auth_username_and_password(username, password)
+
+            if result:
+                response = app.make_response(redirect('/'))
+                session['is_authenticated'] = True
+                return response
+            else:
+                error_message = "Username or password is not correct."
+
+        app.logger.error("{0} -- {1}".format(error_message, username))
+
+        return render_template('login.html', error_message=error_message)
 
     @app.route('/angular_demo')
     def angular_demo():
@@ -47,3 +69,12 @@ def register_unsecure_routes(app):
     def tenant_id():
         """Show index page"""
         return render_template('tenant_id.html')
+
+    @app.route('/')
+    def index():
+        """Show index page"""
+        if session.get('is_authenticated', False):
+            return render_template('index.html')
+        else:
+            app.logger.debug('***** INDEX - NOT AUTHENTICATED *****')
+            return redirect('/login')

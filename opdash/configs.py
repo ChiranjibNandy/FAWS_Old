@@ -48,6 +48,8 @@ class BaseConfig(object):
     # Enable protection against Cross-site Request Forgery
     CSRF_ENABLED = True
 
+    SECRET_KEY = "THIS-IS-THE-SESSION-SECRET-KEY"
+
 
 class DebugConfig(object):
     DEBUG = True
