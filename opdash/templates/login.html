@@ -5,29 +5,6 @@
 
 {% block main %}
 
-<script>
-
-// defining component to display all migration items
-angular.module("migrationApp")
-    .component("rsmigrationloginx", {
-        template: "Hello {{$ctrl.username}}. <button ng-click='$ctrl.onClick()'>Click</button>",
-        controller: function() {
-          this.$onInit = function () {
-            this.username = 'username-here';
-            this.password = 'password-here';
-          };
-          this.login = function() {
-            // validate form here
-            // if valid, submit form to login here
-            console.info('USERNAME:', this.username);
-            console.info('PASSWORD:', this.password);
-          }
-        }
-
-    });
-
-</script>
-
 <div ng-app="migrationApp">
   <rsmigrationlogin></rsmigrationlogin>
 </div>
