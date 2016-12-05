@@ -3,15 +3,15 @@
 
     // defining component to display each migration component (eg: server, network etc)
     angular.module("migrationApp")
-        .component("rsMigrationItem", {
-            templateUrl: "/static/angTemplates/migration/migration-item-template.html",
+        .component("rsmigrationitem", {
+            templateUrl: "/static/angtemplates/migration/migration-item-template.html",
             bindings: {
                 type: "@" // type parameter to be supplied (eg: server, network etc)
             },
             controllerAs: "vm",
             controller: ["migrationItemDataService", "$rootRouter", function (ds, $rootRouter) {
                 var vm = this;
-                
+
                 // Perfoming controller initialization steps
                 vm.$onInit = function() {
                     // 'Select All' checkbox is not selected initially
@@ -35,7 +35,7 @@
                     vm.isAllselected = (i == vm.items.length);
                 };
 
-                // Update item selection based on Select/Deselect all 
+                // Update item selection based on Select/Deselect all
                 vm.changeItemSelection = function () {
                     angular.forEach(vm.items, function (item) {
                         item.selected = vm.isAllselected;
@@ -47,7 +47,7 @@
                     return vm.items ? vm.items.filter(function (item) { return item.status === status }).length : "?";
                 };
 
-                // Move to migration details page if multiple items are selected 
+                // Move to migration details page if multiple items are selected
                 vm.migrate = function(type) {
                     // TODO: add condition for multiple item selction
                     $rootRouter.navigate(["MigrationDetails", {type: vm.type}])

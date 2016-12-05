@@ -1,6 +1,7 @@
-from flask import current_app
+#from flask import current_app
 import requests
 import json
+import logging
 
 
 class Identity(object):
@@ -8,6 +9,7 @@ class Identity(object):
     def __init__(self, identity_url):
 
         self._identity_url = identity_url
+        self.logger = logging.getLogger(__name__)
 
     def auth_username_and_password(self, username, password):
         """
@@ -32,7 +34,7 @@ class Identity(object):
                 identity_url=self._identity_url),
             data=json.dumps(data),
             headers={
-                "content-type": "application/json"
+                "Content-Type": "application/json"
             }
         )
 
@@ -41,7 +43,7 @@ class Identity(object):
         if response.status_code == requests.codes.ok:
             service_catalog = response.text
         else:
-            current_app.logger.error(
+            self.logger.error(
                 "auth_username_and_password - " +
                 "identity returned:{status}".format(
                     status=response.status_code))
@@ -71,7 +73,7 @@ class Identity(object):
                 identity_url=self._identity_url),
             data=json.dumps(data),
             headers={
-                "content-type": "application/json"
+                "Content-Type": "application/json"
             }
         )
 
@@ -80,7 +82,7 @@ class Identity(object):
         if response.status_code == requests.codes.ok:
             service_catalog = response.text
         else:
-            current_app.logger.error(
+            self.logger.error(
                 "auth_tenantid_and_token - identity returned:{status}".format(
                     status=response.status_code))
 
@@ -113,7 +115,7 @@ class Identity(object):
                 identity_url=self._identity_url),
             data=json.dumps(data),
             headers={
-                "content-type": "application/json"
+                "Content-Type": "application/json"
             }
         )
 
@@ -122,8 +124,133 @@ class Identity(object):
         if response.status_code == requests.codes.ok:
             service_catalog = response.text
         else:
-            current_app.logger.error(
+            self.logger.error(
                 "auth_username_and_apikey - identity returned:{status}".format(
                     status=response.status_code))
 
         return service_catalog
+
+    def auth_racker_username_and_token(self, username, rsa_token):
+        """
+            Authenticates a Racker using their username and RSA token.
+            (REQUIRES RACKSPACE INTERNAL IDENTITY)
+            Returns the service catalog.
+
+            :params username
+            :params rsa_token (pin + rsa token)
+        """
+
+        data = {
+            "auth": {
+                "RAX-AUTH:domain": {
+                    "name": "Rackspace"
+                },
+                "RAX-AUTH:rsaCredentials": {
+                    "username": username,
+                    "tokenKey": rsa_token
+                }
+            }
+        }
+
+        response = requests.post(
+            "{identity_url}/tokens".format(
+                identity_url=self._identity_url),
+            data=json.dumps(data),
+            headers={
+                "Content-Type": "application/json"
+            }
+        )
+
+        service_catalog = None
+
+        if response.status_code == requests.codes.ok:
+            service_catalog = response.text
+        else:
+            self.logger.error(
+                "auth_username_and_apikey - identity returned:{status}".format(
+                    status=response.status_code))
+
+        return service_catalog
+
+    def impersonate_user(self, authtoken, username, expiration_seconds=10800):
+        """
+            Impersonates a user. Requires an authtoken for the impersonator,
+            and the username of the user you want to impersonate.
+            (REQUIRES RACKSPACE INTERNAL IDENTITY)
+            Returns impersonation response.
+
+            :params authtoken
+            :params username
+            :params expiration_seconds (default 10800)
+        """
+
+        data = {
+            "RAX-AUTH:impersonation": {
+                "user": {
+                    "username": username
+                },
+                "expire-in-seconds": expiration_seconds
+            }
+        }
+
+        response = requests.post(
+            "{identity_url}/RAX-AUTH/impersonation-tokens".format(
+                identity_url=self._identity_url),
+            data=json.dumps(data),
+            headers={
+                "X-Auth-Token": authtoken,
+                "Content-Type": "application/json"
+            }
+        )
+
+        response_text = None
+
+        if response.status_code == requests.codes.ok:
+            response_text = response.text
+        else:
+            self.logger.error(
+                "impersonate_user - " +
+                "identity returned:{status}".format(
+                    status=response.status_code))
+
+        return response_text
+
+    def get_username_for_tenant_id(self, tenant_id):
+        """
+            Lookup a user name by tenant id.
+            (REQUIRES RACKSPACE INTERNAL IDENTITY)
+            Returns username if found.
+
+            :params tenant_id
+        """
+------- HERE
+        data = {
+            "RAX-AUTH:impersonation": {
+                "user": {
+                    "username": username
+                },
+                "expire-in-seconds": expiration_seconds
+            }
+        }
+
+        response = requests.post(
+            "{identity_url}/RAX-AUTH/impersonation-tokens".format(
+                identity_url=self._identity_url),
+            data=json.dumps(data),
+            headers={
+                "X-Auth-Token": authtoken,
+                "Content-Type": "application/json"
+            }
+        )
+
+        response_text = None
+
+        if response.status_code == requests.codes.ok:
+            response_text = response.text
+        else:
+            self.logger.error(
+                "impersonate_user - " +
+                "identity returned:{status}".format(
+                    status=response.status_code))
+
+        return response_text

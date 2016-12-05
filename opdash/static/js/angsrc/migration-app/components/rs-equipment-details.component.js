@@ -3,12 +3,12 @@
 
     // defining component to display details of a migration item
     angular.module("migrationApp")
-        .component("rsEquipmentDetails", {
-            templateUrl: "/static/angTemplates/migration/equipment-details.html",
+        .component("rsequipmentdetails", {
+            templateUrl: "/static/angtemplates/migration/equipment-details.html",
             controllerAs: "vm",
             controller: ["migrationItemDataService", function (ds) {
                 var vm = this;
-                
+
                 // When the component is active get router params and fetch data
                 vm.$routerOnActivate = function(next, previous) {
                     vm.type = next.params.type;

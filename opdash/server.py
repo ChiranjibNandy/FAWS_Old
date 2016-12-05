@@ -6,10 +6,23 @@ from opdash.configs import load_configuration
 
 import opdash.session_managers as session_managers
 
+class FlaskOpdash(Flask):
+    '''
+        Jinja and Angular both use the double braces {{variable}}
+        delimiter. So here we are changing the Jinja variable delimeter
+        to {[{variable}]} so it does not conflict with Angular delimiter.
+    '''
+    jinja_options = Flask.jinja_options.copy()
+    jinja_options.update(dict(
+        # REMOVE CONFLICT WITH ANGULAR BY
+        # CHANGING JINJA VARIABLE DELIMITER
+        variable_start_string='{!',
+        variable_end_string='!}',
+    ))
 
 def build_app():
     """Build the flask application"""
-    app = Flask(__name__)
+    app = FlaskOpdash(__name__)
 
     # Load Application Configuration
     load_configuration(app)

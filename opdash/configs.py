@@ -1,3 +1,4 @@
+from flask import current_app
 from uuid import uuid4
 from os import environ
 
@@ -36,6 +37,8 @@ class BaseConfig(object):
         'API_BASE_URL',
         'http://migrator-ops-api-dev.us-east-1'
     )
+
+    IDENTITY_URL = "https://identity-internal.api.rackspacecloud.com/v2.0"
 
     # Application threads. A common general assumption is using 2 per available
     # processor core - to handle incoming requests using one and performing
