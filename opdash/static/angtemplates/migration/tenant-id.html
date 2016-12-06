@@ -1,9 +1,74 @@
+
+<h2>Select Tenant ID</h2>
+
+<div class="rs-row">
+<div class="span-10">
+<div class="rs-embedded-list-table-wrapper rs-embedded-small"><table class="rs-list-table rs-embedded-list-table">
+  <thead>
+    <tr>
+       <th>
+        <a href="javascript:void(0);" class="rs-table-sort" rs-table-sort-desc>
+          <h4 class="rs-table-sort-text">Tenant ID</h4>
+           <!-- <span class="rs-table-sort-indicator"></span> -->
+        </a>
+      </th>
+      <th>
+        <a href="javascript:void(0);" class="rs-table-sort" >
+          <h4 class="rs-table-sort-text">Description</h4>
+          <!-- <span class="rs-table-sort-indicator"></span> -->
+        </a>
+      </th>
+      <!-- <th>
+        <a href="javascript:void(0);" class="rs-table-sort" rs-table-sort-desc>
+          <span class="rs-table-sort-text"></span>
+          <span class="rs-table-sort-indicator"></span>
+        </a> 
+      </th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="rs-table-link"><a ng-link="['Migration']">110018</a></td>
+      <td class="rs-table-text">User5432</td>
+    </tr>
+    <tr>
+      <td class="rs-table-link"><a ng-link="['Migration']">180011</a></td>
+      <td class="rs-table-text">User342</td>
+    </tr>
+    <tr>
+      <td class="rs-table-link"><a ng-link="['Migration']">160118</a></td>
+      <td class="rs-table-text">User2332</td>
+    </tr>
+    <!-- <tr>
+      <td class="rs-table-link"><a ng-link="['Migration']">212318</a></td>
+      <td class="rs-table-text">Use3432</td>
+    </tr> -->
+    
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+<br><br>
+<button class="rs-btn" ng-click="showdetails=!showdetails">Add New Tenant ID</button>
+<br><br>
+<form ng-show="showdetails">
+<input type="text" name="tenantid" placeholder="TenantID">
+<input type="text" name="AWS User" placeholder="AWS User">
+<input type="text" name="AWS Key" placeholder="AWS Key"> 
+<input type="text" name="AWS SecretKey" placeholder="AWS SecretKey"> 
+<br>
+<button class="rs-btn rs-btn-primary" ng-submit="" ng-click="showdetails=!showdetails">Add</button>
+</form>
+
 <!-- <div class="rs-content rs-panel"> -->
- <div class="rs-control-group">
+ <!-- <div class="rs-control-group">
     <label class="rs-control-label">Tenant id</label>
     <div class="rs-controls">
       <input type="text" placeholder='Please enter tenant id'>
     </div>
     <a class="rs-btn" ng-link="['Migration']">Submit</a>
-  </div>
+  </div> -->
  <!--  </div> -->
