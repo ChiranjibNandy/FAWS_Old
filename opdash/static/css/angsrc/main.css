@@ -8,14 +8,10 @@ th{
     white-space: nowrap;
 }
 
-.rs-row [class*=span-]{
-    margin: 0;
-}
-
 .rs-facet-item .rs-status-disabled {
     background-color: transparent;
     background-image: url(https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/icons.png);
-    background-position: -1px -677px;
+    background-position: -2px -781px;
     background-repeat: no-repeat;
     width: 13px;
     height: 13px;
@@ -32,11 +28,13 @@ th{
 }
 
 .migration-item-header{
-    padding: 20px 0;
+    padding: 5px 0;
     overflow: auto;
+    box-sizing: border-box;
 }
 
 .migration-item-type{
+    margin: 5px 0;
     text-transform: capitalize;
 }
 
@@ -55,4 +53,11 @@ th{
 }
 .rs-mig-nomar{
     margin: 0px;
+}
+.no-break{
+   white-space: nowrap;
+}
+
+.rs-table-status-disabled{
+    background-color: #aaaaaa;
 }

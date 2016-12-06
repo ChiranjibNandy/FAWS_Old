@@ -2,42 +2,42 @@
   "id": 1001,
   "name": "Network 1",
   "type": "Network Type 1",
-  "status": 0,
+  "status": "completed",
   "ip_address": "62.136.148.24",
   "desc": "Some description"
 }, {
   "id": 1002,
   "name": "Network 2",
   "type": "Network Type 2",
-  "status": 1,
+  "status": "In Progress",
   "ip_address": "158.94.24.111",
   "desc": "Some description"
 }, {
   "id": 1003,
   "name": "Network 3",
   "type": "Network Type 3",
-  "status": 2,
+  "status": "completed",
   "ip_address": "30.179.20.169",
   "desc": "Some description"
 }, {
   "id": 1004,
   "name": "Network 4",
   "type": "Network Type 0",
-  "status": 3,
+  "status": "completed",
   "ip_address": "66.180.215.234",
   "desc": "Some description"
 }, {
   "id": 1005,
   "name": "Network 5",
   "type": "Network Type 1",
-  "status": 0,
+  "status": "Error",
   "ip_address": "186.189.189.191",
   "desc": "Some description"
 }, {
   "id": 1006,
   "name": "Network 6",
   "type": "Network Type 2",
-  "status": 1,
+  "status": "completed",
   "ip_address": "164.130.135.157",
   "desc": "Some description"
 }]
