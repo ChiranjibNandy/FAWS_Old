@@ -1,272 +1,49 @@
-{
-  "dfw": {
-    "servers": []
-  },
-  "hkg": {
-    "servers": []
-  },
-  "iad": {
-    "servers": [
-      {
-        "OS-DCF:diskConfig": "MANUAL",
-        "OS-EXT-STS:power_state": 1,
-        "OS-EXT-STS:task_state": null,
-        "OS-EXT-STS:vm_state": "active",
-        "RAX-PUBLIC-IP-ZONE-ID:publicIPZoneId": "bd4ab497b051ab67cced43b77ecbbf145d988c19c89395c8ffcdd08d",
-        "accessIPv4": "",
-        "accessIPv6": "",
-        "addresses": {
-          "RC-AWS-LINK": [
-            {
-              "addr": "10.255.255.5",
-              "version": 4
-            }
-          ]
-        },
-        "config_drive": "",
-        "created": "2016-11-10T22:15:32Z",
-        "flavor": {
-          "id": "general1-2",
-          "links": [
-            {
-              "href": "https://iad.servers.api.rackspacecloud.com/1018602/flavors/general1-2",
-              "rel": "bookmark"
-            }
-          ]
-        },
-        "hostId": "f3ad88a06e71399c40a3fe22cd572c72d8f20ff60ac30bd52c2479f0",
-        "id": "ba434920-4a3d-4ea4-a2d9-5a5c9943135e",
-        "image": {
-          "id": "65b7c683-19ef-4a24-a934-335c9eeef2d0",
-          "links": [
-            {
-              "href": "https://iad.servers.api.rackspacecloud.com/1018602/images/65b7c683-19ef-4a24-a934-335c9eeef2d0",
-              "rel": "bookmark"
-            }
-          ]
-        },
-        "key_name": null,
-        "links": [
-          {
-            "href": "https://iad.servers.api.rackspacecloud.com/v2/1018602/servers/ba434920-4a3d-4ea4-a2d9-5a5c9943135e",
-            "rel": "self"
-          },
-          {
-            "href": "https://iad.servers.api.rackspacecloud.com/1018602/servers/ba434920-4a3d-4ea4-a2d9-5a5c9943135e",
-            "rel": "bookmark"
-          }
-        ],
-        "metadata": {
-          "rax_service_level_automation": "Complete"
-        },
-        "name": "AWS-Vyatta-VPN",
-        "progress": 100,
-        "status": "ACTIVE",
-        "tenant_id": "1018602",
-        "updated": "2016-11-10T22:17:29Z",
-        "user_id": "70d6be15c18c4c8fb5be76cd9b52e6bf"
-      },
-      {
-        "OS-DCF:diskConfig": "MANUAL",
-        "OS-EXT-STS:power_state": 1,
-        "OS-EXT-STS:task_state": null,
-        "OS-EXT-STS:vm_state": "active",
-        "RAX-PUBLIC-IP-ZONE-ID:publicIPZoneId": "bd4ab497b051ab67cced43b77ecbbf145d988c19c89395c8ffcdd08d",
-        "accessIPv4": "10.4.124.11",
-        "accessIPv6": "",
-        "addresses": {
-          "RC-DMZ": [
-            {
-              "addr": "172.24.48.12",
-              "version": 4
-            }
-          ],
-          "private": [
-            {
-              "addr": "10.208.192.125",
-              "version": 4
-            }
-          ]
-        },
-        "config_drive": "",
-        "created": "2016-11-04T20:10:24Z",
-        "flavor": {
-          "id": "general1-4",
-          "links": [
-            {
-              "href": "https://iad.servers.api.rackspacecloud.com/1018602/flavors/general1-4",
-              "rel": "bookmark"
-            }
-          ]
-        },
-        "hostId": "eb88f5095a1dfe80e67dc0ac92bb1a3c15ea5ed45c62bbef01e85411",
-        "id": "5c0b5a9a-7bf2-4ec4-b86c-ffa639f9e8b9",
-        "image": {
-          "id": "1917cba0-3305-4e4c-bd29-2c88d062b104",
-          "links": [
-            {
-              "href": "https://iad.servers.api.rackspacecloud.com/1018602/images/1917cba0-3305-4e4c-bd29-2c88d062b104",
-              "rel": "bookmark"
-            }
-          ]
-        },
-        "key_name": null,
-        "links": [
-          {
-            "href": "https://iad.servers.api.rackspacecloud.com/v2/1018602/servers/5c0b5a9a-7bf2-4ec4-b86c-ffa639f9e8b9",
-            "rel": "self"
-          },
-          {
-            "href": "https://iad.servers.api.rackspacecloud.com/1018602/servers/5c0b5a9a-7bf2-4ec4-b86c-ffa639f9e8b9",
-            "rel": "bookmark"
-          }
-        ],
-        "metadata": {
-          "build_config": "monitoring_defaults,monitoring_agent_only,auto_updates",
-          "rax_service_level_automation": "Complete"
-        },
-        "name": "Jenkins",
-        "progress": 100,
-        "status": "ACTIVE",
-        "tenant_id": "1018602",
-        "updated": "2016-11-05T14:41:53Z",
-        "user_id": "70d6be15c18c4c8fb5be76cd9b52e6bf"
-      },
-      {
-        "OS-DCF:diskConfig": "MANUAL",
-        "OS-EXT-STS:power_state": 1,
-        "OS-EXT-STS:task_state": null,
-        "OS-EXT-STS:vm_state": "active",
-        "RAX-PUBLIC-IP-ZONE-ID:publicIPZoneId": "bd4ab497b051ab67cced43b77ecbbf145d988c19c89395c8ffcdd08d",
-        "accessIPv4": "10.4.124.1",
-        "accessIPv6": "",
-        "addresses": {
-          "RC-DMZ": [
-            {
-              "addr": "172.24.48.7",
-              "version": 4
-            }
-          ],
-          "private": [
-            {
-              "addr": "10.208.195.21",
-              "version": 4
-            }
-          ]
-        },
-        "config_drive": "",
-        "created": "2016-10-05T16:51:19Z",
-        "flavor": {
-          "id": "general1-2",
-          "links": [
-            {
-              "href": "https://iad.servers.api.rackspacecloud.com/1018602/flavors/general1-2",
-              "rel": "bookmark"
-            }
-          ]
-        },
-        "hostId": "0ed7ee324883ee7370e4d96c4b78cfcac2cdfc1d034d03ec77f7223b",
-        "id": "6dae4088-29e9-4ffd-a3c5-d09218e9799c",
-        "image": {
-          "id": "4b3e2127-4623-43df-a938-e60268c236c2",
-          "links": [
-            {
-              "href": "https://iad.servers.api.rackspacecloud.com/1018602/images/4b3e2127-4623-43df-a938-e60268c236c2",
-              "rel": "bookmark"
-            }
-          ]
-        },
-        "key_name": null,
-        "links": [
-          {
-            "href": "https://iad.servers.api.rackspacecloud.com/v2/1018602/servers/6dae4088-29e9-4ffd-a3c5-d09218e9799c",
-            "rel": "self"
-          },
-          {
-            "href": "https://iad.servers.api.rackspacecloud.com/1018602/servers/6dae4088-29e9-4ffd-a3c5-d09218e9799c",
-            "rel": "bookmark"
-          }
-        ],
-        "metadata": {
-          "build_config": "monitoring_defaults,monitoring_agent_only,auto_updates",
-          "rax_service_level_automation": "Complete"
-        },
-        "name": "GoCD-Server",
-        "progress": 100,
-        "status": "ACTIVE",
-        "tenant_id": "1018602",
-        "updated": "2016-10-06T16:22:05Z",
-        "user_id": "70d6be15c18c4c8fb5be76cd9b52e6bf"
-      },
-      {
-        "OS-DCF:diskConfig": "MANUAL",
-        "OS-EXT-STS:power_state": 1,
-        "OS-EXT-STS:task_state": null,
-        "OS-EXT-STS:vm_state": "active",
-        "RAX-PUBLIC-IP-ZONE-ID:publicIPZoneId": "bd4ab497b051ab67cced43b77ecbbf145d988c19c89395c8ffcdd08d",
-        "accessIPv4": "10.4.124.0",
-        "accessIPv6": "",
-        "addresses": {
-          "RC-DMZ": [
-            {
-              "addr": "172.24.48.6",
-              "version": 4
-            }
-          ],
-          "private": [
-            {
-              "addr": "10.208.193.183",
-              "version": 4
-            }
-          ]
-        },
-        "config_drive": "",
-        "created": "2016-10-04T16:59:36Z",
-        "flavor": {
-          "id": "general1-1",
-          "links": [
-            {
-              "href": "https://iad.servers.api.rackspacecloud.com/1018602/flavors/general1-1",
-              "rel": "bookmark"
-            }
-          ]
-        },
-        "hostId": "290f51be473208c0591a7c0b8055a4e62de5fc4397dd97ba0c808e8e",
-        "id": "a8ea5dd5-676e-4bba-84a1-857c475039e7",
-        "image": {
-          "id": "4b3e2127-4623-43df-a938-e60268c236c2",
-          "links": [
-            {
-              "href": "https://iad.servers.api.rackspacecloud.com/1018602/images/4b3e2127-4623-43df-a938-e60268c236c2",
-              "rel": "bookmark"
-            }
-          ]
-        },
-        "key_name": null,
-        "links": [
-          {
-            "href": "https://iad.servers.api.rackspacecloud.com/v2/1018602/servers/a8ea5dd5-676e-4bba-84a1-857c475039e7",
-            "rel": "self"
-          },
-          {
-            "href": "https://iad.servers.api.rackspacecloud.com/1018602/servers/a8ea5dd5-676e-4bba-84a1-857c475039e7",
-            "rel": "bookmark"
-          }
-        ],
-        "metadata": {
-          "build_config": "monitoring_defaults,monitoring_agent_only,auto_updates",
-          "rax_service_level_automation": "Complete"
-        },
-        "name": "GoCD-Agent-1",
-        "progress": 100,
-        "status": "ACTIVE",
-        "tenant_id": "1018602",
-        "updated": "2016-10-05T20:59:24Z",
-        "user_id": "70d6be15c18c4c8fb5be76cd9b52e6bf"
-      }
-    ]
-  },
-  "syd": {
-    "servers": []
-  }
-}
+[{
+  "id": 1001,
+  "name": "AWS-Vyatta-VPN",
+  "type": "Server Type 1",
+  "status": "completed",
+  "ip_address": "131.86.69.116",
+  "desc": "Some description",
+  "tenant_ID" : "1018602"
+}, {
+  "id": 1002,
+  "name": "Jenkins",
+  "type": "Server Type 2",
+  "status": "completed",
+  "ip_address": "33.140.244.134",
+  "desc": "Some description",
+  "tenant_ID" : "1018602"
+}, {
+  "id": 1003,
+  "name": "GoCD-Server-3",
+  "type": "Server Type 3",
+  "status": "completed",
+  "ip_address": "40.7.24.72",
+  "desc": "Some description",
+  "tenant_ID" : "1018602"
+}, {
+  "id": 1004,
+  "name": "GoCD-Agent-4",
+  "type": "Server Type 0",
+  "status": "In progress",
+  "ip_address": "174.33.91.240",
+  "desc": "Some description",
+  "tenant_ID" : "1018602"
+}, {
+  "id": 1005,
+  "name": "RSW-Server-3",
+  "type": "Server Type 1",
+  "status": "completed",
+  "ip_address": "104.201.64.16",
+  "desc": "Some description",
+  "tenant_ID" : "1018602"
+}, {
+  "id": 1006,
+  "name": "ASW-goPR-6",
+  "type": "Server Type 2",
+  "status": "not started",
+  "ip_address": "248.194.22.84",
+  "desc": "Some description",
+  "tenant_ID" : "1018602"
+}]
