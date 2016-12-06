@@ -4,7 +4,7 @@
     // defining component to display each migration component (eg: server, network etc)
     angular.module("migrationApp")
         .component("rsMigrationItem", {
-            templateUrl: "/static/angTemplates/migration/migration-item-template.html",
+            templateUrl: "/static/angtemplates/migration/migration-item-template.html",
             bindings: {
                 type: "@" // type parameter to be supplied (eg: server, network etc)
             },

@@ -1,6 +1,6 @@
 <div class="rs-row migration-item">
     <div class="migration-item-header">
-        <h2 class="rs-page-title migration-item-type span-8">{{vm.type}}s</h2>
+        <h2 class="rs-page-title migration-item-type span-7">{{vm.type}}s</h2>
         <input type="text" class="rs-input-large span-3" placeholder="Search {{vm.items.length}} {{vm.type}}s by name">
     </div>
     <div class="span-3">
@@ -42,7 +42,8 @@
         </div>
     </div> 
 
-    <div class="span-8">
+    <!-- <div class="rs-content rs-panel"> -->
+    <div class="span-7">
         <div class="rs-inner">
             <div class="rs-embedded-list-table-wrapper rs-embedded-medium">
                 <table class="rs-list-table rs-embedded-list-table">
@@ -76,8 +77,8 @@
                             <td class="rs-table-status" ng-class="{'rs-table-status-ok': item.status=='ACTIVE'}"></td>
                             <td class="rs-table-checkbox"><input type="checkbox" ng-model="item.selected" ng-change="vm.changeSelectAll()" /></td>
                             <td class="rs-table-link"><a href="#" ng-link="['EquipmentDetails', {type: vm.type, id: item.id}]">{{item.name}}</a></td>
-                            <td class="rs-table-link">{{item.tenant_id}}</td>
-                            <td class="rs-table-text">{{item.ip_address}}</td>
+                            <td class="rs-table-link">{{item.ip_address}}</td>
+                            <td class="rs-table-text">{{item.status}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -89,4 +90,5 @@
             </div>
         </div> 
     </div>
+   <!--  </div> -->
 </div>

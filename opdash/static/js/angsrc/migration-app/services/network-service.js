@@ -16,7 +16,7 @@
                             .then(function (response) {
                                 loaded = true;
                                 networks = {
-                                    labels: ["Network Name", "Network Type", "IP Address", "Description"],
+                                    labels: ["Network Name", "IP Address", "Status"],
                                     data: response.data
                                 };
                                 return networks;
