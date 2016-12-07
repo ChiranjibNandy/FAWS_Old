@@ -23,8 +23,8 @@
                   this.$onInit = function () {
                     // This sets the default values
                     this.username = user_data.username;
-                    this.tenant_id = user_data.tenant_id;
                     this.authtoken = user_data.authtoken;
+                    this.tenant_id = user_data.tenant_id;
                     console.info('USERNAME is:', user_data);
                   }
                 }
@@ -36,8 +36,8 @@
     <script type="text/ng-template" id="index_template.html">
       <h3>You are an authenticated user.</h3>
       <div>Username: {{$ctrl.username}}</div>
-      <div>Tenant ID: {{$ctrl.tenant_id}}</div>
       <div>Authtoken: {{$ctrl.authtoken}}</div>
+      <div>Tenant ID: {{$ctrl.tenant_id || 'None Selected'}} </div>
       <p style="margin-top:10px;">This is just a placeholder to show you how to get the logged in user info.</p>
     </script>
     <rsmigrationindex></rsmigrationindex>

@@ -48,16 +48,16 @@
 
   <script>
 
-    var user_data = null;
+    var user_data = {
+      "username": null,
+      "authtoken": null,
+      "tenant_id": null
+    };
 
     {% if g.user_data %}
-
-      user_data = {
-        // These values are for the logged in user
-        'tenant_id': '{!g.user_data.tenant_id!}',
-        'username': '{!g.user_data.username!}',
-        'authtoken': '{!g.user_data.authtoken!}'
-      }
+      // These values are for the logged in Racker
+      user_data.username = '{!g.user_data.username!}';
+      user_data.authtoken = '{!g.user_data.authtoken!}';
     {% endif %}
 
   </script>

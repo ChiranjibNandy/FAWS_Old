@@ -21,18 +21,18 @@ def login_get():
 def login_post():
     """Show index page"""
     current_app.logger.debug('USERNAME:{0}'.format(request.form['username']))
-    current_app.logger.debug('PASSWORD:{0}'.format(request.form['password']))
+    current_app.logger.debug('PASSWORD:{0}'.format(request.form['rsa_token']))
 
     username = request.form['username']
-    password = request.form['password']
+    rsa_token = request.form['rsa_token']
 
     error_message = "Login was not correct."
 
-    if username and password:
+    if username and rsa_token:
 
         identity = Identity(current_app.config["IDENTITY_URL"])
-        service_catalog = identity.auth_username_and_password(
-            username, password)
+        service_catalog = identity.auth_racker_username_and_token(
+            username, rsa_token)
 
         current_app.logger.debug('LOGIN - IS AUTHENTICATED')
 
@@ -41,7 +41,7 @@ def login_post():
             response = current_app.make_response(redirect('/'))
             return response
         else:
-            error_message = "Username or password is not correct."
+            error_message = "Username or rsa token is not correct."
 
     current_app.logger.error("{0} -- {1}".format(error_message, username))
 
