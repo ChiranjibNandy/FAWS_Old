@@ -3,7 +3,7 @@
 
     // defining component to display details of the items to be migrated
     angular.module("migrationApp")
-        .component("rsMigrationDetails", {
+        .component("rsmigrationdetails", {
             templateUrl: "/static/angtemplates/migration/migration-details.html",
             controllerAs: "vm",
             controller: ["migrationItemDataService", function (ds) {

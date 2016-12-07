@@ -1,4 +1,4 @@
-{% macro javascript(filename) %}<script type="text/javascript" src="/static/js/{{ filename }}?rev={{config['GIT_HASH']}}"></script>{% endmacro %}
+{% macro javascript(filename) %}<script type="text/javascript" src="/static/js/{! filename !}?rev={!config['GIT_HASH']!}"></script>{% endmacro %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,10 +12,8 @@
 
     {# CANON STYLES #}
     <link rel="stylesheet" type="text/css" media="screen" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="/static/css/style.css?rev={{config['GIT_HASH']}}">
-    
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/css/style.css?rev={!config['GIT_HASH']!}">
 
-    {{ javascript('angular_1.5.8.js') }}
 
   {% else %}
 
@@ -23,12 +21,46 @@
 
     {# CANON STYLES #}
     <link rel="stylesheet" type="text/css" media="screen" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="/static/css/style.css?rev={{config['GIT_HASH']}}">
-
-    {{ javascript('angular_1.5.8.min.js') }}
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/css/style.css?rev={!config['GIT_HASH']!}">
 
   {% endif %}
+
+  <!-- Loading external libraries -->
+  <script type="text/javascript" src="/static/js/anglib/jquery-1.10.0.min.js"></script>
+  <script type="text/javascript" src="/static/js/anglib/canon.min.js"></script>
+  <script type="text/javascript" src="/static/js/anglib/angular.js"></script>
+  <script type="text/javascript" src="/static/js/anglib/angular_1_router.js"></script>
+
+  <!-- Loading internal js files -->
+  <script type="text/javascript" src="/static/js/angsrc/migration-app/migration-app.js"></script>
+  <script type="text/javascript" src="/static/js/angsrc/migration-app/services/server-service.js"></script>
+  <script type="text/javascript" src="/static/js/angsrc/migration-app/services/network-service.js"></script>
+  <script type="text/javascript" src="/static/js/angsrc/migration-app/services/migration-item-dataservice.js"></script>
+  <script type="text/javascript" src="/static/js/angsrc/migration-app/components/rs-migration-home.component.js"></script>
+  <script type="text/javascript" src="/static/js/angsrc/migration-app/components/rs-migration-item.component.js"></script>
+  <script type="text/javascript" src="/static/js/angsrc/migration-app/components/rs-migration-details.component.js"></script>
+  <script type="text/javascript" src="/static/js/angsrc/migration-app/components/rs-equipment-details.component.js"></script>
+  <script type="text/javascript" src="/static/js/angsrc/migration-app/components/rs-log-details.component.js"></script>
+  <script type="text/javascript" src="/static/js/angsrc/migration-app/components/rs-migration-login.component.js"></script>
+  <script type="text/javascript" src="/static/js/angsrc/migration-app/components/rs-migration-tenantid.component.js"></script>
+
   <link rel="stylesheet" type="text/css" media="screen" href="/static/css/angsrc/main.css">
+
+  <script>
+
+    var user_data = null;
+
+    {% if g.user_data %}
+
+      user_data = {
+        // These values are for the logged in user
+        'tenant_id': '{!g.user_data.tenant_id!}',
+        'username': '{!g.user_data.username!}',
+        'authtoken': '{!g.user_data.authtoken!}'
+      }
+    {% endif %}
+
+  </script>
 
 </head>
 

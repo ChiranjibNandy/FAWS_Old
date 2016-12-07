@@ -3,7 +3,7 @@
 
     // defining component to display all migration items
     angular.module("migrationApp")
-        .component("rsMigrationHome", {
+        .component("rsmigrationhome", {
             templateUrl: "/static/angtemplates/migration/migration.html"
         });
 })();

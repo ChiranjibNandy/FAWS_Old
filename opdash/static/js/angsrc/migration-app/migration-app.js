@@ -2,10 +2,11 @@
     "use strict";
 
     // Creating an angular app with ngComponentRouter for handling routing
-    var migrationApp = angular.module("migrationApp", ["ngComponentRouter"]);
+//    var migrationApp = angular.module("migrationApp", ["ngComponentRouter"]);
+    var migrationApp = angular.module("migrationApp", []);
 
     // Defining the root component which will initiate routing handling
-    migrationApp.value("$routerRootComponent", "rsMigrationRoot");
+//    migrationApp.value("$routerRootComponent", "rsMigrationRoot");
 
     // The header component with logo and menus
     migrationApp.component("rsAppHeader", {
@@ -17,6 +18,7 @@
         templateUrl: "/static/angTemplates/app-footer.html"
     });
 
+/*
     // The root component which defines initial routing
     migrationApp.component("rsMigrationRoot", {
         transclude: true,
@@ -31,4 +33,5 @@
             { path: "/**", redirectTo: ["Login"] }
         ]
     }); // end of rsMigrationRoot component definition
+*/
 })();

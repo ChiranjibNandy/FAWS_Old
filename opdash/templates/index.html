@@ -1,41 +1,46 @@
 {% extends "_template_full.html" %}
 
-{% block title %}FAWS Welcome{% endblock %} 
-
+{% block title %}FAWS Welcome{% endblock %}
 
 {% block main %}
-  <!-- <h2 class="rs-page-title">FAWS Operational Dashboard</h2> -->
-  <!-- <h4>Debug is {{config.get('DEBUG', None)}}
-  <h4>CSRF_SESSION_KEY is {{config.get('CSRF_SESSION_KEY', None)}} -->
 
+  {# THIS IS JUST AN EXAMPLE OF A SUPER SIMPLE, SINGLE PAGE ANGULAR COMPONENT #}
 
-  <div class="rs-responsive" ng-app="migrationApp">
-    <rs-migration-root>
-        <!-- <div class="rs-wrapper">
-            <rs-app-header></rs-app-header> -->
-            <div ng-outlet class="rs-container"></div>
-        <!-- </div>
-        <rs-app-footer></rs-app-footer> -->
-    </rs-migration-root>
+  <script>
+    (function () {
+        "use strict";
 
-    <!-- Loading external libraries -->
-    <script type="text/javascript" src="/static/js/anglib/jquery-1.10.0.min.js"></script>
-    <script type="text/javascript" src="/static/js/anglib/canon.min.js"></script>
-    <script type="text/javascript" src="/static/js/anglib/angular.js"></script>
-    <script type="text/javascript" src="/static/js/anglib/angular_1_router.js"></script>
+        // defining component to display all migration items
+        angular.module("migrationApp")
+            .component("rsmigrationindex", {
+                templateUrl: "index_template.html",
+                bindings: {
+                  username: "@",
+                  tenant_id: "@",
+                  authtoken: "@"
+                },
+                controller: function($scope) {
+                  this.$onInit = function () {
+                    // This sets the default values
+                    this.username = user_data.username;
+                    this.tenant_id = user_data.tenant_id;
+                    this.authtoken = user_data.authtoken;
+                    console.info('USERNAME is:', user_data);
+                  }
+                }
+            });
+    })();
+  </script>
 
-    <!-- Loading internal js files -->
-    <script type="text/javascript" src="/static/js/angsrc/migration-app/migration-app.js"></script>
-    <script type="text/javascript" src="/static/js/angsrc/migration-app/services/server-service.js"></script>
-    <script type="text/javascript" src="/static/js/angsrc/migration-app/services/network-service.js"></script>
-    <script type="text/javascript" src="/static/js/angsrc/migration-app/services/migration-item-dataservice.js"></script>
-    <script type="text/javascript" src="/static/js/angsrc/migration-app/components/rs-migration-home.component.js"></script>
-    <script type="text/javascript" src="/static/js/angsrc/migration-app/components/rs-migration-item.component.js"></script>
-    <script type="text/javascript" src="/static/js/angsrc/migration-app/components/rs-migration-details.component.js"></script>
-    <script type="text/javascript" src="/static/js/angsrc/migration-app/components/rs-equipment-details.component.js"></script>
-    <script type="text/javascript" src="/static/js/angsrc/migration-app/components/rs-log-details.component.js"></script>
-    <script type="text/javascript" src="/static/js/angsrc/migration-app/components/rs-migration-login.component.js"></script>
-    <script type="text/javascript" src="/static/js/angsrc/migration-app/components/rs-migration-tenantid.component.js"></script>
- </div>
+  <div ng-app="migrationApp">
+    <script type="text/ng-template" id="index_template.html">
+      <h3>You are an authenticated user.</h3>
+      <div>Username: {{$ctrl.username}}</div>
+      <div>Tenant ID: {{$ctrl.tenant_id}}</div>
+      <div>Authtoken: {{$ctrl.authtoken}}</div>
+      <p style="margin-top:10px;">This is just a placeholder to show you how to get the logged in user info.</p>
+    </script>
+    <rsmigrationindex></rsmigrationindex>
+  </div>
 
 {% endblock %}

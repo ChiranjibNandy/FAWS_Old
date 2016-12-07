@@ -3,7 +3,7 @@
 
     // defining component to display log details after migration of an item
     angular.module("migrationApp")
-        .component("rsLogDetails", {
+        .component("rslogdetails", {
             templateUrl: "/static/angtemplates/migration/log-details.html",
             controllerAs: "vm",
             controller: ["migrationItemDataService", function (ds) {

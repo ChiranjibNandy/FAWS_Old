@@ -7,11 +7,16 @@
           <li class="rs-nav-item"><a class="rs-nav-link" href="">Private Cloud</a></li>
           <li class="rs-nav-item"><a class="rs-nav-link" href="">Dedicated</a></li> -->
         </ul>
+        {% if g.user_data %}
         <ul class="rs-nav rs-pull-right">
           <li class="rs-nav-item rs-dropdown rs-utility-dropdown">
-            <a class="rs-nav-link rs-dropdown-toggle" href=""> UserRacker <i class="rs-caret"></i></a>
+            <a class="rs-nav-link rs-dropdown-toggle" href="">{!g.user_data.username!}</a>
+          </li>
+          <li class="rs-nav-item">
+            <a class="rs-link" href="/logout">Logout</a>
           </li>
         </ul>
+        {% endif %}
       </div>
     </div>
     <!-- End Utility Nav -->
