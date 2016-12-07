@@ -46,13 +46,9 @@ class UnsecureBlueprint(Blueprint):
         json_catalog = json.loads(service_catalog)
         if json_catalog:
             user_data = {
-                # Add some shortcuts
+                # Get Racker Info
                 "username": json_catalog["access"]["user"]["name"],
                 "authtoken": json_catalog["access"]["token"]["id"],
-                "tenant_id": json_catalog["access"]["token"]["tenant"]["id"],
-
-                # Add the full service catalog
-                "service_catalog": json_catalog
             }
 
             # Save User Data to session and Flask g
