@@ -171,7 +171,8 @@ class Identity(object):
 
         return service_catalog
 
-    def impersonate_user(self, username, authtoken, token_expiration_seconds=10800):
+    def impersonate_user(self, username, authtoken,
+                         token_expiration_seconds=10800):
         """
             Impersonates a user. Requires an authtoken for the impersonator,
             and the username of the user you want to impersonate.

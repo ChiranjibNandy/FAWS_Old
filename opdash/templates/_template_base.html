@@ -46,6 +46,22 @@
 
   <link rel="stylesheet" type="text/css" media="screen" href="/static/css/angsrc/main.css">
 
+  <script>
+
+    var user_data = null;
+
+    {% if g.user_data %}
+
+      user_data = {
+        // These values are for the logged in user
+        'tenant_id': '{!g.user_data.tenant_id!}',
+        'username': '{!g.user_data.username!}',
+        'authtoken': '{!g.user_data.authtoken!}'
+      }
+    {% endif %}
+
+  </script>
+
 </head>
 
 <body class="rs-fixed">

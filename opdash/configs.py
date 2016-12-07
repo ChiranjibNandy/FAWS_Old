@@ -1,4 +1,3 @@
-from flask import current_app
 from uuid import uuid4
 from os import environ
 
@@ -35,10 +34,11 @@ class BaseConfig(object):
 
     API_BASE_URL = environ.get(
         'API_BASE_URL',
-        'http://migrator-ops-api-dev.us-east-1'
+        'http://migrator-ops-api-dev.us-east-1.elasticbeanstalk.com/'
     )
 
     IDENTITY_URL = "https://identity-internal.api.rackspacecloud.com/v2.0"
+    # IDENTITY_URL = "https://identity.api.rackspacecloud.com/v2.0"
 
     # Application threads. A common general assumption is using 2 per available
     # processor core - to handle incoming requests using one and performing
@@ -48,7 +48,12 @@ class BaseConfig(object):
     # Enable protection against Cross-site Request Forgery
     CSRF_ENABLED = True
 
+    # Session Secret Key
     SECRET_KEY = "THIS-IS-THE-SESSION-SECRET-KEY"
+
+    # Session Cookie Settings
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_PERMANENT = False
 
 
 class DebugConfig(object):

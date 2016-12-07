@@ -1,10 +1,11 @@
 from flask import Flask
 from opdash.controllers.errors import register_error_handlers
 from opdash.controllers.proxy import register_api_proxy
-from opdash.controllers.unsecure import register_unsecure_routes
 from opdash.configs import load_configuration
 
+from opdash.controllers import unsecure, secure
 import opdash.session_managers as session_managers
+
 
 class FlaskOpdash(Flask):
     '''
@@ -20,6 +21,7 @@ class FlaskOpdash(Flask):
         variable_end_string='!}',
     ))
 
+
 def build_app():
     """Build the flask application"""
     app = FlaskOpdash(__name__)
@@ -34,9 +36,11 @@ def build_app():
     if ssl_key and ssl_crt:
         context = (ssl_crt, ssl_key)
 
+    # Register Routes and Blueprints
     register_api_proxy(app)
     register_error_handlers(app)
-    register_unsecure_routes(app)
+    app.register_blueprint(unsecure.mod)
+    app.register_blueprint(secure.mod)
 
     session_managers.configure_session_provider(app)
 

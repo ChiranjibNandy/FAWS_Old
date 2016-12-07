@@ -6,8 +6,7 @@ from opdash.auth.identity import Identity
 class TestIdentity(unittest.TestCase):
 
     def setUp(self):
-        self._identity_url =
-            "https://identity-internal.api.rackspacecloud.com/v2.0"
+        self._identity_url = "https://identity.com/v2.0"
 
     def tearDown(self):
         pass
