@@ -2,8 +2,27 @@
     "use strict";
 
     angular.module("migrationApp")
-        .service("migrationItemDataService", ["serverService", "networkService", function (serverService, networkService) {
+        .service("migrationitemdataservice", ["serverservice", "networkservice", function (serverService, networkService) {
             var self = this;
+
+            // Get all items based on migration item type
+            this.getTrimmedAllItems = function (type) {
+                if (type === "server") {
+                    return serverService.getTrimmedList();
+                }
+                else if (type === "network") {
+                    return networkService.getTrimmedList();
+                }
+            }
+
+            this.getDetailedList = function(type) {
+                if (type === "server") {
+                    return serverService.getDetailedList();
+                }
+                else if (type === "network") {
+                    return networkService.getDetailedList();
+                }
+            }
 
             // Get all items based on migration item type
             this.getAllItems = function (type) {
@@ -16,13 +35,13 @@
             }
 
             // Get migration details of items based on type
-            this.getMigrationDetails = function (type, ids) {
-                if (type === "server") {
-                    return serverService.getMigrationDetails(ids);
-                }
-                else if (type === "network") {
-                    return networkService.getMigrationDetails(ids);
-                }
+            this.getMigrationDetails = function (type, id) {
+               if (type === "server") {
+                   return serverService.getMigrationDetails(id);
+               }
+               else if (type === "network") {
+                   return networkService.getMigrationDetails(id);
+               }
             }
 
             // Get log details of an item vased on migration item type
@@ -31,5 +50,5 @@
             }
 
             return self;
-        }]); // end of service definition
+       }]); // end of service definition
 })();

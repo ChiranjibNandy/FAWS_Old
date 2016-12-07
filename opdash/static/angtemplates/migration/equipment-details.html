@@ -1,12 +1,8 @@
-<!-- <div class="rs-content rs-panel"> -->
-<div class="migration-item-details">
+<div class="rs-content rs-panel rs-detail-large migration-item-details">
   <div class="rs-detail-header rs-row">
-    <div class="span-8">
+    <div class="span-9">
       <div class="rs-detail-header-subtitle">{{vm.type}} details</div>
-      <div class="rs-detail-header-title">{{vm.name}}</div>
-    </div>
-    <div class="span-3">
-      <a class="rs-btn" href="#" ng-link="['Migration']">&lt; Back</a>
+      <div class="rs-detail-header-title">{{vm.equipment.name}}</div>
     </div>
   </div>
   <div class="rs-detail-section">
@@ -16,21 +12,41 @@
     <div class="rs-detail-section-body">
       <ul class="rs-detail-list">
         <li class="rs-detail-item">
-          <div class="rs-detail-key">Key</div>
-          <div class="rs-detail-value">Value</div>
+          <div class="rs-detail-key">IP address</div>
+          <div class="rs-detail-value">{{vm.equipment.ip_address}}</div>
         </li>
         <li class="rs-detail-item">
-          <div class="rs-detail-key">Key</div>
-          <div class="rs-detail-value">
-            Many<br>
-            Different<br>
-            Values
-          </div>
+          <div class="rs-detail-key">Host ID</div>
+          <div class="rs-detail-value">{{vm.equipment.hostId}}</div>
+        </li>
+        <li class="rs-detail-item">
+          <div class="rs-detail-key">OS-DCF:diskConfig</div>
+          <div class="rs-detail-value">{{vm.equipment.OS_DCF_diskConfig}}</div>
+        </li>
+        <li class="rs-detail-item">
+          <div class="rs-detail-key">OS-EXT-STS:power_state</div>
+          <div class="rs-detail-value">{{vm.equipment.OS_EXT_STS_power_state}}</div>
+        </li>
+        <li class="rs-detail-item">
+          <div class="rs-detail-key">OS-EXT-STS:task_state</div>
+          <div class="rs-detail-value">{{vm.equipment.OS_EXT_STS_task_state}}</div>
+        </li>
+        <li class="rs-detail-item">
+          <div class="rs-detail-key">OS-EXT-STS:vm_state</div>
+          <div class="rs-detail-value">{{vm.equipment.OS_EXT_STS_vm_state}}</div>
+        </li>
+        <li class="rs-detail-item">
+          <div class="rs-detail-key">Created on</div>
+          <div class="rs-detail-value">{{vm.equipment.created}}</div>
+        </li>
+        <li class="rs-detail-item">
+          <div class="rs-detail-key">Updated on</div>
+          <div class="rs-detail-value">{{vm.equipment.updated}}</div>
         </li>
       </ul>
     </div>
   </div>
-  <div class="rs-detail-section">
+  <!--<div class="rs-detail-section">
     <div class="rs-detail-section-header">
       <div class="rs-detail-section-title">Item Sub-Section</div>
     </div>
@@ -51,13 +67,32 @@
       </ul>
     </div>
   </div>
-  <!-- <div class="rs-collapsible-section rs-detail-section collapsed">
+  <div class="rs-collapsible-section rs-detail-section collapsed">
     <div class="rs-detail-section-header">
       <div class="rs-caret"></div>
-      <div class="rs-detail-section-title">Collapsible Section</div> -->
-
-<div class="rs-progress-label">Migration Progress</div>
-<div class="rs-progress">
+      <div class="rs-detail-section-title">Collapsible Section</div>
+      <div class="rs-detail-section-subtitle">2 Options Configured</div>
+    </div>
+    <div class="rs-detail-section-body">
+      <ul class="rs-detail-list">
+        <li class="rs-detail-item">
+          <div class="rs-detail-key">Key</div>
+          <div class="rs-detail-value">Value</div>
+        </li>
+        <li class="rs-detail-item">
+          <div class="rs-detail-key">Key</div>
+          <div class="rs-detail-value">
+            Many<br>
+            Different<br>
+            Values
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>-->
+  <br>  <br> <br>
+  <h3>{{vm.equipment.name}}</h3>
+  <div class="rs-progress">
     <div class="rs-progress-inner">
       <div class="rs-segment" style="width: 20%">
         <div class="rs-bar rs-status-warning"></div>
@@ -77,27 +112,7 @@
       </div>
     </div>
   </div>
-  <!-- </div> -->
-
-
-      <!-- <div class="rs-detail-section-subtitle">2 Options Configured</div> -->
-    </div>
-    <div class="rs-detail-section-body">
-      <ul class="rs-detail-list">
-        <li class="rs-detail-item">
-          <div class="rs-detail-key">Key</div>
-          <div class="rs-detail-value">Value</div>
-        </li>
-        <li class="rs-detail-item">
-          <div class="rs-detail-key">Key</div>
-          <div class="rs-detail-value">
-            Many<br>
-            Different<br>
-            Values
-          </div>
-        </li>
-      </ul>
-    </div>
+  <div class="login-action">
+      <a class="rs-btn" ng-link="['MigrationLogDetails']">View Log</a>
   </div>
 </div>
-<!-- </div> -->
