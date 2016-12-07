@@ -35,7 +35,10 @@
   <script type="text/javascript" src="/static/js/angsrc/migration-app/migration-app.js"></script>
   <script type="text/javascript" src="/static/js/angsrc/migration-app/services/server-service.js"></script>
   <script type="text/javascript" src="/static/js/angsrc/migration-app/services/network-service.js"></script>
+  <script type="text/javascript" src="/static/js/angsrc/migration-app/services/view-log-service.js"></script>
   <script type="text/javascript" src="/static/js/angsrc/migration-app/services/migration-item-dataservice.js"></script>
+  <script type="text/javascript" src="/static/js/angsrc/migration-app/services/auth-service.js"></script>
+  <script type="text/javascript" src="/static/js/angsrc/migration-app/services/httpwrapper.js"></script>
   <script type="text/javascript" src="/static/js/angsrc/migration-app/components/rs-migration-home.component.js"></script>
   <script type="text/javascript" src="/static/js/angsrc/migration-app/components/rs-migration-item.component.js"></script>
   <script type="text/javascript" src="/static/js/angsrc/migration-app/components/rs-migration-details.component.js"></script>
@@ -72,21 +75,17 @@
     {% endblock %}
     <!-- HEADER END -->
     <div class="rs-body">
-      <div class="rs-inner">
-        <div class="rs-container rs-mig-nopad">
-          {% block content %}
-          <div class="rs-main">
-            <div class="rs-content rs-panel">
-              <div class="rs-inner rs-mig-nomar">
-                {% block main %}
-                  <h2 class="rs-page-title">Base Template</h2>
-                {% endblock %}
-              </div>
-            </div>
+      {% block content %}
+      <div class="rs-main">
+        <!--<div class="rs-content rs-panel">-->
+          <div class="rs-inner rs-mig-nomar">
+            {% block main %}
+              <h2 class="rs-page-title">Base Template</h2>
+            {% endblock %}
           </div>
-          {% endblock %}
-        </div>
+        <!--</div>-->
       </div>
+      {% endblock %}
       <div class="rs-push"></div>
   </div>
   </div>

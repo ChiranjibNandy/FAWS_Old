@@ -13,31 +13,34 @@
         // defining component to display all migration items
         angular.module("migrationApp")
             .component("rsmigrationindex", {
-                templateUrl: "index_template.html",
+                template: "<rs-migration-root><div ng-outlet class='rs-container'></div></rs-migration-root>",
                 bindings: {
                   username: "@",
                   tenant_id: "@",
                   authtoken: "@"
                 },
-                controller: function($scope) {
+                controllerAs: "vm",
+                controller: ["authservice","$rootRouter", function(ase,$rootRouter) {
                   this.$onInit = function () {
                     // This sets the default values
                     this.username = user_data.username;
                     this.authtoken = user_data.authtoken;
                     this.tenant_id = user_data.tenant_id;
+                    ase.storeAuth(user_data);
                     console.info('USERNAME is:', user_data);
+                    $rootRouter.navigate(["Tenant"]);
                   }
-                }
+                }]
             });
     })();
   </script>
 
-  <div ng-app="migrationApp">
+  <div class="rs-responsive" ng-app="migrationApp">
     <script type="text/ng-template" id="index_template.html">
       <h3>You are an authenticated user.</h3>
-      <div>Username: {{$ctrl.username}}</div>
-      <div>Authtoken: {{$ctrl.authtoken}}</div>
-      <div>Tenant ID: {{$ctrl.tenant_id || 'None Selected'}} </div>
+      <div>Username: {{vm.username}}</div>
+      <div>Authtoken: {{vm.authtoken}}</div>
+      <div>Tenant ID: {{vm.tenant_id || 'None Selected'}} </div>
       <p style="margin-top:10px;">This is just a placeholder to show you how to get the logged in user info.</p>
     </script>
     <rsmigrationindex></rsmigrationindex>

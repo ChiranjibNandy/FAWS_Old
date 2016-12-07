@@ -3,9 +3,14 @@
 {% block title %}Login{% endblock %}
 
 {% block main %}
-
-<div ng-app="migrationApp">
-  <rsmigrationlogin></rsmigrationlogin>
+<div class="rs-container">
+<div class="rs-responsive" ng-app="migrationApp">
+  <div class="rs-content rs-panel">
+    <div class="rs-inner rs-mig-nomar">
+      <rsmigrationlogin></rsmigrationlogin>
+    </div>
+  </div>
+</div>
 </div>
 
 {! error_message !}
