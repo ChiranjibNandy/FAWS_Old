@@ -1,0 +1,104 @@
+{% extends "_template_full.html" %}
+
+{% block title %}FAWS Migrations{% endblock %}
+
+{% block main %}
+
+  {# THIS IS JUST AN EXAMPLE OF A SUPER SIMPLE, SINGLE PAGE ANGULAR COMPONENT #}
+
+  <script>
+    (function () {
+        "use strict";
+
+        // defining component to display details of the items to be migrated
+        angular.module("migrationApp")
+            .component("rsmigrations", {
+                templateUrl: "migration_template.html",
+                controllerAs: "vm",
+                controller: ["migrationitemdataservice", function (ds) {
+                    var vm = this;
+
+                    // When the component is active get router params and fetch data
+                    vm.$onInit = function(next, previous) {
+                        //vm.type = next.params.type;
+                        //vm.type = "server";
+
+                        // fetch details based on selected migration item
+                        ds.getAllMigrations(user_data.tenant_id)
+                            .then(function (response) {
+                                //var ids = response.data
+                                 //   .filter(function (item) { return item.selected == true })
+                                  //  .map(function (item) { return item.id; });
+                                vm.migrationItems = response.jobs;
+                                vm.labels = response.labels;
+                                //var ids = [1001, 1002, 1003, 1004];
+
+                                //ds.getMigrationDetails(vm.type, ids)
+                                //    .then(function (response) {
+                                 //       vm.migrationItems = response.data;
+                                 //       vm.labels = response.labels;
+                                 //   });
+                            });
+                    }; // end of $routerOnActivate
+
+                    return vm;
+                }] // end of component controller
+            }); // end of component definition
+    })();
+  </script>
+  <div ng-app="migrationApp" class="rs-container">
+    <div class="rs-content rs-panel">
+        <div class="rs-inner rs-mig-nomar">
+            <script type="text/ng-template" id="migration_template.html">
+                <!-- <div class="rs-content rs-panel"> -->
+                <div class="migration-details-container">
+                    <div class="rs-row">
+                        <div class="migration-item-header">
+                            <h2 class="rs-page-title migration-item-type span-9">Migrations</h2>
+                        </div>
+
+                        <div class="span-12">
+                            <div class="rs-embedded-list-table-wrapper rs-embedded-medium">
+                                <table class="rs-list-table rs-embedded-list-table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <span class="rs-table-sort-text">Job Id</span>
+                                            </th>
+                                            <th>
+                                                <span class="rs-table-sort-text">Status</span>
+                                            </th>
+                                            <th>
+                                                <span class="rs-table-sort-text">View Details</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in ::vm.migrationItems">
+                                            <td class="rs-table-text">{{item.id}}</td>
+                                            <td class="rs-table-text">{{item.status}}</td>
+{#                                            <td class="rs-table-text">#}
+{#                                                <div class="rs-progress">#}
+{#                                                    <div class="rs-progress-inner">#}
+{#                                                        <div class="rs-segment" style="width: {{item.progress}}%">#}
+{#                                                            <div class="rs-bar rs-status-ok"></div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </td>#}
+                                            <td class="rs-table-link"><a href="#" ng-link="['MigrationLogDetails', {type: vm.type, id: item.id}]">View Details</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- </div> -->
+            </script>
+            <rsmigrations></rsmigrations>
+        </div>
+    </div>
+  </div>
+
+{% endblock %}

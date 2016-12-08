@@ -2,7 +2,7 @@
     "use strict";
 
     angular.module("migrationApp")
-        .service("migrationitemdataservice", ["serverservice", "networkservice", function (serverService, networkService) {
+        .service("migrationitemdataservice", ["serverservice", "networkservice", "httpwrapper", function (serverService, networkService, HttpWrapper) {
             var self = this;
 
             // Get all items based on migration item type
@@ -47,6 +47,20 @@
             // Get log details of an item vased on migration item type
             this.getLogDetails = function (type, id) {
                 // TODO: add code retrieve log details
+            }
+
+            // Get all items based on migration item type
+            this.getAllMigrations = function (tenant_id) {
+                var url = "/api/jobs/" + tenant_id + "?fake_data=true";
+                return HttpWrapper.send(url,{"operation":'GET'})
+                                  .then(function(response){
+
+                    var migrations = {
+                        labels: ['Job Id', 'Status'],
+                        jobs: response.jobs
+                    };
+                    return migrations;
+                });
             }
 
             return self;

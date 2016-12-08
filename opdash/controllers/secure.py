@@ -44,3 +44,9 @@ def tenant_id():
 def index():
     """Show index page"""
     return render_template('index.html')
+
+
+@mod.route('/migrations')
+def migrations():
+    """Show index page"""
+    return render_template('migrations.html')
