@@ -57,9 +57,22 @@
 
                     var migrations = {
                         labels: ['Job Id', 'Status'],
-                        jobs: response.jobs
+                        jobs: response.jobs,
+                        id: response.id
                     };
                     return migrations;
+                });
+            }
+
+            this.getMigration = function (job_id) {
+                var url = "/api/job/" + job_id;
+                return HttpWrapper.send(url,{"operation":'GET'})
+                                  .then(function(response){
+
+                    var migration = {
+                        job: response,
+                    };
+                    return migration;
                 });
             }
 
