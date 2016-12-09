@@ -11,15 +11,53 @@
 
                 // When the component is active get router params and fetch data
                 vm.$routerOnActivate = function(next, previous) {
-                   vm.type = next.params.type;
-                   vm.id = next.params.id;
+                   var flavor = "GPv1";
+                    var ram = 1;
 
-                   ds.getMigrationDetails(vm.type, vm.id)
-                           .then(function (response) {
-                               console.log(response);
-                               vm.migrationDetail = response.data;
-                           });
+                    vm.type = next.params.type;
+                    vm.id = next.params.id;
+                    vm.migrationAccount = {
+                        awsAccount: "",
+                        accessKey: "",
+                        secretKey: ""
+                    };
+                    vm.radioSelected = false;
+
+                    ds.getMigrationDetails(vm.type, vm.id)
+                            .then(function (response) {
+                                vm.migrationDetail = response.data;
+                            });
+
+                    ds.getPricingDetails(vm.type, flavor, ram)
+                        .then(function (response) {
+                            var tempPriceList = response.data;
+                            var priceDataList = [];
+                            for(var i=0; i<tempPriceList.length; i++){
+                                var awsTypes = tempPriceList[i].aws_types.split(",");
+
+                                for(var j=0; j<awsTypes.length; j++){
+                                    priceDataList.push({
+                                        aws_type: awsTypes[j],
+                                        flavor: tempPriceList[i].flavor,
+                                        ram: tempPriceList[i].ram,
+                                        price: tempPriceList[i].price
+                                    });
+                                }
+                            }
+                            vm.priceDataList = priceDataList;
+                        });
                 }; // end of $routerOnActivate
+
+                vm.isPricingSelected = function(){
+                    if(vm.selectedAWSType){
+                        vm.radioSelected = true;
+                        vm.selected = true;
+                    } 
+                    else{
+                        vm.radioSelected = false;
+                        vm.selected = false;
+                    }
+                };
 
                 return vm;
             }] // end of component controller

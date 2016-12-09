@@ -23,12 +23,12 @@
         transclude: true,
         template: "<ng-transclude></ng-transclude>",
         $routeConfig: [
-            { path: "/static/angtemplates/migration/migration", component: "rsmigrationhome", name: "Migration" },
-            { path: "/static/angtemplates/migration/login", component: "rsmigrationlogin", name: "Login" },
-            { path: "/static/angtemplates/migration/tenant", component: "rsmigrationtenantid", name: "Tenant" },
-            { path: ":type/:id/static/angtemplates/migration/details", component: "rsequipmentdetails", name: "EquipmentDetails" },
-            { path: ":type/static/angtemplates/migration/migration-details", component: "rsmigrationdetails", name: "MigrationDetails" },
-            { path: ":type/:id/static/angtemplates/migration/log-details", component: "rslogdetails", name: "MigrationLogDetails" },
+            { path: "/migration/:tenant_id/", component: "rsmigrationhome", name: "Migration" },
+            { path: "/login", component: "rsmigrationlogin", name: "Login" },
+            { path: "/tenant", component: "rsmigrationtenantid", name: "Tenant" },
+            { path: "/equipment-details/:type/:id", component: "rsequipmentdetails", name: "EquipmentDetails" },
+            { path: "/migration-details/:type/:id", component: "rsmigrationdetails", name: "MigrationDetails" },
+            { path: "/migration/log-details/:type/:id", component: "rslogdetails", name: "MigrationLogDetails" },
             { path: "/**", redirectTo: ["Tenant"] }
         ]
     }); // end of rsMigrationRoot component definition

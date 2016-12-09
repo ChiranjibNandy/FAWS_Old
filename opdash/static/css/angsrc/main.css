@@ -61,3 +61,45 @@ th{
 .rs-table-status-disabled{
     background-color: #aaaaaa;
 }
+.rs-main .rs-sidebar+.mainContent {
+    margin-left: 160px;
+}
+
+.sidebar{
+    width:160px;
+}
+
+.field-key {
+    color: #999;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.pricing-details{
+    padding: 40px 0 0 30px;
+    color: #c40022;
+}
+
+.rs-control-label{
+    white-space: nowrap;
+}
+
+.error-text{
+    color: #c40022;
+}
+
+.migration-confirm-form{
+    padding-top: 20px;
+}
+
+.form-submit-row{
+    padding-top: 10px;
+}
+
+.tenant-container{
+    padding: 40px;
+}
+
+.migration-header{
+   margin-top: 15px;
+}

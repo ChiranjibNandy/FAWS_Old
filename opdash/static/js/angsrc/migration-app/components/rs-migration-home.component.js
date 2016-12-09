@@ -10,6 +10,7 @@
                 var vm = this;
                 vm.$routerOnActivate = function(next, previous) {
                    authservice.getAuth().tenant_id = next.params.tenant;
+                    vm.tenant_id = next.params.tenant_id;
                 }
             }]
         });

@@ -1,4 +1,4 @@
-<div class="rs-content rs-panel">
+<div class="rs-content rs-panel tenant-container">
 
 <h2>Select Tenant ID</h2>
 
@@ -24,18 +24,20 @@
   <tbody>
     <tr>
       <td class="rs-table-link">
-        <a ng-link="['Migration']">110018</a>
+        <a ng-link="['Migration', {tenant_id: '110018'}]">110018</a>
       </td>
       <td class="rs-table-text">User5432</td>
     </tr>
     <tr>
       <td class="rs-table-link">
-        <a ng-link="['Migration']">180011</a>
+        <a ng-link="['Migration', {tenant_id: '180011'}]">180011</a>
       </td>
       <td class="rs-table-text">User342</td>
     </tr>
     <tr>
-      <td class="rs-table-link"><a ng-link="['Migration']">160118</a></td>
+      <td class="rs-table-link">
+        <a ng-link="['Migration', {tenant_id: '160118'}]">160118</a>
+      </td>
       <td class="rs-table-text">User2332</td>
     </tr>
   </tbody>

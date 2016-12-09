@@ -19,10 +19,7 @@
                             networksList.push({
                                 ip_address: network.id,
                                 name: network.name,
-                                tenant_id: network.tenant_id,
-                                status: network.status,
-                                region:key,
-                                migrationStatus: 'disabled'
+                                status: network.status
                             });
                         });
                     }
@@ -45,7 +42,15 @@
                         // iterate over each network and extract necessary data
                         
                         angular.forEach(t[key].networks, function(network) { 
-                            networksList.push({
+                            networksLiself.getPricingDetails = function(flavor, ram){
+            var url = "/api/get_server_mappings/"+flavor+"/"+ram;
+            return HttpWrapper.send(url,{"operation":'GET'})
+                    .then(function (response) {
+                        return {
+                            data: response
+                        };
+                    });
+        };st.push({
                                 id: network.id,
                                 name: network.name,
                                 tenant_id: network.tenant_id,
@@ -77,13 +82,24 @@
                 return deferred.promise;
             };
 
+        
             self.getDetailedList = function() {
-                var deferred = $q.defer();
-                self.getAll().then(function(response) {
-                    return deferred.resolve(detailsTransform(response));
-                });
-                return deferred.promise;
-            };
+                       var deferred = $q.defer();
+                       self.getAll().then(function(response) {
+                           return deferred.resolve(detailsTransform(response));
+                       });
+                       return deferred.promise;
+           };
+
+           self.getPricingDetails = function(flavor, ram){
+               var url = "/api/get_server_mappings/"+flavor+"/"+ram;
+               return HttpWrapper.send(url,{"operation":'GET'})
+                       .then(function (response) {
+                           return {
+                               data: response
+                           };
+                       });
+           };
 
             // get all network items from backend
             self.getAll = function () {
@@ -95,11 +111,8 @@
                                     loaded = true;
                                     networks = {
                                         labels: [
-                                            {field: "name", text: "Network Name"}, 
-                                            {field: "region", text: "Region"},
-                                            {field: "tenant_id", text: "Tenant ID"},
-                                            {field: "ip_address", text: "Id"}, 
-                                            {field: "migrationStatus", text: "Migration Status"}
+                                            {field: "name", text: "Network Name"},
+                                            {field: "status", text: "Status"}
                                         ],
                                         data: response
                                     };
@@ -121,6 +134,16 @@
                             data: data
                         };
                     });
+            };
+
+            self.getPricingDetails = function(flavor, ram){
+            var url = "/api/compute/get_network_mappings/"+flavor+"/"+ram;
+                return HttpWrapper.send(url,{"operation":'GET'})
+                        .then(function (response) {
+                            return {
+                                data: response
+                            };
+                        });
             };
 
             return self;
