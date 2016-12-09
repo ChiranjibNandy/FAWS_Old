@@ -71,7 +71,7 @@
             //url = _decorateUrl(url, params.urlVars);
             var deferred = $q.defer();
             _getOperation(params.operation, url, params.data).success( function(data, status) {
-                if (data.status === "success" || status === 200 || status === 204){ 				
+                if (data.status === "success" || status === 200 || status === 204){
                     deferred.resolve(data);				
                 }else {
                     console.log("data "+data);
