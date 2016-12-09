@@ -9,7 +9,7 @@
         function trimTransform (data) {
             var serversList = [];
             var t = data.data;
-
+            console.log(t);
             for(var key in t){
                 // iterate over networks by region
                 if (t.hasOwnProperty(key)) {
@@ -21,9 +21,7 @@
                             tenant_id: server.tenant_id,
                             ip_address: server.accessIPv4,
                             status: server.status,
-                            progress: server.progress,
-                            region:key,
-                            migrationStatus:server.mockStatus || 'disabled'
+                            flavor: server.flavor
                         });
                     });
                 }
@@ -88,8 +86,8 @@
 
         // get all server items from backend
         self.getAll = function () {
-            // var url = "/static/Angassets/servers-list.json";
-            var url = "/api/compute/us-instances";
+             var url = "/static/angassets/servers-list.json";
+            // var url = "/api/compute/us-instances";
 
             if (!loaded) {
 
@@ -97,11 +95,10 @@
                                     loaded = true;
                                     servers = {
                                         labels: [
-                                                    {field: "name", text: "Server Name"}, 
-                                                    {field: "region", text: "Region"},
-                                                    {field: "tenant_id", text: "Tenant ID"}, 
+                                                    {field: "name", text: "Server Name"},
                                                     {field: "ip_address", text: "IP Address"},
-                                                    {field: "migrationStatus", text: "Migration Status"}
+                                                    {field: "flavor", text: "Flavor"},
+                                                    {field: "status", text: "Status"}
                                                 ],
                                         data: response
                                     };
@@ -115,14 +112,26 @@
 
         // get server details of specific items
         self.getMigrationDetails = function (id) {
-           var url = "/static/Angassets/server-migration-detail.json";
-           return $http.get(url)
-               .then(function (response) {
-                   return {
-                       data: response.data
-                   };
-               });
+           var url = "/static/angassets/server-migration-details.json";
+           return HttpWrapper.send(url,{"operation":'GET'})
+                    .then(function (response) {
+                        return {
+                            data: response
+                        };
+                    });
         }
+
+        self.getPricingDetails = function(flavor, ram){
+            // var url = "/api/compute/get_server_mappings/"+flavor+"/"+ram;
+            var url = "/static/angassets/pricing-details.json";
+            return HttpWrapper.send(url,{"operation":'GET'})
+                    .then(function (response) {
+                        return {
+                            data: response
+                        };
+                    });
+        };
+
         return self;
     }]);
 })();

@@ -1,0 +1,8 @@
+[
+  {
+    "aws_types": "t2.micro,t2.small",
+    "flavor": "GPv1",
+    "ram": "1",
+    "price": 23
+  }
+]

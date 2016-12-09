@@ -1,0 +1,12 @@
+<tr ng-repeat="item in vm.items | filter: vm.statusFilter | filter: vm.search">
+    <td class="rs-table-status" 
+            ng-class="{'rs-table-status-ok': item.migrationStatus=='completed', 'rs-table-status-processing rs-table-status-striped': item.migrationStatus=='inProgress', 'rs-table-status-error': item.migrationStatus=='error', 'rs-table-status-disabled': item.migrationStatus=='disabled'}">
+    </td>
+    <td class="rs-table-link"><a href="#" ng-link="['EquipmentDetails', {type: vm.type, id: item.id}]">{{item.name}}</a></td>
+    <td class="rs-table-text">{{item.ip_address}}</td>
+    <td class="rs-table-text">{{item.flavor}}</td>
+    <td class="rs-table-text">{{item.status}}</td>
+    <td>
+        <button class="rs-btn rs-btn-primary" ng-click="vm.migrate(item.id)">Migrate</button>
+    </td>
+</tr>

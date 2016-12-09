@@ -1,49 +1,19 @@
-[{
-  "id": 1001,
-  "name": "AWS-Vyatta-VPN",
-  "type": "Server Type 1",
-  "status": "completed",
-  "ip_address": "131.86.69.116",
-  "desc": "Some description",
-  "tenant_ID" : "1018602"
-}, {
-  "id": 1002,
-  "name": "Jenkins",
-  "type": "Server Type 2",
-  "status": "completed",
-  "ip_address": "33.140.244.134",
-  "desc": "Some description",
-  "tenant_ID" : "1018602"
-}, {
-  "id": 1003,
-  "name": "GoCD-Server-3",
-  "type": "Server Type 3",
-  "status": "completed",
-  "ip_address": "40.7.24.72",
-  "desc": "Some description",
-  "tenant_ID" : "1018602"
-}, {
-  "id": 1004,
-  "name": "GoCD-Agent-4",
-  "type": "Server Type 0",
-  "status": "In progress",
-  "ip_address": "174.33.91.240",
-  "desc": "Some description",
-  "tenant_ID" : "1018602"
-}, {
-  "id": 1005,
-  "name": "RSW-Server-3",
-  "type": "Server Type 1",
-  "status": "completed",
-  "ip_address": "104.201.64.16",
-  "desc": "Some description",
-  "tenant_ID" : "1018602"
-}, {
-  "id": 1006,
-  "name": "ASW-goPR-6",
-  "type": "Server Type 2",
-  "status": "not started",
-  "ip_address": "248.194.22.84",
-  "desc": "Some description",
-  "tenant_ID" : "1018602"
-}]
+{
+  
+  "reg":{
+    "servers": [{
+      "id": 1001,
+      "name": "AWS-Vyatta-VPN",
+      "status": "ACTIVE",
+      "accessIPv4": "131.86.69.116",
+      "flavor": "GPv1"
+    },
+    {
+      "id": 1002,
+      "name": "Jenkins",
+      "status": "ACTIVE",
+      "accessIPv4": "131.86.69.117",
+      "flavor": "Compv1"
+    }]
+  }
+}

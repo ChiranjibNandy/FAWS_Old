@@ -44,6 +44,15 @@
                }
             }
 
+             this.getPricingDetails = function(type, flavor, ram) {
+                if (type === "server") {
+                   return serverService.getPricingDetails(flavor, ram);
+               }
+               else if (type === "network") {
+                   return networkService.getPricingDetails(flavor, ram);
+               }
+            };
+
             // Get log details of an item vased on migration item type
             this.getLogDetails = function (type, id) {
                 // TODO: add code retrieve log details

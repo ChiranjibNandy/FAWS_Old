@@ -1,28 +1,105 @@
 <div class="rs-content rs-panel">
-   <div class="migration-details-container"> 
-       <div class="rs-row">
-           <div class="migration-item-header">
-               <h2 class="rs-page-title migration-item-type span-9">{{vm.type}} Migration Details</h2>
-           </div>
-           <div class="span-12">
-               <ul class="rs-detail-list">
-                   <li class="rs-detail-item">
-                       <div class="rs-detail-key">IP Address</div>
-                       <div class="rs-detail-value">{{vm.migrationDetail.ip_address}}</div>
-                   </li>
-                   <li class="rs-detail-item">
-                       <div class="rs-detail-key">Pricing</div>
-                       <div class="rs-detail-value">{{vm.migrationDetail.pricing}}</div>
-                   </li>
-               </ul>
-           </div> 
+   <div class="migration-details-container">
+       <div class="rs-detail-header">
+            <div class="rs-row">
+                <div class="migration-item-header">
+                    <h2 class="rs-page-title migration-item-type span-9">{{vm.type}} Migration Details</h2>
+                </div>
+                <div class="span-12">
+                    <div class="rs-row">
+                        <div class="span-1">
+                            <div class="field-key">Name</div>
+                        </div>
+                        <div class="span-3">
+                            <div class="field-value">{{vm.migrationDetail.name}}</div>
+                        </div>
+                        <div class="span-1">
+                            <div class="field-key">ID</div>
+                        </div>
+                        <div class="span-6">
+                            <div class="field-value">{{vm.migrationDetail.id}}</div>
+                        </div>
+                        </div>
+                        <div class="rs-row">
+                        <div class="span-1">
+                            <div class="field-key">IP Address</div>
+                        </div>
+                        <div class="span-3">
+                            <div class="field-value">{{vm.migrationDetail.ip_address}}</div>
+                        </div>
+                        <div class="span-1">
+                            <div class="field-key">Status</div>
+                        </div>
+                        <div class="span-6">
+                            <div class="field-value">{{vm.migrationDetail.status}}</div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+       <div class="rs-detail-section">
+           <h3 class="pricing-details">Pricing options</h3>
+           <div class="rs-row">
+                <div class="offset-2 span-8">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Flavor</th>
+                                <th>Ram</th>
+                                <th>AWS Type</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="priceItem in vm.priceDataList">
+                                <td><input type="radio" name="pricing" ng-model="vm.selectedAWSType" ng-value="priceItem.aws_type"></td>
+                                <td>{{priceItem.flavor}}</td>
+                                <td>{{priceItem.ram}}</td>
+                                <td>{{priceItem.aws_type}}</td>
+                                <td>{{priceItem.price | currency}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
        </div>
-       <div class="rs-row">
-           <div class="span-9"></div>
+       <div class="rs-row" ng-show="!vm.selected">
+           <div class="offset-2 span-1">
+               <button class="rs-btn rs-btn-primary" ng-click="vm.isPricingSelected()">Continue</button>
            </div>
-           <div class="span-3">
-               <button class="rs-btn rs-btn-primary">Migrate</button>
+           <div class="span-3 error-text" ng-show="!vm.radioSelected">
+               Please select a pricing option
            </div>
        </div>
+
+       <div class="rs-row">
+            <div ng-show="vm.selected" class="offset-2 span-8 migration-confirm-form">
+                <form class="rs-form-horizontal rs-form-small">
+                    <div class="rs-control-group">
+                        <label class="rs-control-label">AWS Account</label>
+                        <div class="rs-controls">
+                            <input type="text" class="rs-input-xlarge" ng-model="vm.migrationAccount.awsAccount">
+                        </div>
+                    </div>
+                    <div class="rs-control-group">
+                        <label class="rs-control-label">Access Key</label>
+                        <div class="rs-controls">
+                            <input type="text" class="rs-input-xlarge" ng-model="vm.migrationAccount.accessKey">
+                        </div>
+                    </div>
+                    <div class="rs-control-group">
+                        <label class="rs-control-label">Secret Key</label>
+                        <div class="rs-controls">
+                            <input type="text" class="rs-input-xlarge" ng-model="vm.migrationAccount.secretKey">
+                        </div>
+                    </div>
+                </form>
+                <div class="rs-btn-group form-submit-row">
+                    <div class="rs-btn rs-btn-primary">Migrate</div>
+                    <div class="rs-btn rs-btn-link" ng-click="vm.selected=false">Cancel</div>
+                </div>
+            </div>
+        </div>
    </div>
 </div>

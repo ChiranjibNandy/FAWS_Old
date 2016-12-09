@@ -17,9 +17,7 @@
                     vm.labels = [];
                     vm.search = {};
                     vm.items = [];
-
-                    // 'Select All' checkbox is not selected initially
-                    vm.isAllselected = false;
+                    vm.loading = true;
 
                     // Retrieve all migration items of a specific type (eg: server, network etc)
                     ds.getTrimmedAllItems(vm.type).then(function (response) {
@@ -29,8 +27,7 @@
                         angular.forEach(response.labels, function(label){
                             vm.search[label.field] = ""; // set search field variables
                         });
-                        
-                        vm.changeSelectAll();
+                        vm.loading = false;
                     });
 
                     // Setup status filters
@@ -38,13 +35,16 @@
                         { text: "All", type: "", selected: true },
                         { text: "Completed", type: "completed", selected: false },
                         { text: "In Progress", type: "inProgress", selected: false },
-                        { text: "Error", type: "error", selected: false },
-                        { text: "Disabled", type: "disabled", selected: false }
+                        { text: "Error", type: "error", selected: false }
+                        // { text: "Disabled", type: "disabled", selected: false }
                     ];
 
                     vm.statusFilter = "";
                 };
 
+                // vm.$routerOnActivate = function(next, previous) {
+                //     vm.tid = next.params.tid;
+                // };
 
                 vm.sort = function(item){
                     var items = vm.items;
@@ -54,16 +54,6 @@
                         return 0;
                     })
                     vm.items = items;
-                };
-                
-                // Select/Deselect all items
-                vm.changeSelectAll = function () {
-                    for (var i = 0; i < vm.items.length; i++) {
-                        if (!vm.items[i].selected) {
-                            break;
-                        }
-                    }
-                    vm.isAllselected = (i == vm.items.length);
                 };
 
                 //store slog status
@@ -76,22 +66,14 @@
                     $rootRouter.navigate(["MigrationLogDetails", {type: vm.type}])
                 }
 
-                // Update item selection based on Select/Deselect all 
-                vm.changeItemSelection = function () {
-                    angular.forEach(vm.items, function (item) {
-                        item.selected = vm.isAllselected;
-                    });
-                };
-
                 // Get count of items by their status type
                 vm.getCountByStatus = function (status) {
-                    return vm.items ? vm.items.filter(function (item) { return item.migrationStatus === status }).length : "?";
+                    return vm.loading ? "?" : (status==="" ? vm.items.length : (vm.items ? vm.items.filter(function (item) { return item.migrationStatus === status }).length : "?"));
                 };
 
                 // Move to migration details page if multiple items are selected
-                vm.migrate = function(type) {
-                    // TODO: add condition for multiple item selction
-                    $rootRouter.navigate(["MigrationDetails", {type: vm.type}])
+                vm.migrate = function(id) {
+                    $rootRouter.navigate(["MigrationDetails", {type: vm.type, id: id}]);
                 };
 
                 // Set status filter

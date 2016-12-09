@@ -1,37 +1,6 @@
-[{
-  "id": 1001,
-  "name": "Server 1",
-  "desc": "Some description",
-  "status": "Migration Status Description",
-  "progress": 52
-}, {
-  "id": 1002,
-  "name": "Server 2",
-  "desc": "Some description",
-  "status": "Migration Status Description",
-  "progress": 39
-}, {
-  "id": 1003,
-  "name": "Server 3",
-  "desc": "Some description",
-  "status": "Migration Status Description",
-  "progress": 54
-}, {
-  "id": 1004,
-  "name": "Server 4",
-  "desc": "Some description",
-  "status": "Migration Status Description",
-  "progress": 12
-}, {
-  "id": 1005,
-  "name": "Server 5",
-  "desc": "Some description",
-  "status": "Migration Status Description",
-  "progress": 59
-}, {
-  "id": 1006,
-  "name": "Server 6",
-  "desc": "Some description",
-  "status": "Migration Status Description",
-  "progress": 73
-}]
+{
+  "id": "ba434920-4a3d-4ea4-a2d9-5a5c9943135e",
+  "name": "AWS-Vyatta-VPN",
+  "ip_address": "10.0.0.0",
+  "status": "ACTIVE"
+}
