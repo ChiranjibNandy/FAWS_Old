@@ -15,66 +15,12 @@
             .component("rsmigrations", {
                 templateUrl: "migration_template.html",
                 controllerAs: "vm",
-                controller: ["migrationitemdataservice",'$filter', function (ds, $filter) {
+                controller: ["migrationitemdataservice", function (ds) {
                     var vm = this;
-
+                    vm.tenant_id = user_data.tenant_id;
                     // When the component is active get router params and fetch data
                     vm.$onInit = function() {
-                        vm.migrations = [];
-                        vm.loaded = false;
-                        vm.servers = []
-
-                        ds.getAllUSServers()
-                            .then(function (response) {
-                                vm.servers = response;
-                                vm.loaded = true;
-                            });
-                        // fetch details based on selected migration item
-                        ds.getAllMigrations(1024814)
-                            .then(function (response) {
-                                vm.tenant_id = response.id;
-                                response.jobs.forEach(function(migration){
-                                    ds.getMigration(migration.id)
-                                        .then(function (response){
-                                            while(vm.loaded === false) {
-                                                setTimeout(function(){
-                                                    console.log("sleeping for 1 second while waiting for servers")
-                                                }, 500);
-                                            }
-                                            var instance_uuid;
-                                            for(instance_uuid in response.results.instances){
-                                                var region;
-                                                var server_name = instance_uuid;
-                                                for(region in vm.servers){
-                                                    var server_by_id = $filter('filter')(vm.servers[region].servers, {id: instance_uuid });
-                                                    if (server_by_id.length == 1) {
-                                                        server_name = server_by_id[0].name;
-                                                        break;
-                                                    }
-                                                }
-
-                                                var progress = 0;
-                                                var status = response.results.instances[instance_uuid].status;
-
-                                                if (status === 'in progress') {
-                                                    progress = 50;
-                                                }
-                                                else if (status === 'done') {
-                                                    progress = 100;
-                                                }
-
-                                                var item = {
-                                                    id: response.id,
-                                                    name: server_name,
-                                                    status: response.results.instances[instance_uuid].status,
-                                                    progress: progress
-                                                };
-
-                                                vm.migrations.push(item);
-                                            }
-                                    });
-                            });
-                        });
+                        vm.migrations = ds.getAllMigrationServerData(vm.tenant_id);
                     }; // end of $routerOnActivate
                     return vm;
                 }] // end of component controller
