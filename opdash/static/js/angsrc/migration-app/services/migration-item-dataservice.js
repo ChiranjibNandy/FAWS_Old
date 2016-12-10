@@ -2,7 +2,7 @@
     "use strict";
 
     angular.module("migrationApp")
-        .service("migrationitemdataservice", ["serverservice", "networkservice", "httpwrapper", function (serverService, networkService, HttpWrapper) {
+        .service("migrationitemdataservice", ["serverservice", "networkservice", "httpwrapper",'$filter', function (serverService, networkService, HttpWrapper, $filter) {
             var self = this;
 
             // Get all items based on migration item type
@@ -58,9 +58,66 @@
                 // TODO: add code retrieve log details
             }
 
+            this.getAllMigrationServerData = function (tenant_id) {
+                var migrations = [];
+                var loaded = false;
+                var servers = [];
+
+                self.getAllUSServers()
+                    .then(function (response) {
+                        servers = response;
+                        loaded = true;
+                    });
+                self.getAllMigrations(tenant_id)
+                    .then(function (response) {
+                        response.jobs.forEach(function(migration){
+                            self.getMigration(migration.id)
+                                .then(function (response){
+                                    while(loaded === false) {
+                                        setTimeout(function(){
+                                            console.log("sleeping for 1 second while waiting for servers")
+                                        }, 500);
+                                    }
+                                    var instance_uuid;
+                                    for(instance_uuid in response.results.instances){
+                                        var region;
+                                        var server_name = instance_uuid;
+                                        for(region in servers){
+                                            var server_by_id = $filter('filter')(servers[region].servers, {id: instance_uuid });
+                                            if (server_by_id.length == 1) {
+                                                server_name = server_by_id[0].name;
+                                                break;
+                                            }
+                                        }
+
+                                        var progress = 0;
+                                        var status = response.results.instances[instance_uuid].status;
+
+                                        if (status === 'in progress') {
+                                            progress = 50;
+                                        }
+                                        else if (status === 'done') {
+                                            progress = 100;
+                                        }
+
+                                        var item = {
+                                            id: response.id,
+                                            name: server_name,
+                                            status: response.results.instances[instance_uuid].status,
+                                            progress: progress
+                                        };
+
+                                        migrations.push(item);
+                                    }
+                            });
+                    });
+                });
+                return migrations;
+            }
+
             // Get all items based on migration item type
             this.getAllMigrations = function (tenant_id) {
-                var url = "/api/jobs/" + tenant_id + "?fake_data=true";
+                var url = "/api/jobs/" + tenant_id;
                 return HttpWrapper.send(url,{"operation":'GET'})
                                   .then(function(response){
 
