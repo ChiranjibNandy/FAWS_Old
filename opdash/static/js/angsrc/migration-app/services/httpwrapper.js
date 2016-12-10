@@ -20,8 +20,8 @@
                     method: operation,
                     data: data,
                     headers: {
-                        "x-auth-token": "AAA_0PFyadCTqoifmhXPfB3fueZEwhU9dt8_h6wWAZ5My1xrDiCPpF_k1UHxJdnRHsZn0NbgQ_Z6RCzWIXghX0ZargGKD_qIlgy1n8uuqrL-Fq5QS49b4P23z_A3CvIj04bJHioHzDTKkgJWwgdduAVU9NU_aPBHA9034Y748nvBUtRKysUtcP1KPvxHutJdXuJUwt3XcDXlTC04CR0cBYlwwPKchkOROsndhW6Ze42OyJTCTdTo7Cy0",
-                        "x-tenant-id": "1018602",
+                        "x-auth-token": user_data.authtoken, // "AAA_0PFyadCTqoifmhXPfB3fueZEwhU9dt8_h6wWAZ5My1xrDiCPpF_k1UHxJdnRHsZn0NbgQ_Z6RCzWIXghX0ZargGKD_qIlgy1n8uuqrL-Fq5QS49b4P23z_A3CvIj04bJHioHzDTKkgJWwgdduAVU9NU_aPBHA9034Y748nvBUtRKysUtcP1KPvxHutJdXuJUwt3XcDXlTC04CR0cBYlwwPKchkOROsndhW6Ze42OyJTCTdTo7Cy0",
+                        "x-tenant-id": "1024814",
                         "Cache-Control": "no-cache"
                     },
                 });
