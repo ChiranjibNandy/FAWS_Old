@@ -77,11 +77,15 @@
                 var url = "/api/job/" + job_id;
                 return HttpWrapper.send(url,{"operation":'GET'})
                                   .then(function(response){
+                    return response;
+                });
+            }
 
-                    var migration = {
-                        job: response,
-                    };
-                    return migration;
+            this.getAllUSServers = function () {
+                var url = "/api/compute/us-instances";
+                return HttpWrapper.send(url,{"operation":'GET'})
+                                  .then(function(response){
+                    return response;
                 });
             }
 
