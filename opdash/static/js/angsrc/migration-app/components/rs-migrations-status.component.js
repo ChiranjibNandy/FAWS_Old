@@ -8,10 +8,14 @@
            controllerAs: "vm",
            controller: ["migrationitemdataservice", function (ds) {
                var vm = this;
-               vm.tenant_id = user_data.tenant_id;
+
                // When the component is active get router params and fetch data
                vm.$onInit = function() {
-                   vm.migrations = ds.getAllMigrationServerData(vm.tenant_id);
+                   vm.tenant_id = user_data.tenant_id;
+                   ds.getServerMigrationStatus(vm.tenant_id)
+                       .then(function(result){
+                           vm.migrations = result.server_status;
+                       });
                }; // end of $routerOnActivate
                return vm;
            }] // end of component controller
