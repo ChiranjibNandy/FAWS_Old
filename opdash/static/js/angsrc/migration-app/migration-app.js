@@ -17,7 +17,7 @@
         templateUrl: "/static/angtemplates/app-footer.html"
     });
 
-    migrationApp.directive('staticInclude', function($parse, $templateRequest, $compile) {
+    migrationApp.directive('staticInclude', ["$parse", "$templateRequest", "$compile", function($parse, $templateRequest, $compile) {
         return {
             restrict: 'A',
             transclude: true,
@@ -33,7 +33,7 @@
                 });
             }
         };
-    });
+    }]);
     // The root component which defines initial routing
     migrationApp.component("rsmigrationroot", {
         transclude: true,

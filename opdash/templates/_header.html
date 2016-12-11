@@ -46,12 +46,21 @@
    <div class="rs-nav-secondary" id="subNav">
        <div class="rs-container">
            <ul class="rs-nav">
-               <li class="rs-nav-item hover"><a class="rs-nav-link" href="#/migration/1024814">Inventory</a></li>
+               <li class="rs-nav-item hover active"><a class="rs-nav-link" href="#/migration/1024814">Inventory</a></li>
                <li class="rs-nav-item hover"><a class="rs-nav-link" href="#/migration-status">Migration Status</a></li>
            </ul>
        </div>
    </div>
    {% endif %}
+
+   <script type="text/javascript">
+     $(document).ready(function() {
+       $("body").delegate(".rs-nav-secondary .rs-nav-item", "click", function() {
+         $(".rs-nav-secondary .rs-nav-item").removeClass("active");
+         $(this).addClass("active");
+       });
+     });
+   </script>
    
     <!-- Secondary Nav
     <div class="rs-nav-secondary">

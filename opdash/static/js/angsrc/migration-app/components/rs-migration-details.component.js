@@ -6,7 +6,7 @@
         .component("rsmigrationdetails", {
             templateUrl: "/static/angtemplates/migration/migration-details.html",
             controllerAs: "vm",
-            controller: ["migrationitemdataservice", "$timeout", function (ds, $timeout) {
+            controller: ["migrationitemdataservice", "httpwrapper", "$timeout", function (ds, $timeout, HttpWrapper) {
                 var vm = this;
 
                 // When the component is active get router params and fetch data
@@ -19,7 +19,7 @@
 
                     ds.getMigrationDetails(vm.type, vm.id)
                             .then(function (response) {
-                                vm.migrationDetail = response.data;
+                                vm.migrationDetail = response;
                             });
 
                     ds.getPricingDetails(vm.type, flavor, ram)
@@ -52,11 +52,16 @@
 
                         vm.submitting = true;
                         vm.showPricingError = false;
-                        $timeout(function() {
-                            var request = ds.prepareRequest(vm.type, {id: vm.id, type: vm.selectedAWSType});
-                            vm.submitting = false;
-                            console.log(request);
-                        }, 2000);
+
+                        var requestObj = ds.prepareRequest(vm.type, {id: vm.id, type: vm.selectedAWSType});
+                        console.log(requestObj);
+
+                        HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj)
+                                   .then(function(response){
+                                       vm.submitting = false;
+                                       console.log(response);
+                                   });
+                        
                     }
                 };
 
