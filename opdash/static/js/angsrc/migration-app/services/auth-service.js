@@ -7,12 +7,12 @@
 
             //store log here
             this.storeAuth = function(type){
-                self.type = type;
-                self.type.awsAccount = "aws_account";
-                self.type.accessKey = "access_key";
-                self.type.secretKey = "secret_key";
-                self.type.rackUsername = "rack user";
-                self.type.rackAPIKey = "rack key";
+               self.type = type;
+               self.type.awsAccount = "rax-9391b0f6b8264c6f8efbe2794a541548";
+               self.type.accessKey = "AKIAIUHV3Q5R7JDRDRBQ";
+               self.type.secretKey = "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";
+               self.type.rackUsername = "RSMTDev1";
+               self.type.rackAPIKey = "f42046566954470dbaa31d6378916bb1";
             }
 
             //get log here

@@ -131,14 +131,18 @@
 
         // get server details of specific items
         self.getMigrationDetails = function (id) {
-           var url = "/static/angassets/server-migration-details.json";
-           return HttpWrapper.send(url,{"operation":'GET'})
-                    .then(function (response) {
-                        return {
-                            data: response
-                        };
-                    });
-        }
+           var deferred = $q.defer();
+           self.getAll().then(function(response) {
+               if(response.error)
+                   return deferred.resolve(response);
+
+               var tempServers = trimTransform(response).data.filter(function(item) { 
+                   return item.id === id; 
+               });
+               return deferred.resolve(tempServers[0]);
+           });
+           return deferred.promise;
+       }
 
         self.getPricingDetails = function(flavor, ram){
             // var url = "/api/compute/get_server_mappings/"+flavor+"/"+ram;
@@ -152,47 +156,47 @@
         };
 
         self.prepareRequest = function(info){
-            var region = getRegionById(info.id);
-            var auth = authservice.getAuth();
+           var region = getRegionById(info.id);
+           var auth = authservice.getAuth();
 
-            return {
-                source: {
-                    cloud: "rackspace",
-                    tenantid: auth.tenant_id,
-                    auth: {
-                        method: "key",
-                        type: "customer",
-                        username: auth.rackUsername,
-                        apikey: auth.rackAPIKey
-                    }
-                },
-                destination: {
-                    cloud: "aws",
-                    account: auth.awsAccount,
-                    auth: {
-                        method: "keys",
-                        accessKey: auth.accessKey,
-                        secretkey: auth.secretKey
-                    }
-                },
-                resources: {
-                    instances: [
-                        {
-                            source: {
-                                id: info.id,
-                                region: region,
-                            },
-                            destination: {
-                                region: "us-east-1", // get region
-                                zone: "us-east-1a", // get zone
-                                type: info.type
-                            }
-                        }
-                    ]
-                },
-                version: "v1"
-            };
-        }
+           return {
+               source: {
+                   cloud: "rackspace",
+                   tenantid: auth.tenant_id,
+                   auth: {
+                       method: "key",
+                       type: "customer",
+                       username: auth.rackUsername,
+                       apikey: auth.rackAPIKey
+                   }
+               },
+               destination: {
+                   cloud: "aws",
+                   account: auth.awsAccount,
+                   auth: {
+                       method: "keys",
+                       accesskey: auth.accessKey,
+                       secretkey: auth.secretKey
+                   }
+               },
+               resources: {
+                   instances: [
+                       {
+                           source: {
+                               id: info.id,
+                               region: region,
+                           },
+                           destination: {
+                               region: "us-east-1",
+                               zone: "us-east-1a",
+                               type: info.type
+                           }
+                       }
+                   ]
+               },
+               version: "v1"
+           };
+       }
 
         return self;
     }]);

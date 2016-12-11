@@ -74,7 +74,7 @@
             var deferred = $q.defer();
             _getOperation(params.operation, url, params.data)
                 .success( function(data, status) {
-                    if (data.status === "success" || status === 200 || status === 204){
+                    if (data.status === "success" || status === 200 || status === 201 || status === 204){
                         deferred.resolve(data);
                         console.log(status, data);				
                     }else {

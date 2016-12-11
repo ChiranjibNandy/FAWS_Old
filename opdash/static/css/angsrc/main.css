@@ -17,6 +17,10 @@ th{
     height: 13px;
 }
 
+a.rs-nav-link{
+   outline: none;
+}
+
 [ng-outlet]{
    margin-top: 10px;
 }
