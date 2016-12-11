@@ -2,11 +2,10 @@
 <div class="rs-content rs-panel">
    <div class="rs-inner rs-mig-nomar">
        <div class="migration-details-container">
-           <div class="rs-row">
-               <div class="migration-item-header">
-                   <h2 class="rs-page-title migration-item-type span-9">Migrations ({{ vm.tenant_id }})</h2>
-               </div>
-
+            <div class="migration-item-header">
+               <h2 class="rs-page-title migration-item-type span-9">Migrations ({{ vm.tenant_id }})</h2>
+            </div>
+            <div class="rs-row">
                <div class="span-12">
                    <div class="rs-embedded-list-table-wrapper rs-embedded-medium">
                        <table class="rs-list-table rs-embedded-list-table">
@@ -43,7 +42,7 @@
                                            </div>
                                        </div>
                                    </td>
-                                   <td class="rs-table-link"><a href="#" ng-link="['MigrationLogDetails', {type: vm.type, id: item.id}]">View Details</a></td>
+                                   <td class="rs-table-link"><a href="#" ng-link="['EquipmentDetails', {type: item.type, id: item.server_id}]">View Details</a></td>
                                </tr>
                            </tbody>
                        </table>

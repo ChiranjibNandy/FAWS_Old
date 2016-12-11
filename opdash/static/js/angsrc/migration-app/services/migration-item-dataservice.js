@@ -87,20 +87,10 @@
                                             console.log("sleeping for 1 second while waiting for servers")
                                         }, 500);
                                     }
-                                    var instance_uuid;
-                                    for(instance_uuid in response.results.instances){
-                                        var region;
-                                        var server_name = instance_uuid;
-                                        for(region in servers){
-                                            var server_by_id = $filter('filter')(servers[region].servers, {id: instance_uuid });
-                                            if (server_by_id.length == 1) {
-                                                server_name = server_by_id[0].name;
-                                                break;
-                                            }
-                                        }
 
+                                    if (response.results === ""){
                                         var progress = 0;
-                                        var status = response.results.instances[instance_uuid].status;
+                                        var status = response.status;
 
                                         if (status === 'in progress') {
                                             progress = 50;
@@ -111,12 +101,49 @@
 
                                         var item = {
                                             id: response.id,
-                                            name: server_name,
-                                            status: response.results.instances[instance_uuid].status,
-                                            progress: progress
+                                            name: "",
+                                            server_id: "",
+                                            status: status,
+                                            progress: progress,
+                                            type: "server"
                                         };
 
                                         migrations.push(item);
+                                    }
+                                    else{
+                                        var instance_uuid;
+                                        for(instance_uuid in response.results.instances){
+                                            var region;
+                                            var server_name = instance_uuid;
+                                            for(region in servers){
+                                                var server_by_id = $filter('filter')(servers[region].servers, {id: instance_uuid });
+                                                if (server_by_id.length == 1) {
+                                                    server_name = server_by_id[0].name;
+                                                    break;
+                                                }
+                                            }
+
+                                            var progress = 0;
+                                            var status = response.results.instances[instance_uuid].status;
+
+                                            if (status === 'in progress') {
+                                                progress = 50;
+                                            }
+                                            else if (status === 'done') {
+                                                progress = 100;
+                                            }
+
+                                            var item = {
+                                                id: response.id,
+                                                server_id: instance_uuid,
+                                                name: server_name,
+                                                status: response.results.instances[instance_uuid].status,
+                                                progress: progress,
+                                                type: "server"
+                                            };
+
+                                            migrations.push(item);
+                                        }
                                     }
                             });
                     });
