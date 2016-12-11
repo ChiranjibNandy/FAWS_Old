@@ -24,10 +24,10 @@
     <!-- Primary Nav -->
     <div class="rs-nav-primary">
       <div class="rs-container">
+        {% if g.user_data %}
         <div class="rs-nav-brand">
           <a href=""></a>
         </div>
-        {% if g.user_data %}
         <ul class="rs-nav">
           <li class="rs-nav-item"><a class="rs-nav-link" href="">Migration</a></li>
           <li class="rs-nav-item"><a class="rs-nav-link" href="">Reports</a></li> 
@@ -41,15 +41,27 @@
     </div>
     <!-- End Primary Nav -->
 
+    {% if g.user_data %}
+   <!-- Secondary Nav -->
+   <div class="rs-nav-secondary" id="subNav">
+       <div class="rs-container">
+           <ul class="rs-nav">
+               <li class="rs-nav-item hover"><a class="rs-nav-link" href="#/migration/1024814">Inventory</a></li>
+               <li class="rs-nav-item hover"><a class="rs-nav-link" href="#/migration-status">Migration Status</a></li>
+           </ul>
+       </div>
+   </div>
+   {% endif %}
+   
     <!-- Secondary Nav
     <div class="rs-nav-secondary">
       <div class="rs-container">
         <ul class="rs-nav">
-          <li class="rs-nav-item hover"><a class="rs-nav-link" href="">Migration</a></li>
-          <li class="rs-nav-item hover"><a class="rs-nav-link" href="">Reports</a></li>
-          <li class="rs-nav-item active"><a class="rs-nav-link" href="">SubSection3</a></li> 
+          <li class="rs-nav-item hover"><a class="rs-nav-link" ng-link="[MigrationsStatus]">Migration Status</a></li>
+          <li class="rs-nav-item hover"><a class="rs-nav-link" ng-link="[Migration]">Inventory</a></li>
+          <li class="rs-nav-item active"><a class="rs-nav-link" href="">SubSection3</a></li>
         </ul>
       </div>
     </div>
-    End Secondary Nav -->
+    End Secondary Nav-->
 </div>

@@ -6,22 +6,16 @@
         .component("rsmigrationdetails", {
             templateUrl: "/static/angtemplates/migration/migration-details.html",
             controllerAs: "vm",
-            controller: ["migrationitemdataservice", function (ds) {
+            controller: ["migrationitemdataservice", "$timeout", function (ds, $timeout) {
                 var vm = this;
 
                 // When the component is active get router params and fetch data
                 vm.$routerOnActivate = function(next, previous) {
-                   var flavor = "GPv1";
+                    var flavor = "GPv1";
                     var ram = 1;
 
                     vm.type = next.params.type;
                     vm.id = next.params.id;
-                    vm.migrationAccount = {
-                        awsAccount: "",
-                        accessKey: "",
-                        secretKey: ""
-                    };
-                    vm.radioSelected = false;
 
                     ds.getMigrationDetails(vm.type, vm.id)
                             .then(function (response) {
@@ -48,14 +42,21 @@
                         });
                 }; // end of $routerOnActivate
 
-                vm.isPricingSelected = function(){
-                    if(vm.selectedAWSType){
-                        vm.radioSelected = true;
-                        vm.selected = true;
-                    } 
-                    else{
-                        vm.radioSelected = false;
-                        vm.selected = false;
+                vm.startMigration = function() {
+                    if(!vm.submitting){
+
+                        if(!vm.selectedAWSType){
+                            vm.showPricingError = true;
+                            return;
+                        }
+
+                        vm.submitting = true;
+                        vm.showPricingError = false;
+                        $timeout(function() {
+                            var request = ds.prepareRequest(vm.type, {id: vm.id, type: vm.selectedAWSType});
+                            vm.submitting = false;
+                            console.log(request);
+                        }, 2000);
                     }
                 };
 

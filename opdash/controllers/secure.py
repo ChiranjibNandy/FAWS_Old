@@ -49,4 +49,4 @@ def index():
 @mod.route('/migrations')
 def migrations():
     """Show index page"""
-    return render_template('migrations.html')
+    return render_template('migrations-status.html')

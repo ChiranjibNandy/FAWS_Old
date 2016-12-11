@@ -1,4 +1,5 @@
 
+
 <div class="rs-main">
   <div class="rs-sidebar sidebar">
     <div class="rs-facet-header">
@@ -7,8 +8,8 @@
     </div>
     <div class="rs-facet-section">
         <div class="rs-facet-section-header">
-        <div class="rs-facet-clear-link rs-hidden">clear</div>
-        <div class="rs-facet-section-title">Migration Status</div>
+            <div class="rs-facet-clear-link rs-hidden">clear</div>
+            <div class="rs-facet-section-title">Migration Status</div>
         </div>
         <div class="rs-facet-section-body">
             <ul class="rs-facet-list">
@@ -27,21 +28,20 @@
     <div class="rs-row">
         <div class="migration-item-header">
             <h2 class="rs-page-title migration-item-type span-5">{{vm.type}}s</h2>
-            <span class="span-1 no-break">Search by:</span>
-            <select class="span-3" ng-model="vm.searchField" 
-                    ng-change="vm.clearSearch()" 
-                    ng-options="label.field as label.text for label in vm.labels">
-           </select>
-            <input type="text" class="rs-input-large span-3" 
-                    ng-model="vm.search[vm.searchField]" 
-                    placeholder="Search {{vm.type}}s">
+            <span ng-show="!vm.loading && !vm.noData">
+                <span class="span-1 no-break">Search by:</span>
+                <select class="span-3" ng-model="vm.searchField" 
+                        ng-change="vm.clearSearch()" 
+                        ng-options="label.field as label.text for label in vm.labels">
+            </select>
+                <input type="text" class="rs-input-large span-3" 
+                        ng-model="vm.search[vm.searchField]" 
+                        placeholder="Search {{vm.type}}s">
+            </span>
         </div>
     </div>
     <div class="rs-embedded-list-table-wrapper rs-embedded-medium">
-        <div ng-show="vm.loading">
-            Loading...
-        </div>
-        <table class="rs-list-table rs-embedded-list-table" ng-show="!vm.loading">
+        <table class="rs-list-table rs-embedded-list-table" ng-show="!vm.loading && !vm.loadError && !vm.noData">
             <thead>
                 <tr>
                     <th class="rs-table-status"></th>
@@ -51,11 +51,32 @@
                             <span class="rs-table-sort-indicator" ng-click="vm.sort(label.field)"></span>
                         </a>
                     </th>
-                    <th>Action</th>
+                    <th style="width: 150px;">Action</th>
                 </tr>
             </thead>
-            <tbody ng-include="'/static/angtemplates/migration/'+vm.type+'-data-template.html'"></tbody>
+            <tbody static-include="'/static/angtemplates/migration/'+vm.type+'-data-template.html'"></tbody>
+            <!--<tbody static-template template-path="/static/angtemplates/migration/server-data-template.html"></tbody>-->
         </table>
+
+        <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
+            <div class="rs-table-overlay-content">
+                <div class="rs-table-overlay-message">Loading&hellip;</div>
+            </div>
+        </div>
+
+        <div ng-show="vm.loadError" class="rs-table-overlay rs-table-overlay-error">
+            <div class="rs-table-overlay-content">
+                <div class="rs-table-overlay-message"><i class="rs-icon-error-indicator"></i>
+                    Error encountered. Please try again.
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="vm.noData" class="rs-table-overlay">
+            <div class="rs-table-overlay-content">
+                <div class="rs-table-overlay-subtitle">There are no {{vm.type}}s yet.</div>
+            </div>
+        </div>
     </div>
   </div>
 </div>

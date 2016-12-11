@@ -1,0 +1,55 @@
+
+<div class="rs-content rs-panel">
+   <div class="rs-inner rs-mig-nomar">
+       <div class="migration-details-container">
+           <div class="rs-row">
+               <div class="migration-item-header">
+                   <h2 class="rs-page-title migration-item-type span-9">Migrations ({{ vm.tenant_id }})</h2>
+               </div>
+
+               <div class="span-12">
+                   <div class="rs-embedded-list-table-wrapper rs-embedded-medium">
+                       <table class="rs-list-table rs-embedded-list-table">
+                           <thead>
+                               <tr>
+                                   <th>
+                                       <span class="rs-table-sort-text">Job Id</span>
+                                   </th>
+                                   <th>
+                                       <span class="rs-table-sort-text">Server</span>
+                                   </th>
+                                   <th>
+                                       <span class="rs-table-sort-text">Status</span>
+                                   </th>
+                                   <th>
+                                       <span class="rs-table-sort-text">Progress</span>
+                                   </th>
+                                   <th>
+                                       <span class="rs-table-sort-text">View Details</span>
+                                   </th>
+                               </tr>
+                           </thead>
+                           <tbody>
+                               <tr ng-repeat="item in vm.migrations">
+                                   <td class="rs-table-text">{{item.id}}</td>
+                                   <td class="rs-table-text">{{item.name}}</td>
+                                   <td class="rs-table-text">{{item.status}}</td>
+                                   <td class="rs-table-text">
+                                       <div class="rs-progress">
+                                           <div class="rs-progress-inner">
+                                               <div class="rs-segment" style="width: {{item.progress}}%">
+                                                   <div class="rs-bar rs-status-ok"></div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </td>
+                                   <td class="rs-table-link"><a href="#" ng-link="['MigrationLogDetails', {type: vm.type, id: item.id}]">View Details</a></td>
+                               </tr>
+                           </tbody>
+                       </table>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>

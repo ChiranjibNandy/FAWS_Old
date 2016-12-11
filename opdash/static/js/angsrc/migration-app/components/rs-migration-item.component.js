@@ -18,33 +18,48 @@
                     vm.search = {};
                     vm.items = [];
                     vm.loading = true;
+                    vm.loadError = false;
+                    vm.noData = false;
 
                     // Retrieve all migration items of a specific type (eg: server, network etc)
-                    ds.getTrimmedAllItems(vm.type).then(function (response) {
-                        vm.items = response.data;
-                        vm.searchField = response.labels[0].field;
-                        vm.labels = response.labels; // set table headers
-                        angular.forEach(response.labels, function(label){
-                            vm.search[label.field] = ""; // set search field variables
+                    ds.getTrimmedAllItems(vm.type)
+                        .then(function (response) {
+                            if(response.error){
+                                vm.loading = false;
+                                vm.loadError = true;
+                                return;
+                            }
+
+                            if(response.data.length === 0){
+                                vm.noData = true;
+                                vm.loading = false;
+                                return;
+                            }
+
+                            vm.items = response.data;
+                            vm.searchField = response.labels[0].field;
+                            vm.labels = response.labels; // set table headers
+                            angular.forEach(response.labels, function(label){
+                                vm.search[label.field] = ""; // set search field variables
+                            });
+                            vm.loading = false;
                         });
-                        vm.loading = false;
-                    });
 
                     // Setup status filters
                     vm.statusFilters = [
                         { text: "All", type: "", selected: true },
                         { text: "Completed", type: "completed", selected: false },
                         { text: "In Progress", type: "inProgress", selected: false },
-                        { text: "Error", type: "error", selected: false }
-                        // { text: "Disabled", type: "disabled", selected: false }
+                        { text: "Error", type: "error", selected: false },
+                        { text: "Disabled", type: "disabled", selected: false }
                     ];
 
                     vm.statusFilter = "";
                 };
 
-                // vm.$routerOnActivate = function(next, previous) {
-                //     vm.tid = next.params.tid;
-                // };
+                vm.$routerOnActivate = function(next, previous) {
+                    vm.tid = next.params.tid;
+                };
 
                 vm.sort = function(item){
                     var items = vm.items;
