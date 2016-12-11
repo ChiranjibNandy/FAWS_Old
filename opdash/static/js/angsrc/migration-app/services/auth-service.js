@@ -8,6 +8,11 @@
             //store log here
             this.storeAuth = function(type){
                 self.type = type;
+                self.type.awsAccount = "aws_account";
+                self.type.accessKey = "access_key";
+                self.type.secretKey = "secret_key";
+                self.type.rackUsername = "rack user";
+                self.type.rackAPIKey = "rack key";
             }
 
             //get log here

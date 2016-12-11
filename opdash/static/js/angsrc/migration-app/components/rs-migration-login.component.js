@@ -7,23 +7,24 @@
             templateUrl: "/static/angtemplates/migration/login.html",
             bindings: {
               username: "@",
-              rsa_token: "@"
+              rsa_token: "@",
+              errorMessage: "@"
             },
+            controllerAs: "vm",
             controller: function($scope, $http) {
-              this.$onInit = function () {
+              var vm = this;
+
+              vm.$onInit = function () {
                 // This sets the default values
                 this.username = '';
                 this.rsa_token = '';
               };
-              this.onSubmit = function() {
-                // validate form here
-                // if valid, submit form to login here
 
-                console.info('USERNAME:', this.username);
-                console.info('RSA_TOKEN:', this.rsa_token);
-
-                return true;
-
+              vm.onSubmit = function(loginForm) {
+                vm.submitted = true;
+                if(this.username && this.rsa_token){
+                    document.getElementById("loginForm").submit();
+                }
               }
             }
         });

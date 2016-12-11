@@ -9,7 +9,7 @@
             controller: ["authservice",function(authservice) {
                 var vm = this;
                 vm.$routerOnActivate = function(next, previous) {
-                   authservice.getAuth().tenant_id = next.params.tenant;
+                   authservice.getAuth().tenant_id = next.params.tenant_id;
                     vm.tenant_id = next.params.tenant_id;
                 }
             }]

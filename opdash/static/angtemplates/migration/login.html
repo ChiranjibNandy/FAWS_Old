@@ -1,26 +1,44 @@
+<div id="content" class="clearfix center-login-form with-banner">
+    <div id="login_wrapper" class="clearfix">
+        <div id="rackspace_logo_container"></div>
 
-<div class="rs-inner rs-mig-nomar">
-<div class="login-form clearfix">
-    <div class="logo-container">
-        <a href="#" class="icon icon-logo-rackspace-managed-cloud-company"></a>
+        <div class="login-block" id="auth_login_block">
+            <span class="welcome_message">Welcome to FAWS Migration Portal</span>
+            <form name="loginForm" id="loginForm" method="POST" class="rs-form-small" ng-submit="vm.onSubmit()" novalidate>
+                <fieldset>
+                    <div class="rs-control-group" ng-class="{'error': loginForm.username.$invalid && (vm.submitted || loginForm.username.$touched)}">
+                        <label for="username">Username</label>
+                        <div class="rs-controls">
+                            <input autofocus="" class="rs-input-large" id="username" name="username" type="text" value="" ng-model="vm.username" required><br>
+                            <span ng-show="loginForm.username.$invalid && (vm.submitted || loginForm.username.$touched)" class="error-text">
+                                <i class="rs-validation-indicator"></i> Username is required
+                            </span>
+                        </div>
+                    </div>
+                    <div class="rs-control-group" ng-class="{'error': loginForm.rsa_token.$invalid && (vm.submitted || loginForm.rsa_token.$touched)}">
+                        <label for="password">RSA Token</label>
+                        <div class="rs-controls">
+                            <input autocomplete="off" class="rs-input-large" id="rsa_token" name="rsa_token" type="password" value="" ng-model="vm.rsa_token"
+                                required><br>
+                            <span ng-show="loginForm.rsa_token.$invalid && (vm.submitted || loginForm.rsa_token.$touched)" class="error-text">
+                                <i class="rs-validation-indicator"></i> RSA token is required
+                            </span>
+                        </div>
+                    </div>
+
+                    <div id="login-status" ng-show="vm.errorMessage">
+                        <div class="rs-control-group error">
+                            <span class="rs-validation-block">
+                                <i class="rs-validation-indicator"></i> {{vm.errorMessage}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="login-action">
+                        <button type="submit" class="rs-btn rs-btn-login">Log In</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
     </div>
-    <div id="main-login-block" class="login-block">
-        <h1>Welcome to FAWS Migration Dashboard</h1>
-        <form name="loginForm" method="POST" class="rs-form-small" action="/login" ng-submit="$ctrl.onSubmit()">
-            <fieldset>
-                <div class="rs-control-group ">
-                    <label for="username">Username</label>
-                    <input autofocus="" class="rs-input-large" id="username" name="username" type="text" value="" ng-model="$ctrl.username">
-                </div>
-                <div class="rs-control-group ">
-                    <label for="password">RSA Token</label>
-                    <input autocomplete="off" class="rs-input-large" id="rsa_token" name="rsa_token" type="password" value="" ng-model="$ctrl.rsa_token">
-                </div>
-                <div class="rs-control-group" style="margin-top:10px;">
-                    <button type="submit" class="rs-btn rs-btn-login">Log In</button>
-                </div>
-            </fieldset>
-        </form>
-    </div>
-</div>
 </div>

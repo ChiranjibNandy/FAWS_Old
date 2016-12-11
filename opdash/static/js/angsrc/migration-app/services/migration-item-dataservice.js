@@ -53,6 +53,15 @@
                }
             };
 
+            this.prepareRequest = function(type, info){
+                if (type === "server") {
+                   return serverService.prepareRequest(info);
+                }
+                else if (type === "network") {
+                    return networkService.prepareRequest(info);
+                }
+            }
+            
             // Get log details of an item vased on migration item type
             this.getLogDetails = function (type, id) {
                 // TODO: add code retrieve log details

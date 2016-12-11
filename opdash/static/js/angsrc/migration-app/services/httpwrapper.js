@@ -2,9 +2,9 @@
     "use strict";
 
     angular.module('migrationApp')
-        .factory('httpwrapper', ['$q', '$http', HttpWrapper]);
+        .factory('httpwrapper', ['$q', '$http', 'authservice', HttpWrapper]);
 
-    function HttpWrapper($q, $http) {
+    function HttpWrapper($q, $http, authservice) {
 
         /**
          * Gets the operation from the operation type for the request
@@ -15,13 +15,15 @@
          */
         function _getOperation(operation, url, data){
             var method;
+            var auth = authservice.getAuth();
+
             method = $http({
                     url: url,
                     method: operation,
                     data: data,
                     headers: {
-                        "x-auth-token": user_data.authtoken, // "AAA_0PFyadCTqoifmhXPfB3fueZEwhU9dt8_h6wWAZ5My1xrDiCPpF_k1UHxJdnRHsZn0NbgQ_Z6RCzWIXghX0ZargGKD_qIlgy1n8uuqrL-Fq5QS49b4P23z_A3CvIj04bJHioHzDTKkgJWwgdduAVU9NU_aPBHA9034Y748nvBUtRKysUtcP1KPvxHutJdXuJUwt3XcDXlTC04CR0cBYlwwPKchkOROsndhW6Ze42OyJTCTdTo7Cy0",
-                        "x-tenant-id": "1024814",
+                        "x-auth-token": auth.authtoken,
+                        "x-tenant-id": auth.tenant_id,
                         "Cache-Control": "no-cache"
                     },
                 });
@@ -70,19 +72,19 @@
             params = params || {};
             //url = _decorateUrl(url, params.urlVars);
             var deferred = $q.defer();
-            _getOperation(params.operation, url, params.data).success( function(data, status) {
-                if (data.status === "success" || status === 200 || status === 204){
-                    deferred.resolve(data);				
-                }else {
-                    console.log("data "+data);
-                    console.log("status "+status)
-                    deferred.reject(data, status);
-                }
+            _getOperation(params.operation, url, params.data)
+                .success( function(data, status) {
+                    if (data.status === "success" || status === 200 || status === 204){
+                        deferred.resolve(data);
+                        console.log(status, data);				
+                    }else {
+                        console.log(status, data);
+                        deferred.reject({ error: status, data: data });
+                    }
             })
             .error(function(data, status){
-                console.log("data "+data);
-                console.log("status "+status);
-                deferred.reject(data, status);
+                console.log(status, data);
+                deferred.reject({ error: status, data: data });
             });
             return deferred.promise;
         }

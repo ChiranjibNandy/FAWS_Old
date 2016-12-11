@@ -77,37 +77,32 @@
             self.getTrimmedList = function() {
                 var deferred = $q.defer();
                 self.getAll().then(function(response) {
+                    if(response.error)
+                        return deferred.resolve(response);
                     return deferred.resolve(trimTransform(response));
                 });
                 return deferred.promise;
             };
-
         
             self.getDetailedList = function() {
                        var deferred = $q.defer();
                        self.getAll().then(function(response) {
+                        if(response.error)
+                                return deferred.resolve(response);
                            return deferred.resolve(detailsTransform(response));
                        });
                        return deferred.promise;
            };
 
-           self.getPricingDetails = function(flavor, ram){
-               var url = "/api/get_server_mappings/"+flavor+"/"+ram;
-               return HttpWrapper.send(url,{"operation":'GET'})
-                       .then(function (response) {
-                           return {
-                               data: response
-                           };
-                       });
-           };
-
             // get all network items from backend
             self.getAll = function () {
+                
                 var url = "/api/us-networks";
 
                 if (!loaded) {
 
-                    return HttpWrapper.send(url,{"operation":'GET'}).then(function(response){
+                    return HttpWrapper.send(url,{"operation":'GET'})
+                                .then(function(response){
                                     loaded = true;
                                     networks = {
                                         labels: [
@@ -117,6 +112,8 @@
                                         data: response
                                     };
                                     return networks;
+                                }, function(errorResponse) {
+                                    return errorResponse;
                                 });
                 } else {
                     return $q.when(networks);
