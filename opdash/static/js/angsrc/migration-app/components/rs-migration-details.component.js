@@ -6,7 +6,7 @@
         .component("rsmigrationdetails", {
             templateUrl: "/static/angtemplates/migration/migration-details.html",
             controllerAs: "vm",
-            controller: ["migrationitemdataservice", "httpwrapper", "$timeout", function (ds, $timeout, HttpWrapper) {
+            controller: ["migrationitemdataservice", "$timeout", "httpwrapper", function (ds, $timeout, HttpWrapper) {
                 var vm = this;
 
                 // When the component is active get router params and fetch data
