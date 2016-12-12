@@ -2,8 +2,8 @@
     "use strict";
 
     // Creating an angular app with ngComponentRouter for handling routing
-    var migrationApp = angular.module("migrationApp", ["ngAnimate", "ngComponentRouter"]);
-   
+    var migrationApp = angular.module("migrationApp", ["ngComponentRouter"]);
+
     // Defining the root component which will initiate routing handling
     migrationApp.value("$routerRootComponent", "rsmigrationroot");
 
