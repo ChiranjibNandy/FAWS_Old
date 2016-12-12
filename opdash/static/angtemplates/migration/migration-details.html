@@ -22,20 +22,20 @@
       </div>
       <div class="rs-detail-list">
         <div class="rs-detail-key">Status</div>
-        <div class="rs-detail-value">{{vm.migrationDetail.status}}</div>
+        <div class="rs-detail-value capitalize">{{vm.migrationDetail.status | lowercase}}</div>
       </div>
     </div>
   </div>
   <div class="rs-detail-section">
     <div class="rs-detail-section-header">
-      <div class="rs-detail-section-title">Pricing options</div>
+      <div class="rs-detail-section-title">Pricing Options</div>
     </div>
     <div class="rs-detail-section-body">
       <div class="rs-embedded-list-table-wrapper rs-embedded-small">
         <table class="rs-list-table rs-embedded-list-table">
             <thead>
                 <tr>
-                    <th></th>
+                    <th style="width:30px;"></th>
                     <th>Flavor</th>
                     <th>Ram</th>
                     <th>AWS Type</th>

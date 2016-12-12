@@ -10,32 +10,30 @@
     <div class="rs-detail-section-body">
       <ul class="rs-detail-list">
         <li class="rs-detail-item">
-          <!--<div class="rs-detail-key">OS-EXT-STS:vm_state</div>-->
           <div class="rs-detail-key">Server Status</div>
-          <div class="rs-detail-value capitalize">{{vm.equipment.OS_EXT_STS_vm_state}}</div>
+          <div class="rs-detail-value capitalize">{{vm.equipment.OS_EXT_STS_vm_state | lowercase}}</div>
         </li>
         <li class="rs-detail-item">
-          <div class="rs-detail-key">IP address</div>
+          <div class="rs-detail-key">IP Address</div>
           <div class="rs-detail-value">{{vm.equipment.ip_address}}</div>
         </li>
         <li class="rs-detail-item">
           <div class="rs-detail-key">Host ID</div>
           <div class="rs-detail-value">{{vm.equipment.hostId}}</div>
         </li>
-        <li class="rs-detail-item">
-          <!--<div class="rs-detail-key">OS-EXT-STS:power_state</div>-->
-          <div class="rs-detail-key">Power State</div>
-          <div class="rs-detail-value capitalize">{{vm.equipment.OS_EXT_STS_power_state}}</div>
-        </li>
-        <li class="rs-detail-item">
-          <!--<div class="rs-detail-key">OS-EXT-STS:task_state</div>-->
+        <!--
+          <li class="rs-detail-item">
+            <div class="rs-detail-key">Power State</div>
+            <div class="rs-detail-value capitalize">{{vm.equipment.OS_EXT_STS_power_state}}</div>
+          </li>
+        -->
+        <li class="rs-detail-item" ng-if="vm.equipment.OS_EXT_STS_task_state">
           <div class="rs-detail-key">Task State</div>
           <div class="rs-detail-value capitalize">{{vm.equipment.OS_EXT_STS_task_state}}</div>
         </li>
         <li class="rs-detail-item">
-          <!--<div class="rs-detail-key">OS-DCF:diskConfig</div>-->
           <div class="rs-detail-key">Disk State</div>
-          <div class="rs-detail-value capitalize">{{vm.equipment.OS_DCF_diskConfig}}</div>
+          <div class="rs-detail-value capitalize">{{vm.equipment.OS_DCF_diskConfig | lowercase}}</div>
         </li>
         <li class="rs-detail-item">
           <div class="rs-detail-key">Created on</div>

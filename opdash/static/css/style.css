@@ -4,3 +4,7 @@
 	transition: color;
 	transition-delay: 2s;
 }
+
+.capitalize {
+  text-transform: capitalize;
+}
