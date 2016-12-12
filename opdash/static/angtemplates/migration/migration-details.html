@@ -1,70 +1,65 @@
 <div class="rs-content rs-panel">
   <div class="rs-detail-header">
     <div class="rs-detail-header-subtitle">Cloud Migration</div>
-    <div class="rs-detail-header-title"><span style="text-transform: capitalize">{{vm.type}}</span> Migration</div>
+    <div class="rs-detail-header-title">Migrate <span class="capitalize">{{vm.type}}</span></div>
   </div>
-    <div class="rs-detail-section migration-details-container">
-      <div class="rs-detail-section-header">
-        <div class="rs-detail-section-title">Server Details</div>
+  <div class="rs-detail-section">
+    <div class="rs-detail-section-header">
+      <div class="rs-detail-section-title">Server Details</div>
+    </div>
+    <div class="rs-detail-section-body">
+      <div class="rs-detail-list">
+        <div class="rs-detail-key">Name</div>
+        <div class="rs-detail-value">{{vm.migrationDetail.name}}</div>
       </div>
-        <div class="rs-detail-section-body">
-          <div class="rs-detail-list">
-            <div class="rs-detail-key">Name</div>
-            <div class="rs-detail-value">{{vm.migrationDetail.name}}</div>
-          </div>
-          <div class="rs-detail-list">
-            <div class="rs-detail-key">ID</div>
-            <div class="rs-detail-value">{{vm.migrationDetail.id}}</div>
-          </div>
-          <div class="rs-detail-list">
-            <div class="rs-detail-key">IP address</div>
-            <div class="rs-detail-value">{{vm.migrationDetail.ip_address}}</div>
-          </div>
-          <div class="rs-detail-list">
-            <div class="rs-detail-key">Status</div>
-            <div class="rs-detail-value">{{vm.migrationDetail.status}}</div>
-          </div>
-          <div class="rs-detail-list">
-            <div class="rs-detail-key">Flavor</div>
-            <div class="rs-detail-value">GPv1</div>
-          </div>
-        </div>
+      <div class="rs-detail-list">
+        <div class="rs-detail-key">ID</div>
+        <div class="rs-detail-value">{{vm.migrationDetail.id}}</div>
       </div>
-      <div class="rs-detail-section">
-        <div class="rs-detail-section-header">
-          <div class="rs-detail-section-title">Pricing options</div>
-        </div>
-        <div class="rs-detail-section-body">
-          <div class="rs-embedded-list-table-wrapper rs-embedded-small">
-            <table class="rs-list-table rs-embedded-list-table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Region</th>
-                        <th>Zone</th>
-                        <th>AWS Type</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="priceItem in vm.priceDataList">
-                        <td><input type="radio" name="pricing" ng-model="vm.selectedAWSType" ng-value="priceItem.aws_type"></td>
-                        <td>US East 1</td>
-                        <td>US East 1a</td>
-                        <td>{{priceItem.aws_type}}</td>
-                        <td>{{priceItem.price | currency:undefined:2}}/month</td>
-                    </tr>
-                </tbody>
-            </table>
-          </div>
-        </div>
+      <div class="rs-detail-list">
+        <div class="rs-detail-key">IP address</div>
+        <div class="rs-detail-value">{{vm.migrationDetail.ip_address}}</div>
       </div>
-      <div class="rs-detail-section">
-        <div class="rs-detail-section-header rs-btn-group">
-          <button type="button" class="rs-btn rs-btn-primary" ng-click="vm.startMigration()" ng-class="{'disabled': vm.submitting}">Migrate</button>
-          <span ng-show="vm.submitting"><i class="rs-processing-indicator"></i> Processing...</span>
-          <span class="error-text" ng-show="vm.showPricingError">Please select a pricing option.</span>
-          <span class="error-text" ng-show="vm.migrationError">Error while trying to migrate.</span>
-        </div>
+      <div class="rs-detail-list">
+        <div class="rs-detail-key">Status</div>
+        <div class="rs-detail-value capitalize">{{vm.migrationDetail.status | lowercase}}</div>
       </div>
+    </div>
+  </div>
+  <div class="rs-detail-section">
+    <div class="rs-detail-section-header">
+      <div class="rs-detail-section-title">Pricing Options</div>
+    </div>
+    <div class="rs-detail-section-body">
+      <div class="rs-embedded-list-table-wrapper rs-embedded-small">
+        <table class="rs-list-table rs-embedded-list-table">
+            <thead>
+                <tr>
+                    <th style="width:30px;"></th>
+                    <th>Flavor</th>
+                    <th>Ram</th>
+                    <th>AWS Type</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="priceItem in vm.priceDataList">
+                    <td><input type="radio" name="pricing" ng-model="vm.selectedAWSType" ng-value="priceItem.aws_type"></td>
+                    <td>{{priceItem.flavor}}</td>
+                    <td>{{priceItem.ram}}</td>
+                    <td>{{priceItem.aws_type}}</td>
+                    <td>{{priceItem.price | currency:undefined:0}}</td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="rs-detail-section">
+    <div class="rs-detail-section-header rs-btn-group">
+      <button type="button" class="rs-btn rs-btn-primary" ng-click="vm.startMigration()" ng-class="{'disabled': vm.submitting}">Migrate</button>
+      <span ng-show="vm.submitting"><i class="rs-processing-indicator"></i> Processing...</span>
+      <span class="error-text" ng-show="vm.showPricingError">Please select a pricing option.</span>
+    </div>
+  </div>
 </div>
