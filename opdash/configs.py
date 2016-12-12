@@ -12,6 +12,10 @@ def load_configuration(app):
     if deploy_environ:
         app.config.from_object('opdash.configs.' + deploy_environ)
 
+    # Used to show what GIT build is currently deployed
+    # ALSO used as a cache buster for static files
+    app.config['GIT_HASH'] = environ.get('GIT_GUID', uuid4())
+
     # Load Secret Values from environent variables
     app.config['SSL_KEY'] = environ.get('UI_SSL_KEY', None)
     app.config['SSL_CRT'] = environ.get('UI_SSL_CERT', None)

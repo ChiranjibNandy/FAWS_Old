@@ -41,6 +41,10 @@ th{
     text-transform: capitalize;
 }
 
+.captitalize {
+  text-transform: capitalize
+}
+
 .rs-content{
     padding: 5px;
 }
