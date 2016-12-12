@@ -13,7 +13,8 @@
                 vm.$routerOnActivate = function(next, previous) {
                     vm.type = next.params.type;
                     vm.id = next.params.id;
-
+                    $('title')[0].innerHTML =  vm.type.charAt(0).toUpperCase() + vm.type.slice(1) + " Details - Rackspace Cloud Backup";
+                    
                     // fetch details based on selected migration item
                     ds.getDetailedList(vm.type)
                         .then(function (response) {
