@@ -1,8 +1,14 @@
 [
   {
-    "aws_types": "t2.micro,t2.small",
+    "aws_types": "t2.micro",
     "flavor": "GPv1",
     "ram": "1",
-    "price": 23
+    "price": 6.7
+  },
+  {
+    "aws_types": "t2.small",
+    "flavor": "GPv1",
+    "ram": "1",
+    "price": 5.8
   }
 ]

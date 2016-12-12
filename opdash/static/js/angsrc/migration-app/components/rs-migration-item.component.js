@@ -9,9 +9,19 @@
                 type: "@" // type parameter to be supplied (eg: server, network etc)
             },
             controllerAs: "vm",
-            controller: ["migrationitemdataservice", "$rootRouter", "viewlogservice",function (ds, $rootRouter,vl) {
+            controller: ["migrationitemdataservice", "$rootRouter", "viewlogservice", "authservice", "$q", function (ds, $rootRouter,vl, authservice, $q) {
                 var vm = this;
                 
+                var mapServerStatus = function(dataList, statusList) {
+                    for(var i=0; i<dataList.length; i++){
+                        var statusItem = statusList.filter(function(item){ return item.server_id === dataList[i].id })[0];
+                        if(statusItem)
+                            dataList[i].migrationStatus = statusItem.status;
+                    }
+                    //dataList[3].migrationStatus = "done";
+                    return dataList;
+                };
+
                 // Perfoming controller initialization steps
                 vm.$onInit = function() {
                     vm.labels = [];
@@ -20,38 +30,48 @@
                     vm.loading = true;
                     vm.loadError = false;
                     vm.noData = false;
+                    vm.sortingOrder = true;
+                    vm.tenant_id = authservice.getAuth().tenant_id;
+                    $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Backup";
 
                     // Retrieve all migration items of a specific type (eg: server, network etc)
-                    ds.getTrimmedAllItems(vm.type)
-                        .then(function (response) {
-                            if(response.error){
-                                vm.loading = false;
-                                vm.loadError = true;
-                                return;
-                            }
+                    var list = ds.getTrimmedAllItems(vm.type);
 
-                            if(response.data.length === 0){
-                                vm.noData = true;
-                                vm.loading = false;
-                                return;
-                            }
+                    // Retrieve migration item status
+                    var status = ds.getServerMigrationStatus(vm.tenant_id);
 
-                            vm.items = response.data;
-                            vm.searchField = response.labels[0].field;
-                            vm.labels = response.labels; // set table headers
-                            angular.forEach(response.labels, function(label){
-                                vm.search[label.field] = ""; // set search field variables
-                            });
+                    // wait for all the promises to resolve
+                    $q.all([list, status]).then(function(results) {
+                        if(results[0].error || results[1].error){
                             vm.loading = false;
+                            vm.loadError = true;
+                            return;
+                        }
+
+                        if(results[0].data.length === 0){
+                            vm.noData = true;
+                            vm.loading = false;
+                            return;
+                        }
+
+                        var dataList = results[0].data;
+                        var statusList = results[1].server_status;
+
+                        vm.items = mapServerStatus(dataList, statusList);
+                        vm.searchField = results[0].labels[0].field;
+                        vm.labels = results[0].labels; // set table headers
+                        angular.forEach(results[0].labels, function(label){
+                            vm.search[label.field] = ""; // set search field variables
                         });
+                        vm.loading = false;
+                    });
 
                     // Setup status filters
                     vm.statusFilters = [
                         { text: "All", type: "", selected: true },
-                        { text: "Completed", type: "completed", selected: false },
-                        { text: "In Progress", type: "inProgress", selected: false },
-                        { text: "Error", type: "error", selected: false },
-                        { text: "Disabled", type: "disabled", selected: false }
+                        { text: "Active", type: "ACTIVE", selected: false },
+                        { text: "Warning", type: "WARNING", selected: false },
+                        { text: "Error", type: "ERROR", selected: false }
                     ];
 
                     vm.statusFilter = "";
@@ -63,11 +83,21 @@
 
                 vm.sort = function(item){
                     var items = vm.items;
-                    items.sort(function(a,b){
-                        if(a[item] < b[item]) return -1;
-                        if(a[item] > b[item]) return 1;
-                        return 0;
-                    })
+                    if(vm.sortingOrder){
+                        items.sort(function(a,b){
+                            if(a[item] < b[item]) return -1;
+                            if(a[item] > b[item]) return 1;
+                            return 0;
+                        });
+                        vm.sortingOrder = false;
+                    }else{
+                        items.sort(function(a,b){
+                            if(a[item] > b[item]) return -1;
+                            if(a[item] < b[item]) return 1;
+                            return 0;
+                        });
+                        vm.sortingOrder = true;
+                    }
                     vm.items = items;
                 };
 
@@ -83,7 +113,7 @@
 
                 // Get count of items by their status type
                 vm.getCountByStatus = function (status) {
-                    return vm.loading ? "?" : (status==="" ? vm.items.length : (vm.items ? vm.items.filter(function (item) { return item.migrationStatus === status }).length : "?"));
+                    return vm.loading ? "?" : (status==="" ? vm.items.length : (vm.items ? vm.items.filter(function (item) { return item.status === status }).length : "?"));
                 };
 
                 // Move to migration details page if multiple items are selected
