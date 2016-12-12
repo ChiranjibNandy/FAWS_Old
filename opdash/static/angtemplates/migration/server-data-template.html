@@ -1,12 +1,14 @@
 <tr ng-repeat="item in vm.items | filter: vm.statusFilter | filter: vm.search">
     <td class="rs-table-status" 
-            ng-class="{'rs-table-status-ok': item.migrationStatus=='completed', 'rs-table-status-processing rs-table-status-striped': item.migrationStatus=='inProgress', 'rs-table-status-error': item.migrationStatus=='error', 'rs-table-status-disabled': item.migrationStatus=='disabled'}">
+            ng-class="{'rs-table-status-ok': item.status=='ACTIVE', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
     </td>
     <td class="rs-table-link"><a href="#" ng-link="['EquipmentDetails', {type: vm.type, id: item.id}]">{{item.name}}</a></td>
     <td class="rs-table-text">{{item.ip_address}}</td>
     <td class="rs-table-text">{{item.flavor}}</td>
     <td class="rs-table-text">{{item.status}}</td>
     <td style="width: 150px;">
-        <button class="rs-btn rs-btn-primary" ng-click="vm.migrate(item.id)">Migrate</button>
+        <div class="rs-status rs-status-processing migration-status" ng-show="item.migrationStatus==='in progress'">Migrating</div>
+        <div class="rs-status rs-status-ok migration-status" ng-show="item.migrationStatus==='done'">Completed</div>
+        <button class="rs-btn rs-btn-primary migration-status" ng-show="!item.migrationStatus" ng-click="vm.migrate(item.id)">Migrate</button>
     </td>
 </tr>

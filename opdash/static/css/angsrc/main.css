@@ -148,3 +148,16 @@ a.rs-nav-link{
 #subNav{
    display: none;
 }
+
+.status-fixed-width{
+    width: 150px;
+}
+
+.migration-status {
+    width: 78px;
+}
+
+.migration-status.rs-status-ok {
+    padding-left: 8px;
+    padding-right: 8px;
+}

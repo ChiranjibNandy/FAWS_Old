@@ -1,7 +1,4 @@
-
-
 <div class="rs-main">
-<!--
   <div class="rs-sidebar sidebar">
     <div class="rs-facet-header">
         <div class="rs-facet-clear-link rs-hidden">clear all</div>
@@ -10,14 +7,14 @@
     <div class="rs-facet-section">
         <div class="rs-facet-section-header">
             <div class="rs-facet-clear-link rs-hidden">clear</div>
-            <div class="rs-facet-section-title">Migration Status</div>
+            <div class="rs-facet-section-title">Status</div>
         </div>
         <div class="rs-facet-section-body">
             <ul class="rs-facet-list">
-                <li class="rs-facet-item" ng-repeat="statusFilterItem in vm.statusFilters"
+                <li class="rs-facet-item" ng-repeat="statusFilterItem in vm.statusFilters" 
                                         ng-class="{'selected': statusFilterItem.selected}"
                                         ng-click="vm.setStatusFilter(statusFilterItem.type)">
-                    <i ng-class="{'rs-status-ok': statusFilterItem.type==='completed', 'rs-status-warning': statusFilterItem.type==='inProgress', 'rs-status-error': statusFilterItem.type==='error', 'rs-status-disabled': statusFilterItem.type==='disabled'}"></i>
+                    <i ng-class="{'rs-status-ok': statusFilterItem.type==='ACTIVE', 'rs-status-warning': statusFilterItem.type==='WARNING', 'rs-status-error': statusFilterItem.type==='ERROR'}"></i>
                     <div class="rs-facet-label">{{statusFilterItem.text}}</div>
                     <div class="rs-facet-count">({{vm.getCountByStatus(statusFilterItem.type)}})</div>
                 </li>
@@ -25,11 +22,11 @@
         </div>
     </div>
   </div>
--->
+
   <div class="rs-content rs-panel mainContent">
     <div class="rs-row">
         <div class="migration-item-header">
-            <h2 class="rs-page-title migration-item-type span-5">{{vm.type}}s</h2>
+            <h2 class="rs-page-title migration-item-type span-5">{{vm.type}}s <span style="font-size: 16px; vertical-align: middle;">({{vm.tenant_id}})</span></h2>
             <span ng-show="!vm.loading && !vm.noData">
                 <span class="span-1 no-break">Search by:</span>
                 <select class="span-3" ng-model="vm.searchField"
@@ -55,17 +52,16 @@
             <thead>
                 <tr>
                     <th class="rs-table-status"></th>
-                    <th ng-repeat="label in vm.labels">
+                    <th ng-repeat="label in vm.labels" ng-click="vm.sort(label.field)">
                         <a class="rs-table-sort rs-table-sort-desc">
                             <span class="rs-table-sort-text">{{label.text}}</span>
-                            <span class="rs-table-sort-indicator" ng-click="vm.sort(label.field)"></span>
+                            <span class="rs-table-sort-indicator"></span>
                         </a>
                     </th>
                     <th style="width: 150px;"></th>
                 </tr>
             </thead>
             <tbody static-include="'/static/angtemplates/migration/'+vm.type+'-data-template.html'"></tbody>
-            <!--<tbody static-template template-path="/static/angtemplates/migration/server-data-template.html"></tbody>-->
         </table>
 
         <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">

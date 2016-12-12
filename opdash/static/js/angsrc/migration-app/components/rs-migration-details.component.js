@@ -16,6 +16,7 @@
 
                     vm.type = next.params.type;
                     vm.id = next.params.id;
+                    $('title')[0].innerHTML =  vm.type.charAt(0).toUpperCase() + vm.type.slice(1)+" Migration - Rackspace Cloud Backup";
 
                     ds.getMigrationDetails(vm.type, vm.id)
                             .then(function (response) {
@@ -52,15 +53,31 @@
 
                         vm.submitting = true;
                         vm.showPricingError = false;
+                        vm.migrationError = false;
 
                         var requestObj = ds.prepareRequest(vm.type, {id: vm.id, type: vm.selectedAWSType});
-                        console.log(requestObj);
+                        //console.log(requestObj);
 
                         HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj)
                                    .then(function(response){
-                                       vm.submitting = false;
-                                       console.log(response);
+                                        if(!response.error){
+                                            $rootRouter.navigate(["MigrationsStatus"]);
+                                        } else {
+                                            vm.migrationError = true;
+                                            vm.submitting = false;
+                                        }
+                                        console.log(response);
                                    });
+
+                        // var status = true;
+                        // $timeout(function(){
+                        //     if(status){
+                        //         $rootRouter.navigate(["MigrationsStatus"]);
+                        //     } else {
+                        //         vm.migrationError = true;
+                        //         vm.submitting = false;
+                        //     }
+                        // }, 3000);
                         
                     }
                 };
