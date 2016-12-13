@@ -17,9 +17,11 @@
                         //ip_address is id 
                         angular.forEach(t[key].networks, function(network) { 
                             networksList.push({
-                                ip_address: network.id,
+                                id: network.id,
                                 name: network.name,
-                                status: network.status
+                                shared: network.shared ? "Yes" : "No",
+                                status: network.status,
+                                tenant_id: network.tenant_id
                             });
                         });
                     }
@@ -42,26 +44,14 @@
                         // iterate over each network and extract necessary data
                         
                         angular.forEach(t[key].networks, function(network) { 
-                            networksLiself.getPricingDetails = function(flavor, ram){
-            var url = "/api/get_server_mappings/"+flavor+"/"+ram;
-            return HttpWrapper.send(url,{"operation":'GET'})
-                    .then(function (response) {
-                        return {
-                            data: response
-                        };
-                    });
-        };st.push({
+                            networksList.push({
                                 id: network.id,
                                 name: network.name,
-                                tenant_id: network.tenant_id,
-                                ip_address: network.accessIPv4,
-                                hostId: network.hostId,
-                                OS_DCF_diskConfig: network["OS-DCF:diskConfig"],
-                                OS_EXT_STS_power_state: network["OS-EXT-STS:power_state"],
-                                OS_EXT_STS_task_state: network["OS-EXT-STS:task_state"],
-                                OS_EXT_STS_vm_state: network["OS-EXT-STS:vm_state"],
-                                created: network.created,
-                                updated:network.updated
+                                admin_state_up: network.admin_state_up ? "Yes" : "No",
+                                shared: network.shared ? "Yes" : "No",
+                                subnets: network.subnets,
+                                status: network.status,
+                                tenant_id: network.tenant_id
                             });
                         });
                     }
@@ -72,6 +62,16 @@
                     data: networksList
                 };
             }
+
+            self.getPricingDetails = function(flavor, ram){
+                var url = "/api/get_server_mappings/"+flavor+"/"+ram;
+                return HttpWrapper.send(url,{"operation":'GET'})
+                        .then(function (response) {
+                            return {
+                                data: response
+                            };
+                        });
+            };
 
             // get network list with only the required properties
             self.getTrimmedList = function() {
@@ -107,6 +107,7 @@
                                     networks = {
                                         labels: [
                                             {field: "name", text: "Network Name"},
+                                            {field: "shared", text: "Shared"},
                                             {field: "status", text: "Status"}
                                         ],
                                         data: response

@@ -32,7 +32,7 @@
                                </tr>
                            </thead>
                            <tbody>
-                               <tr ng-repeat="item in vm.migrations | orderBy:'-vm.created_at'">
+                               <tr ng-repeat="item in vm.migrations | orderBy:'-created_at'">
                                    <td class="rs-table-text status-fixed-width">{{item.id}}</td>
                                    <td class="rs-table-text status-fixed-width">{{item.name}}</td>
                                    <td class="rs-table-text">{{item.status}}</td>
@@ -66,7 +66,7 @@
 
                         <div ng-show="vm.noData" class="rs-table-overlay">
                             <div class="rs-table-overlay-content">
-                                <div class="rs-table-overlay-subtitle">There are no jobs.</div>
+                                <div class="rs-table-overlay-subtitle">No jobs found.</div>
                             </div>
                         </div>
 

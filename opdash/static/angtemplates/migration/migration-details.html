@@ -24,6 +24,10 @@
         <div class="rs-detail-key">Status</div>
         <div class="rs-detail-value capitalize">{{vm.migrationDetail.status | lowercase}}</div>
       </div>
+      <div class="rs-detail-list">
+        <div class="rs-detail-key">Flavor</div>
+        <div class="rs-detail-value capitalize">GPv1</div>
+      </div>
     </div>
   </div>
   <div class="rs-detail-section">
@@ -35,20 +39,22 @@
         <table class="rs-list-table rs-embedded-list-table">
             <thead>
                 <tr>
-                    <th style="width:30px;"></th>
-                    <th>Flavor</th>
-                    <th>Ram</th>
-                    <th>AWS Type</th>
-                    <th>Price</th>
+                    <tr>
+                        <th></th>
+                        <th>Region</th>
+                        <th>Zone</th>
+                        <th>AWS Type</th>
+                        <th>Price</th>
+                    </tr>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="priceItem in vm.priceDataList">
                     <td><input type="radio" name="pricing" ng-model="vm.selectedAWSType" ng-value="priceItem.aws_type"></td>
-                    <td>{{priceItem.flavor}}</td>
-                    <td>{{priceItem.ram}}</td>
+                    <td>US East 1</td>
+                    <td>US East 1a</td>
                     <td>{{priceItem.aws_type}}</td>
-                    <td>{{priceItem.price | currency:undefined:0}}</td>
+                    <td>{{priceItem.price | currency:undefined:2}}/month</td>
                 </tr>
             </tbody>
         </table>

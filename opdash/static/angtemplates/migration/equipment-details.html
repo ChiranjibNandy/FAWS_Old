@@ -5,12 +5,29 @@
   </div>
   <div class="rs-detail-section">
     <div class="rs-detail-section-header">
-      <div class="rs-detail-section-title">Server Details</div>
+      <div class="rs-detail-section-title capitalize">{{vm.type}} Details</div>
     </div>
     <div class="rs-detail-section-body">
-      <ul class="rs-detail-list">
+      <ul class="rs-detail-list" ng-show="vm.type==='network'">
         <li class="rs-detail-item">
-          <div class="rs-detail-key">Server Status</div>
+          <div class="rs-detail-key">Admin State Up</div>
+          <div class="rs-detail-value">{{vm.equipment.admin_state_up}}</div>
+        </li>
+        <li class="rs-detail-item">
+          <div class="rs-detail-key">Shared</div>
+          <div class="rs-detail-value">{{vm.equipment.shared}}</div>
+        </li>
+        <li class="rs-detail-item">
+          <div class="rs-detail-key">Subnets</div>
+          <div class="rs-detail-value">
+            <span ng-repeat="subnet in vm.equipment.subnets"><span>{{subnet}}<br></span></span>
+          </div>
+        </li>
+      </ul>
+
+      <ul class="rs-detail-list" ng-show="vm.type==='server'">
+        <li class="rs-detail-item">
+          <div class="rs-detail-key capitalize">{{vm.type}} Status</div>
           <div class="rs-detail-value capitalize">{{vm.equipment.OS_EXT_STS_vm_state | lowercase}}</div>
         </li>
         <li class="rs-detail-item">
@@ -21,12 +38,6 @@
           <div class="rs-detail-key">Host ID</div>
           <div class="rs-detail-value">{{vm.equipment.hostId}}</div>
         </li>
-        <!--
-          <li class="rs-detail-item">
-            <div class="rs-detail-key">Power State</div>
-            <div class="rs-detail-value capitalize">{{vm.equipment.OS_EXT_STS_power_state}}</div>
-          </li>
-        -->
         <li class="rs-detail-item" ng-if="vm.equipment.OS_EXT_STS_task_state">
           <div class="rs-detail-key">Task State</div>
           <div class="rs-detail-value capitalize">{{vm.equipment.OS_EXT_STS_task_state}}</div>

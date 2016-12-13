@@ -121,6 +121,11 @@
                     $rootRouter.navigate(["MigrationDetails", {type: vm.type, id: id}]);
                 };
 
+                // Move to migration details page if multiple items are selected
+                vm.gotoDetails = function(id) {
+                    $rootRouter.navigate(["EquipmentDetails", {type: vm.type, id: id}]);
+                };
+
                 // Set status filter
                 vm.setStatusFilter = function(status){
                     angular.forEach(vm.statusFilters, function(filter){
