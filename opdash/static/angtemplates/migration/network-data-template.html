@@ -3,8 +3,8 @@
             ng-class="{'rs-table-status-ok': item.status=='ACTIVE', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
     </td>
     <td class="rs-table-link"><a href="#" ng-link="['EquipmentDetails', {type: vm.type, id: item.id}]">{{item.name}}</a></td>
-    <td class="rs-table-text">{{item.status}}</td>
     <td class="rs-table-text">{{item.shared}}</td>
+    <td class="rs-table-text">{{item.status}}</td>
     <td style="width: 150px;">
         <div class="rs-status rs-status-processing migration-status" ng-show="item.migrationStatus==='in progress'">Migrating</div>
         <div class="rs-status rs-status-ok migration-status" ng-show="item.migrationStatus==='done'">Completed</div>
