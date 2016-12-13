@@ -39,7 +39,7 @@ a.rs-nav-link{
 
 .migration-item-type{
     margin: 5px 0;
-    text-transform: capitalize;
+    
 }
 
 .rs-content{
@@ -155,9 +155,14 @@ a.rs-nav-link{
 
 .migration-status {
     width: 78px;
+    cursor: pointer;
 }
 
 .migration-status.rs-status-ok {
     padding-left: 8px;
     padding-right: 8px;
+}
+
+.capitalize{
+    text-transform: capitalize;
 }
