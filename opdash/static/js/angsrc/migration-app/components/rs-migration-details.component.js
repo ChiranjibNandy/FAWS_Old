@@ -85,15 +85,16 @@
                          HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj)
                                     .then(function(response){
                                          if(!response.error){
-                                             $rootRouter.navigate(["MigrationsStatus"]);
+                                             $timeout(function(){
+                                                $rootRouter.navigate(["MigrationsStatus"]);
+                                             }, 4000);
                                          } else {
                                              vm.migrationError = true;
                                              vm.submitting = false;
                                          }
-                                         console.log(response);
                                     });
 
-                        var status = true;
+                        //var status = true;
 //                        $timeout(function(){
 //                            if(status){
 //                                $rootRouter.navigate(["MigrationsStatus"]);

@@ -18,7 +18,18 @@
                         if(statusItem)
                             dataList[i].migrationStatus = statusItem.status;
                     }
-                    //dataList[3].migrationStatus = "done";
+                    //dataList[0].migrationStatus = "done";
+                    return dataList;
+                };
+
+                var mapNetworkStatus = function(dataList, statusList) {
+                    for(var i=0; i<dataList.length; i++){
+                        // item.id === jobsList[i].resources.networks[0].subnets[0].id
+                        var statusItem = statusList.filter(function(item){ return item.resources.networks[0].subnets[0].id === dataList[i].subnets[0].id })[0];
+                        if(statusItem)
+                            dataList[i].migrationStatus = statusItem.status;
+                    }
+                    //dataList[0].migrationStatus = "done";
                     return dataList;
                 };
 
@@ -36,7 +47,7 @@
 
                     // Retrieve all migration items of a specific type (eg: server, network etc)
                     var list = ds.getTrimmedAllItems(vm.type);
-
+                    
                     // Retrieve migration item status
                     var status = ds.getServerMigrationStatus(vm.tenant_id);
 
@@ -55,9 +66,12 @@
                         }
 
                         var dataList = results[0].data;
-                        var statusList = results[1].server_status;
 
-                        vm.items = mapServerStatus(dataList, statusList);
+                        if(vm.type === "server")
+                            vm.items = mapServerStatus(dataList, results[1].server_status);
+                        if(vm.type === "network")
+                            vm.items = mapNetworkStatus(dataList, results[1].network_status);
+
                         vm.searchField = results[0].labels[0].field;
                         vm.labels = results[0].labels; // set table headers
                         angular.forEach(results[0].labels, function(label){
