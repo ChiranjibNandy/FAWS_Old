@@ -5,9 +5,9 @@
   </div>
   <div class="rs-detail-section">
     <div class="rs-detail-section-header">
-      <div class="rs-detail-section-title">Server Details</div>
+      <div class="rs-detail-section-title">{{vm.type.charAt(0).toUpperCase() + vm.type.substr(1).toLowerCase()}} Details</div>
     </div>
-    <div class="rs-detail-section-body">
+    <div class="rs-detail-section-body" ng-show="vm.type==='server'">
       <div class="rs-detail-list">
         <div class="rs-detail-key">Name</div>
         <div class="rs-detail-value">{{vm.migrationDetail.name}}</div>
@@ -29,43 +29,103 @@
         <div class="rs-detail-value capitalize">GPv1</div>
       </div>
     </div>
-  </div>
-  <div class="rs-detail-section">
-    <div class="rs-detail-section-header">
-      <div class="rs-detail-section-title">Pricing Options</div>
+    
+	<div class="rs-detail-section-body" ng-show="vm.type==='network'">
+      <div class="rs-detail-list">
+        <div class="rs-detail-key">Name</div>
+        <div class="rs-detail-value">{{vm.migrationDetail.name}}</div>
+      </div>
+      <div class="rs-detail-list">
+        <div class="rs-detail-key">ID</div>
+        <div class="rs-detail-value">{{vm.migrationDetail.id}}</div>
+      </div>
+      <div class="rs-detail-list">
+        <div class="rs-detail-key">Admin State Up</div>
+        <div class="rs-detail-value">{{vm.migrationDetail.admin_state_up}}</div>
+      </div>
+      <div class="rs-detail-list">
+        <div class="rs-detail-key">Shared</div>
+        <div class="rs-detail-value">{{vm.migrationDetail.shared}}</div>
+      </div>
+      <div class="rs-detail-list">
+        <div class="rs-detail-key">Status</div>
+        <div class="rs-detail-value capitalize">{{vm.migrationDetail.status | lowercase}}</div>
+      </div>
+      <div class="rs-detail-list">
+        <div class="rs-detail-key">Subnets</div>
+        <div class="rs-detail-value capitalize">
+          <span ng-repeat="subnet in vm.migrationDetail.subnets"><span>{{subnet}}<br></span></span>
+        </div>
+      </div>
     </div>
-    <div class="rs-detail-section-body">
-      <div class="rs-embedded-list-table-wrapper rs-embedded-small">
-        <table class="rs-list-table rs-embedded-list-table">
+
+    <div class="rs-detail-section" ng-show="vm.type==='server'">
+      <div class="rs-detail-section-header">
+        <div class="rs-detail-section-title">Pricing Options</div>
+      </div>
+      <div class="rs-detail-section-body">
+        <div class="rs-embedded-list-table-wrapper rs-embedded-small">
+          <table class="rs-list-table rs-embedded-list-table">
             <thead>
+              <tr>
                 <tr>
-                    <tr>
-                        <th></th>
-                        <th>Region</th>
-                        <th>Zone</th>
-                        <th>AWS Type</th>
-                        <th>Price</th>
-                    </tr>
+                  <th></th>
+                  <th>Region</th>
+                  <th>Zone</th>
+                  <th>AWS Type</th>
+                  <th>Price</th>
                 </tr>
+              </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="priceItem in vm.priceDataList">
-                    <td><input type="radio" name="pricing" ng-model="vm.selectedAWSType" ng-value="priceItem.aws_type"></td>
-                    <td>US East 1</td>
-                    <td>US East 1a</td>
-                    <td>{{priceItem.aws_type}}</td>
-                    <td>{{priceItem.price | currency:undefined:2}}/month</td>
-                </tr>
+              <tr ng-repeat="priceItem in vm.priceDataList">
+                <td><input type="radio" name="pricing" ng-model="vm.selectedAWSType" ng-value="priceItem.aws_type"></td>
+                <td>US East 1</td>
+                <td>US East 1a</td>
+                <td>{{priceItem.aws_type}}</td>
+                <td>{{priceItem.price | currency:undefined:2}}</td>
+              </tr>
             </tbody>
-        </table>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="rs-detail-section" ng-show="vm.type==='network'">
+      <div class="rs-detail-section-header">
+        <div class="rs-detail-section-title">Select Destination Region</div>
+      </div>
+      <div class="rs-detail-section-body">
+        <div class="rs-embedded-list-table-wrapper rs-embedded-small">
+          <table class="rs-list-table rs-embedded-list-table">
+            <thead>
+              <tr>
+                <tr>
+                  <th></th>
+                  <th>Region</th>
+                  <th>Zone</th>
+                </tr>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="regionItem in vm.destRegionList">
+                <td><input type="radio" name="destRegion" ng-model="vm.selectedRegion" ng-value="regionItem.regionValue"></td>
+                <td>{{regionItem.regionText}}</td>
+                <td>{{regionItem.zoneText}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="rs-detail-section">
+      <div class="rs-detail-section-header rs-btn-group">
+        <button type="button" class="rs-btn rs-btn-primary" ng-click="vm.startMigration()" ng-class="{'disabled': vm.submitting}">Migrate</button>
+        <span ng-show="vm.submitting"><i class="rs-processing-indicator"></i> Processing...</span>
+        <span class="error-text" ng-show="vm.showPricingError">Please select a pricing option.</span>
+        <span class="error-text" ng-show="vm.showRegionError">Please select a region</span>
       </div>
     </div>
   </div>
-  <div class="rs-detail-section">
-    <div class="rs-detail-section-header rs-btn-group">
-      <button type="button" class="rs-btn rs-btn-primary" ng-click="vm.startMigration()" ng-class="{'disabled': vm.submitting}">Migrate</button>
-      <span ng-show="vm.submitting"><i class="rs-processing-indicator"></i> Processing...</span>
-      <span class="error-text" ng-show="vm.showPricingError">Please select a pricing option.</span>
-    </div>
-  </div>
-</div>
+  <div>

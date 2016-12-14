@@ -47,10 +47,7 @@
              this.getPricingDetails = function(type, flavor, ram) {
                 if (type === "server") {
                    return serverService.getPricingDetails(flavor, ram);
-               }
-               else if (type === "network") {
-                   return networkService.getPricingDetails(flavor, ram);
-               }
+                }
             };
 
             this.prepareRequest = function(type, info){

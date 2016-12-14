@@ -2,7 +2,7 @@
     "use strict";
 
     angular.module("migrationApp")
-        .factory("networkservice", ["httpwrapper", "$q", function (HttpWrapper, $q) {
+        .factory("networkservice", ["httpwrapper", "$q", "authservice", function (HttpWrapper, $q, authservice) {
             // local variables to help cache data
             var loaded, networks, self = this;
 
@@ -63,15 +63,23 @@
                 };
             }
 
-            self.getPricingDetails = function(flavor, ram){
-                var url = "/api/get_server_mappings/"+flavor+"/"+ram;
-                return HttpWrapper.send(url,{"operation":'GET'})
-                        .then(function (response) {
-                            return {
-                                data: response
-                            };
-                        });
-            };
+            var getNetworkDetails = function(id){
+                var t = networks.data;
+                for(var key in t){
+                    if(t.hasOwnProperty(key)){
+                        for(var i=0; i<t[key].networks.length; i++){
+                            if(t[key].networks[i].id === id){
+                                var network = t[key].networks[i];
+
+                                return {
+                                    region: key,
+                                    subnets: network.subnets.map(function(subnetId){ return {id: subnetId}; })
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             // get network list with only the required properties
             self.getTrimmedList = function() {
@@ -122,26 +130,65 @@
             };
 
             // get network details of specific items
-            self.getMigrationDetails = function (ids) {
-                var url = "/static/angassets/network-migration-details.json";
-                return $http.get(url)
-                    .then(function (response) {
-                        var data = response.data.filter(function (item) { return ids.indexOf(item.id) >= 0 });
-                        return {
-                            labels: ["Network Name", "Description", "Migration Status", "Progress", "View log details"],
-                            data: data
-                        };
+            self.getMigrationDetails = function (id) {
+                var deferred = $q.defer();
+                self.getAll().then(function(response) {
+                    if(response.error)
+                        return deferred.resolve(response);
+
+                    var tempNetworks = detailsTransform(response).data.filter(function(item) { 
+                        return item.id === id;
                     });
+                    console.log("tempNetworks", tempNetworks);
+                    return deferred.resolve(tempNetworks[0]);
+                });
+                return deferred.promise;
             };
 
-            self.getPricingDetails = function(flavor, ram){
-            var url = "/api/compute/get_network_mappings/"+flavor+"/"+ram;
-                return HttpWrapper.send(url,{"operation":'GET'})
-                        .then(function (response) {
-                            return {
-                                data: response
-                            };
-                        });
+            self.prepareRequest = function(info){
+                var network = getNetworkDetails(info.id);
+                var auth = authservice.getAuth();
+                
+                var request = {
+                    source: {
+                        cloud: "rackspace",
+                        tenantid: auth.tenant_id,
+                        auth: {
+                            method: "key",
+                            type: "customer",
+                            username: auth.rackUsername,
+                            apikey: auth.rackAPIKey
+                        }
+                    },
+                    destination: {
+                        cloud: "aws",
+                        account: auth.awsAccount,
+                        auth: {
+                            method: "keys",
+                            accesskey: auth.accessKey,
+                            secretkey: auth.secretKey
+                        }
+                    },
+                    resources: {
+                        networks: [
+                            {
+                                source: {
+                                    region: network.region
+                                },
+                                destination: {
+                                    region: info.region,
+                                    default_zone: "us-east-1a"
+                                },
+                                subnets: "All",
+                                instances: "All",
+                                security_groups: "All"
+                            }
+                        ]
+                    },
+                    version: "v1"
+                };
+
+                return request;
             };
 
             return self;
