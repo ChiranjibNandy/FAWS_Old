@@ -16,7 +16,7 @@
 
                     vm.type = next.params.type;
                     vm.id = next.params.id;
-                    $('title')[0].innerHTML =  vm.type.charAt(0).toUpperCase() + vm.type.slice(1)+" Migration - Rackspace Cloud Backup";
+                    $('title')[0].innerHTML =  vm.type.charAt(0).toUpperCase() + vm.type.slice(1)+" Migration - Rackspace Cloud Migration";
 
                     ds.getMigrationDetails(vm.type, vm.id)
                             .then(function (response) {
@@ -102,7 +102,7 @@
 //                                vm.submitting = false;
 //                            }
 //                        }, 2000);
-                        
+
                     }
                 };
 
