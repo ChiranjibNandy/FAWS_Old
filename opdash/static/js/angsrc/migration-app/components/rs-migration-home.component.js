@@ -8,6 +8,7 @@
             controllerAs:"vm",
             controller: ["authservice",function(authservice) {
                 var vm = this;
+                this.auth = authservice.getAuth();
                 vm.$routerOnActivate = function(next, previous) {
                    authservice.getAuth().tenant_id = next.params.tenant_id;
                     vm.tenant_id = next.params.tenant_id;

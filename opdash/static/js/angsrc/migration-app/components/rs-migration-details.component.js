@@ -21,7 +21,7 @@
                     ds.getMigrationDetails(vm.type, vm.id)
                             .then(function (response) {
                                 vm.migrationDetail = response;
-                                console.log(vm.migrationDetail);
+                                console.log('MIGRATION DETAIL:', vm.migrationDetail);
                             });
 
                     if(vm.type === 'server'){
