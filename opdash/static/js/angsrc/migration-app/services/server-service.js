@@ -21,7 +21,8 @@
                             tenant_id: server.tenant_id,
                             ip_address: server.accessIPv4,
                             status: server.status,
-                            ram: server.flavor_details.ram
+                            ram: server.flavor_details.ram,
+                            details: server // NEED ALL THE DETAILS
                         });
                     });
                 }
@@ -139,6 +140,7 @@
                var tempServers = trimTransform(response).data.filter(function(item) {
                    return item.id === id;
                });
+               console.log('FOUND MATCHING SERVER', tempServers[0]);
                return deferred.resolve(tempServers[0]);
            });
            return deferred.promise;
