@@ -14,14 +14,14 @@
                 // iterate over networks by region
                 if (t.hasOwnProperty(key)) {
                     // iterate over each network and extract necessary data
-                    angular.forEach(t[key].servers, function(server) { 
+                    angular.forEach(t[key].servers, function(server) {
                         serversList.push({
                             id: server.id,
                             name: server.name,
                             tenant_id: server.tenant_id,
                             ip_address: server.accessIPv4,
                             status: server.status,
-                            flavor: server.flavor.id
+                            ram: server.flavor_details.ram
                         });
                     });
                 }
@@ -42,8 +42,8 @@
                 // iterate over networks by region
                 if (t.hasOwnProperty(key)) {
                     // iterate over each network and extract necessary data
-                    
-                    angular.forEach(t[key].servers, function(server) { 
+
+                    angular.forEach(t[key].servers, function(server) {
                         serversList.push({
                             id: server.id,
                             name: server.name,
@@ -114,7 +114,7 @@
                                         labels: [
                                                     {field: "name", text: "Server Name"},
                                                     {field: "ip_address", text: "IP Address"},
-                                                    {field: "flavor", text: "Flavor ID"},
+                                                    {field: "ram", text: "RAM"},
                                                     {field: "status", text: "Status"}
                                                 ],
                                         data: response
@@ -136,8 +136,8 @@
                if(response.error)
                    return deferred.resolve(response);
 
-               var tempServers = trimTransform(response).data.filter(function(item) { 
-                   return item.id === id; 
+               var tempServers = trimTransform(response).data.filter(function(item) {
+                   return item.id === id;
                });
                return deferred.resolve(tempServers[0]);
            });
