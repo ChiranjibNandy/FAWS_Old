@@ -21,7 +21,8 @@
                                 name: network.name,
                                 shared: network.shared ? "Yes" : "No",
                                 status: network.status,
-                                tenant_id: network.tenant_id
+                                tenant_id: network.tenant_id,
+                                subnets: network.subnets
                             });
                         });
                     }
@@ -139,7 +140,7 @@
                     var tempNetworks = detailsTransform(response).data.filter(function(item) { 
                         return item.id === id;
                     });
-                    console.log("tempNetworks", tempNetworks);
+                    
                     return deferred.resolve(tempNetworks[0]);
                 });
                 return deferred.promise;
@@ -179,7 +180,7 @@
                                     region: info.region,
                                     default_zone: "us-east-1a"
                                 },
-                                subnets: "All",
+                                subnets: network.subnets,
                                 instances: "All",
                                 security_groups: "All"
                             }

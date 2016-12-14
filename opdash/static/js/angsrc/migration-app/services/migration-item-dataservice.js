@@ -70,6 +70,7 @@
                                   .then(function(response){
                                       var status = {
                                           server_status: response.server_status,
+                                          network_status: response.network_status
                                       };
                                       return status;
                                   });

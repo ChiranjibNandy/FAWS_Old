@@ -3,12 +3,12 @@
    <div class="rs-inner rs-mig-nomar">
        <div class="migration-details-container">
             <div class="migration-item-header">
-               <h2 class="migration-item-type span-9">Migrations ({{ vm.tenant_id }})</h2>
+               <h2 class="migration-item-type span-9">Server Migrations <span style="font-size: 16px; vertical-align: middle;">({{vm.tenant_id}})</span></h2>
             </div>
             <div class="rs-row">
                <div class="span-12">
                    <div class="rs-embedded-list-table-wrapper rs-embedded-medium">
-                       <table class="rs-list-table rs-embedded-list-table" ng-show="!vm.loading && !vm.loadError && !vm.noData">
+                       <table class="rs-list-table rs-embedded-list-table" ng-show="!vm.server.loading && !vm.server.loadError && !vm.server.noData">
                            <thead>
                                <tr>
                                    <th>
@@ -32,7 +32,7 @@
                                </tr>
                            </thead>
                            <tbody>
-                               <tr ng-repeat="item in vm.migrations | orderBy:'-created_at'">
+                               <tr ng-repeat="item in vm.server.migrations | orderBy:'-created_at'">
                                    <td class="rs-table-text status-fixed-width">{{item.id}}</td>
                                    <td class="rs-table-text status-fixed-width">{{item.name}}</td>
                                    <td class="rs-table-text">{{item.status}}</td>
@@ -51,20 +51,20 @@
                            </tbody>
                        </table>
 
-                       <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
+                       <div ng-show="vm.server.loading" class="rs-table-overlay rs-table-overlay-loading">
                             <div class="rs-table-overlay-content">
                                 <div class="rs-table-overlay-message">Loading&hellip;</div>
                             </div>
                         </div>
 
-                        <div ng-show="vm.loadError" class="rs-table-overlay rs-table-overlay-error">
+                        <div ng-show="vm.server.loadError" class="rs-table-overlay rs-table-overlay-error">
                             <div class="rs-table-overlay-content">
                                 <div class="rs-table-overlay-message"><i class="rs-icon-error-indicator"></i> Error encountered. Please try again.
                                 </div>
                             </div>
                         </div>
 
-                        <div ng-show="vm.noData" class="rs-table-overlay">
+                        <div ng-show="vm.server.noData" class="rs-table-overlay">
                             <div class="rs-table-overlay-content">
                                 <div class="rs-table-overlay-subtitle">No jobs found.</div>
                             </div>
@@ -74,5 +74,83 @@
                </div>
            </div>
        </div>
+
+       <div class="migration-details-container">
+            <div class="migration-item-header">
+               <h2 class="migration-item-type span-9">Network Migrations <span style="font-size: 16px; vertical-align: middle;">({{vm.tenant_id}})</span></h2>
+            </div>
+            <div class="rs-row">
+               <div class="span-12">
+                   <div class="rs-embedded-list-table-wrapper rs-embedded-medium">
+                       <table class="rs-list-table rs-embedded-list-table" ng-show="!vm.network.loading && !vm.network.loadError && !vm.network.noData">
+                           <thead>
+                               <tr>
+                                   <th>
+                                       <span class="rs-table-sort-text" style="width:  150px;">Job Id</span>
+                                   </th>
+                                   <th>
+                                       <span class="rs-table-sort-text">Network</span>
+                                   </th>
+                                   <th>
+                                       <span class="rs-table-sort-text">Status</span>
+                                   </th>
+                                   <th>
+                                       <span class="rs-table-sort-text">Progress</span>
+                                   </th>
+                                   <th>
+                                        <span class="rs-table-sort-text">Created At</span>
+                                   </th>
+                                   <th>
+                                       <span class=""></span>
+                                   </th>
+                               </tr>
+                           </thead>
+                           <tbody>
+                               <tr ng-repeat="item in vm.network.migrations | orderBy:'-created_at'">
+                                   <td class="rs-table-text status-fixed-width">{{item.id}}</td>
+                                   <td class="rs-table-text status-fixed-width">{{item.name}}</td>
+                                   <td class="rs-table-text">{{item.status}}</td>
+                                   <td class="rs-table-text">
+                                       <div class="rs-progress" title="Progress: {{item.progress}}%">
+                                           <div class="rs-progress-inner">
+                                               <div class="rs-segment" style="width: {{item.progress}}%">
+                                                   <div class="rs-bar rs-status-ok"></div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </td>
+                                   <td class="rs-table-text status-fixed-width">{{item.created_at | date: "medium"}}</td>
+                                   <td class="rs-table-link" style="width: 80px;">
+                                       <!--<a href="#" ng-link="['EquipmentDetails', {type: item.type, id: item.network_id}]">View Details</a>-->
+                                       <a href="javascript:void(0);">View Details</a>
+                                    </td>
+                               </tr>
+                           </tbody>
+                       </table>
+
+                       <div ng-show="vm.network.loading" class="rs-table-overlay rs-table-overlay-loading">
+                            <div class="rs-table-overlay-content">
+                                <div class="rs-table-overlay-message">Loading&hellip;</div>
+                            </div>
+                        </div>
+
+                        <div ng-show="vm.network.loadError" class="rs-table-overlay rs-table-overlay-error">
+                            <div class="rs-table-overlay-content">
+                                <div class="rs-table-overlay-message"><i class="rs-icon-error-indicator"></i> Error encountered. Please try again.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-show="vm.network.noData" class="rs-table-overlay">
+                            <div class="rs-table-overlay-content">
+                                <div class="rs-table-overlay-subtitle">No jobs found.</div>
+                            </div>
+                        </div>
+
+                   </div>
+               </div>
+           </div>
+       </div>
+
    </div>
 </div>

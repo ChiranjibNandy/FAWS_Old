@@ -8,9 +8,16 @@
            controllerAs: "vm",
            controller: ["migrationitemdataservice", "authservice", "$q", function (ds, authservice, $q) {
                var vm = this;
-               vm.loading = true;
-               vm.loadError = false;
-               vm.noData = false;
+               vm.server = {};
+               vm.network = {};
+
+               vm.server.loading = true;
+               vm.server.loadError = false;
+               vm.server.noData = false;
+               vm.network.loading = true;
+               vm.network.loadError = false;
+               vm.network.noData = false;
+
                $('title')[0].innerHTML = "Migration Status - Rackspace Cloud Backup";
 
                var mapServerName = function(dataList, jobsList) {
@@ -23,33 +30,66 @@
                     return jobsList;
                 };
 
+                var mapNetworkName = function(dataList, jobsList) {
+                    for(var i=0; i<jobsList.length; i++){
+                        var nameItem = dataList.filter(function(item){ return item.subnets[0].id === jobsList[i].resources.networks[0].subnets[0].id })[0];
+                        if(nameItem)
+                            jobsList[i].name = nameItem.name;
+                    }
+
+                    return jobsList;
+                };
+
                 // When the component is active get router params and fetch data
                 vm.$onInit = function() {
                     vm.tenant_id = authservice.getAuth().tenant_id;
-                    // Retrieve all migration items of a specific type (eg: server, network etc)
-                    var list = ds.getTrimmedAllItems("server"); // TODO: Need to pass 'type' dynamically
+
+                    // Retrieve all server migration items
+                    var serverList = ds.getTrimmedAllItems("server");
+
+                    // Retrieve all network migration items
+                    var networkList = ds.getTrimmedAllItems("network");
 
                     // Retrieve migration item status
                     var status = ds.getServerMigrationStatus(vm.tenant_id);
 
-                    $q.all([list, status]).then(function(results) {
-                        if(results[0].error || results[1].error){
-                            vm.loading = false;
-                            vm.loadError = true;
-                            return;
+                    $q.all([serverList, networkList, status]).then(function(results) {
+                        var flag = true;
+                        if(results[0].error || results[2].error){
+                            vm.server.loading = false;
+                            vm.server.loadError = true;
+                            flag = false;
                         }
 
-                        if(results[1].server_status.length === 0){
-                            vm.noData = true;
-                            vm.loading = false;
-                            return;
+                        if(results[2].server_status.length === 0){
+                            vm.server.noData = true;
+                            vm.server.loading = false;
+                            flag = false;
                         }
 
-                        var dataList = results[0].data;
-                        var jobsList = results[1].server_status;
+                        if(results[1].error || results[2].error){
+                            vm.network.loading = false;
+                            vm.network.loadError = true;
+                            flag = false;
+                        }
 
-                        vm.migrations = mapServerName(dataList, jobsList);
-                        vm.loading = false;
+                        if(results[2].server_status.length === 0){
+                            vm.network.noData = true;
+                            vm.network.loading = false;
+                            flag = false;
+                        }
+
+                        if(flag){
+                            var serverDataList = results[0].data;
+                            var networkDataList = results[1].data;
+                            var serverJobsList = results[2].server_status;
+                            var networkJobsList = results[2].network_status;
+
+                            vm.server.migrations = mapServerName(serverDataList, serverJobsList);
+                            vm.network.migrations = mapNetworkName(networkDataList, networkJobsList);
+                            vm.server.loading = false;
+                            vm.network.loading = false;
+                        }
                     });
                 }; // end of $routerOnActivate
                return vm;
