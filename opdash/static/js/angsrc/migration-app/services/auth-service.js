@@ -13,6 +13,7 @@
                self.type.secretKey = "53DJMACy4PaWs0pHlFXnqJI7ZYfCkW1jBjEgF506";
                self.type.rackUsername = "RSMTDev1";
                self.type.rackAPIKey = "f42046566954470dbaa31d6378916bb1";
+               self.type.accountName = "Rackspace - Public Cloud - Migration Tooling";
             }
 
             //get log here

@@ -11,7 +11,7 @@
             controllerAs: "vm",
             controller: ["migrationitemdataservice", "$rootRouter", "viewlogservice", "authservice", "$q", function (ds, $rootRouter,vl, authservice, $q) {
                 var vm = this;
-                
+
                 var mapServerStatus = function(dataList, statusList) {
                     for(var i=0; i<dataList.length; i++){
                         var statusItem = statusList.filter(function(item){ return item.server_id === dataList[i].id })[0];
@@ -32,7 +32,7 @@
                     vm.noData = false;
                     vm.sortingOrder = true;
                     vm.tenant_id = authservice.getAuth().tenant_id;
-                    $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Backup";
+                    $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Migration";
 
                     // Retrieve all migration items of a specific type (eg: server, network etc)
                     var list = ds.getTrimmedAllItems(vm.type);
