@@ -196,7 +196,7 @@
                },
                version: "v1"
            };
-       }
+        }
 
         return self;
     }]);
