@@ -155,6 +155,16 @@
                     });
         };
 
+        self.getJobTasks = function(jobId){
+            var url = "/api/job/"+jobId;
+            return HttpWrapper.send(url,{"operation":'GET'})
+                    .then(function (response) {
+                        return {
+                            data: response
+                        };
+                    });
+        };
+
         self.prepareRequest = function(info){
            var region = getRegionById(info.id);
            var auth = authservice.getAuth();

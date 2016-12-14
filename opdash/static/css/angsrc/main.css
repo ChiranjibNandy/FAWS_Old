@@ -166,3 +166,7 @@ a.rs-nav-link{
 .capitalize{
     text-transform: capitalize;
 }
+
+.red{
+    color:#c40022;
+}
