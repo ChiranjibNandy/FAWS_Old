@@ -46,6 +46,7 @@
             { path: "/migration-details/:type/:id", component: "rsmigrationdetails", name: "MigrationDetails" },
             { path: "/migration/log-details/:type/:id", component: "rslogdetails", name: "MigrationLogDetails" },
             { path: "/migration-status", component: "rsmigrationsstatus", name: "MigrationsStatus" },
+            { path: "/job-status", component: "rsjobstatus", name: "JobStatus" },
             { path: "/**", redirectTo: ["Tenant"] }
         ]
     }); // end of rsMigrationRoot component definition
