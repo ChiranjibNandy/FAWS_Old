@@ -95,9 +95,9 @@
                                                 $rootRouter.navigate(["MigrationsStatus"]);
                                             }, 10000);
                                         } else {
-                                                vm.migrationError = true;
-                                                vm.submitting = false;
-                                            }
+                                            vm.migrationError = true;
+                                            vm.submitting = false;
+                                        }
                                     });
 
                     // var status = true;
