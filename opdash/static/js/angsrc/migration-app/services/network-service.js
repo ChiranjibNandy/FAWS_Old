@@ -149,6 +149,8 @@
             self.prepareRequest = function(info){
                 var network = getNetworkDetails(info.id);
                 var auth = authservice.getAuth();
+
+                // console.log ("INFO.ID", info.id);
                 
                 var request = {
                     source: {
@@ -180,9 +182,9 @@
                                     region: info.region,
                                     default_zone: "us-east-1a"
                                 },
-                                subnets: network.subnets,
-                                instances: "All",
-                                security_groups: "All"
+                                subnets: "[{id:info.id}]",
+                                // instances: "All",
+                                // security_groups: "All"
                             }
                         ]
                     },

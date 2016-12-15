@@ -9,6 +9,6 @@
     <td style="width: 150px;">
         <div class="rs-status rs-status-processing migration-status" ng-show="item.migrationStatus==='in progress'" ng-click="vm.gotoDetails(item.id)">Migrating</div>
         <div class="rs-status rs-status-ok migration-status" ng-show="item.migrationStatus==='done'" ng-click="vm.gotoDetails(item.id)">Completed</div>
-        <button class="rs-btn rs-btn-primary migration-status" ng-show="!item.migrationStatus" ng-click="vm.migrate(item.id)">Migrate</button>
+        <button class="rs-btn rs-btn-primary migration-status" ng-show="!item.migrationStatus || item.migrationStatus==='error'" ng-click="vm.migrate(item.id)">Migrate</button>
     </td>
 </tr>
