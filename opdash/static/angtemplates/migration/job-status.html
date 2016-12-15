@@ -8,70 +8,9 @@
       <div class="rs-detail-section-title capitalize">{{vm.type}} : {{vm.equipment.name}}</div>
     </div>
     <div class="rs-detail-section-body">
-                    <!-- <ul class="rs-detail-list" ng-show="vm.type==='network'">
-                      <li class="rs-detail-item">
-                        <div class="rs-detail-key">Admin State Up</div>
-                        <div class="rs-detail-value">{{vm.equipment.admin_state_up}}</div>
-                      </li>
-                      <li class="rs-detail-item">
-                        <div class="rs-detail-key">Shared</div>
-                        <div class="rs-detail-value">{{vm.equipment.shared}}</div>
-                      </li>
-                      <li class="rs-detail-item">
-                        <div class="rs-detail-key">Subnets</div>
-                        <div class="rs-detail-value">
-                          <span ng-repeat="subnet in vm.equipment.subnets"><span>{{subnet}}<br></span></span>
-                        </div>
-                      </li>
-                    </ul>
-
-                    <ul class="rs-detail-list" ng-show="vm.type==='server'">
-                      <li class="rs-detail-item">
-                        <div class="rs-detail-key capitalize">{{vm.type}} Status</div>
-                        <div class="rs-detail-value capitalize">{{vm.equipment.OS_EXT_STS_vm_state | lowercase}}</div>
-                      </li>
-                      <li class="rs-detail-item">
-                        <div class="rs-detail-key">IP Address</div>
-                        <div class="rs-detail-value">{{vm.equipment.ip_address}}</div>
-                      </li>
-                      <li class="rs-detail-item">
-                        <div class="rs-detail-key">Host ID</div>
-                        <div class="rs-detail-value">{{vm.equipment.hostId}}</div>
-                      </li>
-                      <li class="rs-detail-item" ng-if="vm.equipment.OS_EXT_STS_task_state">
-                        <div class="rs-detail-key">Task State</div>
-                        <div class="rs-detail-value capitalize">{{vm.equipment.OS_EXT_STS_task_state}}</div>
-                      </li>
-                      <li class="rs-detail-item">
-                        <div class="rs-detail-key">Disk State</div>
-                        <div class="rs-detail-value capitalize">{{vm.equipment.OS_DCF_diskConfig | lowercase}}</div>
-                      </li>
-                      <li class="rs-detail-item">
-                        <div class="rs-detail-key">Created on</div>
-                        <div class="rs-detail-value">{{vm.equipment.created}}</div>
-                      </li>
-                      <li class="rs-detail-item">
-                        <div class="rs-detail-key">Updated on</div>
-                        <div class="rs-detail-value">{{vm.equipment.updated}}</div>
-                      </li>
-                    </ul> -->
       <div ng-show="vm.showData">
         <br/>
         <br/>
-                    <!-- <div class="rs-row">
-                      <h1>HELLO</h1>
-                      <h2>Jobs running for {{vm.equipment.name}}</h2>
-                      <div class="migration-item-header">
-                        <h4 class="red migration-item-type span-7">{{vm.jobId}}</h4>
-                        <h4 class="span-4">
-                          <span class="span-2 no-break">Status:</span>
-                          <div style="/* width: 150px; */" class="span-8">
-                            <div class="rs-status rs-status-processing migration-status ng-hide" title="In Progress" ng-show="vm.jobStatus==='in progress'"></div>
-                            <div class="rs-bar rs-status-ok migration-status span-10" title="Done" ng-show="vm.jobStatus==='done'"></div>
-                          </div>
-                        </h4>
-                      </div>
-                    </div> -->
         <div class="rs-embedded-list-table-wrapper rs-embedded-medium">
           <table class="rs-list-table rs-embedded-list-table">
               <thead>
