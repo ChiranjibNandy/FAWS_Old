@@ -146,9 +146,9 @@
            return deferred.promise;
        }
 
-        self.getPricingDetails = function(flavor, ram){
-            // var url = "/api/compute/get_server_mappings/"+flavor+"/"+ram;
-            var url = "/static/angassets/pricing-details.json";
+        self.getPricingDetails = function(rs_flavor_id, aws_region){
+            var url = "/api/compute/mappings_and_prices/"+rs_flavor_id+"/"+aws_region;
+            //var url = "/static/angassets/pricing-details.json";
             return HttpWrapper.send(url,{"operation":'GET'})
                     .then(function (response) {
                         return {
