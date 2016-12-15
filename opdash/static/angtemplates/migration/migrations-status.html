@@ -3,7 +3,8 @@
    <div class="rs-inner rs-mig-nomar">
        <div class="migration-details-container">
             <div class="migration-item-header">
-               <h2 class="migration-item-type span-9">Server Migrations <span style="font-size: 16px; vertical-align: middle;">({{vm.tenant_id}})</span></h2>
+               <h2 ng-click="vm.refreshpage()" class="migration-item-type span-9">Server Migrations <span style="font-size: 16px; vertical-align: middle;">({{vm.tenant_id}})</span></h2>
+                
             </div>
             <div class="rs-row">
                <div class="span-12">
@@ -46,7 +47,7 @@
                                        </div>
                                    </td>
                                    <td class="rs-table-text status-fixed-width">{{item.created_at | date: "medium"}}</td>
-                                   <td class="rs-table-link" style="width: 80px;"><a href="#" ng-link="['EquipmentDetails', {type: item.type, id: item.server_id}]">View Details</a></td>
+                                   <td class="rs-table-link" style="width: 80px;"><a href="#" ng-link="['JobStatus', {type: item.type, id: item.server_id}]">View Details</a></td>
                                </tr>
                            </tbody>
                        </table>

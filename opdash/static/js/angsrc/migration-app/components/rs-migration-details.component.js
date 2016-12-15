@@ -6,7 +6,7 @@
         .component("rsmigrationdetails", {
             templateUrl: "/static/angtemplates/migration/migration-details.html",
             controllerAs: "vm",
-            controller: ["migrationitemdataservice", "$timeout", "httpwrapper", "$rootRouter", function (ds, $timeout, HttpWrapper, $rootRouter) {
+            controller: ["migrationitemdataservice", "$timeout", "httpwrapper", "$rootRouter","$interval", function (ds, $timeout, HttpWrapper, $rootRouter,$interval) {
                 var vm = this;
 
                 // When the component is active get router params and fetch data
@@ -82,25 +82,60 @@
 
                          HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj)
                                     .then(function(response){
-                                         if(!response.error){
-                                             $timeout(function(){
+                                        if(!response.error){
+                                            var m=["Preparing job request...","Submitting job request...","Waiting for response from server...","Submitted job succesfully..."];
+                                            var i=0;
+                                            
+                                            $interval(function(){
+                                                document.getElementById("submitmsg").innerHTML=m[i];
+                                                i=i+1;
+                                            },2000,4,false);
+
+                                     $timeout(function(){
                                                 $rootRouter.navigate(["MigrationsStatus"]);
-                                             }, 4000);
-                                         } else {
-                                             vm.migrationError = true;
-                                             vm.submitting = false;
-                                         }
+                                            }, 10000);
+                                        } else {
+                                            vm.migrationError = true;
+                                            vm.submitting = false;
+                                        }
                                     });
 
-                        //var status = true;
-//                        $timeout(function(){
-//                            if(status){
-//                                $rootRouter.navigate(["MigrationsStatus"]);
-//                            } else {
-//                                vm.migrationError = true;
-//                                vm.submitting = false;
-//                            }
-//                        }, 2000);
+                    // var status = true;
+                       // $timeout(function(){
+                           // if(status){
+                           //  var m=["Preparing job request...","Submitting job request...","Waiting for response from server...","Submitted job succesfully..."];
+                           //  var i=0;
+                           //  $interval(function(){
+                           //              document.getElementById("submitmsg").innerHTML=m[i];
+                           //              i=i+1;
+                                   
+                           //  },2000,4,false);
+
+                            // var handle=$timeout(function(){
+                            //                     document.getElementById("submitmsg").innerHTML="Preparing job request...";
+                            //                 }, 2000,false);
+
+                           //$timeout.cancel(handle);
+                           // document.getElementById("submitmsg").innerHTML="Preparing job request...";
+                           //  var handle=$timeout(function(){
+                           //                      document.getElementById("submitmsg").innerHTML="Submitting job request...";
+                           //                  }, 2000,false);
+                           //  $timeout.cancel(handle);
+                           //  var handle=$timeout(function(){
+                           //                      document.getElementById("submitmsg").innerHTML="Waiting for response from server...";
+                           //                  }, 2000,false);
+                           //  $timeout.cancel(handle);
+                           //  var handle=$timeout(function(){
+                           //                      document.getElementById("submitmsg").innerHTML="Submitted job succesfully...";
+                           //                  }, 2000,false);
+                           // $timeout.cancel(handle);
+
+                               // $rootRouter.navigate(["MigrationsStatus"]);
+                           // } else {
+                           //     vm.migrationError = true;
+                           //     vm.submitting = false;
+                           // }
+                       // }, 2000);
 
                     }
                 };

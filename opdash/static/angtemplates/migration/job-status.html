@@ -1,0 +1,54 @@
+<div class="rs-content rs-panel">
+  <div class="rs-detail-header">
+    <div class="rs-detail-header-subtitle">CLOUD MIGRATION</div>
+    <div class="rs-detail-header-title">{{vm.jobId}}</div>
+  </div>
+  <div class="rs-detail-section">
+    <div class="rs-detail-section-header">
+      <div class="rs-detail-section-title capitalize">{{vm.type}} : {{vm.equipment.name}}</div>
+    </div>
+    <div class="rs-detail-section-body">
+      <div ng-show="vm.showData">
+        <br/>
+        <br/>
+        <div class="rs-embedded-list-table-wrapper rs-embedded-medium">
+          <table class="rs-list-table rs-embedded-list-table">
+              <thead>
+                  <tr>
+                      <th class="rs-table-status"></th>
+                      <th>
+                          <a class="rs-table-sort rs-table-sort-desc">
+                              <span class="rs-table-sort-text">Task Name</span>
+                              <span class="rs-table-sort-indicator"></span>
+                          </a>
+                      </th>
+                      <th>
+                          <a class="rs-table-sort rs-table-sort-desc">
+                              <span class="rs-table-sort-text">Details</span>
+                              <span class="rs-table-sort-indicator"></span>
+                          </a>
+                      </th>
+                      <th>
+                          <a class="rs-table-sort rs-table-sort-desc">
+                              <span class="rs-table-sort-text">Status</span>
+                              <span class="rs-table-sort-indicator"></span>
+                          </a>
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in vm.tasks">
+                  <td class="rs-table-status" 
+                          ng-class="{'rs-table-status-ok': item.status=='done', 'rs-table-status-processing rs-table-status-striped': item.status=='in progress', 'rs-table-status-error': item.status=='error'}">
+                  </td>
+                  <td class="rs-table-text">{{item.name}}</td>
+                  <td class="rs-table-text">{{item.details}}</td>
+                  <td class="rs-table-text capitalize">{{item.status}}</td>
+                </tr>
+              </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

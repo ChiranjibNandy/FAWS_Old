@@ -137,7 +137,7 @@
 
                 // Move to migration details page if multiple items are selected
                 vm.gotoDetails = function(id) {
-                    $rootRouter.navigate(["EquipmentDetails", {type: vm.type, id: id}]);
+                    $rootRouter.navigate(["JobStatus", {type: vm.type, id: id}]);
                 };
 
                 // Set status filter
