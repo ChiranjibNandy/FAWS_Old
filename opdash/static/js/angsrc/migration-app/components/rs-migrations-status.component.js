@@ -40,6 +40,14 @@
                     return jobsList;
                 };
 
+                // vm.refreshpage=function(){
+                //   alert("hello");
+                //   //$window.location.reload();
+                //   //$route.reload();
+                //   $rootRouter.navigate(["MigrationsStatus"]);
+                // }
+                
+
                 // When the component is active get router params and fetch data
                 vm.$onInit = function() {
                     vm.tenant_id = authservice.getAuth().tenant_id;

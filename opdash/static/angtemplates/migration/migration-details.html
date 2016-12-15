@@ -141,7 +141,7 @@
     <div class="rs-detail-section">
       <div class="rs-detail-section-header rs-btn-group">
         <button type="button" class="rs-btn rs-btn-primary" ng-click="vm.startMigration()" ng-class="{'disabled': vm.submitting}">Migrate</button>
-        <span ng-show="vm.submitting"><i class="rs-processing-indicator"></i> Processing...</span>
+        <span ng-show="vm.submitting"><i class="rs-processing-indicator"></i> Processing...</span><span id="submitmsg"></span>
         <span class="error-text" ng-show="vm.showPricingError">Please select a type.</span>
         <span class="error-text" ng-show="vm.showRegionError">Please select a region</span>
       </div>
