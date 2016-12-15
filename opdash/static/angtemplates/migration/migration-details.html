@@ -37,11 +37,11 @@
     <div class="rs-detail-section-body">
       <div class="rs-detail-list">
         <div class="rs-detail-key">AWS Region</div>
-        <div class="rs-detail-value"><select><option>US East 1</option></select></div>
+        <div class="rs-detail-value"><select><option>US-East-1</option></select></div>
       </div>
       <div class="rs-detail-list">
         <div class="rs-detail-key">AWS Zone</div>
-        <div class="rs-detail-value"><select><option>US East 1a</option></select></div>
+        <div class="rs-detail-value"><select><option>US-East-1a</option></select></div>
       </div>
     </div>
   </div>
@@ -99,10 +99,10 @@
             </thead>
             <tbody>
               <tr ng-repeat="priceItem in vm.priceDataList">
-                <td><input type="radio" name="pricing" ng-model="vm.selectedAWSType" ng-value="priceItem.aws_type"></td>
-                <td>{{priceItem.aws_type}}</td>
-                <td>{{priceItem.ram}} MB</td>
-                <td>{{priceItem.price | currency:undefined:2}}</td>
+                <td><input type="radio" name="pricing" ng-model="vm.selectedAWSType" ng-value="priceItem.instance_type"></td>
+                <td>{{priceItem.instance_type}}</td>
+                <td>{{priceItem.memory}}</td>
+                <td>{{priceItem.cost | currency:undefined:2}}</td>
               </tr>
             </tbody>
           </table>
@@ -142,7 +142,7 @@
       <div class="rs-detail-section-header rs-btn-group">
         <button type="button" class="rs-btn rs-btn-primary" ng-click="vm.startMigration()" ng-class="{'disabled': vm.submitting}">Migrate</button>
         <span ng-show="vm.submitting"><i class="rs-processing-indicator"></i> Processing...</span>
-        <span class="error-text" ng-show="vm.showPricingError">Please select a pricing option.</span>
+        <span class="error-text" ng-show="vm.showPricingError">Please select a type.</span>
         <span class="error-text" ng-show="vm.showRegionError">Please select a region</span>
       </div>
     </div>

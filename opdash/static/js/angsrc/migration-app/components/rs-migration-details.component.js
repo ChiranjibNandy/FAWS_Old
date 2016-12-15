@@ -11,8 +11,8 @@
 
                 // When the component is active get router params and fetch data
                 vm.$routerOnActivate = function(next, previous) {
-                    var flavor = "GPv1";
-                    var ram = 1;
+                    var flavor;
+                    var aws_region = "us-east-1";
 
                     vm.type = next.params.type;
                     vm.id = next.params.id;
@@ -22,28 +22,26 @@
                             .then(function (response) {
                                 vm.migrationDetail = response;
                                 console.log('MIGRATION DETAIL:', vm.migrationDetail);
-                            });
+
 
                     if(vm.type === 'server'){
-                        ds.getPricingDetails(vm.type, flavor, ram)
+                        ds.getPricingDetails(vm.type, vm.migrationDetail.details.flavor.id, aws_region)
                             .then(function (response) {
-                                var tempPriceList = response.data;
+                                var instance_types = response.data;
+                                var key, instance_type;
                                 var priceDataList = [];
-                                for(var i=0; i<tempPriceList.length; i++){
-                                    var awsTypes = tempPriceList[i].aws_types.split(",");
-
-                                    for(var j=0; j<awsTypes.length; j++){
-                                        priceDataList.push({
-                                            aws_type: awsTypes[j],
-                                            flavor: tempPriceList[i].flavor,
-                                            ram: tempPriceList[i].ram,
-                                            price: tempPriceList[i].price
-                                        });
-                                    }
+                                for(key in instance_types) {
+                                  instance_type = instance_types[key];
+                                    priceDataList.push({
+                                        instance_type: instance_type.instance_type,
+                                        memory: instance_type.memory,
+                                        cost: instance_type.cost
+                                    });
                                 }
                                 vm.priceDataList = priceDataList;
                             });
                     }
+                    });
 
                     vm.destRegionList = [
                         {
@@ -80,7 +78,7 @@
                             requestInfo = {id: vm.id, region: vm.selectedRegion};
 
                         var requestObj = ds.prepareRequest(vm.type, requestInfo);
-                        console.log(requestObj);
+                        console.log("begin migration", requestObj);
 
                          HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj)
                                     .then(function(response){
