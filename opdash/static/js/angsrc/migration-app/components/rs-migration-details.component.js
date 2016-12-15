@@ -54,6 +54,11 @@
                 }; // end of $routerOnActivate
 
                 vm.startMigration = function() {
+
+                    console.log("IN startMigration function");
+                    console.log("IN startMigration function");
+                    console.log("IN startMigration function");
+
                     if(!vm.submitting){
 
                         if(vm.type==="server" && !vm.selectedAWSType){
@@ -95,6 +100,7 @@
                                                 $rootRouter.navigate(["MigrationsStatus"]);
                                             }, 10000);
                                         } else {
+                                            document.getElementById("submitmsg").innerHTML="Error submitting job request";
                                             vm.migrationError = true;
                                             vm.submitting = false;
                                         }

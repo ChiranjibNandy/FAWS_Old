@@ -28,6 +28,7 @@
                         var statusItem = statusList.filter(function(item){ return item.resources.networks[0].subnets[0].id === dataList[i].subnets[0].id })[0];
                         if(statusItem)
                             dataList[i].migrationStatus = statusItem.status;
+
                     }
                     //dataList[0].migrationStatus = "done";
                     return dataList;
@@ -71,7 +72,7 @@
                             vm.items = mapServerStatus(dataList, results[1].server_status);
                         if(vm.type === "network")
                             vm.items = mapNetworkStatus(dataList, results[1].network_status);
-
+                                       
                         vm.searchField = results[0].labels[0].field;
                         vm.labels = results[0].labels; // set table headers
                         angular.forEach(results[0].labels, function(label){
