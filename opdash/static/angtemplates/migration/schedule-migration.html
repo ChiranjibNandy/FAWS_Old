@@ -1,0 +1,81 @@
+<script type="text/javascript">
+    (function() {
+        document.getElementById("subNav").style.display = "block";
+        var subMenus = $(".rs-nav-secondary .rs-nav-item");
+        $(subMenus).removeClass("active");
+        $(subMenus[2]).addClass("active");
+    })();
+</script>
+
+<div>
+    <h3>Schedule Migration</h3>
+</div>
+
+<div class="rs-row">
+    <div class="span-9">
+
+        <div class="rs-content rs-panel">
+            <div class="rs-row">
+                <div class="span-6">
+                    <span style="vertical-align: super; margin-right: 10px;">Name Your Migration:</span>
+                    <input type="text" ng-model="vm.migrationName" />
+                </div>
+            </div>
+            <div class="rs-row">
+                <div class="span-6">
+                    <rscalendaritem selected="day"></rscalendaritem>
+                </div>
+                <div class="span-6">
+                    <h5>TIME</h5>
+                    <select name="time">
+                        <option value="">12:00pm</option>
+                        <option value="">12:30pm</option>
+                    </select>
+                    <h5>TIME ZONE</h5>
+                    <select name="time">
+                        <option value="">Atlantic</option>
+                        <option value="">Indiana</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="span-3 right-sidebar">
+        <div class="rs-facet-section">
+            <div class="rs-facet-section-body">
+                <div class="rs-facet-title">Current Pricing</div>
+                <div class='pricingDetails'></div>
+                
+                <div class="rs-facet-title">New Pricing</div>
+                <div class='pricingDetails'></div>
+
+                <div class="rs-facet-title">Savings</div>
+                <div class='savingDetails'></div>
+
+                <br>
+                <button class="rs-btn" ng-click="vm.saveItems()">Save For Later</button><br><br>
+                <button class="rs-btn" ng-click="vm.continue()">Continue</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="rs-row" style="margin-top: 10px;">
+    <div class="span-9">
+        <div class="rs-facet-section">
+            <div class="rs-facet-section-body">
+                <div class="rs-facet-title">FAQs + More Information</div>
+                <div class='rs-content rs-panel' style="min-height: 30px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="span-3">
+        <div class="rs-facet-section">
+            <div class="rs-facet-section-body">
+                <div class="rs-facet-title">Support</div>
+                <div class='rs-content rs-panel' style="min-height: 30px;"></div>
+            </div>
+        </div>
+    </div>
+</div>

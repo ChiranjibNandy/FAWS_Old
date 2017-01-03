@@ -1,0 +1,21 @@
+<div class="vertical-tab-container">
+    <div class="rs-main" style="margin-top: 0;">
+        <div class="rs-sidebar">
+            <div class="rs-facet-section rs-facet-section-small collapsed">
+                <div class="rs-facet-section-header">
+                    <div class="rs-facet-section-title">Resource Types</div>
+                </div>
+                <div class="rs-facet-section-body">
+                    <ul class="rs-facet-list">
+                        <li class="rs-facet-item" ng-repeat='tab in vm.tabs' ng-click='vm.selectTab(tab)' ng-class="{'selected': tab.active}">
+                            <div class="rs-facet-label">{{tab.title}}</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="rs-content rs-panel">
+            <div ng-transclude></div>
+        </div>
+    </div>
+</div>

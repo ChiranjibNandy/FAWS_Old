@@ -1,0 +1,32 @@
+<div class="rs-main" style="margin-top: 0;">
+  <div class="rs-embedded-list-table-wrapper rs-embedded-medium">
+    <div ng-show="vm.noData" class="rs-table-overlay">
+        <div class="rs-table-overlay-content">
+            <div class="rs-table-overlay-title">No {{vm.type}}s found.</div>
+            <div data-bind="visible: (filterText() !== '')" class="rs-table-overlay-subtitle"></div>
+            <div class="rs-table-overlay-message"></div>
+        </div>
+    </div>
+    <table class="rs-list-table rs-embedded-list-table" ng-show="!vm.noData">
+      <thead>
+        <tr>
+          <th class="rs-table-status"></th>
+          <th ng-repeat="item in vm.labels">
+            <span>{{item.text}}</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in vm.data">
+          <td class="rs-table-status"
+                  ng-class="{'rs-table-status-ok': item.status=='ACTIVE', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
+          </td>
+          <td class="rs-table-link"><a href="#" ng-link="['EquipmentDetails', {type: vm.type, id: item.id}]">{{item.name}}</a></td>
+          <td class="rs-table-text">{{item.ip_address}}</td>
+          <td class="rs-table-text">{{item.ram}} MB</td>
+          <td class="rs-table-text capitalize">{{item.status | lowercase}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
