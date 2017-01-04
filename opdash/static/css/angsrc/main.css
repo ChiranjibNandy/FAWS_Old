@@ -174,3 +174,200 @@ a.rs-nav-link{
 #refreshbtn{
     margin-left: 565;
 }
+
+#selectedItemsserver,#selectedItemsnetwork{
+    background-color: #fff;
+    height: auto;
+    margin-top: 20px;
+    min-height: 80px;
+    width: 71%;
+    box-shadow: #c2c2c2 0px 3px 8px 1px;
+    padding: 10px;
+}
+
+.selectedChild{
+    font-size: 12px;
+    padding: 5px;
+    margin: 2px 0 3px 5px;
+    position: relative;
+    line-height: 11px;
+    color: #333;
+    cursor: default;
+    border: 1px solid #aaaaaa;
+    border-radius: 3px;
+    background-clip: padding-box;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #e4e4e4;
+    float: left;
+}
+
+.selectedChild:first-child {
+    margin-left: 0;
+}
+
+.sectionRight{
+    padding:0px 56px;
+}
+
+.pricingDetails{
+    width: 100%;
+    background-color: #fff;
+    height: 64px;
+    min-height: 60px;
+    padding: 10px 0px 0px 0px;
+    margin-bottom: 10px;
+}
+
+.savingDetails{
+    width: 100%;
+    background-color: #fff;
+    height: 50px;
+    min-height: 40px;
+    padding: 10px 0px 0px 0px;
+    margin-bottom: 10px;
+}    
+
+.rs-main .rs-content{
+    min-height: 228px;
+}
+
+.pricingDetailsFooter{
+    height: 50px;
+    min-height: 50px;
+}
+
+.rs-tabs>li.active>a{
+    outline: none;
+}
+
+.vertical-tab-container .rs-sidebar{
+    width: 150px;
+}
+
+.vertical-tab-container>.rs-main>.rs-content{
+    margin-left: 150px;
+}
+
+.cross{
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 50%;
+    padding: 0 4px;
+    background: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.right-sidebar{
+    background-color: #f5f5f5;
+    padding: 20px;
+    box-shadow: #c2c2c2 0 3px 8px 1px;
+}
+
+
+/* Start - Calender CSS */
+
+.border-box {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+rscalendaritem {
+  float: left;
+  display: block;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  background: white;
+  width: 300px;
+  border: solid 1px #CCC;
+  margin-bottom: 10px;
+}
+rscalendaritem > div.header {
+  float: left;
+  width: 100%;
+  background: #2875C7;
+  height: 40px;
+  color: white;
+}
+rscalendaritem > div.header > * {
+  height: 40px;
+  line-height: 40px !important;
+  display: inline-block;
+  vertical-align: middle;
+}
+rscalendaritem > div.header > i {
+  float: left;
+  width: 40px;
+  font-size: 1.125em;
+  font-weight: bold;
+  position: relative;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  padding: 0 10px;
+  cursor: pointer;
+}
+rscalendaritem > div.header > i.fa-angle-left {
+  text-align: left;
+}
+rscalendaritem > div.header > i.fa-angle-right {
+  text-align: right;
+  margin-left: -40px;
+}
+rscalendaritem > div.header > span {
+  float: left;
+  width: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  padding-left: 50px;
+  margin-left: -40px;
+  text-align: center;
+  padding-right: 40px;
+  color: inherit;
+}
+rscalendaritem > div.week {
+  float: left;
+  width: 100%;
+  border-top: solid 1px #CCC;
+}
+rscalendaritem > div.week:first-child {
+  border-top: none;
+}
+rscalendaritem > div.week > span.day {
+  float: left;
+  width: 14.28571429%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  border-left: solid 1px #CCC;
+  font-size: 0.75em;
+  text-align: center;
+  height: 30px;
+  line-height: 30px !important;
+  display: inline-block;
+  vertical-align: middle;
+  background: white;
+  cursor: pointer;
+  color: black;
+}
+rscalendaritem > div.week > span.day:first-child {
+  border-left: none;
+}
+rscalendaritem > div.week > span.day.today {
+  background: #E3F2FF;
+}
+rscalendaritem > div.week > span.day.different-month {
+  color: #C0C0C0;
+}
+rscalendaritem > div.week > span.day.selected {
+  background: #2875C7;
+  color: white;
+}
+rscalendaritem > div.week.names > span {
+  color: #2875C7;
+  font-weight: bold;
+}
+
+/* End - Calender CSS */

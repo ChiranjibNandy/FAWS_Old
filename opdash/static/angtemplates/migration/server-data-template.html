@@ -1,14 +1,10 @@
-<tr ng-repeat="item in vm.items | filter: vm.statusFilter | filter: vm.search">
+<tr ng-repeat="item in vm.items | filter: vm.filtervalue">
     <td class="rs-table-status"
             ng-class="{'rs-table-status-ok': item.status=='ACTIVE', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
     </td>
+    <td class="rs-table-checkbox"><input type="checkbox" ng-model="item.selected" ng-change="vm.changeSelectAll(item,false)" /></td>
     <td class="rs-table-link"><a href="#" ng-link="['EquipmentDetails', {type: vm.type, id: item.id}]">{{item.name}}</a></td>
     <td class="rs-table-text">{{item.ip_address}}</td>
     <td class="rs-table-text">{{item.ram}} MB</td>
     <td class="rs-table-text capitalize">{{item.status | lowercase}}</td>
-    <td style="width: 150px;">
-        <div class="rs-status rs-status-processing migration-status" ng-show="item.migrationStatus==='in progress'" ng-click="vm.gotoDetails(item.id)">Migrating</div>
-        <div class="rs-status rs-status-ok migration-status" ng-show="item.migrationStatus==='done'" ng-click="vm.gotoDetails(item.id)">Completed</div>
-        <button class="rs-btn rs-btn-primary migration-status" ng-show="!item.migrationStatus || item.migrationStatus==='error'" ng-click="vm.migrate(item.id)">Migrate</button>
-    </td>
 </tr>

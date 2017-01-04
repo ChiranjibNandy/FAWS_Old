@@ -6,10 +6,14 @@
         .component("rsmigrationitem", {
             templateUrl: "/static/angtemplates/migration/migration-item-template.html",
             bindings: {
-                type: "@" // type parameter to be supplied (eg: server, network etc)
+                type: "@", // type parameter to be supplied (eg: server, network etc)
+                filtervalue:"<"
+            },
+            require: {
+                parent: "^^rsmigrationresourceslist"
             },
             controllerAs: "vm",
-            controller: ["migrationitemdataservice", "$rootRouter", "viewlogservice", "authservice", "$q", function (ds, $rootRouter,vl, authservice, $q) {
+            controller: ["migrationitemdataservice", "$rootRouter", "authservice", "$q", "$scope", function (ds, $rootRouter, authservice, $q, $scope) {
                 var vm = this;
 
                 var mapServerStatus = function(dataList, statusList) {
@@ -37,14 +41,16 @@
                 // Perfoming controller initialization steps
                 vm.$onInit = function() {
                     vm.labels = [];
+                    vm.selectedItems = [];
                     vm.search = {};
                     vm.items = [];
                     vm.loading = true;
                     vm.loadError = false;
                     vm.noData = false;
                     vm.sortingOrder = true;
+                    vm.isAllselected = false;
                     vm.tenant_id = authservice.getAuth().tenant_id;
-                    $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Migration";
+                    console.log("filterValues "+vm.filtervalue);
 
                     // Retrieve all migration items of a specific type (eg: server, network etc)
                     var list = ds.getTrimmedAllItems(vm.type);
@@ -83,17 +89,46 @@
 
                     // Setup status filters
                     vm.statusFilters = [
-                        { text: "All", type: "", selected: true },
-                        { text: "Active", type: "ACTIVE", selected: false },
-                        { text: "Warning", type: "WARNING", selected: false },
-                        { text: "Error", type: "ERROR", selected: false }
+                        { text: "Servers", type: "ACTIVE", selected: false },
+                        { text: "Networks", type: "WARNING", selected: false }
                     ];
 
                     vm.statusFilter = "";
+
+                    $scope.$on("ItemRemoved", function(event, item){
+                        if(item.type === vm.type){
+                            item.selected = false;
+                            vm.isAllSelected = false;
+                        }
+                    });
                 };
 
-                vm.$routerOnActivate = function(next, previous) {
-                    vm.tid = next.params.tid;
+                // Select/Deselect all items
+                vm.changeSelectAll = function (item, fromGlobal) {
+                    if(item.selected){
+                        item.type = vm.type;
+                        vm.parent.addItem(item);
+                    }else{
+                        item.type = vm.type;
+                        vm.parent.removeItem(item);
+                    }
+
+                    if(!fromGlobal) {
+                        var count = 0;
+                        for(var i=0; i<vm.items.length; i++) {
+                            if(vm.items[i].selected) count++;
+                            else break;
+                        }
+                        vm.isAllSelected = count === vm.items.length;
+                    }
+                };
+
+                // Update item selection based on Select/Deselect all 
+                vm.changeItemSelection = function () {
+                    angular.forEach(vm.items, function (item) {
+                        item.selected = vm.isAllSelected;
+                        vm.changeSelectAll(item, true);
+                    });
                 };
 
                 vm.sort = function(item){
@@ -117,14 +152,14 @@
                 };
 
                 //store slog status
-                vm.storeStatus = function(type,name){
+               /* vm.storeStatus = function(type,name){
                     vl.storeLog(
                         {'name':name,
                          'type':type
                         }
                         );
                     $rootRouter.navigate(["MigrationLogDetails", {type: vm.type}])
-                }
+                }*/
 
                 // Get count of items by their status type
                 vm.getCountByStatus = function (status) {
