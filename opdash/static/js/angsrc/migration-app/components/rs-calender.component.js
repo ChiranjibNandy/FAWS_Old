@@ -14,7 +14,7 @@
 
                 vm.selected = _removeTime(vm.selected || moment());
                 vm.month = vm.selected.clone();
-
+                vm.previousToggle = false;
                 var start = vm.selected.clone();
                 start.date(1);
                 _removeTime(start.day(0));
@@ -22,8 +22,12 @@
                 _buildMonth(vm, start, vm.month);
 
                 vm.select = function(day) {
-                    debugger;
                     vm.selected = day.date;  
+                    var then = vm.selected.format('YYYY/MM/DD');
+                    var now = moment().format('YYYY/MM/DD');
+                    if(moment(now).isAfter(then)){
+                        alert('Please select date after today or today');
+                    }
                 };
 
                 vm.next = function() {
@@ -31,6 +35,7 @@
                     _removeTime(next.month(next.month()+1)).date(1);
                     vm.month.month(vm.month.month()+1);
                     _buildMonth(vm, next, vm.month);
+                    vm.checkPrevious();
                 };
 
                 vm.previous = function() {
@@ -38,6 +43,16 @@
                     _removeTime(previous.month(previous.month()-1).date(1));
                     vm.month.month(vm.month.month()-1);
                     _buildMonth(vm, previous, vm.month);
+                    vm.checkPrevious();
+                };
+
+                vm.checkPrevious = function(){
+                    var then = vm.month.format('YYYY/MM/DD');
+                    var now = moment().format('YYYY/MM/DD');
+                    if(moment(now).isAfter(then)) 
+                        vm.previousToggle = false;
+                    else 
+                        vm.previousToggle = true;
                 };
 
                 function _removeTime(date) {

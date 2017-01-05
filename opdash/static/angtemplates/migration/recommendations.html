@@ -12,7 +12,7 @@
     <div>
       <div class="rs-row">
           <div class="span-12">
-              <div class="rs-content rs-panel" style="min-height: 30px;">
+              <div class="rs-content rs-panel" style="min-height: 16px;">
 
               </div>  
           </div>
@@ -35,6 +35,14 @@
                 </rs-tab>
             </rs-tabs>
         </div>
+        <div class="rs-row">
+            <div style="margin-left: 150px;">
+                <div class="span-10"></div>
+                <div class="span-2">
+                    <button class='rs-btn rs-pull-right'>Modify</button>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="span-3 right-sidebar">
         <div class="rs-facet-section">
@@ -49,8 +57,9 @@
                 <div class='savingDetails'></div>
 
                 <br>
-                <button class="rs-btn" ng-click="vm.saveItems()">Save For Later</button><br><br>
-                <button class="rs-btn" ng-click="vm.continue()">Continue</button>
+                <button class="rs-btn saveLaterBtn" ng-click="vm.saveItems()">Save For Later</button><br><br>
+                <a class="rs-btn backBtn" ng-link="['MigrationResourceList']">Back</a>
+                <button class="rs-btn continueBtn" ng-click="vm.continue()">Continue</button>
             </div>
         </div>
     </div>
