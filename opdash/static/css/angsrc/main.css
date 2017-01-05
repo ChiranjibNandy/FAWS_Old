@@ -287,7 +287,7 @@ rscalendaritem {
 rscalendaritem > div.header {
   float: left;
   width: 100%;
-  background: #2875C7;
+  background: #333333;
   height: 40px;
   color: white;
 }
@@ -362,12 +362,25 @@ rscalendaritem > div.week > span.day.different-month {
   color: #C0C0C0;
 }
 rscalendaritem > div.week > span.day.selected {
-  background: #2875C7;
+  background: #333333;
   color: white;
 }
 rscalendaritem > div.week.names > span {
-  color: #2875C7;
+  color: black;
   font-weight: bold;
 }
 
 /* End - Calender CSS */
+
+.saveLaterBtn{
+    width: 100%;
+}
+.backBtn{
+    width: 30%;
+}
+.continueBtn{
+    width: 57%;
+}
+.rs-main.verticalMain {
+    margin-bottom: 16px;
+}

@@ -33,8 +33,9 @@
                     </select>
                     <h5>TIME ZONE</h5>
                     <select name="time">
-                        <option value="">Atlantic</option>
-                        <option value="">Indiana</option>
+                        <option value="est">EST</option>
+                        <option value="cst">CST</option>
+                        <option value="tst">TST</option>
                     </select>
                 </div>
             </div>
@@ -54,8 +55,9 @@
                 <div class='savingDetails'></div>
 
                 <br>
-                <button class="rs-btn" ng-click="vm.saveItems()">Save For Later</button><br><br>
-                <button class="rs-btn" ng-click="vm.continue()">Continue</button>
+                <button class="rs-btn saveLaterBtn" ng-click="vm.saveItems()">Save For Later</button><br><br>
+                <a class="rs-btn backBtn" ng-link="['MigrationResourceList']">Back</a>
+                <button class="rs-btn continueBtn" ng-click="vm.continue()">Continue</button>
             </div>
         </div>
     </div>

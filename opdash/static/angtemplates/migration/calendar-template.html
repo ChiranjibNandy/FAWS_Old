@@ -1,5 +1,6 @@
 <div class="header">
-    <i class="fa fa-angle-left" ng-click="vm.previous()"><</i>
+    <i class="fa fa-angle-left" ng-show="vm.previousToggle" ng-click="vm.previous()"><</i>
+    <i ng-show="!vm.previousToggle"></i>
     <span>{{vm.month.format("MMMM, YYYY")}}</span>
     <i class="fa fa-angle-right" ng-click="vm.next()">></i>
 </div>
