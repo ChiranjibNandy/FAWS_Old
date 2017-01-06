@@ -16,28 +16,31 @@
 
         <div class="rs-content rs-panel">
             <div class="rs-row">
-                <div class="span-6">
-                    <span style="vertical-align: super; margin-right: 10px;">Name Your Migration:</span>
-                    <input type="text" ng-model="vm.migrationName" />
+                <div class="span-9">
+                    <span style="vertical-align: super; margin-right: 20px;">Name Your Migration:</span>
+                    <input type="text" ng-model="vm.migrationName" value={{vm.migrationName}}/>
                 </div>
             </div>
             <div class="rs-row">
                 <div class="span-6">
                     <rscalendaritem selected="day"></rscalendaritem>
                 </div>
-                <div class="span-6">
+                 <div class="span-3">
+                    <h5>TIME ZONE</h5>
+                    <select name="timezone">
+                        <option value="est">EST- GMT-05:00</option>
+                        <option value="cst">CST- GMT-06:00</option>
+                        <option value="tst">PST- GMT-08:00</option>
+                    </select>
+                </div>
+                <div class="span-3">
                     <h5>TIME</h5>
                     <select name="time">
                         <option value="">12:00pm</option>
                         <option value="">12:30pm</option>
                     </select>
-                    <h5>TIME ZONE</h5>
-                    <select name="time">
-                        <option value="est">EST</option>
-                        <option value="cst">CST</option>
-                        <option value="tst">TST</option>
-                    </select>
                 </div>
+               
             </div>
         </div>
 
@@ -56,7 +59,7 @@
 
                 <br>
                 <button class="rs-btn saveLaterBtn" ng-click="vm.saveItems()">Save For Later</button><br><br>
-                <a class="rs-btn backBtn" ng-link="['MigrationResourceList']">Back</a>
+                <a class="rs-btn backBtn" ng-link="['MigrationRecommendation']">Back</a>
                 <button class="rs-btn continueBtn" ng-click="vm.continue()">Continue</button>
             </div>
         </div>

@@ -12,7 +12,8 @@
             controller: [ function () {
                 var vm = this;
 
-                vm.selected = _removeTime(vm.selected || moment());
+                // vm.selected = _removeTime(vm.selected || moment());
+                vm.selected = moment(); //default selection is today's date
                 vm.month = vm.selected.clone();
                 vm.previousToggle = false;
                 var start = vm.selected.clone();
