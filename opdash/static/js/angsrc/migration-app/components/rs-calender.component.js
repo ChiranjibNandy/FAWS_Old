@@ -9,7 +9,7 @@
                 type: "@" // type parameter to be supplied (eg: server, network etc)
             },
             controllerAs: "vm",
-            controller: [ function () {
+            controller: ["datastoreservice", function (dataStoreService) {
                 var vm = this;
 
                 // vm.selected = _removeTime(vm.selected || moment());
@@ -26,6 +26,7 @@
                     vm.selected = day.date;  
                     var then = vm.selected.format('YYYY/MM/DD');
                     var now = moment().format('YYYY/MM/DD');
+                    dataStoreService.storeDate('date',vm.selected);
                     if(moment(now).isAfter(then)){
                         alert('Please select date after today or today');
                     }

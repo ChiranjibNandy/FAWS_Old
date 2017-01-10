@@ -136,11 +136,10 @@
             self.prepareRequest = function(info){
                 var network = getNetworkDetails(info.id);
                 var auth = authservice.getAuth();
-                
                 var request = {
                     source: {
                         cloud: "rackspace",
-                        tenantid: auth.tenant_id,
+                        tenantid: "1024814",
                         auth: {
                             method: "key",
                             type: "customer",
@@ -167,15 +166,15 @@
                                     region: info.region,
                                     default_zone: "us-east-1a"
                                 },
-                                subnets: [{id:info.id}],
-                                // instances: "All",
-                                // security_groups: "All"
+                                subnets: "All",
+                                instances: "All",
+                                security_groups: "All"
                             }
                         ]
                     },
                     version: "v1"
                 };
-
+console.log(request);
                 return request;
             };
 

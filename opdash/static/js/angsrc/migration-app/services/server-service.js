@@ -9,7 +9,6 @@
         function trimTransform (data) {
             var serversList = [];
             var t = data.data;
-
             for(var key in t){
                 // iterate over networks by region
                 if (t.hasOwnProperty(key)) {
@@ -163,7 +162,7 @@
            return {
                source: {
                    cloud: "rackspace",
-                   tenantid: auth.tenant_id,
+                   tenantid: "1024814",
                    auth: {
                        method: "key",
                        type: "customer",

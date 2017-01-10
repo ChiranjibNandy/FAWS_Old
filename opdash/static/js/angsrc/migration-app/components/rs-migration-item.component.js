@@ -64,7 +64,6 @@
                             vm.loadError = true;
                             return;
                         }
-
                         if(results[0].data.length === 0){
                             vm.noData = true;
                             vm.loading = false;
