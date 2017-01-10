@@ -3,6 +3,7 @@
 
     // defining component to display each migration component (eg: server, network etc)
     angular.module("migrationApp")
+        // component to show the list of resources for a tenant
         .component("rsmigrationresourceslist", {
             templateUrl: "/static/angtemplates/migration/resources-list.html",
             controllerAs: "vm",
@@ -17,22 +18,26 @@
                     vm.filterSearch = "";
                 }
 
+                // called when an item is selected by user
                 vm.addItem = function(item) {
                     if(vm.selectedItems.indexOf(item)<0)
                         vm.selectedItems.push(item);
                 }
 
+                // called when an item is removed by user
                 vm.removeItem = function(item) {
                     if(vm.selectedItems.indexOf(item) >= 0){
-                        $scope.$broadcast("ItemRemoved", item);
+                        $scope.$broadcast("ItemRemoved", item); // broadcast event to all child components
                         vm.selectedItems.splice(vm.selectedItems.indexOf(item), 1);
                     }
                 }
 
+                // save items selected by user
                 vm.saveItems = function() {
                     alert("Saving items: To be implemented");
                 };
 
+                // continue to next step: recommendations
                 vm.continue = function() {
                     if(vm.selectedItems.length > 0){
                         dataStoreService.setItems(vm.selectedItems);
@@ -44,5 +49,5 @@
 
                 return vm;
             }
-        ]}); // end of component definition
+        ]}); // end of component rsmigrationresourceslist
 })();

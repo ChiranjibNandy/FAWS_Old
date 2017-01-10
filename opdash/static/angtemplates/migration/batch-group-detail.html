@@ -1,0 +1,54 @@
+<div class="batch-group-detail">
+    <div class="rs-row header">
+        <div class="span-6">
+            <div class="span-4 cell">
+                <span class="icon" ng-class="{'collapsed': vm.panel.collapsed, 'expanded': !vm.panel.collapsed}" ng-click="vm.panel.collapsed = !vm.panel.collapsed"></span>
+                <span class="heading">{{vm.type}}s</span>
+            </div>
+            <div class="span-6 cell">
+                <div class="rs-progress" title="Progress: {{vm.progress}}% ({{vm.completedCount}} of {{vm.batchItems.length}} {{vm.type}}s)">
+                    <div class="rs-progress-inner">
+                        <div class="rs-segment" style="width: {{vm.progress}}%">
+                            <div class="rs-bar rs-status-ok"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--<span class="rs-progress-label"></span>-->
+            </div>
+        </div>
+        <div class="span-3 cell">
+            {{vm.estimatedTimeRemaining}}
+        </div>
+        <div class="span-3 cell">
+            <button class="rs-btn rs-btn-primary" ng-show="vm.status==='inProgress'" ng-click="vm.pause()">Pause</button>
+            <button class="rs-btn rs-btn-primary" ng-show="vm.status==='inProgress'" ng-click="vm.cancel()">Cancel</button>
+        </div>
+    </div>
+
+    <div class="item-group" ng-show="!vm.panel.collapsed">
+        <div class="rs-row item" ng-repeat="batchItem in vm.batchItems">
+            <div class="span-6">
+                <div class="span-4 cell" style="padding-left: 60px;">{{batchItem.name}}</div>
+                <div class="span-6 cell">
+                    <div class="rs-progress rs-custom-progress" style="width: {{batchItem.progress}}%" title="Progress: {{batchItem.progress}}%">
+                        <div class="rs-progress-inner">
+                            <div class="rs-segment" style="width: 100%;">
+                                <div class="rs-bar rs-status-ok"></div>
+                            </div>
+                        </div>
+                        <div class="rs-custom-progress-label">{{batchItem.progress}}%</div>
+                    </div>
+                </div>
+            </div>
+            <div class="span-3 cell">
+                <span ng-show="batchItem.status==='error'">Errored out</span>
+                <span ng-show="batchItem.status==='completed'">Completed</span>
+                <span ng-show="batchItem.status==='inProgress'">{{batchItem.estimatedTimeRemaining}}</span>
+            </div>
+            <div class="span-3 cell">
+                <button class="rs-btn" ng-show="batchItem.status==='inProgress'" ng-click="vm.pause(batchItem.id)">Pause</button>
+                <button class="rs-btn" ng-show="batchItem.status==='inProgress'" ng-click="vm.cancel(batchItem.id)">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

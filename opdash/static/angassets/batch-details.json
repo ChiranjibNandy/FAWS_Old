@@ -1,0 +1,102 @@
+{
+    "server": {
+        "status": "inProgress",
+        "estimatedTimeRemaining": "10 mins 20 secs",
+        "progress": 60,
+        "completedCount": 2,
+        "batchItems": [
+            {
+                "id": 1,
+                "name": "Server 1",
+                "progress": 60,
+                "status": "inProgress",
+                "estimatedTimeRemaining": "10 mins 20 secs"
+            },
+            {
+                "id": 2,
+                "name": "Server 2",
+                "progress": 100,
+                "status": "completed",
+                "estimatedTimeRemaining": "none"
+            },
+            {
+                "id": 3,
+                "name": "Server 3",
+                "progress": 80,
+                "status": "inProgress",
+                "estimatedTimeRemaining": "2 mins"
+            },
+            {
+                "id": 4,
+                "name": "Server 4",
+                "progress": 30,
+                "status": "inProgress",
+                "estimatedTimeRemaining": "13 mins 30 secs"
+            },
+            {
+                "id": 5,
+                "name": "Server 5",
+                "progress": 0,
+                "status": "error",
+                "estimatedTimeRemaining": "none"
+            },
+            {
+                "id": 6,
+                "name": "Server 6",
+                "progress": 20,
+                "status": "inProgress",
+                "estimatedTimeRemaining": "11 mins 15 secs"
+            }
+        ]
+    },
+    "network": {
+        "status": "inProgress",
+        "estimatedTimeRemaining": "5 mins",
+        "progress": 50,
+        "completedCount": 2,
+        "batchItems": [
+            {
+                "id": 1,
+                "name": "Network 1",
+                "progress": 60,
+                "status": "completed",
+                "estimatedTimeRemaining": "3 mins"
+            },
+            {
+                "id": 2,
+                "name": "Network 2",
+                "progress": 0,
+                "status": "error",
+                "estimatedTimeRemaining": "3 mins"
+            },
+            {
+                "id": 3,
+                "name": "Network 3",
+                "progress": 30,
+                "status": "inProgress",
+                "estimatedTimeRemaining": "5 mins"
+            },
+            {
+                "id": 4,
+                "name": "Network 4",
+                "progress": 90,
+                "status": "inProgress",
+                "estimatedTimeRemaining": "30 secs"
+            },
+            {
+                "id": 5,
+                "name": "Network 5",
+                "progress": 100,
+                "status": "completed",
+                "estimatedTimeRemaining": "none"
+            },
+            {
+                "id": 6,
+                "name": "Network 6",
+                "progress": 100,
+                "status": "completed",
+                "estimatedTimeRemaining": "none"
+            }
+        ]
+    }
+}

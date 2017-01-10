@@ -68,6 +68,7 @@
             };
         }
 
+        // get the region of a server based on its id
         var getRegionById = function(id){
             var t = servers.data;
             for(var key in t){
@@ -91,6 +92,7 @@
             return deferred.promise;
         };
 
+        // get detailed info on all the servers of a tenant as a list
         self.getDetailedList = function() {
             var deferred = $q.defer();
             self.getAll().then(function(response) {
@@ -130,22 +132,7 @@
             }
         };
 
-        // get server details of specific items
-        self.getMigrationDetails = function (id) {
-           var deferred = $q.defer();
-           self.getAll().then(function(response) {
-               if(response.error)
-                   return deferred.resolve(response);
-
-               var tempServers = trimTransform(response).data.filter(function(item) {
-                   return item.id === id;
-               });
-               console.log('FOUND MATCHING SERVER', tempServers[0]);
-               return deferred.resolve(tempServers[0]);
-           });
-           return deferred.promise;
-       }
-
+        // get pricing details of a server based on its flavor and the aws region to which it needs to be migrated
         self.getPricingDetails = function(rs_flavor_id, aws_region){
             var url = "/api/compute/mappings_and_prices/"+rs_flavor_id+"/"+aws_region;
             //var url = "/static/angassets/pricing-details.json";
@@ -157,6 +144,7 @@
                     });
         };
 
+        // get the list of all tasks involved in migration of a server
         self.getJobTasks = function(jobId){
             var url = "/api/job/"+jobId;
             return HttpWrapper.send(url,{"operation":'GET'})
@@ -167,6 +155,7 @@
                     });
         };
 
+        // prepares request object to be submitted for migration
         self.prepareRequest = function(info){
            var region = getRegionById(info.id);
            var auth = authservice.getAuth();

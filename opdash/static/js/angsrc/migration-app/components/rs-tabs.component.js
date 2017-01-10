@@ -2,6 +2,7 @@
     "use strict";
     
     angular.module("migrationApp")
+        // component to group multiple tabs
         .component("rsTabs", {
             transclude: true,
             bindings: {
@@ -15,6 +16,7 @@
                 var vm = this;
                 vm.tabs = [];
                 
+                // Called when a tab is added
                 vm.addTab = function(tab) {
                     vm.tabs.push(tab);
 
@@ -23,6 +25,7 @@
                     }
                 };
 
+                // Called a tab is selected
                 vm.selectTab = function(selectedTab){
                     angular.forEach(vm.tabs, function(tab) {
                         if(tab.active && tab !== selectedTab) {
@@ -33,5 +36,5 @@
                     selectedTab.active = true;
                 }
             }
-        });
+        }); // end of component rsTabs
 })();

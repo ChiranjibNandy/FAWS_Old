@@ -24,27 +24,7 @@
                 }
             }
 
-            // Get all items based on migration item type
-            this.getAllItems = function (type) {
-                if (type === "server") {
-                    return serverService.getAll();
-                }
-                else if (type === "network") {
-                    return networkService.getAll();
-                }
-            }
-
-            // Get migration details of items based on type
-            this.getMigrationDetails = function (type, id) {
-               if (type === "server") {
-                   return serverService.getMigrationDetails(id);
-               }
-               else if (type === "network") {
-                   return networkService.getMigrationDetails(id);
-               }
-            }
-
-             this.getPricingDetails = function(type, flavor, ram) {
+            this.getPricingDetails = function(type, flavor, ram) {
                 if (type === "server") {
                    return serverService.getPricingDetails(flavor, ram);
                 }
@@ -57,11 +37,6 @@
                 else if (type === "network") {
                     return networkService.prepareRequest(info);
                 }
-            }
-            
-            // Get log details of an item vased on migration item type
-            this.getLogDetails = function (type, id) {
-                // TODO: add code retrieve log details
             }
 
             this.getServerMigrationStatus = function(tenant_id){

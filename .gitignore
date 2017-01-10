@@ -24,6 +24,8 @@ var/
 .installed.cfg
 *.egg
 .venv
+.DS_Store/
+opdash/.DS_Store/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

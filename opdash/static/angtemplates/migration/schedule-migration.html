@@ -7,7 +7,7 @@
     })();
 </script>
 
-<div>
+<div style="margin-top:10px;">
     <h3>Schedule Migration</h3>
 </div>
 
@@ -49,16 +49,16 @@
         <div class="rs-facet-section">
             <div class="rs-facet-section-body">
                 <div class="rs-facet-title">Current Pricing</div>
-                <div class='pricingDetails'></div>
+                <div class='blank-slate'></div>
                 
                 <div class="rs-facet-title">New Pricing</div>
-                <div class='pricingDetails'></div>
+                <div class='blank-slate'></div>
 
                 <div class="rs-facet-title">Savings</div>
-                <div class='savingDetails'></div>
+                <div class='blank-slate-small'></div>
 
                 <br>
-                <button class="rs-btn saveLaterBtn" ng-click="vm.saveItems()">Save For Later</button><br><br>
+                <button class="rs-btn saveLaterBtn" ng-click="vm.saveItems()" style="width: 100%;">Save For Later</button><br><br>
                 <a class="rs-btn backBtn" ng-link="['MigrationRecommendation']">Back</a>
                 <button class="rs-btn continueBtn" ng-click="vm.continue()">Continue</button>
             </div>

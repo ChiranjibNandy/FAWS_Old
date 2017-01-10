@@ -1,0 +1,59 @@
+<div class="rs-row batch-details-header">
+    <div class="span-9">
+        <button class="rs-btn" ng-click="vm.back()">Back to Migration Dashboard</button>
+    </div>
+    <div class="span-3 buttons">
+        <button class="rs-btn" ng-click="vm.pauseAll()">Pause All</button>
+        <button class="rs-btn" ng-click="vm.cancelAll()">Cancel All</button>
+    </div>
+</div>
+
+<div class="rs-content rs-panel">
+    <rscollapsiblepanelgroup>
+        <div class="rs-row">
+            <div class="span-6 heading">{{vm.batchName}} progress</div>
+            <div class="span-3 heading">Estimated time remaining</div>
+            <div class="span-3 heading">Pause or Cancel?</div>
+        </div>
+        <rscollapsiblepanel type="server"></rscollapsiblepanel>
+        <rscollapsiblepanel type="network"></rscollapsiblepanel>
+    </rscollapsiblepanelgroup>
+</div>
+
+<div class="rs-row" style="margin-top: 25px;">
+    <div class="span-12">
+        <div class="rs-facet-section">
+            <div class="rs-facet-section-body">
+                <div class="rs-facet-title">Alerts</div>
+                <div class='rs-content rs-panel' style="min-height: 30px;">
+                    <table class="rs-list-table">
+                        <thead>
+                            <tr>
+                                <th>Resource Name</th>
+                                <th>Message</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Server 4</td>
+                                <td>Taking a long time to migrate</td>
+                            </tr>
+                            <tr>
+                                <td>Server 5</td>
+                                <td>Migration failed</td>
+                            </tr>
+                            <tr>
+                                <td>Network 5</td>
+                                <td>Migration failed</td>
+                            </tr>
+                            <tr>
+                                <td>Network 3</td>
+                                <td>Might take some time to migrate</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

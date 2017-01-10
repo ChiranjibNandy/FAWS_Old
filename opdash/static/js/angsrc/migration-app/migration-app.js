@@ -7,16 +7,7 @@
     // Defining the root component which will initiate routing handling
     migrationApp.value("$routerRootComponent", "rsmigrationroot");
 
-    // The header component with logo and menus
-    migrationApp.component("rsAppHeader", {
-        templateUrl: "/static/angtemplates/app-header.html"
-    });
-
-    // The footer component
-    migrationApp.component("rsAppFooter", {
-        templateUrl: "/static/angtemplates/app-footer.html"
-    });
-
+    // directive to include html templates without creating a new scope
     migrationApp.directive('staticInclude', ["$parse", "$templateRequest", "$compile", function($parse, $templateRequest, $compile) {
         return {
             restrict: 'A',
@@ -34,6 +25,7 @@
             }
         };
     }]);
+
     // The root component which defines initial routing
     migrationApp.component("rsmigrationroot", {
         transclude: true,
@@ -41,16 +33,12 @@
         $routeConfig: [
             { path: "/login", component: "rsmigrationlogin", name: "Login" },
             { path: "/tenant", component: "rsmigrationtenantid", name: "Tenant" },
-            //{ path: "/migration/...", component: "rsmigrationhome", name: "Migration" },
+            { path: "/equipment-details/:type/:id", component: "rsequipmentdetails", name: "EquipmentDetails" },
             { path: "/migration/resources", component: "rsmigrationresourceslist", name: "MigrationResourceList" },
             { path: "/migration/recommendation", component: "rsmigrationrecommendation", name: "MigrationRecommendation" },
             { path: "/migration/schedule", component: "rsschedulemigration", name: "ScheduleMigration" },
             { path: "/migration/confirm", component: "rsconfirmmigration", name: "ConfirmMigration" },
-            { path: "/equipment-details/:type/:id", component: "rsequipmentdetails", name: "EquipmentDetails" },
-            { path: "/migration-details/:type/:id", component: "rsmigrationdetails", name: "MigrationDetails" },
-            { path: "/migration/log-details/:type/:id", component: "rslogdetails", name: "MigrationLogDetails" },
-            { path: "/migration-status", component: "rsmigrationsstatus", name: "MigrationsStatus" },
-            { path: "/job-status", component: "rsjobstatus", name: "JobStatus" },
+            { path: "/batch-migration-details", component: "rsbatchmigrationdetails", name: "BatchMigrationDetails" },
             { path: "/**", redirectTo: ["Tenant"] }
         ]
     }); // end of rsMigrationRoot component definition
