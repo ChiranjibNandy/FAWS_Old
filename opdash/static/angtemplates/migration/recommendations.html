@@ -1,5 +1,6 @@
 <script type="text/javascript">
     (function() {
+        //$('#rs-main-panel').style.minHeight = '428px';
         document.getElementById("subNav").style.display = "block";
         var subMenus = $(".rs-nav-secondary .rs-nav-item");
         $(subMenus).removeClass("active");
@@ -12,7 +13,7 @@
     <div>
       <div class="rs-row">
           <div class="span-12">
-              <div class="rs-content rs-panel" style="min-height: 16px;">
+              <div class="rs-content rs-panel" style="min-height: 4px;">
 
               </div>  
           </div>
@@ -35,14 +36,6 @@
                 </rs-tab>
             </rs-tabs>
         </div>
-        <div class="rs-row">
-            <div style="margin-left: 150px;">
-                <div class="span-10"></div>
-                <div class="span-2">
-                    <button class='rs-btn rs-pull-right'>Modify</button>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="span-3 right-sidebar">
         <div class="rs-facet-section">
@@ -59,7 +52,7 @@
                 <br>
                 <button class="rs-btn saveLaterBtn" ng-click="vm.saveItems()" style="width: 100%;">Save For Later</button><br><br>
                 <a class="rs-btn backBtn" ng-link="['MigrationResourceList']">Back</a>
-                <button class="rs-btn continueBtn" ng-click="vm.continue()">Continue</button>
+                <button class="rs-btn continueBtn rs-btn-primary" ng-click="vm.continue()">Continue</button>
             </div>
         </div>
     </div>
@@ -70,7 +63,7 @@
         <div class="rs-facet-section">
             <div class="rs-facet-section-body">
                 <div class="rs-facet-title">FAQs + More Information</div>
-                <div class='rs-content rs-panel' style="min-height: 30px;"></div>
+                <div class='rs-content rs-panel' style="min-height: 10px;"></div>
             </div>
         </div>
     </div>
@@ -78,7 +71,7 @@
         <div class="rs-facet-section">
             <div class="rs-facet-section-body">
                 <div class="rs-facet-title">Support</div>
-                <div class='rs-content rs-panel' style="min-height: 30px;"></div>
+                <div class='rs-content rs-panel' style="min-height: 10px;"></div>
             </div>
         </div>
     </div>

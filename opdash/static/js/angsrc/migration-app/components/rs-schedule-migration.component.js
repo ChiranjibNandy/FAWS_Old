@@ -13,10 +13,9 @@
                     vm.timeItems = ["12:00pm","12:30pm","1:00am"];
                     vm.timeZoneItems = ["EST","CST","TST"];
                     vm.time = vm.timeItems[0];
-                    console.log(vm.day);
-                    console.log(vm.selected);
                     vm.timezone = vm.timeZoneItems[0];
-
+                    vm.timeChange();
+                    vm.timezoneChange();
                     var d = new Date();
                     var timestmp = moment(d).format("DDMMMYYYY-hhmma");
                     vm.migrationName = 'Migration-' + timestmp;
