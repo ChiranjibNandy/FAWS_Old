@@ -64,6 +64,7 @@
                 };
             }
 
+            // function to get specific details of a network based on its id
             var getNetworkDetails = function(id){
                 var t = networks.data;
                 for(var key in t){
@@ -93,6 +94,7 @@
                 return deferred.promise;
             };
         
+            // get detailed info on all the networks of a tenant as a list
             self.getDetailedList = function() {
                        var deferred = $q.defer();
                        self.getAll().then(function(response) {
@@ -101,7 +103,7 @@
                            return deferred.resolve(detailsTransform(response));
                        });
                        return deferred.promise;
-           };
+            };
 
             // get all network items from backend
             self.getAll = function () {
@@ -130,27 +132,10 @@
                 }
             };
 
-            // get network details of specific items
-            self.getMigrationDetails = function (id) {
-                var deferred = $q.defer();
-                self.getAll().then(function(response) {
-                    if(response.error)
-                        return deferred.resolve(response);
-
-                    var tempNetworks = detailsTransform(response).data.filter(function(item) { 
-                        return item.id === id;
-                    });
-                    
-                    return deferred.resolve(tempNetworks[0]);
-                });
-                return deferred.promise;
-            };
-
+            // prepares request object to be submitted for migration
             self.prepareRequest = function(info){
                 var network = getNetworkDetails(info.id);
                 var auth = authservice.getAuth();
-
-                // console.log ("INFO.ID", info.id);
                 
                 var request = {
                     source: {

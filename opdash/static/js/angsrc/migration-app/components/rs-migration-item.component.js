@@ -50,7 +50,6 @@
                     vm.sortingOrder = true;
                     vm.isAllselected = false;
                     vm.tenant_id = authservice.getAuth().tenant_id;
-                    console.log("filterValues "+vm.filtervalue);
 
                     // Retrieve all migration items of a specific type (eg: server, network etc)
                     var list = ds.getTrimmedAllItems(vm.type);

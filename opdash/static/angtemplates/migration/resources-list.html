@@ -32,7 +32,7 @@
                 <div class="rs-content rs-panel" style="min-height: 0;">
                     {{vm.selectedItems.length}} items selected
                     <div>
-                        <p ng-repeat="item in vm.selectedItems" ng-attr-id="item.name" class='selectedChild'>
+                        <p ng-repeat="item in vm.selectedItems" ng-attr-id="item.name" class='selected-migration-item'>
                             <span class="cross" ng-click="vm.removeItem(item)">x</span>{{item.name}}
                         </p>
                     </div>
@@ -44,16 +44,16 @@
         <div class="rs-facet-section">
             <div class="rs-facet-section-body">
                 <div class="rs-facet-title">Current Pricing</div>
-                <div class='pricingDetails'></div>
+                <div class='blank-slate'></div>
                 
                 <div class="rs-facet-title">New Pricing</div>
-                <div class='pricingDetails'></div>
+                <div class='blank-slate'></div>
 
                 <div class="rs-facet-title">Savings</div>
-                <div class='savingDetails'></div>
+                <div class='blank-slate-small'></div>
 
                 <br>
-                <button class="rs-btn saveLaterBtn" ng-click="vm.saveItems()">Save For Later</button><br><br>
+                <button class="rs-btn saveLaterBtn" ng-click="vm.saveItems()" style="width: 100%;">Save For Later</button><br><br>
                 <a class="rs-btn backBtn" ng-link="['Tenant']">Back</a>
                 <button class="rs-btn continueBtn" ng-click="vm.continue()">Continue</button>
             </div>

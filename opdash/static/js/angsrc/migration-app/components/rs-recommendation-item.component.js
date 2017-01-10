@@ -3,6 +3,7 @@
 
     // defining component to display each migration component (eg: server, network etc)
     angular.module("migrationApp")
+        // component to handle recommendations for each resource type (server, network)
         .component("rsrecommendationitem", {
             templateUrl: "/static/angtemplates/migration/recommendation-item-template.html",
             bindings: {
@@ -59,5 +60,5 @@
 
                 return vm;
             }]
-        }); // end of component definition
+        }); // end of component rsrecommendationitem
 })();
