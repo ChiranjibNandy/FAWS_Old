@@ -136,7 +136,6 @@
             self.prepareRequest = function(info){
                 var network = getNetworkDetails(info.id);
                 var auth = authservice.getAuth();
-                
                 var request = {
                     source: {
                         cloud: "rackspace",

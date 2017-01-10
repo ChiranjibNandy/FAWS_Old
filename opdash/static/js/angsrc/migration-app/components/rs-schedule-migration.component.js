@@ -14,8 +14,8 @@
                     vm.timeZoneItems = ["EST","CST","TST"];
                     vm.time = vm.timeItems[0];
                     vm.timezone = vm.timeZoneItems[0];
-                    vm.timeChange();
-                    vm.timezoneChange();
+                    dataStoreService.storeDate('time',vm.time);
+                    dataStoreService.storeDate('timezone',vm.timezone);
                     var d = new Date();
                     var timestmp = moment(d).format("DDMMMYYYY-hhmma");
                     vm.migrationName = 'Migration-' + timestmp;
