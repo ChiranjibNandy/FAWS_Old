@@ -38,6 +38,7 @@
             { path: "/migration/recommendation", component: "rsmigrationrecommendation", name: "MigrationRecommendation" },
             { path: "/migration/schedule", component: "rsschedulemigration", name: "ScheduleMigration" },
             { path: "/migration/confirm", component: "rsconfirmmigration", name: "ConfirmMigration" },
+            { path: "/migration-status", component: "rsmigrationstatus", name: "MigrationStatus" },
             { path: "/batch-migration-details", component: "rsbatchmigrationdetails", name: "BatchMigrationDetails" },
             { path: "/**", redirectTo: ["Tenant"] }
         ]

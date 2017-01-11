@@ -137,6 +137,18 @@ th{
     right: -35px;
 }
 
+.migration-status-list-container{
+    margin-top: 15px;
+}
+
+.migration-status-list-container:first-child{
+    margin-top: 0;
+}
+
+.migration-status-list-container .rs-list-table {
+    table-layout: fixed;
+}
+
 /* Start - Collapsible panel CSS */
 .collapsible-panel-group .heading{
     font-weight: bold;
