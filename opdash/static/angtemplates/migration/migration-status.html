@@ -1,0 +1,154 @@
+<script type="text/javascript">
+   (function() {
+        document.getElementById("subNav").style.display = "block";
+        var subMenus = $(".rs-nav-secondary .rs-nav-item");
+        $(subMenus).removeClass("active");
+        //$(subMenus[0]).addClass("active");
+    })();
+</script>
+
+<div class="rs-row template-header">
+    <div class="span-9">
+        <h3>Migration Confirmed for {{vm.scheduledDateTime}}</h3>
+    </div>
+</div>
+
+<div class="rs-content rs-panel mainContent">
+    <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
+        <table class="rs-list-table rs-embedded-list-table">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                            <span class="rs-table-sort-text">Batch Queue</span>
+                            <span class="rs-table-sort-indicator"></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                            <span class="rs-table-sort-text">Start Date</span>
+                            <span class="rs-table-sort-indicator"></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                            <span class="rs-table-sort-text">Status</span>
+                            <span class="rs-table-sort-indicator"></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                            <span class="rs-table-sort-text">Est Time to Complete</span>
+                            <span class="rs-table-sort-indicator"></span>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}">
+                    <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']">{{batch.queue_name}}</a></td>
+                    <td class="rs-table-text">{{batch.start_date}}</td>
+                    <td class="rs-table-text">
+                        <div ng-show="batch.progress===-1">Not started</div>
+                        <div ng-show="batch.progress!==-1" style="width: 80%;">
+                            <div class="rs-progress rs-custom-progress" ng-attr-style="width: {{batch.progress}}%">
+                                <div class="rs-progress-inner">
+                                    <div class="rs-segment" style="width: 100%;">
+                                        <!--<div ng-class="batch.progress === '100' ? 'rs-bar rs-status-ok' : (batch.progress > '60' ? 'rs-bar rs-status-warning' : 'rs-bar rs-status-error')"></div>-->
+                                        <div class="rs-bar rs-status-ok"></div>
+                                    </div>
+                                </div>
+                                <div class="rs-custom-progress-label">{{batch.progress}}%</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="rs-table-text" ng-if="batch.est_completion_time !== '-1'">{{batch.est_completion_time}}</td>
+                    <td class="rs-table-text" ng-if="batch.est_completion_time === '-1'">&infin;</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
+        <table class="rs-list-table rs-embedded-list-table">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                            <span class="rs-table-sort-text">Completed Batches</span>
+                            <span class="rs-table-sort-indicator"></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                            <span class="rs-table-sort-text">Start Date</span>
+                            <span class="rs-table-sort-indicator"></span>
+                        </a>
+                    </th>
+                    <th colspan="2">
+                        <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                            <span class="rs-table-sort-text">Completed Date</span>
+                            <span class="rs-table-sort-indicator"></span>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="batch in vm.batches | filter : {progress:'100'}">
+                    <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']">{{batch.queue_name}}</a></td>
+                    <td class="rs-table-text">{{batch.start_date}}</td>
+                    <td class="rs-table-text" colspan="2">{{batch.end_date}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="rs-row" style="margin-top: 25px;">
+    <div class="span-12">
+        <div class="rs-facet-section">
+            <div class="rs-facet-section-body">
+                <div class="rs-facet-title">Alerts</div>
+                <div class='rs-content rs-panel' style="min-height: 30px;">
+                    <table class="rs-list-table">
+                        <thead>
+                            <tr>
+                                <th>Batch Name</th>
+                                <th>Message</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Batch Three</td>
+                                <td>Taking a long time to migrate</td>
+                            </tr>
+                            <tr>
+                                <td>Batch Five</td>
+                                <td>Problem while starting this batch. Will be retried.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="rs-row" style="margin-top: 10px;">
+    <div class="span-9">
+        <div class="rs-facet-section">
+            <div class="rs-facet-section-body">
+                <div class="rs-facet-title">FAQs + More Information</div>
+                <div class='rs-content rs-panel' style="min-height: 10px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="span-3">
+        <div class="rs-facet-section">
+            <div class="rs-facet-section-body">
+                <div class="rs-facet-title">Support</div>
+                <div class='rs-content rs-panel' style="min-height: 10px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
