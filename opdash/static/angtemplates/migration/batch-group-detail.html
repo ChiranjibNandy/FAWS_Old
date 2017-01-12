@@ -6,7 +6,8 @@
                 <span class="heading">{{vm.type}}s</span>
             </div>
             <div class="span-6 cell">
-                <div class="rs-progress" title="Progress: {{vm.progress}}% ({{vm.completedCount}} of {{vm.batchItems.length}} {{vm.type}}s)">
+                <div class="rs-progress" ng-show="!vm.loading && !vm.loadError && !vm.noData"
+                        title="Progress: {{vm.progress}}% ({{vm.completedCount}} of {{vm.batchItems.length}} {{vm.type}}s)">
                     <div class="rs-progress-inner">
                         <div class="rs-segment" style="width: {{vm.progress}}%">
                             <div class="rs-bar rs-status-ok"></div>
@@ -25,7 +26,7 @@
         </div>
     </div>
 
-    <div class="item-group" ng-show="!vm.panel.collapsed">
+    <div class="item-group" ng-show="!vm.loading && !vm.loadError && !vm.noData && !vm.panel.collapsed">
         <div class="rs-row item" ng-repeat="batchItem in vm.batchItems">
             <div class="span-6">
                 <div class="span-4 cell" style="padding-left: 60px;">{{batchItem.name}}</div>
@@ -48,6 +49,26 @@
             <div class="span-3 cell">
                 <button class="rs-btn" ng-show="batchItem.status==='inProgress'" ng-click="vm.pause(batchItem.id)">Pause</button>
                 <button class="rs-btn" ng-show="batchItem.status==='inProgress'" ng-click="vm.cancel(batchItem.id)">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="!vm.panel.collapsed && vm.noData" class="rs-table-overlay">
+        <div class="rs-table-overlay-content">
+            <div class="rs-table-overlay-title">No {{vm.type}}s found.</div>
+            <div data-bind="visible: (filterText() !== '')" class="rs-table-overlay-subtitle"></div>
+            <div class="rs-table-overlay-message"></div>
+        </div>
+    </div>
+    <div ng-show="!vm.panel.collapsed && vm.loading" class="rs-table-overlay rs-table-overlay-loading">
+        <div class="rs-table-overlay-content">
+            <div class="rs-table-overlay-message">Loading&hellip;</div>
+        </div>
+    </div>
+    <div ng-show="!vm.panel.collapsed && vm.loadError" class="rs-table-overlay rs-table-overlay-error">
+        <div class="rs-table-overlay-content">
+            <div class="rs-table-overlay-message"><i class="rs-icon-error-indicator"></i>
+                Error encountered. Please try again.
             </div>
         </div>
     </div>

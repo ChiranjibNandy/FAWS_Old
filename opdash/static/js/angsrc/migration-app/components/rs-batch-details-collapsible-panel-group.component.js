@@ -7,13 +7,31 @@
             transclude: true,
             template: "<div class='collapsible-panel-group' ng-transclude></div>",
             controllerAs: "vm",
-            controller: ["$q", "httpwrapper", function($q, HttpWrapper) {
+            controller: ["migrationitemdataservice", "$q", "httpwrapper", "authservice", function(ds, $q, HttpWrapper, authservice) {
                 var vm = this, 
                     loaded = false,
                     loading = false, 
                     data,
                     deferred = $q.defer(),
                     subTasks = [];
+
+                var mapServerName = function(dataList, jobsList) {
+                    for(var i=0; i<jobsList.length; i++){
+                        var nameItem = dataList.filter(function(item){ return item.id === jobsList[i].server_id })[0];
+                        if(nameItem)
+                            jobsList[i].name = nameItem.name;
+                    }
+                    return jobsList;
+                };
+
+                var mapNetworkName = function(dataList, jobsList) {
+                    for(var i=0; i<jobsList.length; i++){
+                        var nameItem = dataList.filter(function(item){ return item.subnets[0].id === jobsList[i].resources.networks[0].subnets[0].id })[0];
+                        if(nameItem)
+                            jobsList[i].name = nameItem.name;
+                    }
+                    return jobsList;
+                };
 
                 vm.panels = [];
                 
@@ -66,6 +84,42 @@
                     }else{
                         return $q.when(data[type]); // return data if already available
                     }
+                };
+
+                vm.getBatchList = function(type) {
+                    var batchItems, isEmpty;
+                    var tenant_id = "1024814";
+
+                    // Retrieve all migration items of a certain type
+                    var list = ds.getTrimmedAllItems(type);
+
+                    // Retrieve migration item status
+                    var status = ds.getServerMigrationStatus(tenant_id);
+
+                    return $q.all([list, status]).then(function(results) {
+                        if(results[0].error || results[1].error){
+                            return { error: "Could not load data" };
+                        }
+
+                        if(type==="server" && results[1].server_status.length === 0){
+                            isEmpty = true;
+                            batchItems = [];
+                        }
+                        else if(type==="network" && results[1].network_status.length === 0){
+                            isEmpty = true;
+                            batchItems = [];
+                        }
+
+                        if(!isEmpty && type === "server")
+                            batchItems = mapServerName(results[0].data, results[1].server_status);
+                        else if(!isEmpty && type === "network")
+                            batchItems = mapNetworkName(results[0].data, results[1].network_status);
+
+                        console.log(type, " : ", batchItems);
+                        return {
+                            batchItems: batchItems
+                        };
+                    })
                 };
             }]
         }); // end of component rscollapsiblepanelgroup

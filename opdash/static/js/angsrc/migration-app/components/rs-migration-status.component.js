@@ -2,6 +2,7 @@
     "use strict";
     
     angular.module("migrationApp")
+            // component to display migration status dashboard
             .component("rsmigrationstatus", {
                 templateUrl: "/static/angtemplates/migration/migration-status.html",
                 controllerAs: "vm",
@@ -10,6 +11,7 @@
                     vm.batches = [];
                     vm.scheduledDateTime = "17/01/2017 07:00PM";
 
+                    // gets the list of all batches initiated by the current tenant
                     var getBatches = function() {
                         var url = "/static/angassets/migration-status.json";
                         HttpWrapper.send(url,{"operation":'GET'})
@@ -25,5 +27,5 @@
                         getBatches();
                     };
                 }]
-            });
+            }); // end of comeponent rsmigrationstatus
 })();

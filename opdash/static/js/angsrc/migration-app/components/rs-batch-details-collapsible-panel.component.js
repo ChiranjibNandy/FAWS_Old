@@ -20,6 +20,10 @@
                     var collapsed = true; // set initial state of panel to collapsed
                     vm.batchItems = []; // items to be displayed inside the collapsible panel
 
+                    vm.loading = true;
+                    vm.loadError = false;
+                    vm.noData = false;
+
                     vm.panel = {
                         collapsed: collapsed
                     };
@@ -28,13 +32,25 @@
                     vm.panelGroup.addPanel(vm.panel);
 
                     // get batch items
-                    vm.panelGroup.getBatchItems(vm.type)
+                    vm.panelGroup.getBatchList(vm.type)
                         .then(function(response){
+                            if(response.error){
+                                vm.loading = false;
+                                vm.loadError = true;
+                                return;
+                            }
+                            if(response.batchItems.length === 0){
+                                vm.noData = true;
+                                vm.loading = false;
+                                return;
+                            }
+
                             vm.batchItems = response.batchItems;
                             vm.estimatedTimeRemaining = response.estimatedTimeRemaining;
                             vm.status = response.status;
                             vm.progress = response.progress;
                             vm.completedCount = response.completedCount;
+                            vm.loading = false;
                         });
                 }
                 
