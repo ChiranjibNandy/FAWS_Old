@@ -1,6 +1,7 @@
 from flask import Blueprint, g, session, redirect
 import json
 
+from opdash.lib.pilot import get_pilot_header
 
 class UnsecureBlueprint(Blueprint):
     '''
@@ -16,6 +17,9 @@ class UnsecureBlueprint(Blueprint):
 
             self._app.logger.debug('>>>>>> on_before_request')
 
+            print "PILOT HEADER IS:"
+            print session.get("pilot_header", "NOTHING HERE")
+
             g.user_data = session.get('user_data', None)
 
             if g.user_data:
@@ -30,7 +34,6 @@ class UnsecureBlueprint(Blueprint):
         def on_after_request(response):
 
             self._app.logger.debug('<<<<<< on_after_request')
-
             return response
 
         # Prepare Each Request
@@ -45,15 +48,36 @@ class UnsecureBlueprint(Blueprint):
         self._app.logger.debug('** UPDATING SESSION WITH USER')
         json_catalog = json.loads(service_catalog)
         if json_catalog:
-            user_data = {
+
+            roles = json_catalog["access"]["user"]["roles"]
+            is_racker = next(
+                (True for role in roles if role['name'] == 'Racker'),
+                False # Default
+            )
+
+            session["user_data"] = {
                 # Get Racker Info
                 "username": json_catalog["access"]["user"]["name"],
                 "authtoken": json_catalog["access"]["token"]["id"],
+                "is_racker": is_racker,
+                "roles": roles,
             }
 
+            if not is_racker:
+
+                # Save tenant id for customer
+                session["tenant_id"] = json_catalog["access"] \
+                                                   ["token"] \
+                                                   ["tenant"] \
+                                                   ["id"]
+
+                # Get Pilot Header for this user
+                get_pilot_header(
+                    session['user_data']['authtoken'],
+                    session['tenant_id'])
+
             # Save User Data to session and Flask g
-            session["user_data"] = user_data
-            g.userdata = user_data
+            g.user_data = session['user_data']
 
     def handleNotAuthenticated(self):
         ''' Allow unauthenticated user '''
@@ -64,7 +88,7 @@ class UnsecureBlueprint(Blueprint):
 
 class SecureBlueprint(UnsecureBlueprint):
     '''
-        Use this Blueprint for pages that REQUIRE an authenticated user
+        Use this Blueprint for secure pages for a Racker
     '''
 
     def register(self, app, options, first_registration=False):

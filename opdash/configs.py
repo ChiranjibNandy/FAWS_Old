@@ -1,6 +1,6 @@
 from uuid import uuid4
 from os import environ
-
+from redis import Redis
 
 def load_configuration(app):
 
@@ -61,6 +61,10 @@ class BaseConfig(object):
 
 
 class DebugConfig(object):
+
+    SESSION_TYPE = "redis"
+    SESSION_REDIS = Redis(host="0.0.0.0", port=6379)
+
     DEBUG = True
     USE_RELOADER = True
 

@@ -31,7 +31,10 @@ def login_post():
     if username and rsa_token:
 
         identity = Identity(current_app.config["IDENTITY_URL"])
-        service_catalog = identity.auth_racker_username_and_token(
+#        service_catalog = identity.auth_racker_username_and_token(
+#            username, rsa_token)
+
+        service_catalog = identity.auth_username_and_password(
             username, rsa_token)
 
         current_app.logger.debug('LOGIN - IS AUTHENTICATED')

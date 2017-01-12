@@ -83,7 +83,8 @@
   <div class="rs-wrapper">
     <!-- HEADER START -->
     {% block header %}
-      {% include '_header.html' %}
+      {! session.get('pilot_header')|safe !}
+      {#{% include '_header.html' %}#}
     {% endblock %}
     <!-- HEADER END -->
     <div class="rs-body">

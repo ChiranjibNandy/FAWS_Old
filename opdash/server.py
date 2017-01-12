@@ -3,15 +3,14 @@ from opdash.controllers.errors import register_error_handlers
 from opdash.controllers.proxy import register_api_proxy
 from opdash.configs import load_configuration
 
-from opdash.controllers import unsecure, secure
-import opdash.session_managers as session_managers
-
+from opdash.controllers import unsecure, customer, racker
+from flask_session import Session
 
 class FlaskOpdash(Flask):
     '''
         Jinja and Angular both use the double braces {{variable}}
         delimiter. So here we are changing the Jinja variable delimeter
-        to {[{variable}]} so it does not conflict with Angular delimiter.
+        to {!variable!} so it does not conflict with Angular delimiter.
     '''
     jinja_options = Flask.jinja_options.copy()
     jinja_options.update(dict(
@@ -40,9 +39,11 @@ def build_app():
     register_api_proxy(app)
     register_error_handlers(app)
     app.register_blueprint(unsecure.mod)
-    app.register_blueprint(secure.mod)
+    app.register_blueprint(racker.mod)
+    app.register_blueprint(customer.mod)
 
-    session_managers.configure_session_provider(app)
+    # Create Session
+    Session(app)
 
     return app, context
 
