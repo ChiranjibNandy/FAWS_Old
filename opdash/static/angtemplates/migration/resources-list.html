@@ -7,7 +7,7 @@
     })();
 </script>
 
-<div class="rs-row" style="margin-top:10px;">
+<div class="rs-row template-header">
     <div class="span-9">
         <h3>{{vm.auth.accountName}} ( #{{vm.auth.tenant_id}} )</h3>
     </div>
@@ -44,18 +44,33 @@
         <div class="rs-facet-section">
             <div class="rs-facet-section-body">
                 <div class="rs-facet-title">Current Pricing</div>
-                <div class='blank-slate'></div>
+                <div class='info-panel'>
+                    <span class="no-break">Last Month's Invoice:</span><br>
+                    <span class="no-break">Billing Period: 12-DEC-16 to 11-JAN-17</span><br>
+                    <span class="no-break">$485 (<a href="javascript:void(0);">See Details</a>)</span><br>
+                </div>
                 
                 <div class="rs-facet-title">New Pricing</div>
-                <div class='blank-slate'></div>
+                <div class='info-panel'>
+                    <span class="no-break">Amazon EC2 Service (US-East):</span><br>
+                    <span class="no-break">Compute: $31.81</span><br>
+                    <span class="no-break">Fanatical AWS Support (Navigator): $400.00</span><br>
+                    <span class="no-break summary">TOTAL COST: $431.81</span>
+                </div>
 
                 <div class="rs-facet-title">Savings</div>
-                <div class='blank-slate-small'></div>
+                <div class='info-panel-small'>
+                    <span class="summary"><b>$53.69 SAVED</b></span>
+                </div>
 
                 <br>
-                <button class="rs-btn saveLaterBtn" ng-click="vm.saveItems()" style="width: 100%;">Save For Later</button><br><br>
-                <a class="rs-btn backBtn" ng-link="['Tenant']">Back</a>
-                <button class="rs-btn continueBtn rs-btn-primary" ng-click="vm.continue()">Continue</button>
+                <div class="rs-row">
+                    <button class="rs-btn span-12" ng-click="vm.saveItems()">Save For Later</button><br><br>
+                </div>
+                <div class="rs-row">
+                    <a class="rs-btn span-5" ng-link="['Tenant']">Back</a>
+                    <button class="rs-btn rs-btn-primary span-7" ng-click="vm.continue()">Continue</button>
+                </div>
             </div>
         </div>
     </div>
@@ -66,7 +81,11 @@
         <div class="rs-facet-section">
             <div class="rs-facet-section-body">
                 <div class="rs-facet-title">FAQs + More Information</div>
-                <div class='rs-content rs-panel' style="min-height: 10px;"></div>
+                <div class='rs-panel small-panel'>
+                    <a href="javascript:void(0);">Mapping of Rackspace Resource to Amazon Web Service Resources</a><br>
+                    <a href="javascript:void(0);">How will my billing change?</a><br>
+                    <a href="javascript:void(0);">Learn about the different Fanatical Support for AWS Support Levels</a><br>
+                </div>
             </div>
         </div>
     </div>
@@ -74,7 +93,11 @@
         <div class="rs-facet-section">
             <div class="rs-facet-section-body">
                 <div class="rs-facet-title">Support</div>
-                <div class='rs-content rs-panel' style="min-height: 10px;"></div>
+                <div class='rs-panel small-panel'>
+                    <div class="support-icon chat" title="Chat"></div>
+                    <div class="support-icon call" title="Call"></div>
+                    <div class="support-icon mail" title="Mail"></div>
+                </div>
             </div>
         </div>
     </div>
