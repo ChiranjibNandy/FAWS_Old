@@ -10,6 +10,8 @@
                 var vm = this;
 
                 vm.$onInit = function() {
+                    $('title')[0].innerHTML =  "Schedule Migration - Rackspace Cloud Migration";
+
                     vm.timeItems = ["12:00pm","12:30pm","1:00am"];
                     vm.timeZoneItems = ["EST","CST","TST"];
                     vm.time = vm.timeItems[0];

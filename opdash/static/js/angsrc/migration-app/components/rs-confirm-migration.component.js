@@ -10,6 +10,8 @@
                 var vm = this;
                 
                 vm.$onInit = function() {
+                    $('title')[0].innerHTML =  "Confirm Migration - Rackspace Cloud Migration";
+
                     vm.allItems = [];
                     vm.types = ['server','network'];
                     var dateObject = dataStoreService.returnDate();

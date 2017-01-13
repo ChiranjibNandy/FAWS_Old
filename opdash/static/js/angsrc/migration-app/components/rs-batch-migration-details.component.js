@@ -9,8 +9,9 @@
             controllerAs: "vm",
             controller: function() {
                 var vm = this;
+                $('title')[0].innerHTML =  "Batch Migration Details - Rackspace Cloud Migration";
 
-                vm.batchName = "(Batch name)"
+                vm.batchName = "(Batch name)";
 
                 // Go back to migration dashboard
                 vm.back = function() {
