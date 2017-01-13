@@ -8,7 +8,7 @@
 </script>
 
 <div class="rs-row template-header">
-    <div class="span-9">
+    <div class="span-6">
         <h3>{{vm.auth.accountName}} ( #{{vm.auth.tenant_id}} )</h3>
     </div>
     <div class="span-3">
@@ -45,22 +45,28 @@
             <div class="rs-facet-section-body">
                 <div class="rs-facet-title">Current Pricing</div>
                 <div class='info-panel'>
-                    <span class="no-break">Last Month's Invoice:</span><br>
-                    <span class="no-break">Billing Period: 12-DEC-16 to 11-JAN-17</span><br>
-                    <span class="no-break">$485 (<a href="javascript:void(0);">See Details</a>)</span><br>
+                    <div ng-show="vm.selectedItems.length>0">
+                        <span class="no-break">Last Month's Invoice:</span><br>
+                        <span class="no-break">Billing Period: 12-DEC-16 to 11-JAN-17</span><br>
+                        <span class="no-break">$485 (<a href="javascript:void(0);">See Details</a>)</span>
+                    </div>
                 </div>
                 
                 <div class="rs-facet-title">New Pricing</div>
                 <div class='info-panel'>
-                    <span class="no-break">Amazon EC2 Service (US-East):</span><br>
-                    <span class="no-break">Compute: $31.81</span><br>
-                    <span class="no-break">Fanatical AWS Support (Navigator): $400.00</span><br>
-                    <span class="no-break summary">TOTAL COST: $431.81</span>
+                    <div ng-show="vm.selectedItems.length>0">
+                        <span class="no-break">Amazon EC2 Service (US-East):</span><br>
+                        <span class="no-break">Compute: $31.81</span><br>
+                        <span class="no-break">Fanatical AWS Support (Navigator): $400.00</span><br>
+                        <span class="no-break summary">TOTAL COST: $431.81</span>
+                    </div>
                 </div>
 
                 <div class="rs-facet-title">Savings</div>
                 <div class='info-panel-small'>
-                    <span class="summary"><b>$53.69 SAVED</b></span>
+                    <div ng-show="vm.selectedItems.length>0">
+                        <span class="summary"><b>$53.69 SAVED</b></span>
+                    </div>
                 </div>
 
                 <br>

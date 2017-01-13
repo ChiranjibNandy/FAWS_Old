@@ -24,6 +24,7 @@
                     };
 
                     vm.$onInit = function() {
+                        $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
                         getBatches();
                     };
                 }]
