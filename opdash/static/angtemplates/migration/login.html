@@ -6,22 +6,36 @@
             <span class="welcome_message">Welcome to FAWS Migration Portal</span>
             <form name="loginForm" id="loginForm" method="POST" class="rs-form-small" ng-submit="vm.onSubmit()" novalidate>
                 <fieldset>
+
+                  <div style="display:inline-block; background-color:#ffgg55; width:150px;">
+                    <div class="rs-controls-group">
+                      <label>Type</label>
+                      <label class="rs-radio rs-pull-left">
+                        <input name="user_type" type="radio" ng-model="vm.user_type" value="racker" checked="true">Racker
+                      </label>
+                      <label class="rs-radio rs-pull-right">
+                        <input name="user_type" type="radio" ng-model="vm.user_type" value="customer">Customer
+                      </label>
+                    </div>
+                  </div>
+
                     <div class="rs-control-group" ng-class="{'error': loginForm.username.$invalid && (vm.submitted || loginForm.username.$touched)}">
                         <label for="username">Username</label>
                         <div class="rs-controls">
                             <input autofocus="" class="rs-input-large" id="username" name="username" type="text" value="" ng-model="vm.username" required><br>
                             <span ng-show="loginForm.username.$invalid && (vm.submitted || loginForm.username.$touched)" class="error-text">
-                                <i class="rs-validation-indicator"></i> Username is required
+                                <i class="rs-validation-indicator"></i> Username is required.
                             </span>
                         </div>
                     </div>
+
                     <div class="rs-control-group" ng-class="{'error': loginForm.rsa_token.$invalid && (vm.submitted || loginForm.rsa_token.$touched)}">
-                        <label for="password">RSA Token</label>
+                        <label for="rsa_token">{{vm.user_type == 'racker' ? 'RSA Token':'Password'}}</label>
                         <div class="rs-controls">
                             <input autocomplete="off" class="rs-input-large" id="rsa_token" name="rsa_token" type="password" value="" ng-model="vm.rsa_token"
                                 required><br>
                             <span ng-show="loginForm.rsa_token.$invalid && (vm.submitted || loginForm.rsa_token.$touched)" class="error-text">
-                                <i class="rs-validation-indicator"></i> RSA token is required
+                                <i class="rs-validation-indicator"></i> {{vm.user_type == 'racker' ? 'RSA token':'Password'}} is required.
                             </span>
                         </div>
                     </div>
