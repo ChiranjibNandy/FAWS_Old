@@ -1,13 +1,33 @@
 (function () {
     "use strict";
 
-    // Creating an angular app with ngComponentRouter for handling routing
+    /** 
+     * @ngdoc object
+     * @name migrationApp
+     * @requires ngComponentRouter
+     * @description
+     * A module to facilitate and initiate migration of resources. It requires **ngComponentRouter** for handling routing through [Component router](https://docs.angularjs.org/guide/component-router).
+     */
     var migrationApp = angular.module("migrationApp", ["ngComponentRouter"]);
 
     // Defining the root component which will initiate routing handling
     migrationApp.value("$routerRootComponent", "rsmigrationroot");
 
-    // directive to include html templates without creating a new scope
+    /**
+     * @ngdoc directive
+     * @name migrationApp.directive:staticInclude
+     * @restrict A
+     * @param {String} staticInclude Path to file to be included
+     * @description
+     * Directive to include html templates without creating a new scope. The included template shares the same scope as its parent.
+     * This circumvents the issue with [**ngInclude**](https://docs.angularjs.org/api/ng/directive/ngInclude), which creates an isolate scope for every file inclusion.
+     * @example
+     * <example module="migrationApp">
+     *   <file name="index.html">
+     *      <div static-include="'path/to/file.html'"></div>
+     *   </file>
+     * </example>
+     */
     migrationApp.directive('staticInclude', ["$parse", "$templateRequest", "$compile", function($parse, $templateRequest, $compile) {
         return {
             restrict: 'A',
@@ -26,7 +46,18 @@
         };
     }]);
 
-    // The root component which defines initial routing
+    /**
+     * @ngdoc object
+     * @name migrationApp.component:rsmigrationroot
+     * @description
+     * This is the parent of all components. Its main job is to act as a center place for the routes defined in FAWS UI application.
+     * @example
+     * <example module="migrationApp">
+     *   <file name="index.html">
+     *      <rs-migration-root><div ng-outlet></div></rs-migration-root>
+     *   </file>
+     * </example>
+     */
     migrationApp.component("rsmigrationroot", {
         transclude: true,
         template: "<ng-transclude></ng-transclude>",
