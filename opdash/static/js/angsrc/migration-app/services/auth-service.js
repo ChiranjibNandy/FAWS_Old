@@ -11,6 +11,8 @@
         .service("authservice", [function() {
             var self = this;
 
+            self.type = {};
+            
             /**
              * @ngdoc property
              * @name username
