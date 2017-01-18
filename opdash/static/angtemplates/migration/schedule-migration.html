@@ -7,36 +7,46 @@
     })();
 </script>
 
-<div>
+<div style="margin-top:10px;">
     <h3>Schedule Migration</h3>
 </div>
 
-<div class="rs-row">
+<div class="rs-row template-header">
     <div class="span-9">
 
-        <div class="rs-content rs-panel">
+        <div class="rs-content rs-panel panelCommonHeight">
             <div class="rs-row">
-                <div class="span-6">
-                    <span style="vertical-align: super; margin-right: 10px;">Name Your Migration:</span>
-                    <input type="text" ng-model="vm.migrationName" />
+                <div class="span-9">
+                    <span style="vertical-align: super; margin-right: 20px;">Name Your Migration:</span>
+                    <input type="text" ng-model="vm.migrationName" value={{vm.migrationName}}/>
                 </div>
             </div>
-            <div class="rs-row">
+            <div class="rs-row" style="margin-top: 40px">
                 <div class="span-6">
                     <rscalendaritem selected="day"></rscalendaritem>
                 </div>
-                <div class="span-6">
-                    <h5>TIME</h5>
-                    <select name="time">
-                        <option value="">12:00pm</option>
-                        <option value="">12:30pm</option>
-                    </select>
+                 <div class="span-3">
                     <h5>TIME ZONE</h5>
-                    <select name="time">
-                        <option value="est">EST</option>
-                        <option value="cst">CST</option>
-                        <option value="tst">TST</option>
+                    <select name="timezone">
+                        <option value="est">EST- GMT-05:00</option>
+                        <option value="cst">CST- GMT-06:00</option>
+                        <option value="tst">PST- GMT-08:00</option>
                     </select>
+                </div>
+                <div class="span-3">
+                    <h5>TIME</h5>
+                    <select name="time" ng-change="vm.timeChange()" ng-model="vm.time">
+                        <option ng-repeat="time in vm.timeItems" value="{{time}}">{{time}}</option>
+                    </select>
+                </div>
+               
+            </div>
+            <div class="rs-row" style="margin-top: 40px">
+                <div class="span-6">
+                    Selected migration date is :
+                </div>
+                <div class="span-3">
+                    {{vm.selectedDate}}
                 </div>
             </div>
         </div>
@@ -46,18 +56,33 @@
         <div class="rs-facet-section">
             <div class="rs-facet-section-body">
                 <div class="rs-facet-title">Current Pricing</div>
-                <div class='pricingDetails'></div>
+                <div class='info-panel'>
+                    <span class="no-break">Last Month's Invoice:</span><br>
+                    <span class="no-break">Billing Period: 12-DEC-16 to 11-JAN-17</span><br>
+                    <span class="no-break">$485 (<a href="javascript:void(0);">See Details</a>)</span><br>
+                </div>
                 
                 <div class="rs-facet-title">New Pricing</div>
-                <div class='pricingDetails'></div>
+                <div class='info-panel'>
+                    <span class="no-break">Amazon EC2 Service (US-East):</span><br>
+                    <span class="no-break">Compute: $31.81</span><br>
+                    <span class="no-break">Fanatical AWS Support (Navigator): $400.00</span><br>
+                    <span class="no-break summary">TOTAL COST: $431.81</span>
+                </div>
 
                 <div class="rs-facet-title">Savings</div>
-                <div class='savingDetails'></div>
+                <div class='info-panel-small'>
+                    <span class="summary"><b>$53.69 SAVED</b></span>
+                </div>
 
                 <br>
-                <button class="rs-btn saveLaterBtn" ng-click="vm.saveItems()">Save For Later</button><br><br>
-                <a class="rs-btn backBtn" ng-link="['MigrationResourceList']">Back</a>
-                <button class="rs-btn continueBtn" ng-click="vm.continue()">Continue</button>
+                <div class="rs-row">
+                    <button class="rs-btn span-12" ng-click="vm.saveItems()">Save For Later</button><br><br>
+                </div>
+                <div class="rs-row">
+                    <a class="rs-btn span-5" ng-link="['MigrationRecommendation']">Back</a>
+                    <button class="rs-btn rs-btn-primary span-7" ng-click="vm.continue()">Continue</button>
+                </div>
             </div>
         </div>
     </div>
@@ -68,7 +93,11 @@
         <div class="rs-facet-section">
             <div class="rs-facet-section-body">
                 <div class="rs-facet-title">FAQs + More Information</div>
-                <div class='rs-content rs-panel' style="min-height: 30px;"></div>
+                <div class='rs-panel small-panel'>
+                    <a href="javascript:void(0);">Mapping of Rackspace Resource to Amazon Web Service Resources</a><br>
+                    <a href="javascript:void(0);">How will my billing change?</a><br>
+                    <a href="javascript:void(0);">Learn about the different Fanatical Support for AWS Support Levels</a><br>
+                </div>
             </div>
         </div>
     </div>
@@ -76,7 +105,11 @@
         <div class="rs-facet-section">
             <div class="rs-facet-section-body">
                 <div class="rs-facet-title">Support</div>
-                <div class='rs-content rs-panel' style="min-height: 30px;"></div>
+                <div class='rs-panel small-panel'>
+                    <div class="support-icon chat" title="Chat"></div>
+                    <div class="support-icon call" title="Call"></div>
+                    <div class="support-icon mail" title="Mail"></div>
+                </div>
             </div>
         </div>
     </div>

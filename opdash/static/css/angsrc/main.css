@@ -1,4 +1,4 @@
-button{
+button, a.rs-nav-link, .rs-tabs>li.active>a{
     outline: none;
 }
 
@@ -6,23 +6,20 @@ th{
     padding-top: 10px;
     padding-bottom: 10px;
     white-space: nowrap;
+    text-transform: capitalize;
+    font-weight: bold;
 }
 
-.rs-facet-item .rs-status-disabled {
-    background-color: transparent;
-    background-image: url(https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/icons.png);
-    background-position: -2px -781px;
-    background-repeat: no-repeat;
-    width: 13px;
-    height: 13px;
+.capitalize{
+    text-transform: capitalize;
 }
 
-a.rs-nav-link{
-   outline: none;
+.template-header{
+    margin-top: 10px;
 }
 
-[ng-outlet]{
-   margin-top: 10px;
+.rs-container{
+    width: 1200px;
 }
 
 .migration-item:last-child,
@@ -39,48 +36,22 @@ a.rs-nav-link{
 
 .migration-item-type{
     margin: 5px 0;
-    
 }
 
 .rs-content{
     padding: 20px;
 }
 
-.action-footer{
-    padding: 15px 0;
-    margin: 0;
-    overflow: auto;
-}
-
-.rs-mig-nopad{
-    padding: 0px;
-}
 .rs-mig-nomar{
     margin: 0px;
 }
+
 .no-break{
    white-space: nowrap;
 }
 
-.rs-table-status-disabled{
-    background-color: #aaaaaa;
-}
 .rs-main .rs-sidebar+.mainContent {
     margin-left: 160px;
-}
-
-.sidebar{
-    width:160px;
-}
-
-.field-key {
-    color: #999;
-    white-space: nowrap;
-}
-
-.pricing-details{
-    padding: 40px 0 0 30px;
-    color: #c40022;
 }
 
 .rs-control-label{
@@ -91,101 +62,11 @@ a.rs-nav-link{
     color: #c40022;
 }
 
-.migration-confirm-form{
-    padding-top: 20px;
-}
-
-.form-submit-row{
-    padding-top: 10px;
-}
-
 .tenant-container{
     padding: 40px;
 }
 
-.migration-header{
-   margin-top: 15px;
-}
-
-[ng-outlet].ng-enter, [ui-outlet].ng-leave {
- position: absolute;
- left: 0;
- right: 0;
- -webkit-transition:all .5s ease-in-out;
-    -moz-transition:all .5s ease-in-out;
-    -o-transition:all .5s ease-in-out;
-    transition:all .5s ease-in-out;
-}
-
-[ng-outlet].ng-enter {
- opacity: 0;
- -webkit-transform:scale3d(0.5, 0.5, 0.5);
- -moz-transform:scale3d(0.5, 0.5, 0.5);
- transform:scale3d(0.5, 0.5, 0.5);
-}
-
-[ng-outlet].ng-enter-active {
- opacity: 1;
- -webkit-transform:scale3d(1, 1, 1);
- -moz-transform:scale3d(1, 1, 1);
- transform:scale3d(1, 1, 1);
-}
-
-[ng-outlet].ng-leave {
- opacity: 1;
- -webkit-transform:translate3d(0, 0, 0);
- -moz-transform:translate3d(0, 0, 0);
- transform:translate3d(0, 0, 0);
-}
-
-[ng-outlet].ng-leave-active {
- opacity: 0;
- -webkit-transform:translate3d(100px, 0, 0);
- -moz-transform:translate3d(100px, 0, 0);
- transform:translate3d(100px, 0, 0);
-}
-
-#subNav{
-   display: none;
-}
-
-.status-fixed-width{
-    width: 150px;
-}
-
-.migration-status {
-    width: 78px;
-    cursor: pointer;
-}
-
-.migration-status.rs-status-ok {
-    padding-left: 8px;
-    padding-right: 8px;
-}
-
-.capitalize{
-    text-transform: capitalize;
-}
-
-.red{
-    color:#c40022;
-}
-
-#refreshbtn{
-    margin-left: 565;
-}
-
-#selectedItemsserver,#selectedItemsnetwork{
-    background-color: #fff;
-    height: auto;
-    margin-top: 20px;
-    min-height: 80px;
-    width: 71%;
-    box-shadow: #c2c2c2 0px 3px 8px 1px;
-    padding: 10px;
-}
-
-.selectedChild{
+.selected-migration-item{
     font-size: 12px;
     padding: 5px;
     margin: 2px 0 3px 5px;
@@ -196,7 +77,6 @@ a.rs-nav-link{
     border: 1px solid #aaaaaa;
     border-radius: 3px;
     background-clip: padding-box;
-    -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -205,43 +85,36 @@ a.rs-nav-link{
     float: left;
 }
 
-.selectedChild:first-child {
+.selected-migration-item:first-child {
     margin-left: 0;
 }
 
-.sectionRight{
-    padding:0px 56px;
-}
-
-.pricingDetails{
+.info-panel, .info-panel-small{
     width: 100%;
+    color: #a0a0a0;
     background-color: #fff;
-    height: 64px;
     min-height: 60px;
-    padding: 10px 0px 0px 0px;
+    padding: 5px;
     margin-bottom: 10px;
+    box-sizing: border-box;
 }
 
-.savingDetails{
-    width: 100%;
-    background-color: #fff;
-    height: 50px;
-    min-height: 40px;
-    padding: 10px 0px 0px 0px;
-    margin-bottom: 10px;
-}    
+.info-panel-small{
+    min-height: 30px;
+    line-height: 30px;
+}
+
+.info-panel .summary, .info-panel-small .summary{
+    color: black;
+}
+
+.small-panel{
+    padding: 20px;
+    min-height: 10px;
+}
 
 .rs-main .rs-content{
     min-height: 228px;
-}
-
-.pricingDetailsFooter{
-    height: 50px;
-    min-height: 50px;
-}
-
-.rs-tabs>li.active>a{
-    outline: none;
 }
 
 .vertical-tab-container .rs-sidebar{
@@ -263,13 +136,121 @@ a.rs-nav-link{
 
 .right-sidebar{
     background-color: #f5f5f5;
-    padding: 20px;
+    padding: 20px 15px;
     box-shadow: #c2c2c2 0 3px 8px 1px;
+    font-size: 0.95em;
 }
 
+.rs-custom-progress {
+    overflow: visible;
+    position: relative;
+}
+
+.rs-custom-progress .rs-custom-progress-label{
+    position: absolute;
+    top: 0;
+    right: -35px;
+}
+
+.migration-status-list-container{
+    margin-top: 15px;
+}
+
+.migration-status-list-container:first-child{
+    margin-top: 0;
+}
+
+.migration-status-list-container .rs-list-table {
+    table-layout: fixed;
+}
+
+.support-icon{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin: 0 13px;
+    cursor: pointer;
+}
+
+.chat{
+    background: transparent url(/static/img/chat.png) no-repeat;
+    background-size: cover;
+}
+
+.call{
+    background: transparent url(/static/img/call.png) no-repeat;
+    background-size: cover;
+    width: 52px;
+    height: 52px;
+}
+
+.mail{
+    background: transparent url(/static/img/mail.png) no-repeat;
+    background-size: cover;
+    width: 55px;
+    height: 55px;
+}
+
+/* Start - Collapsible panel CSS */
+.collapsible-panel-group .heading{
+    font-weight: bold;
+}
+
+.batch-details-header {
+    margin: 10px 0;
+}
+
+.batch-details-header .buttons{
+    margin-left: 6px;
+}
+
+.batch-group-detail{
+    border: 1px solid #e7e7e7;
+    box-sizing: border-box;
+    margin: 7px 0;
+}
+
+.batch-group-detail .icon{
+    padding: 2px 5px;
+    margin: 0 10px;
+    cursor: pointer;
+    border: 1px solid #e7e7e7;
+    border-radius: 2px;
+}
+
+.batch-group-detail .icon.collapsed:before{
+    content: '+';
+}
+
+.batch-group-detail .icon.expanded:before{
+    content: "\2013";
+    font-size: 1.2em;
+}
+
+.batch-group-detail .cell{
+    box-sizing: border-box;
+    padding: 5px 0;
+}
+
+.batch-group-detail .header{
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.batch-group-detail .heading{
+    text-transform: capitalize;
+}
+
+.batch-group-detail .item-group{
+    max-height: 250px;
+    padding: 10px 0;
+    overflow: auto;
+}
+.batch-group-detail .item-group .item {
+    min-height: 35px;
+}
+/* End - Collapsible panel CSS */
 
 /* Start - Calender CSS */
-
 .border-box {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -369,18 +350,19 @@ rscalendaritem > div.week.names > span {
   color: black;
   font-weight: bold;
 }
-
 /* End - Calender CSS */
 
-.saveLaterBtn{
-    width: 100%;
+
+.panelCommonHeight{
+    height: 414px;
 }
-.backBtn{
-    width: 30%;
+#subNav{
+   display: none;
 }
-.continueBtn{
-    width: 57%;
-}
+
 .rs-main.verticalMain {
     margin-bottom: 16px;
+}
+#refreshbtn{
+    margin-left: 565px;
 }

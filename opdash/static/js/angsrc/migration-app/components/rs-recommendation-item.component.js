@@ -3,6 +3,7 @@
 
     // defining component to display each migration component (eg: server, network etc)
     angular.module("migrationApp")
+        // component to handle recommendations for each resource type (server, network)
         .component("rsrecommendationitem", {
             templateUrl: "/static/angtemplates/migration/recommendation-item-template.html",
             bindings: {
@@ -28,6 +29,7 @@
                                     {field: "ram", text: "RAM"},
                                     {field: "status", text: "Status"}
                                 ];
+                    $('#rs-main-panel').css('height','414px');
                 };
 
                 // Update item selection based on Select/Deselect all 
@@ -59,5 +61,5 @@
 
                 return vm;
             }]
-        }); // end of component definition
+        }); // end of component rsrecommendationitem
 })();

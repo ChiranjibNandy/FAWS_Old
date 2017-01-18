@@ -1,0 +1,90 @@
+<script type="text/javascript">
+    (function() {
+        document.getElementById("subNav").style.display = "block";
+        var subMenus = $(".rs-nav-secondary .rs-nav-item");
+        $(subMenus).removeClass("active");
+        $(subMenus[3]).addClass("active");
+    })();
+</script>
+
+<div class="template-header">
+    <h3>Confirm And Migrate</h3>
+</div>
+
+<div class="rs-row">
+    <div class="span-12">
+
+        <div class="rs-content rs-panel">
+            <div class="rs-row">
+                <div class="span-8">
+                    Scheduled Migration for below servers and networks is at 
+                </div>
+                <div class="span-4">
+                    {{vm.dateString}}
+                </div>
+            </div>
+            <div class="rs-row">
+                <div class="rs-main" style="margin-top: 0;">
+                    <div class="rs-embedded-list-table-wrapper rs-embedded-medium">
+                        <table class="rs-list-table rs-embedded-list-table" ng-show="!vm.noData">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span>Name</span>
+                                    </th>
+                                    <th>
+                                        <span>Type</span>
+                                    </th>
+                                    <th>
+                                        <span>Cost</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in vm.allItems">
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.type}}</td>
+                                    <td>{{item.cost || "30.00$"}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="rs-row">
+                <div class="span-10"></div>
+                <div class="span-2">
+                    <button class="rs-btn rs-btn-primary" ng-click="vm.migrate()">Confirm and migrate</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="rs-row" style="margin-top: 10px;">
+    <div class="span-9">
+        <div class="rs-facet-section">
+            <div class="rs-facet-section-body">
+                <div class="rs-facet-title">FAQs + More Information</div>
+                <div class='rs-panel small-panel'>
+                    <a href="javascript:void(0);">Mapping of Rackspace Resource to Amazon Web Service Resources</a><br>
+                    <a href="javascript:void(0);">How will my billing change?</a><br>
+                    <a href="javascript:void(0);">Learn about the different Fanatical Support for AWS Support Levels</a><br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="span-3">
+        <div class="rs-facet-section">
+            <div class="rs-facet-section-body">
+                <div class="rs-facet-title">Support</div>
+                <div class='rs-panel small-panel'>
+                    <div class="support-icon chat" title="Chat"></div>
+                    <div class="support-icon call" title="Call"></div>
+                    <div class="support-icon mail" title="Mail"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

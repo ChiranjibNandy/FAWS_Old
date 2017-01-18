@@ -2,6 +2,7 @@
     "use strict";
     
     angular.module("migrationApp")
+        // component to display a tab
         .component("rsTab", {
             transclude: true,
             require: {
@@ -21,8 +22,9 @@
                         active: false
                     };
 
+                    // add current tab to the group
                     vm.tabs.addTab(vm.tab);
                 }
             }
-        });
+        }); // end of component rsTab
 })();
