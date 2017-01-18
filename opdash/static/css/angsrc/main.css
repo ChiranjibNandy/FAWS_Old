@@ -352,17 +352,17 @@ rscalendaritem > div.week.names > span {
 }
 /* End - Calender CSS */
 
+
+.panelCommonHeight{
+    height: 414px;
+}
 #subNav{
    display: none;
 }
 
-<<<<<<< Updated upstream
-/* End - Calender CSS */
-
 .rs-main.verticalMain {
     margin-bottom: 16px;
-=======
+}
 #refreshbtn{
     margin-left: 565px;
->>>>>>> Stashed changes
 }
