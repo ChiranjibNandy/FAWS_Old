@@ -29,7 +29,7 @@ def login_post():
 
     error_message = "Login was not correct."
 
-    if username and (rsa_token or password):
+    if username and rsa_token:
 
         identity = Identity(current_app.config["IDENTITY_URL"])
 

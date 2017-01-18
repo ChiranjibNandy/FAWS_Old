@@ -1,7 +1,7 @@
 from flask import render_template
-from opdash.controllers.base import SecureBlueprint
+from opdash.controllers.base import RackerBlueprint
 
-mod = SecureBlueprint('racker', __name__)
+mod = RackerBlueprint('racker', __name__)
 
 
 @mod.route('/base')

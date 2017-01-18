@@ -1,6 +1,8 @@
 from uuid import uuid4
 from os import environ
 from redis import Redis
+import logging
+
 
 def load_configuration(app):
 
@@ -24,6 +26,8 @@ def load_configuration(app):
     app.config['SECRET_COOKIE_KEY'] = environ.get(
         'UI_SECRET_COOKIE_KEY', uuid4())
 
+    app.logger.setLevel(logging.DEBUG)
+
 
 class BaseConfig(object):
     """
@@ -42,7 +46,14 @@ class BaseConfig(object):
     )
 
     IDENTITY_URL = "https://identity-internal.api.rackspacecloud.com/v2.0"
-    # IDENTITY_URL = "https://identity.api.rackspacecloud.com/v2.0"
+
+    # PILOT HEADER CONFIGURATION ITEMS
+    PILOT = {
+        "PILOT_URL": 'https://prod.pilot.api.rackspacecloud.com/v1/',
+        "PRODUCT": '',  # we don't have a product in the menu yet
+        "MYCLOUD_URL": 'https://mycloud.rackspace.com',
+        "LOGOUT_URL": '/logout',
+    }
 
     # Application threads. A common general assumption is using 2 per available
     # processor core - to handle incoming requests using one and performing

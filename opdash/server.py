@@ -6,6 +6,7 @@ from opdash.configs import load_configuration
 from opdash.controllers import unsecure, customer, racker
 from flask_session import Session
 
+
 class FlaskOpdash(Flask):
     '''
         Jinja and Angular both use the double braces {{variable}}
