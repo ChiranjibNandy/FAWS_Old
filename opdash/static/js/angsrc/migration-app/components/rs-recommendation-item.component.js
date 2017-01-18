@@ -29,6 +29,7 @@
                                     {field: "ram", text: "RAM"},
                                     {field: "status", text: "Status"}
                                 ];
+                    $('#rs-main-panel').css('height','414px');
                 };
 
                 // Update item selection based on Select/Deselect all 

@@ -9,7 +9,7 @@
                 type: "@" // type parameter to be supplied (eg: server, network etc)
             },
             controllerAs: "vm",
-            controller: ["datastoreservice", function (dataStoreService) {
+            controller: ["datastoreservice", "$scope",function (dataStoreService,$scope) {
                 var vm = this;
 
                 // vm.selected = _removeTime(vm.selected || moment());
@@ -26,9 +26,11 @@
                     vm.selected = day.date;  
                     var then = vm.selected.format('YYYY/MM/DD');
                     var now = moment().format('YYYY/MM/DD');
-                    dataStoreService.storeDate('date',vm.selected);
                     if(moment(now).isAfter(then)){
                         alert('Please select date after today or today');
+                    }else{
+                        $scope.$emit("DateChanged", vm.selected);
+                        dataStoreService.storeDate('date',vm.selected);
                     }
                 };
 
