@@ -29,7 +29,11 @@
                                     {field: "ram", text: "RAM"},
                                     {field: "status", text: "Status"}
                                 ];
-                    $('#rs-main-panel').css('height','414px');
+                    if(vm.type == "server") 
+                        vm.showModify = true;                                
+                    else
+                        vm.showModify = false;
+                    $('#rs-main-panel').css('height','412px');
                 };
 
                 // Update item selection based on Select/Deselect all 
@@ -57,6 +61,11 @@
                         }
                         vm.isAllSelected = count === vm.data.length;
                     }
+                };
+
+                //modifing the selected servers
+                vm.modify = function(){
+                    dataStoreService.setRecommendedItems(vm.recSelectedItems);
                 };
 
                 return vm;

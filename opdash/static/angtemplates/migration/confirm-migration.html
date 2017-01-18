@@ -14,7 +14,7 @@
 <div class="rs-row">
     <div class="span-12">
 
-        <div class="rs-content rs-panel">
+        <div class="rs-content rs-panel panelCommonHeight">
             <div class="rs-row">
                 <div class="span-8">
                     Scheduled Migration for below servers and networks is at 
@@ -52,7 +52,10 @@
                 </div>
             </div>
             <div class="rs-row">
-                <div class="span-10"></div>
+                <div class="span-9"></div>
+                <div class="span-1">
+                    <a class="rs-btn" ng-link="['ScheduleMigration']">Back</a>
+                </div>
                 <div class="span-2">
                     <button class="rs-btn rs-btn-primary" ng-click="vm.migrate()">Confirm and migrate</button>
                 </div>
