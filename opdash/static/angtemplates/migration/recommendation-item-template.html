@@ -33,11 +33,11 @@
       </tbody>
     </table>
   </div>
-  <div class="rs-row">
-    <div style="margin-left: 150px;">
+  <div class="rs-row" ng-show="vm.showModify">
+    <div style="margin-left: 150px; margin-top: 10px;">
       <div class="span-10"></div>
         <div class="span-2">
-          <button class='rs-btn rs-pull-right'>Modify</button>
+          <button class='rs-btn rs-pull-right rs-btn-primary' ng-click="vm.modify()">Modify</button>
         </div>
       </div>
     </div>

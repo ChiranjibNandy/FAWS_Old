@@ -13,7 +13,7 @@
                 parent: "^^rsmigrationrecommendation"
             },
             controllerAs: "vm",
-            controller: ["migrationitemdataservice", "$rootRouter", "authservice", "$q", "datastoreservice", function (ds, $rootRouter, authservice, $q, dataStoreService) {
+            controller: ["migrationitemdataservice", "authservice", "$q", "datastoreservice", "$rootRouter", function (ds, authservice, $q, dataStoreService, $rootRouter) {
                 var vm = this;
 
                 vm.$onInit = function() {
@@ -29,7 +29,11 @@
                                     {field: "ram", text: "RAM"},
                                     {field: "status", text: "Status"}
                                 ];
-                    $('#rs-main-panel').css('height','414px');
+                    if(vm.type == "server") 
+                        vm.showModify = true;                                
+                    else
+                        vm.showModify = false;
+                    $('#rs-main-panel').css('height','412px');
                 };
 
                 // Update item selection based on Select/Deselect all 
@@ -57,6 +61,12 @@
                         }
                         vm.isAllSelected = count === vm.data.length;
                     }
+                };
+
+                //modifing the selected servers
+                vm.modify = function(){
+                    dataStoreService.setRecommendedItems(vm.recSelectedItems);
+                    $rootRouter.navigate(["CompareOptions"]);
                 };
 
                 return vm;

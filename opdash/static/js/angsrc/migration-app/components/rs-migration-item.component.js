@@ -99,6 +99,7 @@
                             vm.isAllSelected = false;
                         }
                     });
+                    $('#rs-main-panel').css('height','298px');
                 };
 
                 // Select/Deselect all items

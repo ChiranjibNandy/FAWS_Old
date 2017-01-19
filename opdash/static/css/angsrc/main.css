@@ -261,7 +261,7 @@ rscalendaritem {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   background: white;
-  width: 300px;
+  width: 400px;
   border: solid 1px #CCC;
   margin-bottom: 10px;
 }
@@ -354,7 +354,7 @@ rscalendaritem > div.week.names > span {
 
 
 .panelCommonHeight{
-    height: 414px;
+    height: 412px;
 }
 #subNav{
    display: none;
@@ -365,4 +365,19 @@ rscalendaritem > div.week.names > span {
 }
 #refreshbtn{
     margin-left: 565px;
+}
+.selectedItemsPanel{
+    min-height: 10px;
+    height: 60px;
+    overflow-x: scroll;
+}
+
+.newPricingPanel{
+    height: 90px;
+}
+.currentPricingPanel{
+    height: 70px;
+}
+.savingsPanel{
+    height: 40px;
 }
