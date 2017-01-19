@@ -5,6 +5,7 @@
         .service("datastoreservice", [function() {
             var self = this;
             self.selectedItems = [];
+            self.selectedRecommendedItems = [];
             self.selectedDate = {
                 date:'',
                 time:'',
@@ -29,6 +30,16 @@
             //returning selected servers and networks
             this.getItems = function(type){
                 return self.selectedItems.filter(function(item){return item.type === type;});
+            }
+
+            //store items in the recommendation page
+            this.setRecommendedItems = function(items){
+                self.selectedRecommendedItems = items;
+            }
+
+            //return items in the recommendation page
+            this.getRecommendedItems = function(){
+                return self.selectedRecommendedItems;
             }
 
             return self;

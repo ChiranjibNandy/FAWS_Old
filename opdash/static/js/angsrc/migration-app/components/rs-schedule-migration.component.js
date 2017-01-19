@@ -13,10 +13,10 @@
                     $('title')[0].innerHTML =  "Schedule Migration - Rackspace Cloud Migration";
 
                     vm.timeItems = ["12:00pm","12:30pm","1:00am"];
-                    vm.timeZoneItems = ["EST","CST","TST"];
+                    vm.timeZoneItems = ["EST- GMT-05:00","CST- GMT-06:00","PST- GMT-08:00"];
                     vm.time = vm.timeItems[0];
                     vm.timezone = vm.timeZoneItems[0];
-                    vm.selectedDate = moment().format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
+                    vm.selectedDate = moment().format("MMM Do YYYY")+" at "+vm.time+" "+vm.timezone;
                     vm.date = moment().format("MMM Do YYYY");
                     dataStoreService.storeDate('time',vm.time);
                     dataStoreService.storeDate('timezone',vm.timezone);
@@ -35,10 +35,12 @@
 
                 vm.timeChange = function(){
                     dataStoreService.storeDate('time',vm.time);
+                    vm.selectedDate = moment(vm.date).format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
                 };
 
                 vm.timezoneChange = function(){
                     dataStoreService.storeDate('timezone',vm.timezone);
+                    vm.selectedDate = moment(vm.date).format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
                 };
 
                 vm.continue = function() {

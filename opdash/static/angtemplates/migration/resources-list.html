@@ -29,7 +29,7 @@
         </div>
         <div class="rs-row">
             <div style="margin-left: 150px;">
-                <div class="rs-content rs-panel" style="min-height: 0;">
+                <div class="rs-content rs-panel selectedItemsPanel" style="min-height:0px;">
                     {{vm.selectedItems.length}} items selected
                     <div>
                         <p ng-repeat="item in vm.selectedItems" ng-attr-id="item.name" class='selected-migration-item'>
@@ -44,7 +44,7 @@
         <div class="rs-facet-section">
             <div class="rs-facet-section-body">
                 <div class="rs-facet-title">Current Pricing</div>
-                <div class='info-panel'>
+                <div class='info-panel currentPricingPanel'>
                     <div ng-show="vm.selectedItems.length>0">
                         <span class="no-break">Last Month's Invoice:</span><br>
                         <span class="no-break">Billing Period: 12-DEC-16 to 11-JAN-17</span><br>
@@ -53,7 +53,7 @@
                 </div>
                 
                 <div class="rs-facet-title">New Pricing</div>
-                <div class='info-panel'>
+                <div class='info-panel newPricingPanel'>
                     <div ng-show="vm.selectedItems.length>0">
                         <span class="no-break">Amazon EC2 Service (US-East):</span><br>
                         <span class="no-break">Compute: $31.81</span><br>
@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="rs-facet-title">Savings</div>
-                <div class='info-panel-small'>
+                <div class='info-panel-small savingsPanel'>
                     <div ng-show="vm.selectedItems.length>0">
                         <span class="summary"><b>$53.69 SAVED</b></span>
                     </div>
