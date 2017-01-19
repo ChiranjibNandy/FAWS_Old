@@ -3,23 +3,27 @@
 {% block title %}Error{% endblock %}
 
 {% block main %}
+<div class="rs-container">
+<div class="rs-panel">
+	<div class="rs-inner">
+		<div class="rs-row">
+			<div class="span-7">
+				<div class="rs-detail-header">
+						<h2 class="rs-quiet">Error - {% block status_code %}{% endblock %}</h2>
+						<span class="rs-detail-header-title">{% block error_title %}{% endblock %}</span>
 
-	<div class="rs-row">
-		<div class="span-7">
-			<div class="rs-detail-header">
-					<h2 class="rs-quiet">Error - {% block status_code %}{% endblock %}</h2>
-					<span class="rs-detail-header-title">{% block error_title %}{% endblock %}</span>
+						<h3 class="rs-quiet">{% block error_description %}{% endblock %}</h3>
 
-					<h3 class="rs-quiet">{% block error_description %}{% endblock %}</h3>
-
-					<a href="javascript:history.go(-1)" class="go_back">&laquo; Go Back</a>
+						<a href="javascript:history.go(-1)" class="go_back">&laquo; Go Back</a>
+				</div>
 			</div>
-		</div>
-		<div class="span-5">
-			<div class="rs-detail-header">
-				{% block error_image %}{% endblock %}
+			<div class="span-5">
+				<div class="rs-detail-header">
+					{% block error_image %}{% endblock %}
+				</div>
 			</div>
 		</div>
 	</div>
-
+</div>
+</div>
 {% endblock %}

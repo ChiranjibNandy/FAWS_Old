@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, request, session, current_app, redirect
 from opdash.controllers.base import RackerBlueprint
 
 mod = RackerBlueprint('racker', __name__)
@@ -34,10 +34,25 @@ def angular_app():
     return render_template('angindex.html')
 
 
-@mod.route('/tenant_id')
-def tenant_id():
-    """Show index page"""
-    return render_template('tenant_id.html')
+@mod.route('/select-tenant', methods=['GET'])
+def select_tenant_get():
+    """Select tenant page"""
+    return render_template('select-tenant.html')
+
+
+@mod.route('/select-tenant', methods=['POST'])
+def select_tenant_post():
+    """Select tenant page"""
+    error_message = ""
+
+    tenant_id = request.form['tenantId']
+    if tenant_id:
+        session['tenant_id'] = tenant_id
+        return current_app.make_response(redirect('/'))
+    else:
+        error_message = "You must select a tenant."
+
+    return render_template('select-tenant.html', error_message=error_message)
 
 
 @mod.route('/')

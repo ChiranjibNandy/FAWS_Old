@@ -60,20 +60,21 @@
   {! javascript("angsrc/migration-app/components/rs-migration-status.component.js") !}
   <script>
 
-    var user_data = {
+  var user_data = {
+    // Selected Tenant
+    "tenant_id": "{! session.get('tenant_id', "") !}"||null,
+    {% if g.user_data %}
+      "username": "{!g.user_data.username!}",
+      "authtoken": "{!g.user_data.authtoken!}",
+      "is_racker": {!'true' if g.user_data.is_racker else 'false'!},
+    {% else %}
       "username": null,
       "authtoken": null,
-      "tenant_id": null
-    };
-
-    {% if g.user_data %}
-      // These values are for the logged in Racker
-      user_data.username = '{!g.user_data.username!}';
-      user_data.authtoken = '{!g.user_data.authtoken!}';
+      "is_racker": null,
     {% endif %}
+  };
 
   </script>
-
 </head>
 
 <body class="rs-fixed">

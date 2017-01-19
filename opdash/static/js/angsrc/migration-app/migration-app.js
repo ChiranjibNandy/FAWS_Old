@@ -1,7 +1,7 @@
 (function () {
     "use strict";
 
-    /** 
+    /**
      * @ngdoc object
      * @name migrationApp
      * @requires ngComponentRouter

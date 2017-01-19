@@ -1,0 +1,56 @@
+{% extends "_template_full.html" %}
+
+{% block title %}Select Tenant{% endblock %}
+
+{% block main %}
+HERE
+<script>
+(function () {
+    "use strict";
+
+    // defining component to display all migration items
+    angular.module("migrationApp")
+        .component("rsselecttenant", {
+            templateUrl: "/static/angtemplates/migration/select-tenant.html",
+            bindings: {
+              username: "@",
+              rsa_token: "@",
+              errorMessage: "@"
+            },
+            controllerAs: "vm",
+            controller: function($scope, $http) {
+              var vm = this;
+
+              vm.$onInit = function () {
+                // This sets the default values
+                this.tenantId = null;
+
+                $http({
+                        url: "/api/tenants/get_all",
+                        method: "GET",
+//                        data: data,
+                    }).then(function(data){
+                      console.info('DONE - DATA', data);
+                    })
+
+              };
+
+              vm.onSelectTenant = function(tenantId) {
+                angular.element("#tenantForm #tenantId").val(tenantId);
+                angular.element("#tenantForm").submit();
+              }
+
+            }
+        });
+})();
+
+</script>
+
+
+<div class="rs-container">
+	<div class="rs-responsive" ng-app="migrationApp">
+  		<rsselecttenant error-message="{! error_message !}"></rsselecttenant>
+	</div>
+</div>
+
+{% endblock %}
