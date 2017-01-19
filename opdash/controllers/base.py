@@ -1,7 +1,7 @@
 from flask import Blueprint, g, session, redirect, abort
 import json
 
-from opdash.lib.pilot import get_pilot_header
+from opdash.rax.pilot import get_pilot_header
 
 
 class UnsecureBlueprint(Blueprint):
@@ -10,23 +10,7 @@ class UnsecureBlueprint(Blueprint):
     '''
 
     def on_before_request(self):
-
-        self._app.logger.debug('>>>>>> on_before_request')
-
         g.user_data = session.get('user_data', None)
-
-        if g.user_data:
-            # User has an existing session
-            # TODO: check authtoken expiration here
-            return
-
-        g.user_data = None
-        return self.handleNotAuthenticated()
-
-    def on_after_request(self, response):
-
-        self._app.logger.debug('<<<<<< on_after_request')
-        return response
 
     def register(self, app, options, first_registration=False):
 
@@ -39,6 +23,10 @@ class UnsecureBlueprint(Blueprint):
 
         super(UnsecureBlueprint, self).register(
             app, options, first_registration)
+
+    def on_after_request(self, response):
+        self._app.logger.debug("***** BASE on_after_request *****")
+        return response
 
     def update_session_user(self, service_catalog):
         ''' Save the user_data to session '''
@@ -93,10 +81,16 @@ class CustomerBlueprint(UnsecureBlueprint):
                                                 options,
                                                 first_registration)
 
-    def handleNotAuthenticated(self):
-        ''' Deny unauthenticated user '''
-        self._app.logger.debug("***** USER NOT AUTHENTICATED *****")
-        return redirect('/login')
+    def on_before_request(self):
+
+        # call parent method
+        super(CustomerBlueprint, self).on_before_request()
+
+        if g.user_data:
+            self._app.logger.debug('USER IS A CUSTOMER OR RACKER')
+            return
+        else:
+            return redirect("/login")
 
 
 class RackerBlueprint(UnsecureBlueprint):
@@ -108,21 +102,17 @@ class RackerBlueprint(UnsecureBlueprint):
         super(RackerBlueprint, self).register(app,
                                               options,
                                               first_registration)
-        self.before_request(self.on_before_request)
 
     def on_before_request(self):
 
-        # call parent method
+        # call base method
         super(RackerBlueprint, self).on_before_request()
 
-        if session.get('user_data', {}).get('is_racker', None):
-            self._app.logger.debug('USER IS A RACKER')
-            return
+        if g.user_data:
+            if g.user_data['is_racker']:
+                self._app.logger.debug('USER IS A RACKER')
+                return
+            else:
+                abort(403)
         else:
-            self._app.logger.debug('USER IS NOT A RACKER - CAUSE 403')
-            abort(403)
-
-    def handleNotAuthenticated(self):
-        ''' Deny unauthenticated user '''
-        self._app.logger.debug("***** USER NOT AUTHENTICATED *****")
-        return redirect('/login')
+            return redirect("/login")
