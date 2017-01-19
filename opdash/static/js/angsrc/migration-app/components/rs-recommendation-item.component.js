@@ -13,7 +13,7 @@
                 parent: "^^rsmigrationrecommendation"
             },
             controllerAs: "vm",
-            controller: ["migrationitemdataservice", "$rootRouter", "authservice", "$q", "datastoreservice", function (ds, $rootRouter, authservice, $q, dataStoreService) {
+            controller: ["migrationitemdataservice", "authservice", "$q", "datastoreservice", "$rootRouter", function (ds, authservice, $q, dataStoreService, $rootRouter) {
                 var vm = this;
 
                 vm.$onInit = function() {
@@ -66,6 +66,7 @@
                 //modifing the selected servers
                 vm.modify = function(){
                     dataStoreService.setRecommendedItems(vm.recSelectedItems);
+                    $rootRouter.navigate(["CompareOptions"]);
                 };
 
                 return vm;

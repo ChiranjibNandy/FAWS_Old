@@ -1,0 +1,16 @@
+<div class="batch-group-detail">
+    <div class="rs-row header">
+        <div class="span-6">
+            <div class="span-4 cell">
+                <span class="icon" ng-class="{'collapsed': vm.panel.collapsed, 'expanded': !vm.panel.collapsed}" ng-click="vm.panel.collapsed = !vm.panel.collapsed"></span>
+                <span class="heading">Title goes here</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="item-group" ng-show="!vm.panel.collapsed">
+        <div class="rs-row item">
+            <div ng-transclude></div>
+        </div>    
+    </div>
+</div>
