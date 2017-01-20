@@ -65,8 +65,12 @@
 
                 //modifing the selected servers
                 vm.modify = function(){
-                    dataStoreService.setRecommendedItems(vm.recSelectedItems);
-                    $rootRouter.navigate(["CompareOptions"]);
+                    if(vm.recSelectedItems.length > 0){
+                        dataStoreService.setRecommendedItems(vm.recSelectedItems);
+                        $rootRouter.navigate(["CompareOptions"]);
+                    }else{
+                        alert("Please select servers to compare");
+                    }
                 };
 
                 return vm;
