@@ -1,16 +1,12 @@
+
 <div class="batch-group-detail">
-    <div class="rs-row header">
-        <div class="span-6">
-            <div class="span-4 cell">
-                <span class="icon" ng-class="{'collapsed': vm.panel.collapsed, 'expanded': !vm.panel.collapsed}" ng-click="vm.panel.collapsed = !vm.panel.collapsed"></span>
-                <span class="heading">Title goes here</span>
+    <div class="rs-row header" ng-repeat="panel in vm.panels">
+        <div class="span-12">
+            <div class="span-12 cell">
+                <span class="icon" ng-class="{'collapsed': panel.collapsed, 'expanded': !panel.collapsed}" ng-click="panel.collapsed = !panel.collapsed"></span>
+                <span class="heading">{{panel.title}}</span>
             </div>
         </div>
     </div>
-
-    <div class="item-group" ng-show="!vm.panel.collapsed">
-        <div class="rs-row item">
-            <div ng-transclude></div>
-        </div>    
-    </div>
+    <div ng-transclude></div>
 </div>

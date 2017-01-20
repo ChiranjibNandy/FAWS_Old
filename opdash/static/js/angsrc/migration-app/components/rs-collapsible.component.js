@@ -5,15 +5,16 @@
         // component to create a collapsible panel
         .component("rscollapsible", {
             transclude: true,
-            //yet to create template
             templateUrl: "/static/angtemplates/collapsible-item.html",
             controllerAs: "vm",
             controller: function() {
-                var vm = this,
-                    collapsed = true;
-                vm.panel = {
-                    collapsed:collapsed
-                }
+                var vm = this
+                vm.panels = [];
+                
+                // Called when a panel is added
+                vm.addPanel = function(panel) {
+                    vm.panels.push(panel);
+                };
             }
         }); // end of component rscollapsiblepanel
 })();

@@ -7,9 +7,10 @@
         .component("rscompareoptions", {
             templateUrl: "/static/angtemplates/migration/compare-options.html",
             controllerAs: "vm",
-            controller: [function() {
+            controller: ["datastoreservice",function(dataStoreService) {
                 var vm = this;
-
+                vm.servers = dataStoreService.getRecommendedItems();
+                vm.labels = ["Name","instance_type","region","cost","memory","vcpu"];
                 return vm;
             }
         ]}); // end of component definition
