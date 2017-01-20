@@ -70,12 +70,26 @@ class BaseConfig(object):
     SESSION_COOKIE_HTTPONLY = True
     SESSION_PERMANENT = False
 
+    session_type = environ.get("SESSION_TYPE", None)
+
+    if session_type == "redis":
+
+        # Use Redis Session
+        redis_host = environ.get(
+            "AWS_REDIS_HOST",
+            '0.0.0.0')
+
+        SESSION_TYPE = "redis"
+        SESSION_REDIS = Redis(
+            host=redis_host,
+            port=6379)
+    else:
+
+        # Use File System Session
+        SESSION_TYPE = "filesystem"
+
 
 class DebugConfig(object):
-
-    SESSION_TYPE = "redis"
-    SESSION_REDIS = Redis(host="0.0.0.0", port=6379)
-
     DEBUG = True
     USE_RELOADER = True
 
