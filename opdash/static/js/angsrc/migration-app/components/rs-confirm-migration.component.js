@@ -1,11 +1,30 @@
 (function () {
     "use strict";
 
-    // defining component to display each migration component (eg: server, network etc)
+    /**
+     * @ngdoc object
+     * @name migrationApp.object:rsconfirmmigration
+     * @description
+     * Component to display the _Confirm Migration_ page. This component is loaded directly on route change.  
+     *   
+     * This component uses the template: **angtemplates/migration/batch-migration-details.html**  
+     *   
+     * Its controller {@link migrationApp.controller:rsconfirmmigrationCtrl rsconfirmmigrationCtrl} uses the below services:
+     *  * $rootRouter
+     *  * {@link migrationApp.service:datastoreservice datastoreservice}
+     *  * {@link migrationApp.service:migrationitemdataservice migrationitemdataservice}
+     *  * $q
+     *  * {@link migrationApp.service:httpwrapper httpwrapper}
+     */
     angular.module("migrationApp")
         .component("rsconfirmmigration", {
             templateUrl: "/static/angtemplates/migration/confirm-migration.html",
             controllerAs: "vm",
+            /**
+             * @ngdoc controller
+             * @name migrationApp.controller:rsconfirmmigrationCtrl
+             * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsconfirmmigration rsconfirmmigration} component
+             */
             controller: [ "$rootRouter","datastoreservice","migrationitemdataservice", "$q","httpwrapper", function($rootRouter,dataStoreService,ds,$q,HttpWrapper) {
                 var vm = this;
                 
@@ -27,6 +46,13 @@
                     console.log(vm.allItems);
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name migrate
+                 * @methodOf migrationApp.controller:rsconfirmmigrationCtrl
+                 * @description 
+                 * Starts a batch to migrate all resources selected by user
+                 */
                 vm.migrate = function(){
                     var migrateArray = [];
                     var requestObj;

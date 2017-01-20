@@ -1,12 +1,40 @@
 (function() {
     "use strict";
     
+    /**
+     * @ngdoc object
+     * @name migrationApp.object:rscollapsiblepanelgroup
+     * @description
+     * Component to group all {@link migrationApp.object:rscollapsiblepanel rscollapsiblepanel}. Its transcludes all contents defined inside it.  
+     *   
+     * Its controller {@link migrationApp.controller:rscollapsiblepanelgroupCtrl rscollapsiblepanelgroupCtrl} uses the below services:
+     *  * {@link migrationApp.service:migrationitemdataservice migrationitemdataservice}
+     *  * $q
+     *  * {@link migrationApp.service:httpwrapper httpwrapper}
+     *  * {@link migrationApp.service:authservice authservice}
+     *   
+     * This component (and its features) is being used by following pages of the application:
+     *  * angtemplates/migration/batch-migration-details.html
+     * @example
+     * <example module="migrationApp">
+     *   <file name="index.html">
+     *      <rscollapsiblepanelgroup>
+     *          <rscollapsiblepanel type="server"></rscollapsiblepanel>
+     *           <rscollapsiblepanel type="network"></rscollapsiblepanel>
+     *      </rscollapsiblepanelgroup>
+     *   </file>
+     * </example>
+     */
     angular.module("migrationApp")
-        // component to group all collapsible panels
         .component("rscollapsiblepanelgroup", {
             transclude: true,
             template: "<div class='collapsible-panel-group' ng-transclude></div>",
             controllerAs: "vm",
+            /**
+             * @ngdoc controller
+             * @name migrationApp.controller:rscollapsiblepanelgroupCtrl
+             * @description Controller to handle all view-model interactions of {@link migrationApp.object:rscollapsiblepanelgroup rscollapsiblepanelgroup} component
+             */
             controller: ["migrationitemdataservice", "$q", "httpwrapper", "authservice", function(ds, $q, HttpWrapper, authservice) {
                 var vm = this, 
                     loaded = false,
@@ -33,9 +61,22 @@
                     return jobsList;
                 };
 
+                /**
+                 * @ngdoc property
+                 * @name panels
+                 * @propertyOf migrationApp.controller:rscollapsiblepanelgroupCtrl
+                 * @type {Array.<Object>}
+                 * @description List of {@link migrationApp.object:rscollapsiblepanel rscollapsiblepanel} forming a group
+                 */
                 vm.panels = [];
                 
-                // Add a collapsible panel to group
+                /**
+                 * @ngdoc method
+                 * @name addPanel
+                 * @methodOf migrationApp.controller:rscollapsiblepanelgroupCtrl
+                 * @param {Object} panel {@link migrationApp.object:rscollapsiblepanel rscollapsiblepanel} to be added to group
+                 * @description Add a collapsible panel to group
+                 */
                 vm.addPanel = function(panel) {
                     vm.panels.push(panel);
 
@@ -86,6 +127,13 @@
                     }
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name getBatchList
+                 * @methodOf migrationApp.controller:rscollapsiblepanelgroupCtrl
+                 * @param {String} type Resource type (server, network etc)
+                 * @description Get status of all resources in a batch migration
+                 */
                 vm.getBatchList = function(type) {
                     var batchItems, isEmpty;
                     var tenant_id = "1024814";

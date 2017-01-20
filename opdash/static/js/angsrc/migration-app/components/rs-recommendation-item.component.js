@@ -1,9 +1,33 @@
 (function () {
     "use strict";
 
-    // defining component to display each migration component (eg: server, network etc)
+    /**
+     * @ngdoc object
+     * @name migrationApp.object:rsrecommendationitem
+     * @param {String} type Type of resource (server, network etc)
+     * @requires migrationApp.object:rsmigrationrecommendation
+     * @description
+     * Component to display the recommendation for migration for the given resource type. It also allows the user to change from the available migrations.  
+     *   
+     * This component uses the template: **angtemplates/migration/recommendation-item-template.html**.  
+     *   
+     * This component (and its features) is being used by following pages of the application:
+     *  * angtemplates/migration/recommendations.html
+     *   
+     * Its controller {@link migrationApp.controller:rsrecommendationitemCtrl rsrecommendationitemCtrl} uses the below services:
+     *  * {@link migrationApp.service:migrationitemdataservice migrationitemdataservice}
+     *  * {@link migrationApp.service:authservice authservice}
+     *  * $q
+     *  * {@link migrationApp.service:datastoreservice datastoreservice}
+     *  * $rootRouter
+     * @example
+     * <example module="migrationApp">
+     *   <file name="index.html">
+     *      <rsrecommendationitem type="server"></rsrecommendationitem>
+     *   </file>
+     * </example>
+     */
     angular.module("migrationApp")
-        // component to handle recommendations for each resource type (server, network)
         .component("rsrecommendationitem", {
             templateUrl: "/static/angtemplates/migration/recommendation-item-template.html",
             bindings: {
@@ -13,6 +37,11 @@
                 parent: "^^rsmigrationrecommendation"
             },
             controllerAs: "vm",
+            /**
+             * @ngdoc controller
+             * @name migrationApp.controller:rsrecommendationitemCtrl
+             * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsrecommendationitem rsrecommendationitem} component
+             */
             controller: ["migrationitemdataservice", "authservice", "$q", "datastoreservice", "$rootRouter", function (ds, authservice, $q, dataStoreService, $rootRouter) {
                 var vm = this;
 

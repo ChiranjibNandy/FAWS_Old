@@ -1,23 +1,49 @@
 (function () {
     "use strict";
 
-    // defining component to display each migration component (eg: server, network etc)
+    /**
+     * @ngdoc object
+     * @name migrationApp.object:rsmigrationrecommendation
+     * @description
+     * Component to display the _Recommendations_ page showing the recommended migration for the selected resources. This component is loaded directly on route change.  
+     *   
+     * This component uses the template: **angtemplates/migration/recommendations.html**.  
+     *   
+     * Its controller {@link migrationApp.controller:rsmigrationrecommendationCtrl rsmigrationrecommendationCtrl} uses the below services:
+     *  * $rootRouter
+     */
     angular.module("migrationApp")
-        // component to show recommendations to a user
         .component("rsmigrationrecommendation", {
             templateUrl: "/static/angtemplates/migration/recommendations.html",
             controllerAs: "vm",
+            /**
+             * @ngdoc controller
+             * @name migrationApp.controller:rsmigrationrecommendationCtrl
+             * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationrecommendation rsmigrationrecommendation} component
+             */
             controller: [ "$rootRouter", function($rootRouter) {
                 var vm = this;
 
                 $('title')[0].innerHTML =  "Recommendations - Rackspace Cloud Migration";
 
-                // save the user desired migration
+                /**
+                 * @ngdoc method
+                 * @name saveItems
+                 * @methodOf migrationApp.controller:rsmigrationrecommendationCtrl
+                 * @description 
+                 * Saves the chosen solution for migration of resources
+                 */
                 vm.saveItems = function() {
                     alert("Saving items: To be implemented");
                 };
 
-                // continue to next step: scheduling
+                /**
+                 * @ngdoc method
+                 * @name continue
+                 * @methodOf migrationApp.controller:rsmigrationrecommendationCtrl
+                 * @description 
+                 * Continue to next step: **Schedule Migration**
+                 */
                 vm.continue = function() {
                     $rootRouter.navigate(["ScheduleMigration"]);
                 };
