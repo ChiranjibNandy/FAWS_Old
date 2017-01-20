@@ -1,8 +1,27 @@
 (function() {
     "use strict";
     
+    /**
+     * @ngdoc object
+     * @name migrationApp.object:rsTabs
+     * @param {String} alignment Tab alignment (_horizontal_ or _vertical_)
+     * @requires migrationApp.object:rsTabs
+     * @description
+     * Component to group multiple tabs. This is a generic component that can be used (in conjunction with {@link migrationApp.object:rsTab rsTab}) in other uses cases where a tab layout is needed.  
+     *   
+     * This component transcludes the content provided inside it and displays it as a tab. It uses the controller {@link migrationApp.controller:rsTabsCtrl rsTabsCtrl}  
+     * 
+     * This component (and its features) is being used by following pages of the application:
+     *  * angtemplates/migration/resources-list.html
+     *  * angtemplates/migration/recommendations.html
+     * @example
+     * <example module="migrationApp">
+     *   <file name="index.html">
+     *      <rs-tabs alignment="vertical"></rs-tabs>
+     *   </file>
+     * </example>
+     */
     angular.module("migrationApp")
-        // component to group multiple tabs
         .component("rsTabs", {
             transclude: true,
             bindings: {
@@ -12,11 +31,31 @@
                 return "/static/angtemplates/" + $attrs.alignment + "-tabs.html";
             }],
             controllerAs: "vm",
+            /**
+             * @ngdoc controller
+             * @name migrationApp.controller:rsTabsCtrl
+             * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsTabs rsTabs} component
+             */
             controller: function() {
                 var vm = this;
+
+                /**
+                 * @ngdoc property
+                 * @name tabs
+                 * @propertyOf migrationApp.controller:rsTabsCtrl
+                 * @type {Array}
+                 * @description Set of tabs in the tab group
+                 */
                 vm.tabs = [];
-                
-                // Called when a tab is added
+
+                /**
+                 * @ngdoc method
+                 * @name addTab
+                 * @methodOf migrationApp.controller:rsTabsCtrl
+                 * @param {Object} tab Tab be added to group
+                 * @description 
+                 * Method to add a tab to group
+                 */
                 vm.addTab = function(tab) {
                     vm.tabs.push(tab);
 
@@ -25,7 +64,14 @@
                     }
                 };
 
-                // Called a tab is selected
+                /**
+                 * @ngdoc method
+                 * @name selectTab
+                 * @methodOf migrationApp.controller:rsTabsCtrl
+                 * @param {Object} selectedTab The tab that has been selected
+                 * @description 
+                 * Called when a tab is selected
+                 */
                 vm.selectTab = function(selectedTab){
                     angular.forEach(vm.tabs, function(tab) {
                         if(tab.active && tab !== selectedTab) {

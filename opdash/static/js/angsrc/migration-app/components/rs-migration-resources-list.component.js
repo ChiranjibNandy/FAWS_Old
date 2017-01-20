@@ -1,12 +1,29 @@
 (function () {
     "use strict";
 
-    // defining component to display each migration component (eg: server, network etc)
+    /**
+     * @ngdoc object
+     * @name migrationApp.object:rsmigrationresourceslist
+     * @description
+     * Component to display the _Select Resources_ page. This component is loaded directly on route change.  
+     *   
+     * This component uses the template: **angtemplates/migration/resources-list.html**.  
+     *   
+     * Its controller {@link migrationApp.controller:rsmigrationresourceslistCtrl rsmigrationresourceslistCtrl} uses the below services:
+     *  * {@link migrationApp.service:authservice authservice}
+     *  * $scope
+     *  * $rootRouter
+     *  * {@link migrationApp.service:datastoreservice datastoreservice}
+     */
     angular.module("migrationApp")
-        // component to show the list of resources for a tenant
         .component("rsmigrationresourceslist", {
             templateUrl: "/static/angtemplates/migration/resources-list.html",
             controllerAs: "vm",
+            /**
+             * @ngdoc controller
+             * @name migrationApp.controller:rsmigrationresourceslistCtrl
+             * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationresourceslist rsmigrationresourceslist} component
+             */
             controller: ["authservice", "$scope", "$rootRouter", "datastoreservice", function(authservice, $scope, $rootRouter, dataStoreService) {
                 var vm = this;
 
@@ -18,26 +35,61 @@
                     vm.filterSearch = "";
                 }
 
-                // called when an item is selected by user
+                /**
+                 * @ngdoc method
+                 * @name migrate
+                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @param {Object} item Object describing the selected resource
+                 * @description 
+                 * Called by child component when an item is selected
+                 */
                 vm.addItem = function(item) {
                     if(vm.selectedItems.indexOf(item)<0)
                         vm.selectedItems.push(item);
                 }
 
-                // called when an item is removed by user
+                /**
+                 * @ngdoc method
+                 * @name migrate
+                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @param {Object} item Object describing the selected resource
+                 * @description 
+                 * Called by child component when an item is removed by user
+                 */
                 vm.removeItem = function(item) {
                     if(vm.selectedItems.indexOf(item) >= 0){
+                        /**
+                         * @ngdoc event
+                         * @name ItemRemoved
+                         * @eventOf migrationApp.controller:rsmigrationresourceslistCtrl
+                         * @eventType broadcast
+                         * @param {Object} item Object describing the deselected resource
+                         * @description 
+                         * Event to notify the child components that a resource has been deselected
+                         */
                         $scope.$broadcast("ItemRemoved", item); // broadcast event to all child components
                         vm.selectedItems.splice(vm.selectedItems.indexOf(item), 1);
                     }
                 }
 
-                // save items selected by user
+                /**
+                 * @ngdoc method
+                 * @name saveItems
+                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @description 
+                 * Save selected resources for further processing
+                 */
                 vm.saveItems = function() {
                     alert("Saving items: To be implemented");
                 };
 
-                // continue to next step: recommendations
+                /**
+                 * @ngdoc method
+                 * @name continue
+                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @description 
+                 * Continue to next step: **Recommendations**
+                 */
                 vm.continue = function() {
                     if(vm.selectedItems.length > 0){
                         dataStoreService.setItems(vm.selectedItems);

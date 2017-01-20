@@ -1,11 +1,28 @@
 (function () {
     "use strict";
 
-    // defining component to display each migration component (eg: server, network etc)
+    /**
+     * @ngdoc object
+     * @name migrationApp.object:rsschedulemigration
+     * @description
+     * Component to display the _Schedule Migration_ page. This component is loaded directly on route change.  
+     *   
+     * This component uses the template: **angtemplates/migration/schedule-migration.html**  
+     *   
+     * Its controller {@link migrationApp.controller:rsschedulemigrationCtrl rsschedulemigrationCtrl} uses the below services:
+     *  * $rootRouter
+     *  * {@link migrationApp.service:datastoreservice datastoreservice}
+     *  * $scope
+     */
     angular.module("migrationApp")
         .component("rsschedulemigration", {
             templateUrl: "/static/angtemplates/migration/schedule-migration.html",
             controllerAs: "vm",
+            /**
+             * @ngdoc controller
+             * @name migrationApp.controller:rsschedulemigrationCtrl
+             * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsschedulemigration rsschedulemigration} component
+             */
             controller: [ "$rootRouter","datastoreservice","$scope", function($rootRouter,dataStoreService,$scope) {
                 var vm = this;
 
@@ -33,16 +50,37 @@
                     alert("Saving items: To be implemented");
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name timeChange
+                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                 * @description 
+                 * Saves the chosen time for migration
+                 */
                 vm.timeChange = function(){
                     dataStoreService.storeDate('time',vm.time);
                     vm.selectedDate = moment(vm.date).format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name timezoneChange
+                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                 * @description 
+                 * Saves the chosen timezone for migration
+                 */
                 vm.timezoneChange = function(){
                     dataStoreService.storeDate('timezone',vm.timezone);
                     vm.selectedDate = moment(vm.date).format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name continue
+                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                 * @description 
+                 * Continue to next step: **Confirm Migration**
+                 */
                 vm.continue = function() {
                     $rootRouter.navigate(["ConfirmMigration"]);
                 };

@@ -1,6 +1,12 @@
 (function () {
     "use strict";
 
+    /**
+     * @ngdoc service
+     * @name migrationApp.service:networkservice
+     * @description
+     * Service to retrieve all data for network resources
+     */
     angular.module("migrationApp")
         .factory("networkservice", ["httpwrapper", "$q", "authservice", function (HttpWrapper, $q, authservice) {
             // local variables to help cache data
@@ -83,7 +89,14 @@
                 }
             }
 
-            // get network list with only the required properties
+            /**
+             * @ngdoc method
+             * @name getTrimmedList
+             * @methodOf migrationApp.service:networkservice
+             * @returns {Promise} a promise to fetch the list of networks.
+             * @description 
+             * Get a list of networks for a tenant. It returns only a definite set of properties of a network for its representation.
+             */
             self.getTrimmedList = function() {
                 var deferred = $q.defer();
                 self.getAll().then(function(response) {
@@ -94,7 +107,14 @@
                 return deferred.promise;
             };
         
-            // get detailed info on all the networks of a tenant as a list
+            /**
+             * @ngdoc method
+             * @name getDetailedList
+             * @methodOf migrationApp.service:networkservice
+             * @returns {Promise} a promise to fetch the list of networks.
+             * @description 
+             * Get detailed info on all the networks of a tenant as a list
+             */
             self.getDetailedList = function() {
                        var deferred = $q.defer();
                        self.getAll().then(function(response) {
@@ -105,7 +125,14 @@
                        return deferred.promise;
             };
 
-            // get all network items from backend
+            /**
+             * @ngdoc method
+             * @name getAll
+             * @methodOf migrationApp.service:networkservice
+             * @returns {Promise} a promise to fetch all networks
+             * @description 
+             * Gets the entire list of networks in its raw JSON form, from the api.
+             */
             self.getAll = function () {
                 
                 var url = "/api/us-networks";
@@ -132,7 +159,14 @@
                 }
             };
 
-            // prepares request object to be submitted for migration
+            /**
+             * @ngdoc method
+             * @name prepareRequest
+             * @methodOf migrationApp.service:networkservice
+             * @returns {Object} The request object to be used in the subsequent call for migration
+             * @description 
+             * Prepares request object to be submitted for network migration
+             */
             self.prepareRequest = function(info){
                 var network = getNetworkDetails(info.id);
                 var auth = authservice.getAuth();

@@ -1,7 +1,23 @@
 (function () {
     "use strict";
 
-    // defining component to display all migration items
+    /**
+     * @ngdoc object
+     * @name migrationApp.object:rsmigrationlogin
+     * @param {String} [username] Username of the user trying to login
+     * @param {String} [rsa_token] RSA Token of the user trying to login
+     * @param {String} [errorMessage] Error message to be displayed
+     * @description
+     * Component to display the login page.  
+     *   
+     * This component uses the template: **angtemplates/migration/login.html**. It uses the controller {@link migrationApp.controller:rsmigrationloginCtrl rsmigrationloginCtrl}.  
+     * @example
+     * <example module="migrationApp">
+     *   <file name="index.html">
+     *      <rsmigrationlogin error-message="Some error message"></rsmigrationlogin>
+     *   </file>
+     * </example>
+     */
     angular.module("migrationApp")
         .component("rsmigrationlogin", {
             templateUrl: "/static/angtemplates/migration/login.html",
@@ -11,6 +27,11 @@
               errorMessage: "@"
             },
             controllerAs: "vm",
+            /**
+             * @ngdoc controller
+             * @name migrationApp.controller:rsmigrationloginCtrl
+             * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationlogin rsmigrationlogin} component
+             */
             controller: function($scope, $http) {
               var vm = this;
 
@@ -20,6 +41,13 @@
                 this.rsa_token = '';
               };
 
+              /**
+               * @ngdoc method
+               * @name onSubmit
+               * @methodOf migrationApp.controller:rsmigrationloginCtrl
+               * @description 
+               * Called to submit the login form
+               */
               vm.onSubmit = function(loginForm) {
                 vm.submitted = true;
                 if(this.username && this.rsa_token){
