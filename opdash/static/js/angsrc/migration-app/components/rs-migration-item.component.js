@@ -1,7 +1,32 @@
 (function () {
     "use strict";
 
-    // defining component to display each migration component (eg: server, network etc)
+    /**
+     * @ngdoc object
+     * @name migrationApp.object:rsmigrationitem
+     * @param {String} type Type of resource (server, network etc)
+     * @requires migrationApp.object:rsmigrationresourceslist
+     * @description
+     * Component to display list of resources of the given type.  
+     *   
+     * This component uses the template: **angtemplates/migration/migration-item-template.html**  
+     *   
+     * This component (and its features) is being used by following pages of the application:
+     *  * angtemplates/migration/resources-list.html
+     *   
+     * Its controller {@link migrationApp.controller:rsmigrationitemCtrl rsmigrationitemCtrl} uses the below services:
+     *  * {@link migrationApp.service:migrationitemdataservice migrationitemdataservice}
+     *  * $rootRouter
+     *  * {@link migrationApp.service:authservice authservice}
+     *  * $q
+     *  * $scope
+     * @example
+     * <example module="migrationApp">
+     *   <file name="index.html">
+     *      <rsmigrationitem type="server"></rsmigrationitem>
+     *   </file>
+     * </example>
+     */
     angular.module("migrationApp")
         .component("rsmigrationitem", {
             templateUrl: "/static/angtemplates/migration/migration-item-template.html",
@@ -13,6 +38,11 @@
                 parent: "^^rsmigrationresourceslist"
             },
             controllerAs: "vm",
+            /**
+             * @ngdoc controller
+             * @name migrationApp.controller:rsmigrationitemCtrl
+             * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationitem rsmigrationitem} component
+             */
             controller: ["migrationitemdataservice", "$rootRouter", "authservice", "$q", "$scope", function (ds, $rootRouter, authservice, $q, $scope) {
                 var vm = this;
 
@@ -40,10 +70,34 @@
 
                 // Perfoming controller initialization steps
                 vm.$onInit = function() {
+                    /**
+                     * @ngdoc property
+                     * @name labels
+                     * @propertyOf migrationApp.controller:rsmigrationitemCtrl
+                     * @type {Array}
+                     * @description Set of table headers used while displaying the list of resources
+                     */
                     vm.labels = [];
+
+                    /**
+                     * @ngdoc property
+                     * @name selectedItems
+                     * @propertyOf migrationApp.controller:rsmigrationitemCtrl
+                     * @type {Array}
+                     * @description Set of selected resources of the given type
+                     */
                     vm.selectedItems = [];
-                    vm.search = {};
+
+                    /**
+                     * @ngdoc property
+                     * @name items
+                     * @propertyOf migrationApp.controller:rsmigrationitemCtrl
+                     * @type {Array}
+                     * @description Set of resources of the given type
+                     */
                     vm.items = [];
+
+                    vm.search = {};
                     vm.loading = true;
                     vm.loadError = false;
                     vm.noData = false;
@@ -102,7 +156,15 @@
                     $('#rs-main-panel').css('height','298px');
                 };
 
-                // Select/Deselect all items
+                /**
+                 * @ngdoc method
+                 * @name changeSelectAll
+                 * @methodOf migrationApp.controller:rsmigrationitemCtrl
+                 * @param {Object} item _Object_ describing the selected resource
+                 * @param {Boolean} fromGlobal Flag to indicate if the change is being done programatically or by user interaction
+                 * @description 
+                 * Select/Deselect all resources of the given type
+                 */
                 vm.changeSelectAll = function (item, fromGlobal) {
                     if(item.selected){
                         item.type = vm.type;
@@ -122,7 +184,13 @@
                     }
                 };
 
-                // Update item selection based on Select/Deselect all 
+                /**
+                 * @ngdoc method
+                 * @name changeItemSelection
+                 * @methodOf migrationApp.controller:rsmigrationitemCtrl
+                 * @description 
+                 * Update item selection based on Select/Deselect all
+                 */
                 vm.changeItemSelection = function () {
                     angular.forEach(vm.items, function (item) {
                         item.selected = vm.isAllSelected;
@@ -130,6 +198,13 @@
                     });
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name sort
+                 * @methodOf migrationApp.controller:rsmigrationitemCtrl
+                 * @description 
+                 * Function to sort resource list
+                 */
                 vm.sort = function(item){
                     var items = vm.items;
                     if(vm.sortingOrder){

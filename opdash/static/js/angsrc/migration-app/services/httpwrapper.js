@@ -1,6 +1,12 @@
 (function(angular){
     "use strict";
 
+    /**
+     * @ngdoc service
+     * @name migrationApp.service:httpwrapper
+     * @description
+     * This service provides an API to make all kinds of HTTP requests.
+     */
     angular.module('migrationApp')
         .factory('httpwrapper', ['$q', '$http', 'authservice', HttpWrapper]);
 
@@ -90,10 +96,61 @@
         }
 
         return {
+            /**
+             * @ngdoc method
+             * @name send
+             * @methodOf migrationApp.service:httpwrapper
+             * @param {String} url URL where the request has to be sent.
+             * @param {Object} params Params to specify the type of request
+             * @description 
+             * This function invokes the HTTP service and returns the promise. This function is used for sending HTTP GET requests.
+             */
             send: _send,
+
+            /**
+             * @ngdoc method
+             * @name read
+             * @methodOf migrationApp.service:httpwrapper
+             * @param {String} url URL where the request has to be sent.
+             * @param {Object} urlParams Params to specify the type of request
+             * @description 
+             * This function invokes the HTTP service and returns the promise. This function is used for sending HTTP GET requests.
+             */
             read: read,
+
+            /**
+             * @ngdoc method
+             * @name readAll
+             * @methodOf migrationApp.service:httpwrapper
+             * @param {String} url URL where the request has to be sent.
+             * @param {Object} urlParams Params to specify the type of request
+             * @description 
+             * This function invokes the HTTP service and returns the promise. This function is used for sending HTTP GET requests.
+             */
             readAll: readAll,
+
+            /**
+             * @ngdoc method
+             * @name delete
+             * @methodOf migrationApp.service:httpwrapper
+             * @param {String} url URL where the request has to be sent.
+             * @param {Object} urlParams Params to specify the type of request
+             * @param {Object} data Data to be sent with the request.
+             * @description 
+             * This function invokes the HTTP service and returns the promise. This function is used for sending HTTP DELETE requests (usually while calling a REST API).
+             */
             'delete': _delete,
+            
+            /**
+             * @ngdoc method
+             * @name save
+             * @methodOf migrationApp.service:httpwrapper
+             * @param {String} url URL where the request has to be sent.
+             * @param {Object} urlParams Params to specify the type of request
+             * @param {Object} data Data to be sent with the request.
+             * @description 
+             * This function invokes the HTTP service and returns the promise. This function is used for sending HTTP POST requests.
+             */
             save: save
         };
     }

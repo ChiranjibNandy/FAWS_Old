@@ -48,7 +48,7 @@
 
     /**
      * @ngdoc object
-     * @name migrationApp.component:rsmigrationroot
+     * @name migrationApp.object:rsmigrationroot
      * @description
      * This is the parent of all components. Its main job is to act as a center place for the routes defined in FAWS UI application.
      * @example

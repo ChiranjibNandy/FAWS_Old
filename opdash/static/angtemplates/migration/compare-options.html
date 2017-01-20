@@ -2,11 +2,40 @@
     <div class="rs-row">
         <div class="span-12">
             <rscollapsible>
-                <rscollapsiblechild>
-                    this is transcluded stuff
-                </rscollapsiblechild>
-                <rscollapsiblechild>
-                    this is transcluded stuff
+                <rscollapsiblechild  ng-repeat="server in vm.servers" title="{{server.name}}">
+                    <div class="rs-embedded-list-table-wrapper rs-embedded-medium" style="max-height:298px">
+                        <table class="rs-list-table rs-embedded-list-table">
+                            <thead>
+                                <tr>
+                                    <th ng-repeat="label in vm.labels">
+                                        <span class="rs-table-sort-text">{{label}}</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{server.name}}</td>
+                                    <td>{{server.instance_type || "p2.16*large"}}</td>
+                                    <td>{{server.region || "EU"}}</td>
+                                    <td>{{server.cost || "15.555"}}</td>
+                                    <td>{{server.memory || "64G|B"}}</td>
+                                    <td>{{server.vcpu || "64"}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
+                            <div class="rs-table-overlay-content">
+                                <div class="rs-table-overlay-message">Loading&hellip;</div>
+                            </div>
+                        </div>
+                        <div ng-show="vm.loadError" class="rs-table-overlay rs-table-overlay-error">
+                            <div class="rs-table-overlay-content">
+                                <div class="rs-table-overlay-message"><i class="rs-icon-error-indicator"></i>
+                                    Error encountered. Please try again.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </rscollapsiblechild>
             </rscollapsible>
         </div>

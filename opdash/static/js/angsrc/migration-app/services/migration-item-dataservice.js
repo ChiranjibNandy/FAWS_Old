@@ -16,9 +16,9 @@
              * @name getTrimmedAllItems
              * @methodOf migrationApp.service:migrationitemdataservice
              * @param {String} type Resource type (server, network etc)
-             * @returns {Promise} a promise to fetch the list of given _type_.
+             * @returns {Promise} a promise to fetch the list of resources of given _type_.
              * @description 
-             * This service method returns a promise to fetch the list of given _type_ for a tenant.  
+             * This service method returns a promise to fetch the list of resources given _type_ for a tenant.  
              * This operation trims the set of properties available with the service call and returns only the specific properties needed for its representation.
              */
             this.getTrimmedAllItems = function (type) {
@@ -35,9 +35,9 @@
              * @name getDetailedList
              * @methodOf migrationApp.service:migrationitemdataservice
              * @param {String} type Resource type (server, network etc)
-             * @returns {Promise} a promise to fetch the detailed list of given _type_.
+             * @returns {Promise} a promise to fetch the detailed list of resources of given _type_.
              * @description 
-             * This service method returns a promise to fetch the detailed list of given _type_ for a tenant.
+             * This service method returns a promise to fetch the detailed list of resources of given _type_ for a tenant.
              */
             this.getDetailedList = function(type) {
                 if (type === "server") {

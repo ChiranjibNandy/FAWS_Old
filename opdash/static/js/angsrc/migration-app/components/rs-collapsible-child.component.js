@@ -6,15 +6,23 @@
         .component("rscollapsiblechild", {
             transclude: true,
             require: {
-                tabs: '^^rscollapsible'
+                collapsiblePanel: '^^rscollapsible'
             },
-            template: "<div class='collapsible-panel-group' ng-transclude></div>",
+            bindings: {
+                title: "@"
+            },
+            template: "<div class='item-group' ng-show='!vm.panel.collapsed'><div class='rs-row item'><div ng-transclude></div></div></div>",
             controllerAs: "vm",
             controller: function() {
                 var vm = this;
                 
                 vm.$onInit = function() {
+                    vm.panel = {
+                        title: vm.title,
+                        collapsed:true
+                    };
                     
+                    vm.collapsiblePanel.addPanel(vm.panel);
                 }
             }
         }); // end of component rsTab
