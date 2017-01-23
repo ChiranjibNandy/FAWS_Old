@@ -1,0 +1,58 @@
+{
+    "data":        [{
+                        "instance_type":"p2.16*large",
+                        "region":"EU (Ireland)",
+                        "cost":"15.552",
+                        "memory":"768G|B",
+                        "vcpu":"64"
+                    },
+                    {
+                        "instance_type":"p2.16*large",
+                        "region":"US Wast (N. Virginia)",
+                        "cost":"14.4",
+                        "memory":"768G|B",
+                        "vcpu":"64"
+                    },
+                    {
+                        "instance_type":"p2.16*large",
+                        "region":"US (Oregon)",
+                        "cost":"14.4",
+                        "memory":"768G|B",
+                        "vcpu":"64"
+                    },
+                    {
+                        "instance_type":"t2.large",
+                        "region":"AWS GovCloud (US)",
+                        "cost":"0.124",
+                        "memory":"8G|B",
+                        "vcpu":"2"
+                    },
+                    {
+                        "instance_type":"t2.large",
+                        "region":"Asia Pacific (Mumbai)",
+                        "cost":"0.152",
+                        "memory":"8G|B",
+                        "vcpu":"2"
+                    },
+                    {
+                        "instance_type":"t2.large",
+                        "region":"Asia Pacific (Seoul)",
+                        "cost":"0.16",
+                        "memory":"8G|B",
+                        "vcpu":"2"
+                    },
+                    {
+                        "instance_type":"t2.large",
+                        "region":"Asia Pacific (Singapore)",
+                        "cost":"0.152",
+                        "memory":"8G|B",
+                        "vcpu":"2"
+                    },
+                    {
+                        "instance_type":"t2.large",
+                        "region":"Asia Pacific (Sydney)",
+                        "cost":"0.124",
+                        "memory":"8G|B",
+                        "vcpu":"2"
+    }]
+}
