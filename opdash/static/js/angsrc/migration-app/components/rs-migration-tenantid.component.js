@@ -22,7 +22,7 @@
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationtenantid rsmigrationtenantid} component
              */
             controller:["authservice",function(authservice){
-                var vm = this; 
+                var vm = this;
 
                 vm.setTenant = function(id) {
                     authservice.getAuth().tenant_id = id;

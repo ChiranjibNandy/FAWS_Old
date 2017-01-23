@@ -39,6 +39,7 @@
                 // This sets the default values
                 this.username = '';
                 this.rsa_token = '';
+                this.user_type = "racker";
               };
 
               /**

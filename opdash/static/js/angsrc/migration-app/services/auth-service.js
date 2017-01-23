@@ -12,7 +12,7 @@
             var self = this;
 
             self.type = {};
-            
+
             /**
              * @ngdoc property
              * @name username
@@ -41,7 +41,7 @@
              * @ngdoc property
              * @name awsAccount
              * @propertyOf migrationApp.service:authservice
-             * @description 
+             * @description
              * The AWS account in the destination cloud system. This is the account to which the resources are intended to be migrated.
              */
             self.type.awsAccount = null;
@@ -50,7 +50,7 @@
              * @ngdoc property
              * @name accessKey
              * @propertyOf migrationApp.service:authservice
-             * @description 
+             * @description
              * Access key of AWS account required for migration to AWS
              */
             self.type.accessKey = null;
@@ -59,7 +59,7 @@
              * @ngdoc property
              * @name secretKey
              * @propertyOf migrationApp.service:authservice
-             * @description 
+             * @description
              * Secret key of AWS account required for migration to AWS
              */
             self.type.secretKey = null;
@@ -68,7 +68,7 @@
              * @ngdoc property
              * @name rackUsername
              * @propertyOf migrationApp.service:authservice
-             * @description 
+             * @description
              * Rackspace Cloud account username. This is the username of the client who wants to migrate.
              */
             self.type.rackUsername = null;
@@ -77,7 +77,7 @@
              * @ngdoc property
              * @name rackAPIKey
              * @propertyOf migrationApp.service:authservice
-             * @description 
+             * @description
              * Rackspace Cloud API key. This is the API key of the client who wants to migrate.
              */
             self.type.rackAPIKey = null;

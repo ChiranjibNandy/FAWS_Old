@@ -1,77 +1,118 @@
-from flask import Blueprint, g, session, redirect
+from flask import Blueprint, g, session, redirect, abort
 import json
+
+from opdash.rax.pilot import get_pilot_header
 
 
 class UnsecureBlueprint(Blueprint):
     '''
-        Use this Blueprint for pages that DO NOT REQUIRE authenication
+        Base Blueprint, use for pages that DO NOT REQUIRE authentication
     '''
+
+    def on_before_request(self):
+        g.user_data = session.get('user_data', None)
 
     def register(self, app, options, first_registration=False):
 
         self._app = app
         self._identity_url = app.config["IDENTITY_URL"]
 
-        def on_before_request():
-
-            self._app.logger.debug('>>>>>> on_before_request')
-
-            g.user_data = session.get('user_data', None)
-
-            if g.user_data:
-                # User has an existing session
-                # TODO: check authtoken expiration here
-                return
-
-            self._app.logger.debug("****** BASE USER NOT AUTHENTICATED ******")
-            g.user_data = None
-            return self.handleNotAuthenticated()
-
-        def on_after_request(response):
-
-            self._app.logger.debug('<<<<<< on_after_request')
-
-            return response
-
         # Prepare Each Request
-        self.before_request(on_before_request)
-        self.after_request(on_after_request)
+        self.before_request(self.on_before_request)
+        self.after_request(self.on_after_request)
 
         super(UnsecureBlueprint, self).register(
             app, options, first_registration)
+
+    def on_after_request(self, response):
+        self._app.logger.debug("***** BASE on_after_request *****")
+        return response
 
     def update_session_user(self, service_catalog):
         ''' Save the user_data to session '''
         self._app.logger.debug('** UPDATING SESSION WITH USER')
         json_catalog = json.loads(service_catalog)
         if json_catalog:
-            user_data = {
+
+            roles = json_catalog["access"]["user"]["roles"]
+            is_racker = next(
+                (True for role in roles if role['name'] == 'Racker'),
+                False  # Default
+            )
+
+            session["user_data"] = {
                 # Get Racker Info
                 "username": json_catalog["access"]["user"]["name"],
                 "authtoken": json_catalog["access"]["token"]["id"],
+                "is_racker": is_racker,
+                "roles": roles,
             }
 
+            if not is_racker:
+
+                # Save tenant id for customer
+                session["tenant_id"] = (json_catalog["access"]
+                                                    ["token"]
+                                                    ["tenant"]
+                                                    ["id"])
+
+                # Get Pilot Header for this user
+                get_pilot_header(
+                    session['user_data']['authtoken'],
+                    session['tenant_id'])
+
             # Save User Data to session and Flask g
-            session["user_data"] = user_data
-            g.userdata = user_data
+            g.user_data = session['user_data']
 
     def handleNotAuthenticated(self):
         ''' Allow unauthenticated user '''
         self._app.logger.debug(
-            "***** UnsecureBlueprint:handleNotAuthenticated *****")
+            "***** UnsecureBlueprint: Allow Unauthenticated User *****")
         pass
 
 
-class SecureBlueprint(UnsecureBlueprint):
+class CustomerBlueprint(UnsecureBlueprint):
     '''
-        Use this Blueprint for pages that REQUIRE an authenticated user
+        This blueprint is for an authenticated customer or racker
     '''
 
     def register(self, app, options, first_registration=False):
-        super(SecureBlueprint, self).register(app, options, first_registration)
+        super(CustomerBlueprint, self).register(app,
+                                                options,
+                                                first_registration)
 
-    def handleNotAuthenticated(self):
-        ''' Deny unauthenticated user '''
-        self._app.logger.debug(
-            "***** SecureBlueprint:handleNotAuthenticated *****")
-        return redirect('/login')
+    def on_before_request(self):
+
+        # call parent method
+        super(CustomerBlueprint, self).on_before_request()
+
+        if g.user_data:
+            self._app.logger.debug('USER IS A CUSTOMER OR RACKER')
+            return
+        else:
+            return redirect("/login")
+
+
+class RackerBlueprint(UnsecureBlueprint):
+    '''
+        This Blueprint for authenticated RACKERS ONLY
+    '''
+
+    def register(self, app, options, first_registration=False):
+        super(RackerBlueprint, self).register(app,
+                                              options,
+                                              first_registration)
+
+    def on_before_request(self):
+
+        # call base method
+        super(RackerBlueprint, self).on_before_request()
+
+        if g.user_data:
+            if g.user_data['is_racker']:
+                self._app.logger.debug('USER IS A RACKER')
+                return
+            else:
+                abort(403)
+        else:
+            return redirect("/login")
