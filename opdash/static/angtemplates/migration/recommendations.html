@@ -4,6 +4,15 @@
         document.getElementById("subNav").style.display = "block";
         var subMenus = $(".rs-nav-secondary .rs-nav-item");
         $(subMenus).removeClass("active");
+        $(subMenus).each(function (index) { 
+            if(index > 1){
+               $(subMenus[index]).addClass("disabled");
+            }
+            else{
+                $(subMenus[index]).removeClass("disabled");
+            }
+
+        });
         $(subMenus[1]).addClass("active");
     })();
 </script>

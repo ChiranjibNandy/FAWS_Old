@@ -250,11 +250,19 @@ th{
 }
 /* End - Collapsible panel CSS */
 
+/*Start - disabling anchor tags*/
+.disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+/*End - disabling anchor tags*/
+
 /* Start - Calender CSS */
 .border-box {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
+
 rscalendaritem {
   float: left;
   display: block;
