@@ -28,6 +28,12 @@
                 else if (type === "network") {
                     return networkService.getTrimmedList();
                 }
+                 else if (type === "files") {
+                    return networkService.getTrimmedList();
+                }
+                 else if (type === "loadBalancers") {
+                    return networkService.getTrimmedList();
+                }
             }
 
             /**
@@ -45,6 +51,12 @@
                 }
                 else if (type === "network") {
                     return networkService.getDetailedList();
+                }
+                 else if (type === "files") {
+                    return networkService.getTrimmedList();
+                }
+                 else if (type === "loadBalancers") {
+                    return networkService.getTrimmedList();
                 }
             }
 
@@ -81,6 +93,12 @@
                 }
                 else if (type === "network") {
                     return networkService.prepareRequest(info);
+                }
+                 else if (type === "files") {
+                    return networkService.getTrimmedList(info);
+                }
+                 else if (type === "loadBalancers") {
+                    return networkService.getTrimmedList(info);
                 }
             }
 
