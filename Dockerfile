@@ -8,7 +8,7 @@
 # sudo docker build -t opdash .
 #
 # Then you must run it:
-# sudo docker run -v $(pwd)/opdash:/var/www/migrator/opdash -ti -p 8000:8000 opdash
+# sudo docker run -v $(pwd)/opdash:/var/www/opdash/opdash -ti -p 5000:5000 opdash
 #
 # You can then verify it it up at:
 # http://0.0.0.0:5000/health
@@ -47,10 +47,10 @@ COPY application.py /var/www/opdash/.
 WORKDIR /var/www/opdash
 
 # Open Port (you must also open it when you run with -p 5000:5000)
-EXPOSE 8000
+EXPOSE 5000
 
 # Set Debug Environment
-ENV UI_DEPLOY_ENVIRON='DebugConfig'
+ENV UI_DEPLOY_ENVIRON='DockerConfig'
 
 # Use this entrypoint if you want to go to a bash shell
 #ENTRYPOINT ["/bin/bash"]

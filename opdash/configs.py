@@ -94,6 +94,10 @@ class DebugConfig(object):
     USE_RELOADER = True
 
 
+class DockerConfig(object):
+    PORT = 5000
+
+
 class LocalConfig(object):
     DEBUG = True
     USE_RELOADER = True
