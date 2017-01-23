@@ -7,19 +7,23 @@
                         <table class="rs-list-table rs-embedded-list-table">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th ng-repeat="label in vm.labels">
                                         <span class="rs-table-sort-text">{{label}}</span>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr ng-repeat="item in vm.data">
+                                    <td>    
+                                        <input type="radio" name="{{'selection'+server.name }}" value="{{server.name}}"/>
+                                    </td>
                                     <td>{{server.name}}</td>
-                                    <td>{{server.instance_type || "p2.16*large"}}</td>
-                                    <td>{{server.region || "EU"}}</td>
-                                    <td>{{server.cost || "15.555"}}</td>
-                                    <td>{{server.memory || "64G|B"}}</td>
-                                    <td>{{server.vcpu || "64"}}</td>
+                                    <td>{{item.instance_type}}</td>
+                                    <td>{{item.region}}</td>
+                                    <td>{{item.cost}}</td>
+                                    <td>{{item.memory}}</td>
+                                    <td>{{item.vcpu}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -38,6 +42,14 @@
                     </div>
                 </rscollapsiblechild>
             </rscollapsible>
+        </div>
+    </div>
+    <div class="rs-row">
+        <div class="span-10">
+
+        </div>
+        <div class="span-2">
+            <button class="rs-btn rs-primary" ng-click="vm.compare()">Apply And Continue</button>
         </div>
     </div>
 </div>

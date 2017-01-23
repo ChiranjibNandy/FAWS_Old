@@ -7,10 +7,18 @@
         .component("rscompareoptions", {
             templateUrl: "/static/angtemplates/migration/compare-options.html",
             controllerAs: "vm",
-            controller: ["datastoreservice",function(dataStoreService) {
+            controller: ["datastoreservice","httpwrapper",function(dataStoreService,HttpWrapper) {
                 var vm = this;
-                vm.servers = dataStoreService.getRecommendedItems();
-                vm.labels = ["Name","instance_type","region","cost","memory","vcpu"];
+
+                vm.$onInit = function(){
+                    vm.servers = dataStoreService.getRecommendedItems();
+                    vm.labels = ["Name","instance_type","region","cost","memory","vcpu"];
+                    var url = "/static/angassets/compare-options.json";
+                    HttpWrapper.send(url,{"operation":'GET'}).then(function(result){
+                        vm.data = result.data;
+                    });
+                }
+                
                 return vm;
             }
         ]}); // end of component definition
