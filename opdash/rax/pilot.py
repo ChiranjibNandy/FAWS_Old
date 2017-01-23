@@ -19,7 +19,7 @@ def get_pilot_header(authtoken, tenant_id):
         current_app.logger.debug('-- PILOT HEADER LOADED FROM SESSION --')
 
     else:
-        current_app.logger.debug('-- PILOT NOT NOT FROM SESSION --')
+        current_app.logger.debug('-- PILOT NOT FROM SESSION --')
 
         pilot_header = "<h2>Pilot Header Not Loaded</h2>"
 
@@ -45,8 +45,9 @@ def get_pilot_header(authtoken, tenant_id):
             }
         )
 
-        if response and response.content:
-            pilot_header = response.content
+        if response and response.text:
+            response.encoding = "utf-8"
+            pilot_header = response.text
             current_app.logger.debug('-- SAVING PILOT  HEADER TO SESSION --')
 
     session['pilot_header'] = pilot_header
