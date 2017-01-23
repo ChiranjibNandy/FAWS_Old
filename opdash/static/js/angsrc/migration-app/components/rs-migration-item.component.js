@@ -130,6 +130,10 @@
                             vm.items = mapServerStatus(dataList, results[1].server_status);
                         if(vm.type === "network")
                             vm.items = mapNetworkStatus(dataList, results[1].network_status);
+                        if(vm.type === "files")
+                            vm.items = mapNetworkStatus(dataList, results[1].network_status);
+                        if(vm.type === "loadBalancers")
+                            vm.items = mapNetworkStatus(dataList, results[1].network_status);
                                        
                         vm.searchField = results[0].labels[0].field;
                         vm.labels = results[0].labels; // set table headers
