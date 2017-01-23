@@ -3,6 +3,8 @@
         document.getElementById("subNav").style.display = "block";
         var subMenus = $(".rs-nav-secondary .rs-nav-item");
         $(subMenus).removeClass("active");
+        $(subMenus).addClass("disabled");
+        $(subMenus[0]).removeClass("disabled");
         $(subMenus[0]).addClass("active");
     })();
 </script>
