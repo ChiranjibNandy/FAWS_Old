@@ -7,7 +7,7 @@
         .component("rscompareoptions", {
             templateUrl: "/static/angtemplates/migration/compare-options.html",
             controllerAs: "vm",
-            controller: ["datastoreservice","httpwrapper",function(dataStoreService,HttpWrapper) {
+            controller: ["datastoreservice","httpwrapper", "$rootRouter",function(dataStoreService,HttpWrapper,$rootRouter) {
                 var vm = this;
 
                 vm.$onInit = function(){
@@ -19,6 +19,10 @@
                     });
                 }
                 
+                vm.compare= function() {
+                    $rootRouter.navigate(["MigrationRecommendation"]);
+                };
+
                 return vm;
             }
         ]}); // end of component definition
