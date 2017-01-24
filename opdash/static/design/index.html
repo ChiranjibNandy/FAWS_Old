@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>Rackspace Migration Manager</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest//canon.min.css">
+    <link href="css/migration-mgr.css" rel="stylesheet">
+    <script src="https://use.fontawesome.com/1d292fb501.js"></script>
+</head>
+
+<body>
+    <!-- Fixed navbar -->
+    <div class="rs-wrapper">
+        <!-- Utility Nav -->
+        <div class="rs-nav-utility">
+            <div class="rs-container">
+                <ul class="rs-nav">
+                    <li class="rs-nav-item "><a class="rs-nav-link" href="">Rackspace Cloud</a></li>
+                    <li class="rs-nav-item active"><a class="rs-nav-link" href="">Fanatical Support for AWS</a></li>
+                </ul>
+                <ul class="rs-nav rs-pull-right">
+                    <li class="rs-nav-item rs-dropdown rs-utility-dropdown">
+                        <a class="rs-nav-link rs-dropdown-toggle" href="">Username123 <i class="rs-caret"></i></a>
+                    </li>
+                    <li class="rs-nav-item ">
+                        <a class="rs-nav-link" href="">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- End Utility Nav -->
+        <!-- Primary Nav -->
+        <div class="rs-nav-primary">
+            <div class="rs-container">
+                <div class="rs-nav-brand">
+                    <a href=""></a>
+                </div>
+                <ul class="rs-nav">
+                    <li class="rs-nav-item active"><a class="rs-nav-link" href="">Migration</a></li>
+                    <li class="rs-nav-item"><a class="rs-nav-link" href="">Reports</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- End Primary Nav -->
+        <!-- Secondary Nav -->
+        <!--       <div class="rs-nav-secondary stepper">
+        <div class="rs-container">
+          <ul class="rs-nav">
+            <li class="rs-nav-item active"><a class="rs-nav-link" href="">Select Resources</a></li>
+            <li class="rs-nav-item"><a class="rs-nav-link" href="">Recommendation</a></li>
+            <li class="rs-nav-item"><a class="rs-nav-link" href="">Schedule Migration</a></li>
+            <li class="rs-nav-item"><a class="rs-nav-link" href="">Confirm &amp; Migrate</a></li>
+          </ul>
+        </div>
+      </div> -->
+        <!-- End Secondary Nav -->
+        <div class="rs-container migration-mgr">
+            <div class="rs-main rs-panel">
+                <div class="rs-sidebar rs-pull-right">
+                    <div class="rs-inner">
+                        <div class="info-panel">
+                            <h4>Current Pricing</h4>
+                            <p><small>Last Month's Invoice: <br>
+                            Billing Period: <em>12-DEC-16 to 11-JAN-17</em> <br>
+                            <b>$485</b> <a href="">(See Details)</a></small></p>
+                        </div>
+                        <div class="info-panel">
+                            <h4>New Pricing</h4>
+                            <p><small>Amazon EC2 Service (US-East): <br>
+                              Compute: <em>$31.81 </em><br>
+                              Fanatical AWS Support (Navigator): <em>$400.00</em> <br>
+                            <b>TOTAL COST: $431.81</b> <a href="">(See Details)</a></small></p>
+                        </div>
+                        <div class="white-panel">
+                            <h4>Savings</h4>
+                            <h3>$53.69 SAVED</h3>
+                        </div>
+                        <br>
+                        <div class="rs-row pricing-buttons">
+                            <button class="rs-btn span-12" ng-click="vm.saveItems()">Save For Later</button>
+                        </div>
+                        <div class="rs-row">
+                            <a class="rs-btn span-5" ng-link="['Tenant']" href="./tenant">Back</a>
+                            <button class="rs-btn rs-btn-primary span-7" ng-click="vm.continue()">Continue</button>
+                        </div>
+                        <br>
+                        <hr>
+                        <h4>Support</h4>
+                        <div class="support-icons">
+                            <a href="#" class=""><i class="fa fa-phone fa-fw fa-2x"></i></a>
+                            <a href="#" class=""><i class="fa fa-ticket fa-fw fa-2x"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="rs-content rs-panel">
+                    <div class="mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__supporting-text">
+                            <div class="mdl-stepper-horizontal-alternative">
+                                <div class="mdl-stepper-step active-step step-done">
+                                    <div class="mdl-stepper-circle"><span>1</span></div>
+                                    <div class="mdl-stepper-title">Select Resources</div>
+                                    <div class="mdl-stepper-bar-left"></div>
+                                    <div class="mdl-stepper-bar-right"></div>
+                                </div>
+                                <div class="mdl-stepper-step active-step editable-step">
+                                    <div class="mdl-stepper-circle"><span>2</span></div>
+                                    <div class="mdl-stepper-title">Recommendation</div>
+                                    <div class="mdl-stepper-bar-left"></div>
+                                    <div class="mdl-stepper-bar-right"></div>
+                                </div>
+                                <div class="mdl-stepper-step active-step">
+                                    <div class="mdl-stepper-circle"><span>3</span></div>
+                                    <div class="mdl-stepper-title">Schedule Migration</div>
+                                    <div class="mdl-stepper-bar-left"></div>
+                                    <div class="mdl-stepper-bar-right"></div>
+                                </div>
+                                <div class="mdl-stepper-step">
+                                    <div class="mdl-stepper-circle"><span>4</span></div>
+                                    <div class="mdl-stepper-title">Confirm &amp; Migrate</div>
+                                    <div class="mdl-stepper-bar-left"></div>
+                                    <div class="mdl-stepper-bar-right"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="rs-inner">
+                        <h2>User Namegoeshere</h2>
+                        <h4>Resource Types</h4>
+                        <ul class="rs-tabs">
+                            <li class="active"><a href="#Servers">Servers <span class="rs-quiet">(1)</span></a></li>
+                            <li class="hover"><a href="#Load">Load Balancers <span class="rs-quiet">(3)</span></a></li>
+                        </ul>
+                        <div class="rs-tab-content">
+                            <div class="rs-tab-pane active" id="Servers">
+                                <input type="text" class="rs-input-large searchbox" placeholder="Search...">
+                                <table class="rs-list-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="rs-table-status"></th>
+                                            <th class="rs-table-checkbox">
+                                                <input type="checkbox" />
+                                            </th>
+                                            <th class="rs-table-cog"></th>
+                                            <th>
+                                                <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                    <span class="rs-table-sort-text">Server Name </span>
+                                                    <span class="rs-table-sort-indicator"></span>
+                                                </a>
+                                            </th>
+                                            <th>
+                                                <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                    <span class="rs-table-sort-text">IP Address </span>
+                                                    <span class="rs-table-sort-indicator"></span>
+                                                </a>
+                                            </th>
+                                            <th>
+                                                <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                    <span class="rs-table-sort-text">RAM</span>
+                                                    <span class="rs-table-sort-indicator"></span>
+                                                </a>
+                                            </th>
+                                            <th>
+                                                <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                    <span class="rs-table-sort-text">Status</span>
+                                                    <span class="rs-table-sort-indicator"></span>
+                                                </a>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="rs-table-status rs-table-status-ok"></td>
+                                            <td class="rs-table-checkbox">
+                                                <input type="checkbox" />
+                                            </td>
+                                            <td class="rs-table-cog">
+                                                <div class="rs-dropdown">
+                                                    <div class="rs-cog rs-dropdown-toggle"></div>
+                                                    <ul class="rs-dropdown-menu hidden">
+                                                        <li><span class="rs-dropdown-category">Manage</span></li>
+                                                        <li><a href="#">Action Name&hellip;</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave One</a></td>
+                                            <td class="rs-table-text">64.49.226.84</td>
+                                            <td class="rs-table-text">1024 MB</td>
+                                            <td class="rs-table-text">Active</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="rs-table-status rs-table-status-warning"></td>
+                                            <td class="rs-table-checkbox">
+                                                <input type="checkbox" />
+                                            </td>
+                                            <td class="rs-table-cog">
+                                                <div class="rs-dropdown">
+                                                    <div class="rs-cog rs-dropdown-toggle"></div>
+                                                    <ul class="rs-dropdown-menu hidden">
+                                                        <li><span class="rs-dropdown-category">Manage</span></li>
+                                                        <li><a href="#">Action Name&hellip;</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Two</a></td>
+                                            <td class="rs-table-text">64.49.226.84</td>
+                                            <td class="rs-table-text">1024 MB</td>
+                                            <td class="rs-table-text">Active</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="rs-table-status rs-table-status-processing rs-table-status-striped"></td>
+                                            <td class="rs-table-checkbox">
+                                                <input type="checkbox" />
+                                            </td>
+                                            <td class="rs-table-cog">
+                                                <div class="rs-dropdown">
+                                                    <div class="rs-cog rs-dropdown-toggle"></div>
+                                                    <ul class="rs-dropdown-menu hidden">
+                                                        <li><span class="rs-dropdown-category">Manage</span></li>
+                                                        <li><a href="#">Action Name&hellip;</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Three</a></td>
+                                            <td class="rs-table-text">64.49.226.84</td>
+                                            <td class="rs-table-text">1024 MB</td>
+                                            <td class="rs-table-text">Active</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="rs-table-status rs-table-status-error"></td>
+                                            <td class="rs-table-checkbox">
+                                                <input type="checkbox" />
+                                            </td>
+                                            <td class="rs-table-cog">
+                                                <div class="rs-dropdown">
+                                                    <div class="rs-cog rs-dropdown-toggle"></div>
+                                                    <ul class="rs-dropdown-menu hidden">
+                                                        <li><span class="rs-dropdown-category">Manage</span></li>
+                                                        <li><a href="#">Action Name&hellip;</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Four</a></td>
+                                            <td class="rs-table-text">64.49.226.84</td>
+                                            <td class="rs-table-text">1024 MB</td>
+                                            <td class="rs-table-text">Active</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="rs-table-status rs-table-status-ok"></td>
+                                            <td class="rs-table-checkbox">
+                                                <input type="checkbox" />
+                                            </td>
+                                            <td class="rs-table-cog">
+                                                <div class="rs-dropdown">
+                                                    <div class="rs-cog rs-dropdown-toggle"></div>
+                                                    <ul class="rs-dropdown-menu hidden">
+                                                        <li><span class="rs-dropdown-category">Manage</span></li>
+                                                        <li><a href="#">Action Name&hellip;</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Five</a></td>
+                                            <td class="rs-table-text">64.49.226.84</td>
+                                            <td class="rs-table-text">1024 MB</td>
+                                            <td class="rs-table-text">Active</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="rs-table-status rs-table-status-ok"></td>
+                                            <td class="rs-table-checkbox">
+                                                <input type="checkbox" />
+                                            </td>
+                                            <td class="rs-table-cog">
+                                                <div class="rs-dropdown">
+                                                    <div class="rs-cog rs-dropdown-toggle"></div>
+                                                    <ul class="rs-dropdown-menu hidden">
+                                                        <li><span class="rs-dropdown-category">Manage</span></li>
+                                                        <li><a href="#">Action Name&hellip;</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Six</a></td>
+                                            <td class="rs-table-text">64.49.226.84</td>
+                                            <td class="rs-table-text">1024 MB</td>
+                                            <td class="rs-table-text">Active</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="rs-tab-pane " id="Load">
+                                <p>Tab content pane two</p>
+                            </div>
+                        </div>
+                        <br>
+                        <div>
+                            <h4>1 items selected</h4>
+                            <div class="selected-items">
+                                <span class="rs-status" title="cloud-endure-demo-B_wordpress_2">
+                                  <a href="#"><i class="fa fa-times"></i></a>  cloud-endure-demo-B_wordpress_2 
+                                </span>
+                                <!-- end ngRepeat: item in vm.selectedItems -->
+                            </div>
+                            <div class="selected-items">
+                                <span class="rs-status" title="cloud-endure-demo-B_wordpress_2">
+                                  <a href="#"><i class="fa fa-times"></i></a>  cloud-endure-demo-B_db_slave 
+                                </span>
+                                <!-- end ngRepeat: item in vm.selectedItems -->
+                            </div>
+                            <div class="selected-items">
+                                <span class="rs-status" title="cloud-endure-demo-B_wordpress_2">
+                                  <a href="#"><i class="fa fa-times"></i></a>  cloud-endure-demo-B_wordpress_2 
+                                </span>
+                                <!-- end ngRepeat: item in vm.selectedItems -->
+                            </div>
+                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                <span class="rs-status">
+                                  <a href="#"><i class="fa fa-times"></i></a>  cloud-endure-demo-B_wordpress_2 
+                                </span>
+                                <!-- end ngRepeat: item in vm.selectedItems -->
+                            </div>
+                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                <span class="rs-status">
+                                  <a href="#"><i class="fa fa-times"></i></a>  cloud-endure-demo-B_db_slave 
+                                </span>
+                                <!-- end ngRepeat: item in vm.selectedItems -->
+                            </div>
+                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                <span class="rs-status">
+                                  <a href="#"><i class="fa fa-times"></i></a>  cloud-endure-demo-B_wordpress_2 
+                                </span>
+                                <!-- end ngRepeat: item in vm.selectedItems -->
+                            </div>
+                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                <span class="rs-status">
+                                  <a href="#"><i class="fa fa-times"></i></a>  cloud-endure-demo-B_wordpress_2 
+                                </span>
+                                <!-- end ngRepeat: item in vm.selectedItems -->
+                            </div>
+                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                <span class="rs-status">
+                                  <a href="#"><i class="fa fa-times"></i></a>  cloud-endure-demo-B_wordpress_2 
+                                </span>
+                                <!-- end ngRepeat: item in vm.selectedItems -->
+                            </div>
+                        </div>
+                        <br>
+                        <hr>
+                        <br>
+                        <h4>FAQs + More Information</h4>
+                        <ul>
+                            <li>
+                                <a href="">Mapping of Rackspace Resource to Amazon Web Service Resources</a>
+                            </li>
+                            <li>
+                                <a href="">How will my billing change?</a>
+                            </li>
+                            <li>
+                                <a href="">Learn about the different Fanatical Support for AWS Support Levels</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="rs-nav-footer">
+        <div class="rs-container">
+            <ul class="rs-nav">
+                <li class="rs-nav-item">© 2017 Rackspace, US</li>
+                <li class="rs-nav-item"><a class="rs-nav-link" href="">Website Terms</a></li>
+                <li class="rs-nav-item"><a class="rs-nav-link" href="">Privacy Policy</a></li>
+            </ul>
+            <ul class="rs-nav rs-pull-right">
+                <li class="rs-nav-item"><a class="rs-nav-link" href="#">Feedback</a></li>
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var tooltip;
+        tooltip = new canon.Tooltip();
+    });
+    </script>
+    <script src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
