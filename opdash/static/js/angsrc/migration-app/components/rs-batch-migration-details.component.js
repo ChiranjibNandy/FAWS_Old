@@ -19,7 +19,7 @@
              * @name migrationApp.controller:rsbatchmigrationdetailsCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsbatchmigrationdetails rsbatchmigrationdetails} component
              */
-            controller: function() {
+            controller: ["$rootRouter",function($rootRouter){
                 var vm = this;
                 $('title')[0].innerHTML =  "Batch Migration Details - Rackspace Cloud Migration";
 
@@ -40,7 +40,8 @@
                  * Go back to migration dashboard page
                  */
                 vm.back = function() {
-                    alert("Go back to migration dashboard");
+                    $rootRouter.navigate(["MigrationStatus"]);
+                    //alert("Go back to migration dashboard");
                 };
 
                 /**
@@ -65,5 +66,5 @@
                     alert("Cancel all migrations");
                 };
             }
-        }); // end of component rsbatchmigrationdetails
+            ]}); // end of component rsbatchmigrationdetails
 })();
