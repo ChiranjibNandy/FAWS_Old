@@ -89,6 +89,24 @@
                 }
             }
 
+            self.getNetworkDetails = function(id){
+                var t = networks.data;
+                for(var key in t){
+                    if(t.hasOwnProperty(key)){
+                        for(var i=0; i<t[key].networks.length; i++){
+                            if(t[key].networks[i].id === id){
+                                var network = t[key].networks[i];
+
+                                return {
+                                    region: key,
+                                    subnets: network.subnets.map(function(subnetId){ return {id: subnetId}; })
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             /**
              * @ngdoc method
              * @name getTrimmedList
