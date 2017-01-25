@@ -25,13 +25,14 @@
              * @name migrationApp.controller:rsconfirmmigrationCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsconfirmmigration rsconfirmmigration} component
              */
-            controller: [ "$rootRouter","datastoreservice","migrationitemdataservice", "$q","httpwrapper","authservice","serverservice","networkservice", function($rootRouter,dataStoreService,ds,$q,HttpWrapper,authservice,serverservice,networkservice) {
+            controller: [ "$rootRouter","datastoreservice","migrationitemdataservice", "$q","httpwrapper", function($rootRouter,dataStoreService,ds,$q,HttpWrapper) {
                 var vm = this;
                 
                 vm.$onInit = function() {
                     $('title')[0].innerHTML =  "Confirm Migration - Rackspace Cloud Migration";
 
                     vm.allItems = [];
+                    vm.disable = false;
                     vm.types = ['server','network'];
                     var dateObject = dataStoreService.returnDate();
                     var date = dateObject.date !== ''?moment(dateObject.date).format("MMM Do YY"):moment().format("MMM Do YY");
@@ -43,7 +44,6 @@
                             vm.allItems.push(item);
                         });
                     });
-                    console.log(vm.allItems);
                 };
 
                 /**
@@ -54,90 +54,40 @@
                  * Starts a batch to migrate all resources selected by user
                  */
                 vm.migrate = function(){
-                    var migrateArray = [];
-                    var instances = [],networks = [];
+                    var equipments = [];
                     var requestObj;
-                    var auth = authservice.getAuth();
-
+                    vm.disable = true;
                     vm.allItems.map(function(item){
-                        if(item.type === "server"){
-                            //have to populate the type field in the below object
-                            requestObj = ds.prepareRequest(item.type, {id: item.id, type: "t2.micro"});
-                            migrateArray.push(HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj));
-                        }else{
-                            //hardcoded the value region just to trigger migration
-                            requestObj = ds.prepareRequest(item.type, {id: item.id, region: "US-East-1"});
-                            migrateArray.push(HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj));
-                        }
+                        equipments.push({equipmentType:item.type,id: item.id,type: "t2.micro",region: "US-East-1"});
                     });
-                    $q.all(migrateArray).then(function(results) {
-                        console.log("results");
-                        console.log(results.message);
-                    });
+                    requestObj = ds.prepareRequest(equipments);
+
+                    console.log("-------------");
+                    console.log(requestObj);
+                    console.log("-------------");
+                    HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj).then(function(result){
+                        console.log("results inside component");
+                        console.log(result);
+                        $rootRouter.navigate(["MigrationStatus"]);
+                    })
+
+
                     // vm.allItems.map(function(item){
                     //     if(item.type === "server"){
-                    //         var region = serverservice.getRegionById(item.id);
-                    //         instances.push({
-                    //                         source: {
-                    //                             id: item.id,
-                    //                             region: region,
-                    //                         },
-                    //                         destination: {
-                    //                             region: "us-east-1",
-                    //                             zone: "us-east-1a",
-                    //                             type: "t2.micro"
-                    //                         }
-                    //                     });
+                    //         //have to populate the type field in the below object
+                    //         requestObj = ds.prepareRequest(item.type, {id: item.id, type: "t2.micro"});
+                    //         migrateArray.push(HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj));
                     //     }else{
-                    //         var network = networkservice.getNetworkDetails(item.id);
-                    //         networks.push({
-                    //                                         source: {
-                    //                                             region: network.region
-                    //                                         },
-                    //                                         destination: {
-                    //                                             region: "US-East-1",
-                    //                                             default_zone: "us-east-1a"
-                    //                                         },
-                    //                                         subnets: "All",
-                    //                                         instances: "All",
-                    //                                         security_groups: "All"
-                    //                                     })
+                    //         //hardcoded the value region just to trigger migration
+                    //         requestObj = ds.prepareRequest(item.type, {id: item.id, region: "US-East-1"});
+                    //         migrateArray.push(HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj));
                     //     }
                     // });
-                    // var requestObj = {
-                    //                     source: {
-                    //                         cloud: "rackspace",
-                    //                         tenantid: "1024814",
-                    //                         auth: {
-                    //                             method: "key",
-                    //                             type: "customer",
-                    //                             username: auth.rackUsername,
-                    //                             apikey: auth.rackAPIKey
-                    //                         }
-                    //                     },
-                    //                     destination: {
-                    //                         cloud: "aws",
-                    //                         account: auth.awsAccount,
-                    //                         auth: {
-                    //                             method: "keys",
-                    //                             accesskey: auth.accessKey,
-                    //                             secretkey: auth.secretKey
-                    //                         }
-                    //                     },
-                    //                     resources: {
-                    //                         instances: instances,
-                    //                         networks: networks
-                    //                     },
-                    //                     version: "v1"
-                    //                 };
-                    // console.log("------------------");                                    
-                    // console.log(requestObj);
-                    // console.log("------------------");                                    
-                    // HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj).then(function(result){
-                    //     console.log("results inside component");
-                    //     console.log(result);
-                    // })
-                                
+
+                    // $q.all(migrateArray).then(function(results) {
+                    //     console.log("results");
+                    //     console.log(results.message);
+                    // });                                
                 };
                 return vm;
             }

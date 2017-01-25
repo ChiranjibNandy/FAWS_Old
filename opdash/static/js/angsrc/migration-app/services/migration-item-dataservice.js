@@ -8,7 +8,7 @@
      * This service acts as a facade which handles calling the specific service implementation for each resoource type (server, network etc).
      */
     angular.module("migrationApp")
-        .service("migrationitemdataservice", ["serverservice", "networkservice", "httpwrapper",'$filter', function (serverService, networkService, HttpWrapper, $filter) {
+        .service("migrationitemdataservice", ["serverservice", "networkservice", "httpwrapper",'$filter',"authservice", function (serverService, networkService, HttpWrapper, $filter,authservice) {
             var self = this;
 
             /**
@@ -87,19 +87,77 @@
              * @description 
              * This service method returns an _object_. This object has to be sent while making an HTTP POST request to migrate the resource.
              */
-            this.prepareRequest = function(type, info){
-                if (type === "server") {
-                   return serverService.prepareRequest(info);
+            this.prepareRequest = function(equipments){
+                var instances = [],networks = [];
+                var auth = authservice.getAuth();
+                var reqObj = {
+                                source: {
+                                    cloud: "rackspace",
+                                    tenantid: "1024814",
+                                    auth: {
+                                        method: "key",
+                                        type: "customer",
+                                        username: auth.rackUsername,
+                                        apikey: auth.rackAPIKey
+                                    }
+                                },
+                                destination: {
+                                    cloud: "aws",
+                                    account: auth.awsAccount,
+                                    auth: {
+                                        method: "keys",
+                                        accesskey: auth.accessKey,
+                                        secretkey: auth.secretKey
+                                    }
+                                },
+                                resources: {},
+                                version: "v1"
+                            };
+
+                equipments.map(function(item){
+                    if(item.equipmentType === "server"){
+                        var region = serverService.getRegionById(item.id);
+                            instances.push({
+                                source: {
+                                    id: item.id,
+                                    region: region,
+                                },
+                                destination: {
+                                    region: "us-east-1",
+                                    zone: "us-east-1a",
+                                    type: item.type
+                                }
+                        });
+                    }else if(item.equipmentType === "network"){
+                        var network = networkService.getNetworkDetails(item.id);
+                        networks.push({
+                            source: {
+                                region: network.region
+                            },
+                            destination: {
+                                region: item.region,
+                                default_zone: "us-east-1a"
+                            },
+                            subnets: "All",
+                            instances: "All",
+                            security_groups: "All"
+                        })
+                    }
+                     else if (item.equipmentType === "files") {
+                        return networkService.getTrimmedList(info);
+                    }
+                    else if (item.equipmentType === "loadBalancers") {
+                        return networkService.getTrimmedList(info);
+                    }
+                });
+
+                if(instances.length > 0 ){
+                    reqObj.resources.instances = instances;
                 }
-                else if (type === "network") {
-                    return networkService.prepareRequest(info);
+                if(networks.length > 0){
+                    reqObj.resources.networks = networks;
                 }
-                 else if (type === "files") {
-                    return networkService.getTrimmedList(info);
-                }
-                 else if (type === "loadBalancers") {
-                    return networkService.getTrimmedList(info);
-                }
+                return reqObj;
             }
 
             this.getServerMigrationStatus = function(tenant_id){
