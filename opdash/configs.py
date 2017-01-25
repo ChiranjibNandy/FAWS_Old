@@ -42,7 +42,7 @@ class BaseConfig(object):
 
     API_BASE_URL = environ.get(
         'API_BASE_URL',
-        'http://migrator-ops-api-dev.us-east-1.elasticbeanstalk.com'
+        'http://opdash-api-dev.us-east-1.elasticbeanstalk.com'
     )
 
     IDENTITY_URL = "https://identity-internal.api.rackspacecloud.com/v2.0"
