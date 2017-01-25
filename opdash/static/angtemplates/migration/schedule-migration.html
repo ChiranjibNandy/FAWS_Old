@@ -33,20 +33,26 @@
                 </div>
             </div>
             <div class="rs-row" style="margin-top: 40px">
-                <div class="span-7">
-                    <rscalendaritem selected="day"></rscalendaritem>
+                <div class="span-6">
+                    <rscalendaritem selected="day" class="disabled"></rscalendaritem>
                 </div>
-                 <div class="span-2">
-                    <h5>TIME ZONE</h5>
-                    <select name="timezone" ng-change="vm.timezoneChange()" ng-model="vm.timezone">
-                        <option ng-repeat="time in vm.timeZoneItems" value="{{time}}">{{time}}</option>
-                    </select>
+                <div class="span-3" style="height:228px; border-right: 1px solid black">
+                    <div>
+                        <h5>TIME ZONE</h5>
+                        <select name="timezone" class="disabled" ng-change="vm.timezoneChange()" ng-model="vm.timezone" disabled>
+                            <option ng-repeat="time in vm.timeZoneItems" value="{{time}}">{{time}}</option>
+                        </select>
+                    </div>
+                    <br />
+                    <div>
+                        <h5>TIME</h5>
+                        <select name="time" class="disabled" ng-change="vm.timeChange()" ng-model="vm.time" disabled>
+                            <option ng-repeat="time in vm.timeItems" value="{{time}}">{{time}}</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="span-3">
-                    <h5>TIME</h5>
-                    <select name="time" ng-change="vm.timeChange()" ng-model="vm.time">
-                        <option ng-repeat="time in vm.timeItems" value="{{time}}">{{time}}</option>
-                    </select>
+                <div class="span-3" style="padding-top: 72px; padding-left: 23px; zoom: 1.5">
+                   <input type="checkbox" checked disabled>&nbsp Migrate Now<br>
                 </div>
                
             </div>

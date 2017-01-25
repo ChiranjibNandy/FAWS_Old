@@ -2,7 +2,7 @@
     <td class="rs-table-status" 
             ng-class="{'rs-table-status-ok': item.status=='ACTIVE', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
     </td>
-    <td class="rs-table-checkbox"><input type="checkbox" ng-model="item.selected" ng-change="vm.changeSelectAll(item,false)" /></td>
+    <td class="rs-table-checkbox"><input type="checkbox" ng-model="item.selected" ng-change="vm.changeSelectAll(item,false)" ng-checked="item.selected" /></td>
     <td class="rs-table-link"><a href="#" ng-link="['EquipmentDetails', {type: vm.type, id: item.id}]">{{item.name}}</a></td>
     <td class="rs-table-text">{{item.shared}}</td>
     <td class="rs-table-text capitalize">{{item.status | lowercase}}</td>
