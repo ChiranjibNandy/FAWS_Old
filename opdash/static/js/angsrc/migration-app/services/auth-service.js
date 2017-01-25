@@ -9,9 +9,19 @@
      */
     angular.module("migrationApp")
         .service("authservice", [function() {
-            var self = this;
+            var self = this,
+                rackerDetails,
+                customerDetails;
 
             self.type = {};
+
+            /**
+             * @ngdoc property
+             * @name is_racker
+             * @propertyOf migrationApp.service:authservice
+             * @description Boolean to determine if the logged in user is a racker or a customer
+             */
+            self.is_racker = null;
 
             /**
              * @ngdoc property
@@ -82,20 +92,44 @@
              */
             self.type.rackAPIKey = null;
 
-            //store log here
-            this.storeAuth = function(type){
-               self.type = type;
-               self.type.awsAccount = "rax-9391b0f6b8264c6f8efbe2794a541548";
-               self.type.accessKey = "AKIAIUHV3Q5R7JDRDRBQ";
-               self.type.secretKey = "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";
-               self.type.rackUsername = "RSMTDev1";
-               self.type.rackAPIKey = "f42046566954470dbaa31d6378916bb1";
-            }
+            /**
+             * @ngdoc method
+             * @name storeAuth
+             * @methodOf migrationApp.service:authservice
+             * @description 
+             * Sets user details based on racker or customer login
+             */
+            self.storeAuth = function(userDetails){
+                var details;
+                self.is_racker = userDetails.is_racker;
 
-            //get log here
-            this.getAuth = function(){
-                return self.type;
-            }
+                if(self.is_racker){
+                    rackerDetails = angular.copy(userDetails);
+                    details = rackerDetails;
+                }
+                else{
+                    customerDetails = angular.copy(userDetails);
+                    details = customerDetails;
+                }
+
+                details.awsAccount = "rax-9391b0f6b8264c6f8efbe2794a541548";
+                details.accessKey = "AKIAIUHV3Q5R7JDRDRBQ";
+                details.secretKey = "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";
+                details.rackUsername = "RSMTDev1";
+                details.rackAPIKey = "f42046566954470dbaa31d6378916bb1";
+            };
+
+            /**
+             * @ngdoc method
+             * @name getAuth
+             * @methodOf migrationApp.service:authservice
+             * @description 
+             * Gets user details based on racker or customer login
+             */
+            self.getAuth = function(){
+                return self.is_racker ? rackerDetails : customerDetails;
+            };
+
             return self;
         }]); // end of service definition
 })();

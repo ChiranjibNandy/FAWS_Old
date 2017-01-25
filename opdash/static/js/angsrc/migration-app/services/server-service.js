@@ -86,6 +86,18 @@
             }
         };
 
+        self.getRegionById = function(id){
+            var t = servers.data;
+            for(var key in t){
+                if(t.hasOwnProperty(key)){
+                    for(var i=0; i<t[key].servers.length; i++){
+                        if(t[key].servers[i].id === id)
+                            return key;
+                    }
+                }
+            }
+        };
+
         /**
          * @ngdoc method
          * @name getTrimmedList
