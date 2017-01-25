@@ -73,3 +73,5 @@ target/
 
 # Flask Sessions
 flask_session/
+*/.DS_Store
+opdash/.DS_Store

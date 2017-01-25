@@ -53,87 +53,18 @@
             </div>
         </div>
         <div class="rs-container migration-mgr">
-
-            <div class="rs-main rs-panel">
-            <div class="rs-sidebar rs-pull-right">
-                    <div class="rs-inner">
-                        <div class="rs-row" >
-                            <div class="span-12">
-                                <div class="rs-facet-section ">
-                                    <div class="rs-facet-section-body">
-                                        <h3>Alerts</h3>
-                                        <br>
-                                        <div class=" ">
-                                            <table class="rs-list-table rs-embedded-list-table-wrapper ">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Batch Name</th>
-                                                        <th>Message</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Batch Three</td>
-                                                        <td>Taking a long time to migrate</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Batch Five</td>
-                                                        <td>Problem while starting this batch. Will be retried.</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            </div>
-                            <div class="rs-row" >
-                            <div class="span-12">
-                                <div class="rs-facet-section">
-                                    <div class="rs-facet-section-body">
-                                        <h3>Tickets</h3>
-                                        <br>
-                                        <div class=" ">
-                                            <table class="rs-list-table rs-embedded-list-table-wrapper ">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Batch Name</th>
-                                                        <th>Message</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Batch Three</td>
-                                                        <td>Taking a long time to migrate</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Batch Five</td>
-                                                        <td>Problem while starting this batch. Will be retried.</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <hr>
-                        <h4>Support</h4>
-                        <div class="support-icons">
-                            <a href="#" class=""><i class="fa fa-phone fa-fw fa-2x"></i></a>
-                            <a href="#" class=""><i class="fa fa-ticket fa-fw fa-2x"></i></a>
-                        </div>
-                    </div>
-                </div>
+            <br>
+            <h2>Migration Confirmed for 17/01/2017 07:00PM</h2>
+            <a class="rs-btn " ng-link="['Tenant']" href="">Pause</a>
+            <button class="rs-btn rs-btn-primary">Cancel</button>
+            <div class="rs-main ">
                 <div class="rs-content rs-panel">
                     <div class="rs-inner">
-                        <h2>Migration Confirmed for 17/01/2017 07:00PM</h2>
                         <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
                             <table class="rs-list-table rs-embedded-list-table">
                                 <thead>
                                     <tr>
+                                        <th class="rs-table-status "></th>
                                         <th>
                                             <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
                                                 <span class="rs-table-sort-text">Batch Queue</span>
@@ -163,21 +94,19 @@
                                 <tbody>
                                     <!-- ngRepeat: batch in vm.batches | filter : {progress:'!'+'100'} -->
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                        <td class="rs-table-status rs-table-status-ok"></td>
                                         <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="./batch-migration-details">Batch Three</a></td>
                                         <td class="rs-table-text ng-binding">04/01/2017 12:18 A.M.</td>
                                         <td class="rs-table-text">
-                                            <div ng-show="batch.progress===-1" class="ng-hide">Not started</div>
-                                            <div ng-show="batch.progress!==-1" style="width: 80%;">
-                                                <div class="rs-progress rs-custom-progress" ng-attr-style="width: {{batch.progress}}%" style="width: 60%">
-                                                    <div class="rs-progress-inner">
-                                                        <div class="rs-segment" style="width: 100%;">
-                                                            <!--<div ng-class="batch.progress === '100' ? 'rs-bar rs-status-ok' : (batch.progress > '60' ? 'rs-bar rs-status-warning' : 'rs-bar rs-status-error')"></div>-->
-                                                            <div class="rs-bar rs-status-ok"></div>
-                                                        </div>
+                                            <span class="rs-progress-label">Not Started</span>
+                                            <div class="rs-progress rs-progress-medium">
+                                                <div class="rs-progress-inner">
+                                                    <div class="rs-segment" style="width: 25%">
+                                                        <div class="rs-bar rs-status-ok"></div>
                                                     </div>
-                                                    <div class="rs-custom-progress-label ng-binding">60%</div>
                                                 </div>
                                             </div>
+                                            <span class="rs-progress-label">25%</span>
                                         </td>
                                         <!-- ngIf: batch.est_completion_time !== '-1' -->
                                         <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !== '-1'">9hr 21mins 15sec</td>
@@ -186,21 +115,19 @@
                                     </tr>
                                     <!-- end ngRepeat: batch in vm.batches | filter : {progress:'!'+'100'} -->
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                        <td class="rs-table-status rs-table-status-ok"></td>
                                         <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="./batch-migration-details">Batch Four</a></td>
                                         <td class="rs-table-text ng-binding">05/01/2017 01:25 A.M.</td>
                                         <td class="rs-table-text">
-                                            <div ng-show="batch.progress===-1" class="ng-hide">Not started</div>
-                                            <div ng-show="batch.progress!==-1" style="width: 80%;">
-                                                <div class="rs-progress rs-custom-progress" ng-attr-style="width: {{batch.progress}}%" style="width: 97%">
-                                                    <div class="rs-progress-inner">
-                                                        <div class="rs-segment" style="width: 100%;">
-                                                            <!--<div ng-class="batch.progress === '100' ? 'rs-bar rs-status-ok' : (batch.progress > '60' ? 'rs-bar rs-status-warning' : 'rs-bar rs-status-error')"></div>-->
-                                                            <div class="rs-bar rs-status-ok"></div>
-                                                        </div>
+                                            <span class="rs-progress-label">Not Started</span>
+                                            <div class="rs-progress rs-progress-medium">
+                                                <div class="rs-progress-inner">
+                                                    <div class="rs-segment" style="width: 97%">
+                                                        <div class="rs-bar rs-status-ok"></div>
                                                     </div>
-                                                    <div class="rs-custom-progress-label ng-binding">97%</div>
                                                 </div>
                                             </div>
+                                            <span class="rs-progress-label">97%</span>
                                         </td>
                                         <!-- ngIf: batch.est_completion_time !== '-1' -->
                                         <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !== '-1'">1hr 08mins 21secs</td>
@@ -209,21 +136,19 @@
                                     </tr>
                                     <!-- end ngRepeat: batch in vm.batches | filter : {progress:'!'+'100'} -->
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                        <td class="rs-table-status rs-table-status-ok"></td>
                                         <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="./batch-migration-details">Batch Five</a></td>
                                         <td class="rs-table-text ng-binding">05/01/2017 12:18 A.M.</td>
                                         <td class="rs-table-text">
-                                            <div ng-show="batch.progress===-1">Not started</div>
-                                            <div ng-show="batch.progress!==-1" style="width: 80%;" class="ng-hide">
-                                                <div class="rs-progress rs-custom-progress" ng-attr-style="width: {{batch.progress}}%" style="width: -1%">
-                                                    <div class="rs-progress-inner">
-                                                        <div class="rs-segment" style="width: 100%;">
-                                                            <!--<div ng-class="batch.progress === '100' ? 'rs-bar rs-status-ok' : (batch.progress > '60' ? 'rs-bar rs-status-warning' : 'rs-bar rs-status-error')"></div>-->
-                                                            <div class="rs-bar rs-status-ok"></div>
-                                                        </div>
+                                            <span class="rs-progress-label">Not Started</span>
+                                            <div class="rs-progress rs-progress-medium">
+                                                <div class="rs-progress-inner">
+                                                    <div class="rs-segment" style="width: 5%">
+                                                        <div class="rs-bar rs-status-ok"></div>
                                                     </div>
-                                                    <div class="rs-custom-progress-label ng-binding">-1%</div>
                                                 </div>
                                             </div>
+                                            <span class="rs-progress-label">5%</span>
                                         </td>
                                         <!-- ngIf: batch.est_completion_time !== '-1' -->
                                         <!-- ngIf: batch.est_completion_time === '-1' -->
@@ -235,11 +160,11 @@
                             </table>
                         </div>
                         <br>
-                        <br>
                         <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
                             <table class="rs-list-table rs-embedded-list-table">
                                 <thead>
                                     <tr>
+                                        <th class="rs-table-status"></th>
                                         <th>
                                             <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
                                                 <span class="rs-table-sort-text">Completed Batches</span>
@@ -263,18 +188,21 @@
                                 <tbody>
                                     <!-- ngRepeat: batch in vm.batches | filter : {progress:'100'} -->
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'100'}" class="ng-scope">
+                                        <td class="rs-table-status rs-table-status-ok"></td>
                                         <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="./batch-migration-details">Batch One</a></td>
                                         <td class="rs-table-text ng-binding">12/01/2016 10:18 P.M.</td>
                                         <td class="rs-table-text ng-binding" colspan="2">12/03/2016 01:08 A.M.</td>
                                     </tr>
                                     <!-- end ngRepeat: batch in vm.batches | filter : {progress:'100'} -->
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'100'}" class="ng-scope">
+                                        <td class="rs-table-status rs-table-status-ok"></td>
                                         <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="./batch-migration-details">Batch Two</a></td>
                                         <td class="rs-table-text ng-binding">12/10/2016 12:18 A.M.</td>
                                         <td class="rs-table-text ng-binding" colspan="2">12/11/2016 05:23 P.M.</td>
                                     </tr>
                                     <!-- end ngRepeat: batch in vm.batches | filter : {progress:'100'} -->
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'100'}" class="ng-scope">
+                                        <td class="rs-table-status rs-table-status-ok"></td>
                                         <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="./batch-migration-details">Batch Six</a></td>
                                         <td class="rs-table-text ng-binding">16/10/2016 12:18 A.M.</td>
                                         <td class="rs-table-text ng-binding" colspan="2">18/10/2016 05:23 P.M.</td>
@@ -283,13 +211,107 @@
                                 </tbody>
                             </table>
                         </div>
-                        
+                    </div>
+                </div>
+            </div>
 
+            <div class="rs-main ">
+                <div class="rs-content rs-panel">
+                    <div class="rs-inner">
+                        <div class="rs-row">
+                            <div class="span-6">
+                                <div class="rs-facet-section ">
+                                    <div class="rs-facet-section-body">
+                                        <h3>Alerts</h3>
+                                        <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
+                                            <table class="rs-list-table rs-embedded-list-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="rs-table-status"></th>
+                                                        <th>Batch Name</th>
+                                                        <th>Message</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="rs-table-status rs-table-status-warning"></td>
+                                                        <td>Batch Three</td>
+                                                        <td>Taking a long time to migrate</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="rs-table-status rs-table-status-warning"></td>
+                                                        <td>Batch Five</td>
+                                                        <td>Problem while starting this batch. Will be retried.</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span-6">
+                                <div class="rs-facet-section">
+                                    <div class="rs-facet-section-body">
+                                        <h3>Tickets</h3>
+                                        <div class=" ">
+                                            <table class="rs-list-table rs-embedded-list-table-wrapper ">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="rs-table-status"></th>
+                                                        <th>Batch Name</th>
+                                                        <th>Message</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="rs-table-status rs-table-status-warning"></td>
+                                                        <td>Batch Three</td>
+                                                        <td>Taking a long time to migrate</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="rs-table-status rs-table-status-warning"></td>
+                                                        <td>Batch Five</td>
+                                                        <td>Problem while starting this batch. Will be retried.</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <br>
-                        
+            <hr>        
+            <div class="rs-row">
+                <div class="span8">
+                    <h4>FAQs + More Information</h4>
+                    <ul>
+                        <li>
+                            <a href="">Mapping of Rackspace Resource to Amazon Web Service Resources</a>
+                        </li>
+                        <li>
+                            <a href="">How will my billing change?</a>
+                        </li>
+                        <li>
+                            <a href="">Learn about the different Fanatical Support for AWS Support Levels</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="span4 ">
+                    <div class="rs-pull-right">
+                        <h4>Support</h4>
+                        <div class="support-icons">
+                            <a href="#" class=""><i class="fa fa-phone fa-fw fa-2x"></i></a>
+                            <a href="#" class=""><i class="fa fa-ticket fa-fw fa-2x"></i></a>
+                        </div>
+                    </div>                    
+                </div>
+            </div>     
+
+            <br>
         </div>
     </div>
     <br>
