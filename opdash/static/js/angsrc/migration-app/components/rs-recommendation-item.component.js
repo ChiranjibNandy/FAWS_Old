@@ -46,7 +46,8 @@
                 var vm = this;
 
                 vm.$onInit = function() {
-                    vm.recSelectedItems = [];
+                    vm.recSelectedItems = dataStoreService.getRecommendedItems();
+                    //vm.recSelectedItems = [];
                     vm.data = dataStoreService.getItems(vm.type);
                     if(vm.data.length >0)
                         vm.noData = false;

@@ -43,7 +43,7 @@
              * @name migrationApp.controller:rsmigrationitemCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationitem rsmigrationitem} component
              */
-            controller: ["migrationitemdataservice", "$rootRouter", "authservice", "$q", "$scope", function (ds, $rootRouter, authservice, $q, $scope) {
+            controller: ["migrationitemdataservice", "datastoreservice", "$rootRouter", "authservice", "$q", "$scope", function (ds, datastoreservice, $rootRouter, authservice, $q, $scope) {
                 var vm = this;
 
                 var mapServerStatus = function(dataList, statusList) {
@@ -59,9 +59,9 @@
                 var mapNetworkStatus = function(dataList, statusList) {
                     for(var i=0; i<dataList.length; i++){
                         // item.id === jobsList[i].resources.networks[0].subnets[0].id
-                        var statusItem = statusList.filter(function(item){ return item.resources.networks[0].subnets[0].id === dataList[i].subnets[0].id })[0];
-                        if(statusItem)
-                            dataList[i].migrationStatus = statusItem.status;
+                        // var statusItem = statusList.filter(function(item){ return item.resources.networks[0].subnets[0].id === dataList[i].subnets[0].id })[0];
+                        // if(statusItem)
+                        //     dataList[i].migrationStatus = statusItem.status;
 
                     }
                     //dataList[0].migrationStatus = "done";
@@ -105,43 +105,61 @@
                     vm.isAllselected = false;
                     vm.tenant_id = authservice.getAuth().tenant_id;
 
-                    // Retrieve all migration items of a specific type (eg: server, network etc)
-                    var list = ds.getTrimmedAllItems(vm.type);
+                    var resources_retrieved = datastoreservice.retrieveallItems(vm.type);
                     
-                    // Retrieve migration item status
-                    var status = ds.getServerMigrationStatus(vm.tenant_id);
+                    //check if resources already retrieved
+                    if(resources_retrieved.length == 0){
+                        //During first time loading of resources
+                        // Retrieve all migration items of a specific type (eg: server, network etc)
+                        var list = ds.getTrimmedAllItems(vm.type);
+                        
+                        // Retrieve migration item status
+                        var status = ds.getServerMigrationStatus(vm.tenant_id);
 
-                    // wait for all the promises to resolve
-                    $q.all([list, status]).then(function(results) {
-                        if(results[0].error || results[1].error){
+                        // wait for all the promises to resolve
+                        $q.all([list, status]).then(function(results) {
+                            if(results[0].error || results[1].error){
+                                vm.loading = false;
+                                vm.loadError = true;
+                                return;
+                            }
+                            if(results[0].data.length === 0){
+                                vm.noData = true;
+                                vm.loading = false;
+                                return;
+                            }
+
+                            var dataList = results[0].data;
+
+                            if(vm.type === "server")
+                                vm.items = mapServerStatus(dataList, results[1].server_status);
+                            if(vm.type === "network")
+                                vm.items = mapNetworkStatus(dataList, results[1].network_status);
+                            if(vm.type === "files")
+                                vm.items = mapNetworkStatus(dataList, results[1].network_status);
+                            if(vm.type === "loadBalancers")
+                                vm.items = mapNetworkStatus(dataList, results[1].network_status);
+                            //Store all retrieved resources in factory variable
+                            datastoreservice.storeallItems(vm.items, vm.type);               
+                            vm.searchField = results[0].labels[0].field;
+                            vm.labels = results[0].labels; // set table headers
+                            datastoreservice.storeallItems(vm.labels, "label"+vm.type);
+                            angular.forEach(results[0].labels, function(label){
+                                vm.search[label.field] = ""; // set search field variables
+                            });
                             vm.loading = false;
-                            vm.loadError = true;
-                            return;
-                        }
-                        if(results[0].data.length === 0){
-                            vm.noData = true;
-                            vm.loading = false;
-                            return;
-                        }
-
-                        var dataList = results[0].data;
-
-                        if(vm.type === "server")
-                            vm.items = mapServerStatus(dataList, results[1].server_status);
-                        if(vm.type === "network")
-                            vm.items = mapNetworkStatus(dataList, results[1].network_status);
-                        if(vm.type === "files")
-                            vm.items = mapNetworkStatus(dataList, results[1].network_status);
-                        if(vm.type === "loadBalancers")
-                            vm.items = mapNetworkStatus(dataList, results[1].network_status);
-                                       
-                        vm.searchField = results[0].labels[0].field;
-                        vm.labels = results[0].labels; // set table headers
-                        angular.forEach(results[0].labels, function(label){
-                            vm.search[label.field] = ""; // set search field variables
                         });
+                    } else{
+                        //For repeated fetch of resources after first time loading.
+                        vm.items = datastoreservice.retrieveallItems(vm.type);
+                        vm.labels = datastoreservice.retrieveallItems("label"+vm.type); // set table headers
                         vm.loading = false;
-                    });
+                        
+                        var servers_selected = datastoreservice.getItems(vm.type);
+                        angular.forEach(servers_selected, function (item_selected) {
+                             vm.parent.addItem(item_selected);
+                         });
+                    }
 
                     // Setup status filters
                     vm.statusFilters = [
