@@ -20,6 +20,8 @@ lib64/
 parts/
 sdist/
 var/
+docs/
+node_modules/
 *.egg-info/
 .installed.cfg
 *.egg

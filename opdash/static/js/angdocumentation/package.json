@@ -1,0 +1,19 @@
+{
+  "name": "faws",
+  "version": "1.0.0",
+  "description": "Gulp Env for FAWS UI project",
+  "main": "index.js",
+  "scripts": {
+    "test": "script.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "3.9.1",
+    "gulp-connect": "5.0.0",
+    "gulp-open": "2.0.0"
+  },
+  "dependencies": {
+    "gulp-ngdocs": "^0.3.0"
+  }
+}
