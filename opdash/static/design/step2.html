@@ -27,7 +27,7 @@
             <div class="rs-container">
                 <ul class="rs-nav">
                     <li class="rs-nav-item "><a class="rs-nav-link" href="">Rackspace Cloud</a></li>
-                    <li class="rs-nav-item active"><a class="rs-nav-link" href="">Fanatical Support for AWS</a></li>
+                    <li class="rs-nav-item active"><a class="rs-nav-link" href="step0.html">Fanatical Support for AWS</a></li>
                 </ul>
                 <ul class="rs-nav rs-pull-right">
                     <li class="rs-nav-item rs-dropdown rs-utility-dropdown">
@@ -46,50 +46,50 @@
                 <div class="rs-nav-brand">
                     <a href=""></a>
                 </div>
-                <ul class="rs-nav">
+                <!--                 <ul class="rs-nav">
                     <li class="rs-nav-item active"><a class="rs-nav-link" href="">Migration</a></li>
                     <li class="rs-nav-item"><a class="rs-nav-link" href="">Reports</a></li>
-                </ul>
+                </ul> -->
             </div>
         </div>
         <!-- End Primary Nav -->
-
         <div class="rs-container migration-mgr">
             <div class="rs-main rs-panel">
                 <div class="rs-sidebar rs-pull-right">
                     <div class="rs-inner">
                         <div class="info-panel">
+                            <h2>Breakdown</h2>
                             <h4>Current Pricing</h4>
-                            <p><small>Last Month's Invoice: <br>
-                            Billing Period: <em>12-DEC-16 to 11-JAN-17</em> <br>
-                            <b>$485</b> <a href="">(See Details)</a></small></p>
-                        </div>
-                        <div class="info-panel">
-                            <h4>New Pricing</h4>
-                            <p><small>Amazon EC2 Service (US-East): <br>
-                              Compute: <em>$31.81 </em><br>
-                              Fanatical AWS Support (Navigator): <em>$400.00</em> <br>
-                            <b>TOTAL COST: $431.81</b> <a href="">(See Details)</a></small></p>
+                            <p>
+                                Last Month's Invoice:
+                                <br> Billing Period: <em>12-DEC-16 to 11-JAN-17</em>
+                                <br>
+                                <b>$485</b>
+                                <br>
+                                <a href="">(See Details)</a>
+                            </p>
                         </div>
                         <div class="white-panel">
-                            <h4>Savings</h4>
-                            <h3>$53.69 SAVED</h3>
+                            <h4>New Pricing</h4>
+                            <p>
+                                Amazon EC2 Service:
+                                <br> Compute: <em>$31.81 </em>
+                                <br> Fanatical AWS Support (Navigator): <em>$400.00</em>
+                                <br>
+                                <b>TOTAL COST: $431.81</b>
+                                <br>
+                                <a href="">(See Details)</a>
+                            </p>
                         </div>
                         <br>
                         <div class="rs-row pricing-buttons">
                             <button class="rs-btn span-12" ng-click="vm.saveItems()">Save For Later</button>
                         </div>
                         <div class="rs-row">
-                            <a class="rs-btn span-5" ng-link="['Tenant']" href="./tenant">Back</a>
-                            <button class="rs-btn rs-btn-primary span-7" ng-click="vm.continue()">Continue</button>
+                            <a class="rs-btn span-5" ng-link="['Tenant']" href="step1.html">Back</a>
+                            <a class="rs-btn rs-btn-primary span-7" ng-click="vm.continue()" href="step3.html">Continue</a>
                         </div>
                         <br>
-                        <hr>
-                        <h4>Support</h4>
-                        <div class="support-icons">
-                            <a href="#" class=""><i class="fa fa-phone fa-fw fa-2x"></i></a>
-                            <a href="#" class=""><i class="fa fa-ticket fa-fw fa-2x"></i></a>
-                        </div>
                     </div>
                 </div>
                 <div class="rs-content rs-panel">
@@ -98,18 +98,20 @@
                         <div class="mdl-card__supporting-text">
                             <div class="mdl-stepper-horizontal-alternative">
                                 <div class="mdl-stepper-step active-step step-done">
-                                    <div class="mdl-stepper-circle"><span>1</span></div>
+                                    <a href="step1.html">
+                                        <div class="mdl-stepper-circle"><span>1</span></div>
+                                    </a>
                                     <div class="mdl-stepper-title">Select Resources</div>
                                     <div class="mdl-stepper-bar-left"></div>
                                     <div class="mdl-stepper-bar-right"></div>
                                 </div>
-                                <div class="mdl-stepper-step active-step editable-step">
+                                <div class="mdl-stepper-step active-step">
                                     <div class="mdl-stepper-circle"><span>2</span></div>
-                                    <div class="mdl-stepper-title">Recommendation</div>
+                                    <div class="mdl-stepper-title">Recommendations </div>
                                     <div class="mdl-stepper-bar-left"></div>
                                     <div class="mdl-stepper-bar-right"></div>
                                 </div>
-                                <div class="mdl-stepper-step active-step">
+                                <div class="mdl-stepper-step ">
                                     <div class="mdl-stepper-circle"><span>3</span></div>
                                     <div class="mdl-stepper-title">Schedule Migration</div>
                                     <div class="mdl-stepper-bar-left"></div>
@@ -127,52 +129,60 @@
                     <!-- End Stepper -->
                     <hr>
                     <div class="rs-inner">
-                        <h2>User Namegoeshere</h2>
+                        <h2>User Namegoeshere ( #1024814 )</h2>
                         <h4>Resource Types</h4>
+                        <input type="text" class="rs-input-large searchbox" placeholder="filter by keyword or tag...">
                         <ul class="rs-tabs">
                             <li class="active"><a href="#Servers">Servers <span class="rs-quiet">(1)</span></a></li>
-                            <li class="hover"><a href="#Load">Load Balancers <span class="rs-quiet">(3)</span></a></li>
+                            <li class="hover"><a href="#Load">Files<span class="rs-quiet">(3)</span></a></li>
+                            <li class="hover"><a href="#Load">Blocks<span class="rs-quiet">(5)</span></a></li>
+                            <li class="hover"><a href="#Load">Load Balancers <span class="rs-quiet">(0)</span></a></li>
+                            <li class="hover"><a href="#Load">CDN <span class="rs-quiet">(1)</span></a></li>
+                            <li class="hover"><a href="#Load">DNS <span class="rs-quiet">(3)</span></a></li>
+                            <li class="hover"><a href="#Load">Databases <span class="rs-quiet">(2)</span></a></li>
                         </ul>
                         <div class="rs-tab-content">
                             <div class="rs-tab-pane active" id="Servers">
-                                <input type="text" class="rs-input-large searchbox" placeholder="Search...">
                                 <table class="rs-list-table">
                                     <thead>
-                                        <tr>
-                                            <th class="rs-table-status"></th>
-                                            <th class="rs-table-checkbox">
-                                                <input type="checkbox" />
-                                            </th>
-                                            <th class="rs-table-cog"></th>
-                                            <th>
-                                                <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                    <span class="rs-table-sort-text">Server Name </span>
-                                                    <span class="rs-table-sort-indicator"></span>
-                                                </a>
-                                            </th>
-                                            <th>
-                                                <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                    <span class="rs-table-sort-text">IP Address </span>
-                                                    <span class="rs-table-sort-indicator"></span>
-                                                </a>
-                                            </th>
-                                            <th>
-                                                <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                    <span class="rs-table-sort-text">RAM</span>
-                                                    <span class="rs-table-sort-indicator"></span>
-                                                </a>
-                                            </th>
-                                            <th>
-                                                <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                    <span class="rs-table-sort-text">Status</span>
-                                                    <span class="rs-table-sort-indicator"></span>
-                                                </a>
-                                            </th>
+                                        <th class="rs-table-checkbox">
+                                            <input type="checkbox" />
+                                        </th>
+                                        <th class="rs-table-cog"></th>
+                                        <th>
+                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                <span class="rs-table-sort-text">Server </span>
+                                                <span class="rs-table-sort-indicator"></span>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                <span class="rs-table-sort-text">IP Address </span>
+                                                <span class="rs-table-sort-indicator"></span>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                <span class="rs-table-sort-text">AWS Region</span>
+                                                <span class="rs-table-sort-indicator"></span>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                <span class="rs-table-sort-text">AWS Zone</span>
+                                                <span class="rs-table-sort-indicator"></span>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                <span class="rs-table-sort-text">AWS Instance</span>
+                                                <span class="rs-table-sort-indicator"></span>
+                                            </a>
+                                        </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td class="rs-table-status rs-table-status-ok"></td>
                                             <td class="rs-table-checkbox">
                                                 <input type="checkbox" />
                                             </td>
@@ -185,13 +195,73 @@
                                                     </ul>
                                                 </div>
                                             </td>
-                                            <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave One</a></td>
+                                            <td class="rs-table-link">
+                                                <a href="javascript:void(0);">cloud-endure-demo-A_db_slave One</a>
+                                                <div class="rs-popover">
+                                                    <div class="rs-popover-arrow rs-popover-arrow-top-left"></div>
+                                                    <div class="rs-popover-content">
+                                                        <div class="rs-popover-body">
+                                                            <div class="rs-form-horizontal ">
+                                                                <div class="rs-control-group">
+                                                                    <h5>cloud-endure-demo-A_db_slave One</h5>
+                                                                    <br>
+                                                                    <label class="rs-control-label">IP Address</label>
+                                                                    <div class="rs-controls">
+                                                                        198.61.210.149
+                                                                    </div>
+                                                                </div>
+                                                                <div class="rs-control-group">
+                                                                    <label class="rs-control-label">RAM</label>
+                                                                    <div class="rs-controls">
+                                                                        1024 MB
+                                                                    </div>
+                                                                </div>
+                                                                <div class="rs-control-group">
+                                                                    <label class="rs-control-label">Status</label>
+                                                                    <div class="rs-controls">
+                                                                        <span class="rs-status rs-status-ok">Active</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="rs-control-group">
+                                                                    <div class="accordion" id="accordion1">
+                                                                        <div class="accordion-group">
+                                                                            <div class="accordion-heading">
+                                                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#Dependencies">Dependencies: (15) <i class="fa fa-caret-down"></i></a>
+                                                                            </div>
+                                                                            <div id="Dependencies" class="accordion-body collapse ">
+                                                                                <div class="accordion-inner">
+                                                                                    <ul>
+                                                                                        <li>Network</li>
+                                                                                        <li>Network</li>
+                                                                                        <li>Network</li>
+                                                                                        <li>Network</li>
+                                                                                        <li>Network</li>
+                                                                                        <li>Network</li>
+                                                                                        <li>Network</li>
+                                                                                        <li>Network</li>
+                                                                                        <li>Network</li>
+                                                                                        <li>Network</li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="rs-popover-footer rs-btn-group">
+                                                            <div class="rs-btn rs-btn-primary">Modify</div>
+                                                            <div class="rs-btn rs-btn-link">Cancel</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
                                             <td class="rs-table-text">64.49.226.84</td>
-                                            <td class="rs-table-text">1024 MB</td>
-                                            <td class="rs-table-text">Active</td>
+                                            <td class="rs-table-text"></td>
+                                            <td class="rs-table-text"></td>
+                                            <td class="rs-table-text"></td>
                                         </tr>
                                         <tr>
-                                            <td class="rs-table-status rs-table-status-warning"></td>
                                             <td class="rs-table-checkbox">
                                                 <input type="checkbox" />
                                             </td>
@@ -206,11 +276,11 @@
                                             </td>
                                             <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Two</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
-                                            <td class="rs-table-text">1024 MB</td>
-                                            <td class="rs-table-text">Active</td>
+                                            <td class="rs-table-text"></td>
+                                            <td class="rs-table-text"></td>
+                                            <td class="rs-table-text"></td>
                                         </tr>
                                         <tr>
-                                            <td class="rs-table-status rs-table-status-processing rs-table-status-striped"></td>
                                             <td class="rs-table-checkbox">
                                                 <input type="checkbox" />
                                             </td>
@@ -225,11 +295,11 @@
                                             </td>
                                             <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Three</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
-                                            <td class="rs-table-text">1024 MB</td>
-                                            <td class="rs-table-text">Active</td>
+                                            <td class="rs-table-text"></td>
+                                            <td class="rs-table-text"></td>
+                                            <td class="rs-table-text"></td>
                                         </tr>
                                         <tr>
-                                            <td class="rs-table-status rs-table-status-error"></td>
                                             <td class="rs-table-checkbox">
                                                 <input type="checkbox" />
                                             </td>
@@ -244,11 +314,11 @@
                                             </td>
                                             <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Four</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
-                                            <td class="rs-table-text">1024 MB</td>
-                                            <td class="rs-table-text">Active</td>
+                                            <td class="rs-table-text"></td>
+                                            <td class="rs-table-text"></td>
+                                            <td class="rs-table-text"></td>
                                         </tr>
                                         <tr>
-                                            <td class="rs-table-status rs-table-status-ok"></td>
                                             <td class="rs-table-checkbox">
                                                 <input type="checkbox" />
                                             </td>
@@ -263,11 +333,11 @@
                                             </td>
                                             <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Five</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
-                                            <td class="rs-table-text">1024 MB</td>
-                                            <td class="rs-table-text">Active</td>
+                                            <td class="rs-table-text"></td>
+                                            <td class="rs-table-text"></td>
+                                            <td class="rs-table-text"></td>
                                         </tr>
                                         <tr>
-                                            <td class="rs-table-status rs-table-status-ok"></td>
                                             <td class="rs-table-checkbox">
                                                 <input type="checkbox" />
                                             </td>
@@ -282,8 +352,9 @@
                                             </td>
                                             <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Six</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
-                                            <td class="rs-table-text">1024 MB</td>
-                                            <td class="rs-table-text">Active</td>
+                                            <td class="rs-table-text"></td>
+                                            <td class="rs-table-text"></td>
+                                            <td class="rs-table-text"></td>
                                         </tr>
                                     </tbody>
                                     <!-- ********** PAGINATION GOES HERE... ************* -->
@@ -338,20 +409,31 @@
                             </div>
                         </div>
                         <br>
-                        <hr>
-                        <br>
-                        <h4>FAQs + More Information</h4>
-                        <ul>
-                            <li>
-                                <a href="">Mapping of Rackspace Resource to Amazon Web Service Resources</a>
-                            </li>
-                            <li>
-                                <a href="">How will my billing change?</a>
-                            </li>
-                            <li>
-                                <a href="">Learn about the different Fanatical Support for AWS Support Levels</a>
-                            </li>
-                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="rs-row">
+                <div class="span8">
+                    <h4>FAQs + More Information</h4>
+                    <ul>
+                        <li>
+                            <a href="">Mapping of Rackspace Resource to Amazon Web Service Resources</a>
+                        </li>
+                        <li>
+                            <a href="">How will my billing change?</a>
+                        </li>
+                        <li>
+                            <a href="">Learn about the different Fanatical Support for AWS Support Levels</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="span4 ">
+                    <div class="rs-pull-right">
+                        <h4>Support</h4>
+                        <div class="support-icons">
+                            <a href="#" class=""><i class="fa fa-phone fa-fw fa-2x"></i></a>
+                            <a href="#" class=""><i class="fa fa-ticket fa-fw fa-2x"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>

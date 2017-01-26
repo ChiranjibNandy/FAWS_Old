@@ -2,10 +2,17 @@
     width: 1200px!important;
     padding: 0;
 }
+.migration-mgr .searchbox{
+  margin-bottom:1em;
+}
+.migration-mgr .rs-panel{
+  min-height: 540px;
+}
  .rs-table-header, th {
    font-weight: 700;
    color: #333;
  }
+
 .white-panel{
 	background: #fff;
 	padding: 1em;
@@ -22,8 +29,8 @@
 }
 .info-panel:first-child{
 	padding: 1em;
-	border-bottom: 2px solid #fff;
-	margin-bottom: 1em;
+/*	border-bottom: 2px solid #fff;
+	margin-bottom: 1em;*/
 }
 .pricing-buttons{
 	margin-bottom: 1em;
@@ -57,9 +64,57 @@
 .selected-items .rs-status{
 	background-color: #777;
 }
-.migration-mgr .searchbox{
-	margin:1em;
+
+.rs-list-table.step1-table  thead th:nth-child(-n+4){
+  background: rgba(0,0,0,0);
 }
+.rs-list-table.step1-table  td:nth-child(-n+4){
+  background: rgba(0,0,0,0);
+}
+.rs-list-table thead th:nth-child(-n+4){
+  background: rgba(0,0,0,.15);
+}
+.rs-list-table td:nth-child(-n+4){
+  background: rgba(0,0,0,0.05);
+}
+.rs-list-table td:nth-child(3) a{
+  display: inline-block;
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rs-list-table.step1-table  td:nth-child(3) a{
+  display: block;
+  width: inherit;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: inherit;
+}
+/* bs accordion style overrides */
+.accordion-group {
+    margin-bottom: 0px;
+    border: none;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+}
+.accordion-inner {
+    border-top: none;
+    background: #fff;
+    padding:5px;
+    margin: 10px 0;
+}
+.accordion-toggle:hover, .accordion-inner:hover{
+    outline: none;
+    text-decoration: none;
+}
+.accordion-heading .accordion-toggle {
+    display: inline;
+    padding: 5px;
+    color:#777;
+}
+
 /* Simple setup for stepper */
 /* SOURCE ---- https://codepen.io/sharafat_8271/pen/KVWMXP */
 
@@ -67,7 +122,9 @@
   min-height: 0;
   margin: 10px auto;
 }
-
+.mdl-card a{
+  text-decoration: none;
+}
 .mdl-card__supporting-text {
   width: 100%;
   padding: 0;
@@ -111,12 +168,6 @@
   border-bottom-right-radius: 0;
 }
 
-.mdl-stepper-horizontal-alternative .mdl-stepper-step:hover .mdl-stepper-circle {
-  background-color: #fff;
-  border: 2px solid #c40022;
-  color: #c40022;
-}
-
 .mdl-stepper-horizontal-alternative .mdl-stepper-step:first-child .mdl-stepper-bar-left,
 .mdl-stepper-horizontal-alternative .mdl-stepper-step:last-child .mdl-stepper-bar-right {
   display: none;
@@ -130,9 +181,10 @@
   border: 2px solid #ccc;
   border-radius: 50%;
   text-align: center;
-  line-height: 26px;
+  line-height: 28px;
   font-size: 12px;
-
+  font-weight: 700;
+  color:#777;
 }
 
 .mdl-stepper-horizontal-alternative .mdl-stepper-step.active-step .mdl-stepper-circle {
@@ -143,6 +195,9 @@
 
 .mdl-stepper-horizontal-alternative .mdl-stepper-step.step-done .mdl-stepper-circle:before {
   content: "\2714";
+}
+.mdl-stepper-horizontal-alternative .mdl-stepper-step.step-done a:hover > .mdl-stepper-circle:before {
+  content: "\270E";
 }
 
 .mdl-stepper-horizontal-alternative .mdl-stepper-step.step-done .mdl-stepper-circle *,
@@ -178,13 +233,13 @@
 }
 
 .mdl-stepper-horizontal-alternative .mdl-stepper-step.active-step .mdl-stepper-title {
-  font-weight: 500;
+  font-weight: 700;
   color: rgba(0, 0, 0, .87);
 }
 
 .mdl-stepper-horizontal-alternative .mdl-stepper-step.active-step.step-done .mdl-stepper-title,
 .mdl-stepper-horizontal-alternative .mdl-stepper-step.active-step.editable-step .mdl-stepper-title {
-  font-weight: 300;
+  font-weight: 700;
 }
 
 .mdl-stepper-horizontal-alternative .mdl-stepper-step .mdl-stepper-optional {
