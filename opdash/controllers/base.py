@@ -90,7 +90,7 @@ class CustomerBlueprint(UnsecureBlueprint):
             self._app.logger.debug('USER IS A CUSTOMER OR RACKER')
             return
         else:
-            return redirect("/login")
+            return redirect(self._app.config["CP_BASE_URL"] + "/login")
 
 
 class RackerBlueprint(UnsecureBlueprint):
@@ -115,4 +115,4 @@ class RackerBlueprint(UnsecureBlueprint):
             else:
                 abort(403)
         else:
-            return redirect("/login")
+            return redirect(self._app.config["CP_BASE_URL"] + "/login")
