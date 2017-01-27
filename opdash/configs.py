@@ -40,6 +40,11 @@ class BaseConfig(object):
     DEBUG = False
     USE_RELOADER = False
 
+    CP_BASE_URL = environ.get(
+        'CP_BASE_URL'
+        'https://dev.migration.rackspace.net'
+    )
+
     API_BASE_URL = environ.get(
         'API_BASE_URL',
         'http://migrator-ops-api-dev.us-east-1.elasticbeanstalk.com'
