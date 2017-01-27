@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>Rackspace Migration Manager</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest//canon.min.css">
+    <link href="css/migration-mgr.css" rel="stylesheet">
+    <script src="https://use.fontawesome.com/1d292fb501.js"></script>
+</head>
+
+<body>
+    <!-- Fixed navbar -->
+    <div class="rs-wrapper">
+        <!-- Utility Nav -->
+        <div class="rs-nav-utility">
+            <div class="rs-container">
+                <ul class="rs-nav">
+                    <li class="rs-nav-item "><a class="rs-nav-link" href="">Rackspace Cloud</a></li>
+                    <li class="rs-nav-item active"><a class="rs-nav-link" href="step0.html">Fanatical Support for AWS</a></li>
+                </ul>
+                <ul class="rs-nav rs-pull-right">
+                    <li class="rs-nav-item rs-dropdown rs-utility-dropdown">
+                        <a class="rs-nav-link rs-dropdown-toggle" href="">Username123 <i class="rs-caret"></i></a>
+                    </li>
+                    <li class="rs-nav-item ">
+                        <a class="rs-nav-link" href="">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- End Utility Nav -->
+        <!-- Primary Nav -->
+        <div class="rs-nav-primary">
+            <div class="rs-container">
+                <div class="rs-nav-brand">
+                    <a href=""></a>
+                </div>
+            </div>
+        </div>
+        <!-- End Primary Nav -->
+        <div class="rs-container migration-mgr">
+            <div class="rs-main rs-panel">
+                <div class="rs-sidebar rs-pull-right">
+                    <div class="rs-inner">
+                        <div class="info-panel">
+                            <h2>Breakdown</h2>
+                            <h4>Current Pricing</h4>
+                            <p>Last Month's Invoice:
+                                <br> Billing Period: <em>12-DEC-16 to 11-JAN-17</em>
+                                <br>
+                                <b>$485</b>
+                                <br>
+                                <a href="">(See Details)</a>
+                            </p>
+                        </div>
+                        <div class="white-panel">
+                            <h4>New Pricing</h4>
+                            <p>Amazon EC2 Service:
+                                <br> Compute: <em>$31.81 </em>
+                                <br> Fanatical AWS Support (Navigator): <em>$400.00</em>
+                                <br>
+                                <b>TOTAL COST: $431.81</b>
+                                <br>
+                                <a href="">(See Details)</a>
+                            </p>
+                        </div>
+                        <br>
+                        <div class="rs-row pricing-buttons">
+                            <button class="rs-btn span-12" ng-click="vm.saveItems()">Save For Later</button>
+                        </div>
+                        <div class="rs-row">
+                            <a class="rs-btn span-5" ng-link="['Tenant']" href="step3.html">Back</a>
+                            <a class="rs-btn rs-btn-primary span-7" ng-click="vm.continue()" href="step0.html">Migrate</a>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <div class="rs-content rs-panel">
+                    <!-- Start Stepper -->
+                    <div class="mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__supporting-text">
+                            <div class="mdl-stepper-horizontal-alternative">
+                                <div class="mdl-stepper-step active-step step-done">
+                                    <a href="step1.html">
+                                        <div class="mdl-stepper-circle"><span>1</span></div>
+                                    </a>
+                                    <div class="mdl-stepper-title">Select Resources</div>
+                                    <div class="mdl-stepper-bar-left"></div>
+                                    <div class="mdl-stepper-bar-right"></div>
+                                </div>
+                                <div class="mdl-stepper-step active-step step-done">
+                                    <a href="step2.html">
+                                        <div class="mdl-stepper-circle"><span>2</span></div>
+                                    </a>
+                                    <div class="mdl-stepper-title">Recommendations </div>
+                                    <div class="mdl-stepper-bar-left"></div>
+                                    <div class="mdl-stepper-bar-right"></div>
+                                </div>
+                                <div class="mdl-stepper-step active-step step-done ">
+                                    <a href="step3.html">
+                                        <div class="mdl-stepper-circle"><span>3</span></div>
+                                    </a>
+                                    <div class="mdl-stepper-title">Schedule Migration</div>
+                                    <div class="mdl-stepper-bar-left"></div>
+                                    <div class="mdl-stepper-bar-right"></div>
+                                </div>
+                                <div class="mdl-stepper-step active-step">
+                                    <div class="mdl-stepper-circle"><span>4</span></div>
+                                    <div class="mdl-stepper-title">Confirm &amp; Migrate</div>
+                                    <div class="mdl-stepper-bar-left"></div>
+                                    <div class="mdl-stepper-bar-right"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Stepper -->
+                    <hr>
+                    <div class="rs-inner">
+                        <h2>User Namegoeshere ( #1024814 )</h2>
+                        <h4>Confirm &amp; Migrate</h4>
+                        <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
+                            <table class="rs-list-table rs-embedded-list-table step1-table ">
+                                <thead>
+                                    <tr>
+                                        
+                                        <th>
+                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                <span class="rs-table-sort-text">Batch Queue</span>
+                                                <span class="rs-table-sort-indicator"></span>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                <span class="rs-table-sort-text">Start Date</span>
+                                                <span class="rs-table-sort-indicator"></span>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                <span class="rs-table-sort-text">Status</span>
+                                                <span class="rs-table-sort-indicator"></span>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                <span class="rs-table-sort-text">Est Time to Complete</span>
+                                                <span class="rs-table-sort-indicator"></span>
+                                            </a>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- ngRepeat: batch in vm.batches | filter : {progress:'!'+'100'} -->
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                        
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="./batch-migration-details">Batch Three</a></td>
+                                        <td class="rs-table-text ng-binding">4/1/2017 12:18 AM</td>
+                                        <td class="rs-table-text">
+                                            <span class="rs-progress-label">Stopped</span>
+                                            <div class="rs-progress rs-progress-medium">
+                                                <div class="rs-progress-inner">
+                                                    <div class="rs-segment" style="width: 25%">
+                                                        <div class="rs-bar rs-status-ok"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="rs-progress-label">25%</span>
+                                        </td>
+                                        <!-- ngIf: batch.est_completion_time !== '-1' -->
+                                        <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !== '-1'">9hr 21mins</td>
+                                        <!-- end ngIf: batch.est_completion_time !== '-1' -->
+                                        <!-- ngIf: batch.est_completion_time === '-1' -->
+                                    </tr>
+                                    <!-- end ngRepeat: batch in vm.batches | filter : {progress:'!'+'100'} -->
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                        
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="./batch-migration-details">Batch Four</a></td>
+                                        <td class="rs-table-text ng-binding">5/1/2017 1:25 AM</td>
+                                        <td class="rs-table-text">
+                                            <span class="rs-progress-label">Stopped</span>
+                                            <div class="rs-progress rs-progress-medium">
+                                                <div class="rs-progress-inner">
+                                                    <div class="rs-segment" style="width: 97%">
+                                                        <div class="rs-bar rs-status-ok"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="rs-progress-label">97%</span>
+                                        </td>
+                                        <!-- ngIf: batch.est_completion_time !== '-1' -->
+                                        <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !== '-1'">1hr 08mins </td>
+                                        <!-- end ngIf: batch.est_completion_time !== '-1' -->
+                                        <!-- ngIf: batch.est_completion_time === '-1' -->
+                                    </tr>
+                                    <!-- end ngRepeat: batch in vm.batches | filter : {progress:'!'+'100'} -->
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                        
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="./batch-migration-details">Batch Five</a></td>
+                                        <td class="rs-table-text ng-binding">5/1/2017 12:18 AM</td>
+                                        <td class="rs-table-text">
+                                            <span class="rs-progress-label">Stopped</span>
+                                            <div class="rs-progress rs-progress-medium">
+                                                <div class="rs-progress-inner">
+                                                    <div class="rs-segment" style="width: 5%">
+                                                        <div class="rs-bar rs-status-ok"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="rs-progress-label">5%</span>
+                                        </td>
+                                        <!-- ngIf: batch.est_completion_time !== '-1' -->
+                                        <!-- ngIf: batch.est_completion_time === '-1' -->
+                                        <td class="rs-table-text ng-scope" ng-if="batch.est_completion_time === '-1'">∞</td>
+                                        <!-- end ngIf: batch.est_completion_time === '-1' -->
+                                    </tr>
+                                    <!-- end ngRepeat: batch in vm.batches | filter : {progress:'!'+'100'} -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <br>
+                        <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
+                            <table class="rs-list-table rs-embedded-list-table step1-table ">
+                                <thead>
+                                    <tr>
+                                        
+                                        <th>
+                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                <span class="rs-table-sort-text">Completed Batches</span>
+                                                <span class="rs-table-sort-indicator"></span>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                <span class="rs-table-sort-text">Start Date</span>
+                                                <span class="rs-table-sort-indicator"></span>
+                                            </a>
+                                        </th>
+                                        <th colspan="2">
+                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                <span class="rs-table-sort-text">Completed Date</span>
+                                                <span class="rs-table-sort-indicator"></span>
+                                            </a>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- ngRepeat: batch in vm.batches | filter : {progress:'100'} -->
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'100'}" class="ng-scope">
+                                        
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="./batch-migration-details">Batch One</a></td>
+                                        <td class="rs-table-text ng-binding">1/12/2017 10:18 PM</td>
+                                        <td class="rs-table-text ng-binding" colspan="2">3/12/2017 1:08 AM</td>
+                                    </tr>
+                                    <!-- end ngRepeat: batch in vm.batches | filter : {progress:'100'} -->
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'100'}" class="ng-scope">
+                                        
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="./batch-migration-details">Batch Two</a></td>
+                                        <td class="rs-table-text ng-binding">12/10/2017 12:18 A.M.</td>
+                                        <td class="rs-table-text ng-binding" colspan="2">12/11/2017 5:23 PM</td>
+                                    </tr>
+                                    <!-- end ngRepeat: batch in vm.batches | filter : {progress:'100'} -->
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'100'}" class="ng-scope">
+                                        
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="./batch-migration-details">Batch Six</a></td>
+                                        <td class="rs-table-text ng-binding">16/10/2017 12:18 A.M.</td>
+                                        <td class="rs-table-text ng-binding" colspan="2">1/18/2017 5:23 PM</td>
+                                    </tr>
+                                    <!-- end ngRepeat: batch in vm.batches | filter : {progress:'100'} -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="rs-row">
+                <div class="span8">
+                    <h4>FAQs + More Information</h4>
+                    <ul>
+                        <li>
+                            <a href="">Mapping of Rackspace Resource to Amazon Web Service Resources</a>
+                        </li>
+                        <li>
+                            <a href="">How will my billing change?</a>
+                        </li>
+                        <li>
+                            <a href="">Learn about the different Fanatical Support for AWS Support Levels</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="span4 ">
+                    <div class="rs-pull-right">
+                        <h4>Support</h4>
+                        <div class="support-icons">
+                            <a href="#" class=""><i class="fa fa-phone fa-fw fa-2x"></i></a>
+                            <a href="#" class=""><i class="fa fa-ticket fa-fw fa-2x"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="rs-nav-footer">
+        <div class="rs-container">
+            <ul class="rs-nav">
+                <li class="rs-nav-item">© 2017 Rackspace, US</li>
+                <li class="rs-nav-item"><a class="rs-nav-link" href="">Website Terms</a></li>
+                <li class="rs-nav-item"><a class="rs-nav-link" href="">Privacy Policy</a></li>
+            </ul>
+            <ul class="rs-nav rs-pull-right">
+                <li class="rs-nav-item"><a class="rs-nav-link" href="#">Feedback</a></li>
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var tooltip;
+            tooltip = new canon.Tooltip();
+        });
+    </script>
+    <script src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
