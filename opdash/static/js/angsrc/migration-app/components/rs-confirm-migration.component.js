@@ -70,24 +70,6 @@
                         console.log(result);
                         $rootRouter.navigate(["MigrationStatus"]);
                     })
-
-
-                    // vm.allItems.map(function(item){
-                    //     if(item.type === "server"){
-                    //         //have to populate the type field in the below object
-                    //         requestObj = ds.prepareRequest(item.type, {id: item.id, type: "t2.micro"});
-                    //         migrateArray.push(HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj));
-                    //     }else{
-                    //         //hardcoded the value region just to trigger migration
-                    //         requestObj = ds.prepareRequest(item.type, {id: item.id, region: "US-East-1"});
-                    //         migrateArray.push(HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj));
-                    //     }
-                    // });
-
-                    // $q.all(migrateArray).then(function(results) {
-                    //     console.log("results");
-                    //     console.log(results.message);
-                    // });                                
                 };
                 return vm;
             }

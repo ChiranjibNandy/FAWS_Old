@@ -31,11 +31,6 @@
                 vm.$onInit = function(){
                     vm.servers = dataStoreService.getRecommendedItems();
                     vm.labels = ["Name","instance_type","region","cost","memory","vcpu"];
-                    var url = "/static/angassets/compare-options.json";
-                    //making an api call to get the compare options
-                    HttpWrapper.send(url,{"operation":'GET'}).then(function(result){
-                        vm.data = result.data;
-                    });
                 }
                 
                 //this function gets triggers when we press the compare button.
