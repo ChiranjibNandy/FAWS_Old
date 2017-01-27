@@ -27,6 +27,7 @@
                             ip_address: server.accessIPv4,
                             status: server.status,
                             ram: server.flavor_details.ram,
+                            mappings: server.mappings,
                             details: server // NEED ALL THE DETAILS
                         });
                     });
