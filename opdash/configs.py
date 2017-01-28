@@ -1,7 +1,6 @@
 from uuid import uuid4
 from os import environ
 from redis import Redis
-import logging
 
 
 def load_configuration(app):
