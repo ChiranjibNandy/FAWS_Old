@@ -48,7 +48,8 @@ def select_tenant_post():
     tenant_id = request.form['tenantId']
     if tenant_id:
         session['tenant_id'] = tenant_id
-        return current_app.make_response(redirect('/'))
+        return current_app.make_response(
+            redirect(current_app.config["CP_BASE_URL"] + "/"))
     else:
         error_message = "You must select a tenant."
 
