@@ -26,8 +26,6 @@ def load_configuration(app):
     app.config['SECRET_COOKIE_KEY'] = environ.get(
         'UI_SECRET_COOKIE_KEY', uuid4())
 
-    app.logger.setLevel(logging.DEBUG)
-
 
 class BaseConfig(object):
     """
@@ -41,7 +39,7 @@ class BaseConfig(object):
     USE_RELOADER = False
 
     CP_BASE_URL = environ.get(
-        'CP_BASE_URL'
+        'CP_BASE_URL',
         'https://dev.migration.rackspace.net'
     )
 
