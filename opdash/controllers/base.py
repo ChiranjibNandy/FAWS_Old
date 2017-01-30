@@ -37,6 +37,8 @@ class UnsecureBlueprint(Blueprint):
             If so, uses the protocol specificed in that header.
         '''
         parsed_url = urlparse.urlparse(request.url)
+
+        # Check for X-Forwarded-Proto header from AWS load balancer
         forwarded_proto = request.headers.get('X-Forwarded-Proto')
         if forwarded_proto:
             # Change scheme and remove port
@@ -44,7 +46,9 @@ class UnsecureBlueprint(Blueprint):
                 scheme=forwarded_proto,
                 netloc=parsed_url.hostname)
 
-        return urlparse.urlunparse(parsed_url)
+        return "{scheme}://{netloc}".format(
+            scheme=parsed_url.scheme,
+            netloc=parsed_url.netloc)
 
     def update_session_user(self, service_catalog):
         ''' Save the user_data to session '''
@@ -108,7 +112,7 @@ class CustomerBlueprint(UnsecureBlueprint):
             self._app.logger.debug('USER IS A CUSTOMER OR RACKER')
             return
         else:
-            return redirect(self.get_base_url() + "login")
+            return redirect(self.get_base_url() + "/login")
 
 
 class RackerBlueprint(UnsecureBlueprint):
@@ -133,4 +137,4 @@ class RackerBlueprint(UnsecureBlueprint):
             else:
                 abort(403)
         else:
-            return redirect(self.get_base_url() + "login")
+            return redirect(self.get_base_url() + "/login")
