@@ -27,7 +27,14 @@
                     this.authtoken = user_data.authtoken;
                     this.tenant_id = user_data.tenant_id;
                     ase.storeAuth(user_data);
-                    $rootRouter.navigate(["Tenant"]);
+
+                    if(user_data.is_racker) {
+                      $rootRouter.navigate(["Tenant"]);
+                    }
+                    else{
+                      ase.getAuth().tenant_id = user_data.tenant_id;
+                      $rootRouter.navigate(["MigrationResourceList"]);
+                    }
                   }
                 }]
             });

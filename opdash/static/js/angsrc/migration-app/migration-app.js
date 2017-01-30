@@ -71,8 +71,7 @@
             { path: "/migration/confirm", component: "rsconfirmmigration", name: "ConfirmMigration" },
             { path: "/migration-status", component: "rsmigrationstatus", name: "MigrationStatus" },
             { path: "/compare-options", component: "rscompareoptions", name: "CompareOptions" },
-            { path: "/batch-migration-details", component: "rsbatchmigrationdetails", name: "BatchMigrationDetails" },
-            { path: "/**", redirectTo: ["Tenant"] }
+            { path: "/batch-migration-details", component: "rsbatchmigrationdetails", name: "BatchMigrationDetails" }
         ]
     }); // end of rsMigrationRoot component definition
 })();
