@@ -28,6 +28,7 @@ node_modules/
 .venv
 .DS_Store
 opdash/.DS_Store
+.vscode/
 
 
 # PyInstaller

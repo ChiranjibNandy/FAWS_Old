@@ -39,7 +39,7 @@ class BaseConfig(object):
 
     CP_BASE_URL = environ.get(
         'CP_BASE_URL',
-        'http://localhost:8000'
+        'https://dev.migration.rackspace.net'
     )
 
     API_BASE_URL = environ.get(
