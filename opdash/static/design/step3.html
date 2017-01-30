@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>Rackspace Migration Manager</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest//canon.min.css">
+    <link href="css/migration-mgr.css" rel="stylesheet">
+    <link href="css/flex-cal.css" rel="stylesheet">
+    <script src="https://use.fontawesome.com/1d292fb501.js"></script>
+</head>
+
+<body>
+    <!-- Fixed navbar -->
+    <div class="rs-wrapper">
+        <!-- Utility Nav -->
+        <div class="rs-nav-utility">
+            <div class="rs-container">
+                <ul class="rs-nav">
+                    <li class="rs-nav-item "><a class="rs-nav-link" href="">Rackspace Cloud</a></li>
+                    <li class="rs-nav-item active"><a class="rs-nav-link" href="step0.html">Fanatical Support for AWS</a></li>
+                </ul>
+                <ul class="rs-nav rs-pull-right">
+                    <li class="rs-nav-item rs-dropdown rs-utility-dropdown">
+                        <a class="rs-nav-link rs-dropdown-toggle" href="">Username123 <i class="rs-caret"></i></a>
+                    </li>
+                    <li class="rs-nav-item ">
+                        <a class="rs-nav-link" href="">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- End Utility Nav -->
+        <!-- Primary Nav -->
+        <div class="rs-nav-primary">
+            <div class="rs-container">
+                <div class="rs-nav-brand">
+                    <a href=""></a>
+                </div>
+            </div>
+        </div>
+        <!-- End Primary Nav -->
+        <div class="rs-container migration-mgr">
+            <div class="rs-main rs-panel">
+                <div class="rs-sidebar rs-pull-right">
+                    <div class="rs-inner">
+                        <div class="info-panel">
+                            <h4>Current Pricing</h4>
+                            <p>
+                                Billing Period:
+                                <br>
+                                <em>12/12/2016 to 1/11/2017</em>
+                                <br>
+                                <b>$485</b>
+                                <br>
+                                <a href="">(See Details)</a>
+                            </p>
+                        </div>
+                        <div class="white-panel">
+                            <h4>New Pricing</h4>
+                            <p>
+                                <b>$431.81</b>
+                                <br>
+                                <a href="">(See Details)</a>
+                            </p>
+                        </div>
+                        <br>
+                        <div class="rs-row pricing-buttons">
+                            <button class="rs-btn span-12" ng-click="vm.saveItems()">Save For Later</button>
+                        </div>
+                        <div class="rs-row">
+                            <a class="rs-btn span-5" ng-link="['Tenant']" href="step2.html">Back</a>
+                            <a class="rs-btn rs-btn-primary span-7" ng-click="vm.continue()" href="step4.html">Continue</a>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <div class="rs-content rs-panel">
+                    <!-- Start Stepper -->
+                    <div class="mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__supporting-text">
+                            <div class="mdl-stepper-horizontal-alternative">
+                                <div class="mdl-stepper-step active-step step-done">
+                                    <a href="step1.html">
+                                        <div class="mdl-stepper-circle"><span>1</span></div>
+                                    </a>
+                                    <div class="mdl-stepper-title">Select Resources</div>
+                                    <div class="mdl-stepper-bar-left"></div>
+                                    <div class="mdl-stepper-bar-right"></div>
+                                </div>
+                                <div class="mdl-stepper-step active-step step-done">
+                                    <a href="step2.html">
+                                        <div class="mdl-stepper-circle"><span>2</span></div>
+                                    </a>
+                                    <div class="mdl-stepper-title">Recommendation </div>
+                                    <div class="mdl-stepper-bar-left"></div>
+                                    <div class="mdl-stepper-bar-right"></div>
+                                </div>
+                                <div class="mdl-stepper-step active-step ">
+                                    <div class="mdl-stepper-circle"><span>3</span></div>
+                                    <div class="mdl-stepper-title">Schedule Migration</div>
+                                    <div class="mdl-stepper-bar-left"></div>
+                                    <div class="mdl-stepper-bar-right"></div>
+                                </div>
+                                <div class="mdl-stepper-step ">
+                                    <div class="mdl-stepper-circle"><span>4</span></div>
+                                    <div class="mdl-stepper-title">Confirm &amp; Migrate</div>
+                                    <div class="mdl-stepper-bar-left"></div>
+                                    <div class="mdl-stepper-bar-right"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Stepper -->
+                    <hr>
+                    <div class="rs-inner">
+                        <h2>User Namegoeshere ( #1024814 )</h2>
+                        <div class="rs-row">
+                        
+                        
+                            <form class="rs-form-horizontal span-6">
+
+                                <div class="rs-control-group">
+                                    <label class="rs-control-label">Migrate Now </label>
+                                    <div class="rs-controls">
+                                        <input type="checkbox" name="">
+                                    </div>
+                                </div>
+                                <div class="rs-control-group">
+                                    <label class="rs-control-label">Name Your Migration</label>
+                                    <div class="rs-controls">
+                                        <input type="text" placeholder="Migration-25Jan2017-0434pm">
+                                    </div>
+                                </div>
+                                <div class="rs-control-group">
+                                    <label class="rs-control-label">Time Zone</label>
+                                    <div class="rs-controls">
+                                        <select name="timezone" ng-change="vm.timezoneChange()" ng-model="vm.timezone" class="ng-pristine ng-valid ng-not-empty ng-touched span2">
+                                            <!-- ngRepeat: time in vm.timeZoneItems -->
+                                            <option ng-repeat="time in vm.timeZoneItems" value="EST- GMT-05:00" class="ng-binding ng-scope">EST- GMT-05:00</option>
+                                            <!-- end ngRepeat: time in vm.timeZoneItems -->
+                                            <option ng-repeat="time in vm.timeZoneItems" value="CST- GMT-06:00" class="ng-binding ng-scope">CST- GMT-06:00</option>
+                                            <!-- end ngRepeat: time in vm.timeZoneItems -->
+                                            <option ng-repeat="time in vm.timeZoneItems" value="PST- GMT-08:00" class="ng-binding ng-scope">PST- GMT-08:00</option>
+                                            <!-- end ngRepeat: time in vm.timeZoneItems -->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="rs-control-group">
+                                    <label class="rs-control-label">Time </label>
+                                    <div class="rs-controls">
+                                        <select name="time" ng-change="vm.timeChange()" ng-model="vm.time" class="ng-pristine ng-untouched ng-valid ng-not-empty span2">
+                                            <!-- ngRepeat: time in vm.timeItems -->
+                                            <option ng-repeat="time in vm.timeItems" value="12:00pm" class="ng-binding ng-scope">12:00pm</option>
+                                            <!-- end ngRepeat: time in vm.timeItems -->
+                                            <option ng-repeat="time in vm.timeItems" value="12:30pm" class="ng-binding ng-scope">12:30pm</option>
+                                            <!-- end ngRepeat: time in vm.timeItems -->
+                                            <option ng-repeat="time in vm.timeItems" value="1:00am" class="ng-binding ng-scope">1:00am</option>
+                                            <!-- end ngRepeat: time in vm.timeItems -->
+                                        </select>
+                                    </div>
+                                </div>  
+                                <br>
+                            <hr>
+                            <h4>Migration schedule summary:</h4>
+                            <p>Jan 25th 2017 at 12:00pm EST- GMT-05:00</p>                              
+                            </form>
+                            
+                            <div ng-app="app" class="span-4">
+                            <div ng-controller="MainController">
+                                <div class="wrapp">
+                                    <flex-calendar options="options" events="events"></flex-calendar>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="rs-row">
+                <div class="span8">
+                    <h4>FAQs + More Information</h4>
+                    <ul>
+                        <li>
+                            <a href="">Mapping of Rackspace Resource to Amazon Web Service Resources</a>
+                        </li>
+                        <li>
+                            <a href="">How will my billing change?</a>
+                        </li>
+                        <li>
+                            <a href="">Learn about the different Fanatical Support for AWS Support Levels</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="span4 ">
+                    <div class="rs-pull-right">
+                        <h4>Support</h4>
+                        <div class="support-icons">
+                            <a href="#" class=""><i class="fa fa-phone fa-fw fa-2x"></i></a>
+                            <a href="#" class=""><i class="fa fa-ticket fa-fw fa-2x"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="rs-nav-footer">
+        <div class="rs-container">
+            <ul class="rs-nav">
+                <li class="rs-nav-item">© 2017 Rackspace, US</li>
+                <li class="rs-nav-item"><a class="rs-nav-link" href="">Website Terms</a></li>
+                <li class="rs-nav-item"><a class="rs-nav-link" href="">Privacy Policy</a></li>
+            </ul>
+            <ul class="rs-nav rs-pull-right">
+                <li class="rs-nav-item"><a class="rs-nav-link" href="#">Feedback</a></li>
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var tooltip;
+        tooltip = new canon.Tooltip();
+    });
+    </script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.7.2/angular-translate.js'></script>
+    <script src="js/flex-cal-angular.js"></script>
+    <script src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
