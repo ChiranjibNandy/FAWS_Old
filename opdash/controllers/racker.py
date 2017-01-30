@@ -56,10 +56,10 @@ def select_tenant_post():
     return render_template('select-tenant.html', error_message=error_message)
 
 
-@mod.route('/')
-def index():
-    """Show index page"""
-    return render_template('index.html')
+# @mod.route('/')
+# def index():
+#     """Show index page"""
+#     return render_template('index.html')
 
 
 @mod.route('/migrations')
