@@ -31,7 +31,8 @@
         .component("rsrecommendationitem", {
             templateUrl: "/static/angtemplates/migration/recommendation-item-template.html",
             bindings: {
-                type: "@" // type parameter to be supplied (eg: server, network etc)
+                type: "@", // type parameter to be supplied (eg: server, network etc)
+                filtervalue:"<"
             },
             require: {
                 parent: "^^rsmigrationrecommendation"
@@ -46,7 +47,7 @@
                 var vm = this;
 
                 vm.$onInit = function() {
-                    vm.recSelectedItems = dataStoreService.getRecommendedItems();
+                    vm.recSelectedItems = dataStoreService.getRecommendedItems() || [];
                     //vm.recSelectedItems = [];
                     vm.data = dataStoreService.getItems(vm.type);
                     if(vm.data.length >0)
@@ -56,14 +57,15 @@
                     vm.labels = [
                                     {field: "name", text: vm.type+" Name"},
                                     {field: "ip_address", text: "IP Address"},
-                                    {field: "ram", text: "RAM"},
-                                    {field: "status", text: "Status"}
+                                    {field: "aws_region", text: "AWS Region"},
+                                    {field: "aws_zone", text: "AWS Zone"},
+                                    {field: "aws_instance", text: "AWS instance"}
                                 ];
                     if(vm.type == "server") 
                         vm.showModify = true;                                
                     else
                         vm.showModify = false;
-                    $('#rs-main-panel').css('height','412px');
+                    $('#rs-main-panel').css('height','310px');
                 };
 
                 // Update item selection based on Select/Deselect all 
@@ -78,7 +80,9 @@
                 vm.changeSelectAll = function (item, fromGlobal) {
                     if(item.recSelected){
                         item.type = vm.type;
-                        vm.recSelectedItems.push(item);
+                        if(vm.recSelectedItems.indexOf(item) === -1){
+                            vm.recSelectedItems.push(item);
+                        }
                     }else{
                         item.type = vm.type;
                         vm.recSelectedItems.splice(vm.recSelectedItems.indexOf(item), 1);
@@ -92,6 +96,11 @@
                         vm.isAllSelected = count === vm.data.length;
                     }
                 };
+
+                // vm.removeItem = function(item){
+                //     vm.recSelectedItems.splice(vm.recSelectedItems.indexOf(item), 1);
+                //     item.recSelected = false;
+                // }
 
                 //modifing the selected servers
                 vm.modify = function(){

@@ -389,3 +389,7 @@ rscalendaritem > div.week.names > span {
 .savingsPanel{
     height: 40px;
 }
+.recommendation-table-height{
+    height: 280px;
+    overflow-y: scroll;
+}

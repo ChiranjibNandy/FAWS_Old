@@ -1,44 +1,71 @@
-<div class="rs-main" style="margin-top: 0;">
-  <div class="rs-embedded-list-table-wrapper rs-embedded-medium">
-    <div ng-show="vm.noData" class="rs-table-overlay">
-        <div class="rs-table-overlay-content">
-            <div class="rs-table-overlay-title">No {{vm.type}}s found.</div>
-            <div data-bind="visible: (filterText() !== '')" class="rs-table-overlay-subtitle"></div>
-            <div class="rs-table-overlay-message"></div>
-        </div>
-    </div>
-    <table class="rs-list-table rs-embedded-list-table" ng-show="!vm.noData">
-      <thead>
-        <tr>
-          <th class="rs-table-status"></th>
-          <th class="rs-table-checkbox">
-              <input type="checkbox" ng-model="vm.isAllSelected" ng-change="vm.changeItemSelection()"/>
-          </th>
-          <th ng-repeat="item in vm.labels">
-            <span>{{item.text}}</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="item in vm.data">
-          <td class="rs-table-status"
-                  ng-class="{'rs-table-status-ok': item.status=='ACTIVE', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
-          </td>
-          <td class="rs-table-checkbox"><input type="checkbox" ng-model="item.recSelected" ng-change="vm.changeSelectAll(item,false)" /></td>
-          <td class="rs-table-link"><a href="#" ng-link="['EquipmentDetails', {type: vm.type, id: item.id}]">{{item.name}}</a></td>
-          <td class="rs-table-text">{{item.ip_address}}</td>
-          <td class="rs-table-text">{{item.ram}} MB</td>
-          <td class="rs-table-text capitalize">{{item.status | lowercase}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="rs-row" ng-show="vm.showModify">
-    <div style="margin-left: 150px; margin-top: 10px;">
-      <div class="span-10"></div>
-        <div class="span-2">
-          <button class='rs-btn rs-pull-right rs-btn-primary' ng-click="vm.modify()">Modify</button>
-        </div>
+  <div class="rs-tab-content recommendation-table-height">
+      <div class="rs-tab-pane active" id="Servers">
+          <div ng-show="vm.noData" class="rs-table-overlay">
+              <div class="rs-table-overlay-content">
+                  <div class="rs-table-overlay-title">No {{vm.type}}s found.</div>
+                  <div data-bind="visible: (filterText() !== '')" class="rs-table-overlay-subtitle"></div>
+                  <div class="rs-table-overlay-message"></div>
+              </div>
+          </div>
+          <table class="rs-list-table" ng-show="!vm.noData">
+              <thead>
+                  <tr>
+                      <th class="rs-table-status"></th>
+                      <th class="rs-table-checkbox">
+                          <input type="checkbox" ng-model="vm.isAllSelected" ng-change="vm.changeItemSelection()"/>
+                      </th>
+                      <th ng-repeat="item in vm.labels">
+                        <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                            <span class="rs-table-sort-text">{{item.text}} </span>
+                            <span class="rs-table-sort-indicator"></span>
+                        </a>
+                      </th>
+                      <th></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr ng-repeat="item in vm.data | filter: vm.filtervalue">
+                    <td class="rs-table-status"
+                            ng-class="{'rs-table-status-ok': item.status=='ACTIVE', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
+                    </td>
+                    <td class="rs-table-checkbox"><input type="checkbox" ng-model="item.recSelected" ng-change="vm.changeSelectAll(item,false)" /></td>
+                    <td class="rs-table-link"><a href="#" ng-link="['EquipmentDetails', {type: vm.type, id: item.id}]">{{item.name}}</a></td>
+                    <td class="rs-table-text">{{item.ip_address}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="rs-table-cog">
+                        <div class="rs-dropdown">
+                            <div class="rs-cog rs-dropdown-toggle"></div>
+                            <ul class="rs-dropdown-menu hidden">
+                                <li><span class="rs-dropdown-category">Manage</span></li>
+                                <li><a href="#">Action Name&hellip;</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                  </tr>
+              </tbody>
+              <!-- ********** PAGINATION GOES HERE... ************* -->
+          </table>
       </div>
-    </div>
-</div>
+      <!--<div class="rs-tab-pane " id="Load">
+          <p>Tab content pane two</p>
+      </div>-->
+  </div>
+  <br>
+  <!--<div ng-show="vm.showModify">
+      <h4>{{vm.recSelectedItems.length}} items selected</h4>
+      <div class="selected-items" ng-repeat="item in vm.recSelectedItems">
+          <span class="rs-status" title="{{item.name}}">
+            <i class="fa fa-times" ng-click="vm.removeItem(item)"></i>  {{item.name }}
+          </span>
+      </div>
+  </div>-->
+  <!--<div class="rs-row" ng-show="vm.showModify">
+      <div style="margin-left: 150px; margin-top: 10px;">
+      <div class="span-10"></div>
+          <div class="span-2">
+          <button class='rs-btn rs-pull-right rs-btn-primary' ng-click="vm.modify()">Modify</button>
+          </div>
+      </div>
+  </div>-->

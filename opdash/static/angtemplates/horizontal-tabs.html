@@ -1,12 +1,10 @@
-<div class='rs-container'>
-    <div class='rs-panel'>
-        <div class="horizontal-tab-container">
-            <ul class='rs-tabs'>
-                <li ng-repeat='tab in vm.tabs' ng-class="{'active': tab.active}">
-                    <a href='' ng-click='vm.selectTab(tab)'>{{tab.title}}</a>
-                </li>
-            </ul>
-            <div ng-transclude></div>
-        </div>
+<div class="horizontal-tab-container">
+    <ul class='rs-tabs'>
+        <li ng-repeat='tab in vm.tabs' ng-class="{'active': tab.active}">
+            <a href='' ng-click='vm.selectTab(tab)'>{{tab.title}}</a>
+        </li>
+    </ul>
+    <div id="rs-main-panel">
+        <div ng-transclude></div>
     </div>
 </div>
