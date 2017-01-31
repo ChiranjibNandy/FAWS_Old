@@ -1,26 +1,12 @@
-<script type="text/javascript">
-   (function() {
-        document.getElementById("subNav").style.display = "block";
-        var subMenus = $(".rs-nav-secondary .rs-nav-item");
-        $(subMenus).removeClass("active");
-        $(subMenus).addClass("disabled");
-        $(subMenus[0]).removeClass("disabled");
-        $(subMenus[0]).addClass("active");
-    })();
-</script>
-
-<div class="rs-row template-header">
-    <div class="span-6">
-        <h3>Select Resources For Batch Migration ( #{{vm.auth.tenant_id}} )</h3>
-    </div>
-    <div class="span-3">
-        <input type="text" ng-model="vm.filterSearch" placeholder="Search..." style="width: 100%;"/>
-    </div>
-</div>
+<rsinteractiveheader pagenum="0"></rsinteractiveheader>
+<hr>
+<h2>User #1024814 </h2>
+<h4>Resource Types</h4>
+<input type="text" class="rs-input-large searchbox" ng-model="vm.filterSearch" placeholder="filter by keyword or tag...">
 <div class="rs-row">
     <div class="span-9">
         <div class="rs-row">
-            <rs-tabs alignment="vertical">
+            <rs-tabs alignment="horizontal">
                 <rs-tab title="Servers">
                     <rsmigrationitem type="server" filtervalue="vm.filterSearch"></rsmigrationitem>
                 </rs-tab>
@@ -37,48 +23,129 @@
                 </rs-tab>
             </rs-tabs>
         </div>
-        <div class="rs-row">
-            <div style="margin-left: 150px;">
-                <div class="rs-content rs-panel selectedItemsPanel" style="min-height:0px;">
-                    {{vm.selectedItems.length}} items selected
-                    <div>
-                        <p ng-repeat="item in vm.selectedItems" ng-attr-id="item.name" class='selected-migration-item'>
-                            <span class="cross" ng-click="vm.removeItem(item)">x</span>{{item.name}}
-                        </p>
+     </div>
+</div>
+<br>
+<div class="rs-row">
+    <div class="span-8">
+        <h4>Items Selected</h4>
+        <div class="accordion" id="accordion2">
+            <div class="accordion-group">
+                <div class="accordion-heading ">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#server-name">
+                        <b class=""> Servers (12)  <i class="fa fa-caret-down"></i></b>
+                    </a>
+                </div>
+                <div id="server-name" class="accordion-body collapse ">
+                    <div class="accordion-inner ">
+                        <ul class="inline">
+                            <li>cloud-endure-demo-A_db_slave</li>
+                            <li>cloud-endure-demo-A_db_slave</li>
+                            <li>cloud-endure-demo-A_db_slave</li>
+                            <li>cloud-endure-demo-A_db_slave</li>
+                            <li>cloud-endure-demo-A_db_slave</li>
+                            <li>cloud-endure-demo-A_db_slave</li>
+                            <li>cloud-endure-demo-A_db_slave</li>
+                            <li>cloud-endure-demo-A_db_slave</li>
+                            <li>cloud-endure-demo-A_db_slave</li>
+                            <li>cloud-endure-demo-A_db_slave</li>
+                            <li>cloud-endure-demo-A_db_slave</li>
+                            <li>cloud-endure-demo-A_db_slave</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-group">
+                <div class="accordion-heading ">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#file-name">
+                        <b class="">  Files (3) <i class="fa fa-caret-down"></i></b>
+                    </a>
+                </div>
+                <div id="file-name" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <ul class="inline">
+                            <li>File</li>
+                            <li>File</li>
+                            <li>File</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-group">
+                <div class="accordion-heading ">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#block-name">
+                        <b class=""> Blocks (35) <i class="fa fa-caret-down"></i></b>
+                    </a>
+                </div>
+                <div id="block-name" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <ul class="inline">
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                            <li>Block</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-group">
+                <div class="accordion-heading ">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#cdn-name">
+                        <b class="">CDN (1) <i class="fa fa-caret-down"></i></b>
+                    </a>
+                </div>
+                <div id="cdn-name" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <ul class="inline">
+                            <li>CDN</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="span-3 right-sidebar">
+    <div class="span-4">
+        <div class="rs-pull-right" style="margin-top: 15px">
+            <a class="rs-btn" ng-click="vm.saveItems()">Save For Later</a>
+            <a class="rs-btn rs-btn-primary " ng-click="vm.continue()">Continue</a>
+        </div>
+    </div>
+</div>
+
+    <!--<div class="span-3 right-sidebar">
         <div class="rs-facet-section">
             <div class="rs-facet-section-body">
-                <div class="rs-facet-title">Current Pricing</div>
-                <div class='info-panel currentPricingPanel'>
-                    <div ng-show="vm.selectedItems.length>0">
-                        <span class="no-break">Last Month's Invoice:</span><br>
-                        <span class="no-break">Billing Period: 12-DEC-16 to 11-JAN-17</span><br>
-                        <span class="no-break">$485 (<a ng-href="https://mybill.rackspace.com/overview" target="_blank">See Details</a>)</span>
-                    </div>
-                </div>
-                
-                <div class="rs-facet-title">New Pricing</div>
-                <div class='info-panel newPricingPanel'>
-                    <div ng-show="vm.selectedItems.length>0">
-                        <span class="no-break">Amazon EC2 Service (US-East):</span><br>
-                        <span class="no-break">Compute: $31.81</span><br>
-                        <span class="no-break">Fanatical AWS Support (Navigator): $400.00</span><br>
-                        <span class="no-break summary">TOTAL COST: $431.81</span>
-                    </div>
-                </div>
-
-                <div class="rs-facet-title">Savings</div>
-                <div class='info-panel-small savingsPanel'>
-                    <div ng-show="vm.selectedItems.length>0">
-                        <span class="summary"><b>$53.69 SAVED</b></span>
-                    </div>
-                </div>
-
                 <br>
                 <div class="rs-row">
                     <button class="rs-btn span-12" ng-click="vm.saveItems()">Save For Later</button><br><br>
@@ -89,7 +156,7 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </div>-->
+
 
 <rsinteractivefooter></rsinteractivefooter>

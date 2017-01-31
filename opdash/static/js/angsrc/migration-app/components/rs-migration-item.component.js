@@ -58,10 +58,10 @@
 
                 var mapNetworkStatus = function(dataList, statusList) {
                     for(var i=0; i<dataList.length; i++){
-                        // item.id === jobsList[i].resources.networks[0].subnets[0].id
-                        // var statusItem = statusList.filter(function(item){ return item.resources.networks[0].subnets[0].id === dataList[i].subnets[0].id })[0];
-                        // if(statusItem)
-                        //     dataList[i].migrationStatus = statusItem.status;
+                        //item.id === jobsList[i].resources.networks[0].subnets[0].id
+                        var statusItem = statusList.filter(function(item){ return item.resources.networks[0].subnets[0].id === dataList[i].subnets[0].id })[0];
+                        if(statusItem)
+                            dataList[i].migrationStatus = statusItem.status;
 
                     }
                     //dataList[0].migrationStatus = "done";
@@ -104,7 +104,13 @@
                     vm.sortingOrder = true;
                     vm.isAllselected = false;
                     vm.tenant_id = authservice.getAuth().tenant_id;
-
+                    /**
+                     * @ngdoc property
+                     * @name resources_retrieved
+                     * @propertyOf migrationApp.controller:rsmigrationitemCtrl
+                     * @type {Array}
+                     * @description Set of resources retrieved during first time loading of application
+                     */
                     var resources_retrieved = datastoreservice.retrieveallItems(vm.type);
                     
                     //check if resources already retrieved
@@ -143,6 +149,7 @@
                             datastoreservice.storeallItems(vm.items, vm.type);               
                             vm.searchField = results[0].labels[0].field;
                             vm.labels = results[0].labels; // set table headers
+                            //Store all labels in factory variable
                             datastoreservice.storeallItems(vm.labels, "label"+vm.type);
                             angular.forEach(results[0].labels, function(label){
                                 vm.search[label.field] = ""; // set search field variables
