@@ -8,7 +8,7 @@
      * This service acts as a facade which handles calling the specific service implementation for each resoource type (server, network etc).
      */
     angular.module("migrationApp")
-        .service("migrationitemdataservice", ["serverservice", "networkservice", "httpwrapper",'$filter',"authservice", function (serverService, networkService, HttpWrapper, $filter,authservice) {
+        .service("migrationitemdataservice", ["serverservice", "networkservice", "contactservice", "httpwrapper",'$filter',"authservice", function (serverService, networkService, contactService, HttpWrapper, $filter,authservice) {
             var self = this;
 
             /**
@@ -52,11 +52,14 @@
                 else if (type === "network") {
                     return networkService.getDetailedList();
                 }
-                 else if (type === "files") {
+                else if (type === "files") {
                     return networkService.getTrimmedList();
                 }
-                 else if (type === "loadBalancers") {
+                else if (type === "loadBalancers") {
                     return networkService.getTrimmedList();
+                }
+                else if (type === "contactNumbers") {
+                    return contactService.getContactNumbers();
                 }
             }
 
