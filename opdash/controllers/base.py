@@ -1,7 +1,8 @@
 from flask import Blueprint, g, session, redirect, abort, request
-import urlparse
 import json
 
+# noinspection PyUnresolvedReferences
+from six.moves.urllib import parse as urlparse
 from opdash.rax.pilot import get_pilot_header
 
 
@@ -36,7 +37,7 @@ class UnsecureBlueprint(Blueprint):
             if the request came through the load balancer.
             If so, uses the protocol specificed in that header.
         '''
-        parsed_url = urlparse.urlparse(request.url)
+        parsed_url = urlparse(request.url)
 
         # Check for X-Forwarded-Proto header from AWS load balancer
         forwarded_proto = request.headers.get('X-Forwarded-Proto')
