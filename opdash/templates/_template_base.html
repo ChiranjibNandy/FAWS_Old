@@ -23,9 +23,12 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/static/css/style.css?rev={!config['GIT_HASH']!}">
 
   {% endif %}
-
+  <link href="/static/css/anglib/bootstrap-combined.min.css?rev={!config['GIT_HASH']!}" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" media="screen" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.css">
   <link rel="stylesheet" type="text/css" media="screen" href="/static/css/angsrc/main.css?rev={!config['GIT_HASH']!}">
   <link rel="stylesheet" type="text/css" media="screen" href="/static/css/angsrc/login.css?rev={!config['GIT_HASH']!}">
+  <link rel="stylesheet" type="text/css" media="screen" href="/static/css/newstyles/flex-cal.css?rev={!config['GIT_HASH']!}">
+  <link rel="stylesheet" type="text/css" media="screen" href="/static/css/newstyles/migration-mgr.css?rev={!config['GIT_HASH']!}">
 
   <!-- Loading external libraries -->
   {! javascript("anglib/jquery-1.10.0.min.js") !}
@@ -33,6 +36,8 @@
   {! javascript("anglib/angular.js") !}
   {! javascript("anglib/angular_1_router.js") !}
   {! javascript("anglib/moment.js") !}
+  {! javascript("anglib/bootstrap.min.js") !}
+  {! javascript("anglib/fontawesome-1d292fb501.js") !}
 
   <!-- Loading internal js files -->
   {! javascript("angsrc/migration-app/migration-app.js") !}

@@ -17,69 +17,103 @@
     })();
 </script>
 
-<div class="template-header">
-    <h3>Recommended Solution</h3>
-    <div>
-      <div class="rs-row">
-          <div class="span-12">
-              <div class="rs-content rs-panel" style="min-height: 4px;">
-                  Recommendations are based on the best match of current flavor and configuration of the resource.
-              </div>  
-          </div>
-          <div class="span-8">
-
-          </div>
-      </div>
-    </div>
-</div>
-
-<div class="rs-row">
-    <div class="span-9">
-        <div class="rs-row">
-            <rs-tabs alignment="vertical">
-                <rs-tab title="Servers">
-                    <rsrecommendationitem type="server"></rsrecommendationitem>
-                </rs-tab>
-                <rs-tab title="Networks">
-                    <rsrecommendationitem type="network"></rsrecommendationitem>
-                </rs-tab>
-            </rs-tabs>
-        </div>
-    </div>
-    <div class="span-3 right-sidebar">
-        <div class="rs-facet-section">
-            <div class="rs-facet-section-body">
-                <div class="rs-facet-title">Current Pricing</div>
-                <div class='info-panel'>
-                    <span class="no-break">Last Month's Invoice:</span><br>
-                    <span class="no-break">Billing Period: 12-DEC-16 to 11-JAN-17</span><br>
-                    <span class="no-break">$485 (<a ng-href="https://mybill.rackspace.com/overview" target="_blank">See Details</a>)</span><br>
+ <div class="rs-wrapper">
+        <div class="rs-container migration-mgr">
+            <div class="rs-main rs-panel">
+                <div class="rs-sidebar rs-pull-right">
+                    <div class="rs-inner">
+                        <div class="info-panel">
+                            <h2>Breakdown</h2>
+                            <h4>Current Pricing</h4>
+                            <p>
+                                Last Month's Invoice:
+                                <br> Billing Period: <em>12-DEC-16 to 11-JAN-17</em>
+                                <br>
+                                <b>$485</b>
+                                <br>
+                                <a href="">(See Details)</a>
+                            </p>
+                        </div>
+                        <div class="white-panel">
+                            <h4>New Pricing</h4>
+                            <p>
+                                Amazon EC2 Service:
+                                <br> Compute: <em>$31.81 </em>
+                                <br> Fanatical AWS Support (Navigator): <em>$400.00</em>
+                                <br>
+                                <b>TOTAL COST: $431.81</b>
+                                <br>
+                                <a href="">(See Details)</a>
+                            </p>
+                        </div>
+                        <br>
+                        <div class="rs-row pricing-buttons">
+                            <button class="rs-btn span-12" ng-click="vm.saveItems()">Save For Later</button>
+                        </div>
+                        <div class="rs-row">
+                            <a class="rs-btn span-5" ng-link="['MigrationResourceList']">Back</a>
+                            <a class="rs-btn rs-btn-primary span-7" ng-click="vm.continue()">Continue</a>
+                        </div>
+                        <br>
+                    </div>
                 </div>
-                
-                <div class="rs-facet-title">New Pricing</div>
-                <div class='info-panel'>
-                    <span class="no-break">Amazon EC2 Service (US-East):</span><br>
-                    <span class="no-break">Compute: $31.81</span><br>
-                    <span class="no-break">Fanatical AWS Support (Navigator): $400.00</span><br>
-                    <span class="no-break summary">TOTAL COST: $431.81</span>
-                </div>
-
-                <div class="rs-facet-title">Savings</div>
-                <div class='info-panel-small'>
-                    <span class="summary"><b>$53.69 SAVED</b></span>
-                </div>
-
-                <br>
-                <div class="rs-row">
-                    <button class="rs-btn span-12" ng-click="vm.saveItems()">Save For Later</button><br><br>
-                </div>
-                <div class="rs-row">
-                    <a class="rs-btn span-5" ng-link="['MigrationResourceList']">Back</a>
-                    <button class="rs-btn rs-btn-primary span-7" ng-click="vm.continue()">Continue</button>
+                <div class="rs-content rs-panel">
+                    <!-- Start Stepper -->
+                    <div class="mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__supporting-text">
+                            <div class="mdl-stepper-horizontal-alternative">
+                                <div class="mdl-stepper-step active-step step-done">
+                                    <a href="step1.html">
+                                        <div class="mdl-stepper-circle"><span>1</span></div>
+                                    </a>
+                                    <div class="mdl-stepper-title">Select Resources</div>
+                                    <div class="mdl-stepper-bar-left"></div>
+                                    <div class="mdl-stepper-bar-right"></div>
+                                </div>
+                                <div class="mdl-stepper-step active-step">
+                                    <div class="mdl-stepper-circle"><span>2</span></div>
+                                    <div class="mdl-stepper-title">Recommendations </div>
+                                    <div class="mdl-stepper-bar-left"></div>
+                                    <div class="mdl-stepper-bar-right"></div>
+                                </div>
+                                <div class="mdl-stepper-step ">
+                                    <div class="mdl-stepper-circle"><span>3</span></div>
+                                    <div class="mdl-stepper-title">Schedule Migration</div>
+                                    <div class="mdl-stepper-bar-left"></div>
+                                    <div class="mdl-stepper-bar-right"></div>
+                                </div>
+                                <div class="mdl-stepper-step">
+                                    <div class="mdl-stepper-circle"><span>4</span></div>
+                                    <div class="mdl-stepper-title">Confirm &amp; Migrate</div>
+                                    <div class="mdl-stepper-bar-left"></div>
+                                    <div class="mdl-stepper-bar-right"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Stepper -->
+                    <hr>
+                    <div class="rs-inner">
+                        <h2>User Namegoeshere ( #1024814 )</h2>
+                        <h4>Resource Types</h4>
+                        <input type="text" class="rs-input-large searchbox" ng-model="vm.filteredValue" placeholder="filter by keyword or tag...">
+                        <rs-tabs alignment="horizontal">
+                            <rs-tab title="Servers">
+                                <rsrecommendationitem type="server" filtervalue="vm.filteredValue"></rsrecommendationitem>
+                            </rs-tab>
+                            <rs-tab title="Networks">
+                                <rsrecommendationitem type="network" filtervalue="vm.filteredValue"></rsrecommendationitem>
+                            </rs-tab>
+                        </rs-tabs>
+                    </div>
                 </div>
             </div>
+            <rsinteractivefooter></rsinteractivefooter>
         </div>
     </div>
-</div>
-
-<rsinteractivefooter></rsinteractivefooter>
+    <!--<script type="text/javascript">
+    $(document).ready(function() {
+        var tooltip;
+        tooltip = new canon.Tooltip();
+    });
+    </script>-->
