@@ -58,6 +58,28 @@
                         $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
                         getBatches();
                     };
+
+                    /**
+                     * @ngdoc method
+                     * @name getItems
+                     * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                     * @description 
+                     * Pauses migration of resources in this batch
+                     */
+                    vm.pauseBatch = function() {
+                        alert("Pause migration of resources in this batch");
+                    };
+
+                    /**
+                     * @ngdoc method
+                     * @name cancelBatch
+                     * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                     * @description 
+                     * Cancels migration of resources in this batch
+                     */
+                    vm.cancelBatch = function() {
+                        alert("Cancel migration of resources in this batch");
+                    };
                 }]
             }); // end of comeponent rsmigrationstatus
 })();

@@ -1,35 +1,41 @@
 [{
   "queue_name": "Batch One",
+  "status": "completed",
   "start_date": "12/01/2016 10:18 P.M.",
   "end_date": "12/03/2016 01:08 A.M.",
   "est_completion_time":"",
   "progress": 100
 }, {
   "queue_name": "Batch Two",
+  "status": "completed",
   "start_date": "12/10/2016 12:18 A.M.",
   "end_date": "12/11/2016 05:23 P.M.",
   "est_completion_time":"",
   "progress": 100
 }, {
   "queue_name": "Batch Three",
+  "status": "inProgress",
   "start_date": "04/01/2017 12:18 A.M.",
   "end_date": "06/01/2017 03:21 P.M.",
   "est_completion_time":"9hr 21mins 15sec",
   "progress": 60
 }, {
   "queue_name": "Batch Four",
+  "status": "paused",
   "start_date": "05/01/2017 01:25 A.M.",
-  "end_date": "06/01/2017 12:30 A.M.",
+  "end_date": "",
   "est_completion_time":"1hr 08mins 21secs",
   "progress": 97
 }, {
   "queue_name": "Batch Five",
+  "status": "error",
   "start_date": "05/01/2017 12:18 A.M.",
   "end_date": "08/01/2017 03:37 A.M.",
-  "est_completion_time":"-1",
-  "progress": -1
+  "est_completion_time":"",
+  "progress": 20
 }, {
   "queue_name": "Batch Six",
+  "status": "completed",
   "start_date": "16/10/2016 12:18 A.M.",
   "end_date": "18/10/2016 05:23 P.M.",
   "est_completion_time":"",
