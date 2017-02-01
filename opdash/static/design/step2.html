@@ -46,10 +46,11 @@
                 <div class="rs-nav-brand">
                     <a href=""></a>
                 </div>
-                <!--                 <ul class="rs-nav">
-                    <li class="rs-nav-item active"><a class="rs-nav-link" href="">Migration</a></li>
-                    <li class="rs-nav-item"><a class="rs-nav-link" href="">Reports</a></li>
-                </ul> -->
+                <ul class="rs-nav">
+                    <li class="rs-dropdown rs-primary-dropdown active">
+                        <a class="" href="step0.html">Dashboard</a>
+                    </li>
+                </ul>
             </div>
         </div>
         <!-- End Primary Nav -->
@@ -58,32 +59,37 @@
                 <div class="rs-sidebar rs-pull-right">
                     <div class="rs-inner">
                         <div class="info-panel">
-                            <h4>Current Pricing</h4>
+                            <h3>Current Pricing</h3>
                             <p>
                                 Billing Period:
                                 <br>
                                 <em>12/12/2016 to 1/11/2017</em>
                                 <br>
-                                <b>$485</b>
+                                <big><b>$485</b></big>
                                 <br>
                                 <a href="">(See Details)</a>
                             </p>
                         </div>
                         <div class="white-panel">
-                            <h4>New Pricing</h4>
+                            <h3>New Pricing</h3>
                             <p>
-                                <b>$431.81</b>
+                                <big><b>$431.81</b></big>
                                 <br>
                                 <a href="">(See Details)</a>
                             </p>
                         </div>
                         <br>
                         <div class="rs-row pricing-buttons">
-                            <button class="rs-btn span-12" ng-click="vm.saveItems()">Save For Later</button>
-                        </div>
-                        <div class="rs-row">
                             <a class="rs-btn span-5" ng-link="['Tenant']" href="step1.html">Back</a>
                             <a class="rs-btn rs-btn-primary span-7" ng-click="vm.continue()" href="step3.html">Continue</a>
+                        </div>
+               
+                        <div class="rs-row pricing-buttons">
+                            <button class="rs-btn span-12" ng-click="vm.saveItems()">Save for later</button>
+                        </div>
+
+                        <div class="rs-row">
+                            <button class="rs-btn span-12" ng-click="vm.saveItems()">Cancel Migration</button>
                         </div>
                         <br>
                     </div>
@@ -124,10 +130,12 @@
                     </div>
                     <!-- End Stepper -->
                     <hr>
-                    <div class="rs-inner">
+                    <div class="rs-inner recommend">
                         <h2>User Namegoeshere ( #1024814 )</h2>
-                        <h4>Resource Types</h4>
-                        <input type="text" class="rs-input-large searchbox" placeholder="filter by keyword or tag...">
+                        <h3>Migration Namegoeshere</h3>
+                        <input type="text" class="rs-input-large searchbox rs-pull-right" placeholder="filter by keyword or tag...">
+                        <h4>Choose Desitination</h4>
+                        
                         <ul class="rs-tabs">
                             <li class="active"><a href="#Servers">Servers <span class="rs-quiet">(1)</span></a></li>
                             <li class="hover"><a href="#Load">Files<span class="rs-quiet">(3)</span></a></li>
@@ -139,7 +147,7 @@
                         </ul>
                         <div class="rs-tab-content">
                             <div class="rs-tab-pane active" id="Servers">
-                                <table class="rs-list-table">
+                                <table class="rs-list-table ">
                                     <thead>
                                         <th>
                                             <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
@@ -176,154 +184,68 @@
                                     <tbody>
                                         <tr>
                                             <td class="rs-table-link">
-                                                <a href="javascript:void(0);">cloud-endure-demo-A_db_slave One</a>
-                                                <div class="rs-popover">
-                                                    <div class="rs-popover-arrow rs-popover-arrow-top-left"></div>
-                                                    <div class="rs-popover-content">
-                                                        <div class="rs-popover-body">
-                                                            <div class="rs-form-horizontal ">
-                                                                <div class="rs-control-group">
-                                                                    <h5>cloud-endure-demo-A_db_slave One</h5>
-                                                                    <br>
-                                                                    <label class="rs-control-label">IP Address</label>
-                                                                    <div class="rs-controls">
-                                                                        198.61.210.149
-                                                                    </div>
-                                                                </div>
-                                                                <div class="rs-control-group">
-                                                                    <label class="rs-control-label">RAM</label>
-                                                                    <div class="rs-controls">
-                                                                        1024 MB
-                                                                    </div>
-                                                                </div>
-                                                                <div class="accordion" id="accordion1">
-                                                                    <div class="accordion-group">
-                                                                        <div class="accordion-heading">
-                                                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#Dependencies">Dependencies: (15) <i class="fa fa-caret-down"></i></a>
-                                                                        </div>
-                                                                        <div id="Dependencies" class="accordion-body collapse ">
-                                                                            <div class="accordion-inner">
-                                                                                <ul>
-                                                                                    <li>Network</li>
-                                                                                    <li>Network</li>
-                                                                                    <li>Network</li>
-                                                                                    <li>Network</li>
-                                                                                    <li>Network</li>
-                                                                                    <li>Network</li>
-                                                                                    <li>Network</li>
-                                                                                    <li>Network</li>
-                                                                                    <li>Network</li>
-                                                                                    <li>Network</li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="rs-popover-footer rs-btn-group">
-                                                            <div class="rs-btn rs-btn-primary">Modify</div>
-                                                            <div class="rs-btn rs-btn-link">Cancel</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <a href="#myModal" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave One</a>
                                             </td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
                                             <td class="rs-table-cog">
-                                                <div class="rs-dropdown">
-                                                    <div class="rs-cog rs-dropdown-toggle"></div>
-                                                    <ul class="rs-dropdown-menu hidden">
-                                                        <li><span class="rs-dropdown-category">Manage</span></li>
-                                                        <li><a href="#">Action Name&hellip;</a></li>
-                                                    </ul>
-                                                </div>
+                                                <a href="#myModal2" role="button" data-toggle="modal"><i class="rs-cog "></i></a>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Two</a></td>
+                                            <td class="rs-table-link"><a href="#myModal" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Two</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
                                             <td class="rs-table-cog">
-                                                <div class="rs-dropdown">
-                                                    <div class="rs-cog rs-dropdown-toggle"></div>
-                                                    <ul class="rs-dropdown-menu hidden">
-                                                        <li><span class="rs-dropdown-category">Manage</span></li>
-                                                        <li><a href="#">Action Name&hellip;</a></li>
-                                                    </ul>
-                                                </div>
+                                                <a href="#myModal2" role="button" data-toggle="modal"><i class="rs-cog "></i></a>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Three</a></td>
+                                            <td class="rs-table-link"><a href="#myModal" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Three</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
                                             <td class="rs-table-cog">
-                                                <div class="rs-dropdown">
-                                                    <div class="rs-cog rs-dropdown-toggle"></div>
-                                                    <ul class="rs-dropdown-menu hidden">
-                                                        <li><span class="rs-dropdown-category">Manage</span></li>
-                                                        <li><a href="#">Action Name&hellip;</a></li>
-                                                    </ul>
-                                                </div>
+                                                <a href="#myModal2" role="button" data-toggle="modal"><i class="rs-cog "></i></a>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Four</a></td>
+                                            <td class="rs-table-link"><a href="#myModal" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Four</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
                                             <td class="rs-table-cog">
-                                                <div class="rs-dropdown">
-                                                    <div class="rs-cog rs-dropdown-toggle"></div>
-                                                    <ul class="rs-dropdown-menu hidden">
-                                                        <li><span class="rs-dropdown-category">Manage</span></li>
-                                                        <li><a href="#">Action Name&hellip;</a></li>
-                                                    </ul>
-                                                </div>
+                                                <a href="#myModal2" role="button" data-toggle="modal"><i class="rs-cog "></i></a>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Five</a></td>
+                                            <td class="rs-table-link"><a href="#myModal" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Five</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
                                             <td class="rs-table-cog">
-                                                <div class="rs-dropdown">
-                                                    <div class="rs-cog rs-dropdown-toggle"></div>
-                                                    <ul class="rs-dropdown-menu hidden">
-                                                        <li><span class="rs-dropdown-category">Manage</span></li>
-                                                        <li><a href="#">Action Name&hellip;</a></li>
-                                                    </ul>
-                                                </div>
+                                                <a href="#myModal2" role="button" data-toggle="modal"><i class="rs-cog "></i></a>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Six</a></td>
+                                            <td class="rs-table-link"><a href="#myModal" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Six</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
                                             <td class="rs-table-cog">
-                                                <div class="rs-dropdown">
-                                                    <div class="rs-cog rs-dropdown-toggle"></div>
-                                                    <ul class="rs-dropdown-menu hidden">
-                                                        <li><span class="rs-dropdown-category">Manage</span></li>
-                                                        <li><a href="#">Action Name&hellip;</a></li>
-                                                    </ul>
-                                                </div>
+                                                <a href="#myModal2" role="button" data-toggle="modal"><i class="rs-cog "></i></a>
                                             </td>
                                         </tr>
                                     </tbody>
-                                    <!-- ********** PAGINATION GOES HERE... ************* -->
+   
                                 </table>
                             </div>
                             <div class="rs-tab-pane " id="Load">
@@ -331,6 +253,21 @@
                             </div>
                         </div>
                         <br>
+                        <div class="pagination pagination-mini" >
+                            <ul>
+                                <li><a href="#">Prev</a></li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">Next</a></li>
+                                <li><span>Showing 6 of 10</span></li>
+                            </ul>
+                        </div>
+                        <br>
+
+
                         <!-- <h4>1 items selected</h4>
                             <div class="selected-items">
                                 <span class="rs-status" title="cloud-endure-demo-B_wordpress_2">
@@ -417,12 +354,193 @@
             </ul>
         </div>
     </div>
+    <!-- Modal -->
+    <div id="myModal" class="modal hide fade details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="rs-content rs-panel  rs-detail-xlarge">
+            <div class="rs-detail-header">
+
+                <div class="rs-detail-header-subtitle">Server Name</div>
+                <div class="rs-detail-header-title">cloud-endure-demo-A_db_slave One</div>
+            </div>
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">Server Details</div>
+                </div>
+                <div class="rs-detail-section-body">
+                    <ul class="rs-detail-list">
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Server Status</div>
+                            <div class="rs-detail-value"><span class="rs-status rs-status-ok">Active</span></div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">ID</div>
+                            <div class="rs-detail-value">86753098675309</div>
+                        </li>
+                        
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key" id="size-key">RAM</div>
+                            <div class="rs-detail-value">
+                                <div class="rs-progress rs-progress-small">
+                                    <div class="rs-progress-inner">
+                                        <div class="rs-segment" style="width: 49%">
+                                            <div class="rs-bar rs-status-info"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="rs-progress-label">912.23 MB of 2 GB</span>
+                            </div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key" id="size-key">Disk</div>
+                            <div class="rs-detail-value">100 GB
+                                <button class="rs-edit rs-popover-source" data-popover-target="size-key" data-popover="resize-popover" data-popover-position="right" id="detail-example-edit-button"></button>
+                            </div>
+                        </li>
+
+        
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Region</div>
+                            <div class="rs-detail-value">Dallas (DFW)</div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Server Type</div>
+                            <div class="rs-detail-value">First Generation Server</div>
+                        </li>
+       
+                    </ul>
+                </div>
+            </div>
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">Networks</div>
+                </div>
+                <div class="rs-detail-section-body">
+                    <div class="rs-embedded-list-table-wrapper rs-embedded-small">
+                        <table class="rs-list-table rs-embedded-list-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>IPv4</th>
+                                    <th>IPv6</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="rs-table-text">PublicNet <span class="rs-quiet">(Internet)</span></td>
+                                    <td class="rs-table-text">101.122.11.222</td>
+                                    <td class="rs-table-text"><span class="rs-quiet">None</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="rs-table-text">ServiceNet <span class="rs-quiet">(Rackspace DFW)</span></td>
+                                    <td class="rs-table-text">10.111.22.112</td>
+                                    <td class="rs-table-text"><span class="rs-quiet">None</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+    </div>
+
+    <div id="myModal2" class="modal hide fade details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Choose your configuration</h3>
+        </div>
+        <div class="modal-body">
+            <form class="rs-form-horizontal rs-form-medium">
+              <div class="rs-control-group">
+
+                <label class="rs-control-label">AWS Region</label>
+                <div class="rs-controls">
+                  <select>
+                    <option>US-East-1</option>
+                    <option>US-East-1</option>
+                    <option>US-East-1</option>
+                    <option>US-East-1</option>
+                  </select>
+                </div>
+            </div>
+            <div class="rs-control-group">
+                <label class="rs-control-label">AWS Zone</label>
+                <div class="rs-controls">
+                  <select>
+                    <option>US-East-1a 1</option>
+                    <option>US-East-1a 2</option>
+                    <option>US-East-1a 3</option>
+                    <option>US-East-1a 3</option>
+                  </select>
+                </div>
+            </div>
+
+            
+            
+            AWS Instance
+            <div class="rs-embedded-list-table-wrapper rs-embedded-small">
+                <table class="rs-list-table rs-select-table">
+                    <thead>
+                        <tr>
+                            <th class="rs-table-checkbox"></th>
+                            <th>Name</th>
+                            <th>IPv4</th>
+                            <th>IPv6</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="rs-table-checkbox">
+                                <input type="checkbox" />
+                            </td>
+                            <td class="rs-table-text">General Purpose</td>
+                            <td class="rs-table-text"></td>
+                            <td class="rs-table-text"></td>
+                        </tr>
+                        <tr class="selected">
+                            <td class="rs-table-checkbox" >
+                                <input type="checkbox" / checked="checked">
+                            </td>
+                            <td class="rs-table-text">T2</td>
+                            <td class="rs-table-text"></td>
+                            <td class="rs-table-text"></td>
+                        </tr>
+                        <tr>
+                            <td class="rs-table-checkbox">
+                                <input type="checkbox" />
+                            </td>
+                            <td class="rs-table-text">M4</td>
+                            <td class="rs-table-text"></td>
+                            <td class="rs-table-text"></td>
+                        </tr>
+                        <tr>
+                            <td class="rs-table-checkbox">
+                                <input type="checkbox" />
+                            </td>
+                            <td class="rs-table-text">M3</td>
+                            <td class="rs-table-text"></td>
+                            <td class="rs-table-text"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="rs-btn rs-btn-primary">Save changes</button>
+        </div>
+    </div>
+    <!-- end modal -->
+
     <script type="text/javascript">
-    $(document).ready(function() {
-        var tooltip;
-        tooltip = new canon.Tooltip();
-    });
+        $(document).ready(function() {
+            var tooltip;
+            tooltip = new canon.Tooltip();
+        });
     </script>
+
     <script src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
