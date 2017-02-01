@@ -1,162 +1,102 @@
-<rsinteractiveheader pagenum="0"></rsinteractiveheader>
-<hr>
-<h2>User #1024814 </h2>
-<h4>Resource Types</h4>
-<input type="text" class="rs-input-large searchbox" ng-model="vm.filterSearch" placeholder="filter by keyword or tag...">
-<div class="rs-row">
-    <div class="span-9">
-        <div class="rs-row">
-            <rs-tabs alignment="horizontal">
-                <rs-tab title="Servers">
-                    <rsmigrationitem type="server" filtervalue="vm.filterSearch"></rsmigrationitem>
-                </rs-tab>
-                <rs-tab title="Networks">
-                    <rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>
-                </rs-tab>
-                <rs-tab title="Files">
-                    Files
-                    <!--<rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>-->
-                </rs-tab>
-                <rs-tab title="Load Balancers">
-                    Load Balancers
-                    <!--<rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>-->
-                </rs-tab>
-            </rs-tabs>
-        </div>
-     </div>
-</div>
-<br>
-<div class="rs-row">
-    <div class="span-8">
-        <h4>Items Selected</h4>
-        <div class="accordion" id="accordion2">
-            <div class="accordion-group">
-                <div class="accordion-heading ">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#server-name">
-                        <b class=""> Servers (12)  <i class="fa fa-caret-down"></i></b>
-                    </a>
-                </div>
-                <div id="server-name" class="accordion-body collapse ">
-                    <div class="accordion-inner ">
-                        <ul class="inline">
-                            <li>cloud-endure-demo-A_db_slave</li>
-                            <li>cloud-endure-demo-A_db_slave</li>
-                            <li>cloud-endure-demo-A_db_slave</li>
-                            <li>cloud-endure-demo-A_db_slave</li>
-                            <li>cloud-endure-demo-A_db_slave</li>
-                            <li>cloud-endure-demo-A_db_slave</li>
-                            <li>cloud-endure-demo-A_db_slave</li>
-                            <li>cloud-endure-demo-A_db_slave</li>
-                            <li>cloud-endure-demo-A_db_slave</li>
-                            <li>cloud-endure-demo-A_db_slave</li>
-                            <li>cloud-endure-demo-A_db_slave</li>
-                            <li>cloud-endure-demo-A_db_slave</li>
-                        </ul>
+<div class="rs-wrapper">
+        <div class="migration-mgr rs-container ">
+            <div class="rs-main ">
+                <div class="rs-content rs-panel">
+                    <!-- Start Stepper -->
+                   <rsinteractiveheader pagenum="0"></rsinteractiveheader>
+                    <!-- End Stepper -->
+                    <hr>
+                    <div class="rs-inner">
+                        <h2>User #1024814 </h2>
+                        <h4>Resource Types</h4>
+                        <input type="text" class="rs-input-large searchbox" ng-model="vm.filterSearch" placeholder="filter by keyword or tag...">
+                        <rs-tabs alignment="horizontal">
+                            <rs-tab title="Servers">
+                                <rsmigrationitem type="server" filtervalue="vm.filterSearch"></rsmigrationitem>
+                             </rs-tab>
+                            <rs-tab title="Networks">
+                                <rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>
+                            </rs-tab>
+                            <rs-tab title="Files">
+                                Files
+                                <!--<rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>-->
+                            </rs-tab>
+                            <rs-tab title="Load Balancers">
+                                Load Balancers
+                                <!--<rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>-->
+                            </rs-tab>
+                        </rs-tabs>
+                        <br>
+                        <div class="rs-row">
+                            <div class="span-8">
+                                <h4>Items Selected</h4>
+                                <div class="accordion" id="accordion2">
+                                    <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}">
+                                        <div class="accordion-heading ">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#server-name">
+                                                <b class=""> Servers ({{vm.selectedItems.server.length}})  <i class="fa fa-caret-down"></i></b>
+                                            </a>
+                                        </div>
+                                        <div id="server-name" class="accordion-body collapse ">
+                                            <div class="accordion-inner ">
+                                                <ul class="inline">
+                                                    <li ng-repeat="item in vm.selectedItems.server">{{item.name}}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-group" ng-class="{disabled:vm.selectedItems.network.length == 0}">
+                                        <div class="accordion-heading ">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#file-name">
+                                                <b class="">  Networks ({{vm.selectedItems.network.length}}) <i class="fa fa-caret-down"></i></b>
+                                            </a>
+                                        </div>
+                                        <div id="file-name" class="accordion-body collapse">
+                                            <div class="accordion-inner">
+                                                <ul class="inline">
+                                                    <li ng-repeat="item in vm.selectedItems.network">{{item.name}}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-group disabled">
+                                        <div class="accordion-heading ">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#block-name">
+                                                <b class=""> Files (0) <i class="fa fa-caret-down"></i></b>
+                                            </a>
+                                        </div>
+                                        <div id="block-name" class="accordion-body collapse">
+                                            <div class="accordion-inner">
+                                                <ul class="inline">
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-group disabled">
+                                        <div class="accordion-heading ">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#cdn-name">
+                                                <b class="">Load Balancers (0) <i class="fa fa-caret-down"></i></b>
+                                            </a>
+                                        </div>
+                                        <div id="cdn-name" class="accordion-body collapse">
+                                            <div class="accordion-inner">
+                                                <ul class="inline">
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span-4">
+                                <div class="rs-pull-right ">
+                                    <a class="rs-btn" ng-click="vm.saveItems()">Save For Later</a>
+                                    <a class="rs-btn rs-btn-primary " ng-click="vm.continue()" href="">Continue</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="accordion-group">
-                <div class="accordion-heading ">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#file-name">
-                        <b class="">  Files (3) <i class="fa fa-caret-down"></i></b>
-                    </a>
-                </div>
-                <div id="file-name" class="accordion-body collapse">
-                    <div class="accordion-inner">
-                        <ul class="inline">
-                            <li>File</li>
-                            <li>File</li>
-                            <li>File</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-group">
-                <div class="accordion-heading ">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#block-name">
-                        <b class=""> Blocks (35) <i class="fa fa-caret-down"></i></b>
-                    </a>
-                </div>
-                <div id="block-name" class="accordion-body collapse">
-                    <div class="accordion-inner">
-                        <ul class="inline">
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                            <li>Block</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-group">
-                <div class="accordion-heading ">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#cdn-name">
-                        <b class="">CDN (1) <i class="fa fa-caret-down"></i></b>
-                    </a>
-                </div>
-                <div id="cdn-name" class="accordion-body collapse">
-                    <div class="accordion-inner">
-                        <ul class="inline">
-                            <li>CDN</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+             <rsinteractivefooter></rsinteractivefooter>
         </div>
     </div>
-    <div class="span-4">
-        <div class="rs-pull-right" style="margin-top: 15px">
-            <a class="rs-btn" ng-click="vm.saveItems()">Save For Later</a>
-            <a class="rs-btn rs-btn-primary " ng-click="vm.continue()">Continue</a>
-        </div>
-    </div>
-</div>
-
-    <!--<div class="span-3 right-sidebar">
-        <div class="rs-facet-section">
-            <div class="rs-facet-section-body">
-                <br>
-                <div class="rs-row">
-                    <button class="rs-btn span-12" ng-click="vm.saveItems()">Save For Later</button><br><br>
-                </div>
-                <div class="rs-row">
-                    <a class="rs-btn span-5" ng-link="['Tenant']">Back</a>
-                    <button class="rs-btn rs-btn-primary span-7" ng-click="vm.continue()">Continue</button>
-                </div>
-            </div>
-        </div>
-    </div>-->
-
-
-<rsinteractivefooter></rsinteractivefooter>

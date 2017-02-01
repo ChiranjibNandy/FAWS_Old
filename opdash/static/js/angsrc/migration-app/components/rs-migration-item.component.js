@@ -86,7 +86,7 @@
                      * @type {Array}
                      * @description Set of selected resources of the given type
                      */
-                    vm.selectedItems = [];
+                    vm.selectedItems = {};
 
                     /**
                      * @ngdoc property
@@ -164,7 +164,7 @@
                         
                         var servers_selected = datastoreservice.getItems(vm.type);
                         angular.forEach(servers_selected, function (item_selected) {
-                             vm.parent.addItem(item_selected);
+                             vm.parent.addItem(item_selected, vm.type);
                          });
                     }
 
@@ -197,10 +197,10 @@
                 vm.changeSelectAll = function (item, fromGlobal) {
                     if(item.selected){
                         item.type = vm.type;
-                        vm.parent.addItem(item);
+                        vm.parent.addItem(item, vm.type);
                     }else{
                         item.type = vm.type;
-                        vm.parent.removeItem(item);
+                        vm.parent.removeItem(item, vm.type);
                     }
 
                     if(!fromGlobal) {
