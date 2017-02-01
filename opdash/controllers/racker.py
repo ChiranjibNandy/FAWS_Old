@@ -49,17 +49,17 @@ def select_tenant_post():
     if tenant_id:
         session['tenant_id'] = tenant_id
         return current_app.make_response(
-            redirect(mod.get_base_url()))
+            redirect(current_app.config["CP_BASE_URL"] + "/"))
     else:
         error_message = "You must select a tenant."
 
     return render_template('select-tenant.html', error_message=error_message)
 
 
-# @mod.route('/')
-# def index():
-#     """Show index page"""
-#     return render_template('index.html')
+@mod.route('/')
+def index():
+    """Show index page"""
+    return render_template('index.html')
 
 
 @mod.route('/migrations')

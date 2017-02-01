@@ -1,23 +1,4 @@
-<script type="text/javascript">
-    (function() {
-        //$('#rs-main-panel').style.minHeight = '428px';
-        document.getElementById("subNav").style.display = "block";
-        var subMenus = $(".rs-nav-secondary .rs-nav-item");
-        $(subMenus).removeClass("active");
-        $(subMenus).each(function (index) { 
-            if(index > 1){
-               $(subMenus[index]).addClass("disabled");
-            }
-            else{
-                $(subMenus[index]).removeClass("disabled");
-            }
-
-        });
-        $(subMenus[1]).addClass("active");
-    })();
-</script>
-
- <div class="rs-wrapper">
+<div class="rs-wrapper">
         <div class="rs-container migration-mgr">
             <div class="rs-main rs-panel">
                 <div class="rs-sidebar rs-pull-right">
@@ -63,7 +44,7 @@
                         <div class="mdl-card__supporting-text">
                             <div class="mdl-stepper-horizontal-alternative">
                                 <div class="mdl-stepper-step active-step step-done">
-                                    <a href="step1.html">
+                                    <a href="#/migration/resources">
                                         <div class="mdl-stepper-circle"><span>1</span></div>
                                     </a>
                                     <div class="mdl-stepper-title">Select Resources</div>

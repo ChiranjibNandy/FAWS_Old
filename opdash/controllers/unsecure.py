@@ -52,7 +52,7 @@ def login_post():
         if service_catalog:
             mod.update_session_user(service_catalog)
             return current_app.make_response(
-                redirect(mod.get_base_url()))
+                redirect(current_app.config["CP_BASE_URL"] + "/"))
 
     current_app.logger.error("{0} -- {1}".format(error_message, username))
 
@@ -63,4 +63,4 @@ def login_post():
 def logout():
     g.user_data = None
     session.clear()
-    return redirect(mod.get_base_url() + "/login")
+    return redirect(current_app.config["CP_BASE_URL"] + "/login")
