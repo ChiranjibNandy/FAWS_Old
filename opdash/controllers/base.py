@@ -3,7 +3,6 @@ import json
 
 # noinspection PyUnresolvedReferences
 from six.moves.urllib.parse import urlparse
-from six.moves.urllib import parse as urlparse
 from opdash.rax.pilot import get_pilot_header
 
 
