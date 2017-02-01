@@ -93,8 +93,6 @@
                             <div class="rs-table-overlay">
                                 <div class="rs-table-overlay-content">
                                     <div class="rs-table-overlay-title">You don't have any batches migrating yet.</div>
-                                    
-                                    
                                 </div>
                             </div>
                         </div>
@@ -129,8 +127,6 @@
                             <div class="rs-table-overlay">
                                 <div class="rs-table-overlay-content">
                                     <div class="rs-table-overlay-title">You don't have any completed batches yet.</div>
-                                    
-                                    
                                 </div>
                             </div>
                         </div>
@@ -154,8 +150,6 @@
                                             <div class="rs-table-overlay">
                                                 <div class="rs-table-overlay-content">
                                                     <div class="rs-table-overlay-title">You don't have any alerts yet.</div>
-                                                    
-                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -180,8 +174,6 @@
                                             <div class="rs-table-overlay">
                                                 <div class="rs-table-overlay-content">
                                                     <div class="rs-table-overlay-title">You don't have any tickets yet.</div>
-                                                    
-                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -235,22 +227,37 @@
             </ul>
         </div>
     </div>
-
     <!-- Modal -->
-  
+    <div class="modal hide fade details" id="myModal">
+        <br>
 
+        <div class="modal-body">
+            <h3 class="rs-page-title">Welcome to the Rackspace Migration Manager!</h3>
+            <p><big>We've created an application to help you easliy migrate to AWS, customize your infrastructure and access Rackspace Fanatical® support.</big>
+            <br><br>
+
+            Perl emacs Linus Torvalds concurrently terminal case tera ddos todo script kiddies kilo private mainframe. Buffer long eof hack the mainframe loop overflow ssh stdio.h crack server. Afk nak protocol fail wombat bypass infinite loop tarball double fork boolean client cache memory leak syn eaten by a grue. <br><br>
+            It looks like you currently have nothing saved to migrate, click the '<b>Start a Migration</b>' button below to get started.</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="rs-btn" data-dismiss="modal">Cancel</a>
+            <a href="step1.html" class="rs-btn rs-btn-primary">Start a Migration</a>
+        </div>
+    </div>
     <script type="text/javascript">
-        $(document).ready(function() {
-            var tooltip;
-            tooltip = new canon.Tooltip();
-        });
+    $(document).ready(function() {
+        var tooltip;
+        tooltip = new canon.Tooltip();
+    });
     </script>
-
-    
-
     <script type="application/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
     <script type="application/javascript" src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    $(window).load(function() {
+        $('#myModal').modal('show');
+    });
+    </script>
 </body>
 
 </html>
