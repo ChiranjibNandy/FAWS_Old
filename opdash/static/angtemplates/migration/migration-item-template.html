@@ -9,11 +9,11 @@
     <table class="rs-list-table rs-embedded-list-table" ng-show="!vm.loading && !vm.loadError && !vm.noData">
         <thead>
             <tr>
-                <th class="rs-table-status"></th>
-                <th class="rs-table-checkbox">
+                <th class="rs-table-status" style="background-color: white"></th>
+                <th class="rs-table-checkbox" style="background-color: white">
                     <input type="checkbox" ng-model="vm.isAllSelected" ng-change="vm.changeItemSelection()" />
                 </th>
-                <th ng-repeat="label in vm.labels" ng-click="vm.sort(label.field)">
+                <th ng-repeat="label in vm.labels" ng-click="vm.sort(label.field)" style="background-color: white">
                     <a class="rs-table-sort rs-table-sort-desc">
                         <span class="rs-table-sort-text">{{label.text}}</span>
                         <span class="rs-table-sort-indicator"></span>

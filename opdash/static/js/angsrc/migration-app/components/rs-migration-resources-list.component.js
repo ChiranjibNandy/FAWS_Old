@@ -31,44 +31,38 @@
                     $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Migration";
                     authservice.getAuth().tenant_id = 1024814;
                     vm.auth = authservice.getAuth();
-                    vm.selectedItems = [];
+                    vm.selectedItems = {
+                        server:[],
+                        network:[]
+                    };
                     vm.filterSearch = "";
                 }
 
                 /**
                  * @ngdoc method
-                 * @name migrate
+                 * @name addItem
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
                  * @param {Object} item Object describing the selected resource
                  * @description 
                  * Called by child component when an item is selected
                  */
-                vm.addItem = function(item) {
-                    if(vm.selectedItems.indexOf(item)<0)
-                        vm.selectedItems.push(item);
+                vm.addItem = function(item, type) {
+                    if(vm.selectedItems[type].indexOf(item)<0)
+                        vm.selectedItems[type].push(item);
                 }
 
                 /**
                  * @ngdoc method
-                 * @name migrate
+                 * @name removeItem
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
                  * @param {Object} item Object describing the selected resource
                  * @description 
                  * Called by child component when an item is removed by user
                  */
-                vm.removeItem = function(item) {
-                    if(vm.selectedItems.indexOf(item) >= 0){
-                        /**
-                         * @ngdoc event
-                         * @name ItemRemoved
-                         * @eventOf migrationApp.controller:rsmigrationresourceslistCtrl
-                         * @eventType broadcast
-                         * @param {Object} item Object describing the deselected resource
-                         * @description 
-                         * Event to notify the child components that a resource has been deselected
-                         */
+                vm.removeItem = function(item, type) {
+                    if(vm.selectedItems[type].indexOf(item)>=0){
                         $scope.$broadcast("ItemRemoved", item); // broadcast event to all child components
-                        vm.selectedItems.splice(vm.selectedItems.indexOf(item), 1);
+                        vm.selectedItems[type].splice(vm.selectedItems[type].indexOf(item), 1);
                     }
                 }
 
@@ -91,7 +85,7 @@
                  * Continue to next step: **Recommendations**
                  */
                 vm.continue = function() {
-                    if(vm.selectedItems.length > 0){
+                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0){
                         dataStoreService.setItems(vm.selectedItems);
                         $rootRouter.navigate(["MigrationRecommendation"]);
                     }

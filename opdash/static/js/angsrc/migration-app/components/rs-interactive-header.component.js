@@ -3,15 +3,15 @@
 
     /**
      * @ngdoc object
-     * @name migrationApp.object:rsinteractivefooter
+     * @name migrationApp.object:rsinteractiveheader
      * @description
-     * Component to have a interactive footer in every page.  
+     * Component to have a interactive header in every page.  
      *   
-     * This component uses the template: **angtemplates/migration/interactive-footer.html**. It uses the controller {@link migrationApp.controller:rsinteractivefooterCtrl rsinteractivefooterCtrl}.  
+     * This component uses the template: **angtemplates/migration/interactive-header.html**. It uses the controller {@link migrationApp.controller:rsinteractiveheaderCtrl rsinteractiveheaderCtrl}.  
      * @example
      * <example module="migrationApp">
      *   <file name="index.html">
-     *      <rsinteractivefooter error-message="Some error message"></rsinteractivefooter>
+     *      <rsinteractiveheader error-message="Some error message"></rsinteractiveheader>
      *   </file>
      * </example>
      */
@@ -24,14 +24,13 @@
             controllerAs: "vm",
             /**
              * @ngdoc controller
-             * @name migrationApp.controller:rsinteractivefooterCtrl
-             * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsinteractivefooter rsinteractivefooter} component
+             * @name migrationApp.controller:rsinteractiveheaderCtrl
+             * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsinteractiveheader rsinteractiveheader} component
              */
             controller: ["datastoreservice", function (dataStoreService) {
                 var vm = this;
                 document.getElementById("subNav").style.display = "block";
                 var subMenus = $("#subNav .mdl-stepper-step");
-                console.log("page num: "+parseInt(vm.pagenum));
                 $(subMenus).removeClass("active-step step-done");
                 $(subMenus).each(function (index) { 
                     if(index > parseInt(vm.pagenum)){

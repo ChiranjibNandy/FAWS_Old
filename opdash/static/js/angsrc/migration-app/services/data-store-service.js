@@ -44,7 +44,10 @@
             self.loadItems = [];
             self.labelsServer = [];
             self.labelsNetwork = [];
-            self.selectedItems = [];
+            self.selectedItems = {
+                server:[],
+                network:[]
+            };
             self.selectedRecommendedItems = [];
             self.selectedDate = {
                 date:'',
@@ -149,7 +152,8 @@
              * Retrieves the saved list of resources of the specified _type_.
              */
             this.getItems = function(type){
-                return self.selectedItems.filter(function(item){return item.type === type;});
+                //return self.selectedItems.filter(function(item){return item.type === type;});
+                 return self.selectedItems[type];
             }
 
             //store items in the recommendation page
