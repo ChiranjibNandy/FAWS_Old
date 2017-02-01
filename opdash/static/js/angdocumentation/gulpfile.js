@@ -5,7 +5,7 @@ var gulp = require("gulp"),
     ngDocs = require("gulp-ngdocs");
 
 // Define your source files
-var jsSrcFiles = ["../opdash-cp/opdash/static/js/angsrc/**/*.js", "./overview.js"];
+var jsSrcFiles = ["../angsrc/**/*.js", "./overview.js"];
 
 // Define your server details
 var serverUrl = "http://localhost:8080/docs",
@@ -13,7 +13,7 @@ var serverUrl = "http://localhost:8080/docs",
 
 var ngDocsOptions = {
     title: "FAWS Migration UI Docs",
-    styles: ["./docs/css/custom.css"]
+    styles: ["./custom.css"]
 }
 
 // Start a local server
