@@ -1,6 +1,8 @@
-from flask import Blueprint, g, session, redirect, abort
+from flask import Blueprint, g, session, redirect, abort, request
 import json
 
+# noinspection PyUnresolvedReferences
+from six.moves.urllib.parse import urlparse
 from opdash.rax.pilot import get_pilot_header
 
 
@@ -27,6 +29,27 @@ class UnsecureBlueprint(Blueprint):
     def on_after_request(self, response):
         self._app.logger.debug("***** BASE on_after_request *****")
         return response
+
+    def get_base_url(self):
+        '''
+            Gets the base url of the request.
+            Looks for the X-Forwarded-Proto header to see
+            if the request came through the load balancer.
+            If so, uses the protocol specificed in that header.
+        '''
+        parsed_url = urlparse(request.url)
+
+        # Check for X-Forwarded-Proto header from AWS load balancer
+        forwarded_proto = request.headers.get('X-Forwarded-Proto')
+        if forwarded_proto:
+            # Change scheme and remove port
+            parsed_url = parsed_url._replace(
+                scheme=forwarded_proto,
+                netloc=parsed_url.hostname)
+
+        return "{scheme}://{netloc}".format(
+            scheme=parsed_url.scheme,
+            netloc=parsed_url.netloc)
 
     def update_session_user(self, service_catalog):
         ''' Save the user_data to session '''
@@ -90,7 +113,7 @@ class CustomerBlueprint(UnsecureBlueprint):
             self._app.logger.debug('USER IS A CUSTOMER OR RACKER')
             return
         else:
-            return redirect(self._app.config["CP_BASE_URL"] + "/login")
+            return redirect(self.get_base_url() + "/login")
 
 
 class RackerBlueprint(UnsecureBlueprint):
@@ -115,4 +138,4 @@ class RackerBlueprint(UnsecureBlueprint):
             else:
                 abort(403)
         else:
-            return redirect(self._app.config["CP_BASE_URL"] + "/login")
+            return redirect(self.get_base_url() + "/login")
