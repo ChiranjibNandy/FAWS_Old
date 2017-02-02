@@ -1,0 +1,38 @@
+
+                    <div class="rs-inner">
+                        <div class="info-panel">
+                            <h3>Current Pricing</h3>
+                            <p>
+                                Billing Period:
+                                <br>
+                                <em>12/12/2016 to 1/11/2017</em>
+                                <br>
+                                <big><b>${{vm.currentPricing}}</b></big>
+                                <br>
+                                <a href="">(See Details)</a>
+                            </p>
+                        </div>
+                        <div class="white-panel">
+                            <h3>New Pricing</h3>
+                            <p>
+                                <big><b>${{vm.totalCost}}</b></big>
+                                <br>
+                                <a href="">(See Details)</a>
+                            </p>
+                        </div>
+                        <br>
+                        <div class="rs-row pricing-buttons">
+                            <a class="rs-btn span-5" g-link="['Tenant']" ng-click="vm.back()">Back</a>
+                            <a class="rs-btn rs-btn-primary span-7" ng-click="vm.continue()">Continue</a>
+                        </div>
+                        <div class="rs-row pricing-buttons">
+                            <button class="rs-btn span-12" ng-click="vm.saveItems()">Save for later</button>
+                        </div>
+
+                        <div class="rs-row">
+                            <button class="rs-btn span-12" ng-click="vm.saveItems()">Cancel Migration</button>
+                        </div>
+                        <br>
+                    </div>
+                    
+                  
