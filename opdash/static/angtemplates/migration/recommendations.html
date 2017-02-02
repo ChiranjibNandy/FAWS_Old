@@ -1,42 +1,6 @@
-<div class="rs-wrapper">
-        <div class="rs-container migration-mgr">
-            <div class="rs-main rs-panel">
+<div class="rs-main rs-panel">
                 <div class="rs-sidebar rs-pull-right">
-                    <div class="rs-inner">
-                        <div class="info-panel">
-                            <h2>Breakdown</h2>
-                            <h4>Current Pricing</h4>
-                            <p>
-                                Last Month's Invoice:
-                                <br> Billing Period: <em>12-DEC-16 to 11-JAN-17</em>
-                                <br>
-                                <b>$485</b>
-                                <br>
-                                <a href="">(See Details)</a>
-                            </p>
-                        </div>
-                        <div class="white-panel">
-                            <h4>New Pricing</h4>
-                            <p>
-                                Amazon EC2 Service:
-                                <br> Compute: <em>$31.81 </em>
-                                <br> Fanatical AWS Support (Navigator): <em>$400.00</em>
-                                <br>
-                                <b>TOTAL COST: $431.81</b>
-                                <br>
-                                <a href="">(See Details)</a>
-                            </p>
-                        </div>
-                        <br>
-                        <div class="rs-row pricing-buttons">
-                            <button class="rs-btn span-12" ng-click="vm.saveItems()">Save For Later</button>
-                        </div>
-                        <div class="rs-row">
-                            <a class="rs-btn span-5" ng-link="['MigrationResourceList']">Back</a>
-                            <a class="rs-btn rs-btn-primary span-7" ng-click="vm.continue()">Continue</a>
-                        </div>
-                        <br>
-                    </div>
+                    <rspricingpanel page ="recommendation"></rspricingpanel>
                 </div>
                 <div class="rs-content rs-panel">
                     <!-- Start Stepper -->

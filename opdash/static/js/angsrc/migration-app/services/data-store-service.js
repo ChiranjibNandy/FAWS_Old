@@ -183,6 +183,19 @@
                 return self.selectedRecommendedItems;
             }
 
+            this.setRecommendedTotalCost = function(){
+                 self.RecommendedTotalCost = 431.81 ;
+            }
+            this.getRecommendedTotalCost = function(){
+                 return  self.RecommendedTotalCost ;
+            }
+            this.setCurrentPricing = function(){
+                 self.CurrentPricing = 485 ;
+            }
+            this.getCurrentPricing = function(){
+               return   self.CurrentPricing ;
+            }
+
             return self;
         }]); // end of service definition
 })();
