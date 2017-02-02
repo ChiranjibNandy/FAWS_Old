@@ -1,4 +1,4 @@
-<tr ng-repeat="item in vm.items | filter: vm.filtervalue">
+<tr ng-repeat="item in vm.items | filter: vm.filtervalue | limitTo : vm.pageSize : (vm.currentPage-1)*vm.pageSize">
     <td class="rs-table-status" style="background-color: white" 
             ng-class="{'rs-table-status-ok': item.status=='ACTIVE', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
     </td>

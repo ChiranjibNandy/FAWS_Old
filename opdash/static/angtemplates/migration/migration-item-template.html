@@ -1,4 +1,4 @@
-<div class="rs-embedded-list-table-wrapper rs-embedded-medium" style="max-height:298px">
+<div class="rs-embedded-list-table-wrapper rs-embedded-medium" style="max-height:246px; min-height:246px">
     <div ng-show="vm.noData" class="rs-table-overlay">
         <div class="rs-table-overlay-content">
             <div class="rs-table-overlay-title">No {{vm.type}}s found.</div>
@@ -35,4 +35,12 @@
             </div>
         </div>
     </div>
+</div>
+<div class="pagination pagination-mini" ng-if="vm.totalItems">
+    <ul>
+        <li ng-class="{disabled: vm.currentPage == 1}" ng-click="vm.currentPage=vm.currentPage-1"><a href="">Prev</a></li>
+        <li ng-repeat="n in vm.pageArray" ng-click="vm.currentPage = $index+1"><a href="">{{n}}</a></li>
+        <li ng-class="{disabled: vm.currentPage == vm.noOfPages}" ng-click="vm.currentPage=vm.currentPage+1"><a href="">Next</a></li>
+        <li><span>Showing {{(vm.currentPage == 1 ? vm.currentPage : ((vm.currentPage-1)*5)+1)}}-{{(vm.currentPage == vm.noOfPages ? vm.items.length : vm.currentPage*5)}} of {{vm.items.length}}</span></li>
+    </ul>
 </div>
