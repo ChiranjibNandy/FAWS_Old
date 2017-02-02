@@ -68,7 +68,7 @@
                                 <br>
                                 <big><b>$485</b></big>
                                 <br>
-                                <a href="">(See Details)</a>
+                                <a href=""><small>(See Details)</small></a>
                             </p>
                         </div>
                         <div class="white-panel">
@@ -76,7 +76,7 @@
                             <p>
                                 <big><b>$431.81</b></big>
                                 <br>
-                                <a href="">(See Details)</a>
+                                <a href=""><small>(See Details)</small></a>
                             </p>
                         </div>
                         <br>
@@ -89,7 +89,7 @@
                         </div>
 
                         <div class="rs-row">
-                            <button class="rs-btn span-12" ng-click="vm.saveItems()">Cancel Migration</button>
+                            <a class="rs-btn span-12" href="#cancel_modal" role="button" data-toggle="modal" ">Cancel Migration</a>
                         </div>
                         <br>
                     </div>
@@ -134,7 +134,7 @@
                     <hr>
                     <div class="rs-inner">
                         <h2>User Namegoeshere ( #1024814 )</h2>
-                        <h3>Migration Namegoeshere</h3>
+                        <h3>Migration-01Feb2017-0456pm <a href="" class="rs-edit" title="click to edit migration name"></a></h3>
                         <div class="rs-row">
                         
                         
@@ -243,6 +243,32 @@
             </ul>
         </div>
     </div>
+    <!-- modals -->
+    <div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-body">
+            <h3>Would you like to save the selections you've made so far for another time?</h3>
+            <form class=" ">
+                <div class="rs-control-group">
+
+                    <div class="rs-controls">
+                      <label class="rs-radio">
+                        <input type="radio" name="three">
+                        <strong>Yes</strong><br>
+                        <span class="rs-help-block">Save my progress for later</span>
+                      </label>
+                      <label class="rs-radio">
+                        <input type="radio" name="three">
+                        <strong>No</strong>
+                        <span class="rs-help-block">Cancel and move on</span>
+                      </label>
+                    </div>
+                  </div>
+                    <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <a class="rs-btn rs-btn-primary " ng-click="vm.continue()" href="step0.html">Submit</a>
+            </form>
+        </div>
+    </div>
+    <!-- end modals -->
     <script type="text/javascript">
     $(document).ready(function() {
         var tooltip;
