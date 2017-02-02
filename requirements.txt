@@ -3,3 +3,4 @@ requests
 redis
 flask-session
 six
+waitress
