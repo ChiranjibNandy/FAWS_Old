@@ -60,7 +60,6 @@
                  * Continue to next step: **Schedule Migration**
                  */
                 vm.continue = function() {
-                debugger;
                     console.log(vm.page);
                     console.log(vm.selecteditem);
                     dataStoreService.getItems(vm.selecteditem);
