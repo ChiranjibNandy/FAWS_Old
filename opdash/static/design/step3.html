@@ -27,14 +27,14 @@
         <div class="rs-nav-utility">
             <div class="rs-container">
                 <ul class="rs-nav">
-                    <li class="rs-nav-item "><a class="rs-nav-link" href="">Rackspace Cloud</a></li>
-                    <li class="rs-nav-item active"><a class="rs-nav-link" href="step0.html">Fanatical Support for AWS</a></li>
+                    <li class="rs-nav-item"><a class="rs-nav-link" href="">Rackspace Cloud</a></li>
+                    <li class="rs-nav-item active"><a class="rs-nav-link" href="https://mycloud.rackspace.com">Fanatical Support for AWS</a></li>
                 </ul>
                 <ul class="rs-nav rs-pull-right">
                     <li class="rs-nav-item rs-dropdown rs-utility-dropdown">
                         <a class="rs-nav-link rs-dropdown-toggle" href="">Username123 <i class="rs-caret"></i></a>
                     </li>
-                    <li class="rs-nav-item ">
+                    <li class="rs-nav-item">
                         <a class="rs-nav-link" href="">Logout</a>
                     </li>
                 </ul>
@@ -49,7 +49,7 @@
                 </div>
                 <ul class="rs-nav">
                     <li class="rs-dropdown rs-primary-dropdown active">
-                        <a class="" href="step0.html">Dashboard</a>
+                        <a class="" href="step5.html">Migration Dashboard</a>
                     </li>
                 </ul>
             </div>
@@ -87,9 +87,8 @@
                         <div class="rs-row pricing-buttons">
                             <button class="rs-btn span-12" ng-click="vm.saveItems()">Save for later</button>
                         </div>
-
                         <div class="rs-row">
-                            <a class="rs-btn span-12" href="#cancel_modal" role="button" data-toggle="modal" ">Cancel Migration</a>
+                            <a class="rs-btn span-12" href="#cancel_modal" role="button" data-toggle="modal"">Cancel Migration</a>
                         </div>
                         <br>
                     </div>
@@ -115,13 +114,13 @@
                                     <div class="mdl-stepper-bar-left"></div>
                                     <div class="mdl-stepper-bar-right"></div>
                                 </div>
-                                <div class="mdl-stepper-step active-step ">
+                                <div class="mdl-stepper-step active-step">
                                     <div class="mdl-stepper-circle"><span>3</span></div>
                                     <div class="mdl-stepper-title">Schedule Migration</div>
                                     <div class="mdl-stepper-bar-left"></div>
                                     <div class="mdl-stepper-bar-right"></div>
                                 </div>
-                                <div class="mdl-stepper-step ">
+                                <div class="mdl-stepper-step">
                                     <div class="mdl-stepper-circle"><span>4</span></div>
                                     <div class="mdl-stepper-title">Confirm &amp; Migrate</div>
                                     <div class="mdl-stepper-bar-left"></div>
@@ -134,19 +133,16 @@
                     <hr>
                     <div class="rs-inner">
                         <h2>User Namegoeshere ( #1024814 )</h2>
-                        <h3>Migration-01Feb2017-0456pm <a href="" class="rs-edit" title="click to edit migration name"></a></h3>
-                        <div class="rs-row">
-                        
-                        
+                        <h3>Migration-01Feb2017-0456pm <a href="#name_modal2" role="button" data-toggle="modal" class="rs-edit" title="click to edit migration name"></a></h3>
+                        <hr>
+                        <div class="rs-row">                       
                             <form class="rs-form-horizontal span-6">
-
                                 <div class="rs-control-group">
                                     <label class="rs-control-label">Migrate Now </label>
                                     <div class="rs-controls">
                                         <input type="checkbox" name="">
                                     </div>
-                                </div>                            
-
+                                </div>                  
                                 <div class="rs-control-group">
                                     <label class="rs-control-label">Time Zone</label>
                                     <div class="rs-controls">
@@ -161,7 +157,6 @@
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="rs-control-group">
                                     <label class="rs-control-label">Time </label>
                                     <div class="rs-controls">
@@ -184,9 +179,11 @@
                                     </div>
                                 </div>
                                 <br>
-                            <hr>
-                            <h3>Migration schedule summary:</h3>
-                            <big>Jan 25th 2017 at 12:00pm EST- GMT-05:00</big>                              
+                           
+                                <div class="white-panel">
+                                    <h3>Migration Schedule Summary:</h3>
+                                    <big>Jan 25th 2017 at 12:00pm EST- GMT-05:00</big>  
+                                </div>
                             </form>
                             
                             <div ng-app="app" class="span-4">
@@ -217,7 +214,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="span4 ">
+                <div class="span4">
                     <div class="rs-pull-right">
                         <h4>Support</h4>
                         <div class="support-icons">
@@ -244,10 +241,25 @@
         </div>
     </div>
     <!-- modals -->
+    <div id="name_modal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-body">
+            <h3>What would you like to name your migration?</h3>
+            <form class="">
+                <div class="rs-control-group">
+                    
+                    <div class="rs-controls">
+                        <input type="text" placeholder="Migration-01Feb2017-0456pm">
+                    </div>
+                </div>
+                <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <a class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true">Save</a>
+            </form>
+        </div>
+    </div>
     <div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-body">
             <h3>Would you like to save the selections you've made so far for another time?</h3>
-            <form class=" ">
+            <form class="">
                 <div class="rs-control-group">
 
                     <div class="rs-controls">
@@ -264,7 +276,7 @@
                     </div>
                   </div>
                     <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                    <a class="rs-btn rs-btn-primary " ng-click="vm.continue()" href="step0.html">Submit</a>
+                    <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="https://mycloud.rackspace.com">Submit</a>
             </form>
         </div>
     </div>
