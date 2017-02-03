@@ -96,7 +96,7 @@
                      * @description Set of resources of the given type
                      */
                     vm.items = [];
-
+                    vm.pageArray = [];
                     vm.search = {};
                     vm.loading = true;
                     vm.loadError = false;
@@ -146,7 +146,15 @@
                             if(vm.type === "loadBalancers")
                                 vm.items = mapNetworkStatus(dataList, results[1].network_status);
                             //Store all retrieved resources in factory variable
-                            datastoreservice.storeallItems(vm.items, vm.type);               
+                            datastoreservice.storeallItems(vm.items, vm.type);   
+                            // pagination controls
+                            vm.currentPage = 1;
+                            vm.pageSize = 5; // items per page
+                            vm.totalItems = vm.items.length;
+                            vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
+                            for(var i=1;i<=vm.noOfPages;i++){
+                                vm.pageArray.push(i);
+                            };      
                             vm.searchField = results[0].labels[0].field;
                             vm.labels = results[0].labels; // set table headers
                             //Store all labels in factory variable
@@ -159,6 +167,12 @@
                     } else{
                         //For repeated fetch of resources after first time loading.
                         vm.items = datastoreservice.retrieveallItems(vm.type);
+                        // pagination controls
+                        vm.currentPage = 1;
+                        vm.pageSize = 5; // items per page
+                        vm.totalItems = vm.items.length;
+                        vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
+
                         vm.labels = datastoreservice.retrieveallItems("label"+vm.type); // set table headers
                         vm.loading = false;
                         
