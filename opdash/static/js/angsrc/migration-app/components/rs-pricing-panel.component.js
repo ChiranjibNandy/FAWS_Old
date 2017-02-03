@@ -17,8 +17,9 @@
             templateUrl: "/static/angtemplates/migration/pricing-panel.html",
              bindings: {
                 page: "@",
-                selecteditem: "="
+                selecteditem: "=",
             },
+           
             //   require: {
             //      parent: "^^rsmigrationresourceslist,^^rsmigrationrecommendation"
             // },
@@ -35,8 +36,8 @@
                     dataStoreService.setCurrentPricing ();
                     vm.totalCost = dataStoreService.getRecommendedTotalCost();
                     vm.currentPricing = dataStoreService.getCurrentPricing ();
-                    vm.savings = (vm.currentPricing - vm.totalCost); 
-                    // vm.data = dataStoreService.getItems(vm.selectedItem);
+                    vm.savings = (vm.currentPricing - vm.totalCost);           
+                    //vm.data = dataStoreService.getItems(vm.selectedItem);
                     // dataStoreService.setItems(vm.selectedItem);
                     // dataStoreService.getItems(vm.type);
                 };
@@ -59,10 +60,10 @@
                  * @description 
                  * Continue to next step: **Schedule Migration**
                  */
-                vm.continue = function() {
-                    console.log(vm.page);
-                    console.log(vm.selecteditem);
-                    dataStoreService.getItems(vm.selecteditem);
+                vm.continue = function() {     
+                vm.selectedTime = dataStoreService.getScheduleMigration();
+                console.log(vm.selectedTime);
+                   dataStoreService.getItems(vm.selecteditem);
                        if(vm.page==="resources"){
                   if(vm.selecteditem.length>0){
                       dataStoreService.setItems(vm.selecteditem);
@@ -72,22 +73,23 @@
                       {alert("Please select some items to migrate");
                     } 
                      } 
-                     else if(vm.page==="recommendation"){
+                     else if(vm.page==="recommendation"){ 
                     $rootRouter.navigate(["ScheduleMigration"]);
                      }
                     else if(vm.page==="scheduleMigration"){
+                     dataStoreService.setScheduleMigration(vm.selectedTime);  
                       $rootRouter.navigate(["ConfirmMigration"]);
                      }
                 };
-vm.back = function() {
-    if(vm.page==="recommendation"){
+                 vm.back = function() {
+                     if(vm.page==="recommendation"){
                     $rootRouter.navigate(["MigrationResourceList"]);
                      }
                      else if(vm.page==="scheduleMigration"){
-$rootRouter.navigate(["MigrationRecommendation"]);
+                     $rootRouter.navigate(["MigrationRecommendation"]);
 
-                     }
-}
+                         }
+                        }
 
                 return vm;
               

@@ -29,8 +29,43 @@
                 vm.$onInit = function() {
                     $('title')[0].innerHTML =  "Schedule Migration - Rackspace Cloud Migration";
                     vm.tenant_id = 1024814;
-                    vm.timeItems = ["12:00pm","12:30pm","1:00am"];
-                    vm.timeZoneItems = ["EST- GMT-05:00","CST- GMT-06:00","PST- GMT-08:00"];
+                    vm.timeItems = ["12:00am","12:30am","1:00am","1:30am","2:00am","2:30am","3:00am","3:30am","4:00am","4:30am","5:00am","5:30am",
+                    "06:00am","6:30am","7:00am","7:30am","8:00am","8:30am","9:00am","9:30am","10:00am",
+                    "10:30am","11:00am","11:30am","12:00pm","12:30pm","1:00pm","1:30pm","2:00pm","2:30pm",
+                    "3:00pm","3:30pm","4:00pm","4:30pm","5:00pm","5:30pm","6:00pm","6:30pm","7:00pm",
+                    "7:30pm","8:00pm","8:30pm","9:00pm","9:30pm","10:00pm","10:30pm","11:00pm","11:30pm"];
+                    vm.timeZoneItems = ["(GMT -12:00) Eniwetok, Kwajalein",
+                "(GMT -11:00) Midway Island, Samoa",
+                "(GMT -10:00) Hawaii",
+                "(GMT -9:00) Alaska",
+                "(GMT -8:00) Pacific Time (US &amp; Canada)",
+                "(GMT -7:00) Mountain Time (US &amp; Canada)",
+                "(GMT -6:00) Central Time (US &amp; Canada), Mexico City",
+                "(GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima",
+                "(GMT -4:30) Caracas",
+                "(GMT -4:00) Atlantic Time (Canada), La Paz, Santiago",
+                "(GMT -3:00) Brazil, Buenos Aires, Georgetown",
+               "(GMT -2:00) Mid-Atlantic",
+                "(GMT -1:00 hour) Azores, Cape Verde Islands",
+                "(GMT) Western Europe Time, London, Lisbon, Casablanca, Greenwich",
+               "(GMT +1:00 hour) Brussels, Copenhagen, Madrid, Paris",
+                "(GMT +2:00) Kaliningrad, South Africa, Cairo",
+               "(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg",
+               "(GMT +3:30) Tehran",
+                "(GMT +4:00) Abu Dhabi, Muscat, Yerevan, Baku, Tbilisi",
+                 "(GMT +4:30) Kabul",
+                "(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent",
+                "(GMT +5:30) Mumbai, Kolkata, Chennai, New Delhi",
+                "(GMT +5:45) Kathmandu",
+                "(GMT +6:00) Almaty, Dhaka, Colombo",
+               "(GMT +6:30) Yangon, Cocos Islands",
+                "(GMT +7:00) Bangkok, Hanoi, Jakarta",
+                "(GMT +8:00) Beijing, Perth, Singapore, Hong Kong",
+                "(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk",
+               "(GMT +9:30) Adelaide, Darwin",
+                "(GMT +10:00) Eastern Australia, Guam, Vladivostok",
+                "(GMT +11:00) Magadan, Solomon Islands, New Caledonia",
+                    "(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka"]
                     vm.time = vm.timeItems[0];
                     vm.timezone = vm.timeZoneItems[0];
                     vm.selectedDate = moment().format("MMM Do YYYY")+" at "+vm.time+" "+vm.timezone;
@@ -40,6 +75,17 @@
                     var d = new Date();
                     var timestmp = moment(d).format("DDMMMYYYY-hhmma");
                     vm.migrationName = 'Migration-' + timestmp;
+                    $scope.$watch('vm.migrationName', function() {
+                   vm.selectedTime = {
+                   migrationName: vm.migrationName,
+                   time:vm.time,
+                   timezone:vm.timezone
+            };
+
+             dataStoreService.setScheduleMigration(vm.selectedTime);
+    });
+
+
                     $scope.$on("DateChanged", function(event, item){
                         vm.date = item;
                         vm.selectedDate = moment(item).format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
@@ -49,7 +95,6 @@
                 vm.saveItems = function() {
                     alert("Saving items: To be implemented");
                 };
-
                 /**
                  * @ngdoc method
                  * @name timeChange

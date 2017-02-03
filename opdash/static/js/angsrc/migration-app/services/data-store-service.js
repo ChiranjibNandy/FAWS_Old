@@ -54,6 +54,19 @@
                 time:'',
                 timezone:''
             };
+             self.fileItems = [];
+            /**
+              * @ngdoc property
+              * @name loadScheduledMigrationTime
+              * @propertyOf migrationApp.service:datastoreservice
+              * @type {Array}
+              * @description Set of selectedTime for the scheduled migration page
+             */
+            self.selectedTime = {
+               migrationName:'',
+                time:'',
+                timezone:''
+            };
 
             /**
              * @ngdoc method
@@ -195,6 +208,23 @@
             this.getCurrentPricing = function(){
                return   self.CurrentPricing ;
             }
+
+             /**
+             * @ngdoc method
+             * @name setScheduleMigration
+             * @methodOf migrationApp.service:datastoreservice
+             * @param {Array} items The list of resources to be saved for further processing
+             * @description 
+             * Saves list of resources the user wants to migrate.
+             */
+            this.setScheduleMigration = function(items){
+                self.selectedTime = items;
+            }
+            this.getScheduleMigration = function(){
+            return    self.selectedTime;
+            }
+
+
 
             return self;
         }]); // end of service definition
