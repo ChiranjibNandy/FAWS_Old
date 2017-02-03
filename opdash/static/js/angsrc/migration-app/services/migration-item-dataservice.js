@@ -87,10 +87,11 @@
              * @description 
              * This service method returns an _object_. This object has to be sent while making an HTTP POST request to migrate the resource.
              */
-            this.prepareRequest = function(equipments){
+            this.prepareRequest = function(equipments, batchName){
                 var instances = [],networks = [];
                 var auth = authservice.getAuth();
                 var reqObj = {
+                                //batchName: batchName,
                                 source: {
                                     cloud: "rackspace",
                                     tenantid: "1024814",
