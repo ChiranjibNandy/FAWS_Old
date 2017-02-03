@@ -37,28 +37,31 @@
                     vm.userOrTenant = auth.is_racker ? "Tenant" : "User";
 
                     vm.selectedItems = {};
-                    vm.selectedItems.servers = ["cloud-endure-demo-A_db_slave", "cloud-endure-demo-B_db_slave"];
-                    vm.selectedItems.files = ["File 1", "File 2", "File 3"];
-                    vm.selectedItems.blocks = ["Block 1", "Block 2", "Block 3", "Block 4"];
-                    vm.selectedItems.cdns = ["CDN 1"];
+                    vm.selectedItems.servers = dataStoreService.getItems("server");
+                    vm.selectedItems.files = [];
+                    vm.selectedItems.blocks = [];
+                    vm.selectedItems.cdns = [];
 
                     vm.destination = "AWS EC2";
+                    vm.batchName = "Migration-03Feb2017-0411pm";
                     vm.scheduledDateTime = "1/11/2017";
                     vm.cost = 431.85;
 
-                    // vm.allItems = [];
-                    // vm.disable = false;
-                    // vm.types = ['server','network'];
+                    vm.allItems = [];
+                    vm.disable = false;
+                    vm.types = ['server','network'];
                     // var dateObject = dataStoreService.returnDate();
                     // var date = dateObject.date !== ''?moment(dateObject.date).format("MMM Do YY"):moment().format("MMM Do YY");
                     // vm.dateString = date+" at "+dateObject.time+" in "+dateObject.timezone;
                     
-                    // vm.types.map(function(type,index){
-                    //     var data = dataStoreService.getItems(type);
-                    //     data.map(function(item){
-                    //         vm.allItems.push(item);
-                    //     });
-                    // });
+                    vm.types.map(function(type,index){
+                        var data = dataStoreService.getItems(type);
+                        if(data){
+                            data.map(function(item){
+                                vm.allItems.push(item);
+                            });
+                        }
+                    });
                 };
 
                 /**
@@ -75,13 +78,14 @@
                     vm.allItems.map(function(item){
                         equipments.push({equipmentType:item.type,id: item.id,type: "t2.micro",region: "US-East-1"});
                     });
-                    requestObj = ds.prepareRequest(equipments);
+                    requestObj = ds.prepareRequest(equipments, vm.batchName);
 
                     console.log(requestObj);
-                    // HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj).then(function(result){
-                    //     console.log(result);
-                    //     $rootRouter.navigate(["MigrationStatus"]);
-                    // });
+                    HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj)
+                                .then(function(result){
+                                    console.log(result);
+                                    $rootRouter.navigate(["MigrationStatus"]);
+                                });
                 };
                 return vm;
             }
