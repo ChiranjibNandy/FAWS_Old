@@ -8,8 +8,9 @@
                     <hr>
                     <div class="rs-inner">
                         <h2>User #1024814 </h2>
-                        <h4>Resource Types</h4>
-                        <input type="text" class="rs-input-large searchbox" ng-model="vm.filterSearch" placeholder="filter by keyword or tag...">
+                        <input type="text" class="rs-input-large searchbox rs-pull-right" ng-model="vm.filterSearch" placeholder="filter by keyword or tag...">
+                        <h4>Select Resources</h4>
+                        <br>
                         <rs-tabs alignment="horizontal">
                             <rs-tab title="Servers">
                                 <rsmigrationitem type="server" filtervalue="vm.filterSearch"></rsmigrationitem>
@@ -89,6 +90,7 @@
                             </div>
                             <div class="span-4">
                                 <div class="rs-pull-right ">
+                                    <a class="rs-btn" href="" role="button">Cancel Migration</a>
                                     <a class="rs-btn" ng-click="vm.saveItems()">Save For Later</a>
                                     <a class="rs-btn rs-btn-primary " ng-click="vm.continue()" href="">Continue</a>
                                 </div>

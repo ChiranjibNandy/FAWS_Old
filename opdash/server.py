@@ -5,6 +5,7 @@ from opdash.configs import load_configuration
 
 from opdash.controllers import unsecure, customer, racker
 from flask_caching import Cache
+import waitress
 
 
 class FlaskOpdash(Flask):
@@ -62,11 +63,9 @@ def main(app=None, context=None):
     if app is None and context is None:
         app, context = build_app()
 
-    app.run(host=app.config['HOST'],
-            port=app.config['PORT'],
-            ssl_context=context,
-            debug=app.config['DEBUG'],
-            use_reloader=app.config['USE_RELOADER'])
+    waitress.serve(app,
+                   host=app.config.get('HOST', None),
+                   port=app.config.get('PORT', None))
 
 
 if __name__ == '__main__':

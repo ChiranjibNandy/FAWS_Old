@@ -1,4 +1,5 @@
 flask
 requests
 redis
+waitress
 flask-caching

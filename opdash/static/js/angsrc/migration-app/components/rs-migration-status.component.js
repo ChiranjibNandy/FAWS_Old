@@ -42,6 +42,15 @@
                      */
                     vm.scheduledDateTime = "17/01/2017 07:00PM";
 
+                    vm.$routerOnActivate = function(next, previous) {
+                        console.log(previous);
+                        if(previous && previous.urlPath.indexOf("confirm") > -1){
+                            vm.message = "Migration Confirmed for 1/17/2017 7:00 PM";
+                        } else{
+                            vm.message = "Migration Dashboard";
+                        }
+                    };
+
                     // gets the list of all batches initiated by the current tenant
                     var getBatches = function() {
                         var url = "/static/angassets/migration-status.json";
@@ -49,6 +58,10 @@
                                 .then(function(response) {
                                     console.log("Batch: ", response);
                                     vm.batches = response;
+                                    //vm.batches = [];
+                                    if(vm.batches.length === 0){
+                                        $('#myModal').modal('show');
+                                    }
                                 }, function(errorResponse) {
                                     console.log("Error: ", errorResponse);
                                 });

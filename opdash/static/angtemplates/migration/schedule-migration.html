@@ -28,7 +28,7 @@
         <div class="rs-container migration-mgr">
             <div class="rs-main rs-panel">
                 <div class="rs-sidebar rs-pull-right">
-                    <rspricingpanel page ="scheduleMigration"></rspricingpanel>
+                    <rspricingpanel page ="scheduleMigration" migrationName ="vm.migrationName" time="vm.time" timezone="vm.timezone"></rspricingpanel>
                 </div>
  <div class="rs-content rs-panel">
                     <!-- Start Stepper -->
@@ -51,13 +51,13 @@
                                 <div class="rs-control-group">
                                     <label class="rs-control-label">Name Your Migration</label>
                                     <div class="rs-controls">
-                                        <input type="text" ng-model="vm.migrationName" value={{vm.migrationName}} style="width: 240px;"/>
+                                        <input type="text" ng-model="vm.migrationName" value={{vm.migrationName}} disabled="true" style="width: 240px;"/>
                                     </div>
                                 </div>
                                 <div class="rs-control-group">
                                     <label class="rs-control-label">Time Zone</label>
                                     <div class="rs-controls">
-                                        <select name="timezone" ng-change="vm.timezoneChange()" ng-model="vm.timezone" class="ng-pristine ng-valid ng-not-empty ng-touched span2">
+                                        <select name="timezone" ng-change="vm.timezoneChange()" ng-model="vm.timezone" class="ng-pristine ng-valid ng-not-empty ng-touched span2" disabled="true">
                                              <option ng-repeat="time in vm.timeZoneItems" value="{{time}}">{{time}}</option>
                                         </select>
                                     </div>
@@ -65,7 +65,7 @@
                                 <div class="rs-control-group">
                                     <label class="rs-control-label">Time </label>
                                     <div class="rs-controls">
-                                        <select name="time" ng-change="vm.timeChange()" ng-model="vm.time" class="ng-pristine ng-untouched ng-valid ng-not-empty span2">
+                                        <select name="time" ng-change="vm.timeChange()" ng-model="vm.time" class="ng-pristine ng-untouched ng-valid ng-not-empty span2" disabled="true">
                                           <option ng-repeat="time in vm.timeItems" value="{{time}}">{{time}}</option>
                                         </select>
                                     </div>

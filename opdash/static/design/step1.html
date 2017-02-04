@@ -48,14 +48,14 @@
                 </div>
                 <ul class="rs-nav">
                     <li class="rs-dropdown rs-primary-dropdown active">
-                        <a class="" href="step0.html">Dashboard</a>
+                        <a class="" href="step5.html">Migration Dashboard</a>
                     </li>
                 </ul>
             </div>
         </div>
         <!-- End Primary Nav -->
-        <div class="migration-mgr rs-container ">
-            <div class="rs-main ">
+        <div class="migration-mgr rs-container">
+            <div class="rs-main">
                 <div class="rs-content rs-panel">
                     <!-- Start Stepper -->
                     <div class="mdl-card mdl-shadow--2dp">
@@ -144,7 +144,7 @@
                                                     </ul>
                                                 </div>
                                             </td>
-                                            <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave One</a></td>
+                                            <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave One</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">1024 MB</td>
                                         </tr>
@@ -161,7 +161,7 @@
                                                     </ul>
                                                 </div>
                                             </td>
-                                            <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Two</a></td>
+                                            <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Two</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">1024 MB</td>
                                         </tr>
@@ -178,7 +178,7 @@
                                                     </ul>
                                                 </div>
                                             </td>
-                                            <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Three</a></td>
+                                            <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Three</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">1024 MB</td>
                                         </tr>
@@ -195,7 +195,7 @@
                                                     </ul>
                                                 </div>
                                             </td>
-                                            <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Four</a></td>
+                                            <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Four</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">1024 MB</td>
                                         </tr>
@@ -212,7 +212,7 @@
                                                     </ul>
                                                 </div>
                                             </td>
-                                            <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Five</a></td>
+                                            <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Five</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">1024 MB</td>
                                         </tr>
@@ -229,7 +229,7 @@
                                                     </ul>
                                                 </div>
                                             </td>
-                                            <td class="rs-table-link"><a href="javascript:void(0);">cloud-endure-demo-A_db_slave Six</a></td>
+                                            <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Six</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">1024 MB</td>
                                         </tr>
@@ -409,7 +409,94 @@
             </ul>
         </div>
     </div>
-    <!-- Modals -->
+    <!-- Modal -->
+    <div id="resource_info" class="modal hide fade details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="rs-content rs-panel rs-detail-xlarge">
+            <div class="rs-detail-header">
+
+                <div class="rs-detail-header-subtitle">Server Name</div>
+                <div class="rs-detail-header-title">cloud-endure-demo-A_db_slave One</div>
+            </div>
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">Server Details</div>
+                </div>
+                <div class="rs-detail-section-body">
+                    <ul class="rs-detail-list">
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Server Status</div>
+                            <div class="rs-detail-value"><span class="rs-status rs-status-ok">Active</span></div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">ID</div>
+                            <div class="rs-detail-value">86753098675309</div>
+                        </li>                        
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key" id="size-key">RAM</div>
+                            <div class="rs-detail-value">
+                                <div class="rs-progress rs-progress-small">
+                                    <div class="rs-progress-inner">
+                                        <div class="rs-segment" style="width: 49%">
+                                            <div class="rs-bar rs-status-info"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="rs-progress-label">912.23 MB of 2 GB</span>
+                            </div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key" id="size-key">Disk</div>
+                            <div class="rs-detail-value">100 GB
+                                <button class="rs-edit rs-popover-source" data-popover-target="size-key" data-popover="resize-popover" data-popover-position="right" id="detail-example-edit-button"></button>
+                            </div>
+                        </li>        
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Region</div>
+                            <div class="rs-detail-value">Dallas (DFW)</div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Server Type</div>
+                            <div class="rs-detail-value">First Generation Server</div>
+                        </li>       
+                    </ul>
+                </div>
+            </div>
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">Networks</div>
+                </div>
+                <div class="rs-detail-section-body">
+                    <div class="rs-embedded-list-table-wrapper rs-embedded-small">
+                        <table class="rs-list-table rs-embedded-list-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>IPv4</th>
+                                    <th>IPv6</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="rs-table-text">PublicNet <span class="rs-quiet">(Internet)</span></td>
+                                    <td class="rs-table-text">101.122.11.222</td>
+                                    <td class="rs-table-text"><span class="rs-quiet">None</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="rs-table-text">ServiceNet <span class="rs-quiet">(Rackspace DFW)</span></td>
+                                    <td class="rs-table-text">10.111.22.112</td>
+                                    <td class="rs-table-text"><span class="rs-quiet">None</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+    </div>
+    
     <div id="name_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-body">
             <h3>What would you like to name your migration?</h3>
@@ -436,7 +523,7 @@
                       <label class="rs-radio">
                         <input type="radio" name="three">
                         <strong>Yes</strong><br>
-                        <span class="rs-help-block">Save my progress for later</span>
+                        <span class="rs-help-block">Save progress for later</span>
                       </label>
                       <label class="rs-radio">
                         <input type="radio" name="three">
@@ -446,8 +533,31 @@
                     </div>
                   </div>
                     <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                    <a class="rs-btn rs-btn-primary " ng-click="vm.continue()" href="step0.html">Submit</a>
+                    <a class="rs-btn rs-btn-primary " ng-click="vm.continue()" href="https://mycloud.rackspace.com">Submit</a>
             </form>
+        </div>
+    </div>
+
+    <div class="modal hide fade details" id="intro_modal">
+        <br>
+        <div class="modal-body">
+            <h2 class="rs-page-title">Welcome to the Rackspace Migration Manager!</h2>
+            <h3>We've created an application to help you easliy migrate to AWS, customize your infrastructure and access Rackspace Fanatical<sup>&#169;</sup> support.</h3>
+
+            <p>Migrating your application portfolio is a critical first step to set you up for success with AWS. If you choose to handle your own migration to AWS, you are responsible for locating, hiring and retaining experts that may not contribute to your core mission once the job is done. Conversely, engaging a one-time migration specialist to handle your migration leaves your business with an unclear path moving forward as your needs evolve. Fanatical Support for AWS, alongside a range of partners, will manage your migration to best match your business requirements now and in the future. <br>
+            <a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Learn More</a> | <a href="https://www.youtube.com/watch?v=JS9FrFt_GbM" target="_blank">Watch Video</a></p>
+     
+            <h5>It looks like you currently have nothing saved to migrate, click the 'Start a Migration' button below to get started.</h5>
+        </div>
+        <div class="modal-footer">
+            <div class="rs-pull-left">
+                <label class="rs-checkbox">
+                    <input type="checkbox">
+                    Don't show this again
+                </label>
+            </div>                      
+            <a href="https://mycloud.rackspace.com" class="rs-btn">Cancel</a>
+            <a href="#" class="rs-btn rs-btn-primary" data-dismiss="modal">Start a Migration</a>
         </div>
     </div>
     <!-- end modals -->
@@ -460,6 +570,11 @@
     <script src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    $(window).load(function() {
+        $('#intro_modal').modal('show');
+    });
+    </script>
 </body>
 
 </html>

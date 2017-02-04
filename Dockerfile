@@ -34,17 +34,23 @@ RUN pip install -U pip
 
 # Install Requirements
 # Copy Requirements.txt file
-ADD requirements.txt .
-RUN pip install -r requirements.txt
+#ADD requirements.txt .
+#RUN pip install -r requirements.txt
 
 # Create Application Directory Structure
-RUN mkdir -p /var/www/opdash/opdash
+#RUN mkdir -p /var/www/opdash
 
 # Copy Starting Python File to Container
-COPY application.py /var/www/opdash/.
+#COPY . /var/www/opdash
 
 # Set the current directory
-WORKDIR /var/www/opdash
+#WORKDIR /var/www/opdash
+
+COPY . /opdash
+
+WORKDIR /opdash
+
+RUN pip install -e .
 
 # Open Port (you must also open it when you run with -p 5000:5000)
 EXPOSE 5000
@@ -56,4 +62,4 @@ ENV UI_DEPLOY_ENVIRON='DockerConfig'
 #ENTRYPOINT ["/bin/bash"]
 
 # Use this entrypoint if you want to run the server
-ENTRYPOINT ["python","/var/www/opdash/application.py"]
+ENTRYPOINT ["python","/opdash/application.py"]
