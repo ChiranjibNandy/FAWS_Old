@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, session, current_app, g
+from flask import render_template, request, redirect, current_app
 from opdash.auth.identity import Identity
 from opdash.controllers.base import UnsecureBlueprint
 
@@ -61,6 +61,5 @@ def login_post():
 
 @mod.route('/logout', methods=['GET'])
 def logout():
-    g.user_data = None
-    session.clear()
+    mod.logout()
     return redirect(mod.get_base_url() + "/login")

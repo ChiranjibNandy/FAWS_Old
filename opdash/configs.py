@@ -1,6 +1,5 @@
 from uuid import uuid4
 from os import environ
-from redis import Redis
 
 
 def load_configuration(app):
@@ -20,10 +19,15 @@ def load_configuration(app):
     # Load Secret Values from environent variables
     app.config['SSL_KEY'] = environ.get('UI_SSL_KEY', None)
     app.config['SSL_CRT'] = environ.get('UI_SSL_CERT', None)
-    app.config['CSRF_SESSION_KEY'] = environ.get(
-        'UI_CSRF_SESSION_KEY', uuid4())
-    app.config['SECRET_COOKIE_KEY'] = environ.get(
-        'UI_SECRET_COOKIE_KEY', uuid4())
+
+    # DONT BELIEVE THESE ARE NEEDED ANYMORE
+    # app.config['CSRF_SESSION_KEY'] = environ.get(
+    #     'UI_CSRF_SESSION_KEY', uuid4())
+    # app.config['SECRET_COOKIE_KEY'] = environ.get(
+    #     'UI_SECRET_COOKIE_KEY', uuid4())
+
+    app.config['SESSION_COOKIE_DOMAIN'] = environ.get(
+        'SESSION_COOKIE_DOMAIN', None)
 
 
 class BaseConfig(object):
@@ -60,30 +64,28 @@ class BaseConfig(object):
     # Enable protection against Cross-site Request Forgery
     CSRF_ENABLED = True
 
-    # Session Secret Key
-    SECRET_KEY = "THIS-IS-THE-SESSION-SECRET-KEY"
-
     # Session Cookie Settings
-    SESSION_COOKIE_HTTPONLY = True
-    SESSION_PERMANENT = False
+    SESSION_COOKIE_NAME = 'migrate-session'
+    SESSION_DOMAIN = None
 
-    session_type = environ.get("SESSION_TYPE", None)
+    if environ.get("SESSION_TYPE", None) == 'redis':
 
-    if session_type == "redis":
+        # Set Cache to use AWS Redis Host
+        CACHE_CONFIG = {
+            "CACHE_TYPE": 'redis',
+            "CACHE_KEY_PREFIX": 'opdash-session',
+            "CACHE_REDIS_HOST": environ.get(
+                "AWS_REDIS_HOST",
+                '0.0.0.0'),
+        }
 
-        # Use Redis Session
-        redis_host = environ.get(
-            "AWS_REDIS_HOST",
-            '0.0.0.0')
-
-        SESSION_TYPE = "redis"
-        SESSION_REDIS = Redis(
-            host=redis_host,
-            port=6379)
     else:
 
-        # Use File System Session
-        SESSION_TYPE = "filesystem"
+        # Use File System Cache (FOR DEV ONLY)
+        CACHE_CONFIG = {
+            "CACHE_TYPE": "filesystem",
+            "CACHE_DIR": "./session"
+        }
 
 
 class DebugConfig(object):
