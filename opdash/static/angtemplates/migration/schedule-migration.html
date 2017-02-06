@@ -37,6 +37,8 @@
                     <hr>
                     <div class="rs-inner">
                         <h2>User Namegoeshere ( #{{vm.tenant_id}} )</h2>
+                         <h3>Migration-{{vm.selectedDateHeader}} <a href="#name_modal2" role="button" data-toggle="modal" class="rs-edit" title="click to edit migration name"></a></h3>
+                        <hr>
                         <div class="rs-row">
                         
                         
@@ -51,14 +53,14 @@
                                 <div class="rs-control-group">
                                     <label class="rs-control-label">Name Your Migration</label>
                                     <div class="rs-controls">
-                                        <input type="text" ng-model="vm.migrationName" value={{vm.migrationName}} disabled="true" style="width: 240px;"/>
+                                        <input type="text" ng-model="vm.migrationName" value={{vm.migrationName}} disabled="true" style="width: 256px;"/>
                                     </div>
                                 </div>
                                 <div class="rs-control-group">
                                     <label class="rs-control-label">Time Zone</label>
                                     <div class="rs-controls">
                                         <select name="timezone" ng-change="vm.timezoneChange()" ng-model="vm.timezone" class="ng-pristine ng-valid ng-not-empty ng-touched span2" disabled="true">
-                                             <option ng-repeat="time in vm.timeZoneItems" value="{{time}}">{{time}}</option>
+                                             <option ng-repeat="time in vm.timeZoneItems" value="{{vm.timezone}}">{{vm.timezone}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -66,14 +68,18 @@
                                     <label class="rs-control-label">Time </label>
                                     <div class="rs-controls">
                                         <select name="time" ng-change="vm.timeChange()" ng-model="vm.time" class="ng-pristine ng-untouched ng-valid ng-not-empty span2" disabled="true">
-                                          <option ng-repeat="time in vm.timeItems" value="{{time}}">{{time}}</option>
+                                          <option ng-repeat="time in vm.timeItems" value="{{vm.time}}">{{vm.time}}</option>
                                         </select>
                                     </div>
                                 </div>  
                                 <br>
                             <hr>
-                            <h4>Migration schedule summary:</h4>
-                            <p>{{vm.selectedDate}}</p>                              
+                            <div class="white-panel"  style="border: 1px solid #ccc">
+                                    <h3 style="color: #c40022;">Migration Schedule Summary:</h3>
+                                    <big>{{vm.selectedDate}}</big>  
+                                </div>
+                            <!--<h4>Migration schedule summary:</h4>
+                            <p>{{vm.selectedDate}}</p>                              -->
                             </form>
                             
                             <div  class="span-4">

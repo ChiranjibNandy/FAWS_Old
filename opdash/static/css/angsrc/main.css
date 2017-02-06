@@ -92,7 +92,7 @@ th{
 .info-panel, .info-panel-small{
     width: 100%;
     color: #a0a0a0;
-    background-color: #fff;
+    /*background-color: #fff;*/
     min-height: 60px;
     padding: 5px;
     margin-bottom: 10px;
@@ -102,6 +102,7 @@ th{
 .info-panel-small{
     min-height: 30px;
     line-height: 30px;
+    background-color: #fff;
 }
 
 .info-panel .summary, .info-panel-small .summary{
