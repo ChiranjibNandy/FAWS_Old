@@ -3,14 +3,11 @@
 .white-panel {
     background: #fff;
     padding: 1em;
-    border: 1px solid #ccc;
+    border: 1px solid #ccc !important;
 }
 
 .white-panel h3 {
-    color: #c40022;
-}
-
-.white-panel h3 {
+    color: #c40022 !important;
     margin: 0;
     padding: 0;
 }

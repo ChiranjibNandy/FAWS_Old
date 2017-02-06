@@ -1,35 +1,43 @@
 
-                    <div class="rs-inner">
+                    
+        <div class="rs-inner">
                         <div class="info-panel">
-                            <h4>Current Pricing</h4>
+                            <h3>Current Pricing</h3>
                             <p>
-                                Billing Period:  
+                                Billing Period:
                                 <br>
                                 <em>12/12/2016 to 1/11/2017</em>
                                 <br>
-                                <b>${{vm.currentPricing}}</b>
+                                <big><b>${{vm.currentPricing}}</b></big>
                                 <br>
-                                <a href="">(See Details)</a>
+                                <a href=""><small>(See Details)</small></a>
                             </p>
                         </div>
-                        <div class="white-panel">
-                            <h4>New Pricing</h4>
+                        <div class="white-panel" style="border: 1px solid #ccc">
+                            <h3 style="color: #c40022;">New Pricing</h3>
                             <p>
-                                <b>${{vm.totalCost}}</b>
+                                <big><b>${{vm.totalCost}}</b></big>
                                 <br>
-                                <a href="">(See Details)</a>
+                                <a href=""><small>(See Details)</small></a>
                             </p>
                         </div>
                         <br>
                         <div class="rs-row pricing-buttons">
-                            <button class="rs-btn span-12" ng-click="vm.saveItems()">Save For Later</button>
+                            <a class="rs-btn span-5" ng-link="['Tenant']"  ng-click="vm.back()">Back</a>
+                            <a class="rs-btn rs-btn-primary span-7" ng-click="vm.continue()">Continue</a>
+                        </div>
+                        <div class="rs-row pricing-buttons">
+                            <button class="rs-btn span-12"  ng-click="vm.saveItems()">Save for later</button>
                         </div>
                         <div class="rs-row">
-                            <a class="rs-btn span-5" ng-link="['Tenant']" ng-click="vm.saveItems()">Back</a>
-                            <a class="rs-btn rs-btn-primary span-7" ng-click="vm.continue()" >Continue</a>
+                            <a class="rs-btn span-12" href="#cancel_modal" role="button" data-toggle="modal"">Cancel Migration</a>
                         </div>
-                        <br>
-                    </div>
+                        <br>            
                     
                     
-                  
+                    
+                    
+                    
+                    
+                    
+        

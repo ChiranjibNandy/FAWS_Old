@@ -2,13 +2,12 @@
 .white-panel{
   background: #fff;
   padding: 1em;
-}
-.white-panel h4{
-  color: #c40022;
+  border: 1px solid #ccc
 }
 .white-panel h3{
   margin:0;
   padding:0;
+  color: #c40022;
 }
 .info-panel{
   padding: 1em;

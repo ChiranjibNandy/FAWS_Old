@@ -66,15 +66,17 @@
                 "(GMT +10:00) Eastern Australia, Guam, Vladivostok",
                 "(GMT +11:00) Magadan, Solomon Islands, New Caledonia",
                     "(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka"]
-                    vm.time = vm.timeItems[0];
-                    vm.timezone = vm.timeZoneItems[0];
-                    vm.selectedDate = moment().format("MMM Do YYYY")+" at "+vm.time+" "+vm.timezone;
+                    vm.time =  new Date().toLocaleTimeString();//vm.timeItems[0];
+                     vm.timezone =new Date().toTimeString(); //vm.timeZoneItems[0];
+                    vm.selectedDate = new Date().toString();
+                    vm.selectedDateHeader = new Date().toLocaleString();//moment().format("MMM Do YYYY")+" at "+vm.time+" "+vm.timezone;
                     vm.date = moment().format("MMM Do YYYY");
                     dataStoreService.storeDate('time',vm.time);
                     dataStoreService.storeDate('timezone',vm.timezone);
                     var d = new Date();
-                    var timestmp = moment(d).format("DDMMMYYYY-hhmma");
-                    vm.migrationName = 'Migration-' + timestmp;
+                    //var timestmp = moment(d).format("DDMMMYYYY-hhmma");
+                    vm.migrationName = 'Migration-' + new Date().toString();
+                     //(d.getUTCMonth()+1) +"-"+ d.getUTCDate()+"-"+ d.getUTCFullYear() + + " " + d.getUTCHours() + ":" + d.getUTCMinutes() + ":" + d.getUTCSeconds();;
                     $scope.$watch('vm.migrationName', function() {
                    vm.selectedTime = {
                    migrationName: vm.migrationName,
