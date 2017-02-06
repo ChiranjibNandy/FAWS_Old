@@ -1,6 +1,5 @@
 flask
 requests
 redis
-flask-session
-six
 waitress
+flask-caching

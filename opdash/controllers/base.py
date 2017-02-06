@@ -1,8 +1,9 @@
-from flask import Blueprint, g, session, redirect, abort, request
+from flask import Blueprint, g, redirect, abort, request, current_app
+from uuid import uuid4
 import json
+import urlparse
+from datetime import datetime
 
-# noinspection PyUnresolvedReferences
-from six.moves.urllib.parse import urlparse
 from opdash.rax.pilot import get_pilot_header
 
 
@@ -12,7 +13,46 @@ class UnsecureBlueprint(Blueprint):
     '''
 
     def on_before_request(self):
-        g.user_data = session.get('user_data', None)
+
+            current_app.logger.debug('&&& SamlBlueprint - on_before_request')
+
+            # self.req = self.prepare_flask_request(request)
+            # self.auth = self.init_saml_auth(self.req)
+
+            g.user_data = None
+
+            cookie_session_id = request.cookies.get(
+                current_app.config['SESSION_COOKIE_NAME'], None)
+
+            if (cookie_session_id):
+
+                current_app.logger.debug(
+                    '@@@@@@@@ FOUND A COOKIE:{0}'.format(cookie_session_id))
+
+                user_data = current_app.cache.get(cookie_session_id)
+
+                if user_data:
+
+                    #
+                    # Session FOUND in cache, restore data and proceed
+                    #
+                    current_app.logger.debug('PULLED DATA FROM CACHE')
+                    g.user_data = user_data
+
+                    # logging.debug('****** JSON DATA START ********')
+                    # logging.debug(
+                    #     json.dumps(
+                    #         request.environ["rax_auth"]["service_catalog"],
+                    #         sort_keys=True, indent=2, separators=(',', ': ')
+                    #     )
+                    # )
+                    # logging.debug('****** JSON DATA STOPS ********')
+
+            if not g.user_data:
+
+                current_app.logger.debug(
+                    "****** BASE NOT AUTHENTICATED ******")
+                return self.handleNotAuthenticated()
 
     def register(self, app, options, first_registration=False):
 
@@ -26,9 +66,45 @@ class UnsecureBlueprint(Blueprint):
         super(UnsecureBlueprint, self).register(
             app, options, first_registration)
 
+    def samlExpiryToDT(self, samlExpiration):
+        return datetime.strptime(samlExpiration, '%Y-%m-%dT%H:%M:%S.%fZ')
+        # return datetime.datetime.utcfromtimestamp(
+        #     OneLogin_Saml2_Utils.parse_SAML_to_time(samlExpiration))
+
     def on_after_request(self, response):
-        self._app.logger.debug("***** BASE on_after_request *****")
-        return response
+
+            if g.user_data:
+
+                response.set_cookie(
+                    current_app.config['SESSION_COOKIE_NAME'],
+                    domain=current_app.config['SESSION_COOKIE_DOMAIN'],
+                    httponly=True,
+                    secure=request.headers.get(
+                        'X-Forwarded-Proto', "") == "https",
+                    value=g.user_data["session_id"],
+                    path='/',
+                    expires=self.samlExpiryToDT(
+                        g.user_data["expires"]),
+                )
+                return response
+
+            current_app.logger.debug('--- NO AUTH - SO CLEAR COOKIE ---')
+
+            g.rax_auth = None
+
+            # if NO userData clear session cookie
+            response.delete_cookie(
+                current_app.config['SESSION_COOKIE_NAME'],
+                domain=current_app.config['SESSION_COOKIE_DOMAIN'],
+                path='/')
+
+            return response
+
+    def logout(self):
+        # Delete from cache if it exists
+        if current_app.cache.get(g.user_data["session_id"]):
+            current_app.cache.delete(g.user_data["session_id"])
+        g.user_data = None
 
     def get_base_url(self):
         '''
@@ -37,7 +113,7 @@ class UnsecureBlueprint(Blueprint):
             if the request came through the load balancer.
             If so, uses the protocol specificed in that header.
         '''
-        parsed_url = urlparse(request.url)
+        parsed_url = urlparse.urlparse(request.url)
 
         # Check for X-Forwarded-Proto header from AWS load balancer
         forwarded_proto = request.headers.get('X-Forwarded-Proto')
@@ -53,43 +129,55 @@ class UnsecureBlueprint(Blueprint):
 
     def update_session_user(self, service_catalog):
         ''' Save the user_data to session '''
-        self._app.logger.debug('** UPDATING SESSION WITH USER')
+
+        current_app.logger.debug('** UPDATING SESSION WITH USER')
+
         json_catalog = json.loads(service_catalog)
+
         if json_catalog:
 
+            # Check if user is a Racker
             roles = json_catalog["access"]["user"]["roles"]
             is_racker = next(
                 (True for role in roles if role['name'] == 'Racker'),
                 False  # Default
             )
 
-            session["user_data"] = {
+            user_data = {
                 # Get Racker Info
                 "username": json_catalog["access"]["user"]["name"],
                 "authtoken": json_catalog["access"]["token"]["id"],
+                "expires": json_catalog["access"]["token"]["expires"],
                 "is_racker": is_racker,
                 "roles": roles,
+                "session_id": str(uuid4()),
             }
 
             if not is_racker:
 
                 # Save tenant id for customer
-                session["tenant_id"] = (json_catalog["access"]
-                                                    ["token"]
-                                                    ["tenant"]
-                                                    ["id"])
+                user_data["tenant_id"] = (json_catalog["access"]
+                                                      ["token"]
+                                                      ["tenant"]
+                                                      ["id"])
 
-                # Get Pilot Header for this user
-                get_pilot_header(
-                    session['user_data']['authtoken'],
-                    session['tenant_id'])
+                # Get Pilot Header
+                user_data["pilot_header"] = get_pilot_header(
+                    user_data['authtoken'],
+                    user_data['tenant_id'])
+
+            current_app.cache.set(
+                user_data["session_id"],  # Cache Key
+                user_data,
+                timeout=3600  # Cache User Data for 1 Hour
+            )
 
             # Save User Data to session and Flask g
-            g.user_data = session['user_data']
+            g.user_data = user_data
 
     def handleNotAuthenticated(self):
         ''' Allow unauthenticated user '''
-        self._app.logger.debug(
+        current_app.logger.debug(
             "***** UnsecureBlueprint: Allow Unauthenticated User *****")
         pass
 
@@ -110,7 +198,7 @@ class CustomerBlueprint(UnsecureBlueprint):
         super(CustomerBlueprint, self).on_before_request()
 
         if g.user_data:
-            self._app.logger.debug('USER IS A CUSTOMER OR RACKER')
+            current_app.logger.debug('USER IS A CUSTOMER OR RACKER')
             return
         else:
             return redirect(self.get_base_url() + "/login")
@@ -133,7 +221,7 @@ class RackerBlueprint(UnsecureBlueprint):
 
         if g.user_data:
             if g.user_data['is_racker']:
-                self._app.logger.debug('USER IS A RACKER')
+                current_app.logger.debug('USER IS A RACKER')
                 return
             else:
                 abort(403)
