@@ -90,9 +90,9 @@
                             </div>
                             <div class="span-4">
                                 <div class="rs-pull-right ">
-                                    <a class="rs-btn" href="" role="button">Cancel Migration</a>
+                                    <a class="rs-btn" ng-click="vm.cancelMigration()">Cancel Migration</a>
                                     <a class="rs-btn" ng-click="vm.saveItems()">Save For Later</a>
-                                    <a class="rs-btn rs-btn-primary " ng-click="vm.continue()" href="">Continue</a>
+                                    <a class="rs-btn rs-btn-primary " ng-click="vm.continue()">Continue</a>
                                 </div>
                             </div>
                         </div>
@@ -100,5 +100,75 @@
                 </div>
             </div>
              <rsinteractivefooter></rsinteractivefooter>
+        </div>
+    </div>
+    <div id="name_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForSelect" aria-hidden="true">
+        <div class="modal-body">
+            <h3>What would you like to name your migration?</h3>
+            <form class=" ">
+                <div class="rs-control-group">
+                    <label class="rs-control-label">Name your migration and click '<b>Save and Continue</b>' to go to step 2</label>
+                    <div class="rs-controls">
+                        <input type="text" ng-model="vm.migrationName" placeholder="{{vm.migrationName}}">
+                        <span ng-show="vm.noName" style="color:red">Please name your Migration!</span>
+                    </div>
+                </div>
+                <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Back</button>
+                <a class="rs-btn rs-btn-primary" ng-click="vm.savencontinue()">Save and Continue</a>
+            </form>
+        </div>
+    </div>
+
+    <div id="no_selection" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSelect" aria-hidden="true">
+        <div class="modal-body" style="height: 150px">
+            <h3 style="line-height: 136px; text-align: center">Please select some items to migrate</h3>
+        </div>
+    </div>
+
+    <div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForCancel" aria-hidden="true">
+        <div class="modal-body">
+            <h3>Would you like to save the selections you've made so far for another time?</h3>
+            <form class=" ">
+                <div class="rs-control-group">
+
+                    <div class="rs-controls">
+                      <label class="rs-radio">
+                        <input type="radio" ng-model="vm.saveProgress" value="yes">
+                        <strong>Yes</strong><br>
+                        <span class="rs-help-block">Save progress for later</span>
+                      </label>
+                      <label class="rs-radio">
+                        <input type="radio" ng-model="vm.saveProgress" value="no">
+                        <strong>No</strong>
+                        <span class="rs-help-block">Cancel and move on</span>
+                      </label>
+                    </div>
+                  </div>
+                    <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button class="rs-btn rs-btn-primary " ng-class="{disabled:vm.saveProgress == ''}" ng-click="vm.submitCancel()">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal hide fade details" id="intro_modal">
+        <br>
+        <div class="modal-body">
+            <h2 class="rs-page-title">Welcome to the Rackspace Migration Manager!</h2>
+            <h3>We've created an application to help you easliy migrate to AWS, customize your infrastructure and access Rackspace Fanatical<sup>&#169;</sup> support.</h3>
+
+            <p>Migrating your application portfolio is a critical first step to set you up for success with AWS. If you choose to handle your own migration to AWS, you are responsible for locating, hiring and retaining experts that may not contribute to your core mission once the job is done. Conversely, engaging a one-time migration specialist to handle your migration leaves your business with an unclear path moving forward as your needs evolve. Fanatical Support for AWS, alongside a range of partners, will manage your migration to best match your business requirements now and in the future. <br>
+            <a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Learn More</a> | <a href="https://www.youtube.com/watch?v=JS9FrFt_GbM" target="_blank">Watch Video</a></p>
+     
+            <h5>It looks like you currently have nothing saved to migrate, click the 'Start a Migration' button below to get started.</h5>
+        </div>
+        <div class="modal-footer">
+            <div class="rs-pull-left">
+                <label class="rs-checkbox">
+                    <input type="checkbox">
+                    Don't show this again
+                </label>
+            </div>                      
+            <a ng-link="['MigrationStatus']" class="rs-btn">Cancel</a>
+            <a href="#" class="rs-btn rs-btn-primary" data-dismiss="modal">Start a Migration</a>
         </div>
     </div>
