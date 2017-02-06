@@ -63,9 +63,20 @@ def main(app=None, context=None):
     if app is None and context is None:
         app, context = build_app()
 
-    waitress.serve(app,
-                   host=app.config.get('HOST', None),
-                   port=app.config.get('PORT', None))
+    if app.config.get("DEBUG", False):
+        # Debug Mode
+        app.run(
+            host=app.config['HOST'],
+            port=app.config['PORT'],
+            ssl_context=context,
+            debug=app.config['DEBUG'],
+            use_reloader=app.config['USE_RELOADER'])
+    else:
+        # Use Waitress
+        waitress.serve(
+            app,
+            host=app.config.get('HOST', None),
+            port=app.config.get('PORT', None))
 
 
 if __name__ == '__main__':
