@@ -28,6 +28,7 @@
                 var vm = this;
 
                 vm.$onInit = function() {
+                    $('#intro_modal').modal('show');
                     $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Migration";
                     authservice.getAuth().tenant_id = 1024814;
                     vm.auth = authservice.getAuth();
@@ -36,6 +37,11 @@
                         network:[]
                     };
                     vm.filterSearch = "";
+                    vm.saveProgress = "";
+                    var d = new Date();
+                    var timestmp = moment(d).format("DDMMMYYYY-hhmma");
+                    vm.migrationName = 'Migration-' + timestmp;
+                    vm.noName = false;
                 }
 
                 /**
@@ -87,11 +93,55 @@
                 vm.continue = function() {
                     if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0){
                         dataStoreService.setItems(vm.selectedItems);
+                        // $rootRouter.navigate(["MigrationRecommendation"]);
+                        $('#name_modal').modal('show');
+                    }
+                    else{
+                        $('#name_modal').modal('hide');
+                        $("#no_selection").modal('show');
+                        $('#intro_modal').modal('hide');
+                    }
+                };
+
+                vm.savencontinue = function() {
+                    if(vm.migrationName){
+                        self.selectedTime = {
+                            migrationName:vm.migrationName,
+                            time:'',
+                            timezone:''
+                        };
+                        dataStoreService.setScheduleMigration(vm.selectedTime);
+                        $('#name_modal').modal('hide');
+                        $('#cancel_modal').modal('hide');
+                        $('#intro_modal').modal('hide');
+                        $('#no_selection').modal('hide');
                         $rootRouter.navigate(["MigrationRecommendation"]);
                     }
-                    else
-                        alert("Please select some items to migrate");
+                    else{
+                        vm.noName = true;
+                    }
                 };
+
+                vm.cancelMigration = function() {
+                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0){
+                        $('#cancel_modal').modal('show');
+                    }
+                    else{
+                        $('#name_modal').modal('hide');
+                        $('#cancel_modal').modal('hide');
+                        $('#intro_modal').modal('hide');
+                        $('#no_selection').modal('hide');
+                        $rootRouter.navigate(["MigrationStatus"]);
+                    }
+                };
+
+                vm.submitCancel = function() {
+                    $('#name_modal').modal('hide');
+                    $('#cancel_modal').modal('hide');
+                    $('#intro_modal').modal('hide');
+                    $('#no_selection').modal('hide');
+                    $rootRouter.navigate(["MigrationStatus"]);
+                }
 
                 return vm;
             }
