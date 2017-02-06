@@ -81,12 +81,25 @@
                     requestObj = ds.prepareRequest(equipments, vm.batchName);
 
                     console.log(requestObj);
-                    HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj)
-                                .then(function(result){
-                                    console.log(result);
-                                    $rootRouter.navigate(["MigrationStatus"]);
-                                });
+
+                    $rootRouter.navigate(["MigrationStatus"]);
+                    
+                    // HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj)
+                    //             .then(function(result){
+                    //                 console.log(result);
+                    //                 $rootRouter.navigate(["MigrationStatus"]);
+                    //             });
                 };
+
+                vm.showMigrationNameDialog = function() {
+                    console.log($('#name_modal2'));
+                    $('#name_modal2').modal('show');
+                };
+
+                vm.showCancelDialog = function() {
+                    $('#cancel_modal').modal('show');
+                };
+
                 return vm;
             }
         ]}); // end of component definition

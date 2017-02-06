@@ -1,117 +1,197 @@
 <div class="rs-container migration-mgr">
     <div class="rs-main rs-panel">
-    
         <div class="rs-content rs-panel">
             <rsinteractiveheader pagenum="3"></rsinteractiveheader>
             <hr>
             <div class="rs-inner">
                 <div class="rs-detail-header">
-                    <div class="rs-detail-header-title">
-                        {{vm.userOrTenant}} ( #{{vm.tenant_id}} )
-                    </div>
+                    <div class="rs-detail-header-title">{{vm.userOrTenant}} ( #{{vm.tenant_id}} )</div>
                 </div>
-                
-                <div class="rs-detail-section">
-                    <div class="rs-detail-section-header">
-                        
-                        <div class="rs-detail-section-title">Items Selected <a ng-link="['MigrationResourceList']" class="rs-edit"></a></div>
-                    </div>
-
-                    <div class="rs-detail-section-body">
-                        
-                        <div class="accordion" id="accordion2">
-                            <div class="accordion-group">
-                                <div class="accordion-heading ">
-                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#server-name">
-                                        <b class=""> Servers ({{vm.selectedItems.servers.length}})  <i class="fa fa-caret-down"></i></b>
-                                    </a>
-                                </div>
-                                <div id="server-name" class="accordion-body collapse ">
-                                    <div class="accordion-inner ">
-                                        <ul class="">
-                                            <li ng-repeat="server in vm.selectedItems.servers">{{server.name}}</li>
-                                        </ul>
+                <hr>
+                <div class=" rs-facets">
+                    <div class="rs-inner" id="facets-example">
+                        <div class="rs-facet-header">
+                            <div class="rs-facet-clear-link rs-hidden">clear all</div>
+                            <div class="rs-facet-title">Migration-01Feb2017-0456pm
+                                <button ng-click="vm.showMigrationNameDialog()" class="rs-edit" title="click to edit migration name"></button>
+                            </div>
+                        </div>
+                        <div class="rs-facet-section-header">
+                            <div class="rs-facet-clear-link rs-hidden">clear</div>
+                            <div class="rs-facet-section-title">Selected Resources
+                                <a ng-link="['ScheduleMigration']" class="rs-edit" title="Go to step 3 to choose new Schedule"></a>
+                            </div>
+                        </div>
+                        <div class="rs-facet-section rs-facet-section-small">
+                            <div class="accordion" id="accordion2">
+                                <div class="accordion-group" ng-class="{disabled:vm.selectedItems.servers.length == 0}">
+                                    <div class="accordion-heading ">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#server-name">
+                                            <b> Servers ({{vm.selectedItems.servers.length}})  <i class="fa fa-caret-down" ></i></b>
+                                        </a>
+                                    </div>
+                                    <div id="server-name" class="accordion-body collapse ">
+                                        <div class="accordion-inner ">
+                                            <ul>
+                                                <li ng-repeat="server in vm.selectedItems.servers">{{server.name}}</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="accordion-group">
-                                <div class="accordion-heading ">
-                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#file-name">
-                                        <b class="">  Files ({{vm.selectedItems.files.length}}) <i class="fa fa-caret-down"></i></b>
-                                    </a>
-                                </div>
-                                <div id="file-name" class="accordion-body collapse">
-                                    <div class="accordion-inner">
-                                        <ul class="">
-                                            <li ng-repeat="file in vm.selectedItems.files">{{file}}</li>
-                                        </ul>
+                                <div class="accordion-group" ng-class="{disabled:vm.selectedItems.files.length == 0}">
+                                    <div class="accordion-heading ">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#file-name">
+                                            <b>  Files ({{vm.selectedItems.files.length}}) <i class="fa fa-caret-down"></i></b>
+                                        </a>
+                                    </div>
+                                    <div id="file-name" class="accordion-body collapse">
+                                        <div class="accordion-inner">
+                                            <ul>
+                                                <li ng-repeat="file in vm.selectedItems.files">{{file}}</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="accordion-group">
-                                <div class="accordion-heading ">
-                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#block-name">
-                                        <b class=""> Blocks ({{vm.selectedItems.blocks.length}}) <i class="fa fa-caret-down"></i></b>
-                                    </a>
-                                </div>
-                                <div id="block-name" class="accordion-body collapse">
-                                    <div class="accordion-inner">
-                                        <ul class="">
-                                            <li ng-repeat="block in vm.selectedItems.blocks">{{block}}</li>
-                                        </ul>
+                                <div class="accordion-group" ng-class="{disabled:vm.selectedItems.blocks.length == 0}">
+                                    <div class="accordion-heading ">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#block-name">
+                                            <b> Blocks ({{vm.selectedItems.blocks.length}}) <i class="fa fa-caret-down"></i></b>
+                                        </a>
+                                    </div>
+                                    <div id="block-name" class="accordion-body collapse">
+                                        <div class="accordion-inner">
+                                            <ul>
+                                                <li ng-repeat="block in vm.selectedItems.blocks">{{block}}</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="accordion-group">
-                                <div class="accordion-heading ">
-                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#cdn-name">
-                                        <b class="">CDN ({{vm.selectedItems.cdns.length}}) <i class="fa fa-caret-down"></i></b>
-                                    </a>
-                                </div>
-                                <div id="cdn-name" class="accordion-body collapse">
-                                    <div class="accordion-inner">
-                                        <ul class="">
-                                            <li ng-repeat="cdn in vm.selectedItems.cdns">{{cdn}}</li>
-                                        </ul>
+                                <div class="accordion-group" ng-class="{disabled:vm.selectedItems.cdns.length == 0}">
+                                    <div class="accordion-heading ">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#cdn-name">
+                                            <b>CDN ({{vm.selectedItems.cdns.length}}) <i class="fa fa-caret-down"></i></b>
+                                        </a>
+                                    </div>
+                                    <div id="cdn-name" class="accordion-body collapse">
+                                        <div class="accordion-inner">
+                                            <ul>
+                                                <li ng-repeat="cdn in vm.selectedItems.cdns">{{cdn}}</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-        
-                    <div class="rs-detail-section-header">
-                        <div class="rs-detail-section-title">Desitination</div>
-                    </div>
-                    <div class="rs-detail-section-body">
-                        {{vm.destination}} <a ng-link="['MigrationRecommendation']" class="rs-edit"></a>
-                    </div>
-        
-                    <div class="rs-detail-section-header">
-                        <div class="rs-detail-section-title">Scheduled Time</div>
-                    </div>
-                    <div class="rs-detail-section-body">
-                        {{vm.scheduledDateTime}} <a ng-link="['ScheduleMigration']" class="rs-edit"></a>
-                    </div>
-            
-                    <div class="rs-detail-section-header">
-                        <div class="rs-detail-section-title">Total Cost</div>
-                    </div>
-                    <div class="rs-detail-section-body">
-                        
-                        {{vm.cost | currency: '$'}} <a ng-link="['MigrationResourceList']" class="rs-edit"></a>
-                        <br>
-                        
-                    </div>
-                    <div class="rs-pull-right">
-                        <button class="rs-btn rs-btn-action ">Save for Later</button>
-                        <button class="rs-btn rs-btn-primary" ng-click="vm.migrate()">Migrate</button>
+                        <div class="rs-facet-section">
+                            <div class="rs-facet-section-header">
+                                <div class="rs-facet-clear-link rs-hidden">clear</div>
+                                <div class="rs-facet-section-title">Destination
+                                    <a ng-link="['MigrationRecommendation']" class="rs-edit" title="Go to step 2 to choose new Desitination"></a>
+                                </div>
+                            </div>
+                            <div class="accordion" id="migr-destination">
+                                <div class="accordion-group">
+                                    <div class="accordion-heading ">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#migr-destination" href="#aws-destination">
+                                            <b class="rs-facet-label"> {{vm.destination}}  <i class="fa fa-caret-down" ></i></b>
+                                        </a>
+                                    </div>
+                                    <div id="aws-destination" class="accordion-body collapse ">
+                                        <div class="accordion-inner ">
+                                            <ul>
+                                                <li>t2-small</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rs-facet-section">
+                            <div class="rs-facet-section-header">
+                                <div class="rs-facet-clear-link rs-hidden">clear</div>
+                                <div class="rs-facet-section-title">Scheduled Time
+                                    <a ng-link="['ScheduleMigration']" class="rs-edit" title="Go to step 3 to choose new Schedule"></a>
+                                </div>
+                            </div>
+                            <div class="rs-facet-section-body">
+                                <ul class="rs-facet-list">
+                                    <li class="rs-facet-item">
+                                        <div class="rs-facet-label">{{vm.scheduledDateTime}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="rs-facet-section">
+                            <div class="rs-facet-section-header">
+                                <div class="rs-facet-clear-link rs-hidden">clear</div>
+                                <div class="rs-facet-section-title">Projected Monthly Cost
+                                    <a href=""><i id="tooltip-demo" class="rs-icon-help" title="click to see more details about pricing."></i></a>
+                                </div>
+                            </div>
+                            <div class="rs-facet-section-body ">
+                                <ul class="rs-facet-list">
+                                    <li class="rs-facet-item">
+                                        <div class="rs-facet-label">{{vm.cost | currency: '$'}}</div>
+                                        <a href=""><small>(See Details)</small></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="rs-pull-right">
+                            <a class="rs-btn " ng-link="['ScheduleMigration']">Back</a>
+                            <a class="rs-btn" href="">Save for later</a>
+                            <button class="rs-btn " role="button" data-toggle="modal" ng-click="vm.showCancelDialog()">Cancel Migration</button>
+                            <a ng-link="['MigrationStatus']" class="rs-btn rs-btn-primary " ng-click="vm.saveItems() ">Confirm Migration</a>
+                        </div>
+                        <br>                                
                     </div>
                 </div>
-    
-
-                <br>
             </div>
         </div>
     </div>
     <rsinteractivefooter></rsinteractivefooter>
+
+    <!-- modals -->
+    <div id="name_modal2" class="modal hide fade" tabindex="-1 " role="dialog " aria-labelledby="myModalLabel1" aria-hidden="true ">
+        <div class="modal-body ">
+            <h3>What would you like to name your migration?</h3>
+            <form class=" ">
+                <div class="rs-control-group ">
+                    
+                    <div class="rs-controls ">
+                        <input type="text " placeholder="Migration-01Feb2017-0456pm ">
+                    </div>
+                </div>
+                <button class="rs-btn " data-dismiss="modal " aria-hidden="true ">Close</button>
+                <a class="rs-btn rs-btn-primary " data-dismiss="modal " aria-hidden="true ">Save</a>
+            </form>
+        </div>
+    </div>
+    <div id="cancel_modal" class="modal hide fade" tabindex="-1 " role="dialog " aria-labelledby="myModalLabel2" aria-hidden="true ">
+        <div class="modal-body ">
+            <h3>Would you like to save the selections you've made so far for another time?</h3>
+            <form class=" ">
+                <div class="rs-control-group ">
+
+                    <div class="rs-controls ">
+                      <label class="rs-radio ">
+                        <input type="radio " name="three ">
+                        <strong>Yes</strong><br>
+                        <span class="rs-help-block ">Save my progress for later</span>
+                      </label>
+                      <label class="rs-radio ">
+                        <input type="radio " name="three ">
+                        <strong>No</strong>
+                        <span class="rs-help-block ">Cancel and move on</span>
+                      </label>
+                    </div>
+                  </div>
+                    <button class="rs-btn " data-dismiss="modal " aria-hidden="true ">Close</button>
+                    <a class="rs-btn rs-btn-primary " ng-click="vm.continue() " href="https://mycloud.rackspace.com ">Submit</a>
+            </form>
+        </div>
+    </div>
+    <!-- end modals -->
+
 </div>

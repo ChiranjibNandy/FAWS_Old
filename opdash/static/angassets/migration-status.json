@@ -20,6 +20,20 @@
   "est_completion_time":"9hr 21mins 15sec",
   "progress": 60
 }, {
+  "queue_name": "Batch Seven",
+  "status": null,
+  "start_date": "",
+  "end_date": "",
+  "est_completion_time":"",
+  "progress": 0
+}, {
+  "queue_name": "Batch Eight",
+  "status": "scheduled",
+  "start_date": "10/02/2017 12:18 A.M.",
+  "end_date": "",
+  "est_completion_time":"",
+  "progress": 0
+}, {
   "queue_name": "Batch Four",
   "status": "paused",
   "start_date": "05/01/2017 01:25 A.M.",
