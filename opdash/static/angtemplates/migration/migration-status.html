@@ -7,7 +7,7 @@
         <div class="rs-content rs-panel">
             <div class="rs-inner">
                 <div class="pull-right">
-                    <a class="rs-btn rs-btn-primary" ng-link="['MigrationResourceList']"><i class="fa fa-plus-square fa-fw"></i> Start New Migration</a>
+                    <button class="rs-btn rs-btn-primary" ng-click="vm.startNewMigration()"><i class="fa fa-plus-square fa-fw"></i> Start New Migration</button>
                 </div>
                 <h3>Migrations</h3>
                 <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
@@ -198,7 +198,7 @@
         </div>
         <div class="modal-footer">
             <a href="#" class="rs-btn" data-dismiss="modal">Cancel</a>
-            <a ng-link="['MigrationResourceList']" class="rs-btn rs-btn-primary">Start a Migration</a>
+            <button ng-click="vm.startNewMigration()" class="rs-btn rs-btn-primary">Start a Migration</button>
         </div>
     </div>
     <br>
