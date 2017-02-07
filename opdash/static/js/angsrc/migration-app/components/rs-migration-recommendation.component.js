@@ -21,10 +21,13 @@
              * @name migrationApp.controller:rsmigrationrecommendationCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationrecommendation rsmigrationrecommendation} component
              */
-            controller: [ "$rootRouter", function($rootRouter) {
+            controller: [ "$rootRouter","datastoreservice", function($rootRouter,datastoreservice) {
                 var vm = this;
-
+                
                 $('title')[0].innerHTML =  "Recommendations - Rackspace Cloud Migration";
+                vm.migrationName = datastoreservice.getScheduleMigration();
+                vm.dataServer = datastoreservice.getItems('server').length;
+                vm.dataNetwork = datastoreservice.getItems('network').length;
 
                 /**
                  * @ngdoc method

@@ -50,6 +50,15 @@
                     vm.recSelectedItems = dataStoreService.getRecommendedItems() || [];
                     //vm.recSelectedItems = [];
                     vm.data = dataStoreService.getItems(vm.type);
+                    // pagination controls
+                    vm.pageArray = [];
+                    vm.currentPage = 1;
+                    vm.pageSize = 5; // items per page
+                    vm.totalItems = vm.data.length;
+                    vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
+                    for(var i=1;i<=vm.noOfPages;i++){
+                        vm.pageArray.push(i);
+                    };      
                     if(vm.data.length >0)
                         vm.noData = false;
                     else
