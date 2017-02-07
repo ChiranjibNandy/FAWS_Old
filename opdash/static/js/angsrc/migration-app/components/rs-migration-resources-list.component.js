@@ -28,7 +28,10 @@
                 var vm = this;
 
                 vm.$onInit = function() {
-                    $('#intro_modal').modal('show');
+                    var status = dataStoreService.getDontShowStatus();
+                    if(status == false){
+                        $('#intro_modal').modal('show');
+                    }        
                     $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Migration";
                     authservice.getAuth().tenant_id = 1024814;
                     vm.auth = authservice.getAuth();
@@ -85,6 +88,18 @@
 
                 /**
                  * @ngdoc method
+                 * @name dontShow
+                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @description 
+                 * Consider Dont show checkbox if checked.
+                 */
+                vm.dontShow = function() {
+                    dataStoreService.setDontShowStatus(vm.dontshowStatus);
+                    console.log("dont show called:  "+vm.dontshowStatus);
+                };
+
+                /**
+                 * @ngdoc method
                  * @name continue
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
                  * @description 
@@ -105,7 +120,7 @@
 
                 vm.savencontinue = function() {
                     if(vm.migrationName){
-                        self.selectedTime = {
+                        vm.selectedTime = {
                             migrationName:vm.migrationName,
                             time:'',
                             timezone:''
@@ -115,6 +130,7 @@
                         $('#cancel_modal').modal('hide');
                         $('#intro_modal').modal('hide');
                         $('#no_selection').modal('hide');
+                        dataStoreService.setDontShowStatus(true);
                         $rootRouter.navigate(["MigrationRecommendation"]);
                     }
                     else{
