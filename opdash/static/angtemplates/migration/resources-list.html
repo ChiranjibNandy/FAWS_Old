@@ -164,11 +164,11 @@
         <div class="modal-footer">
             <div class="rs-pull-left">
                 <label class="rs-checkbox">
-                    <input type="checkbox">
+                    <input type="checkbox" ng-change="vm.dontShow()" ng-model="vm.dontshowStatus">
                     Don't show this again
                 </label>
             </div>                      
-            <a ng-link="['MigrationStatus']" class="rs-btn">Cancel</a>
+            <a ng-click="vm.submitCancel()" class="rs-btn">Cancel</a>
             <a href="#" class="rs-btn rs-btn-primary" data-dismiss="modal">Start a Migration</a>
         </div>
     </div>
