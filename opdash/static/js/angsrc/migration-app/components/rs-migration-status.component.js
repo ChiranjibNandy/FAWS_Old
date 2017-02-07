@@ -21,7 +21,7 @@
                  * @name migrationApp.controller:rsmigrationstatusCtrl
                  * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationstatus rsmigrationstatus} component
                  */
-                controller: ["httpwrapper", function(HttpWrapper) {
+                controller: ["httpwrapper", "datastoreservice", "$rootRouter", function(HttpWrapper, dataStoreService, $rootRouter) {
                     var vm = this;
 
                     /**
@@ -92,6 +92,19 @@
                      */
                     vm.cancelBatch = function() {
                         alert("Cancel migration of resources in this batch");
+                    };
+
+                    /**
+                     * @ngdoc method
+                     * @name startNewMigration
+                     * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                     * @description 
+                     * Resets all previous resource data and helps to starts a new migration
+                     */
+                    vm.startNewMigration = function() {
+                        dataStoreService.resetAll();
+                        dataStoreService.setDontShowStatus(false);
+                        $rootRouter.navigate(["MigrationResourceList"]);
                     };
                 }]
             }); // end of comeponent rsmigrationstatus

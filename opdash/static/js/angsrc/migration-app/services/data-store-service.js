@@ -41,6 +41,7 @@
               * @type {Array}
               * @description Set of load balancer items received after making API call
              */
+            self.dontShowStatus = false;
             self.loadItems = [];
             self.labelsServer = [];
             self.labelsNetwork = [];
@@ -224,7 +225,30 @@
             return    self.selectedTime;
             }
 
+            this.setDontShowStatus = function(status){
+               self.dontShowStatus = status;
+            }
 
+            this.getDontShowStatus = function(){
+                return self.dontShowStatus;
+            }
+
+            self.resetAll = function(){
+                self.serverItems = [];
+                self.networkItems = [];
+                self.fileItems = [];
+                self.loadItems = [];
+                self.labelsServer = [];
+                self.labelsNetwork = [];
+                self.selectedItems.server = [];
+                self.selectedItems.network = [];
+                self.labelsServer = [];
+                self.labelsNetwork = [];
+                self.selectedDate = {};
+                self.selectedRecommendedItems = [];
+                self.RecommendedTotalCost = null;
+                self.CurrentPricing = null;
+            };
 
             return self;
         }]); // end of service definition
