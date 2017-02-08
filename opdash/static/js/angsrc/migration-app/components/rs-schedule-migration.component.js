@@ -94,6 +94,7 @@
                    timezone:vm.timezone
             };
              dataStoreService.setScheduleMigration(vm.selectedTime);
+            vm.editorEnabled = false;
     });
          
 
@@ -141,7 +142,38 @@
                 vm.continue = function() {
                     $rootRouter.navigate(["ConfirmMigration"]);
                 };
+ /**
+                 * @ngdoc method
+                 * @name editMigrationName
+                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                 * @description 
+                 * Edit migration name**
+                 */
 
+                vm.editMigrationName = function() {
+                vm.editorEnabled = true;
+                vm.editableTitle = vm.migrationName;
+                      };
+                      /**
+                 * @ngdoc method
+                 * @name disableEditor
+                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                 * @description 
+                 * Cancel edit migration name**
+                 */
+              vm.disableEditor = function() {
+                 vm.editorEnabled = false;
+                   };
+                   /**
+                 * @ngdoc method
+                 * @name save
+                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                 * @description 
+                 * Save edited migration name**
+                 */
+                vm.save = function() {
+             vm.disableEditor();
+                };
                 return vm;
             }
         ]}); // end of component definition
