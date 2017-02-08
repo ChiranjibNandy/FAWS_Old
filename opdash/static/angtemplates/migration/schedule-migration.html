@@ -36,9 +36,23 @@
                     <!-- End Stepper -->
                     <hr>
                     <div class="rs-inner">
-                        <h2>User Namegoeshere ( #{{vm.tenant_id}} )</h2>
-                         <h3>Migration-{{vm.selectedDateHeader}} <a href="#name_modal2" role="button" data-toggle="modal" class="rs-edit" title="click to edit migration name"></a></h3>
+                        <h2 >User Namegoeshere ( #{{vm.tenant_id}} )</h2>
+                         <h3>
+                             <div class="rs-control-group">
+                                    <div class="rs-controls" style="width: 37%;float: left;" ng-hide="vm.editorEnabled">{{vm.migrationName}} </div>
+                                    <div class="rs-controls" style="width: 50%;">
+                                        <a  role="button" ng-click ="vm.editMigrationName()" data-toggle="modal" class="rs-edit" title="click to edit migration name" ng-hide="vm.editorEnabled"></a>
+                                    </div>
+                                </div>
+                            </h3>
+                        <div ng-show="vm.editorEnabled">
+                          <input ng-model="vm.migrationName" ng-show="vm.editorEnabled">
+                           <a  ng-click="vm.save()">Save</a>
+                             or
+                           <a  ng-click="vm.disableEditor()">cancel</a>.
+                           </div>
                         <hr>
+                         
                         <div class="rs-row">
                         
                         

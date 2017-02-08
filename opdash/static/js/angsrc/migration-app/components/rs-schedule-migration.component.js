@@ -94,6 +94,7 @@
                    timezone:vm.timezone
             };
              dataStoreService.setScheduleMigration(vm.selectedTime);
+            vm.editorEnabled = false;
     });
          
 
@@ -142,6 +143,17 @@
                     $rootRouter.navigate(["ConfirmMigration"]);
                 };
 
+                vm.editMigrationName = function() {
+                vm.editorEnabled = true;
+                vm.editableTitle = vm.migrationName;
+  };
+ vm.disableEditor = function() {
+    vm.editorEnabled = false;
+  };
+  
+  vm.save = function() {
+    vm.disableEditor();
+  };
                 return vm;
             }
         ]}); // end of component definition
