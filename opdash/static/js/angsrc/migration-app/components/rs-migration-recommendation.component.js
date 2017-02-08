@@ -25,9 +25,29 @@
                 var vm = this;
                 
                 $('title')[0].innerHTML =  "Recommendations - Rackspace Cloud Migration";
-                vm.migrationName = datastoreservice.getScheduleMigration();
+                vm.migrationName = datastoreservice.getScheduleMigration().migrationName;
                 vm.dataServer = datastoreservice.getItems('server').length;
                 vm.dataNetwork = datastoreservice.getItems('network').length;
+
+                /**
+                 * @ngdoc method
+                 * @name changeName
+                 * @methodOf migrationApp.controller:rsmigrationrecommendationCtrl
+                 * @description 
+                 * Changes the migration batch name and updates it in the service datastoreservice
+                 */
+                vm.changeName = function() {
+                    if(vm.changedMigrationName){
+                        vm.selectedTime = {
+                            migrationName:vm.changedMigrationName,
+                            time:'',
+                            timezone:''
+                        };
+                        vm.migrationName = vm.changedMigrationName;
+                        datastoreservice.setScheduleMigration(vm.selectedTime);
+                    }
+                    $('#name_modal2').modal('hide');
+                };
 
                 /**
                  * @ngdoc method

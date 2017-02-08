@@ -27,11 +27,11 @@
                     </td>
                     <td class="rs-table-link"><a href="#" ng-link="['EquipmentDetails', {type: vm.type, id: item.id}]">{{item.name}}</a></td>
                     <td class="rs-table-text">{{item.ip_address}}</td>
-                    <td>{{item.mappings[0].region}}</td>
-                    <td>{{item.mappings[0].region}}</td>
-                    <td>{{item.mappings[0].instance_type}}</td>
+                    <td>{{item.selectedMapping.region}}</td>
+                    <td>{{item.selectedMapping.zone || 'US-East-1a 2'}}</td>
+                    <td>{{item.selectedMapping.instance_type}}</td>
                     <td class="rs-table-cog">
-                        <a href="#modify_modal" role="button" data-toggle="modal"><i class="rs-cog"></i></a>
+                        <a href="{{'#modify_modal'+ item.id}}" role="button" data-toggle="modal"><i class="rs-cog"></i></a>
                     </td>
                   </tr>
               </tbody>
@@ -49,7 +49,8 @@
         </ul>
     </div>
     <br>
-    <div id="modify_modal" class="modal hide fade details" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- ********** MODAL CODE GOES HERE... ************* -->
+    <div ng-repeat="item in vm.data" id="{{'modify_modal'+item.id}}" class="modal hide fade details" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h3>Choose your configuration</h3>
@@ -59,22 +60,22 @@
               <div class="rs-control-group">
                 <h4 class="rs-control-label">AWS Region</h4>
                 <div class="rs-controls">
-                  <select>
+                  <select ng-model="vm.awsRegion">
                     <option>US-East-1</option>
-                    <option>US-East-1</option>
-                    <option>US-East-1</option>
-                    <option>US-East-1</option>
+                    <option>US-East-2</option>
+                    <option>US-East-3</option>
+                    <option>US-East-4</option>
                   </select>
                 </div>
             </div>
             <div class="rs-control-group">
                 <h4 class="rs-control-label">AWS Zone</h4>
                 <div class="rs-controls">
-                  <select>
+                  <select ng-model="vm.awsZone">
                     <option>US-East-1a 1</option>
                     <option>US-East-1a 2</option>
                     <option>US-East-1a 3</option>
-                    <option>US-East-1a 3</option>
+                    <option>US-East-1a 4</option>
                   </select>
                 </div>
             </div>           
@@ -93,72 +94,31 @@
                         </tr>
                     </thead>
                     <tbody>
-
-                        <tr class="rs-inst-types">
+                        <tr ng-repeat="server in item.mappings track by $index" class="rs-inst-types">
+                            <td>    
+                                <input type="radio" name="{{'selection'+item.name }}" ng-model="item.id" ng-value="$index"/>
+                            </td>
+                            <td>{{server.instance_type}}</td>
+                            <td>{{server.vcpu || 2}}</td>
+                            <td>{{server.memory || '2 GB'}}</td>
+                            <td>{{server.storage || 'EBS-Only'}}</td>
+                            <td>{{server.cost || '$0.00'}}</td>
+                        </tr>
+                        <!--<tr class="rs-inst-types">
                             <td class="rs-table-checkbox"><img src="images/rackspace-logo.svg" alt=""></td>
                             <td class="rs-table-text">Next Generation (Current)</td>
                             <td class="rs-table-text">3</td>
                             <td class="rs-table-text">2 GB</td>
                             <td class="rs-table-text"></td>
                             <td class="rs-table-text">$0.00</td>
-                        </tr>
-                        <tr>
-                            <td class="rs-table-checkbox">
-                                <input type="radio" />
-                            </td>
-                            <td class="rs-table-text">t2.small</td>
-                            <td class="rs-table-text">1</td>
-                            <td class="rs-table-text">2 GB</td>
-                            <td class="rs-table-text">EBS-Only</td>
-                            <td class="rs-table-text">$0.00</td>
-                        </tr>
-                        <tr>
-                            <td class="rs-table-checkbox">
-                                <input type="radio" />
-                            </td>
-                            <td class="rs-table-text">m4.large</td>
-                            <td class="rs-table-text">2</td>
-                            <td class="rs-table-text">8 GB</td>
-                            <td class="rs-table-text">EBS-Only</td>
-                            <td class="rs-table-text">$0.00</td>
-                        </tr>
-                        <tr class="selected">
-                            <td class="rs-table-checkbox" >
-                                <input type="radio" / checked="checked">
-                            </td>
-                            <td class="rs-table-text">m3.large</td>
-                            <td class="rs-table-text">2</td>
-                            <td class="rs-table-text">7.5 GB</td>
-                            <td class="rs-table-text">1 x 32</td>
-                            <td class="rs-table-text">$0.00</td>
-                        </tr>
-                        <tr>
-                            <td class="rs-table-checkbox">
-                                <input type="radio" />
-                            </td>
-                            <td class="rs-table-text">c4.large</td>
-                            <td class="rs-table-text">2</td>
-                            <td class="rs-table-text">3.75 GB</td>
-                            <td class="rs-table-text">EBS-Only</td>
-                            <td class="rs-table-text">$0.00</td>
-                        </tr>
-                        <tr>
-                            <td class="rs-table-checkbox">
-                                <input type="radio" />
-                            </td>
-                            <td class="rs-table-text">c3.large</td>
-                            <td class="rs-table-text">2</td>
-                            <td class="rs-table-text">3.75 GB</td>
-                            <td class="rs-table-text">2 x 16</td>
-                            <td class="rs-table-text">$0.00</td>
-                        </tr>
+                        </tr>-->
                     </tbody>
                 </table>
             </div>
         </div>
         <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <button class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true">Save Changes</button>
+            <button class="rs-btn rs-btn-primary" ng-click="vm.saveUpdatedObject(item.id)">Save Changes</button>
             <!-- replace 'data-dismiss="modal" aria-hidden="true"' on 'Save Changes' -->
         </div>
     </div>
