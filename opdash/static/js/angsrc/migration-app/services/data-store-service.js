@@ -12,39 +12,34 @@
             var self = this;
              /**
               * @ngdoc property
-              * @name serverItems
+              * @name resourceItems
               * @propertyOf migrationApp.service:datastoreservice
               * @type {Array}
-              * @description Set of servers items received after making API call
+              * @description Set of resources received during first time API call
              */
-            self.serverItems = [];
+            self.resourceItems = {
+                server:[],
+                network:[],
+                files:[],
+                loadbalancers:[]
+            };
             /**
               * @ngdoc property
-              * @name networkItems
+              * @name dontShowStatus
               * @propertyOf migrationApp.service:datastoreservice
               * @type {Array}
-              * @description Set of network items received after making API call
-             */
-            self.networkItems = [];
-            /**
-              * @ngdoc property
-              * @name fileItems
-              * @propertyOf migrationApp.service:datastoreservice
-              * @type {Array}
-              * @description Set of file items received after making API call
-             */
-            self.fileItems = [];
-            /**
-              * @ngdoc property
-              * @name loadItems
-              * @propertyOf migrationApp.service:datastoreservice
-              * @type {Array}
-              * @description Set of load balancer items received after making API call
+              * @description Flag to avoid repeated dispaly of sliding window at initial step of migration
              */
             self.dontShowStatus = false;
-            self.loadItems = [];
             self.labelsServer = [];
             self.labelsNetwork = [];
+            /**
+              * @ngdoc property
+              * @name selectedItems
+              * @propertyOf migrationApp.service:datastoreservice
+              * @type {Array}
+              * @description set of resources selected by user.
+             */
             self.selectedItems = {
                 server:[],
                 network:[]
@@ -55,10 +50,9 @@
                 time:'',
                 timezone:''
             };
-             self.fileItems = [];
             /**
               * @ngdoc property
-              * @name loadScheduledMigrationTime
+              * @name selectedTime
               * @propertyOf migrationApp.service:datastoreservice
               * @type {Array}
               * @description Set of selectedTime for the scheduled migration page
@@ -90,20 +84,7 @@
              * Saves list of all resources once application is loaded.
              */
             this.storeallItems = function(items, type){
-                if(type == "server")
-                    self.serverItems = items;
-                else if (type == "network") {
-                    self.networkItems = items;
-                } else if (type == "files") {
-                    self.fileItems = items;
-                } else if (type == "loadBalancers") {
-                    self.loadItems = items;
-                } else if (type == "labelserver"){
-                    self.labelsServer = items;
-                }
-                else{
-                    self.labelsNetwork = items;
-                }
+                self.resourceItems[type] = items;
             }
 
             /**
@@ -115,20 +96,7 @@
              * Retrieves list of all resources that were saved after application was loaded.
              */
             this.retrieveallItems = function(type){
-                if(type == "server")
-                    return self.serverItems;
-                else if(type == "network")
-                    return self.networkItems;
-                else if(type == "files")
-                    return self.fileItems;
-                else if(type == "loadBalancers")
-                    return self.loadItems;
-                else if(type == "labelserver"){
-                    return self.labelsServer;
-                }
-                else {
-                    return self.labelsNetwork;
-                }
+                return self.resourceItems[type];
             }
 
             /**
@@ -234,10 +202,12 @@
             }
 
             self.resetAll = function(){
-                self.serverItems = [];
-                self.networkItems = [];
-                self.fileItems = [];
-                self.loadItems = [];
+                self.resourceItems = {
+                    server:[],
+                    network:[],
+                    files:[],
+                    loadbalancers:[]
+                };
                 self.labelsServer = [];
                 self.labelsNetwork = [];
                 self.selectedItems.server = [];

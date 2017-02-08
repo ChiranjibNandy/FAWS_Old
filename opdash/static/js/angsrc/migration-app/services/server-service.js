@@ -28,7 +28,8 @@
                             status: server.status,
                             ram: server.flavor_details.ram,
                             mappings: server.mappings,
-                            details: server // NEED ALL THE DETAILS
+                            details: server, // NEED ALL THE DETAILS
+                            region: key
                         });
                     });
                 }

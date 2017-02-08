@@ -35,6 +35,7 @@
                     $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Migration";
                     authservice.getAuth().tenant_id = 1024814;
                     vm.auth = authservice.getAuth();
+                    vm.isRacker = authservice.is_racker;
                     vm.selectedItems = {
                         server:[],
                         network:[]
@@ -45,6 +46,8 @@
                     var timestmp = moment(d).format("DDMMMYYYY-hhmma");
                     vm.migrationName = 'Migration-' + timestmp;
                     vm.noName = false;
+                    vm.networkCount = 0;
+                    vm.networksList = [];
                 }
 
                 /**
@@ -95,8 +98,18 @@
                  */
                 vm.dontShow = function() {
                     dataStoreService.setDontShowStatus(vm.dontshowStatus);
-                    console.log("dont show called:  "+vm.dontshowStatus);
                 };
+
+                $scope.$watch('vm.selectedItems.server.length', function () {
+                    vm.networkCount = 0;
+                    vm.networksList = [];
+                    angular.forEach(vm.selectedItems.server, function (item) {
+                        angular.forEach(item.details.networks, function (network) {
+                            vm.networkCount += 1;
+                            vm.networksList.push(network);
+                        });
+                    });
+                });
 
                 /**
                  * @ngdoc method
@@ -117,7 +130,13 @@
                         $('#intro_modal').modal('hide');
                     }
                 };
-
+                /**
+                 * @ngdoc method
+                 * @name savencontinue
+                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @description 
+                 * Give name for migration and continue to next step: **Recommendations**
+                 */
                 vm.savencontinue = function() {
                     if(vm.migrationName){
                         vm.selectedTime = {
@@ -137,7 +156,13 @@
                         vm.noName = true;
                     }
                 };
-
+                /**
+                 * @ngdoc method
+                 * @name cancelMigration
+                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @description 
+                 * Cancel Migration of resources and go back to migration dashboard page.
+                 */
                 vm.cancelMigration = function() {
                     if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0){
                         $('#cancel_modal').modal('show');
@@ -151,6 +176,13 @@
                     }
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name submitCancel
+                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @description 
+                 * Cancel Migration of resources and go back to migration dashboard page.
+                 */
                 vm.submitCancel = function() {
                     $('#name_modal').modal('hide');
                     $('#cancel_modal').modal('hide');

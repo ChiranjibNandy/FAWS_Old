@@ -36,6 +36,7 @@
         </div>
     </div>
 </div>
+<br>
 <div class="pagination pagination-mini" ng-if="vm.totalItems">
     <ul>
         <li ng-class="{disabled: vm.currentPage == 1}" ng-click="vm.currentPage=vm.currentPage-1"><a href="">Prev</a></li>
@@ -44,3 +45,81 @@
         <li><span>Showing {{(vm.currentPage == 1 ? vm.currentPage : ((vm.currentPage-1)*5)+1)}}-{{(vm.currentPage == vm.noOfPages ? vm.items.length : vm.currentPage*5)}} of {{vm.items.length}}</span></li>
     </ul>
 </div>
+<div id="resource_info" style="width: 750px !important; overflow-y: scroll; top: 4% !important" class="modal hide fade details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="rs-content rs-panel rs-detail-xlarge">
+            <div class="rs-detail-header">
+
+                <div class="rs-detail-header-subtitle">Server Name</div>
+                <div class="rs-detail-header-title">{{vm.itemDetails.name}}</div>
+            </div>
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">Server Details</div>
+                </div>
+                <div class="rs-detail-section-body">
+                    <ul class="rs-detail-list">
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Server Status</div>
+                            <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.status}}</span></div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">ID</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
+                        </li>                        
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key" id="size-key">RAM</div>
+                            <div class="rs-detail-value">
+                                <span class="rs-progress-label">{{vm.itemDetails.ram}} MB</span>
+                            </div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key" id="size-key">Disk</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.details.flavor_details.disk}} GB
+                                <!--<button class="rs-edit rs-popover-source" data-popover-target="size-key" data-popover="resize-popover" data-popover-position="right" id="detail-example-edit-button"></button>-->
+                            </div>
+                        </li>        
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Region</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.region}}</div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Server Type</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.details.flavor_details.name}}</div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Virtual CPUs</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.details.flavor_details.vcpus}}</div>
+                        </li>       
+                    </ul>
+                </div>
+            </div>
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">Networks</div>
+                </div>
+                <div class="rs-detail-section-body">
+                    <div class="rs-embedded-list-table-wrapper rs-embedded-small">
+                        <table class="rs-list-table rs-embedded-list-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>ID</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="network in vm.itemDetails.details.networks">
+                                    <td class="rs-table-text">{{network.name}}</td>
+                                    <td class="rs-table-text">{{network.id}}</td>
+                                    <td class="rs-table-text"><span class="rs-status rs-status-ok">{{network.status}}</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+    </div>
