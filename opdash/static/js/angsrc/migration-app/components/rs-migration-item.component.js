@@ -43,7 +43,7 @@
              * @name migrationApp.controller:rsmigrationitemCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationitem rsmigrationitem} component
              */
-            controller: ["migrationitemdataservice", "datastoreservice", "$rootRouter", "authservice", "$q", "$scope", function (ds, datastoreservice, $rootRouter, authservice, $q, $scope) {
+            controller: ["migrationitemdataservice", "datastoreservice", "serverservice", "$rootRouter", "authservice", "$q", "$scope", function (ds, datastoreservice, ss, $rootRouter, authservice, $q, $scope) {
                 var vm = this;
 
                 var mapServerStatus = function(dataList, statusList) {
@@ -104,6 +104,7 @@
                     vm.sortingOrder = true;
                     vm.isAllselected = false;
                     vm.tenant_id = authservice.getAuth().tenant_id;
+                    vm.isRacker = authservice.is_racker;
                     /**
                      * @ngdoc property
                      * @name resources_retrieved
@@ -172,6 +173,9 @@
                         vm.pageSize = 5; // items per page
                         vm.totalItems = vm.items.length;
                         vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
+                        for(var i=1;i<=vm.noOfPages;i++){
+                            vm.pageArray.push(i);
+                        };
 
                         vm.labels = datastoreservice.retrieveallItems("label"+vm.type); // set table headers
                         vm.loading = false;
@@ -307,6 +311,65 @@
                    }
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name equipmentDetails
+                 * @methodOf migrationApp.controller:rsmigrationitemCtrl
+                 * @description 
+                 * display equipment details for a perticular resource.
+                 */
+                vm.equipmentDetails = function(type, itemdetails) {
+                    vm.type = type;
+                    vm.itemDetails = itemdetails;
+                    // vm.equipStatus = status;
+                    // vm.equipRam = ram;
+                    // vm.equipFlavorDetails = flavorDetails;
+                    // vm.equipRegion = region;
+                    // vm.equipNetworks = networks;
+                    // vm.equipProgress = vm.equipRam/2000*100;
+                    /**
+                     * @ngdoc property
+                     * @name equipment
+                     * @propertyOf migrationApp.controller:rsequipmentdetailsCtrl
+                     * @type {Object}
+                     * @description Object containing details about the equipment
+                     */
+                    vm.equipment = {};
+
+                    /**
+                     * @ngdoc property
+                     * @name tasks
+                     * @propertyOf migrationApp.controller:rsequipmentdetailsCtrl
+                     * @type {Array}
+                     * @description Array containing set of tasks involved in migrating the resource 
+                     */
+                    vm.tasks = [];
+                    // fetch details based on selected migration item
+                    ds.getDetailedList(vm.type)
+                        .then(function (response) {
+                            vm.equipment = response.data.filter(function (item) { return item.id == vm.id })[0];
+                        });
+
+                    if(vm.type == 'server'){
+                        ds.getServerMigrationStatus(authservice.getAuth().tenant_id)
+                            .then(function(response){
+                                var jobId = response.server_status
+                                                .filter(function(item){
+                                                    if(item.server_id == vm.id)
+                                                        return item;
+                                                });
+                                if(jobId.length > 0){
+                                    vm.jobId = jobId[0].id;
+                                    ss.getJobTasks(jobId[0].id)
+                                        .then(function(response){
+                                            vm.jobStatus = response.data.results.instances[vm.id].status;
+                                            vm.tasks = response.data.results.instances[vm.id].tasks;
+                                            vm.showData = true;
+                                        });
+                                }                                            
+                            });
+                    }
+                }
                 return vm;
             }]
         }); // end of component definition

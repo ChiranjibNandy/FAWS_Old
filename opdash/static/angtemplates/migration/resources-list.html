@@ -12,17 +12,17 @@
                         <h4>Select Resources</h4>
                         <br>
                         <rs-tabs alignment="horizontal">
-                            <rs-tab title="Servers">
+                            <rs-tab title="Servers" >
                                 <rsmigrationitem type="server" filtervalue="vm.filterSearch"></rsmigrationitem>
                              </rs-tab>
-                            <rs-tab title="Networks">
+                            <!--<rs-tab title="Networks">
                                 <rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>
-                            </rs-tab>
-                            <rs-tab title="Files">
+                            </rs-tab>-->
+                            <rs-tab title="Files" ng-if="vm.isRacker">
                                 Files
                                 <!--<rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>-->
                             </rs-tab>
-                            <rs-tab title="Load Balancers">
+                            <rs-tab title="Load Balancers" ng-if="vm.isRacker">
                                 Load Balancers
                                 <!--<rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>-->
                             </rs-tab>
@@ -38,7 +38,7 @@
                                                 <b class=""> Servers ({{vm.selectedItems.server.length}})  <i class="fa fa-caret-down"></i></b>
                                             </a>
                                         </div>
-                                        <div id="server-name" class="accordion-body collapse ">
+                                        <div id="server-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
                                             <div class="accordion-inner ">
                                                 <ul class="inline">
                                                     <li ng-repeat="item in vm.selectedItems.server">{{item.name}}</li>
@@ -46,16 +46,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="accordion-group" ng-class="{disabled:vm.selectedItems.network.length == 0}">
+                                    <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}">
                                         <div class="accordion-heading ">
                                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#file-name">
-                                                <b class="">  Networks ({{vm.selectedItems.network.length}}) <i class="fa fa-caret-down"></i></b>
+                                                <b class="">  Networks ({{vm.networkCount}}) <i class="fa fa-caret-down"></i></b>
                                             </a>
                                         </div>
-                                        <div id="file-name" class="accordion-body collapse">
+                                        <div id="file-name" class="accordion-body collapse" ng-if="vm.selectedItems.server.length > 0">
                                             <div class="accordion-inner">
                                                 <ul class="inline">
-                                                    <li ng-repeat="item in vm.selectedItems.network">{{item.name}}</li>
+                                                    <li ng-repeat="network in vm.networksList">{{network.name}}</li>
                                                 </ul>
                                             </div>
                                         </div>

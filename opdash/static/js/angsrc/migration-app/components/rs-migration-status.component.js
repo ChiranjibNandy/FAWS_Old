@@ -103,7 +103,7 @@
                      */
                     vm.startNewMigration = function() {
                         dataStoreService.resetAll();
-                        dataStoreService.setDontShowStatus(false);
+                        // dataStoreService.setDontShowStatus(false);
                         $rootRouter.navigate(["MigrationResourceList"]);
                     };
                 }]
