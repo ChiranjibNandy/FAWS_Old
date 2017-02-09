@@ -12,9 +12,10 @@
     <title>Rackspace Migration Manager</title>
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <!-- Bootstrap theme -->
     <!-- Custom styles for this template -->
     <link rel="stylesheet" type="text/css" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest//canon.min.css">
+    <!-- added custom -->
+    <link href="css/animate.css" rel="stylesheet">
     <link href="css/migration-mgr.css" rel="stylesheet">
     <script src="https://use.fontawesome.com/1d292fb501.js"></script>
 </head>
@@ -46,9 +47,28 @@
                 <div class="rs-nav-brand">
                     <a href=""></a>
                 </div>
-                <ul class="rs-nav">
-                    <li class="rs-dropdown rs-primary-dropdown active">
-                        <a class="" href="step5.html">Migration Dashboard</a>
+                <ul class="rs-nav" id="links">
+
+                    <li id="pilot-dashboard" data-nav="dashboard" class="rs-nav-item">
+                        <a id="pilot-dashboard-link" class="rs-nav-link" data-pilot-tracking-id="dashboard-link" href="https://mycloud.rackspace.com/cloud/453265/home">Dashboard</a>
+                    </li>
+                    <li id="pilot-servers" data-nav="servers" class="rs-nav-item pilot-nav-item">
+                        <div class="rs-nav-link" data-pilot-tracking-id="servers-dropdown" role="button" tabindex="0" style="user-select: none;">Servers</div>
+                    </li>
+                    <li id="pilot-orchestration" data-nav="orchestration" class="rs-nav-item pilot-nav-item">
+                        <div class="rs-nav-link" data-pilot-tracking-id="orchestration-dropdown" role="button" tabindex="0" style="user-select: none;">Orchestration</div>
+                    </li>
+                    <li id="pilot-networking" data-nav="networking" class="rs-nav-item pilot-nav-item">
+                        <div class="rs-nav-link" data-pilot-tracking-id="networking-dropdown" role="button" tabindex="0" style="user-select: none;">Networking</div>
+                    </li>
+                    <li id="pilot-storage" data-nav="storage" class="rs-nav-item pilot-nav-item">
+                        <div class="rs-nav-link" data-pilot-tracking-id="storage-dropdown" role="button" tabindex="0" style="user-select: none;">Storage</div>
+                    </li>
+                    <li id="pilot-databases" data-nav="databases" class="rs-nav-item pilot-nav-item">
+                        <div class="rs-nav-link" data-pilot-tracking-id="database-dropdown" role="button" tabindex="0" style="user-select: none;">Databases</div>
+                    </li>
+                    <li id="pilot-backups" data-nav="backups" class="rs-nav-item pilot-nav-item">
+                        <div class="rs-nav-link" data-pilot-tracking-id="backups-dropdown" role="button" tabindex="0" style="user-select: none;">Backups</div>
                     </li>
                 </ul>
             </div>
@@ -86,6 +106,11 @@
                         <div class="rs-row pricing-buttons">
                             <button class="rs-btn span-12" ng-click="vm.saveItems()">Save for later</button>
                         </div>
+                        <!-- conditional - show only if there is already migrations made -->
+                        <div class="rs-row pricing-buttons">
+                            <a class="rs-btn span-12" ng-click="vm.continue()" href="step5.html">Dashboard</a>
+                        </div>
+                            <!-- ****** -->
                         <div class="rs-row">
                             <a class="rs-btn span-12" href="#cancel_modal" role="button" data-toggle="modal"">Cancel Migration</a>
                     
@@ -130,11 +155,14 @@
                     <!-- End Stepper -->
                     <hr>
                     <div class="rs-inner recommend">
-                        <h2>User Namegoeshere ( #1024814 )</h2>
-                        <h3>Migration-01Feb2017-0456pm <a href="#name_modal2" role="button" data-toggle="modal" class="rs-edit" title="click to edit migration name"></a></h3>
+                        <h2>User Namegoeshere (#1024814)</h2>
                         <input type="text" class="rs-input-large searchbox rs-pull-right" placeholder="filter by keyword or tag...">
-                        <h4>Our recommendation:</h4>
-                        
+                        <div class="migr-name">
+                            <h3>Migration-01Feb2017-0456pm</h3><span class="edit rs-edit"></span>
+                            <input type="text" value="" class="name-input animated flipInX" placeholder="Migration-01Feb2017-0456pm" />
+                        </div>                      
+                        <div class="clear"></div>                        
+                        <h4>Our recommendation:</h4>                        
                         <ul class="rs-tabs">
                             <li class="active"><a href="#Servers">Servers <span class="rs-quiet">(1)</span></a></li>
                             <li class="hover"><a href="#Load">Files<span class="rs-quiet">(3)</span></a></li>
@@ -183,7 +211,7 @@
                                     <tbody>
                                         <tr>
                                             <td class="rs-table-link">
-                                                <a href="#myModal" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave One</a>
+                                                <a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave One</a>
                                             </td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">US-East-1</td>
@@ -194,7 +222,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="rs-table-link"><a href="#myModal" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Two</a></td>
+                                            <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Two</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
@@ -204,7 +232,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="rs-table-link"><a href="#myModal" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Three</a></td>
+                                            <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Three</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
@@ -214,7 +242,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="rs-table-link"><a href="#myModal" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Four</a></td>
+                                            <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Four</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
@@ -224,7 +252,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="rs-table-link"><a href="#myModal" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Five</a></td>
+                                            <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Five</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
@@ -234,7 +262,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="rs-table-link"><a href="#myModal" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Six</a></td>
+                                            <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Six</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
@@ -243,8 +271,7 @@
                                                 <a href="#modify_modal" role="button" data-toggle="modal"><i class="rs-cog"></i></a>
                                             </td>
                                         </tr>
-                                    </tbody>
-   
+                                    </tbody>   
                                 </table>
                             </div>
                             <div class="rs-tab-pane" id="Load">
@@ -254,61 +281,150 @@
                         <br>
                         <div class="pagination pagination-mini" >
                             <ul>
+                                <li><span>Showing 6 of 10</span></li>
                                 <li><a href="#">Prev</a></li>
                                 <li><a href="#">1</a></li>
                                 <li><a href="#">2</a></li>
                                 <li><a href="#">3</a></li>
                                 <li><a href="#">4</a></li>
                                 <li><a href="#">5</a></li>
-                                <li><a href="#">Next</a></li>
-                                <li><span>Showing 6 of 10</span></li>
+                                <li><a href="#">Next</a></li>                                
                             </ul>
+                        </div>                      
+                         
+                        <div class="plain-panel">
+                            <h4>Item Selected</h4>
+                            <hr>
+                            <div class="accordion" id="accordion2">
+                                <div class="accordion-group">
+                                    <div class="accordion-heading ">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#server-name">
+                                            <b class=""> Servers (4)  <i class="rs-caret"></i></b>
+                                        </a>
+                                    </div>
+                                    <div id="server-name" class="accordion-body collapse ">
+                                        <div class="accordion-inner ">
+                                            <div class="selected-items">
+                                              <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i>  US-East-1 - US-East-1a - t2 small
+                                            </div>
+                                            <div class="selected-items">
+                                              <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
+                                            </div>
+                                            <div class="selected-items">
+                                              <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
+                                            </div>
+                                            <div class="selected-items">
+                                              <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
+                                            </div>         
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-group">
+                                    <div class="accordion-heading ">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#file-name">
+                                            <b class="">  Files (2) <i class="rs-caret"></i></b>
+                                        </a>
+                                    </div>
+                                    <div id="file-name" class="accordion-body collapse">
+                                        <div class="accordion-inner">
+                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                               <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  filename1</b>
+                                            </div>
+                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                               <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  filename1</b>
+                                            </div>                
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-group">
+                                    <div class="accordion-heading ">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#block-name">
+                                            <b class=""> Blocks (2) <i class="rs-caret"></i></b>
+                                        </a>
+                                    </div>
+                                    <div id="block-name" class="accordion-body collapse">
+                                        <div class="accordion-inner">
+                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  BlockName1</b>
+                                            </div>
+                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  BlockName1</b>
+                                            </div>                               
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-group">
+                                    <div class="accordion-heading ">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#LB-name">
+                                            <b class="">Load Balancers (2) <i class="rs-caret"></i></b>
+                                        </a>
+                                    </div>
+                                    <div id="LB-name" class="accordion-body collapse">
+                                        <div class="accordion-inner">
+                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> LBname1b </b>
+                                            </div>
+                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> LBname1b</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-group">
+                                    <div class="accordion-heading ">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#cdn-name">
+                                            <b class="">CDN (2) <i class="rs-caret"></i></b>
+                                        </a>
+                                    </div>
+                                    <div id="cdn-name" class="accordion-body collapse">
+                                        <div class="accordion-inner">
+                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  CDNname1b</b>
+                                            </div>
+                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  CDNname1b</b>
+                                            </div>                 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-group">
+                                    <div class="accordion-heading ">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#dns-name">
+                                            <b class="">DNS (0) <!-- <i class="rs-caret"></i> --></b>
+                                        </a>
+                                    </div>
+                                    <div id="dns-name" class="accordion-body collapse">
+                                        <div class="accordion-inner">
+               
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-group">
+                                    <div class="accordion-heading ">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#db-name">
+                                            <b class="">Databases (4) <i class="rs-caret"></i></b>
+                                        </a>
+                                    </div>
+                                    <div id="db-name" class="accordion-body collapse">
+                                        <div class="accordion-inner">
+                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
+                                            </div>
+                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
+                                            </div>
+                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
+                                            </div>
+                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>    
                         </div>
-                        <br>
-
-
-                        <!-- <h4>1 items selected</h4>
-                            <div class="selected-items">
-                                <span class="rs-status" title="cloud-endure-demo-B_wordpress_2">
-                                  <a href="#"><i class="fa fa-times"></i></a>  cloud-endure-demo-B_wordpress_2 
-                                </span>
-                            </div>
-                            <div class="selected-items">
-                                <span class="rs-status" title="cloud-endure-demo-B_wordpress_2">
-                                  <a href="#"><i class="fa fa-times"></i></a>  cloud-endure-demo-B_db_slave 
-                                </span>
-                            </div>
-                            <div class="selected-items">
-                                <span class="rs-status" title="cloud-endure-demo-B_wordpress_2">
-                                  <a href="#"><i class="fa fa-times"></i></a>  cloud-endure-demo-B_wordpress_2 
-                                </span>
-                            </div>
-                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                <span class="rs-status">
-                                  <a href="#"><i class="fa fa-times"></i></a>  cloud-endure-demo-B_wordpress_2 
-                                </span>
-                            </div>
-                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                <span class="rs-status">
-                                  <a href="#"><i class="fa fa-times"></i></a>  cloud-endure-demo-B_db_slave 
-                                </span>
-                            </div>
-                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                <span class="rs-status">
-                                  <a href="#"><i class="fa fa-times"></i></a>  cloud-endure-demo-B_wordpress_2 
-                                </span>
-                            </div>
-                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                <span class="rs-status">
-                                  <a href="#"><i class="fa fa-times"></i></a>  cloud-endure-demo-B_wordpress_2 
-                                </span>
-                            </div>
-                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                <span class="rs-status">
-                                  <a href="#"><i class="fa fa-times"></i></a>  cloud-endure-demo-B_wordpress_2 
-                                </span>
-                            </div> -->
-                        <br>
+                    
                     </div>
                 </div>
             </div>
@@ -356,25 +472,9 @@
 
     <!-- Modals -->
 
-    <div id="name_modal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-body">
-            <h3>What would you like to name your migration?</h3>
-            <form class=" ">
-                <div class="rs-control-group">
-                    
-                    <div class="rs-controls">
-                        <input type="text" placeholder="Migration-01Feb2017-0456pm">
-                    </div>
-                </div>
-                <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                <a class="rs-btn rs-btn-primary " data-dismiss="modal" aria-hidden="true">Save</a>
-            </form>
-        </div>
-    </div>
-
-    <div id="myModal" class="modal hide fade details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="rs-content rs-panel rs-detail-xlarge">
-            <div class="rs-detail-header">
+    <div id="resource_info" class="modal hide fade details" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
 
                 <div class="rs-detail-header-subtitle">Server Name</div>
                 <div class="rs-detail-header-title">cloud-endure-demo-A_db_slave One</div>
@@ -396,21 +496,13 @@
                         <li class="rs-detail-item">
                             <div class="rs-detail-key" id="size-key">RAM</div>
                             <div class="rs-detail-value">
-                                <div class="rs-progress rs-progress-small">
-                                    <div class="rs-progress-inner">
-                                        <div class="rs-segment" style="width: 49%">
-                                            <div class="rs-bar rs-status-info"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <span class="rs-progress-label">912.23 MB of 2 GB</span>
+                
+                                <span class="rs-progress-label">2 GB</span>
                             </div>
                         </li>
                         <li class="rs-detail-item">
                             <div class="rs-detail-key" id="size-key">Disk</div>
-                            <div class="rs-detail-value">100 GB
-                                <button class="rs-edit rs-popover-source" data-popover-target="size-key" data-popover="resize-popover" data-popover-position="right" id="detail-example-edit-button"></button>
-                            </div>
+                            <div class="rs-detail-value">100 GB</div>
                         </li>        
                         <li class="rs-detail-item">
                             <div class="rs-detail-key">Region</div>
@@ -453,7 +545,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        
         <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
@@ -461,7 +553,7 @@
 
     <div id="modify_modal" class="modal hide fade details" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
             <h3>Choose your configuration</h3>
         </div>
         <div class="modal-body">
@@ -574,15 +666,17 @@
     </div>
 
     <div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-body">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
             <h3>Would you like to save the selections you've made so far for another time?</h3>
-            <form>
+            <br>
+            <form class="">
                 <div class="rs-control-group">
                     <div class="rs-controls">
                       <label class="rs-radio">
                         <input type="radio" name="three">
                         <strong>Yes</strong><br>
-                        <span class="rs-help-block">Save my progress for later</span>
+                        <span class="rs-help-block">Save progress for later</span>
                       </label>
                       <label class="rs-radio">
                         <input type="radio" name="three">
@@ -590,10 +684,12 @@
                         <span class="rs-help-block">Cancel and move on</span>
                       </label>
                     </div>
-                </div>
-                <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="https://mycloud.rackspace.com">Submit</a>
-            </form>
+                </div>                  
+            </form>            
+        </div>
+        <div class="modal-footer">
+            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="https://mycloud.rackspace.com">Submit</a>
         </div>
     </div>
     <!-- end modals -->
@@ -604,10 +700,46 @@
             tooltip = new canon.Tooltip();
         });
     </script>
-
     <script src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>   
+    <!-- name edit script -->
+    <script type="text/javascript">
+        $(document).ready(function(){   
+            $('.edit').click(function(){
+                $(this).hide();
+                $(this).prev().hide();
+                $(this).next().show();
+                $(this).next().select();
+            });         
+            $('input.name-input[type="text"]').blur(function() {  
+                 if ($.trim(this.value) == ''){  
+                     this.value = (this.defaultValue ? this.defaultValue : '');  
+                 }
+                 else{
+                     $(this).prev().prev().html(this.value);
+                 }       
+                 $(this).hide();
+                 $(this).prev().show();
+                 $(this).prev().prev().show();
+             });      
+              $('input.name-input[type="text"]').keypress(function(event) {
+                  if (event.keyCode == '13') {
+                      if ($.trim(this.value) == ''){  
+                         this.value = (this.defaultValue ? this.defaultValue : '');  
+                     }
+                     else
+                     {
+                         $(this).prev().prev().html(this.value);
+                     }           
+                     $(this).hide();
+                     $(this).prev().show();
+                     $(this).prev().prev().show();
+                  }
+              });         
+        });
+    </script>
+    
 </body>
 
 </html>
