@@ -45,11 +45,6 @@
                 network:[]
             };
             self.selectedRecommendedItems = [];
-            self.selectedDate = {
-                date:'',
-                time:'',
-                timezone:''
-            };
             /**
               * @ngdoc property
               * @name selectedTime
