@@ -29,7 +29,6 @@ node_modules/
 .DS_Store
 opdash/.DS_Store
 .vscode/
-session/
 
 
 # PyInstaller
