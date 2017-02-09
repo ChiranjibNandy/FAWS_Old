@@ -29,13 +29,12 @@
         <h3>What would you like to name your migration?</h3>
         <form class=" ">
             <div class="rs-control-group">
-                
                 <div class="rs-controls">
-                    <input type="text" placeholder="Migration-01Feb2017-0456pm">
+                    <input type="text" ng-model="vm.changedMigrationName" placeholder="{{vm.migrationName}}">
                 </div>
             </div>
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <a class="rs-btn rs-btn-primary " data-dismiss="modal" aria-hidden="true">Save</a>
+            <a class="rs-btn rs-btn-primary " ng-click="vm.changeName()">Save</a>
         </form>
     </div>
 </div>
