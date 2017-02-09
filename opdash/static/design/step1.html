@@ -209,6 +209,9 @@
                         <div class="rs-pull-right">
                             <a class="rs-btn" href="#cancel_modal" role="button" data-toggle="modal"">Cancel Migration</a>
                             <a class="rs-btn" ng-click="vm.saveItems()">Save for Later</a>
+                            <!-- conditional - show only if there is already migrations made -->
+                            <a class="rs-btn" ng-click="vm.continue()" href="step5.html">Dashboard</a>
+                            <!-- ****** -->
                             <a class="rs-btn rs-btn-primary" href="#name_modal" role="button" data-toggle="modal">Continue</a>
                         </div>
                         <div class="pagination pagination-mini">
@@ -402,7 +405,9 @@
     
     <!-- Modals -->
     <div id="resource_info" class="modal hide fade details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="rs-content rs-panel rs-detail-xlarge">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+
             <div class="rs-detail-header">
 
                 <div class="rs-detail-header-subtitle">Server Name</div>
@@ -481,7 +486,8 @@
     </div>
     
     <div id="name_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-body">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
             <h3>What would you like to name your migration?</h3>
             <form class="">
                 <div class="rs-control-group">
@@ -499,8 +505,10 @@
     </div>
 
     <div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-body">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
             <h3>Would you like to save the selections you've made so far for another time?</h3>
+            <br>
             <form class="">
                 <div class="rs-control-group">
                     <div class="rs-controls">
@@ -520,6 +528,7 @@
         </div>
         <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <a class="rs-btn" ng-click="vm.continue()" href="step5.html">Dashboard</a>
             <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="https://mycloud.rackspace.com">Submit</a>
         </div>
     </div>

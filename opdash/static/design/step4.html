@@ -279,6 +279,9 @@
                             <a class="rs-btn " ng-link="['Tenant']" href="step3.html">Back</a>
                             <a class="rs-btn" href="">Save for later</a>
                             <a class="rs-btn " href="#cancel_modal" role="button" data-toggle="modal" ">Cancel Migration</a>
+                            <!-- conditional - show only if there is already migrations made -->
+                            <a class="rs-btn" ng-click="vm.continue()" href="step5.html">Dashboard</a>
+                            <!-- ****** -->
                             <a href="step5.html "class="rs-btn rs-btn-primary " ng-click="vm.saveItems() ">Confirm Migration</a>
                         </div>
                         <br>
@@ -328,28 +331,32 @@
     </div>
     <!-- modals -->
 
-    <div id="cancel_modal " class="modal hide fade " tabindex="-1 " role="dialog " aria-labelledby="myModalLabel " aria-hidden="true ">
-        <div class="modal-body ">
+    <div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
             <h3>Would you like to save the selections you've made so far for another time?</h3>
-            <form class=" ">
-                <div class="rs-control-group ">
-                    <div class="rs-controls ">
-                        <label class="rs-radio ">
-                            <input type="radio " name="three ">
-                            <strong>Yes</strong>
-                            <br>
-                            <span class="rs-help-block ">Save my progress for later</span>
-                        </label>
-                        <label class="rs-radio ">
-                            <input type="radio " name="three ">
-                            <strong>No</strong>
-                            <span class="rs-help-block ">Cancel and move on</span>
-                        </label>
+            <br>
+            <form class="">
+                <div class="rs-control-group">
+                    <div class="rs-controls">
+                      <label class="rs-radio">
+                        <input type="radio" name="three">
+                        <strong>Yes</strong><br>
+                        <span class="rs-help-block">Save progress for later</span>
+                      </label>
+                      <label class="rs-radio">
+                        <input type="radio" name="three">
+                        <strong>No</strong>
+                        <span class="rs-help-block">Cancel and move on</span>
+                      </label>
                     </div>
-                </div>
-                <button class="rs-btn " data-dismiss="modal " aria-hidden="true ">Close</button>
-                <a class="rs-btn rs-btn-primary " ng-click="vm.continue() " href="https://mycloud.rackspace.com ">Submit</a>
-            </form>
+                </div>                  
+            </form>            
+        </div>
+        <div class="modal-footer">
+            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <a class="rs-btn" ng-click="vm.continue()" href="step5.html">Dashboard</a>
+            <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="https://mycloud.rackspace.com">Submit</a>
         </div>
     </div>
     <!-- end modals -->
