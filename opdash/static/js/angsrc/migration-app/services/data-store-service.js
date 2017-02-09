@@ -50,6 +50,7 @@
                 time:'',
                 timezone:''
             };
+            self.fileItems = [];
             /**
               * @ngdoc property
               * @name selectedTime
@@ -169,13 +170,13 @@
                  self.RecommendedTotalCost = 431.81 ;
             }
             this.getRecommendedTotalCost = function(){
-                 return  self.RecommendedTotalCost ;
+                 return self.RecommendedTotalCost ;
             }
             this.setCurrentPricing = function(){
                  self.CurrentPricing = 485 ;
             }
             this.getCurrentPricing = function(){
-               return   self.CurrentPricing ;
+               return self.CurrentPricing ;
             }
 
              /**
@@ -190,7 +191,7 @@
                 self.selectedTime = items;
             }
             this.getScheduleMigration = function(){
-            return    self.selectedTime;
+                return self.selectedTime;
             }
 
             this.setDontShowStatus = function(status){
@@ -198,7 +199,7 @@
             }
 
             this.getDontShowStatus = function(){
-                return self.dontShowStatus;
+               return self.dontShowStatus;
             }
 
             self.resetAll = function(){

@@ -51,6 +51,9 @@
                     //vm.recSelectedItems = [];
                     vm.data = dataStoreService.getItems(vm.type);
                     // pagination controls
+                    vm.data.map(function(item){
+                        item.selectedMapping = item.mappings[0];
+                    });
                     vm.pageArray = [];
                     vm.currentPage = 1;
                     vm.pageSize = 5; // items per page
@@ -77,48 +80,22 @@
                     $('#rs-main-panel').css('height','310px');
                 };
 
-                // Update item selection based on Select/Deselect all 
-                vm.changeItemSelection = function () {
-                    angular.forEach(vm.data, function (item) {
-                        item.recSelected = vm.isAllSelected;
-                        vm.changeSelectAll(item,true);
-                    });
-                };
-
-                // Select/Deselect all items
-                vm.changeSelectAll = function (item, fromGlobal) {
-                    if(item.recSelected){
-                        item.type = vm.type;
-                        if(vm.recSelectedItems.indexOf(item) === -1){
-                            vm.recSelectedItems.push(item);
-                        }
-                    }else{
-                        item.type = vm.type;
-                        vm.recSelectedItems.splice(vm.recSelectedItems.indexOf(item), 1);
-                    }
-                    if(!fromGlobal) {
-                        var count = 0;
-                        for(var i=0; i<vm.data.length; i++) {
-                            if(vm.data[i].recSelected) count++;
-                            else break;
-                        }
-                        vm.isAllSelected = count === vm.data.length;
-                    }
-                };
-
-                // vm.removeItem = function(item){
-                //     vm.recSelectedItems.splice(vm.recSelectedItems.indexOf(item), 1);
-                //     item.recSelected = false;
-                // }
-
-                //modifing the selected servers
-                vm.modify = function(){
-                    if(vm.recSelectedItems.length > 0){
-                        dataStoreService.setRecommendedItems(vm.recSelectedItems);
-                        $rootRouter.navigate(["CompareOptions"]);
-                    }else{
-                        alert("Please select servers to compare");
-                    }
+                /**
+                 * @ngdoc method
+                 * @name saveUpdatedObject
+                 * @methodOf migrationApp.controller:rsrecommendationitemCtrl
+                 * @description 
+                 * This function enables when we click the save button in the modal and it updates the object 
+                 * with newly selected data which is provided in the table format on popup.
+                 */
+                vm.saveUpdatedObject  = function(id){
+                    var selectedServer = vm.data.filter(function(server){
+                                            return server.id == id;
+                                         });
+                    selectedServer[0].selectedMapping = selectedServer[0].mappings[parseInt(vm.selectedConfiguration)];
+                    selectedServer[0].selectedMapping.zone = vm.awsZone;
+                    selectedServer[0].selectedMapping.region = vm.awsRegion;
+                    $('#modify_modal'+id).modal('hide');
                 };
 
                 return vm;
