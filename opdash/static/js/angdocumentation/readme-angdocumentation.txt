@@ -4,8 +4,8 @@ This application uses ng-docs for generating documentation for the angular code 
 
 Setup
 *******
-	Tools needed
-	***************
+	Tools needed for generating documentation
+	*******************************************
 	- Nodejs needs to be locally installed on the system for the following steps to work. Nodejs is available here: 
 	https://nodejs.org/en/download/
 	
