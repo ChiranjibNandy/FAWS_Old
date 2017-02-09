@@ -113,10 +113,10 @@
                  * @description 
                  * Saves the chosen time for migration
                  */
-                vm.timeChange = function(){
-                    dataStoreService.storeDate('time',vm.time);
-                    vm.selectedDate = moment(vm.date).format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
-                };
+                // vm.timeChange = function(){
+                //     dataStoreService.storeDate('time',vm.time);
+                //     vm.selectedDate = moment(vm.date).format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
+                // };
 
                 /**
                  * @ngdoc method
@@ -125,10 +125,10 @@
                  * @description 
                  * Saves the chosen timezone for migration
                  */
-                vm.timezoneChange = function(){
-                    dataStoreService.storeDate('timezone',vm.timezone);
-                    vm.selectedDate = moment(vm.date).format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
-                };
+                // vm.timezoneChange = function(){
+                //     dataStoreService.storeDate('timezone',vm.timezone);
+                //     vm.selectedDate = moment(vm.date).format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
+                // };
 
                 /**
                  * @ngdoc method
