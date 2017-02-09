@@ -129,9 +129,7 @@
     margin: 0;
 }
 
-.migration-mgr .searchbox {
-    margin-bottom: 1em;
-}
+
 
 
 /*.migration-mgr .rs-panel {
@@ -195,13 +193,13 @@ th {
     cursor: pointer;
     margin-left: 10px;
 }
-
 .clear {
     clear: both;
-    height: 20px;
 }
 
-
+.migration-mgr .searchbox{
+    margin:0;
+}
 /* bootstrap overrides */
 
 .alert-success {

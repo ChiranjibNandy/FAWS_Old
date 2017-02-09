@@ -156,14 +156,13 @@
                     <hr>
                     <div class="rs-inner recommend">
                         <h2>User Namegoeshere (#1024814)</h2>
+                        <input type="text" class="rs-input-large searchbox rs-pull-right" placeholder="filter by keyword or tag...">
                         <div class="migr-name">
                             <h3>Migration-01Feb2017-0456pm</h3><span class="edit rs-edit"></span>
                             <input type="text" value="" class="name-input animated flipInX" placeholder="Migration-01Feb2017-0456pm" />
                         </div>                      
-                        <div class="clear"></div>
-                        <input type="text" class="rs-input-large searchbox rs-pull-right" placeholder="filter by keyword or tag...">
-                        <h4>Our recommendation:</h4>
-                        
+                        <div class="clear"></div>                        
+                        <h4>Our recommendation:</h4>                        
                         <ul class="rs-tabs">
                             <li class="active"><a href="#Servers">Servers <span class="rs-quiet">(1)</span></a></li>
                             <li class="hover"><a href="#Load">Files<span class="rs-quiet">(3)</span></a></li>
@@ -474,8 +473,8 @@
     <!-- Modals -->
 
     <div id="resource_info" class="modal hide fade details" tabindex="-1" role="dialog"  aria-hidden="true">
-        <div class="rs-content rs-panel rs-detail-xlarge">
-            <div class="rs-detail-header">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
 
                 <div class="rs-detail-header-subtitle">Server Name</div>
                 <div class="rs-detail-header-title">cloud-endure-demo-A_db_slave One</div>
@@ -546,7 +545,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        
         <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
@@ -554,7 +553,7 @@
 
     <div id="modify_modal" class="modal hide fade details" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
             <h3>Choose your configuration</h3>
         </div>
         <div class="modal-body">
@@ -690,7 +689,6 @@
         </div>
         <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <a class="rs-btn" ng-click="vm.continue()" href="step5.html">Dashboard</a>
             <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="https://mycloud.rackspace.com">Submit</a>
         </div>
     </div>
