@@ -76,29 +76,27 @@
                 "(GMT +11:00) Magadan, Solomon Islands, New Caledonia",
                     "(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka"]
                     vm.time =  new Date().toLocaleTimeString();//vm.timeItems[0];
-                     vm.timezone =new Date().toTimeString(); //vm.timeZoneItems[0];
+                    vm.timezone =new Date().toTimeString(); //vm.timeZoneItems[0];
                     vm.selectedDate = new Date().toString();
+                    vm.unixTime = Math.floor(new Date().getTime()/ 1000);
                     vm.selectedDateHeader = new Date().toLocaleString();//moment().format("MMM Do YYYY")+" at "+vm.time+" "+vm.timezone;
                     vm.date = moment().format("MMM Do YYYY");
                     dataStoreService.storeDate('time',vm.time);
                     dataStoreService.storeDate('timezone',vm.timezone);
                     var d = new Date();
-                    //var timestmp = moment(d).format("DDMMMYYYY-hhmma");
                    vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
                      dataStoreService.getScheduleMigration();//'Migration-' + new Date().toString();
                      //(d.getUTCMonth()+1) +"-"+ d.getUTCDate()+"-"+ d.getUTCFullYear() + + " " + d.getUTCHours() + ":" + d.getUTCMinutes() + ":" + d.getUTCSeconds();;
                     $scope.$watch('vm.migrationName', function() {              
               vm.selectedTime = {
                    migrationName: vm.migrationName,
-                   time:vm.time,
+                   time:vm.unixTime,
                    timezone:vm.timezone
             };
              dataStoreService.setScheduleMigration(vm.selectedTime);
             vm.editorEnabled = false;
     });
          
-
-
                     $scope.$on("DateChanged", function(event, item){
                         vm.date = item;
                         vm.selectedDate = moment(item).format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
@@ -115,10 +113,10 @@
                  * @description 
                  * Saves the chosen time for migration
                  */
-                vm.timeChange = function(){
-                    dataStoreService.storeDate('time',vm.time);
-                    vm.selectedDate = moment(vm.date).format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
-                };
+                // vm.timeChange = function(){
+                //     dataStoreService.storeDate('time',vm.time);
+                //     vm.selectedDate = moment(vm.date).format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
+                // };
 
                 /**
                  * @ngdoc method
@@ -127,10 +125,10 @@
                  * @description 
                  * Saves the chosen timezone for migration
                  */
-                vm.timezoneChange = function(){
-                    dataStoreService.storeDate('timezone',vm.timezone);
-                    vm.selectedDate = moment(vm.date).format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
-                };
+                // vm.timezoneChange = function(){
+                //     dataStoreService.storeDate('timezone',vm.timezone);
+                //     vm.selectedDate = moment(vm.date).format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
+                // };
 
                 /**
                  * @ngdoc method
@@ -140,6 +138,7 @@
                  * Continue to next step: **Confirm Migration**
                  */
                 vm.continue = function() {
+                    console.log(vm.selectedTime);
                     $rootRouter.navigate(["ConfirmMigration"]);
                 };
  /**
