@@ -91,7 +91,8 @@
               vm.selectedTime = {
                    migrationName: vm.migrationName,
                    time:vm.unixTime,
-                   timezone:vm.timezone
+                   timezone:vm.timezone,
+               
             };
              dataStoreService.setScheduleMigration(vm.selectedTime);
             vm.editorEnabled = false;
