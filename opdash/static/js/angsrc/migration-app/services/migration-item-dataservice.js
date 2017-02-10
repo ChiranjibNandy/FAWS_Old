@@ -94,7 +94,7 @@
                 var instances = [],networks = [];
                 var auth = authservice.getAuth();
                 var reqObj = {
-                                //batchName: batchName,
+                                batch_name: batchName,
                                 source: {
                                     cloud: "rackspace",
                                     tenantid: "1024814",
