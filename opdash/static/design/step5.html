@@ -10,14 +10,12 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
     <title>Rackspace Migration Manager</title>
-    <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
     <link rel="stylesheet" type="text/css" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest//canon.min.css">
-    <!-- added custom -->
-    <link href="css/animate.css" rel="stylesheet">
+    <!-- Custom styles  -->
+    <link href="css/animate.css" rel="stylesheet">    
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/migration-mgr.css" rel="stylesheet">
-    <script src="https://use.fontawesome.com/1d292fb501.js"></script>
 </head>
 
 <body>
@@ -26,16 +24,161 @@
         <!-- Utility Nav -->
         <div class="rs-nav-utility">
             <div class="rs-container">
-                <ul class="rs-nav">
-                    <li class="rs-nav-item "><a class="rs-nav-link" href="">Rackspace Cloud</a></li>
-                    <li class="rs-nav-item active"><a class="rs-nav-link" href="">Fanatical Support for AWS</a></li>
+                <ul id="pilot-control-panel-menu" class="rs-nav rs-pull-left">
+                    <li class="rs-nav-item">
+                        <div class="nav-brand">
+                            <div class="pilot-logo-white"></div>
+                        </div>
+                    </li>
+                    <li class="rs-nav-item active" id="rackspace-public-cloud">
+                        <a href="https://mycloud.rackspace.com/cloud/453265/home" class="rs-nav-link" data-pilot-tracking-id="rackspace-public-cloud">Rackspace Cloud</a>
+                    </li>
+                    <li class="rs-nav-item rs-dropdown rs-utility-dropdown" id="more-products-dropdown">
+                        <div class="rs-nav-link rs-dropdown-toggle" data-pilot-tracking-id="more-products-dropdown" role="button" aria-expanded="false" tabindex="0" aria-haspopup="true" style="user-select: none;">
+                            <span class="rs-dropdown-title">More Products</span>
+                            <i class="rs-caret"></i>
+                        </div>
+                        <div class="rs-dropdown-menu" role="menu" aria-haspopup="true" style="user-select: none; display: none;">
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":0" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" href="https://manage.rackspace.com/" target="_self" data-pilot-tracking-id="fanatical-support-for-aws-dropdown" style="user-select: none;">Fanatical Support for AWS</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-dropdown-item disabled goog-menuitem" role="menuitem" id=":1" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" data-tooltip="This control panel is only available to the account owner." style="user-select: none;">
+                                        <a class="rs-dropdown-link" target="_self" data-pilot-tracking-id="myrackspace" style="user-select: none;">Dedicated Hosting</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-dropdown-item disabled goog-menuitem" role="menuitem" id=":2" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" data-tooltip="This control panel is only available to the account owner." style="user-select: none;">
+                                        <a class="rs-dropdown-link" target="_self" data-pilot-tracking-id="cloud-sites" style="user-select: none;">Cloud Sites</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":3" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" href="https://intelligence.rackspace.com/" target="_self" data-pilot-tracking-id="eyebrow-cloud-intelligence" style="user-select: none;">Rackspace Intelligence</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-dropdown-item disabled goog-menuitem" role="menuitem" id=":4" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" data-tooltip="This control panel is only available to the account owner." style="user-select: none;">
+                                        <a class="rs-dropdown-link" target="_self" data-pilot-tracking-id="mailgun" style="user-select: none;">Mailgun</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
                 <ul class="rs-nav rs-pull-right">
-                    <li class="rs-nav-item rs-dropdown rs-utility-dropdown">
-                        <a class="rs-nav-link rs-dropdown-toggle" href="">Username123 <i class="rs-caret"></i></a>
+                    <li class="rs-nav-item" id="support-link">
+                        <div data-support-drawer-trigger="data-support-drawer-trigger" class="rs-nav-link" data-pilot-tracking-id="support-drawer">
+                            <i class="fa fa-life-ring"></i> Support
+                        </div>
                     </li>
-                    <li class="rs-nav-item ">
-                        <a class="rs-nav-link" href="">Logout</a>
+                    <li class="rs-nav-item rs-dropdown rs-utility-dropdown" id="user-menu">
+                        <div class="rs-nav-link rs-dropdown-toggle" data-pilot-tracking-id="user-menu" role="button" aria-expanded="false" tabindex="0" aria-haspopup="true" style="user-select: none;">
+                            <span class="rs-dropdown-title">mick3085</span>
+                            <i class="rs-caret"></i>
+                        </div>
+                        <div class="rs-dropdown-menu" role="menu" aria-haspopup="true" style="user-select: none; display: none;">
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":6" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <span style="user-select: none;">Account # 453265</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-divider" style="user-select: none;"></div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":7" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" href="https://account.rackspace.com/users/f40ca5be65254eea951a83cb4dbc9c38" target="_self" data-pilot-tracking-id="my-profile" style="user-select: none;">My Profile &amp; Settings</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-divider" style="user-select: none;"></div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":8" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;"><span class="rs-dropdown-category pilot-dropdown-category" style="user-select: none;">Rackspace</span></div>
+                            </div>
+                            <div class="rs-dropdown-item disabled goog-menuitem" role="menuitem" id=":9" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" data-tooltip="This feature is disabled. For more information, contact your account admin." style="user-select: none;">
+                                        <a class="rs-dropdown-link" target="_self" data-pilot-tracking-id="billing" style="user-select: none;">Billing Overview</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":a" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" href="https://account.rackspace.com/" target="_self" data-pilot-tracking-id="account-settings" style="user-select: none;">Account Settings</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-dropdown-item disabled goog-menuitem" role="menuitem" id=":b" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" data-tooltip="This feature is disabled. For more information, contact your account admin." style="user-select: none;">
+                                        <a class="rs-dropdown-link" target="_self" data-pilot-tracking-id="user-management" style="user-select: none;">User Management</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":c" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" href="https://mycloud.rackspace.com/cloud/453265/account#forms" target="_self" data-pilot-tracking-id="account-forms" style="user-select: none;">Documents and Forms</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-divider" style="user-select: none;"></div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":d" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" href="https://mycloud.rackspace.com/cloud/453265/tickets" target="_self" data-pilot-tracking-id="support-tickets" style="user-select: none;">Support Tickets</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-divider" style="user-select: none;"></div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":e" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;"><span class="rs-dropdown-category pilot-dropdown-category" style="user-select: none;">Rackspace Cloud</span></div>
+                            </div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":f" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" id="resource-limits" href="/account#resource-limits" target="_self" data-pilot-tracking-id="None" style="user-select: none;">Resource Limits</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":g" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" id="select_timezone" href="/account#update-timezone" target="_self" data-pilot-tracking-id="None" style="user-select: none;">Time Zone</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-divider" style="user-select: none;"></div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":h" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" href="https://community.rackspace.com/feedback/default" target="_blank" data-pilot-tracking-id="feedback" style="user-select: none;">Feedback <i class="rs-icon-external-dark" style="user-select: none;"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-divider" style="user-select: none;"></div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":i" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" href="https://mycloud.rackspace.com/cloud/453265/account/logout?logout_success=true" target="_self" data-pilot-tracking-id="logout" style="user-select: none;">Logout</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -44,9 +187,9 @@
         <!-- Primary Nav -->
         <div class="rs-nav-primary">
             <div class="rs-container">
-                <div class="rs-nav-brand">
-                    <a href=""></a>
-                </div>
+                <!-- <div class="rs-nav-brand">
+                    <a href="https://www.rackspace.com/" target="_blank"></a>
+                </div> -->
                 <ul class="rs-nav" id="links">
                     <li id="pilot-dashboard" data-nav="dashboard" class="rs-nav-item">
                         <a id="pilot-dashboard-link" class="rs-nav-link" data-pilot-tracking-id="dashboard-link" href="https://mycloud.rackspace.com/cloud/453265/home">Dashboard</a>
@@ -75,10 +218,10 @@
         <div class="rs-container migration-mgr">
             <div class="alert alert-success">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <h4>Success! &nbsp;&nbsp; 5 Migrations Confirmed 1/17/2017 at 7:00 PM</h4>
+                <h3>Success! 5 Migrations Confirmed 1/17/2017 at 7:00 PM</h3>
             </div>
 
-            <div class="rs-main ">
+            <div class="rs-main">
 
                 <div class="rs-content rs-panel">
                     <div class="rs-inner">
@@ -94,6 +237,12 @@
                                         <th>
                                             <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
                                                 <span class="rs-table-sort-text">Batch Queue</span>
+                                                <span class="rs-table-sort-indicator"></span>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                <span class="rs-table-sort-text">Batch Initiated by</span>
                                                 <span class="rs-table-sort-indicator"></span>
                                             </a>
                                         </th>
@@ -124,6 +273,7 @@
                                 <tbody>
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
                                         <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="batch-current.html">Migration-01Feb2017-0456pm</a></td>
+                                        <td class="rs-table-text ng-binding">User</td>
                                         <td class="rs-table-text ng-binding">TBD</td>
                                         <td class="rs-table-text"><span class="rs-status">Not Configured</span></td>
                                         <td class="rs-table-text">
@@ -144,7 +294,7 @@
                                                     <ul class="rs-dropdown-menu visible">
                                                         <li><span class="rs-dropdown-category">Manage</span></li>
                                                         <li><a href="#">Modify Migration</a></li>
-                                                        <li><a href="#">Pause Migration</a></li>
+                                                        <!-- <li><a href="#">Pause Migration</a></li> -->
                                                         <li><a href="#">Cancel Migration</a></li>
                                                     </ul>
                                                 </div>
@@ -153,6 +303,7 @@
                                     </tr>
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
                                         <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="batch-current.html">Migration-01Feb2017-0456pm</a></td>
+                                        <td class="rs-table-text ng-binding">User</td>
                                         <td class="rs-table-text ng-binding">2/1/2017 2:18 PM</td>
                                         <td class="rs-table-text"><span class="rs-status">Scheduled</span></td>
                                         <td class="rs-table-text">
@@ -175,6 +326,7 @@
                                     <!-- ngRepeat: batch in vm.batches | filter : {progress:'!'+'100'} -->
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
                                         <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="batch-current.html">Migration-01Feb2017-0456pm</a></td>
+                                        <td class="rs-table-text ng-binding">Racker</td>
                                         <td class="rs-table-text ng-binding">1/1/2017 4:23 PM</td>
                                         <td class="rs-table-text"><span class="rs-status rs-status-error">Stopped</span></td>
                                         <td class="rs-table-text">
@@ -200,6 +352,7 @@
                                     <!-- end ngRepeat: batch in vm.batches | filter : {progress:'!'+'100'} -->
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
                                         <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="batch-current.html" >Migration-01Feb2017-0456pm</a></td>
+                                        <td class="rs-table-text ng-binding">User</td>
                                         <td class="rs-table-text ng-binding">5/1/2017 1:25 AM</td>
                                         <td class="rs-table-text"><span class="rs-status rs-status-ok">Started</span></td>
                                         <td class="rs-table-text">
@@ -225,6 +378,7 @@
                                     <!-- end ngRepeat: batch in vm.batches | filter : {progress:'!'+'100'} -->
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
                                         <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="batch-current.html">Migration-01Feb2017-0456pm</a></td>
+                                        <td class="rs-table-text ng-binding">Racker</td>
                                         <td class="rs-table-text ng-binding">5/1/2017 12:18 AM</td>
                                         <td class="rs-table-text"><span class="rs-status rs-status-warning">Paused</span></td>
                                         <td class="rs-table-text">
@@ -252,8 +406,21 @@
                             </table>
                         </div>
                         <br>
+                        <div class="pagination pagination-mini" >
+                            <ul>
+                                <li><span>Showing 6 of 10</span></li>
+                                <li><a href="#">Prev</a></li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">Next</a></li>                                
+                            </ul>
+                        </div>  
+                    
                         <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
-                            <table class="rs-list-table rs-embedded-list-table secondary-table ">
+                            <table class="rs-list-table rs-embedded-list-table secondary-table">
                                 <thead>
                                     <tr>
                                         <th>
@@ -300,9 +467,21 @@
                             </table>
                         </div>
                         <br>
+                        <div class="pagination pagination-mini" >
+                            <ul>
+                                <li><span>Showing 6 of 10</span></li>
+                                <li><a href="#">Prev</a></li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">Next</a></li>                                
+                            </ul>
+                        </div>  
                         <div class="rs-row">
                             <div class="span-6">
-                                <div class="rs-facet-section ">
+                                <div class="rs-facet-section">
                                     <div class="rs-facet-section-body">
                                         <h3>Alerts (2)</h3>
                                         <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
@@ -332,8 +511,8 @@
                                 <div class="rs-facet-section">
                                     <div class="rs-facet-section-body">
                                         <h3>Tickets (3)</h3>
-                                        <div class=" ">
-                                            <table class="rs-list-table rs-embedded-list-table-wrapper ">
+                                        <div class="">
+                                            <table class="rs-list-table rs-embedded-list-table-wrapper">
                                                 <thead>
                                                     <tr>
                                                         <th>Batch Name</th>
@@ -365,7 +544,7 @@
             </div>
             <br>
             <div class="rs-row">
-                <div class="span8">
+                <div class="span-8">
                     <h4>FAQs + More Information</h4>
                     <ul>
                         <li>
@@ -379,7 +558,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="span4 ">
+                <div class="span-4">
                     <div class="rs-pull-right">
                         <h4>Support</h4>
                         <div class="support-icons">
@@ -415,7 +594,7 @@
     </script>
     <script type="application/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
     <script type="application/javascript" src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.js"></script>
 </body>
 
 </html>

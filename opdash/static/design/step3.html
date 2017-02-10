@@ -10,15 +10,14 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
     <title>Rackspace Migration Manager</title>
-    <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
+    <!-- Canon styles for this template -->
     <link rel="stylesheet" type="text/css" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest//canon.min.css">
     <!-- added custom -->
-    <link href="css/animate.css" rel="stylesheet">
     <link href="css/flex-cal.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">    
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/migration-mgr.css" rel="stylesheet">
-    <script src="https://use.fontawesome.com/1d292fb501.js"></script>
 </head>
 
 <body>
@@ -27,16 +26,161 @@
         <!-- Utility Nav -->
         <div class="rs-nav-utility">
             <div class="rs-container">
-                <ul class="rs-nav">
-                    <li class="rs-nav-item"><a class="rs-nav-link" href="">Rackspace Cloud</a></li>
-                    <li class="rs-nav-item active"><a class="rs-nav-link" href="https://mycloud.rackspace.com">Fanatical Support for AWS</a></li>
+                <ul id="pilot-control-panel-menu" class="rs-nav rs-pull-left">
+                    <li class="rs-nav-item">
+                        <div class="nav-brand">
+                            <div class="pilot-logo-white"></div>
+                        </div>
+                    </li>
+                    <li class="rs-nav-item active" id="rackspace-public-cloud">
+                        <a href="https://mycloud.rackspace.com/cloud/453265/home" class="rs-nav-link" data-pilot-tracking-id="rackspace-public-cloud">Rackspace Cloud</a>
+                    </li>
+                    <li class="rs-nav-item rs-dropdown rs-utility-dropdown" id="more-products-dropdown">
+                        <div class="rs-nav-link rs-dropdown-toggle" data-pilot-tracking-id="more-products-dropdown" role="button" aria-expanded="false" tabindex="0" aria-haspopup="true" style="user-select: none;">
+                            <span class="rs-dropdown-title">More Products</span>
+                            <i class="rs-caret"></i>
+                        </div>
+                        <div class="rs-dropdown-menu" role="menu" aria-haspopup="true" style="user-select: none; display: none;">
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":0" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" href="https://manage.rackspace.com/" target="_self" data-pilot-tracking-id="fanatical-support-for-aws-dropdown" style="user-select: none;">Fanatical Support for AWS</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-dropdown-item disabled goog-menuitem" role="menuitem" id=":1" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" data-tooltip="This control panel is only available to the account owner." style="user-select: none;">
+                                        <a class="rs-dropdown-link" target="_self" data-pilot-tracking-id="myrackspace" style="user-select: none;">Dedicated Hosting</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-dropdown-item disabled goog-menuitem" role="menuitem" id=":2" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" data-tooltip="This control panel is only available to the account owner." style="user-select: none;">
+                                        <a class="rs-dropdown-link" target="_self" data-pilot-tracking-id="cloud-sites" style="user-select: none;">Cloud Sites</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":3" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" href="https://intelligence.rackspace.com/" target="_self" data-pilot-tracking-id="eyebrow-cloud-intelligence" style="user-select: none;">Rackspace Intelligence</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-dropdown-item disabled goog-menuitem" role="menuitem" id=":4" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" data-tooltip="This control panel is only available to the account owner." style="user-select: none;">
+                                        <a class="rs-dropdown-link" target="_self" data-pilot-tracking-id="mailgun" style="user-select: none;">Mailgun</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
                 <ul class="rs-nav rs-pull-right">
-                    <li class="rs-nav-item rs-dropdown rs-utility-dropdown">
-                        <a class="rs-nav-link rs-dropdown-toggle" href="">Username123 <i class="rs-caret"></i></a>
+                    <li class="rs-nav-item" id="support-link">
+                        <div data-support-drawer-trigger="data-support-drawer-trigger" class="rs-nav-link" data-pilot-tracking-id="support-drawer">
+                            <i class="fa fa-life-ring"></i> Support
+                        </div>
                     </li>
-                    <li class="rs-nav-item">
-                        <a class="rs-nav-link" href="">Logout</a>
+                    <li class="rs-nav-item rs-dropdown rs-utility-dropdown" id="user-menu">
+                        <div class="rs-nav-link rs-dropdown-toggle" data-pilot-tracking-id="user-menu" role="button" aria-expanded="false" tabindex="0" aria-haspopup="true" style="user-select: none;">
+                            <span class="rs-dropdown-title">mick3085</span>
+                            <i class="rs-caret"></i>
+                        </div>
+                        <div class="rs-dropdown-menu" role="menu" aria-haspopup="true" style="user-select: none; display: none;">
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":6" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <span style="user-select: none;">Account # 453265</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-divider" style="user-select: none;"></div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":7" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" href="https://account.rackspace.com/users/f40ca5be65254eea951a83cb4dbc9c38" target="_self" data-pilot-tracking-id="my-profile" style="user-select: none;">My Profile &amp; Settings</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-divider" style="user-select: none;"></div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":8" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;"><span class="rs-dropdown-category pilot-dropdown-category" style="user-select: none;">Rackspace</span></div>
+                            </div>
+                            <div class="rs-dropdown-item disabled goog-menuitem" role="menuitem" id=":9" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" data-tooltip="This feature is disabled. For more information, contact your account admin." style="user-select: none;">
+                                        <a class="rs-dropdown-link" target="_self" data-pilot-tracking-id="billing" style="user-select: none;">Billing Overview</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":a" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" href="https://account.rackspace.com/" target="_self" data-pilot-tracking-id="account-settings" style="user-select: none;">Account Settings</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-dropdown-item disabled goog-menuitem" role="menuitem" id=":b" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" data-tooltip="This feature is disabled. For more information, contact your account admin." style="user-select: none;">
+                                        <a class="rs-dropdown-link" target="_self" data-pilot-tracking-id="user-management" style="user-select: none;">User Management</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":c" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" href="https://mycloud.rackspace.com/cloud/453265/account#forms" target="_self" data-pilot-tracking-id="account-forms" style="user-select: none;">Documents and Forms</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-divider" style="user-select: none;"></div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":d" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" href="https://mycloud.rackspace.com/cloud/453265/tickets" target="_self" data-pilot-tracking-id="support-tickets" style="user-select: none;">Support Tickets</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-divider" style="user-select: none;"></div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":e" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;"><span class="rs-dropdown-category pilot-dropdown-category" style="user-select: none;">Rackspace Cloud</span></div>
+                            </div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":f" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" id="resource-limits" href="/account#resource-limits" target="_self" data-pilot-tracking-id="None" style="user-select: none;">Resource Limits</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":g" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" id="select_timezone" href="/account#update-timezone" target="_self" data-pilot-tracking-id="None" style="user-select: none;">Time Zone</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-divider" style="user-select: none;"></div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":h" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" href="https://community.rackspace.com/feedback/default" target="_blank" data-pilot-tracking-id="feedback" style="user-select: none;">Feedback <i class="rs-icon-external-dark" style="user-select: none;"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rs-divider" style="user-select: none;"></div>
+                            <div class="rs-dropdown-item goog-menuitem" role="menuitem" id=":i" style="user-select: none;">
+                                <div class="goog-menuitem-content" style="user-select: none;">
+                                    <div class="rs-dropdown-item-content" style="user-select: none;">
+                                        <a class="rs-dropdown-link" href="https://mycloud.rackspace.com/cloud/453265/account/logout?logout_success=true" target="_self" data-pilot-tracking-id="logout" style="user-select: none;">Logout</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -45,11 +189,10 @@
         <!-- Primary Nav -->
         <div class="rs-nav-primary">
             <div class="rs-container">
-                <div class="rs-nav-brand">
-                    <a href=""></a>
-                </div>
+                <!-- <div class="rs-nav-brand">
+                    <a href="https://www.rackspace.com/" target="_blank"></a>
+                </div> -->
                 <ul class="rs-nav" id="links">
-
                     <li id="pilot-dashboard" data-nav="dashboard" class="rs-nav-item">
                         <a id="pilot-dashboard-link" class="rs-nav-link" data-pilot-tracking-id="dashboard-link" href="https://mycloud.rackspace.com/cloud/453265/home">Dashboard</a>
                     </li>
@@ -76,6 +219,7 @@
         </div>
         <!-- End Primary Nav -->
         <div class="rs-container migration-mgr">
+            
             <div class="rs-main rs-panel">
                 <div class="rs-sidebar rs-pull-right">
                     <div class="rs-inner">
@@ -107,17 +251,18 @@
                         <div class="rs-row pricing-buttons">
                             <button class="rs-btn span-12" ng-click="vm.saveItems()">Save for later</button>
                         </div>
-                         <!-- conditional - show only if there is already migrations made -->
+                        <!-- conditional - show only if there is already migrations made -->
                         <div class="rs-row pricing-buttons">
                             <a class="rs-btn span-12" ng-click="vm.continue()" href="step5.html">Dashboard</a>
                         </div>
-                            <!-- ****** -->
+                        <!-- ****** -->
                         <div class="rs-row">
                             <a class="rs-btn span-12" href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>
                         </div>
                         <br>
                     </div>
                 </div>
+                
                 <div class="rs-content rs-panel">
                     <!-- Start Stepper -->
                     <div class="mdl-card mdl-shadow--2dp">
@@ -160,96 +305,75 @@
                         <h2>User Namegoeshere (#1024814)</h2>
                         <div class="migr-name">
                             <h3>Migration-01Feb2017-0456pm</h3><span class="edit rs-edit"></span>
-                            <input type="text" value="" class="name-input animated flipInX" placeholder="Migration-01Feb2017-0456pm"/>
-                        </div> 
+                            <input type="text" value="" class="name-input animated flipInX" placeholder="Migration-01Feb2017-0456pm" />
+                        </div>
                         <div class="clear"></div>
                         <hr>
-                        <div class="rs-row">                       
-                            <form class="rs-form-horizontal span-6">
-                                <div class="rs-control-group">
-                                    <label class="rs-control-label">Migrate Now </label>
-                                    <div class="rs-controls">
-                                        <input type="checkbox" name="">
-                                    </div>
-                                </div>                  
-                                <div class="rs-control-group">
-                                    <label class="rs-control-label">Time Zone</label>
-                                    <div class="rs-controls">
-                                        <select name="timezone" ng-change="vm.timezoneChange()" ng-model="vm.timezone" class="ng-pristine ng-valid ng-not-empty ng-touched span2">
-                                            <!-- ngRepeat: time in vm.timeZoneItems -->
-                                            <option ng-repeat="time in vm.timeZoneItems" value="EST- GMT-05:00" class="ng-binding ng-scope">EST- GMT-05:00</option>
-                                            <!-- end ngRepeat: time in vm.timeZoneItems -->
-                                            <option ng-repeat="time in vm.timeZoneItems" value="CST- GMT-06:00" class="ng-binding ng-scope">CST- GMT-06:00</option>
-                                            <!-- end ngRepeat: time in vm.timeZoneItems -->
-                                            <option ng-repeat="time in vm.timeZoneItems" value="PST- GMT-08:00" class="ng-binding ng-scope">PST- GMT-08:00</option>
-                                            <!-- end ngRepeat: time in vm.timeZoneItems -->
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="rs-control-group">
-                                    <label class="rs-control-label">Time </label>
-                                    <div class="rs-controls">
-                                        <select name="time" ng-change="vm.timeChange()" ng-model="vm.time" class="ng-pristine ng-untouched ng-valid ng-not-empty span2">
-                                            <!-- ngRepeat: time in vm.timeItems -->
-                                            <option ng-repeat="time in vm.timeItems" value="12:00pm" class="ng-binding ng-scope">12:00pm</option>
-                                            <!-- end ngRepeat: time in vm.timeItems -->
-                                            <option ng-repeat="time in vm.timeItems" value="12:30pm" class="ng-binding ng-scope">12:30pm</option>
-                                            <!-- end ngRepeat: time in vm.timeItems -->
-                                            <option ng-repeat="time in vm.timeItems" value="1:00am" class="ng-binding ng-scope">1:00am</option>
-                                            <!-- end ngRepeat: time in vm.timeItems -->
-                                        </select>
-                                    </div>
-                                </div>  
-                                <div class="rs-control-group">
-                                    <label class="rs-control-label">Date </label>
-                                    <div class="rs-controls">
-                                        <input type="datetime-local" class="datepicker">
+                        <div class="rs-row">
+                            <div class="span-12">
+                                
+                                <h4 class="rs-checkbox">
+                                    <input type="checkbox">
+                                    Migrate Now
+                                </h4>
+                                <p>Or, choose date and time below</p>
+                                <!-- <select name="timezone" ng-change="vm.timezoneChange()" ng-model="vm.timezone" class="ng-pristine ng-valid ng-not-empty ng-touched span2" >
+                                    <option ng-repeat="time in vm.timeZoneItems" value="EST- GMT-05:00" class="ng-binding ng-scope">EST- GMT-05:00</option>
+                                    <option ng-repeat="time in vm.timeZoneItems" value="CST- GMT-06:00" class="ng-binding ng-scope">CST- GMT-06:00</option>
+                                    <option ng-repeat="time in vm.timeZoneItems" value="PST- GMT-08:00" class="ng-binding ng-scope">PST- GMT-08:00</option>                                                
+                                </select>                          
+                              
+                                <select name="time" ng-change="vm.timeChange()" ng-model="vm.time" class="ng-pristine ng-untouched ng-valid ng-not-empty span2">                                                
+                                    <option ng-repeat="time in vm.timeItems" value="12:00pm" class="ng-binding ng-scope">12:00pm</option>
+                                    <option ng-repeat="time in vm.timeItems" value="12:30pm" class="ng-binding ng-scope">12:30pm</option>
+                                    <option ng-repeat="time in vm.timeItems" value="1:00am" class="ng-binding ng-scope">1:00am</option>
+                                </select> -->
+                               
+                                 <div class="alert">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <h3>Migration scheduled for: Jan 25th 2017 at 12:00pm EST- GMT-05:00</h3>
+                                </div>                      
+                                <div ng-app="app">
+                                    <div ng-controller="MainController">
+                                        <div class="wrapp">
+                                            <flex-calendar options="options" events="events"></flex-calendar>
+                                        </div>
                                     </div>
                                 </div>
-                                <br>                           
-                                <div class="white-panel">
-                                    <h3>Migration Schedule Summary:</h3>
-                                    <big>Jan 25th 2017 at 12:00pm EST- GMT-05:00</big>  
-                                </div>
-                            </form>                            
-                            <div ng-app="app" class="span-4">
-                                <div ng-controller="MainController">
-                                    <div class="wrapp">
-                                        <flex-calendar options="options" events="events"></flex-calendar>
-                                    </div>
-                                </div>
+               
                             </div>
-                        </div>                        
+                            
+                        </div>
                         <br>
                         <div class="plain-panel">
                             <h4>Item Selected</h4>
                             <hr>
                             <div class="accordion" id="accordion2">
                                 <div class="accordion-group">
-                                    <div class="accordion-heading ">
+                                    <div class="accordion-heading">
                                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#server-name">
                                             <b class=""> Servers (4)  <i class="rs-caret"></i></b>
                                         </a>
                                     </div>
-                                    <div id="server-name" class="accordion-body collapse ">
-                                        <div class="accordion-inner ">
+                                    <div id="server-name" class="accordion-body collapse">
+                                        <div class="accordion-inner">
                                             <div class="selected-items">
-                                              <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i>  US-East-1 - US-East-1a - t2 small
+                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
                                             </div>
                                             <div class="selected-items">
-                                              <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
+                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
                                             </div>
                                             <div class="selected-items">
-                                              <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
+                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
                                             </div>
                                             <div class="selected-items">
-                                              <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
-                                            </div>         
+                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="accordion-group">
-                                    <div class="accordion-heading ">
+                                    <div class="accordion-heading">
                                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#file-name">
                                             <b class="">  Files (2) <i class="rs-caret"></i></b>
                                         </a>
@@ -257,16 +381,16 @@
                                     <div id="file-name" class="accordion-body collapse">
                                         <div class="accordion-inner">
                                             <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                               <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  filename1</b>
+                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  filename1</b>
                                             </div>
                                             <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                               <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  filename1</b>
-                                            </div>                
+                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  filename1</b>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="accordion-group">
-                                    <div class="accordion-heading ">
+                                    <div class="accordion-heading">
                                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#block-name">
                                             <b class=""> Blocks (2) <i class="rs-caret"></i></b>
                                         </a>
@@ -274,16 +398,16 @@
                                     <div id="block-name" class="accordion-body collapse">
                                         <div class="accordion-inner">
                                             <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  BlockName1</b>
+                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  BlockName1</b>
                                             </div>
                                             <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  BlockName1</b>
-                                            </div>                               
+                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  BlockName1</b>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="accordion-group">
-                                    <div class="accordion-heading ">
+                                    <div class="accordion-heading">
                                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#LB-name">
                                             <b class="">Load Balancers (2) <i class="rs-caret"></i></b>
                                         </a>
@@ -291,16 +415,16 @@
                                     <div id="LB-name" class="accordion-body collapse">
                                         <div class="accordion-inner">
                                             <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> LBname1b </b>
+                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> LBname1b </b>
                                             </div>
                                             <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> LBname1b</b>
+                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> LBname1b</b>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="accordion-group">
-                                    <div class="accordion-heading ">
+                                    <div class="accordion-heading">
                                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#cdn-name">
                                             <b class="">CDN (2) <i class="rs-caret"></i></b>
                                         </a>
@@ -308,28 +432,27 @@
                                     <div id="cdn-name" class="accordion-body collapse">
                                         <div class="accordion-inner">
                                             <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  CDNname1b</b>
+                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  CDNname1b</b>
                                             </div>
                                             <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  CDNname1b</b>
-                                            </div>                 
+                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  CDNname1b</b>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="accordion-group">
-                                    <div class="accordion-heading ">
+                                    <div class="accordion-heading">
                                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#dns-name">
                                             <b class="">DNS (0) <!-- <i class="rs-caret"></i> --></b>
                                         </a>
                                     </div>
                                     <div id="dns-name" class="accordion-body collapse">
                                         <div class="accordion-inner">
-               
                                         </div>
                                     </div>
                                 </div>
                                 <div class="accordion-group">
-                                    <div class="accordion-heading ">
+                                    <div class="accordion-heading">
                                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#db-name">
                                             <b class="">Databases (4) <i class="rs-caret"></i></b>
                                         </a>
@@ -337,23 +460,22 @@
                                     <div id="db-name" class="accordion-body collapse">
                                         <div class="accordion-inner">
                                             <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
+                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
                                             </div>
                                             <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
+                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
                                             </div>
                                             <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
+                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
                                             </div>
                                             <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
+                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>    
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -399,7 +521,6 @@
         </div>
     </div>
     <!-- modals -->
-
     <div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
@@ -408,19 +529,20 @@
             <form class="">
                 <div class="rs-control-group">
                     <div class="rs-controls">
-                      <label class="rs-radio">
-                        <input type="radio" name="three">
-                        <strong>Yes</strong><br>
-                        <span class="rs-help-block">Save progress for later</span>
-                      </label>
-                      <label class="rs-radio">
-                        <input type="radio" name="three">
-                        <strong>No</strong>
-                        <span class="rs-help-block">Cancel and move on</span>
-                      </label>
+                        <label class="rs-radio">
+                            <input type="radio" name="three">
+                            <strong>Yes</strong>
+                            <br>
+                            <span class="rs-help-block">Save progress for later</span>
+                        </label>
+                        <label class="rs-radio">
+                            <input type="radio" name="three">
+                            <strong>No</strong>
+                            <span class="rs-help-block">Cancel and move on</span>
+                        </label>
                     </div>
-                </div>                  
-            </form>            
+                </div>
+            </form>
         </div>
         <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -435,53 +557,49 @@
     });
     </script>
     <script type="text/javascript">
-        $('.datepicker').pickadate({
-            selectMonths: true, // Creates a dropdown to control month
-            selectYears: 15 // Creates a dropdown of 15 years to control year
-          });
+    $('.datepicker').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15 // Creates a dropdown of 15 years to control year
+    });
     </script>
-    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.7.2/angular-translate.js'></script>
+    <script src='js/angular.min.js'></script>
+    <script src='js/angular-translate.js'></script>
     <script src="js/flex-cal-angular.js"></script>
-
     <script src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.js"></script>
     <!-- name edit script -->
     <script type="text/javascript">
-        $(document).ready(function(){   
-            $('.edit').click(function(){
-                $(this).hide();
-                $(this).prev().hide();
-                $(this).next().show();
-                $(this).next().select();
-            });         
-            $('input.name-input[type="text"]').blur(function() {  
-                 if ($.trim(this.value) == ''){  
-                     this.value = (this.defaultValue ? this.defaultValue : '');  
-                 }
-                 else{
-                     $(this).prev().prev().html(this.value);
-                 }       
-                 $(this).hide();
-                 $(this).prev().show();
-                 $(this).prev().prev().show();
-             });      
-              $('input.name-input[type="text"]').keypress(function(event) {
-                  if (event.keyCode == '13') {
-                      if ($.trim(this.value) == ''){  
-                         this.value = (this.defaultValue ? this.defaultValue : '');  
-                     }
-                     else
-                     {
-                         $(this).prev().prev().html(this.value);
-                     }           
-                     $(this).hide();
-                     $(this).prev().show();
-                     $(this).prev().prev().show();
-                  }
-              });         
+    $(document).ready(function() {
+        $('.edit').click(function() {
+            $(this).hide();
+            $(this).prev().hide();
+            $(this).next().show();
+            $(this).next().select();
         });
+        $('input.name-input[type="text"]').blur(function() {
+            if ($.trim(this.value) == '') {
+                this.value = (this.defaultValue ? this.defaultValue : '');
+            } else {
+                $(this).prev().prev().html(this.value);
+            }
+            $(this).hide();
+            $(this).prev().show();
+            $(this).prev().prev().show();
+        });
+        $('input.name-input[type="text"]').keypress(function(event) {
+            if (event.keyCode == '13') {
+                if ($.trim(this.value) == '') {
+                    this.value = (this.defaultValue ? this.defaultValue : '');
+                } else {
+                    $(this).prev().prev().html(this.value);
+                }
+                $(this).hide();
+                $(this).prev().show();
+                $(this).prev().prev().show();
+            }
+        });
+    });
     </script>
 </body>
 
