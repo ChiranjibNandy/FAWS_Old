@@ -226,6 +226,7 @@ th {
 
 .alert {
     text-shadow: none;
+    margin-bottom: 30px;
 }
 
 .pagination {
