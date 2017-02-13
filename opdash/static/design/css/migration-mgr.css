@@ -118,8 +118,11 @@
 #intro_modal h3{
     font-size: 20px;
 }
-/* canon style overrides  */
 
+/* canon style overrides  */
+.migration-mgr .rs-main {
+    margin: 10px 0;
+}
 .migration-mgr.rs-container {
     width: 1200px!important;
     padding: 0;
@@ -128,13 +131,6 @@
 .migration-mgr .rs-list-table .rs-btn-group {
     margin: 0;
 }
-
-
-
-
-/*.migration-mgr .rs-panel {
-    min-height: 540px;
-}*/
 
 .migration-mgr .rs-table-header,
 th {
@@ -200,6 +196,22 @@ th {
 .migration-mgr .searchbox{
     margin:0;
 }
+
+/* Reach styles */
+
+.rs-nav-utility .rs-nav-item.active .rs-nav-link {
+    background-color: #c40022;
+    padding-right: 15px!important;
+    padding-left: 15px!important;
+}
+.pilot-logo-white {
+    width: 137px;
+    height: 36px;
+    background-image: url(https://19c5b85ac8f15b5aa0f0-992405e4638ce3c6772d7b96e627ce61.ssl.cf1.rackcdn.com/assets/dist/3d0583dbb0964540738f67314090c70c68d626dc/rackspace-logo-white-small-cutouts.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 /* bootstrap overrides */
 
 .alert-success {
@@ -214,6 +226,7 @@ th {
 
 .alert {
     text-shadow: none;
+    margin-bottom: 30px;
 }
 
 .pagination {
@@ -233,6 +246,9 @@ body .modal.details2 {
 }
 .modal-body{
     padding: 30px;
+}
+.modal img{
+    width: 100%;
 }
 .accordion-group {
     margin-bottom: 0px;
