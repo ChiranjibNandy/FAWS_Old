@@ -91,7 +91,8 @@
               vm.selectedTime = {
                    migrationName: vm.migrationName,
                    time:vm.unixTime,
-                   timezone:vm.timezone
+                   timezone:vm.timezone,
+               
             };
              dataStoreService.setScheduleMigration(vm.selectedTime);
             vm.editorEnabled = false;
@@ -104,6 +105,7 @@
                 };
 
                 vm.saveItems = function() {
+                      $('#cancel_modal').modal('show');
                     alert("Saving items: To be implemented");
                 };
                 /**
@@ -148,10 +150,9 @@
                  * @description 
                  * Edit migration name**
                  */
-
-                vm.editMigrationName = function() {
-                vm.editorEnabled = true;
-                vm.editableTitle = vm.migrationName;
+                 vm.editMigrationName = function() {
+                 vm.editorEnabled = true;
+                 vm.editedMigrationName = vm.migrationName;
                       };
                       /**
                  * @ngdoc method
@@ -160,7 +161,7 @@
                  * @description 
                  * Cancel edit migration name**
                  */
-              vm.disableEditor = function() {
+                vm.disableEditor = function() {
                  vm.editorEnabled = false;
                    };
                    /**
@@ -171,7 +172,8 @@
                  * Save edited migration name**
                  */
                 vm.save = function() {
-             vm.disableEditor();
+                vm.migrationName  = vm.editedMigrationName;
+                vm.disableEditor();
                 };
                 return vm;
             }

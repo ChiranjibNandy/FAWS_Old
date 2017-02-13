@@ -37,21 +37,24 @@
                     <hr>
                     <div class="rs-inner">
                         <h2 >User Namegoeshere ( #{{vm.tenant_id}} )</h2>
+                        <form>
                          <h3>
+                             
                              <div class="rs-control-group">
                                     <div class="rs-controls" style="width: 40%;float: left;" ng-hide="vm.editorEnabled">{{vm.migrationName}} </div>
                                     <div class="rs-controls" style="width: 50%;">
-                                        <a  role="button" ng-click ="vm.editMigrationName()" data-toggle="modal" class="rs-edit" title="click to edit migration name" ng-hide="vm.editorEnabled"></a>
+                                        <a  role="button" ng-click ="vm.editMigrationName();" data-toggle="modal" class="rs-edit" title="click to edit migration name" ng-hide="vm.editorEnabled"></a>
                                     </div>
                                 </div>
                             </h3>
                         <div ng-show="vm.editorEnabled">
-                          <input ng-model="vm.migrationName" ng-show="vm.editorEnabled">
-                           <a  ng-click="vm.save()">Save</a>
+                          <input ng-model="vm.editedMigrationName" >
+                           <button    role="button" ng-click="vm.save()">Save</button>
                              or
-                           <a  ng-click="vm.disableEditor()">cancel</a>.
+                           <button    role="button" ng-click="vm.disableEditor()">cancel</button>.
                            </div>
                         <hr>
+                        </form>
                          
                         <div class="rs-row" style="width: 110%" >
                         
@@ -86,6 +89,13 @@
                                         </select>
                                     </div>
                                 </div>  
+                                <div class="rs-control-group">
+                                    <label class="rs-control-label">Date </label>
+                                    <div class="rs-controls">
+                                        <input type="datetime-local" class="datepicker"  ng-model="vm.date" value={{vm.date}}>
+                                    </div>
+                                </div>
+                                <br>   
                                 <br>
                             <hr>
                             <div class="white-panel"  style="border: 1px solid #ccc">
@@ -106,10 +116,76 @@
                         </div>
                         </div>
                         
-                  
+                
                     </div>
+                    <br>
+                       <div class="plain-panel">
+                               <div class="span-8">
+                                <h4>Items Selected</h4>
+                                <hr style = "width: 568%">
+                                <div class="accordion" id="accordion2">
+                                    <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}">
+                                        <div class="accordion-heading ">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#server-name">
+                                                <b class=""> Servers ({{vm.selectedItems.server.length}})  <i class="fa fa-caret-down"></i></b>
+                                            </a>
+                                        </div>
+                                        <div id="server-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
+                                            <div class="accordion-inner ">
+                                                <ul class="inline">
+                                                    <li ng-repeat="item in vm.selectedItems.server">{{item.name}}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}">
+                                        <div class="accordion-heading ">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#file-name">
+                                                <b class="">  Networks ({{vm.networkCount}}) <i class="fa fa-caret-down"></i></b>
+                                            </a>
+                                        </div>
+                                        <div id="file-name" class="accordion-body collapse" ng-if="vm.selectedItems.server.length > 0">
+                                            <div class="accordion-inner">
+                                                <ul class="inline">
+                                                    <li ng-repeat="network in vm.networksList">{{network.name}}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-group disabled">
+                                        <div class="accordion-heading ">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#block-name">
+                                                <b class=""> Files (0) <i class="fa fa-caret-down"></i></b>
+                                            </a>
+                                        </div>
+                                        <div id="block-name" class="accordion-body collapse">
+                                            <div class="accordion-inner">
+                                                <ul class="inline">
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-group disabled">
+                                        <div class="accordion-heading ">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#cdn-name">
+                                                <b class="">Load Balancers (0) <i class="fa fa-caret-down"></i></b>
+                                            </a>
+                                        </div>
+                                        <div id="cdn-name" class="accordion-body collapse">
+                                            <div class="accordion-inner">
+                                                <ul class="inline">
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
                 </div>
             </div>
+            
             </div>
+           
         <rsinteractivefooter></rsinteractivefooter>
+
   

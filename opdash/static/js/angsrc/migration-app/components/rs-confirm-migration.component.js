@@ -40,10 +40,14 @@
                     vm.selectedItems.servers = dataStoreService.getItems("server");
                     vm.selectedItems.files = [];
                     vm.selectedItems.blocks = [];
+                    vm.selectedItems.loadBalancers = [];
                     vm.selectedItems.cdns = [];
+                    vm.selectedItems.dnss = [];
+                    vm.selectedItems.databases = [];
 
                     vm.destination = "AWS EC2";
                     vm.batchName = "Migration-03Feb2017-0411pm";
+                    vm.tempBatchName = vm.batchName;
                     vm.scheduledDateTime = "1/11/2017";
                     vm.cost = 431.85;
 
@@ -98,6 +102,16 @@
 
                 vm.showCancelDialog = function() {
                     $('#cancel_modal').modal('show');
+                };
+
+                vm.save = function() {
+                    vm.batchName = vm.tempBatchName;
+                    vm.editorEnabled = false;
+                };
+
+                vm.disableEditor = function() {
+                    vm.tempBatchName = vm.batchName;
+                    vm.editorEnabled = false;
                 };
 
                 return vm;

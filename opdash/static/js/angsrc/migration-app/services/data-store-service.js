@@ -61,7 +61,7 @@
             self.selectedTime = {
                migrationName:'',
                 time:'',
-                timezone:''
+                timezone:'',
             };
 
             /**

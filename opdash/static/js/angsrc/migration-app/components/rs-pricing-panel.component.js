@@ -50,7 +50,8 @@
                  * Saves the chosen solution for migration of resources
                  */
                 vm.saveItems = function() {
-                    alert("Saving items: To be implemented");
+                     $('#save_modal').modal('show');
+                    //alert("Saving items: To be implemented");
                 };
 
                 /**
@@ -90,6 +91,10 @@
 
                          }
                         }
+                   vm.showCancelDialog = function() {
+                    $('#cancel_modal').modal('show');
+                };
+
 
                 return vm;
               
