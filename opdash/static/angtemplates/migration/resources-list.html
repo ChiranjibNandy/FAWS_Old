@@ -26,76 +26,71 @@
                                 Load Balancers
                                 <!--<rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>-->
                             </rs-tab>
+                            <div class="rs-pull-right">
+                                <a class="rs-btn" ng-click="vm.cancelMigration()">Cancel Migration</a>
+                                <a class="rs-btn" ng-click="vm.saveItems()">Save For Later</a>
+                                <a class="rs-btn rs-btn-primary " ng-click="vm.continue()">Continue</a>
+                            </div>
                         </rs-tabs>
                         <br>
-                        <div class="rs-row">
-                            <div class="span-8">
-                                <h4>Items Selected</h4>
-                                <div class="accordion" id="accordion2">
-                                    <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}">
-                                        <div class="accordion-heading ">
-                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#server-name">
-                                                <b class=""> Servers ({{vm.selectedItems.server.length}})  <i class="fa fa-caret-down"></i></b>
-                                            </a>
-                                        </div>
-                                        <div id="server-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
-                                            <div class="accordion-inner ">
-                                                <ul class="inline">
-                                                    <li ng-repeat="item in vm.selectedItems.server">{{item.name}}</li>
-                                                </ul>
-                                            </div>
+                        <rsselecteditemspanel></rsselecteditemspanel>
+                        <!--<div class="plain-panel">
+                            <h4>Items Selected</h4>
+                            <hr>
+                            <div class="accordion" id="accordion2">
+                                <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}">
+                                    <div class="accordion-heading ">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#server-name">
+                                            <b class=""> Servers ({{vm.selectedItems.server.length}})  <i class="fa fa-caret-down"></i></b>
+                                        </a>
+                                    </div>
+                                    <div id="server-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
+                                        <div class="selected-items" ng-repeat="item in vm.selectedItems.server">
+                                            <a href="#" target="_self" ng-click="vm.removeItem(item,'server')"><i class="fa fa-times"></i></a>  <b title="({{item.details.networks.length}}) Networks: {{item.details.networks.toString()}}"> {{item.name}} </b> 
                                         </div>
                                     </div>
-                                    <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}">
-                                        <div class="accordion-heading ">
-                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#file-name">
-                                                <b class="">  Networks ({{vm.networkCount}}) <i class="fa fa-caret-down"></i></b>
-                                            </a>
-                                        </div>
-                                        <div id="file-name" class="accordion-body collapse" ng-if="vm.selectedItems.server.length > 0">
-                                            <div class="accordion-inner">
-                                                <ul class="inline">
-                                                    <li ng-repeat="network in vm.networksList">{{network.name}}</li>
-                                                </ul>
-                                            </div>
+                                </div>
+                                <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}">
+                                    <div class="accordion-heading ">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#file-name">
+                                            <b class="">  Networks ({{vm.networkCount}}) <i class="fa fa-caret-down"></i></b>
+                                        </a>
+                                    </div>
+                                    <div id="file-name" class="accordion-body collapse" ng-if="vm.selectedItems.server.length > 0">
+                                        <div class="selected-items" ng-repeat="network in vm.networksList">
+                                            <a class= "disabled" href="#" ng-click="vm.removeItem(item,'server')"><i class="fa fa-times"></i></a> {{network}} 
                                         </div>
                                     </div>
-                                    <div class="accordion-group disabled">
-                                        <div class="accordion-heading ">
-                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#block-name">
-                                                <b class=""> Files (0) <i class="fa fa-caret-down"></i></b>
-                                            </a>
-                                        </div>
-                                        <div id="block-name" class="accordion-body collapse">
-                                            <div class="accordion-inner">
-                                                <ul class="inline">
-                                                </ul>
-                                            </div>
+                                </div>
+                                <div class="accordion-group disabled">
+                                    <div class="accordion-heading ">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#block-name">
+                                            <b class=""> Files (0) <i class="fa fa-caret-down"></i></b>
+                                        </a>
+                                    </div>
+                                    <div id="block-name" class="accordion-body collapse">
+                                        <div class="accordion-inner">
+                                            <ul class="inline">
+                                            </ul>
                                         </div>
                                     </div>
-                                    <div class="accordion-group disabled">
-                                        <div class="accordion-heading ">
-                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#cdn-name">
-                                                <b class="">Load Balancers (0) <i class="fa fa-caret-down"></i></b>
-                                            </a>
-                                        </div>
-                                        <div id="cdn-name" class="accordion-body collapse">
-                                            <div class="accordion-inner">
-                                                <ul class="inline">
-                                                </ul>
-                                            </div>
+                                </div>
+                                <div class="accordion-group disabled">
+                                    <div class="accordion-heading ">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#cdn-name">
+                                            <b class="">Load Balancers (0) <i class="fa fa-caret-down"></i></b>
+                                        </a>
+                                    </div>
+                                    <div id="cdn-name" class="accordion-body collapse">
+                                        <div class="accordion-inner">
+                                            <ul class="inline">
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="span-4">
-                                <div class="rs-pull-right ">
-                                    <a class="rs-btn" ng-click="vm.cancelMigration()">Cancel Migration</a>
-                                    <a class="rs-btn" ng-click="vm.saveItems()">Save For Later</a>
-                                    <a class="rs-btn rs-btn-primary " ng-click="vm.continue()">Continue</a>
-                                </div>
-                            </div>
-                        </div>
+                        </div>-->
+                            
                     </div>
                 </div>
             </div>
@@ -122,6 +117,12 @@
     <div id="no_selection" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSelect" aria-hidden="true">
         <div class="modal-body" style="height: 150px">
             <h3 style="line-height: 136px; text-align: center">Please select some items to migrate</h3>
+        </div>
+    </div>
+
+    <div id="save_for_later" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSave" aria-hidden="true">
+        <div class="modal-body" style="height: 150px">
+            <h3 style="line-height: 136px; text-align: center">Saving items: To be implemented</h3>
         </div>
     </div>
 
@@ -154,12 +155,28 @@
         <br>
         <div class="modal-body">
             <h2 class="rs-page-title">Welcome to the Rackspace Migration Manager!</h2>
-            <h3>We've created an application to help you easliy migrate to AWS, customize your infrastructure and access Rackspace Fanatical<sup>&#169;</sup> support.</h3>
+            <h3>On average, our customers save more than 20% by migrating from Rackspace Public Cloud to Managed AWS. All while keeping the fanatical support they love.</h3>
+            <br>
+            <div class="rs-row">
+                <div class="span-6">
+                    <h3>Migrate in just 4 easy steps:</h3>
+                    <ul>
+                        <li>Choose resources to migrate</li>
+                        <li>Get our recommendation and make modifications</li>
+                        <li>Schedule your migration</li>
+                        <li> Migrate</li>
+                    </ul>
+                    <b>Need more information?</b><br>
 
-            <p>Migrating your application portfolio is a critical first step to set you up for success with AWS. If you choose to handle your own migration to AWS, you are responsible for locating, hiring and retaining experts that may not contribute to your core mission once the job is done. Conversely, engaging a one-time migration specialist to handle your migration leaves your business with an unclear path moving forward as your needs evolve. Fanatical Support for AWS, alongside a range of partners, will manage your migration to best match your business requirements now and in the future. <br>
-            <a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Learn More</a> | <a href="https://www.youtube.com/watch?v=JS9FrFt_GbM" target="_blank">Watch Video</a></p>
-     
-            <h5>It looks like you currently have nothing saved to migrate, click the 'Start a Migration' button below to get started.</h5>
+                    <a href="https://www.rackspace.com/en-us/managed-aws" target="_blank">Rackspace Managed AWS</a>
+                    <br>
+                    <a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Pricing and Support Levels</a>
+                </div>
+                <div class="span-6">
+                    <img src="/static/img/migr-mgr-screen.png" alt="">
+                </div>
+            </div>
+            <br>        
         </div>
         <div class="modal-footer">
             <div class="rs-pull-left">
