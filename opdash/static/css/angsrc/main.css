@@ -394,3 +394,7 @@ rscalendaritem > div.week.names > span {
     height: 280px;
     overflow-y: scroll;
 }
+
+.rs-dropdown-menu .disabled{
+    background: #c9c9c9;
+}
