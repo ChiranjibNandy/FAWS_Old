@@ -35,18 +35,12 @@
                                 <th>
                                     <span class="rs-table-sort-text">Progress</span>
                                 </th>
-                                <th>
-                                    <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                        <span class="rs-table-sort-text">ETA</span>
-                                        <span class="rs-table-sort-indicator"></span>
-                                    </a>
-                                </th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="batch in vm.batches | filter : {status: '!'+'completed'} | orderBy: 'queue_name'" class="ng-scope">
-                                <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="./batch-migration-details">{{batch.queue_name}}</a></td>
+                                <td class="rs-table-link"><a ng-link="['CurrentBatchDetails', {batch_id: batch.batch_id}]" class="ng-binding" href="./batch-migration-details">{{batch.queue_name}}</a></td>
                                 <td class="rs-table-text ng-binding">{{batch.start_date || "TBD"}}</td>
                                 <td class="rs-table-text">
                                     <span class="rs-status" ng-show="batch.status===null">Not Configured</span>
@@ -65,21 +59,14 @@
                                     </div>
                                     <span class="rs-progress-label">{{batch.progress}}%</span>
                                 </td>
-                                <!-- ngIf: batch.est_completion_time !== '-1' -->
-                                <td class="rs-table-text">
-                                    <span ng-show="batch.status==='scheduled' || batch.status===null">TBD</span>
-                                    <span ng-show="batch.status!==null && batch.status!=='error'">{{batch.est_completion_time}}</span>
-                                    <span ng-show="batch.status!==null && batch.status==='error'">&infin;</span>
-                                </td>
                                 <td class="rs-table-input">
                                     <div class="rs-btn-group">
                                         <div class="rs-dropdown">
                                             <div class="rs-cog rs-dropdown-toggle" ng-click="batch.showSettings = !batch.showSettings"></div>
                                             <ul class="rs-dropdown-menu visible" ng-show="batch.showSettings">
                                                 <li><span class="rs-dropdown-category">Manage</span></li>
-                                                <li><a href="#">Modify Migration</a></li>
-                                                <li><a href="#">Pause Migration</a></li>
-                                                <li><a href="#">Cancel Migration</a></li>
+                                                <li class="disabled"><a href="#">Modify Migration (NA)</a></li>
+                                                <li class="disabled"><a href="#">Cancel Migration (NA)</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -90,7 +77,7 @@
                 </div>
                 <br>
                 <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
-                    <table class="rs-list-table rs-embedded-list-table step1-table">
+                    <table class="rs-list-table rs-embedded-list-table secondary-table ">
                         <thead>
                             <tr>
                                 <th>
@@ -111,13 +98,15 @@
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="batch in vm.batches | filter : {status: 'completed'} | orderBy: 'queue_name'" class="ng-scope">
-                                <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="./batch-migration-details">{{batch.queue_name}}</a></td>
+                                <td class="rs-table-link"><a ng-link="['CompletedBatchDetails', {batch_id: batch.batch_id}]" class="ng-binding" href="./batch-migration-details">{{batch.queue_name}}</a></td>
                                 <td class="rs-table-text ng-binding">{{batch.start_date}}</td>
                                 <td class="rs-table-text ng-binding" colspan="2">{{batch.end_date}}</td>
+                                <td><a href="" class="trash-button"><i class="fa fa-trash"></i></a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -127,7 +116,7 @@
                     <div class="span-6">
                         <div class="rs-facet-section ">
                             <div class="rs-facet-section-body">
-                                <h3>Alerts</h3>
+                                <h3>Alerts (2)</h3>
                                 <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
                                     <table class="rs-list-table rs-embedded-list-table">
                                         <thead>
@@ -138,11 +127,11 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>Migration-01Feb2017-0456pm</td>
+                                                <td><a href="">Migration-01Feb2017-0456pm</a></td>
                                                 <td><a href="">Taking a long time to migrate</a></td>
                                             </tr>
                                             <tr>
-                                                <td>Migration-01Feb2017-0456pm</td>
+                                                <td><a href="">Migration-01Feb2017-0456pm</a></td>
                                                 <td><a href="">Problem while starting this batch. Will be retried.</a></td>
                                             </tr>
                                         </tbody>
@@ -154,7 +143,7 @@
                     <div class="span-6">
                         <div class="rs-facet-section">
                             <div class="rs-facet-section-body">
-                                <h3>Tickets</h3>
+                                <h3>Tickets (3)</h3>
                                 <div class=" ">
                                     <table class="rs-list-table rs-embedded-list-table-wrapper ">
                                         <thead>
@@ -165,11 +154,15 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>Migration-01Feb2017-0456pm</td>
+                                                <td><a href="">Migration-01Feb2017-0456pm</a></td>
                                                 <td><a href="">Taking a long time to migrate</a></td>
                                             </tr>
                                             <tr>
-                                                <td>Migration-01Feb2017-0456pm</td>
+                                                <td><a href="">Migration-01Feb2017-0456pm</a></td>
+                                                <td><a href="">Problem while starting this batch. Will be retried.</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">Migration-01Feb2017-0456pm</a></td>
                                                 <td><a href="">Problem while starting this batch. Will be retried.</a></td>
                                             </tr>
                                         </tbody>
