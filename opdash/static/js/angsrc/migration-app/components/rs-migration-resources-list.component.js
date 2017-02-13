@@ -46,10 +46,18 @@
                     var timestmp = moment(d).format("DDMMMYYYY-hhmma");
                     vm.migrationName = 'Migration-' + timestmp;
                     vm.noName = false;
-                    vm.networkCount = 0;
-                    vm.networksList = [];
+                    vm.numOfItems = {
+                        server:0,
+                        network:0,
+                        file:0
+                    };
                 }
 
+                vm.numOfResources = function(type, itemLen) {
+                    console.log("emit called: "+itemLen);
+                    vm.numOfItems[type] = itemLen;
+                    //vm.ServerTitle = 'Servers' + '(' + vm.numOfItems['server'] + ')';
+                };
                 /**
                  * @ngdoc method
                  * @name addItem
@@ -59,8 +67,11 @@
                  * Called by child component when an item is selected
                  */
                 vm.addItem = function(item, type) {
-                    if(vm.selectedItems[type].indexOf(item)<0)
+                    if(vm.selectedItems[type].indexOf(item)<0){
                         vm.selectedItems[type].push(item);
+                        dataStoreService.setItems(vm.selectedItems);
+                        $scope.$broadcast("ItemsModified");
+                    };
                 }
 
                 /**
@@ -71,10 +82,18 @@
                  * @description 
                  * Called by child component when an item is removed by user
                  */
+
+                $scope.$on("ItemRemoved", function(event, item){
+                    console.log("broadcast invoked");
+                    $scope.$broadcast("ItemRemovedForChild", item); // broadcast event to all child components
+                });
+
                 vm.removeItem = function(item, type) {
                     if(vm.selectedItems[type].indexOf(item)>=0){
-                        $scope.$broadcast("ItemRemoved", item); // broadcast event to all child components
                         vm.selectedItems[type].splice(vm.selectedItems[type].indexOf(item), 1);
+                        dataStoreService.setItems(vm.selectedItems);
+                        $scope.$broadcast("ItemRemovedForChild", item); // broadcast event to all child components
+                        $scope.$broadcast("ItemsModified");
                     }
                 }
 
@@ -83,10 +102,10 @@
                  * @name saveItems
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
                  * @description 
-                 * Save selected resources for further processing
+                 * Save selected resources for further processing 
                  */
                 vm.saveItems = function() {
-                    alert("Saving items: To be implemented");
+                    $('#save_for_later').modal('show');
                 };
 
                 /**
@@ -100,17 +119,6 @@
                     dataStoreService.setDontShowStatus(vm.dontshowStatus);
                 };
 
-                $scope.$watch('vm.selectedItems.server.length', function () {
-                    vm.networkCount = 0;
-                    vm.networksList = [];
-                    angular.forEach(vm.selectedItems.server, function (item) {
-                        angular.forEach(item.details.networks, function (network) {
-                            vm.networkCount += 1;
-                            vm.networksList.push(network);
-                        });
-                    });
-                });
-
                 /**
                  * @ngdoc method
                  * @name continue
@@ -121,10 +129,14 @@
                 vm.continue = function() {
                     if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0){
                         dataStoreService.setItems(vm.selectedItems);
-                        // $rootRouter.navigate(["MigrationRecommendation"]);
-                        $('#name_modal').modal('show');
+                        var migrationName = dataStoreService.getScheduleMigration().migrationName;
+                        if(migrationName)
+                            $rootRouter.navigate(["MigrationRecommendation"]);
+                        else
+                            $('#name_modal').modal('show');
                     }
                     else{
+                        $('#save_for_later').modal('hide');
                         $('#name_modal').modal('hide');
                         $("#no_selection").modal('show');
                         $('#intro_modal').modal('hide');
@@ -145,6 +157,7 @@
                             timezone:''
                         };
                         dataStoreService.setScheduleMigration(vm.selectedTime);
+                        $('#save_for_later').modal('hide');
                         $('#name_modal').modal('hide');
                         $('#cancel_modal').modal('hide');
                         $('#intro_modal').modal('hide');
@@ -168,6 +181,7 @@
                         $('#cancel_modal').modal('show');
                     }
                     else{
+                        $('#save_for_later').modal('hide');
                         $('#name_modal').modal('hide');
                         $('#cancel_modal').modal('hide');
                         $('#intro_modal').modal('hide');
@@ -184,6 +198,7 @@
                  * Cancel Migration of resources and go back to migration dashboard page.
                  */
                 vm.submitCancel = function() {
+                    $('#save_for_later').modal('hide');
                     $('#name_modal').modal('hide');
                     $('#cancel_modal').modal('hide');
                     $('#intro_modal').modal('hide');

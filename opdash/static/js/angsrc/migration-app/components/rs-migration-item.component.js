@@ -147,7 +147,8 @@
                             if(vm.type === "loadBalancers")
                                 vm.items = mapNetworkStatus(dataList, results[1].network_status);
                             //Store all retrieved resources in factory variable
-                            datastoreservice.storeallItems(vm.items, vm.type);   
+                            datastoreservice.storeallItems(vm.items, vm.type);  
+                            vm.parent.numOfResources(vm.type, vm.items.length); 
                             // pagination controls
                             vm.currentPage = 1;
                             vm.pageSize = 5; // items per page
@@ -168,6 +169,7 @@
                     } else{
                         //For repeated fetch of resources after first time loading.
                         vm.items = datastoreservice.retrieveallItems(vm.type);
+                        vm.parent.numOfResources(vm.type, vm.items.length);
                         // pagination controls
                         vm.currentPage = 1;
                         vm.pageSize = 5; // items per page
@@ -194,9 +196,9 @@
 
                     vm.statusFilter = "";
 
-                    $scope.$on("ItemRemoved", function(event, item){
+                    $scope.$on("ItemRemovedForChild", function(event, item){
                         if(item.type === vm.type){
-                            item.selected = false;
+                            //item.selected = false;
                             vm.isAllSelected = false;
                         }
                     });
