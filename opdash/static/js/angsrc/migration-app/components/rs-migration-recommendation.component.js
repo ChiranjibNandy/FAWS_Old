@@ -28,6 +28,7 @@
                 vm.migrationName = datastoreservice.getScheduleMigration().migrationName;
                 vm.dataServer = datastoreservice.getItems('server').length;
                 vm.dataNetwork = datastoreservice.getItems('network').length;
+                vm.editName = false;
 
                 /**
                  * @ngdoc method
@@ -46,7 +47,18 @@
                         vm.migrationName = vm.changedMigrationName;
                         datastoreservice.setScheduleMigration(vm.selectedTime);
                     }
-                    $('#name_modal2').modal('hide');
+                    vm.editName = false;
+                };
+
+                /**
+                 * @ngdoc method
+                 * @name revertName
+                 * @methodOf migrationApp.controller:rsmigrationrecommendationCtrl
+                 * @description 
+                 * This function helps to restore the previously set migration name
+                 */
+                vm.revertName = function(){
+                    vm.editName = false;
                 };
 
                 /**
@@ -60,6 +72,16 @@
                     alert("Saving items: To be implemented");
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name editMigrationName
+                 * @methodOf migrationApp.controller:rsmigrationrecommendationCtrl
+                 * @description 
+                 * This method helps to edit the migration name to user desired name.
+                 */
+                vm.editMigrationName = function() {
+                    vm.editName = true;
+                };
                 /**
                  * @ngdoc method
                  * @name continue

@@ -93,8 +93,8 @@
                                             return server.id == id;
                                          });
                     selectedServer[0].selectedMapping = selectedServer[0].mappings[parseInt(vm.selectedConfiguration)];
-                    selectedServer[0].selectedMapping.zone = vm.awsZone;
-                    selectedServer[0].selectedMapping.region = vm.awsRegion;
+                    selectedServer[0].selectedMapping.zone = vm.awsZone || selectedServer[0].selectedMapping.zone;
+                    selectedServer[0].selectedMapping.region = vm.awsRegion || selectedServer[0].selectedMapping.region
                     $('#modify_modal'+id).modal('hide');
                 };
 
