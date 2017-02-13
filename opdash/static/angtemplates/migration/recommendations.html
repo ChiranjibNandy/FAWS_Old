@@ -9,32 +9,160 @@
         <hr>
         <div class="rs-inner">
             <h2>User Namegoeshere ( #1024814 )</h2>
-            <h3>{{vm.migrationName}} <a href="#name_modal2" role="button" data-toggle="modal" class="rs-edit" title="click to edit migration name"></a></h3>
-            <input type="text" class="rs-input-large searchbox" ng-model="vm.filteredValue" placeholder="filter by keyword or tag...">
+            <input type="text" class="rs-input-large searchbox rs-pull-right" ng-model="vm.filteredValue" placeholder="filter by keyword or tag...">
+            <h3 ng-show="!vm.editName">{{vm.migrationName}} <a role="button" ng-click ="vm.editMigrationName()" class="rs-edit" title="click to edit migration name" ></a></h3>
+            <h3 ng-show="vm.editName">
+                <div>
+                    <input ng-model="vm.changedMigrationName">
+                    <a ng-click="vm.changeName()" style="cursor:pointer">Save</a>
+                    or
+                    <a ng-click="vm.revertName()" style="cursor:pointer">Cancel</a>.
+                </div>
+            </h3>
+            <div class="clear"></div>    
             <h4>Our recommendation:</h4>
             <rs-tabs alignment="horizontal">
                 <rs-tab title="Servers ({{vm.dataServer}})">
                     <rsrecommendationitem type="server" filtervalue="vm.filteredValue"></rsrecommendationitem>
                 </rs-tab>
-                <rs-tab title="Networks ({{vm.dataNetwork}})">
+                <!--<rs-tab title="Networks ({{vm.dataNetwork}})">
                     <rsrecommendationitem type="network" filtervalue="vm.filteredValue"></rsrecommendationitem>
-                </rs-tab>
+                </rs-tab>-->
             </rs-tabs>
+            <br>
+            <div class="plain-panel">
+                <h4>Item Selected</h4>
+                <hr>
+                <div class="accordion" id="accordion2">
+                    <div class="accordion-group">
+                        <div class="accordion-heading ">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#server-name">
+                                <b class=""> Servers (4)  <i class="rs-caret"></i></b>
+                            </a>
+                        </div>
+                        <div id="server-name" class="accordion-body collapse ">
+                            <div class="accordion-inner ">
+                                <div class="selected-items">
+                                    <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i>  US-East-1 - US-East-1a - t2 small
+                                </div>
+                                <div class="selected-items">
+                                    <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
+                                </div>
+                                <div class="selected-items">
+                                    <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
+                                </div>
+                                <div class="selected-items">
+                                    <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
+                                </div>         
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group">
+                        <div class="accordion-heading ">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#file-name">
+                                <b class="">  Files (2) <i class="rs-caret"></i></b>
+                            </a>
+                        </div>
+                        <div id="file-name" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                    <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  filename1</b>
+                                </div>
+                                <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                    <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  filename1</b>
+                                </div>                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group">
+                        <div class="accordion-heading ">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#block-name">
+                                <b class=""> Blocks (2) <i class="rs-caret"></i></b>
+                            </a>
+                        </div>
+                        <div id="block-name" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                    <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  BlockName1</b>
+                                </div>
+                                <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                    <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  BlockName1</b>
+                                </div>                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group">
+                        <div class="accordion-heading ">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#LB-name">
+                                <b class="">Load Balancers (2) <i class="rs-caret"></i></b>
+                            </a>
+                        </div>
+                        <div id="LB-name" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                    <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> LBname1b </b>
+                                </div>
+                                <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                    <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> LBname1b</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group">
+                        <div class="accordion-heading ">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#cdn-name">
+                                <b class="">CDN (2) <i class="rs-caret"></i></b>
+                            </a>
+                        </div>
+                        <div id="cdn-name" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                    <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  CDNname1b</b>
+                                </div>
+                                <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                    <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  CDNname1b</b>
+                                </div>                 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group">
+                        <div class="accordion-heading ">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#dns-name">
+                                <b class="">DNS (0) <!-- <i class="rs-caret"></i> --></b>
+                            </a>
+                        </div>
+                        <div id="dns-name" class="accordion-body collapse">
+                            <div class="accordion-inner">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group">
+                        <div class="accordion-heading ">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#db-name">
+                                <b class="">Databases (4) <i class="rs-caret"></i></b>
+                            </a>
+                        </div>
+                        <div id="db-name" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                    <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
+                                </div>
+                                <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                    <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
+                                </div>
+                                <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                    <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
+                                </div>
+                                <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
+                                    <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
         </div>
     </div>
 </div>
 <rsinteractivefooter></rsinteractivefooter>
-<div id="name_modal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-body">
-        <h3>What would you like to name your migration?</h3>
-        <form class=" ">
-            <div class="rs-control-group">
-                <div class="rs-controls">
-                    <input type="text" ng-model="vm.changedMigrationName" placeholder="{{vm.migrationName}}">
-                </div>
-            </div>
-            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <a class="rs-btn rs-btn-primary " ng-click="vm.changeName()">Save</a>
-        </form>
-    </div>
-</div>
