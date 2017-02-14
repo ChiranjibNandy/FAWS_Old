@@ -81,6 +81,7 @@
                  */
                 vm.editMigrationName = function() {
                     vm.editName = true;
+                    vm.changedMigrationName = vm.migrationName;
                 };
                 /**
                  * @ngdoc method
