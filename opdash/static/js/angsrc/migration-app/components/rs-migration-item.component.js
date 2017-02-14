@@ -121,11 +121,11 @@
                         var list = ds.getTrimmedAllItems(vm.type);
                         
                         // Retrieve migration item status
-                        var status = ds.getServerMigrationStatus(vm.tenant_id);
+                        // var status = ds.getServerMigrationStatus(vm.tenant_id);
 
                         // wait for all the promises to resolve
-                        $q.all([list, status]).then(function(results) {
-                            if(results[0].error || results[1].error){
+                        $q.all([list]).then(function(results) {
+                            if(results[0].error){
                                 vm.loading = false;
                                 vm.loadError = true;
                                 return;
@@ -138,14 +138,15 @@
 
                             var dataList = results[0].data;
 
-                            if(vm.type === "server")
-                                vm.items = mapServerStatus(dataList, results[1].server_status);
-                            if(vm.type === "network")
-                                vm.items = mapNetworkStatus(dataList, results[1].network_status);
-                            if(vm.type === "files")
-                                vm.items = mapNetworkStatus(dataList, results[1].network_status);
-                            if(vm.type === "loadBalancers")
-                                vm.items = mapNetworkStatus(dataList, results[1].network_status);
+                            vm.items = dataList;
+                            // if(vm.type === "server")
+                            //     vm.items = mapServerStatus(dataList, results[1].server_status);
+                            // if(vm.type === "network")
+                            //     vm.items = mapNetworkStatus(dataList, results[1].network_status);
+                            // if(vm.type === "files")
+                            //     vm.items = mapNetworkStatus(dataList, results[1].network_status);
+                            // if(vm.type === "loadBalancers")
+                            //     vm.items = mapNetworkStatus(dataList, results[1].network_status);
                             //Store all retrieved resources in factory variable
                             datastoreservice.storeallItems(vm.items, vm.type);  
                             vm.parent.numOfResources(vm.type, vm.items.length); 
@@ -165,6 +166,9 @@
                                 vm.search[label.field] = ""; // set search field variables
                             });
                             vm.loading = false;
+                        }, function(error){
+                            vm.loading = false;
+                            vm.loadError = true;
                         });
                     } else{
                         //For repeated fetch of resources after first time loading.
@@ -352,7 +356,7 @@
                             vm.equipment = response.data.filter(function (item) { return item.id == vm.id })[0];
                         });
 
-                    if(vm.type == 'server'){
+                    /* if(vm.type == 'server'){
                         ds.getServerMigrationStatus(authservice.getAuth().tenant_id)
                             .then(function(response){
                                 var jobId = response.server_status
@@ -370,7 +374,7 @@
                                         });
                                 }                                            
                             });
-                    }
+                }*/
                 }
                 return vm;
             }]

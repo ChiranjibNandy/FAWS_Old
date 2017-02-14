@@ -29,68 +29,12 @@
                             <div class="rs-pull-right">
                                 <a class="rs-btn" ng-click="vm.cancelMigration()">Cancel Migration</a>
                                 <a class="rs-btn" ng-click="vm.saveItems()">Save For Later</a>
+                                <a class="rs-btn" ng-link="['MigrationStatus']">Dashboard</a>
                                 <a class="rs-btn rs-btn-primary " ng-click="vm.continue()">Continue</a>
                             </div>
                         </rs-tabs>
                         <br>
                         <rsselecteditemspanel></rsselecteditemspanel>
-                        <!--<div class="plain-panel">
-                            <h4>Items Selected</h4>
-                            <hr>
-                            <div class="accordion" id="accordion2">
-                                <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}">
-                                    <div class="accordion-heading ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#server-name">
-                                            <b class=""> Servers ({{vm.selectedItems.server.length}})  <i class="fa fa-caret-down"></i></b>
-                                        </a>
-                                    </div>
-                                    <div id="server-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
-                                        <div class="selected-items" ng-repeat="item in vm.selectedItems.server">
-                                            <a href="#" target="_self" ng-click="vm.removeItem(item,'server')"><i class="fa fa-times"></i></a>  <b title="({{item.details.networks.length}}) Networks: {{item.details.networks.toString()}}"> {{item.name}} </b> 
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}">
-                                    <div class="accordion-heading ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#file-name">
-                                            <b class="">  Networks ({{vm.networkCount}}) <i class="fa fa-caret-down"></i></b>
-                                        </a>
-                                    </div>
-                                    <div id="file-name" class="accordion-body collapse" ng-if="vm.selectedItems.server.length > 0">
-                                        <div class="selected-items" ng-repeat="network in vm.networksList">
-                                            <a class= "disabled" href="#" ng-click="vm.removeItem(item,'server')"><i class="fa fa-times"></i></a> {{network}} 
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group disabled">
-                                    <div class="accordion-heading ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#block-name">
-                                            <b class=""> Files (0) <i class="fa fa-caret-down"></i></b>
-                                        </a>
-                                    </div>
-                                    <div id="block-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <ul class="inline">
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group disabled">
-                                    <div class="accordion-heading ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#cdn-name">
-                                            <b class="">Load Balancers (0) <i class="fa fa-caret-down"></i></b>
-                                        </a>
-                                    </div>
-                                    <div id="cdn-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <ul class="inline">
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>-->
-                            
                     </div>
                 </div>
             </div>
