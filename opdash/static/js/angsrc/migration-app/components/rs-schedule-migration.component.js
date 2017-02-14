@@ -28,7 +28,7 @@
 
                 vm.$onInit = function() {
                     $('title')[0].innerHTML =  "Schedule Migration - Rackspace Cloud Migration";
-                    vm.tenant_id = 1024814;
+                    vm.tenant_id = 1024814;//  authservice.getAuth().tenant_id;
                     vm.timeItems = ["12:00am","12:15am","12:30am","12:45am","1:00am","1:15am","1:30am","1:45am","2:00am","2:15am","2:30am","2:45am","3:00am","3:15am","3:30am","3:45am","4:00am","4:15am","4:30am","4:45am",
                     "5:00am","5:15am","5:30am","5:45am",
                     "06:00am","6:15am","6:30am","6:45am",
@@ -75,12 +75,17 @@
                 "(GMT +10:00) Eastern Australia, Guam, Vladivostok",
                 "(GMT +11:00) Magadan, Solomon Islands, New Caledonia",
                     "(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka"]
-                    vm.time =  new Date().toLocaleTimeString();//vm.timeItems[0];
-                    vm.timezone =new Date().toTimeString(); //vm.timeZoneItems[0];
-                    vm.selectedDate = new Date().toString();
-                    vm.unixTime = Math.floor(new Date().getTime()/ 1000);
+                    vm.time =  vm.timeItems[0];//new Date().toLocaleTimeString(); ;
+                    vm.initTime =  new Date().toLocaleTimeString();
+                    vm.timezone = vm.timeZoneItems[0]//new Date().toTimeString(); //;
                     vm.selectedDateHeader = new Date().toLocaleString();//moment().format("MMM Do YYYY")+" at "+vm.time+" "+vm.timezone;
-                    vm.date = moment().format("MMM Do YYYY");
+                    vm.date =new Date();
+                    vm.finalDateForUnixTime = vm.date.toDateString()+ " "+ vm.time +" "+ vm.timezone;
+                     vm.selectedDate =  vm.finalDateForUnixTime;
+                    console.log(vm.finalDateForUnixTime);
+                   //console.log(new Date(vm.finalDateForUnixTime));
+                    vm.unixTime = Math.floor(new Date().getTime()/ 1000);
+                     console.log(new Date(vm.finalDateForUnixTime));
                     dataStoreService.storeDate('time',vm.time);
                     dataStoreService.storeDate('timezone',vm.timezone);
                     var d = new Date();
