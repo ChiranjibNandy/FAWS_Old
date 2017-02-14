@@ -46,7 +46,7 @@
                     vm.selectedItems.databases = [];
 
                     vm.destination = "AWS EC2";
-                    vm.batchName = "Migration-03Feb2017-0411pm";
+                    vm.batchName = dataStoreService.getScheduleMigration().migrationName;
                     vm.tempBatchName = vm.batchName;
                     vm.scheduledDateTime = "1/11/2017";
                     vm.cost = 431.85;

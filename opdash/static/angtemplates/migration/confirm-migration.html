@@ -8,14 +8,20 @@
                         <div class="migr-name">
                             <div ng-show="!vm.editorEnabled">
                                 <h3>{{vm.batchName}}</h3>
-                                <span class="edit rs-edit" ng-click="vm.editorEnabled = true"></span>
+                                <span class="edit rs-edit" ng-click="vm.editorEnabled = true; vm.tempBatchName = vm.batchName"></span>
                             </div>
                             <div ng-show="vm.editorEnabled">
+                                <input ng-model="vm.tempBatchName" >
+                                <button class="rs-primary" role="button" ng-click="vm.save()">Save</button>
+                                    or
+                                <button role="button" ng-click="vm.disableEditor()">cancel</button>
+                            </div>
+                            <!--<div ng-show="vm.editorEnabled">
                                 <input type="text" ng-model="vm.tempBatchName" class="name-input animated flipInX" style="display: inline-block;"/>
                                 <a href="javascript:void(0);" ng-click="vm.save()">Save</a>
                                 or
                                 <a href="javascript:void(0);" ng-click="vm.disableEditor()">Cancel</a>
-                            </div>
+                            </div>-->
                         </div>
                         <div class="clear"></div>
                         <div class="rs-row">
