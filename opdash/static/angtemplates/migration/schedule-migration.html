@@ -76,16 +76,16 @@
                                 <div class="rs-control-group">
                                     <label class="rs-control-label">Time Zone</label>
                                     <div class="rs-controls">
-                                        <select name="timezone" ng-change="vm.timezoneChange()" ng-model="vm.timezone" class="ng-pristine ng-valid ng-not-empty ng-touched span2" >
-                                             <option ng-repeat="time in vm.timeZoneItems" value="{{vm.timezone}}">{{vm.timezone}}</option>
+                                        <select name="timezone" ng-change="vm.timezoneChange()"  ng-options="time for time in vm.timeZoneItems" ng-model="vm.timezone" class="ng-pristine ng-valid ng-not-empty ng-touched span2" >
+                                             <option  value="{{vm.timezone}}">{{vm.timezone}}</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="rs-control-group">
                                     <label class="rs-control-label">Time </label>
                                     <div class="rs-controls">
-                                        <select name="time" ng-change="vm.timeChange()" ng-model="vm.time" class="ng-pristine ng-untouched ng-valid ng-not-empty span2" >
-                                          <option ng-repeat="time in vm.timeItems" value="{{vm.time}}">{{vm.time}}</option>
+                                        <select name="time" ng-change="vm.timeChange()"  ng-options="time for time in vm.timeItems" ng-model="vm.time" class="ng-pristine ng-untouched ng-valid ng-not-empty span2" >
+                                          <option  value="{{vm.time}}">{{vm.time}}</option>
                                         </select>
                                     </div>
                                 </div>  

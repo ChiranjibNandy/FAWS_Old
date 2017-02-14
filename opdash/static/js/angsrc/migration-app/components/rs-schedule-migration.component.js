@@ -76,14 +76,16 @@
                 "(GMT +11:00) Magadan, Solomon Islands, New Caledonia",
                     "(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka"]
                     vm.time =  vm.timeItems[0];//new Date().toLocaleTimeString(); ;
+                    vm.initTime =  new Date().toLocaleTimeString();
                     vm.timezone = vm.timeZoneItems[0]//new Date().toTimeString(); //;
-                    vm.selectedDate = new Date().toString();
                     vm.selectedDateHeader = new Date().toLocaleString();//moment().format("MMM Do YYYY")+" at "+vm.time+" "+vm.timezone;
                     vm.date =new Date();
                     vm.finalDateForUnixTime = vm.date.toDateString()+ " "+ vm.time +" "+ vm.timezone;
+                     vm.selectedDate =  vm.finalDateForUnixTime;
                     console.log(vm.finalDateForUnixTime);
-                    console.log(new Date(vm.finalDateForUnixTime));
+                   //console.log(new Date(vm.finalDateForUnixTime));
                     vm.unixTime = Math.floor(new Date().getTime()/ 1000);
+                     console.log(new Date(vm.finalDateForUnixTime));
                     dataStoreService.storeDate('time',vm.time);
                     dataStoreService.storeDate('timezone',vm.timezone);
                     var d = new Date();
