@@ -25,7 +25,7 @@
                             name: server.name,
                             tenant_id: server.tenant_id,
                             ip_address: server.accessIPv4,
-                            status: server.status,
+                            status: server["OS-EXT-STS:vm_state"],
                             ram: server.flavor_details.ram,
                             mappings: server.mappings,
                             details: server, // NEED ALL THE DETAILS

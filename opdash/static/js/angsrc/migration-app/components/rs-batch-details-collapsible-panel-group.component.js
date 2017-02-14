@@ -142,7 +142,7 @@
                     var list = ds.getTrimmedAllItems(type);
 
                     // Retrieve migration item status
-                    var status = ds.getServerMigrationStatus(tenant_id);
+                    //var status = ds.getServerMigrationStatus(tenant_id);
 
                     return $q.all([list, status]).then(function(results) {
                         if(results[0].error || results[1].error){
