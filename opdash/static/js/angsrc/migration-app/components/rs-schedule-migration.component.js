@@ -78,9 +78,12 @@
                     vm.time =  vm.timeItems[0];//new Date().toLocaleTimeString(); ;
                     vm.timezone = vm.timeZoneItems[0]//new Date().toTimeString(); //;
                     vm.selectedDate = new Date().toString();
-                    vm.unixTime = Math.floor(new Date().getTime()/ 1000);
                     vm.selectedDateHeader = new Date().toLocaleString();//moment().format("MMM Do YYYY")+" at "+vm.time+" "+vm.timezone;
-                    vm.date = moment().format("MMM Do YYYY");
+                    vm.date =new Date();
+                    vm.finalDateForUnixTime = vm.date.toDateString()+ " "+ vm.time +" "+ vm.timezone;
+                    console.log(vm.finalDateForUnixTime);
+                    console.log(new Date(vm.finalDateForUnixTime));
+                    vm.unixTime = Math.floor(new Date().getTime()/ 1000);
                     dataStoreService.storeDate('time',vm.time);
                     dataStoreService.storeDate('timezone',vm.timezone);
                     var d = new Date();
