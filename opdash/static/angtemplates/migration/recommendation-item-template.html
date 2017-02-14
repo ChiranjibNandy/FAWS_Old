@@ -94,7 +94,7 @@
                             <th>VCPU</th>
                             <th>Memory</th>
                             <th>Storage</th>
-                            <th>Cost</th>
+                            <th>Cost/month</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -106,7 +106,7 @@
                             <td>{{server.vcpu || 2}}</td>
                             <td>{{server.memory || '2 GB'}}</td>
                             <td>{{server.storage || 'EBS-Only'}}</td>
-                            <td>{{server.cost || '$0.00'}}</td>
+                            <td>{{server.cost || '$0.00' | currency}}</td>
                         </tr>
                     </tbody>
                 </table>

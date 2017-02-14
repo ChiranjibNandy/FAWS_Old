@@ -1,0 +1,12 @@
+<h3 ng-show="!vm.editName">
+    {{vm.migrationName}} 
+    <a role="button" ng-click ="vm.editMigrationName()" class="rs-edit" title="click to edit migration name" ></a>
+</h3>
+<h3 ng-show="vm.editName">
+    <div>
+        <input ng-model="vm.changedMigrationName">
+        <a ng-click="vm.changeName()" style="cursor:pointer">Save</a>
+        or
+        <a ng-click="vm.revertName()" style="cursor:pointer">Cancel</a>.
+    </div>
+</h3>
