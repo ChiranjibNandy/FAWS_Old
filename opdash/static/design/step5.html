@@ -218,8 +218,8 @@
         <br>
 
         <div class="rs-container migration-mgr">
-            <div class="alert alert-success">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <div class="alert alert-success animated fadeIn">
+                <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
                 <h3>Success! 5 Migrations Confirmed 1/17/2017 at 7:00 PM</h3>
             </div>
             <div class="rs-main rs-panel">
@@ -375,8 +375,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <!-- end ngRepeat: batch in vm.batches | filter : {progress:'!'+'100'} -->
-                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                    <!-- <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
                                         <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="batch-current.html">Migration-01Feb2017-0456pm</a></td>
                                         <td class="rs-table-text ng-binding">Racker</td>
                                         <td class="rs-table-text ng-binding">5/1/2017 12:18 AM</td>
@@ -391,17 +390,13 @@
                                             </div>
                                             <span class="rs-progress-label">45%</span>
                                         </td>
-                                        <!-- ngIf: batch.est_completion_time !== '-1' -->
-                                        <!-- ngIf: batch.est_completion_time === '-1' -->
                                         <td class="rs-table-text ng-scope" ng-if="batch.est_completion_time === '-1'">∞</td>
-                                        <!-- end ngIf: batch.est_completion_time === '-1' -->
                                         <td class="rs-table-input">
                                             <div class="rs-btn-group">
                                                 <a href="" class="rs-cog"></a>
                                             </div>
                                         </td>
-                                    </tr>
-                                    <!-- end ngRepeat: batch in vm.batches | filter : {progress:'!'+'100'} -->
+                                    </tr> -->
                                 </tbody>
                             </table>
                         </div>

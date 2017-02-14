@@ -41,10 +41,6 @@
     margin-bottom: 10px;
 }
 
-.support-icons {
-    margin: 1em auto;
-}
-
 .trash-button {
     font-size: 16px;
     color: #979797
@@ -62,6 +58,30 @@
     text-align: center;
 }
 
+.rs-custom-counter {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.rs-custom-counter li {
+    counter-increment: step-counter;
+    margin-bottom: 10px;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.rs-custom-counter li::before {
+    content: counter(step-counter);
+    margin-right: 5px;
+    font-size: 80%;
+    background-color: rgb(196, 0, 34);
+    color: white;
+    font-weight: bold;
+    padding: 5px 8px;
+    border-radius: 50px;
+}
+
 .selected-items {
     display: block;
     /*    max-width: 180px;
@@ -71,6 +91,10 @@
     color: #fff;*/
     padding-right: 5px;
     margin-bottom: 5PX;
+}
+
+.support-icons {
+    margin: 1em auto;
 }
 
 .support-icons a i {
@@ -99,7 +123,7 @@
 }
 
 .rs-tr-disabled {
-    background: rgba(196, 0, 34, 0.1);
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .rs-inst-types {
@@ -115,14 +139,20 @@
     text-decoration: none;
 }
 
-#intro_modal h3{
+#intro_modal h3 {
     font-size: 20px;
 }
 
+
 /* canon style overrides  */
+
 .migration-mgr .rs-main {
     margin: 10px 0;
 }
+.migration-mgr .rs-main .rs-panel {
+    min-height: 500px;
+}
+
 .migration-mgr.rs-container {
     width: 1200px!important;
     padding: 0;
@@ -165,12 +195,15 @@ th {
     overflow: visible;
     text-overflow: inherit;
 }
-.migration-mgr .secondary-table{
-    background: rgba(0,0,0,0.05);
+
+.migration-mgr .secondary-table {
+    background: rgba(0, 0, 0, 0.05);
 }
+
 .migration-mgr .secondary-table tr:nth-child(even) {
     background: transparent;
 }
+
 .migration-mgr .rs-detail-section-header {
     padding: 20px 20px 0px;
     border-top: 1px solid #eee;
@@ -189,13 +222,15 @@ th {
     cursor: pointer;
     margin-left: 10px;
 }
+
 .clear {
     clear: both;
 }
 
-.migration-mgr .searchbox{
-    margin:0;
+.migration-mgr .searchbox {
+    margin: 0;
 }
+
 
 /* Reach styles */
 
@@ -204,6 +239,7 @@ th {
     padding-right: 15px!important;
     padding-left: 15px!important;
 }
+
 .pilot-logo-white {
     width: 137px;
     height: 36px;
@@ -213,6 +249,12 @@ th {
 }
 
 /* bootstrap overrides */
+
+.alert-schedule {
+    background-color: #fff;
+    border: 4px solid #000;
+    color: #c40022;
+}
 
 .alert-success {
     background-color: #00a96d;
@@ -244,12 +286,15 @@ body .modal.details2 {
     /* must be half of the width, minus scrollbar on the left (30px) */
     margin-left: -425px;
 }
-.modal-body{
+
+.modal-body {
     padding: 30px;
 }
-.modal img{
+
+.modal img {
     width: 100%;
 }
+
 .accordion-group {
     margin-bottom: 0px;
     border: none;
@@ -262,7 +307,7 @@ body .modal.details2 {
     border-top: none;
     padding: 10px;
     background: #f9f9f9;
-    color:#999;
+    color: #999;
 }
 
 .accordion-toggle:hover,
