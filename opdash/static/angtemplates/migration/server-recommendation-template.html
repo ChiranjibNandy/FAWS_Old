@@ -1,0 +1,29 @@
+<tr ng-repeat="item in vm.data | filter: vm.filtervalue | limitTo : vm.pageSize : (vm.currentPage-1)*vm.pageSize">
+    <td class="rs-table-status"
+            ng-class="{'rs-table-status-ok': item.status=='ACTIVE', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
+    </td>
+    <td class="rs-table-link">
+        <a href="{{'#resource_info' + item.id}}" role="button" data-toggle="modal">{{item.name}}</a>
+    </td>
+    <!--<td class="rs-table-link"><a href="#" ng-link="['EquipmentDetails', {type: vm.type, id: item.id}]">{{item.name}}</a></td>-->
+    <td class="rs-table-text">{{item.ip_address}}</td>
+    <td>{{item.selectedMapping.region}}</td>
+    <td>{{item.selectedMapping.zone || 'US-East-1a 2'}}</td>
+    <td>{{item.selectedMapping.instance_type}}</td>
+    <td class="rs-table-input">
+        <div class="rs-btn-group">
+            <div class="rs-dropdown">
+                <div class="rs-cog rs-dropdown-toggle" ng-click="batch.showSettings = !batch.showSettings"></div>
+                <ul class="rs-dropdown-menu visible recommendationsMenu" ng-show="batch.showSettings">
+                    <li><span class="rs-dropdown-category">Manage</span></li>
+                    <li>
+                        <a href="{{'#modify_modal'+ item.id}}" ng-click="batch.showSettings = !batch.showSettings" role="button" data-toggle="modal">Pricing Options</a>
+                    </li>
+                    <li>
+                        <a href="" ng-click = "vm.removeServer(item.id)">Remove From List</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </td>
+</tr>

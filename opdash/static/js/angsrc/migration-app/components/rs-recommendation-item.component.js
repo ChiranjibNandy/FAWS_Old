@@ -48,12 +48,36 @@
 
                 vm.$onInit = function() {
                     vm.recSelectedItems = dataStoreService.getRecommendedItems() || [];
-                    //vm.recSelectedItems = [];
-                    vm.data = dataStoreService.getItems(vm.type);
+                    
+                    if(vm.type === "server"){
+                        vm.data = dataStoreService.getItems(vm.type);
+                        vm.data.map(function(item){
+                            item.selectedMapping = item.mappings[0];
+                        });
+                        vm.labels = [
+                                        {field: "name", text: vm.type+" Name"},
+                                        {field: "ip_address", text: "IP Address"},
+                                        {field: "aws_region", text: "AWS Region"},
+                                        {field: "aws_zone", text: "AWS Zone"},
+                                        {field: "aws_instance", text: "AWS instance"}
+                                    ];
+                    }else{
+                        var servers = dataStoreService.getItems('server');
+                        vm.data = [];
+                        vm.labels = [
+                                        {field: "name", text: vm.type+" Name"},
+                                        {field: "id", text: "ID"},
+                                        {field: "status", text: "Status"}
+                                    ];
+                        for(var i = 0 ;i < servers.length; i++){
+                            var networks = servers[i].details.networks;
+                            networks.map(function(network){
+                                vm.data.push(network);
+                            });
+                        }
+                    }
+                    
                     // pagination controls
-                    vm.data.map(function(item){
-                        item.selectedMapping = item.mappings[0];
-                    });
                     vm.pageArray = [];
                     vm.currentPage = 1;
                     vm.pageSize = 5; // items per page
@@ -66,13 +90,7 @@
                         vm.noData = false;
                     else
                         vm.noData = true;
-                    vm.labels = [
-                                    {field: "name", text: vm.type+" Name"},
-                                    {field: "ip_address", text: "IP Address"},
-                                    {field: "aws_region", text: "AWS Region"},
-                                    {field: "aws_zone", text: "AWS Zone"},
-                                    {field: "aws_instance", text: "AWS instance"}
-                                ];
+                    
                     if(vm.type == "server") 
                         vm.showModify = true;                                
                     else
@@ -98,6 +116,26 @@
                     $('#modify_modal'+id).modal('hide');
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name removeServer
+                 * @methodOf migrationApp.controller:rsrecommendationitemCtrl
+                 * @description 
+                 * This function helps to remove the selected servers and also modify the original object 
+                 * of the particular server.
+                 */
+                vm.removeServer = function(id){
+                    var allData = dataStoreService.retrieveallItems('server');     
+                    var selectedServer = allData.filter(function(item){
+                                            if(item.id === id){
+                                                item.selected = false;
+                                                return item;
+                                            };
+                                         });    
+                    dataStoreService.storeallItems(allData,'server');     
+                    vm.data.splice(vm.data.indexOf(selectedServer[0]), 1);
+                    dataStoreService.setItems(vm.data);
+                }
                 return vm;
             }]
         }); // end of component rsrecommendationitem

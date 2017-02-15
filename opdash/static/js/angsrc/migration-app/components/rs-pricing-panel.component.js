@@ -62,39 +62,51 @@
                  * Continue to next step: **Schedule Migration**
                  */
                 vm.continue = function() {     
-                vm.selectedTime = dataStoreService.getScheduleMigration();
-                console.log(vm.selectedTime);
-                   dataStoreService.getItems(vm.selecteditem);
-                       if(vm.page==="resources"){
-                  if(vm.selecteditem.length>0){
-                      dataStoreService.setItems(vm.selecteditem);
-                        $rootRouter.navigate(["MigrationRecommendation"]);
-                   }
-                   else
-                      {alert("Please select some items to migrate");
-                    } 
-                     } 
-                     else if(vm.page==="recommendation"){ 
-                    $rootRouter.navigate(["ScheduleMigration"]);
-                     }
-                    else if(vm.page==="scheduleMigration"){
-                     dataStoreService.setScheduleMigration(vm.selectedTime);  
-                      $rootRouter.navigate(["ConfirmMigration"]);
-                     }
-                };
-                 vm.back = function() {
-                     if(vm.page==="recommendation"){
-                    $rootRouter.navigate(["MigrationResourceList"]);
-                     }
-                     else if(vm.page==="scheduleMigration"){
-                     $rootRouter.navigate(["MigrationRecommendation"]);
-
-                         }
+                    vm.selectedTime = dataStoreService.getScheduleMigration();
+                    console.log(vm.selectedTime);
+                    dataStoreService.getItems(vm.selecteditem);
+                    if(vm.page==="resources"){
+                        if(vm.selecteditem.length>0){
+                            dataStoreService.setItems(vm.selecteditem);
+                            $rootRouter.navigate(["MigrationRecommendation"]);
                         }
+                        else{
+                            alert("Please select some items to migrate");
+                        } 
+                    } 
+                    else if(vm.page==="recommendation"){ 
+                        $('#precheck_modal').modal('show');
+                    }
+                    else if(vm.page==="scheduleMigration"){
+                        dataStoreService.setScheduleMigration(vm.selectedTime);  
+                        $rootRouter.navigate(["ConfirmMigration"]);
+                    }
+                };
+                vm.back = function() {
+                    if(vm.page==="recommendation"){
+                        $rootRouter.navigate(["MigrationResourceList"]);
+                    }
+                    else if(vm.page==="scheduleMigration"){
+                        $rootRouter.navigate(["MigrationRecommendation"]);
+                    }
+                }
                    vm.showCancelDialog = function() {
                     $('#cancel_modal').modal('show');
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name continueToSchedule
+                 * @methodOf migrationApp.controller:rsmigrationrecommendationCtrl
+                 * @description 
+                 * When we click on the continue button in recommendations page, a popup willbe shown up 
+                 * saying about the configurations that are made on inventory. If we press continue button
+                 * in that popup, this function will be triggered helping us navigate to schedule migration 
+                 * page.
+                 */
+                vm.continueToSchedule = function(){
+                    $rootRouter.navigate(["ScheduleMigration"]);
+                }
 
                 return vm;
               

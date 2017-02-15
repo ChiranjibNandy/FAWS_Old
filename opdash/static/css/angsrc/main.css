@@ -398,3 +398,7 @@ rscalendaritem > div.week.names > span {
 .rs-dropdown-menu .disabled{
     background: #c9c9c9;
 }
+
+.recommendationsMenu{
+    right: 0px;
+}
