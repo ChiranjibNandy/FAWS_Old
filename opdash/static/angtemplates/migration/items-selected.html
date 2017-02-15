@@ -1,6 +1,7 @@
 <div class="plain-panel" style="min-height: initial !important">
     <!--<div class="span-8">-->
-    <h4>Items Selected</h4>
+    <h4 ng-show="vm.showrec === 'false'">Items Selected</h4>
+    <h3 ng-show="vm.showrec === 'true'">Selected Resources <a ng-link="['MigrationResourceList']" class="rs-edit" title="Go to step 1 to choose resources to migrate"></a></h3>
     <hr>
     <div class="accordion" id="accordion2">
         <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}">

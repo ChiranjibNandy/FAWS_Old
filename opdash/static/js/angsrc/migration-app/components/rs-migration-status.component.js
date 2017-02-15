@@ -21,7 +21,7 @@
                  * @name migrationApp.controller:rsmigrationstatusCtrl
                  * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationstatus rsmigrationstatus} component
                  */
-                controller: ["httpwrapper", "datastoreservice", "$rootRouter", function(HttpWrapper, dataStoreService, $rootRouter) {
+                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", function(HttpWrapper, dataStoreService, $rootRouter, authservice) {
                     var vm = this;
 
                     /**
@@ -43,7 +43,6 @@
                     vm.scheduledDateTime = "17/01/2017 07:00PM";
 
                     vm.$routerOnActivate = function(next, previous) {
-                        console.log(previous);
                         if(previous && previous.urlPath.indexOf("confirm") > -1){
                             vm.message = "Migration Confirmed for 1/17/2017 7:00 PM";
                         } else{
@@ -53,17 +52,28 @@
 
                     // gets the list of all batches initiated by the current tenant
                     var getBatches = function() {
-                        var url = "/static/angassets/migration-status.json";
+                        //var url = "/static/angassets/migration-status.json";
+                        var tenant = authservice.getAuth().tenant_id;
+                        var url = "/api/server_status/" + tenant;
+
                         HttpWrapper.send(url,{"operation":'GET'})
                                 .then(function(response) {
                                     console.log("Batch: ", response);
-                                    vm.batches = response;
+                                    //vm.batches = response;
                                     //vm.batches = [];
-                                    if(vm.batches.length === 0){
-                                        $('#myModal').modal('show');
-                                    }
+                                    //if(vm.batches.length === 0){
+                                    //    $('#myModal').modal('show');
+                                    //}
                                 }, function(errorResponse) {
-                                    console.log("Error: ", errorResponse);
+                                    console.log("Dashboard Error: ", errorResponse);
+                                });
+
+                        var jobApiURL = "/api/job/job-ed80806b-6983-45be-8a6e-620b5b3c97ca";
+                        HttpWrapper.send(jobApiURL,{"operation":'GET'})
+                                .then(function(response) {
+                                    console.log("Job Details: ", response);
+                                }, function(errorResponse) {
+                                    console.log("Job Error: ", errorResponse);
                                 });
                     };
 
