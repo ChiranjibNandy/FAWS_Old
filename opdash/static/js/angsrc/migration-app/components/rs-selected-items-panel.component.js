@@ -18,6 +18,9 @@
     angular.module("migrationApp")
         .component("rsselecteditemspanel", {
             templateUrl: "/static/angtemplates/migration/items-selected.html",
+            bindings: {
+                showrec: "@"
+            },
             controllerAs: "vm",
             /**
              * @ngdoc controller

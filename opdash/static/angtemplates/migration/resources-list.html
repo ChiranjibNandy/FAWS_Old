@@ -1,3 +1,28 @@
+<style>
+.rs-custom-counter {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.rs-custom-counter li {
+    counter-increment: step-counter;
+    margin-bottom: 10px;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.rs-custom-counter li::before {
+    content: counter(step-counter);
+    margin-right: 5px;
+    font-size: 80%;
+    background-color: rgb(196, 0, 34);
+    color: white;
+    font-weight: bold;
+    padding: 5px 8px;
+    border-radius: 50px;
+}
+</style>
 <div class="rs-wrapper">
         <div class="migration-mgr rs-container ">
             <div class="rs-main ">
@@ -34,7 +59,7 @@
                             </div>
                         </rs-tabs>
                         <br>
-                        <rsselecteditemspanel></rsselecteditemspanel>
+                        <rsselecteditemspanel showrec="false"></rsselecteditemspanel>
                     </div>
                 </div>
             </div>
@@ -99,17 +124,18 @@
         <br>
         <div class="modal-body">
             <h2 class="rs-page-title">Welcome to the Rackspace Migration Manager!</h2>
-            <h3>On average, our customers save more than 20% by migrating from Rackspace Public Cloud to Managed AWS. All while keeping the fanatical support they love.</h3>
+            <!-- <h3>On average, our customers save more than 20% by migrating from Rackspace Public Cloud to Managed AWS. All while keeping the fanatical support they love.</h3> -->
             <br>
             <div class="rs-row">
                 <div class="span-6">
                     <h3>Migrate in just 4 easy steps:</h3>
-                    <ul>
+                    <ol class="rs-custom-counter">
                         <li>Choose resources to migrate</li>
                         <li>Get our recommendation and make modifications</li>
                         <li>Schedule your migration</li>
                         <li> Migrate</li>
-                    </ul>
+                    </ol>
+                    <br>
                     <b>Need more information?</b><br>
 
                     <a href="https://www.rackspace.com/en-us/managed-aws" target="_blank">Rackspace Managed AWS</a>

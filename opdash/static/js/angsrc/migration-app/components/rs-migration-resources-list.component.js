@@ -96,7 +96,8 @@
                         $scope.$broadcast("ItemsModified");
                     }
                 }
-
+                console.log("time stamp: "+Math.floor(new Date().getTime()/ 1000));
+                
                 /**
                  * @ngdoc method
                  * @name saveItems
@@ -105,6 +106,19 @@
                  * Save selected resources for further processing 
                  */
                 vm.saveItems = function() {
+                    vm.saveDetails={
+                        "timestmp":Math.floor(new Date().getTime()/ 1000), //(so we know when was it saved)
+                        "selected_resources": dataStoreService.getItems('server'),
+                        "recommendations":'',
+                        "scheduling-details":'',
+                        "step":"1"
+                    };
+                    console.log("saved details: "+vm.saveDetails);
+                    //HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj)
+                    //             .then(function(result){
+                    //                 console.log(result);
+                    //                 $rootRouter.navigate(["MigrationStatus"]);
+                    //             });
                     $('#save_for_later').modal('show');
                 };
 
