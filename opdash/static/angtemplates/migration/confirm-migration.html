@@ -26,108 +26,7 @@
                         <div class="clear"></div>
                         <div class="rs-row">
                             <div class="span-6">
-                                <div class="plain-panel">
-                                    <h3>Selected Resources <a ng-link="['MigrationResourceList']" class="rs-edit" title="Go to step 1 to choose resources to migrate"></a></h3>
-                                    <hr>
-                                    <div class="accordion" id="accordion2">
-                                        <div class="accordion-group" ng-class="{disabled:vm.selectedItems.servers.length == 0}">
-                                            <div class="accordion-heading ">
-                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#server-name">
-                                                    <b class=""> Servers ({{vm.selectedItems.servers.length}})  <i class="rs-caret"></i></b>
-                                                </a>
-                                            </div>
-                                            <div id="server-name" class="accordion-body collapse ">
-                                                <div class="accordion-inner ">
-                                                    <div class="selected-items" ng-repeat="server in vm.selectedItems.servers">
-                                                      <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> {{server.name}} </b> <i class="fa fa-arrow-right fa fw"></i>  US-East-1 - US-East-1a - t2 small
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-group" ng-class="{disabled:vm.selectedItems.files.length == 0}">
-                                            <div class="accordion-heading ">
-                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#file-name">
-                                                    <b class="">  Files ({{vm.selectedItems.files.length}}) <i class="rs-caret"></i></b>
-                                                </a>
-                                            </div>
-                                            <div id="file-name" class="accordion-body collapse">
-                                                <div class="accordion-inner">
-                                                    <div class="selected-items" ng-repeat="file in vm.selectedItems.files">
-                                                       <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  {{file.name}}</b>
-                                                    </div>             
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-group" ng-class="{disabled:vm.selectedItems.blocks.length == 0}">
-                                            <div class="accordion-heading ">
-                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#block-name">
-                                                    <b class=""> Blocks ({{vm.selectedItems.blocks.length}}) <i class="rs-caret"></i></b>
-                                                </a>
-                                            </div>
-                                            <div id="block-name" class="accordion-body collapse">
-                                                <div class="accordion-inner">
-                                                    <div class="selected-items" ng-repeat="block in vm.selectedItems.blocks">
-                                                        <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  {{block.name}} </b>
-                                                    </div>                        
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-group" ng-class="{disabled:vm.selectedItems.loadBalancers.length == 0}">
-                                            <div class="accordion-heading ">
-                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#LB-name">
-                                                    <b class="">Load Balancers ({{vm.selectedItems.loadBalancers.length}}) <i class="rs-caret"></i></b>
-                                                </a>
-                                            </div>
-                                            <div id="LB-name" class="accordion-body collapse">
-                                                <div class="accordion-inner">
-                                                    <div class="selected-items" ng-repeat="loadBalancer in vm.selectedItems.loadBalancers">
-                                                        <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> {{loadBalancer.name}} </b>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-group" ng-class="{disabled:vm.selectedItems.cdns.length == 0}">
-                                            <div class="accordion-heading ">
-                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#cdn-name">
-                                                    <b class="">CDN ({{vm.selectedItems.cdns.length}}) <i class="rs-caret"></i></b>
-                                                </a>
-                                            </div>
-                                            <div id="cdn-name" class="accordion-body collapse">
-                                                <div class="accordion-inner">
-                                                    <div class="selected-items" ng-repeat="cdn in vm.selectedItems.cdns">
-                                                        <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  {{cdn.name}}</b>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-group" ng-class="{disabled:vm.selectedItems.dnss.length == 0}">
-                                            <div class="accordion-heading ">
-                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#dns-name">
-                                                    <b class="">DNS ({{vm.selectedItems.dnss.length}}) <!-- <i class="rs-caret"></i> --></b>
-                                                </a>
-                                            </div>
-                                            <div id="dns-name" class="accordion-body collapse">
-                                                <div class="accordion-inner">
-                       
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-group" ng-class="{disabled:vm.selectedItems.databases.length == 0}">
-                                            <div class="accordion-heading ">
-                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#db-name">
-                                                    <b class="">Databases ({{vm.selectedItems.databases.length}}) <i class="rs-caret"></i></b>
-                                                </a>
-                                            </div>
-                                            <div id="db-name" class="accordion-body collapse">
-                                                <div class="accordion-inner">
-                                                    <div class="selected-items" ng-repeat="database in vm.selectedItems.databases">
-                                                        <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  {{database.name}}</b>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>    
-                                </div>
+                                <rsselecteditemspanel showrec="true"></rsselecteditemspanel>
                             </div>
                             <div class="span-3">
                                 <div class="plain-panel rs-center">
@@ -146,15 +45,19 @@
                             </div>
                         </div>
                         <br>
-                        <div class="rs-pull-right">
-                            <a class="rs-btn " ng-link="['ScheduleMigration']">Back</a>
-                            <a class="rs-btn" href="">Save for later</a>
-                            <a class="rs-btn " href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>
-                            <!-- conditional - show only if there is already migrations made -->
-                            <a class="rs-btn" ng-link="['MigrationStatus']">Dashboard</a>
-                            <!-- ****** -->
-                            <a class="rs-btn rs-btn-primary " ng-click="vm.migrate() ">Confirm Migration</a>
+                        <div class="rs-row">
+                            <div class="rs-pull-right">
+                                <a class="rs-btn " ng-link="['ScheduleMigration']">Back</a>
+                                <a class="rs-btn" href="">Save for later</a>
+                                <a class="rs-btn " href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>
+                                <!-- conditional - show only if there is already migrations made -->
+                                <a class="rs-btn" ng-link="['MigrationStatus']">Dashboard</a>
+                                <!-- ****** -->
+                                <a class="rs-btn rs-btn-primary " ng-click="vm.migrate()" ng-show="!vm.migrating" ng-class="{'disabled': vm.errorInMigration}">Confirm Migration</a>
+                                <a class="rs-btn rs-btn-primary disabled" ng-show="vm.migrating">Processing...</a>
+                            </div>
                         </div>
+                        <div style="color: red; text-align: right;" ng-show="vm.errorInMigration">Error while trying to migrate</div>
                         <br>
                     </div>
                 </div>

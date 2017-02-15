@@ -8,8 +8,25 @@
      * This service acts as a facade which handles calling the specific service implementation for each resoource type (server, network etc).
      */
     angular.module("migrationApp")
-        .service("migrationitemdataservice", ["serverservice", "networkservice", "contactservice", "httpwrapper",'$filter',"authservice", function (serverService, networkService, contactService, HttpWrapper, $filter,authservice) {
+        .service("migrationitemdataservice", ["serverservice", "networkservice", "contactservice", "httpwrapper",'$filter',"authservice", "datastoreservice", function (serverService, networkService, contactService, HttpWrapper, $filter,authservice, dataStoreService) {
             var self = this;
+
+            var prepareNames = function() {
+                var servers = dataStoreService.selectedItems.server;
+                var names = {};
+                names.instances = {};
+                names.networks = {};
+
+                angular.forEach(servers, function(item) {
+                    names.instances[item.id] = item.name;
+                    var networks = item.details.networks;
+                    angular.forEach(networks, function(item) {
+                        names.networks[item.id] = item.name;
+                    });
+                });
+
+                return names;
+            };
 
             /**
              * @ngdoc method
@@ -91,10 +108,15 @@
              * This service method returns an _object_. This object has to be sent while making an HTTP POST request to migrate the resource.
              */
             this.prepareRequest = function(equipments, batchName){
+                console.log(dataStoreService.selectedTime.time);
                 var instances = [],networks = [];
                 var auth = authservice.getAuth();
+                var names = prepareNames();
                 var reqObj = {
                                 batch_name: batchName,
+                                //start: dataStoreService.selectedTime.time,
+                                start: parseInt((new Date().getTime()/1000), 10),
+                                names: names,
                                 source: {
                                     cloud: "rackspace",
                                     tenantid: "1024814",

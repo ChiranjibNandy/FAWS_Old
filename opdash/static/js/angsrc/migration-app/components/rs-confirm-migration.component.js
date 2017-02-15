@@ -30,7 +30,7 @@
                 
                 vm.$onInit = function() {
                     $('title')[0].innerHTML =  "Confirm Migration - Rackspace Cloud Migration";
-
+                    console.log(dataStoreService.selectedDate);
                     var auth = authservice.getAuth();
                     vm.tenant_id = auth.tenant_id;
                     vm.tenant_name = auth.rackUsername;
@@ -48,11 +48,13 @@
                     vm.destination = "AWS EC2";
                     vm.batchName = dataStoreService.getScheduleMigration().migrationName;
                     vm.tempBatchName = vm.batchName;
-                    vm.scheduledDateTime = "1/11/2017";
+                    var dt = new Date();
+                    vm.scheduledDateTime = (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
                     vm.cost = 431.85;
+                    vm.migrating = false;
+                    vm.errorInMigration = false;
 
                     vm.allItems = [];
-                    vm.disable = false;
                     vm.types = ['server','network'];
                     // var dateObject = dataStoreService.returnDate();
                     // var date = dateObject.date !== ''?moment(dateObject.date).format("MMM Do YY"):moment().format("MMM Do YY");
@@ -78,21 +80,22 @@
                 vm.migrate = function(){
                     var equipments = [];
                     var requestObj;
-                    vm.disable = true;
+                    vm.migrating = true;
                     vm.allItems.map(function(item){
                         equipments.push({equipmentType:item.type,id: item.id,type: "t2.micro",region: "US-East-1"});
                     });
                     requestObj = ds.prepareRequest(equipments, vm.batchName);
-
                     console.log(requestObj);
-
-                    $rootRouter.navigate(["MigrationStatus"]);
-                    
-                    // HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj)
-                    //             .then(function(result){
-                    //                 console.log(result);
-                    //                 $rootRouter.navigate(["MigrationStatus"]);
-                    //             });
+                    //$rootRouter.navigate(["MigrationStatus"]);
+                    HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj)
+                                .then(function(result){
+                                    console.log("Migration Response: ", result);
+                                    $rootRouter.navigate(["MigrationStatus"]);
+                                }, function(error) {
+                                    console.log("Error: Could not trigger migration", error);
+                                    vm.migrating = false;
+                                    vm.errorInMigration = true;
+                                });
                 };
 
                 vm.showMigrationNameDialog = function() {
