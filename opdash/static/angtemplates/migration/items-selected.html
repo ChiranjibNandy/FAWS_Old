@@ -1,4 +1,4 @@
-<div class="plain-panel">
+<div class="plain-panel" style="min-height: initial !important">
     <!--<div class="span-8">-->
     <h4>Items Selected</h4>
     <hr>
@@ -11,9 +11,11 @@
             </div>
             <div id="server-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
                 <div class="selected-items" ng-repeat="item in vm.selectedItems.server">
-                  <a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'server')"><i class="fa fa-times"></i></a>  <b title="({{item.details.networks.length}}) Networks: {{vm.networksToServer(item).toString()}}"> {{item.name}} </b> 
+                  <a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'server')"><i class="fa fa-times"></i></a>  <b title="({{item.details.networks.length}}) Networks: {{vm.networksToServer(item).toString()}}"> {{item.name}} </b>
+                  <i class="fa fa-arrow-right fa fw" ng-if="vm.showrec == 'true'"></i><span ng-if="vm.showrec == 'true'"> {{item.mappings[0].region}} - {{item.mappings[0].zone || 'US-East-1a 2'}} - {{item.mappings[0].instance_type}} </span>
                 </div>
-                <!--<div class="accordion-inner ">
+                <!--<div class="accordion-inner ">                displayRecommendations: "<",
+
                     <ul class="inline">
                         <li ng-repeat="item in vm.selectedItems.server">{{item.name}}</li>
                     </ul>
