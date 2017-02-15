@@ -627,26 +627,7 @@
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
     </div>
-    
-    <div id="name_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-            <h3>What would you like to name your migration?</h3>
-            <form class="">
-                <div class="rs-control-group">
-                    <p class="rs-control-label">Name your migration and click '<b>Save and Continue</b>' to go to step 2</p>
-                    <div class="rs-controls">
-                        <input type="text" placeholder="Migration-01Feb2017-0456pm">
-                    </div>
-                </div>                
-            </form>            
-        </div>
-        <div class="modal-footer">
-            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Back</button>
-            <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="step2.html">Save and Continue</a>
-        </div>
-    </div>
-
+    <!-- cancel migration modal -->
     <div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
@@ -671,15 +652,15 @@
         </div>
         <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="https://mycloud.rackspace.com">Submit</a>
+            <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="step5.html">Submit</a>
         </div>
     </div>
-
+    <!-- intro modal -->
     <div class="modal hide fade details" id="intro_modal">
         <br>
         <div class="modal-body">
             <h2 class="rs-page-title">Welcome to the Rackspace Migration Manager!</h2>
-            <h3>On average, our customers save more than 20% by migrating from Rackspace Public Cloud to Managed AWS. All while keeping the fanatical support they love.</h3>
+            <!-- <h3>On average, our customers save more than 20% by migrating from Rackspace Public Cloud to Managed AWS. All while keeping the fanatical support they love.</h3> -->
             <br>
             <div class="rs-row">
                 <div class="span-6">

@@ -236,7 +236,7 @@
                         <div class="white-panel">
                             <h3>Projected Pricing</h3>
                             <p>
-                                <big><b>$431.81</b>/mo</big>
+                                <big><b>$420</b>/mo</big>
                                 <br>
                                 <a href="#pricing-details_modal" role="button" data-toggle="modal" ><small>(See Details)</small></a>
                             </p>
@@ -351,6 +351,12 @@
                                                 <span class="rs-table-sort-indicator"></span>
                                             </a>
                                         </th>
+                                        <th>
+                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                <span class="rs-table-sort-text">Cost</span>
+                                                <span class="rs-table-sort-indicator"></span>
+                                            </a>
+                                        </th>
                                         <th class="rs-table-cog"></th>
                                     </thead>
                                     <tbody>
@@ -362,6 +368,7 @@
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
+                                            <td class="rs-table-text">$2</td>
                                             <td class="rs-table-cog">
                                                 <a href="#modify_modal" role="button" data-toggle="modal"><i class="rs-cog"></i></a>
                                             </td>
@@ -372,6 +379,7 @@
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
+                                            <td class="rs-table-text">$5</td>
                                             <td class="rs-table-cog">
                                                 <a href="#modify_modal" role="button" data-toggle="modal"><i class="rs-cog"></i></a>
                                             </td>
@@ -382,6 +390,7 @@
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
+                                            <td class="rs-table-text">$7</td>
                                             <td class="rs-table-cog">
                                                 <a href="#modify_modal" role="button" data-toggle="modal"><i class="rs-cog"></i></a>
                                             </td>
@@ -392,6 +401,7 @@
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
+                                            <td class="rs-table-text">$2</td>
                                             <td class="rs-table-cog">
                                                 <a href="#modify_modal" role="button" data-toggle="modal"><i class="rs-cog"></i></a>
                                             </td>
@@ -402,6 +412,7 @@
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
+                                            <td class="rs-table-text">$2</td>
                                             <td class="rs-table-cog">
                                                 <a href="#modify_modal" role="button" data-toggle="modal"><i class="rs-cog"></i></a>
                                             </td>
@@ -412,6 +423,7 @@
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
+                                            <td class="rs-table-text">$2</td>
                                             <td class="rs-table-cog">
                                                 <a href="#modify_modal" role="button" data-toggle="modal"><i class="rs-cog"></i></a>
                                             </td>
@@ -702,7 +714,7 @@
         </div>
         <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="https://mycloud.rackspace.com">Submit</a>
+            <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="step5.html">Submit</a>
         </div>
     </div>
     <!-- SEE PRICING DETAILS MODAL -->
@@ -712,7 +724,7 @@
             
             <div class="rs-detail-section">
                 <div class="rs-detail-section-header">
-                    <div class="rs-detail-section-title">Select Option</div>
+                    <div class="rs-detail-section-title">Select FAWS Account Level</div>
                 </div>
                 <div class="rs-detail-section-body">
                     <div class="rs-embedded-list-table-wrapper rs-embedded-small">
@@ -728,6 +740,8 @@
                                         </a>
                                     </th>
                                     <th>Description</th>
+                                    <th>Rackspace</th>
+                                    <th>AWS</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -740,6 +754,8 @@
                                     </td>
                                     <td class="rs-table-text"><strong>Navigator</strong></td>
                                     <td class="rs-table-text">Tooling and Automation + Certified AWS experts when you need them.</td>
+                                    <td>$400</td>
+                                    <td>$20</td>
                                 </tr>
                                 <tr>
                                     <td class="rs-table-radio">
@@ -750,6 +766,8 @@
                                     </td>
                                     <td class="rs-table-text"><strong>Aviator</strong></td>
                                     <td class="rs-table-text">Our certified experts will manage your AWS 24x7.</td>
+                                    <td>$200</td>
+                                    <td>$20</td>
                                 </tr>
                                 <tr>
                                     <td class="rs-table-radio">
@@ -760,6 +778,8 @@
                                     </td>
                                     <td class="rs-table-text"><strong>Simplified AWS</strong></td>
                                     <td class="rs-table-text">Description of sAWS goes here</td>
+                                    <td>$100</td>
+                                    <td>$20</td>
                                 </tr>                                    
                             </tbody>
                         </table>
@@ -770,7 +790,7 @@
         </div>
         <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="https://mycloud.rackspace.com">Submit</a>
+            <a class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true">Submit</a>
         </div>
     </div>
     <!-- PRECHECK MODAL -->
