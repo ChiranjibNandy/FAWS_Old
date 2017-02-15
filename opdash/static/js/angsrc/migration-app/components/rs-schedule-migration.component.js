@@ -101,6 +101,10 @@
             };
              dataStoreService.setScheduleMigration(vm.selectedTime);
             vm.editorEnabled = false;
+            vm.showTimeForm = false;
+            vm.showMigrate = false;
+           vm.isDisableDate =false;
+           vm.isModeSave= true;
     });
          
                     $scope.$on("DateChanged", function(event, item){
@@ -180,7 +184,24 @@
                 vm.migrationName  = vm.editedMigrationName;
                 vm.disableEditor();
                 };
+                
+               vm.showTime = function(){
+                   vm.showTimeForm =  !vm.showTimeForm;
+               };
+               vm.showMigrateNow = function(){
+                  vm.showMigrate = !vm.showMigrate;
+               }
+
+               vm.onSaveTime = function(){
+               vm.isDisableDate =true;
+                vm.isModeSave= false;
+               }
+         vm.onEditTime = function(){
+                vm.isModeSave= true;
+                vm.isDisableDate =false;
+               }
                 return vm;
             }
+
         ]}); // end of component definition
 })();

@@ -35,12 +35,18 @@
                     <rsinteractiveheader pagenum="2"></rsinteractiveheader>
                     <!-- End Stepper -->
                     <hr>
-                    <div class="rs-inner">
-                        <h2 >User Namegoeshere ( #{{vm.tenant_id}} )</h2>
-                        <form>
+                      <div class="rs-inner">
+                        <!-- conditional - show only if there is already migrations made -->
+                        <div class="rs-pull-right pricing-buttons">
+                            <a class="rs-btn" ng-click="vm.continue()" href="step5.html">Dashboard</a>
+                        </div>
+                        <!-- ****** -->
+                        <h2>User Namegoeshere ( #{{vm.tenant_id}} )</h2>
+                        <div class="migr-name">
+                            <form>
                          <h3>
                              
-                             <div class="rs-control-group">
+                             <div class="rs-control-group" style="width: 250%;">
                                     <div class="rs-controls" style="width: 40%;float: left;" ng-hide="vm.editorEnabled">{{vm.migrationName}} </div>
                                     <div class="rs-controls" style="width: 50%;">
                                         <a  role="button" ng-click ="vm.editMigrationName();" data-toggle="modal" class="rs-edit" title="click to edit migration name" ng-hide="vm.editorEnabled"></a>
@@ -49,75 +55,85 @@
                             </h3>
                         <div ng-show="vm.editorEnabled">
                           <input ng-model="vm.editedMigrationName" >
-                           <button class="rs-primary" role="button" ng-click="vm.save()">Save</button>
+                           <button    role="button" ng-click="vm.save()">Save</button>
                              or
-                           <button role="button" ng-click="vm.disableEditor()">cancel</button>.
+                           <button    role="button" ng-click="vm.disableEditor()">cancel</button>.
                            </div>
-                        <hr>
                         </form>
-                         
-                        <div class="rs-row" style="width: 110%" >
-                        
-                        
-                            <form class="rs-form-horizontal span-6">
-
-                                <div class="rs-control-group">
-                                    <label class="rs-control-label">Migrate Now </label>
-                                    <div class="rs-controls">
-                                        <input type="checkbox" name="" ng-checked="true" >
+                        </div>
+                        <div class="clear"></div>
+                        <hr>
+                        <div class="rs-row">
+                            <div class="span-12">
+                                <!-- SHOW ALERT AFTER CHOICE MADE -->
+                                <div class="alert alert-success animated fadeIn" id="alert" ng-show="vm.showMigrate">
+                                    <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
+                                    <h3>Migration Summary: {{vm.selectedDate}}</h3>
+                                </div> 
+                                <!-- SHOW ALERT AFTER CHOICE MADE END -->
+                                <div class="rs-row">
+                                    <div class="span-4">
+                                        <div class="rs-control-group">
+                                            <div class="rs-controls">
+                                                <label class="rs-radio">
+                                                <input type="checkbox" name="" ng-click="vm.showMigrateNow()">
+                                                <strong>Migrate Now</strong><br>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="rs-control-group">
+                                            <div class="rs-controls">
+                                                <label class="rs-radio">
+                                                <input type="checkbox" ng-modal ="showTime" name="" ng-click="vm.showTime(showTime)" >
+                                                <strong>Schedule Time</strong><br>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <!--<div class="rs-control-group">
-                                    <label class="rs-control-label">Name Your Migration</label>
-                                    <div class="rs-controls">
-                                        <input type="text" ng-model="vm.migrationName" value={{vm.migrationName}} disabled="true" style="width: 256px;"/>
-                                    </div>
-                                </div>-->
-                                <div class="rs-control-group">
-                                    <label class="rs-control-label">Time Zone</label>
-                                    <div class="rs-controls">
-                                        <select name="timezone" ng-change="vm.timezoneChange()"  ng-options="time for time in vm.timeZoneItems" ng-model="vm.timezone" class="ng-pristine ng-valid ng-not-empty ng-touched span2" >
+                          
+                                    <div class="span-8 animated fadeIn"  id="scheduleform" style="min-height: 200px;">
+                                        <form class="rs-form-horizontal rs-form-small" ng-show="vm.showTimeForm">
+                                            <div class="rs-control-group">
+                                                <label class="rs-control-label">Choose Date</label>
+                                                <div class="rs-controls">
+                                                    <input id="field" type="date"  ng-model="vm.date" ng-disabled="vm.isDisableDate" value={{vm.date}}>
+                                                </div>
+                                            </div>
+                                            <div class="rs-control-group">
+                                                <label class="rs-control-label">Time Zone</label>
+                                                <div class="rs-controls">
+                                                   <select name="timezone" ng-change="vm.timezoneChange()"  ng-disabled="vm.isDisableDate" ng-options="time for time in vm.timeZoneItems" ng-model="vm.timezone" class="ng-pristine ng-valid ng-not-empty ng-touched span2" >
                                              <option  value="{{vm.timezone}}">{{vm.timezone}}</option>
                                         </select>
-                                    </div>
-                                </div>
-                                <div class="rs-control-group">
-                                    <label class="rs-control-label">Time </label>
-                                    <div class="rs-controls">
-                                        <select name="time" ng-change="vm.timeChange()"  ng-options="time for time in vm.timeItems" ng-model="vm.time" class="ng-pristine ng-untouched ng-valid ng-not-empty span2" >
+                                                </div>  
+                                            </div> 
+                                            <div class="rs-control-group">
+                                                <label class="rs-control-label">Time</label>
+                                                <div class="rs-controls">
+                                                    <select name="time" ng-change="vm.timeChange()"  ng-disabled="vm.isDisableDate" ng-options="time for time in vm.timeItems" ng-model="vm.time" class="ng-pristine ng-untouched ng-valid ng-not-empty span2" >
                                           <option  value="{{vm.time}}">{{vm.time}}</option>
                                         </select>
+                                                </div>  
+                                            </div>  
+                                            <div class="rs-control-group">                                        
+                                                <div class="rs-controls">
+                                                    <div class="rs-row">
+                                                        <a href="#" ng-click="vm.onSaveTime()" class="rs-btn rs-btn-primary span-3" ng-show="vm.isModeSave">Save</a>
+                                                       <!--  <button id="savebtn" class="rs-btn span-2 rs-btn-primary">Save</button> -->
+                                                    </div>
+                                                    <div class="rs-row">
+                                                        <a href="#" ng-click="vm.onEditTime()" class="rs-btn rs-btn-primary span-3" ng-show="!vm.isModeSave">Edit</a>
+                                                       <!--  <button id="savebtn" class="rs-btn span-2 rs-btn-primary">Save</button> -->
+                                                    </div>
+                                                </div>  
+                                            </div>                                     
+                                        </form>   
                                     </div>
-                                </div>  
-                                <div class="rs-control-group">
-                                    <label class="rs-control-label">Date </label>
-                                    <div class="rs-controls">
-                                        <input type="date" class="datepicker"  ng-model="vm.date" value={{vm.date}}>
-                                    </div>
-                                </div>
-                                <br>   
-                                <br>
-                            <hr>
-                            <div class="white-panel"  style="border: 1px solid #ccc">
-                                    <h3 style="color: #c40022;">Migration Schedule Summary:</h3>
-                                    <big>{{vm.selectedDate}}</big>  
-                                </div>
-                            <!--<h4>Migration schedule summary:</h4>
-                            <p>{{vm.selectedDate}}</p>                              -->
-                            </form>
-                            
-                            <div  class="span-4">
-                            <div >
-                                <div class="rs-row" >
-                                <div class="wrapp disabled" >
-                                    <flex-calendar  options="options" events="events"></flex-calendar>
-                                </div>
-                            </div>
+                                </div>         
+                            </div>             
                         </div>
-                        </div>
-                        
-                
-                    </div>
+                        <br>
+                        <br><br>
                     <br>
                       
                 </div>
