@@ -27,7 +27,6 @@
                 $('title')[0].innerHTML =  "Recommendations - Rackspace Cloud Migration";
                 vm.migrationName = datastoreservice.getScheduleMigration().migrationName;
                 vm.dataServer = datastoreservice.getItems('server').length;
-                vm.dataNetwork = datastoreservice.getItems('network').length;
                 vm.editName = false;
 
                 /**

@@ -10,34 +10,17 @@
           <table class="rs-list-table" ng-show="!vm.noData">
               <thead>
                   <tr>
-                      <th class="rs-table-status"></th>
+                      <th ng-show="vm.type === 'server'" class="rs-table-status"></th>
                       <th ng-repeat="item in vm.labels">
                         <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
                             <span class="rs-table-sort-text">{{item.text}} </span>
                             <span class="rs-table-sort-indicator"></span>
                         </a>
                       </th>
-                      <th></th>
+                      <th ng-show="vm.type === 'server'"></th>
                   </tr>
               </thead>
-              <tbody>
-                  <tr ng-repeat="item in vm.data | filter: vm.filtervalue | limitTo : vm.pageSize : (vm.currentPage-1)*vm.pageSize">
-                    <td class="rs-table-status"
-                            ng-class="{'rs-table-status-ok': item.status=='ACTIVE', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
-                    </td>
-                    <td class="rs-table-link">
-                        <a href="{{'#resource_info' + item.id}}" role="button" data-toggle="modal">{{item.name}}</a>
-                    </td>
-                    <!--<td class="rs-table-link"><a href="#" ng-link="['EquipmentDetails', {type: vm.type, id: item.id}]">{{item.name}}</a></td>-->
-                    <td class="rs-table-text">{{item.ip_address}}</td>
-                    <td>{{item.selectedMapping.region}}</td>
-                    <td>{{item.selectedMapping.zone || 'US-East-1a 2'}}</td>
-                    <td>{{item.selectedMapping.instance_type}}</td>
-                    <td class="rs-table-cog">
-                        <a href="{{'#modify_modal'+ item.id}}" role="button" data-toggle="modal"><i class="rs-cog"></i></a>
-                    </td>
-                  </tr>
-              </tbody>
+              <tbody static-include="'/static/angtemplates/migration/'+vm.type+'-recommendation-template.html'"></tbody>
           </table>
       </div>
   </div>
@@ -171,18 +154,16 @@
                         <table class="rs-list-table rs-embedded-list-table">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Id</th>
-                                    <th>IPv4</th>
-                                    <th>IPv6</th>
+                                    <th><b>Name</b></th>
+                                    <th><b>ID</b></th>
+                                    <th><b>Status</b></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="network in item.details.networks">
                                     <td class="rs-table-text">{{network.name}} <span class="rs-quiet">(Internet)</span></td>
                                     <td class="rs-table-text">{{network.id}}</td>
-                                    <td class="rs-table-text">{{network.ipv4 || none}}</td>
-                                    <td class="rs-table-text"><span class="rs-quiet">{{network.ipv6 || none}}</span></td>
+                                    <td><span class="rs-status rs-status-ok ng-binding"> {{network.status}} </span></td>
                                 </tr>
                             </tbody>
                         </table>

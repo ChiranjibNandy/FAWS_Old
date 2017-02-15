@@ -1,45 +1,57 @@
 
-                    
-        <div class="rs-inner">
-                        <div class="info-panel">
-                            <h3>Current Pricing</h3>
-                            <p>
-                                Billing Period:
-                                <br>
-                                <em>12/12/2016 to 1/11/2017</em>
-                                <br>
-                                <big><b>${{vm.currentPricing}}</b>/mo</big>
-                                <br>
-                                <a href=""><small>(See Details)</small></a>
-                            </p>
-                        </div>
-                        <div class="white-panel">
-                            <h3>Projected Pricing</h3>
-                            <p>
-                                <big><b>${{vm.totalCost}}</b>/mo</big>
-                                <br>
-                                <a href=""><small>(See Details)</small></a>
-                            </p>
-                        </div>
-                        <br>
-                        
-                        <div class="rs-row pricing-buttons">
-                            <button class="rs-btn span-12" ng-click="vm.saveItems()">Save for later</button>
-                        </div>
-                        
-                        <div class="rs-row pricing-buttons">
-                            <a class="rs-btn span-12" href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>
-                        </div>
-                        <div class="rs-row">
-                            <a class="rs-btn span-6" ng-link="['Tenant']"  ng-click="vm.back()">Back</a>
-                            <a class="rs-btn rs-btn-primary span-6" ng-click="vm.continue()" >Continue</a>
-                        </div>
-                        <br>
-                    </div>
-                </div>
+    <div class="rs-inner">
+        <div class="info-panel">
+            <h3>Current Pricing</h3>
+            <p>
+                Billing Period:
+                <br>
+                <em>12/12/2016 to 1/11/2017</em>
+                <br>
+                <big><b>${{vm.currentPricing}}</b>/mo</big>
+                <br>
+                <a href=""><small>(See Details)</small></a>
+            </p>
+        </div>
+        <div class="white-panel">
+            <h3>Projected Pricing</h3>
+            <p>
+                <big><b>${{vm.totalCost}}</b>/mo</big>
+                <br>
+                <a href=""><small>(See Details)</small></a>
+            </p>
+        </div>
+        <br>
         
+        <div class="rs-row pricing-buttons">
+            <button class="rs-btn span-12" ng-click="vm.saveItems()">Save for later</button>
+        </div>
         
-        
-        
-        
-       
+        <div class="rs-row pricing-buttons">
+            <a class="rs-btn span-12" href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>
+        </div>
+        <div class="rs-row">
+            <a class="rs-btn span-6" ng-link="['Tenant']"  ng-click="vm.back()">Back</a>
+            <a class="rs-btn rs-btn-primary span-6" ng-click="vm.continue()" >Continue</a>
+        </div>
+        <br>
+    </div>
+</div>  
+ <!-- PRECHECK MODAL -->
+<div id="precheck_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <h3 class="rs-page-title"><i class="fa fa-warning fa-fw"></i> Uh oh! There are issues...</h3>
+        <br>
+        <ul>
+            <li>Issue 1: There are incompatible configurations.</li>
+            <li>Issue 2: Dependant files are missing.</li>
+            <li>Issue 3: Everything has gone haywire!</li>
+        </ul>
+        <p><strong>I really would fix this if I were you!</strong></p>        
+    </div>
+    <div class="modal-footer">
+        <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Go Back</button>
+        <a class="rs-btn rs-btn-primary" ng-click="vm.continueToSchedule()" >Continue</a>
+    </div>
+</div>
+<!--modals End -->
