@@ -82,10 +82,10 @@
                     vm.date =new Date();
                     vm.finalDateForUnixTime = vm.date.toDateString()+ " "+ vm.time +" "+ vm.timezone;
                      vm.selectedDate =  vm.finalDateForUnixTime;
-                    console.log(vm.finalDateForUnixTime);
+                    // console.log(vm.finalDateForUnixTime);
                    //console.log(new Date(vm.finalDateForUnixTime));
                     vm.unixTime = Math.floor(new Date().getTime()/ 1000);
-                     console.log(new Date(vm.finalDateForUnixTime));
+                    //  console.log(new Date(vm.finalDateForUnixTime));
                     dataStoreService.storeDate('time',vm.time);
                     dataStoreService.storeDate('timezone',vm.timezone);
                     var d = new Date();
@@ -149,7 +149,7 @@
                  * Continue to next step: **Confirm Migration**
                  */
                 vm.continue = function() {
-                    console.log(vm.selectedTime);
+                    // console.log(vm.selectedTime);
                     $rootRouter.navigate(["ConfirmMigration"]);
                 };
  /**

@@ -63,7 +63,7 @@
                  */
                 vm.continue = function() {     
                     vm.selectedTime = dataStoreService.getScheduleMigration();
-                    console.log(vm.selectedTime);
+                    // console.log(vm.selectedTime);
                     dataStoreService.getItems(vm.selecteditem);
                     if(vm.page==="resources"){
                         if(vm.selecteditem.length>0){
@@ -75,7 +75,8 @@
                         } 
                     } 
                     else if(vm.page==="recommendation"){ 
-                        $('#precheck_modal').modal('show');
+                        // $('#precheck_modal').modal('show');
+                        $rootRouter.navigate(["ScheduleMigration"]);
                     }
                     else if(vm.page==="scheduleMigration"){
                         dataStoreService.setScheduleMigration(vm.selectedTime);  
