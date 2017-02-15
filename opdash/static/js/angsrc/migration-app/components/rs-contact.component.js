@@ -33,7 +33,7 @@
                     migrationItemDataService.getDetailedList('contactNumbers')
                         .then(function (response) {
                             vm.contactNumbers = response;
-                            console.log(response);
+                            // console.log(response);
                         });
                  }
 

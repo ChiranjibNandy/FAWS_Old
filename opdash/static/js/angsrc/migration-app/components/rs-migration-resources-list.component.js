@@ -54,7 +54,7 @@
                 }
 
                 vm.numOfResources = function(type, itemLen) {
-                    console.log("emit called: "+itemLen);
+                    // console.log("emit called: "+itemLen);
                     vm.numOfItems[type] = itemLen;
                     //vm.ServerTitle = 'Servers' + '(' + vm.numOfItems['server'] + ')';
                 };
@@ -84,7 +84,7 @@
                  */
 
                 $scope.$on("ItemRemoved", function(event, item){
-                    console.log("broadcast invoked");
+                    // console.log("broadcast invoked");
                     $scope.$broadcast("ItemRemovedForChild", item); // broadcast event to all child components
                 });
 
@@ -96,7 +96,7 @@
                         $scope.$broadcast("ItemsModified");
                     }
                 }
-                console.log("time stamp: "+Math.floor(new Date().getTime()/ 1000));
+                // console.log("time stamp: "+Math.floor(new Date().getTime()/ 1000));
                 
                 /**
                  * @ngdoc method
