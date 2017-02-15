@@ -17,6 +17,8 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/migration-mgr.css" rel="stylesheet">
+    <!-- datepicker -->
+    <link rel="stylesheet" type="text/css" href="material-datepicker/css/material.datepicker.css">
 </head>
 
 <body>
@@ -229,34 +231,31 @@
                                 <br>
                                 <em>12/12/2016 to 1/11/2017</em>
                                 <br>
-                                <big><b>$485</b></big>
+                                <big><b>$485</b>/mo</big>
                                 <br>
                                 <a href=""><small>(See Details)</small></a>
                             </p>
                         </div>
                         <div class="white-panel">
-                            <h3>New Pricing</h3>
+                            <h3>Projected Pricing</h3>
                             <p>
-                                <big><b>$431.81</b></big>
+                                <big><b>$431.81</b>/mo</big>
                                 <br>
                                 <a href=""><small>(See Details)</small></a>
                             </p>
                         </div>
                         <br>
-                        <div class="rs-row pricing-buttons">
-                            <a class="rs-btn span-5" ng-link="['Tenant']" href="step2.html">Back</a>
-                            <a class="rs-btn rs-btn-primary span-7" ng-click="vm.continue()" href="step4.html">Continue</a>
-                        </div>
+                        
                         <div class="rs-row pricing-buttons">
                             <button class="rs-btn span-12" ng-click="vm.saveItems()">Save for later</button>
                         </div>
-                        <!-- conditional - show only if there is already migrations made -->
+                        
                         <div class="rs-row pricing-buttons">
-                            <a class="rs-btn span-12" ng-click="vm.continue()" href="step5.html">Dashboard</a>
-                        </div>
-                        <!-- ****** -->
-                        <div class="rs-row">
                             <a class="rs-btn span-12" href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>
+                        </div>
+                        <div class="rs-row">
+                            <a class="rs-btn span-6" ng-link="['Tenant']" href="step2.html">Back</a>
+                            <a class="rs-btn rs-btn-primary span-6" ng-click="vm.continue()" href="step4.html">Continue</a>
                         </div>
                         <br>
                     </div>
@@ -301,6 +300,11 @@
                     <!-- End Stepper -->
                     <hr>
                     <div class="rs-inner">
+                        <!-- conditional - show only if there is already migrations made -->
+                        <div class="rs-pull-right pricing-buttons">
+                            <a class="rs-btn" ng-click="vm.continue()" href="step5.html">Dashboard</a>
+                        </div>
+                        <!-- ****** -->
                         <h2>User Namegoeshere (#1024814)</h2>
                         <div class="migr-name">
                             <h3>Migration-01Feb2017-0456pm</h3><span class="edit rs-edit"></span>
@@ -310,171 +314,76 @@
                         <hr>
                         <div class="rs-row">
                             <div class="span-12">
-                                
-                                <h4 class="rs-checkbox">
-                                    <input type="checkbox">
-                                    Migrate Now
-                                </h4>
-                                <p>Or, choose date and time below</p>
-                                <!-- <select name="timezone" ng-change="vm.timezoneChange()" ng-model="vm.timezone" class="ng-pristine ng-valid ng-not-empty ng-touched span2" >
-                                    <option ng-repeat="time in vm.timeZoneItems" value="EST- GMT-05:00" class="ng-binding ng-scope">EST- GMT-05:00</option>
-                                    <option ng-repeat="time in vm.timeZoneItems" value="CST- GMT-06:00" class="ng-binding ng-scope">CST- GMT-06:00</option>
-                                    <option ng-repeat="time in vm.timeZoneItems" value="PST- GMT-08:00" class="ng-binding ng-scope">PST- GMT-08:00</option>                                                
-                                </select>                          
-                              
-                                <select name="time" ng-change="vm.timeChange()" ng-model="vm.time" class="ng-pristine ng-untouched ng-valid ng-not-empty span2">                                                
-                                    <option ng-repeat="time in vm.timeItems" value="12:00pm" class="ng-binding ng-scope">12:00pm</option>
-                                    <option ng-repeat="time in vm.timeItems" value="12:30pm" class="ng-binding ng-scope">12:30pm</option>
-                                    <option ng-repeat="time in vm.timeItems" value="1:00am" class="ng-binding ng-scope">1:00am</option>
-                                </select> -->
-                               
-                                 <div class="alert">
-                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <h3>Migration scheduled for: Jan 25th 2017 at 12:00pm EST- GMT-05:00</h3>
-                                </div>                      
-                                <div ng-app="app">
-                                    <div ng-controller="MainController">
-                                        <div class="wrapp">
-                                            <flex-calendar options="options" events="events"></flex-calendar>
+                                <!-- SHOW ALERT AFTER CHOICE MADE -->
+                                <div class="alert alert-success animated fadeIn" id="alert" style="display: none;">
+                                    <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
+                                    <h3>Migration Summary: Jan 25th 2017 at 12:00pm EST- GMT-05:00</h3>
+                                </div> 
+                                <!-- SHOW ALERT AFTER CHOICE MADE END -->
+                                <div class="rs-row">
+                                    <div class="span-4">
+                                        <div class="rs-control-group">
+                                            <div class="rs-controls">
+                                                <label class="rs-radio">
+                                                <input type="radio" name="" onclick="show('alert')">
+                                                <strong>Migrate Now</strong><br>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="rs-control-group">
+                                            <div class="rs-controls">
+                                                <label class="rs-radio">
+                                                <input type="radio" name="" onclick="show('scheduleform')" >
+                                                <strong>Schedule Time</strong><br>
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-               
-                            </div>
-                            
+                          
+                                    <div class="span-8 animated fadeIn" id="scheduleform" style="display: none;">
+                                        <form class="rs-form-horizontal rs-form-small">
+                                            <div class="rs-control-group">
+                                                <label class="rs-control-label">Choose Date</label>
+                                                <div class="rs-controls">
+                                                    <input id="field">
+                                                </div>
+                                            </div>
+                                            <div class="rs-control-group">
+                                                <label class="rs-control-label">Time Zone</label>
+                                                <div class="rs-controls">
+                                                    <select name="timezone" ng-change="vm.timezoneChange()" ng-model="vm.timezone" class="ng-pristine ng-valid ng-not-empty ng-touched span2" >
+                                                        <option ng-repeat="time in vm.timeZoneItems" value="EST- GMT-05:00" class="ng-binding ng-scope">EST- GMT-05:00</option>
+                                                        <option ng-repeat="time in vm.timeZoneItems" value="CST- GMT-06:00" class="ng-binding ng-scope">CST- GMT-06:00</option>
+                                                        <option ng-repeat="time in vm.timeZoneItems" value="PST- GMT-08:00" class="ng-binding ng-scope">PST- GMT-08:00</option>                                                
+                                                    </select>
+                                                </div>  
+                                            </div> 
+                                            <div class="rs-control-group">
+                                                <label class="rs-control-label">Time</label>
+                                                <div class="rs-controls">
+                                                    <select name="time" ng-change="vm.timeChange()" ng-model="vm.time" class="ng-pristine ng-untouched ng-valid ng-not-empty span2">                                                
+                                                        <option ng-repeat="time in vm.timeItems" value="12:00pm" class="ng-binding ng-scope">12:00pm</option>
+                                                        <option ng-repeat="time in vm.timeItems" value="12:30pm" class="ng-binding ng-scope">12:30pm</option>
+                                                        <option ng-repeat="time in vm.timeItems" value="1:00am" class="ng-binding ng-scope">1:00am</option>
+                                                    </select>
+                                                </div>  
+                                            </div>  
+                                            <div class="rs-control-group">                                        
+                                                <div class="rs-controls">
+                                                    <div class="rs-row">
+                                                        <a href="#" onclick="show('alert')" class="rs-btn rs-btn-primary span-3">Save</a>
+                                                       <!--  <button id="savebtn" class="rs-btn span-2 rs-btn-primary">Save</button> -->
+                                                    </div>
+                                                </div>  
+                                            </div>                                     
+                                        </form>   
+                                    </div>
+                                </div>         
+                            </div>             
                         </div>
                         <br>
-                        <div class="plain-panel">
-                            <h4>Item Selected</h4>
-                            <hr>
-                            <div class="accordion" id="accordion2">
-                                <div class="accordion-group">
-                                    <div class="accordion-heading">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#server-name">
-                                            <b class=""> Servers (4)  <i class="rs-caret"></i></b>
-                                        </a>
-                                    </div>
-                                    <div id="server-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <div class="selected-items">
-                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
-                                            </div>
-                                            <div class="selected-items">
-                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
-                                            </div>
-                                            <div class="selected-items">
-                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
-                                            </div>
-                                            <div class="selected-items">
-                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group">
-                                    <div class="accordion-heading">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#file-name">
-                                            <b class="">  Files (2) <i class="rs-caret"></i></b>
-                                        </a>
-                                    </div>
-                                    <div id="file-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  filename1</b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  filename1</b>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group">
-                                    <div class="accordion-heading">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#block-name">
-                                            <b class=""> Blocks (2) <i class="rs-caret"></i></b>
-                                        </a>
-                                    </div>
-                                    <div id="block-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  BlockName1</b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  BlockName1</b>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group">
-                                    <div class="accordion-heading">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#LB-name">
-                                            <b class="">Load Balancers (2) <i class="rs-caret"></i></b>
-                                        </a>
-                                    </div>
-                                    <div id="LB-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> LBname1b </b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> LBname1b</b>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group">
-                                    <div class="accordion-heading">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#cdn-name">
-                                            <b class="">CDN (2) <i class="rs-caret"></i></b>
-                                        </a>
-                                    </div>
-                                    <div id="cdn-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  CDNname1b</b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  CDNname1b</b>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group">
-                                    <div class="accordion-heading">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#dns-name">
-                                            <b class="">DNS (0) <!-- <i class="rs-caret"></i> --></b>
-                                        </a>
-                                    </div>
-                                    <div id="dns-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group">
-                                    <div class="accordion-heading">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#db-name">
-                                            <b class="">Databases (4) <i class="rs-caret"></i></b>
-                                        </a>
-                                    </div>
-                                    <div id="db-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <br><br>
+
                     </div>
                 </div>
             </div>
@@ -498,8 +407,8 @@
                     <div class="rs-pull-right">
                         <h4>Support</h4>
                         <div class="support-icons">
-                            <a href="#" class=""><i class="fa fa-phone fa-fw fa-2x"></i></a>
-                            <a href="#" class=""><i class="fa fa-ticket fa-fw fa-2x"></i></a>
+                            <a href="tel:555-555-5555"><i class="fa fa-phone fa-fw fa-2x"></i></a>
+                            <a href=""><i class="fa fa-ticket fa-fw fa-2x"></i></a>
                         </div>
                     </div>
                 </div>
@@ -546,28 +455,51 @@
         </div>
         <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="https://mycloud.rackspace.com">Submit</a>
+            <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="step5.html">Submit</a>
         </div>
     </div>
     <!-- end modals -->
+
     <script type="text/javascript">
     $(document).ready(function() {
         var tooltip;
         tooltip = new canon.Tooltip();
     });
     </script>
+
     <script type="text/javascript">
     $('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
         selectYears: 15 // Creates a dropdown of 15 years to control year
     });
     </script>
+
     <script src='js/angular.min.js'></script>
     <script src='js/angular-translate.js'></script>
     <script src="js/flex-cal-angular.js"></script>
     <script src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="js/bootstrap.js"></script>
+    <!-- datepicker -->
+    <script src="libs/moment.min.js"></script>
+    <script src="libs/knockout-3.2.0.js"></script>
+    <script src="material-datepicker/js/material.datepicker.js"></script>
+
+    <!-- FOR ALERT and EXAMPLE - DELETE AFTER IMPLEMENTATION -->
+    <script>
+    function show(target) {
+        document.getElementById(target).style.display = 'block';
+    }
+    </script>
+    <!-- FOR ALERT EXAMPLE - DELETE AFTER IMPLEMENTATION END -->
+
+    <!-- custon datepicker -->
+    <script>
+        var options = {};
+        $('#field').datepicker(options);
+    </script>
+    <!-- custon datepicker - end -->
+    
     <!-- name edit script -->
     <script type="text/javascript">
     $(document).ready(function() {

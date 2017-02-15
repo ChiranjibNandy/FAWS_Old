@@ -228,35 +228,32 @@
                                 <br>
                                 <em>12/12/2016 to 1/11/2017</em>
                                 <br>
-                                <big><b>$485</b></big>
+                                <big><b>$485</b>/mo</big>
                                 <br>
                                 <a href=""><small>(See Details)</small></a>
                             </p>
                         </div>
                         <div class="white-panel">
-                            <h3>New Pricing</h3>
+                            <h3>Projected Pricing</h3>
                             <p>
-                                <big><b>$431.81</b></big>
+                                <big><b>$420</b>/mo</big>
                                 <br>
-                                <a href=""><small>(See Details)</small></a>
+                                <a href="#pricing-details_modal" role="button" data-toggle="modal" ><small>(See Details)</small></a>
                             </p>
                         </div>
                         <br>
-                        <div class="rs-row pricing-buttons">
-                            <a class="rs-btn span-5" ng-link="['Tenant']" href="step1.html">Back</a>
-                            <a class="rs-btn rs-btn-primary span-7" ng-click="vm.continue()" href="step3.html">Continue</a>
-                        </div>
+                        
                         <div class="rs-row pricing-buttons">
                             <button class="rs-btn span-12" ng-click="vm.saveItems()">Save for later</button>
                         </div>
-                        <!-- conditional - show only if there is already migrations made -->
+                        
                         <div class="rs-row pricing-buttons">
-                            <a class="rs-btn span-12" ng-click="vm.continue()" href="step5.html">Dashboard</a>
-                        </div>
-                            <!-- ****** -->
-                        <div class="rs-row">
-                            <a class="rs-btn span-12" href="#cancel_modal" role="button" data-toggle="modal"">Cancel Migration</a>
+                            <a class="rs-btn span-12" href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>
                     
+                        </div>
+                        <div class="rs-row">
+                            <a class="rs-btn span-6" ng-link="['Tenant']" href="step1.html">Back</a>
+                            <a class="rs-btn rs-btn-primary span-6" href="#precheck_modal" role="button" data-toggle="modal">Continue</a>
                         </div>
                         <br>
                     </div>
@@ -298,6 +295,11 @@
                     <!-- End Stepper -->
                     <hr>
                     <div class="rs-inner recommend">
+                        <!-- conditional - show only if there is already migrations made -->
+                        <div class="rs-pull-right">
+                            <a class="rs-btn" ng-click="vm.continue()" href="step5.html">Dashboard</a>
+                        </div>
+                            <!-- ****** -->
                         <h2>User Namegoeshere (#1024814)</h2>
                         <input type="text" class="rs-input-large searchbox rs-pull-right" placeholder="filter by keyword or tag...">
                         <div class="migr-name">
@@ -349,6 +351,12 @@
                                                 <span class="rs-table-sort-indicator"></span>
                                             </a>
                                         </th>
+                                        <th>
+                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                <span class="rs-table-sort-text">Cost</span>
+                                                <span class="rs-table-sort-indicator"></span>
+                                            </a>
+                                        </th>
                                         <th class="rs-table-cog"></th>
                                     </thead>
                                     <tbody>
@@ -360,6 +368,7 @@
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
+                                            <td class="rs-table-text">$2</td>
                                             <td class="rs-table-cog">
                                                 <a href="#modify_modal" role="button" data-toggle="modal"><i class="rs-cog"></i></a>
                                             </td>
@@ -370,6 +379,7 @@
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
+                                            <td class="rs-table-text">$5</td>
                                             <td class="rs-table-cog">
                                                 <a href="#modify_modal" role="button" data-toggle="modal"><i class="rs-cog"></i></a>
                                             </td>
@@ -380,6 +390,7 @@
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
+                                            <td class="rs-table-text">$7</td>
                                             <td class="rs-table-cog">
                                                 <a href="#modify_modal" role="button" data-toggle="modal"><i class="rs-cog"></i></a>
                                             </td>
@@ -390,6 +401,7 @@
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
+                                            <td class="rs-table-text">$2</td>
                                             <td class="rs-table-cog">
                                                 <a href="#modify_modal" role="button" data-toggle="modal"><i class="rs-cog"></i></a>
                                             </td>
@@ -400,6 +412,7 @@
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
+                                            <td class="rs-table-text">$2</td>
                                             <td class="rs-table-cog">
                                                 <a href="#modify_modal" role="button" data-toggle="modal"><i class="rs-cog"></i></a>
                                             </td>
@@ -410,6 +423,7 @@
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
+                                            <td class="rs-table-text">$2</td>
                                             <td class="rs-table-cog">
                                                 <a href="#modify_modal" role="button" data-toggle="modal"><i class="rs-cog"></i></a>
                                             </td>
@@ -434,139 +448,6 @@
                                 <li><a href="#">Next</a></li>                                
                             </ul>
                         </div>                      
-                         
-                        <div class="plain-panel">
-                            <h4>Item Selected</h4>
-                            <hr>
-                            <div class="accordion" id="accordion2">
-                                <div class="accordion-group">
-                                    <div class="accordion-heading ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#server-name">
-                                            <b class=""> Servers (4)  <i class="rs-caret"></i></b>
-                                        </a>
-                                    </div>
-                                    <div id="server-name" class="accordion-body collapse ">
-                                        <div class="accordion-inner ">
-                                            <div class="selected-items">
-                                              <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i>  US-East-1 - US-East-1a - t2 small
-                                            </div>
-                                            <div class="selected-items">
-                                              <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
-                                            </div>
-                                            <div class="selected-items">
-                                              <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
-                                            </div>
-                                            <div class="selected-items">
-                                              <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw"></i> US-East-1 - US-East-1a - t2 small
-                                            </div>         
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group">
-                                    <div class="accordion-heading ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#file-name">
-                                            <b class="">  Files (2) <i class="rs-caret"></i></b>
-                                        </a>
-                                    </div>
-                                    <div id="file-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                               <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  filename1</b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                               <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  filename1</b>
-                                            </div>                
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group">
-                                    <div class="accordion-heading ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#block-name">
-                                            <b class=""> Blocks (2) <i class="rs-caret"></i></b>
-                                        </a>
-                                    </div>
-                                    <div id="block-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  BlockName1</b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  BlockName1</b>
-                                            </div>                               
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group">
-                                    <div class="accordion-heading ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#LB-name">
-                                            <b class="">Load Balancers (2) <i class="rs-caret"></i></b>
-                                        </a>
-                                    </div>
-                                    <div id="LB-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> LBname1b </b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> LBname1b</b>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group">
-                                    <div class="accordion-heading ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#cdn-name">
-                                            <b class="">CDN (2) <i class="rs-caret"></i></b>
-                                        </a>
-                                    </div>
-                                    <div id="cdn-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  CDNname1b</b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  CDNname1b</b>
-                                            </div>                 
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group">
-                                    <div class="accordion-heading ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#dns-name">
-                                            <b class="">DNS (0) <!-- <i class="rs-caret"></i> --></b>
-                                        </a>
-                                    </div>
-                                    <div id="dns-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-               
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group">
-                                    <div class="accordion-heading ">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#db-name">
-                                            <b class="">Databases (4) <i class="rs-caret"></i></b>
-                                        </a>
-                                    </div>
-                                    <div id="db-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times"></i></a>  <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>    
-                        </div>
                     
                     </div>
                 </div>
@@ -615,7 +496,7 @@
     </div>
 
     <!-- Modals -->
-
+    <!-- RESOURCE DETAILS MODAL -->
     <div id="resource_info" class="modal hide fade details" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
@@ -694,7 +575,7 @@
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
     </div>
-
+    <!-- MODIFY MODAL -->
     <div id="modify_modal" class="modal hide fade details" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
@@ -808,7 +689,7 @@
             <!-- replace 'data-dismiss="modal" aria-hidden="true"' on 'Save Changes' -->
         </div>
     </div>
-
+    <!-- CANCEL MIGRATION MODAL -->
     <div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
@@ -833,7 +714,101 @@
         </div>
         <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="https://mycloud.rackspace.com">Submit</a>
+            <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="step5.html">Submit</a>
+        </div>
+    </div>
+    <!-- SEE PRICING DETAILS MODAL -->
+    <div id="pricing-details_modal" class="modal hide fade details" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+            
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">Select FAWS Account Level</div>
+                </div>
+                <div class="rs-detail-section-body">
+                    <div class="rs-embedded-list-table-wrapper rs-embedded-small">
+                        <table class="rs-list-table rs-embedded-list-table rs-select-table">
+                            <thead>
+                                <tr>
+                                    <th class="rs-table-radio"></th>
+                                    <th class="rs-table-cog"></th>
+                                    <th>
+                                        <a href="javascript:void(0);" class="rs-table-sort">
+                                            <span class="rs-table-sort-text">Name</span>
+                                            <span class="rs-table-sort-indicator"></span>
+                                        </a>
+                                    </th>
+                                    <th>Description</th>
+                                    <th>Rackspace</th>
+                                    <th>AWS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="selected">
+                                    <td class="rs-table-radio">
+                                        <input type="radio" name="" checked="checked" >
+                                    </td>
+                                    <td>
+                                        <img src="images/navigator-icon.png">
+                                    </td>
+                                    <td class="rs-table-text"><strong>Navigator</strong></td>
+                                    <td class="rs-table-text">Tooling and Automation + Certified AWS experts when you need them.</td>
+                                    <td>$400</td>
+                                    <td>$20</td>
+                                </tr>
+                                <tr>
+                                    <td class="rs-table-radio">
+                                        <input type="radio" name="">
+                                    </td>
+                                    <td>
+                                        <img src="images/aviator-icon.png">
+                                    </td>
+                                    <td class="rs-table-text"><strong>Aviator</strong></td>
+                                    <td class="rs-table-text">Our certified experts will manage your AWS 24x7.</td>
+                                    <td>$200</td>
+                                    <td>$20</td>
+                                </tr>
+                                <tr>
+                                    <td class="rs-table-radio">
+                                        <input type="radio" name="">
+                                    </td>
+                                    <td>
+                                        <img src="images/simplified-aws.jpg">
+                                    </td>
+                                    <td class="rs-table-text"><strong>Simplified AWS</strong></td>
+                                    <td class="rs-table-text">Description of sAWS goes here</td>
+                                    <td>$100</td>
+                                    <td>$20</td>
+                                </tr>                                    
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+         
+        </div>
+        <div class="modal-footer">
+            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <a class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true">Submit</a>
+        </div>
+    </div>
+    <!-- PRECHECK MODAL -->
+    <div id="precheck_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+            <h3 class="rs-page-title"><i class="fa fa-warning fa-fw"></i> Uh oh! There are issues...</h3>
+            <br>
+            <ul>
+                <li>Issue 1: There are incompatible configurations.</li>
+                <li>Issue 2: Dependant files are missing.</li>
+                <li>Issue 3: Everything has gone haywire!</li>
+            </ul>
+            <p><strong>I really would fix this if I were you!</strong></p>        
+        </div>
+        <div class="modal-footer">
+            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Go Back</button>
+            <a class="rs-btn rs-btn-primary" href="step3.html">Continue</a>
         </div>
     </div>
     <!-- end modals -->

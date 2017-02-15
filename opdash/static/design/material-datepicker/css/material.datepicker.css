@@ -1,0 +1,148 @@
+
+@font-face {
+	font-family: FontAwesome;
+	src: url('../fonts/FontAwesome.otf');
+}
+
+.no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.material-datepicker {
+	font-family: 'Source Sans Pro','Helvetica Neue',sans-serif;
+	position: absolute;
+	width: 280px;
+	background: #fff;
+	border:1px solid gray;
+	z-index: 1000000;
+	margin:10px 0 20px;
+}
+.material-datepicker:after{
+	bottom: 100%;
+	left: 20%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-bottom-color: #565656;
+	border-width: 10px;
+	margin-left: -10px;
+}
+.material-datepicker:focus {
+	outline: none;
+}
+
+.material-datepicker.hide {
+	display: none;
+}
+
+section.top-day {
+	text-align: center;
+	font-weight: 300;
+	font-size: 14px;
+	background-color: #565656;
+	height: 32px;
+	line-height: 32px;
+	color: #fff;
+}
+
+section.middle-date {
+	background-color: #333;
+	height: 35px;
+	color: #fff;
+	text-align: center;
+	position: relative;
+	padding-top: 15px;
+}
+
+section.middle-date > .month {
+	padding: 8px 0px;
+	text-transform: uppercase;
+	font-size: 22px;
+	margin-right: 5px;
+}
+section.middle-date > .date {
+	font-size: 22px;
+	margin-right: 5px;
+}
+/*section.middle-date > .year {
+	font-size: 22px;
+	font-weight: 400;
+	color: #999;
+}
+*/
+a.control {
+	font-family: FontAwesome;
+	color: #c40022;;
+	font-size: 15px;
+	font-weight: 300;
+	position: absolute;
+	cursor: pointer;
+	top: 7px;
+}
+a.prev {
+	left: 62px;
+}
+a.next {
+	right: 62px;
+}
+
+section.calendar {
+	position: relative;
+	padding-bottom: 15px;
+}
+
+section.calendar > .title {
+	margin-top: 8px;
+	padding: 7px;
+ 	text-align: center;
+ 	font-size: 14px;
+}
+
+section.calendar .days, section.calendar .headings  {
+	width: 250px;
+	margin: auto;
+}
+
+section.calendar .day.heading {
+	color: grey;
+	font-weight: 400;
+}
+
+section.calendar .day {
+	font-size: 12px;
+	display: inline-block;
+	width: 32px;
+	line-height: 32px;
+	text-align: center;
+	font-weight: 300;
+}
+
+section.calendar a.day.today {
+	color: #c40022;
+}
+
+section.calendar a.day {
+	cursor: pointer;
+	border-radius: 40px;
+	color: #777;
+	text-decoration: none;
+}
+
+section.calendar a.day.selected {
+	background-color: #333;
+	color: #fff;
+}
+section.calendar a.day.selected:hover {
+	color: #333;
+}
+section.calendar a.day:hover {
+	background-color: #EDEDED;
+}
