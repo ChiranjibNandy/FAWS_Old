@@ -1,4 +1,4 @@
-<div class="plain-panel" style="min-height: initial !important">
+<div class="plain-panel" ng-style="{'min-height': vm.showrec === 'true' ? '230px' : 'initial'}">
     <!--<div class="span-8">-->
     <h4 ng-show="vm.showrec === 'false'">Items Selected</h4>
     <h3 ng-show="vm.showrec === 'true'">Selected Resources <a ng-link="['MigrationResourceList']" class="rs-edit" title="Go to step 1 to choose resources to migrate"></a></h3>

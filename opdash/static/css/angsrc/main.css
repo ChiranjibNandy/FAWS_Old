@@ -403,6 +403,29 @@ rscalendaritem > div.week.names > span {
     right: 0px;
 }
 
+.empty-collection-info{
+    padding: 20px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+}
+
+.collection-error-msg{
+    padding: 20px;
+    font-weight: 600;
+    color: #D00000;
+    text-align: center;
+}
+
+.large-col{
+    width: 25%;
+}
+
+.schedule-tile p{
+    font-size: 1em;
+    font-weight: 600;
+    text-align: left;
+}
 .migration-mgr .recommend .rs-list-table thead th:nth-child(-n+3) {
     background: rgba(0, 0, 0, .15);
 }

@@ -221,6 +221,50 @@
                 self.CurrentPricing = null;
             };
 
+            /**
+             * @ngdoc method
+             * @name getMigrationDate
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Returns migration date based on Epoch timestamp
+             */
+            self.getMigrationDate = function() {
+                var dt = self.selectedTime.time * 1000;
+                if(dt){}
+                    return moment(dt).format("M/DD/YYYY");
+            };
+
+            /**
+             * @ngdoc method
+             * @name getMigrationDate
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Returns migration date based on Epoch timestamp
+             */
+            self.getMigrationTime = function() {
+                var dt = self.selectedTime.time * 1000;
+                if(dt){}
+                    return moment(dt).format("hh:mm a");
+            };
+
+            /**
+             * @ngdoc method
+             * @name getMigrationResourceCount
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Get count of migrating resources
+             */
+            self.getMigrationResourceCount = function() {
+                // initialize with server count
+                var migrationResourceCount = self.selectedItems.server.length;
+
+                // evaluate network count and add to the total count
+                angular.forEach(self.selectedItems.server, function(item) {
+                    migrationResourceCount += item.details.networks.length;
+                });
+                return migrationResourceCount;
+            };
+
             return self;
         }]); // end of service definition
 })();
