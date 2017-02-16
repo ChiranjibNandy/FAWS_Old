@@ -3,7 +3,7 @@
     <h4 ng-show="vm.showrec === 'false'">Items Selected</h4>
     <h3 ng-show="vm.showrec === 'true'">Selected Resources <a ng-link="['MigrationResourceList']" class="rs-edit" title="Go to step 1 to choose resources to migrate"></a></h3>
     <hr>
-    <div class="accordion" id="accordion2">
+    <div class="accordion" id="accordion2" ng-hide="vm.selectedItems.server.length == 0">
         <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}">
             <div class="accordion-heading ">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#server-name">
@@ -40,7 +40,7 @@
                 </div>-->
             </div>
         </div>
-        <div class="accordion-group disabled" ng-if="vm.isRacker">
+        <div class="accordion-group disabled" ng-if="vm.isRacker" style="display: none">
             <div class="accordion-heading ">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#block-name">
                     <b class=""> Files (0) <i class="fa fa-caret-down"></i></b>
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <div class="accordion-group disabled" ng-if="vm.isRacker">
+        <div class="accordion-group disabled" ng-if="vm.isRacker" style="display: none">
             <div class="accordion-heading ">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#cdn-name">
                     <b class="">Load Balancers (0) <i class="fa fa-caret-down"></i></b>
@@ -67,4 +67,5 @@
             </div>
         </div>
     </div>
+    <div ng-show="vm.selectedItems.server.length == 0" style="color:red; text-align: center">No items selected</div>
 </div>
