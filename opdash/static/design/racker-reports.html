@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>Rackspace Migration Manager</title>
+    <link rel="stylesheet" type="text/css" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest//canon.min.css">
+    <!-- Custom styles  -->
+    <link href="css/animate.css" rel="stylesheet">    
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/migration-mgr.css" rel="stylesheet">
+    
+</head>
+
+<body>
+    <!-- Fixed navbar -->
+    <div class="rs-wrapper">
+        <!-- Utility Nav -->
+        <div class="rs-nav-utility">
+            <div class="rs-container">
+                <ul class="rs-nav">
+                    <li class="rs-nav-item "><a class="rs-nav-link" href="">Rackspace Cloud</a></li>
+                    <li class="rs-nav-item"><a class="rs-nav-link" href="">Fanatical Support for AWS</a></li>
+                </ul>
+                <ul class="rs-nav rs-pull-right">
+                    <li class="rs-nav-item rs-dropdown rs-utility-dropdown">
+                        <a class="rs-nav-link rs-dropdown-toggle" href="">Username123 <i class="rs-caret"></i></a>
+                    </li>
+                    <li class="rs-nav-item ">
+                        <a class="rs-nav-link" href="">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- End Utility Nav -->
+        <!-- Primary Nav -->
+        <div class="rs-nav-primary">
+            <div class="rs-container">
+                <div class="rs-nav-brand">
+                    <a href="https://www.rackspace.com/" target="_blank"></a>
+                </div>
+                <ul class="rs-nav" id="links">
+                    <li id="pilot-dashboard" data-nav="dashboard" class="rs-nav-item">
+                        <a id="pilot-dashboard-link" class="rs-nav-link" data-pilot-tracking-id="dashboard-link" href="racker-dash.html">Accounts Dashboard</a>
+                    </li>
+                    <li id="pilot-dashboard" data-nav="dashboard" class="rs-nav-item">
+                        <a id="pilot-dashboard-link" class="rs-nav-link" data-pilot-tracking-id="dashboard-link" href="racker-reports.html">Reports</a>
+                    </li>
+                    <li id="pilot-dashboard" data-nav="dashboard" class="rs-nav-item">
+                        <a id="pilot-dashboard-link" class="rs-nav-link" data-pilot-tracking-id="dashboard-link" href="https://encore.rackspace.com/" target="_blank">Encore</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- End Primary Nav -->
+        <br>
+        <div class="rs-container migration-mgr">
+            <div class="rs-main rs-panel">
+                <div class="rs-content rs-panel">
+                    <div class="rs-inner">
+                        <h3>Migration Reports</h3>
+                        <div class="rs-row">
+                            <div class="span-12">
+                                <canvas id="myChart" width="640" height="200"></canvas>
+                            </div>
+                        </div>
+                        <div class="rs-row">
+                            <div class="span-6">
+                                <canvas id="myChart2" width="640" height="400"></canvas>
+                            </div>
+                            <div class="span-6">
+                                <canvas id="myPieChart" width="640" height="400"></canvas>
+                            </div>
+                        </div>
+                 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="rs-nav-footer">
+        <div class="rs-container">
+            <ul class="rs-nav">
+                <li class="rs-nav-item">© 2017 Rackspace, US</li>
+                <li class="rs-nav-item"><a class="rs-nav-link" href="">Website Terms</a></li>
+                <li class="rs-nav-item"><a class="rs-nav-link" href="">Privacy Policy</a></li>
+            </ul>
+            <ul class="rs-nav rs-pull-right">
+                <li class="rs-nav-item"><a class="rs-nav-link" href="#">Feedback</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var tooltip;
+        tooltip = new canon.Tooltip();
+    });
+    </script>
+    <script type="application/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script type="application/javascript" src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+
+    <script src="js/Chart.bundle.js"></script>
+    <script src="js/Chart.min.js"></script>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+            datasets: [{
+              label: 'Metric 1',
+              data: [12, 19, 3, 17, 6, 3, 7],
+              backgroundColor: "rgba(51,51,51,0.2)"
+            }, {
+              label: 'Metric 2',
+              data: [2, 29, 5, 5, 2, 3, 10],
+              backgroundColor: "rgba(0,169,109,0.8)"
+            }]
+          }
+        });
+
+        var ctx = document.getElementById("myChart2");
+        var myChart2 = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+                datasets: [{
+                    label: '# of Accounts',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(196,0,34, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(0,169,109,0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(196,0,34,,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(0,169,109,0.1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+        // For a pie chart
+        var ctx = document.getElementById("myPieChart");
+        var myPieChart = new Chart(ctx,{
+            type: 'doughnut',
+            data: {
+            labels: [
+                "Rackspace FAWS",
+                "Migrations",
+                "AWS Accounts"
+            ],
+            datasets: [
+                {
+                    data: [300, 50, 100],
+                    backgroundColor: [
+                        "#c40022",
+                        "#00A96D",
+                        "#FFCE56"
+                    ],
+                    hoverBackgroundColor: [
+                        "#c40022",
+                        "#00A96D",
+                        "#FFCE56"
+                    ]
+                }]
+            }
+
+        });
+
+        
+</script>
+
+</body>
+
+</html>
