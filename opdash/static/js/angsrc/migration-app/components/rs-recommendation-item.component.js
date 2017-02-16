@@ -136,6 +136,12 @@
                     vm.data.splice(vm.data.indexOf(selectedServer[0]), 1);
                     dataStoreService.setItems(vm.data);
                 }
+
+                vm.equipmentDetails = function(type, itemdetails) {
+                    vm.type = type;
+                    vm.itemDetails = itemdetails;
+                };
+                
                 return vm;
             }]
         }); // end of component rsrecommendationitem

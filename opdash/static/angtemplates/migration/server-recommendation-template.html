@@ -3,7 +3,7 @@
             ng-class="{'rs-table-status-ok': item.status=='ACTIVE', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
     </td>
     <td class="rs-table-link">
-        <a href="{{'#resource_info' + item.id}}" role="button" data-toggle="modal">{{item.name}}</a>
+        <a href="#resource_info" role="button" ng-click="vm.equipmentDetails(vm.type, item)" data-toggle="modal">{{item.name}}</a>
     </td>
     <!--<td class="rs-table-link"><a href="#" ng-link="['EquipmentDetails', {type: vm.type, id: item.id}]">{{item.name}}</a></td>-->
     <td class="rs-table-text">{{item.ip_address}}</td>

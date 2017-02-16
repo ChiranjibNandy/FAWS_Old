@@ -1,6 +1,6 @@
 <tr ng-repeat="item in vm.data | filter: vm.filtervalue | limitTo : vm.pageSize : (vm.currentPage-1)*vm.pageSize">
     <td class="rs-table-link">
-        <a href="#" role="button" data-toggle="modal">{{item.name}}</a>
+        {{item.name}}
     </td>
     <td class="rs-table-text">{{item.id}}</td>
     <td>
