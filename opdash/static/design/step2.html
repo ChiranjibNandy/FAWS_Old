@@ -732,50 +732,20 @@
                         <table class="rs-list-table rs-embedded-list-table rs-select-table">
                             <thead>
                                 <tr>
-                                    <th>
-                                        <a href="javascript:void(0);" class="rs-table-sort">
-                                            <span class="rs-table-sort-text">Resources to be Migrated</span>
-                                            <span class="rs-table-sort-indicator"></span>
-                                        </a>
-                                    </th>                                
-                                    <th>Cost</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="rs-table-text">cloud-endure-demo-A_db_slave One</td>                               
-                                    <td>$3</td>
-                                </tr>
-                                <tr>
-                                    <td class="rs-table-text">cloud-endure-demo-A_db_slave One</td>                              
-                                    <td>$7</td>
-                                </tr>  
-                                <tr class="rs-inst-types">
-                                    <td><strong>Total</strong></td>                              
-                                    <td>$10</td>
-                                </tr>                                                        
-                            </tbody>
-                        </table>
-                    </div>
-                    <br>
-                    <div class="rs-embedded-list-table-wrapper rs-embedded-small">
-                        <table class="rs-list-table rs-embedded-list-table rs-select-table">
-                            <thead>
-                                <tr>
                                     <th class="rs-table-radio"></th>
                                     <th class="rs-table-cog"></th>
                                     <th>
                                         <a href="javascript:void(0);" class="rs-table-sort">
-                                            <span class="rs-table-sort-text">Name</span>
+                                            <span class="rs-table-sort-text">Service</span>
                                             <span class="rs-table-sort-indicator"></span>
                                         </a>
                                     </th>
                                     <th>Description</th>
-                                    <th>Service</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="selected">
+                                <tr>
                                     <td class="rs-table-radio">
                                         <input type="radio" name="" checked="checked" >
                                     </td>
@@ -795,22 +765,46 @@
                                     </td>
                                     <td class="rs-table-text"><strong>Aviator</strong></td>
                                     <td class="rs-table-text">Our certified experts will manage your AWS 24x7.</td>
-                                    <td>$2400</td>
+                                    <td>$2500</td>
                                 </tr>
-                                <tr class="rs-tr-disabled">
+                                <tr>
                                     <td class="rs-table-radio">
-                                        <input type="radio" name="">
+                                        <input type="radio" id="SAWS">
                                     </td>
                                     <td>
                                         <img src="images/simplified-aws.jpg">
                                     </td>
                                     <td class="rs-table-text"><strong>Simplified AWS</strong></td>
-                                    <td class="rs-table-text">Description of sAWS goes here</td>
-                                    <td>---</td>
+                                    <td class="rs-table-text">Description of SAWS goes here.</td>
+                                    <td>TBD</td>
                                 </tr>                                    
                             </tbody>
                         </table>
                     </div>
+                    <br>
+                    <div class="rs-embedded-list-table-wrapper rs-embedded-small">
+                        <table class="rs-list-table rs-embedded-list-table rs-select-table">
+                            <tbody>
+                                <tr>
+                                    <td>Estimated Costs for Selected Resources</td>                                
+                                    <td><span class="rs-pull-right">$20</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                    <div class="rs-embedded-list-table-wrapper rs-embedded-small">
+                        
+                        <table class="rs-list-table rs-embedded-list-table rs-select-table">
+                            <tbody>
+
+                                <tr class="rs-inst-types">
+                                    <td><strong>Projected New Price</strong></td>
+                                    <td><span class="rs-pull-right"><strong>$420</strong></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>                  
                     <br>
                     
                 </div>
@@ -888,7 +882,9 @@
               });         
         });
     </script>
-    
+    <script type="text/javascript">
+        document.getElementById("SAWS").disabled = true;
+    </script>
 </body>
 
 </html>
