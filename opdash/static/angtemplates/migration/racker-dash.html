@@ -1,0 +1,114 @@
+<div class="rs-container migration-mgr">
+    <div class="rs-main ">
+        <div class="rs-content rs-panel">
+            <div class="rs-inner">
+                <div class="pull-right">
+                    <div class="rs-control-group">
+                        <div class="rs-controls">
+                            <input type="text" class="rs-input-large searchbox" placeholder="Search Accounts" autocomplete="on">
+                            <a class="rs-btn rs-btn-primary" href="" ng-click="vm.openAddAccountModalDialog()"><i class="fa fa-plus-square fa-fw"></i> Add Accounts</a>
+                            
+                        </div>
+                    </div>
+                </div>
+                <h3>Accounts (5)</h3>
+                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
+                    <table class="rs-list-table rs-embedded-list-table no-truncate-td">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                        <span class="rs-table-sort-text">Account Name</span>
+                                        <span class="rs-table-sort-indicator"></span>
+                                    </a>
+                                </th>
+                                <th>
+                                    <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                        <span class="rs-table-sort-text">Service Level</span>
+                                        
+                                    </a>
+                                </th>
+                                <th>
+                                    <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                        <span class="rs-table-sort-text">FAWS Account Level</span>
+                                        
+                                    </a>
+                                </th>
+                                <th>
+                                    <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                        <span class="rs-table-sort-text"># Batches in Progress</span>
+                                    </a>
+                                </th>
+                                <th>
+                                    <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                        <span class="rs-table-sort-text"># Batches Completed</span>
+                                    </a>
+                                </th>
+                        
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in vm.items | limitTo : vm.pageSize : (vm.currentPage-1)*vm.pageSize">
+                                <td class="rs-table-link"><a ng-link="['MigrationStatus']" class="ng-binding" href="migration-status.html">{{item.accountName}}</a></td>
+                                <td class="rs-table-text">{{item.serviceLevel}}</td>
+                                <td class="rs-table-text">{{item.accountLevel}}</td>
+                                <td class="rs-table-text ng-binding">{{item.inProgressBatches}}</td>
+                                <td class="rs-table-text ng-binding">{{item.completedBatches}}</td>
+                                <td class="rs-table-input">
+                                    <div class="rs-btn-group">
+                                        <div class="rs-dropdown">
+                                            <div class="rs-cog rs-dropdown-toggle" ng-click="batch.showSettings = !batch.showSettings"></div>
+                                            <ul class="rs-dropdown-menu visible" ng-show="batch.showSettings">
+                                                <li><span class="rs-dropdown-category">Manage</span></li>
+                                                <li class=""><a href="" ng-click="vm.removeAccount(item.accountName)">Remove from Panel</a></li>
+                                                <li class=""><a href="#">View in Encore</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+                  <!-- ********** PAGINATION GOES HERE... ************* -->
+                <div class="pagination pagination-mini" ng-if="vm.totalItems">
+                    <ul>
+                        <li ng-class="{disabled: vm.currentPage == 1}" ng-click="vm.currentPage=vm.currentPage-1"><a href="">Prev</a></li>
+                        <li ng-repeat="n in vm.pageArray" ng-click="vm.currentPage = $index+1"><a href="">{{n}}</a></li>
+                        <li ng-class="{disabled: vm.currentPage == vm.noOfPages}" ng-click="vm.currentPage=vm.currentPage+1"><a href="">Next</a></li>
+                    <li><span>Showing {{(vm.currentPage == 1 ? vm.currentPage : ((vm.currentPage-1)*vm.pageSize)+1)}}-{{(vm.currentPage == vm.noOfPages ? vm.items.length : vm.currentPage*vm.pageSize)}} of {{vm.items.length}}</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="add_account_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForAddAccount" aria-hidden="true">
+    <div class="modal-body">
+        <h3>Add a new Account</h3>
+        <form class=" " name="addAccountForm" ng-submit="vm.submitAddAccount()">
+            <div class="rs-control-group">
+                <div class="rs-controls">
+                    <label class="rs-control-label" style="display: inline">
+                        Account Name
+                        <span class="rs-controls" style="display: inline;color:red;">*</span>
+                    </label>
+                    
+                    <div class="rs-controls" style="display: inline">
+                        <input type="text" class="rs-input-large" ng-model="vm.addedAccount" style="margin-top: 5px;margin-left:7px;">
+                    </div>
+                </div>
+            </div>
+            <div class="rs-control-group">
+                <div class="rs-btn-group">
+                    <button class="rs-btn rs-btn-primary " ng-disabled="!vm.addedAccount.length" target="_blank" >Submit</button>
+                    <button class="rs-btn rs-btn-link" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
