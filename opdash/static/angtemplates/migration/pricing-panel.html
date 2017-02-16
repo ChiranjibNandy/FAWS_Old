@@ -5,9 +5,9 @@
             <p>
                 Billing Period:
                 <br>
-                <em>12/12/2016 to 1/11/2017</em>
+                <em>{{vm.invoiceCoverageStartDate}} to {{vm.invoiceCoverageEndDate}}</em>
                 <br>
-                <big><b>${{vm.currentPricing}}</b>/mo</big>
+                <big><b>${{vm.invoiceTotal}}</b>/month</big>
                 <br>
                 <a href=""><small>(See Details)</small></a>
             </p>
@@ -15,9 +15,8 @@
         <div class="white-panel">
             <h3>Projected Pricing</h3>
             <p>
-                <big><b>${{vm.totalCost}}</b>/mo</big>
-                <br>
-                <a href=""><small>(See Details)</small></a>
+                <big><b>$420</b>/month</big><br>
+                <small>Current Support Level: <b><a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Navigator</a></b></small>
             </p>
         </div>
         <br>

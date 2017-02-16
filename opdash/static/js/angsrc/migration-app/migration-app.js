@@ -64,6 +64,7 @@
         $routeConfig: [
             { path: "/login", component: "rsmigrationlogin", name: "Login" },
             { path: "/tenant", component: "rsmigrationtenantid", name: "Tenant" },
+            { path: "/racker-dashboard", component: "rsmigrationrackerdash", name: "RackerDash" },
             { path: "/equipment-details/:type/:id", component: "rsequipmentdetails", name: "EquipmentDetails" },
             { path: "/migration/resources", component: "rsmigrationresourceslist", name: "MigrationResourceList" },
             { path: "/migration/recommendation", component: "rsmigrationrecommendation", name: "MigrationRecommendation" },

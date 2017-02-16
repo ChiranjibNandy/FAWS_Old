@@ -29,8 +29,12 @@
              * @name migrationApp.controller:rspricingCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rspricingpanel rspricingpanel} component
              */
-            controller:["datastoreservice","$rootRouter",function(dataStoreService,$rootRouter){
+            controller:["datastoreservice","$rootRouter","httpwrapper","$filter",function(dataStoreService,$rootRouter,HttpWrapper,$filter){
                 var vm = this;
+                vm.invoiceCoverageStartDate = '';
+                vm.invoiceCoverageEndDate = '';
+                vm.invoiceTotal = '';
+
                 vm.$onInit = function() {
                     dataStoreService.setRecommendedTotalCost();
                     dataStoreService.setCurrentPricing ();
@@ -40,6 +44,7 @@
                     //vm.data = dataStoreService.getItems(vm.selectedItem);
                     // dataStoreService.setItems(vm.selectedItem);
                     // dataStoreService.getItems(vm.type);
+                    vm.getCurrentPricingDetails();
                 };
                    
                       /**
@@ -107,6 +112,25 @@
                  */
                 vm.continueToSchedule = function(){
                     $rootRouter.navigate(["ScheduleMigration"]);
+                }
+
+                /**
+                 * @ngdoc method
+                 * @name getCurrentPricingDetails
+                 * @methodOf migrationApp.controller:rsmigrationrecommendationCtrl
+                 * @description 
+                 * Gets current pricing amount and the billing period
+                 */
+                vm.getCurrentPricingDetails = function(){
+                    HttpWrapper.send('/api/billing/get_latest_bill', {"operation":'GET'})
+                    .then(function(result){
+                        console.log("Current Pricing Response: ", result);
+                        vm.invoiceCoverageStartDate = $filter('date')(result.invoice.coverageStartDate, "dd/MM/yyyy");
+                        vm.invoiceCoverageEndDate = $filter('date')(result.invoice.coverageEndDate, "dd/MM/yyyy");
+                        vm.invoiceTotal = result.invoice.invoiceTotal;
+                    }, function(error) {
+                        console.log("Error: Could not fetch current pricing details", error);
+                    });
                 }
 
                 return vm;
