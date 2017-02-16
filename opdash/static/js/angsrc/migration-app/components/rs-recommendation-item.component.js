@@ -43,17 +43,27 @@
              * @name migrationApp.controller:rsrecommendationitemCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsrecommendationitem rsrecommendationitem} component
              */
-            controller: ["migrationitemdataservice", "authservice", "$q", "datastoreservice", "$rootRouter", function (ds, authservice, $q, dataStoreService, $rootRouter) {
+            controller: ["migrationitemdataservice", "authservice", "$q", "datastoreservice", "$rootRouter","httpwrapper", function (ds, authservice, $q, dataStoreService, $rootRouter,HttpWrapper) {
                 var vm = this;
 
                 vm.$onInit = function() {
                     vm.recSelectedItems = dataStoreService.getRecommendedItems() || [];
                     
                     if(vm.type === "server"){
+                        var url = '/api/ec2/regions'; 
+                        HttpWrapper.send(url,{"operation":'GET'}).then(function(result){
+                            vm.regions = result;
+                            vm.awsRegion = 'us-east-1';
+                            vm.getZones();
+                        },function(error){
+                            console.log('error');
+                            console.log(error);
+                        });
                         vm.data = dataStoreService.getItems(vm.type);
                         vm.data.map(function(item){
                             item.selectedMapping = item.mappings[0];
                         });
+                        dataStoreService.setItems({server:vm.data,network:[]});
                         vm.labels = [
                                         {field: "name", text: vm.type+" Name"},
                                         {field: "ip_address", text: "IP Address"},
@@ -98,6 +108,37 @@
                     $('#rs-main-panel').css('height','310px');
                 };
 
+
+                /**
+                 * @ngdoc method
+                 * @name getZones
+                 * @methodOf migrationApp.controller:rsrecommendationitemCtrl
+                 * @description 
+                 * This function helps to get the zones based on the region you selected.
+                 */
+                vm.getZones = function(item){
+                    var url =  '/api/ec2/availability_zones/'+vm.awsRegion; 
+                    if(item) vm.getPricingDetails(item);
+                    HttpWrapper.send(url,{"operation":'GET'}).then(function(zones){
+                        vm.awsZone = zones[0];
+                        vm.zones = zones;
+                    },function(error){
+                        console.log("error");
+                        console.log(error);
+                    });
+                };
+
+                vm.getPricingDetails = function(item){
+                    var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+vm.awsRegion;
+                    HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
+                        item.pricingOptions = pricingOptions;
+                    });
+                }
+ 
+                vm.showModifyModal = function(item){
+                    vm.getPricingDetails(item);
+                };
+
                 /**
                  * @ngdoc method
                  * @name saveUpdatedObject
@@ -107,12 +148,13 @@
                  * with newly selected data which is provided in the table format on popup.
                  */
                 vm.saveUpdatedObject  = function(id){
-                    var selectedServer = vm.data.filter(function(server){
-                                            return server.id == id;
-                                         });
-                    selectedServer[0].selectedMapping = selectedServer[0].mappings[parseInt(vm.selectedConfiguration)];
-                    selectedServer[0].selectedMapping.zone = vm.awsZone || selectedServer[0].selectedMapping.zone;
-                    selectedServer[0].selectedMapping.region = vm.awsRegion || selectedServer[0].selectedMapping.region
+                    vm.data.filter(function(server){
+                        if(server.id == id){
+                            server.selectedMapping = server.pricingOptions[parseInt(vm.selectedConfiguration)];
+                            server.selectedMapping.zone = vm.awsZone || server.selectedMapping.zone;
+                        }    
+                    });
+                    dataStoreService.setItems({server:vm.data,network:[]});
                     $('#modify_modal'+id).modal('hide');
                 };
 
