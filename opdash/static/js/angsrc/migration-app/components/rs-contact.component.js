@@ -30,15 +30,15 @@
                 vm.tenant_id = auth.tenant_id;
 
                 vm.$onInit = function() {
+
+                 }
+
+                $scope.showPopover = function(element) {
                     migrationItemDataService.getDetailedList('contactNumbers')
                         .then(function (response) {
                             vm.contactNumbers = response;
                             // console.log(response);
                         });
-                 }
-
-                $scope.showPopover = function(element) {
-                    $scope.popoverIsVisible = true;
                 };
 
                 $scope.hidePopover = function (element) {
