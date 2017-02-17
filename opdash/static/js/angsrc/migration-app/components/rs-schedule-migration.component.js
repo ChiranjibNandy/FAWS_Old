@@ -78,7 +78,7 @@
                 "(GMT +11:00) Magadan, Solomon Islands, New Caledonia",
                     "(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka"];
                     var date = new Date().toTimeString();
-                    var timeZone =  date.substr(date.indexOf("+")+1,5);
+                    var timeZone =  date.indexOf("+") === -1 ?date.substr(date.indexOf("-")+1,5):date.substr(date.indexOf("+")+1,5);
                     var exactZone = [timeZone.slice(0, 2),':', timeZone.slice(2)].join('');
                     vm.timezone = vm.timeZoneItems.filter(function(item){
                                     if(item.includes(exactZone.trim())){
@@ -96,7 +96,7 @@
                     vm.selectedDate =  moment().format('ddd MMMM Do YYYY')+' '+vm.time+' '+vm.timezone;
                     // console.log(vm.finalDateForUnixTime);
                    //console.log(new Date(vm.finalDateForUnixTime));
-                    vm.unixTime = Math.floor(new Date().getTime()/ 1000);
+                    vm.unixTime = parseInt((new Date().getTime()/1000), 10);
                     //  console.log(new Date(vm.finalDateForUnixTime));
                     dataStoreService.storeDate('time',vm.time);
                     dataStoreService.storeDate('timezone',vm.timezone);
@@ -112,6 +112,7 @@
                
             };
              dataStoreService.setScheduleMigration(vm.selectedTime);
+             console.log(dataStoreService.getScheduleMigration());
             vm.editorEnabled = false;
             vm.showTimeForm = false;
             vm.showMigrate = false;
@@ -149,7 +150,7 @@
                  * Saves the chosen timezone for migration
                  */
                 vm.timezoneChange = function(){
-                    vm.selectedDate =  moment().format('ddd MMMM Do YYYY')+' '+vm.time+' '+vm.timezone;
+                    vm.selectedDate =  moment(vm.date).format('ddd MMMM Do YYYY')+' '+vm.time+' '+vm.timezone;
                 };
 
                 /**
