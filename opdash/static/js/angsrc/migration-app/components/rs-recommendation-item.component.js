@@ -62,6 +62,7 @@
                         vm.data = dataStoreService.getItems(vm.type);
                         vm.data.map(function(item){
                             item.selectedMapping = item.mappings[0];
+                            item.isMenuOpen = false;
                         });
                         dataStoreService.setItems({server:vm.data,network:[]});
                         vm.labels = [
@@ -73,18 +74,21 @@
                                     ];
                     }else{
                         var servers = dataStoreService.getItems('server');
+                        var networkNames = [];
                         vm.data = [];
                         vm.labels = [
                                         {field: "name", text: vm.type+" Name"},
                                         {field: "id", text: "ID"},
                                         {field: "status", text: "Status"}
                                     ];
-                        for(var i = 0 ;i < servers.length; i++){
-                            var networks = servers[i].details.networks;
-                            networks.map(function(network){
-                                vm.data.push(network);
+                        angular.forEach(servers, function (item) {
+                            angular.forEach(item.details.networks, function (network) {
+                                if(networkNames.indexOf(network.name) == -1) {
+                                    networkNames.push(network.name);
+                                    vm.data.push(network);
+                                };
                             });
-                        }
+                        });     
                     }
                     
                     // pagination controls
@@ -108,7 +112,6 @@
                     $('#rs-main-panel').css('height','310px');
                 };
 
-
                 /**
                  * @ngdoc method
                  * @name getZones
@@ -128,6 +131,14 @@
                     });
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name getPricingDetails
+                 * @methodOf migrationApp.controller:rsrecommendationitemCtrl
+                 * @description 
+                 * This function helps to get the pricing details for the region and server selected using this api
+                 * '/api/ec2/get_all_ec2_prices/<flavor-id>/<region>';
+                 */
                 vm.getPricingDetails = function(item){
                     var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+vm.awsRegion;
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
@@ -135,7 +146,15 @@
                     });
                 }
  
+                /**
+                 * @ngdoc method
+                 * @name showModifyModal
+                 * @methodOf migrationApp.controller:rsrecommendationitemCtrl
+                 * @description 
+                 * This function helps to populate the pricing details when the modal is clicked first time.
+                 */
                 vm.showModifyModal = function(item){
+                    item.isMenuOpen = !item.isMenuOpen;
                     vm.getPricingDetails(item);
                 };
 
@@ -176,7 +195,7 @@
                                          });    
                     dataStoreService.storeallItems(allData,'server');     
                     vm.data.splice(vm.data.indexOf(selectedServer[0]), 1);
-                    dataStoreService.setItems(vm.data);
+                    dataStoreService.setItems({server:vm.data,network:[]});
                 }
 
                 vm.equipmentDetails = function(type, itemdetails) {

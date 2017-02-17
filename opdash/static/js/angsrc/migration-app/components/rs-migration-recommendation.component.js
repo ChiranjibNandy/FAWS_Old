@@ -26,7 +26,17 @@
                 
                 $('title')[0].innerHTML =  "Recommendations - Rackspace Cloud Migration";
                 vm.migrationName = datastoreservice.getScheduleMigration().migrationName;
-                vm.dataServer = datastoreservice.getItems('server').length;
+                var servers = datastoreservice.getItems('server');
+                vm.dataServer = servers.length;
+                var networkNames = [];
+                angular.forEach(servers, function (item) {
+                    angular.forEach(item.details.networks, function (network) {
+                        if(networkNames.indexOf(network.name) == -1) {
+                            networkNames.push(network.name);
+                        };
+                    });
+                });  
+                vm.dataNetwork = networkNames.length;
                 vm.editName = false;
 
                 /**
