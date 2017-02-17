@@ -21,7 +21,7 @@
                  * @name migrationApp.controller:rsmigrationstatusCtrl
                  * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationstatus rsmigrationstatus} component
                  */
-                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", function(HttpWrapper, dataStoreService, $rootRouter, authservice) {
+                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "$filter", function(HttpWrapper, dataStoreService, $rootRouter, authservice, $filter) {
                     var vm = this;
 
                     /**
@@ -35,18 +35,68 @@
 
                     /**
                      * @ngdoc property
-                     * @name scheduledDateTime
+                     * @name scheduledDate
                      * @propertyOf migrationApp.controller:rsmigrationstatusCtrl
-                     * @type {Date}
-                     * @description Date time of the instant when migration is scheduled
+                     * @type {String}
+                     * @description Date of when migration is scheduled
                      */
-                    vm.scheduledDateTime = "17/01/2017 07:00PM";
+                    vm.scheduledDate = dataStoreService.getMigrationDate();
+
+                    /**
+                     * @ngdoc property
+                     * @name scheduledTime
+                     * @propertyOf migrationApp.controller:rsmigrationstatusCtrl
+                     * @type {String}
+                     * @description Time when migration is scheduled
+                     */
+                    vm.scheduledTime = dataStoreService.getMigrationTime();
+
+                    /**
+                     * @ngdoc property
+                     * @name resourceCount
+                     * @propertyOf migrationApp.controller:rsmigrationstatusCtrl
+                     * @type {Integer}
+                     * @description Total count of resources to be migrated
+                     */
+                    vm.resourceCount = 0;
+
+                    /**
+                     * @ngdoc property
+                     * @name currentBatches
+                     * @propertyOf migrationApp.controller:rsmigrationstatusCtrl
+                     * @type {Object}
+                     * @description Incompleted batches model
+                     */
+                    vm.currentBatches = {};
+                    vm.currentBatches.items = [];
+                    vm.currentBatches.currentPage = 1;
+                    vm.currentBatches.pageSize = 5;
+
+                    /**
+                     * @ngdoc property
+                     * @name completedBatches
+                     * @propertyOf migrationApp.controller:rsmigrationstatusCtrl
+                     * @type {Object}
+                     * @description Completed batches model
+                     */
+                    vm.completedBatches = {};
+                    vm.completedBatches.items = [];
+                    vm.completedBatches.currentPage = 1;
+                    vm.completedBatches.pageSize = 5;
+
+                    var auth = authservice.getAuth();
+                    vm.userOrTenant = auth.is_racker ? "Tenant" : "User";
+                    vm.tenant_id = auth.tenant_id;
+                    vm.currentUser = auth.username;
+
+                    vm.loading = true;
 
                     vm.$routerOnActivate = function(next, previous) {
                         if(previous && previous.urlPath.indexOf("confirm") > -1){
-                            vm.message = "Migration Confirmed for 1/17/2017 7:00 PM";
+                            vm.afterNewMigration = true;
+                            vm.resourceCount = dataStoreService.getMigrationResourceCount();
                         } else{
-                            vm.message = "Migration Dashboard";
+                            vm.afterNewMigration = false;
                         }
                     };
 
@@ -54,27 +104,47 @@
                     var getBatches = function() {
                         //var url = "/static/angassets/migration-status.json";
                         var tenant = authservice.getAuth().tenant_id;
-                        var url = "/api/server_status/" + tenant;
+                        var url = "/api/jobs/" + tenant;
 
                         HttpWrapper.send(url,{"operation":'GET'})
                                 .then(function(response) {
                                     console.log("Batch: ", response);
-                                    //vm.batches = response;
-                                    //vm.batches = [];
-                                    //if(vm.batches.length === 0){
-                                    //    $('#myModal').modal('show');
-                                    //}
+                                    var validCurrentBatchStatus = ["started", "error"];
+                                    var validCompletedBatchStatus = ["completed"];
+                                    var jobList = response.job_status_list;
+                                    var currentBatches = [];
+                                    var completedBatches = [];
+
+                                    angular.forEach(jobList, function(job){
+                                        if(validCurrentBatchStatus.indexOf(job.batch_status)>=0)
+                                            currentBatches.push(job);
+                                        if(validCompletedBatchStatus.indexOf(job.batch_status)>=0)
+                                            completedBatches.push(job);
+                                    });
+
+                                    vm.currentBatches.items = $filter('orderBy')(currentBatches, '-start');
+                                    vm.currentBatches.noOfPages = Math.ceil(currentBatches.length / vm.currentBatches.pageSize);
+                                    vm.currentBatches.pages = new Array(vm.currentBatches.noOfPages);
+                                    
+                                    vm.completedBatches.items = $filter('orderBy')(completedBatches, '-start');
+                                    vm.completedBatches.noOfPages = Math.ceil(completedBatches.length / vm.completedBatches.pageSize);
+                                    vm.completedBatches.pages = new Array(vm.completedBatches.noOfPages);
+
+                                    vm.loading = false;
                                 }, function(errorResponse) {
+                                    vm.loading = false;
+                                    vm.currentBatches.loadError = true;
+                                    vm.completedBatches.loadError = true;
                                     console.log("Dashboard Error: ", errorResponse);
                                 });
 
-                        var jobApiURL = "/api/job/job-ed80806b-6983-45be-8a6e-620b5b3c97ca";
-                        HttpWrapper.send(jobApiURL,{"operation":'GET'})
-                                .then(function(response) {
-                                    console.log("Job Details: ", response);
-                                }, function(errorResponse) {
-                                    console.log("Job Error: ", errorResponse);
-                                });
+                        // var jobApiURL = "/api/job/job-ed80806b-6983-45be-8a6e-620b5b3c97ca";
+                        // HttpWrapper.send(jobApiURL,{"operation":'GET'})
+                        //         .then(function(response) {
+                        //             console.log("Job Details: ", response);
+                        //         }, function(errorResponse) {
+                        //             console.log("Job Error: ", errorResponse);
+                        //         });
                     };
 
                     vm.$onInit = function() {

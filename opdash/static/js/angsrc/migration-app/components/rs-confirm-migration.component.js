@@ -49,7 +49,9 @@
                     vm.batchName = dataStoreService.getScheduleMigration().migrationName;
                     vm.tempBatchName = vm.batchName;
                     var dt = new Date();
-                    vm.scheduledDateTime = (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+                    vm.scheduledDate = dataStoreService.getMigrationDate();
+                    vm.scheduledTime = dataStoreService.getMigrationTime();
+                    vm.scheduledTimezone = dataStoreService.selectedTime.timezone;
                     vm.cost = 431.85;
                     vm.migrating = false;
                     vm.errorInMigration = false;
