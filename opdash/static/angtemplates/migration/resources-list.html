@@ -43,20 +43,23 @@
                             <!--<rs-tab title="Networks">
                                 <rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>
                             </rs-tab>-->
-                            <rs-tab title="Files" ng-if="vm.isRacker">
+                            <rs-tab title="Files" ng-if="vm.isRacker" class="disabled">
                                 Files
                                 <!--<rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>-->
                             </rs-tab>
-                            <rs-tab title="Load Balancers" ng-if="vm.isRacker">
+                            <rs-tab title="Load Balancers" ng-if="vm.isRacker" class="disabled">
                                 Load Balancers
                                 <!--<rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>-->
                             </rs-tab>
                             <div class="rs-pull-right">
                                 <a class="rs-btn" ng-click="vm.cancelMigration()">Cancel Migration</a>
-                                <a class="rs-btn" ng-click="vm.saveItems()">Save For Later</a>
+                                <a class="rs-btn" ng-click="vm.saveForLater()" ng-hide="vm.saveLaterObj.saveInProgress">Save For Later</a>
+                                <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
+                                <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>
                                 <a class="rs-btn rs-btn-primary " ng-click="vm.continue()">Continue</a>
                             </div>
                         </rs-tabs>
+                        <div class="rs-pull-right" ng-show="vm.saveLaterObj.resultMsg" ng-style="vm.saveLaterObj.saveSuccess == true ? {color:'green'} : {color:'red'}" >{{vm.saveLaterObj.resultMsg}}</div>
                         <br>
                         <rsselecteditemspanel showrec="false"></rsselecteditemspanel>
                     </div>
@@ -86,11 +89,29 @@
         <div class="modal-body" style="height: 150px">
             <h3 style="line-height: 136px; text-align: center">Please select some items to migrate</h3>
         </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
     </div>
 
     <div id="save_for_later" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSave" aria-hidden="true">
-        <div class="modal-body" style="height: 150px">
-            <h3 style="line-height: 136px; text-align: center">Saving items: To be implemented</h3>
+        <div class="modal-body">
+            <h3>Please name your Migration in order to save this instance</h3>
+            <form class=" ">
+                <div class="rs-control-group">
+                    <label class="rs-control-label">Name your migration and click '<b>Save </b>' to save this instance</label>
+                    <div class="rs-controls">
+                        <input type="text" ng-model="vm.migrationName" placeholder="{{vm.migrationName}}">
+                        <!--<span ng-show="vm.noName" style="color:red">Please name this instance!</span>-->
+                    </div>
+                </div>
+                <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <a class="rs-btn rs-btn-primary" ng-class="{disabled:vm.migrationName == ''}" ng-click="vm.saveItems(vm.saveLaterObj)" ng-hide="vm.saveLaterObj.saveInProgress">Save</a>
+                <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
+                <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>
+                <br>
+                <div ng-show="vm.saveLaterObj.resultMsg" ng-style="vm.saveLaterObj.saveSuccess == true ? {color:'green'} : {color:'red'}" >{{vm.saveLaterObj.resultMsg}}</div>
+            </form>
         </div>
     </div>
 
@@ -106,6 +127,10 @@
                         <strong>Yes</strong><br>
                         <span class="rs-help-block">Save progress for later</span>
                       </label>
+                      <label ng-show="vm.displayMigName" class="rs-control-label">Name your migration and click '<b>Submit </b>' to save this instance</label>
+                      <div ng-show="vm.displayMigName" class="rs-controls">
+                        <input type="text" ng-model="vm.migrationName" placeholder="{{vm.migrationName}}">
+                      </div>
                       <label class="rs-radio">
                         <input type="radio" ng-model="vm.saveProgress" value="no">
                         <strong>No</strong>
@@ -114,7 +139,11 @@
                     </div>
                   </div>
                     <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                    <button class="rs-btn rs-btn-primary " ng-class="{disabled:vm.saveProgress == ''}" ng-click="vm.submitCancel()">Submit</button>
+                    <button class="rs-btn rs-btn-primary " ng-class="{disabled:vm.saveProgress == '' || !vm.migrationName}" ng-click="vm.submitCancel()" ng-hide="vm.cancelnSaveObj.saveInProgress">Submit</button>
+                    <a class="rs-btn disabled" disabled="disabled" ng-show="vm.cancelnSaveObj.saveInProgress">Submitting...</a>
+                    <i class="rs-processing-indicator" ng-show="vm.cancelnSaveObj.saveInProgress"></i>
+                    <br>
+                    <div ng-show="vm.cancelnSaveObj.resultMsg" ng-style="vm.cancelnSaveObj.saveSuccess == true ? {color:'green'} : {color:'red'}" >{{vm.cancelnSaveObj.resultMsg}}</div>
             </form>
         </div>
     </div>
