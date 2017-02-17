@@ -104,7 +104,7 @@
                     var getBatches = function() {
                         //var url = "/static/angassets/migration-status.json";
                         var tenant = authservice.getAuth().tenant_id;
-                        var url = "/api/server_status/" + tenant;
+                        var url = "/jobs/" + tenant;
 
                         HttpWrapper.send(url,{"operation":'GET'})
                                 .then(function(response) {
