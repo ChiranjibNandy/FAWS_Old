@@ -8,7 +8,7 @@
      * This service is used to store data. This helps in accessing user data across pages.
      */
     angular.module("migrationApp")
-        .service("datastoreservice", [function() {
+        .service("datastoreservice", ["httpwrapper","authservice", function (HttpWrapper, authservice) {
             var self = this;
              /**
               * @ngdoc property
@@ -216,6 +216,11 @@
                 self.labelsServer = [];
                 self.labelsNetwork = [];
                 self.selectedDate = {};
+                self.selectedTime = {
+                    migrationName:'',
+                    time:'',
+                    timezone:''
+                };
                 self.selectedRecommendedItems = [];
                 self.RecommendedTotalCost = null;
                 self.CurrentPricing = null;
@@ -263,6 +268,82 @@
                     migrationResourceCount += item.details.networks.length;
                 });
                 return migrationResourceCount;
+            };
+            /**
+             * @ngdoc method
+             * @name saveItems
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Invokes "/api/users/uidata/" API call for fetching exisitng saved instances. 
+            */
+            this.saveItems = function(saveInstance) {   
+                var self = this;
+                var getSavedInstancesUrl = "/api/users/uidata/"+authservice.getAuth().tenant_id+"/Saved_Migrations";
+                return HttpWrapper.send(getSavedInstancesUrl, {"operation":'GET'})
+                    .then(function(result){
+                        if(result == null){
+                            result = JSON.stringify({
+                                'savedDetails': []
+                            });
+                        }
+                        return self.postSavedInstances(JSON.parse(result.savedDetails || '[]'), saveInstance);
+                    },function(error) {
+                        return false;
+                });
+            };
+
+            /**
+                 * @ngdoc method
+                 * @name postSavedInstances
+                 * @methodOf migrationApp.service:datastoreservice
+                 * @description 
+                 * Invokes "/api/users/uidata/add" API call for posting saved instance.
+            */
+            this.postSavedInstances = function(response,saveInstance) {
+                var self = this;
+                var requestObj = self.objForSaveLater(response, saveInstance);
+                return HttpWrapper.save("/api/users/uidata/add", {"operation":'POST'}, requestObj)
+                    .then(function(result){
+                        return true;
+                    },function(error) {
+                        return false;
+                    });
+            };
+
+            /**
+             * @ngdoc method
+             * @name objForSaveLater
+             * @methodOf migrationApp.service:datastoreservice
+             * @param {String} preSavedDetails previous saved instances of migration  
+             * @param {String} recommendations recommendations for selected resources
+             * @param {String} scheduling_details scheduling details of migration to be saved
+             * @param {String} stepName Step of the Migration instance to be saved
+             * @returns {Object} A POST request _object_ for saving instance of Migration.
+             * @description 
+             * This service method returns an object that will be posted to /api/users/uidata/add API.
+             */
+            this.objForSaveLater = function(preSavedDetails, saveInstance){
+                var self = this;
+                self.setScheduleMigration(saveInstance.migration_schedule)
+                var savedetails_json = 
+                    [{
+                        "instance_name":self.getScheduleMigration().migrationName,
+                        "timestamp":moment().format('MMDYYYYhmmss'), //(so we know when was it saved)
+                        "selected_resources": self.getItems('server'),
+                        "recommendations":saveInstance.recommendations,
+                        "scheduling-details":saveInstance.scheduling_details,
+                        "step_name":saveInstance.step_name
+                    }];
+                if(preSavedDetails.length > 0){
+                    preSavedDetails.push(savedetails_json[0]);
+                    savedetails_json = preSavedDetails;
+                }
+                var reqObj = {
+                                "tenant_id": authservice.getAuth().tenant_id.toString(),
+                                "context": "Saved_Migrations",
+                                "savedDetails": JSON.stringify(savedetails_json)
+                }
+                return reqObj;
             };
 
             return self;

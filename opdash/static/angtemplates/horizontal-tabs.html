@@ -1,7 +1,7 @@
 <div class="horizontal-tab-container">
     <ul class='rs-tabs'>
         <li ng-repeat='tab in vm.tabs' ng-class="{'active': tab.active}">
-            <a href='' ng-click='vm.selectTab(tab)'>{{tab.title}}</a>
+            <a href='' ng-click='vm.selectTab(tab)' ng-class="{'disabled': tab.title != 'Servers'}">{{tab.title}}</a>
         </li>
     </ul>
     <div id="rs-main-panel">

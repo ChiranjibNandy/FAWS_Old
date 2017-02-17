@@ -24,7 +24,7 @@
              * @name migrationApp.controller:rsmigrationresourceslistCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationresourceslist rsmigrationresourceslist} component
              */
-            controller: ["authservice", "$scope", "$rootRouter", "datastoreservice", function(authservice, $scope, $rootRouter, dataStoreService) {
+            controller: ["authservice", "$scope", "$rootRouter", "datastoreservice", "migrationitemdataservice", "httpwrapper", "$timeout", function(authservice, $scope, $rootRouter, dataStoreService, ds, HttpWrapper, $timeout) {
                 var vm = this;
 
                 vm.$onInit = function() {
@@ -43,6 +43,19 @@
                     vm.filterSearch = "";
                     vm.saveProgress = "";
                     var d = new Date();
+                    vm.saveLaterObj = {
+                        "saveSuccess" : false,
+                        "saveInProgress" : false,
+                        "resultMsg" : "",
+                        "modalName": '#save_for_later'
+                    };
+                    vm.cancelnSaveObj = {
+                        "saveSuccess" : false,
+                        "saveInProgress" : false,
+                        "resultMsg" : "",
+                        "modalName": '#cancel_modal'
+                    };
+                    vm.displayMigName = false;
                     var timestmp = moment(d).format("DDMMMYYYY-hhmma");
                     vm.migrationName = 'Migration-' + timestmp;
                     vm.noName = false;
@@ -54,7 +67,6 @@
                 }
 
                 vm.numOfResources = function(type, itemLen) {
-                    // console.log("emit called: "+itemLen);
                     vm.numOfItems[type] = itemLen;
                     //vm.ServerTitle = 'Servers' + '(' + vm.numOfItems['server'] + ')';
                 };
@@ -82,12 +94,6 @@
                  * @description 
                  * Called by child component when an item is removed by user
                  */
-
-                $scope.$on("ItemRemoved", function(event, item){
-                    // console.log("broadcast invoked");
-                    $scope.$broadcast("ItemRemovedForChild", item); // broadcast event to all child components
-                });
-
                 vm.removeItem = function(item, type) {
                     if(vm.selectedItems[type].indexOf(item)>=0){
                         vm.selectedItems[type].splice(vm.selectedItems[type].indexOf(item), 1);
@@ -95,31 +101,92 @@
                         $scope.$broadcast("ItemRemovedForChild", item); // broadcast event to all child components
                         $scope.$broadcast("ItemsModified");
                     }
+                };
+
+                $scope.$on("ItemRemoved", function(event, item){
+                    // console.log("broadcast invoked");
+                    $scope.$broadcast("ItemRemovedForChild", item); // broadcast event to all child components
+                });
+
+                /**
+                 * @ngdoc method
+                 * @name saveForLater
+                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @description 
+                 * Save instance of Migration for further processing 
+                 */
+                vm.saveForLater = function() {
+                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0) {
+                        var migration_name = dataStoreService.getScheduleMigration().migrationName;
+                        if(migration_name){
+                            vm.saveItems(vm.saveLaterObj);
+                        }
+                        else{
+                            $('#save_for_later').modal('show');
+                        }
+                    }
+                    else{
+                        $("#no_selection").modal('show');
+                    }
                 }
-                // console.log("time stamp: "+Math.floor(new Date().getTime()/ 1000));
                 
                 /**
                  * @ngdoc method
                  * @name saveItems
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
                  * @description 
-                 * Save selected resources for further processing 
+                 * Invokes "/api/users/uidata/" API call for fetching existing saved instances. 
                  */
-                vm.saveItems = function() {
-                    vm.saveDetails={
-                        "timestmp":Math.floor(new Date().getTime()/ 1000), //(so we know when was it saved)
-                        "selected_resources": dataStoreService.getItems('server'),
-                        "recommendations":'',
-                        "scheduling-details":'',
-                        "step":"1"
+                vm.saveItems = function(buttonDetails) {
+                    var saveInstance = {
+                        recommendations : {},
+                        scheduling_details : {},
+                        step_name: "MigrationResourceList",
+                        migration_schedule: {
+                            migrationName:vm.migrationName,
+                            time:'',
+                            timezone:''
+                        }
                     };
-                    console.log("saved details: "+vm.saveDetails);
-                    //HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj)
-                    //             .then(function(result){
-                    //                 console.log(result);
-                    //                 $rootRouter.navigate(["MigrationStatus"]);
-                    //             });
-                    $('#save_for_later').modal('show');
+                    buttonDetails.saveInProgress = true;
+                    dataStoreService.saveItems(saveInstance).then(function(success){
+                        if(success){
+                            buttonDetails.saveInProgress = false;
+                            buttonDetails.saveSuccess = true;
+                            buttonDetails.resultMsg = "Saved your instance successfully with name: "+dataStoreService.getScheduleMigration().migrationName;
+                            $timeout(function () {
+                                buttonDetails.resultMsg = "";
+                            }, 3000);
+                            $timeout(function () {
+                                if(buttonDetails.modalName == '#cancel_modal'){
+                                    $('#cancel_modal').modal('hide');
+                                    $rootRouter.navigate(["MigrationStatus"]);
+                                }
+                                else
+                                    $(buttonDetails.modalName).modal('hide');
+                            }, 4000);
+                        }else{
+                            buttonDetails.saveInProgress = false;
+                            buttonDetails.saveSuccess = false;
+                            buttonDetails.resultMsg = "Error while saving. Please try again after sometime!!";
+                            $timeout(function () {
+                                buttonDetails.resultMsg = "";
+                            }, 3000);
+                            $timeout(function () {
+                                $(buttonDetails.modalName).modal('hide');
+                            }, 4000);
+                        }
+                    },function(error){
+                        buttonDetails.saveInProgress = false;
+                        buttonDetails.saveSuccess = false;
+                        buttonDetails.resultMsg = "Error while saving. Please try again after sometime!!";
+                        $timeout(function () {
+                            buttonDetails.resultMsg = "";
+                        }, 3000);
+                        $timeout(function () {
+                            $(buttonDetails.modalName).modal('hide');
+                        }, 4000);
+                    });
                 };
 
                 /**
@@ -143,6 +210,7 @@
                 vm.continue = function() {
                     if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0){
                         dataStoreService.setItems(vm.selectedItems);
+                        dataStoreService.setDontShowStatus(true);
                         var migrationName = dataStoreService.getScheduleMigration().migrationName;
                         if(migrationName)
                             $rootRouter.navigate(["MigrationRecommendation"]);
@@ -176,7 +244,6 @@
                         $('#cancel_modal').modal('hide');
                         $('#intro_modal').modal('hide');
                         $('#no_selection').modal('hide');
-                        dataStoreService.setDontShowStatus(true);
                         $rootRouter.navigate(["MigrationRecommendation"]);
                     }
                     else{
@@ -212,12 +279,23 @@
                  * Cancel Migration of resources and go back to migration dashboard page.
                  */
                 vm.submitCancel = function() {
+                    if(vm.saveProgress == 'yes'){
+                        var migration_name = dataStoreService.getScheduleMigration().migrationName;
+                        if(!migration_name && !vm.displayMigName){
+                            vm.displayMigName = true;
+                        }
+                        else{
+                            vm.saveItems(vm.cancelnSaveObj);
+                        };
+                    }
+                    else{
+                        $rootRouter.navigate(["MigrationStatus"]);
+                        $('#cancel_modal').modal('hide');
+                    }
                     $('#save_for_later').modal('hide');
                     $('#name_modal').modal('hide');
-                    $('#cancel_modal').modal('hide');
                     $('#intro_modal').modal('hide');
                     $('#no_selection').modal('hide');
-                    $rootRouter.navigate(["MigrationStatus"]);
                 }
 
                 return vm;

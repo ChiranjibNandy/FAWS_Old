@@ -1,11 +1,11 @@
 <tr ng-repeat="item in vm.items | filter: vm.filtervalue | limitTo : vm.pageSize : (vm.currentPage-1)*vm.pageSize">
-    <td class="rs-table-status" style="background-color: white"
-            ng-class="{'rs-table-status-ok': item.status=='ACTIVE', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
+    <td class="rs-table-status" 
+            ng-class="{'rs-table-status-ok': item.status=='active', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
     </td>
     <td class="rs-table-checkbox" style="background-color: white"><input type="checkbox" ng-model="item.selected" ng-change="vm.changeSelectAll(item,false)" ng-checked="item.selected" /></td>
     <td class="rs-table-link" style="background-color: white"><a href="#resource_info" role="button" ng-click="vm.equipmentDetails(vm.type, item)" data-toggle="modal" style="overflow: visible !important">{{item.name}}</a></td>
     <!--<td class="rs-table-link" style="background-color: white"><a href="#" ng-link="['EquipmentDetails', {type: vm.type, id: item.id}]" style="overflow: visible !important">{{item.name}}</a></td>-->
     <td class="rs-table-text" style="background-color: white">{{item.ip_address}}</td>
-    <td class="rs-table-text">{{item.ram}} MB</td>
-    <td class="rs-table-text capitalize">{{item.status | lowercase}}</td>
+    <td class="rs-table-text" style="background-color: white">{{item.ram}} MB</td>
+    <td class="rs-table-text capitalize" style="background-color: white">{{item.status | lowercase}}</td>
 </tr>
