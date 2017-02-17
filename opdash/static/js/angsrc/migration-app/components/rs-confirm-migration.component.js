@@ -25,7 +25,7 @@
              * @name migrationApp.controller:rsconfirmmigrationCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsconfirmmigration rsconfirmmigration} component
              */
-            controller: [ "$rootRouter","datastoreservice","migrationitemdataservice", "$q","httpwrapper", "authservice", function($rootRouter,dataStoreService,ds,$q,HttpWrapper, authservice) {
+            controller: [ "$rootRouter","datastoreservice","migrationitemdataservice", "$q","httpwrapper", "authservice", "$timeout", function($rootRouter,dataStoreService,ds,$q,HttpWrapper, authservice, $timeout) {
                 var vm = this;
                 
                 vm.$onInit = function() {
@@ -91,8 +91,10 @@
                     //$rootRouter.navigate(["MigrationStatus"]);
                     HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj)
                                 .then(function(result){
-                                    console.log("Migration Response: ", result);
-                                    $rootRouter.navigate(["MigrationStatus"]);
+                                    $timeout(function() {
+                                        console.log("Migration Response: ", result);
+                                        $rootRouter.navigate(["MigrationStatus"]);
+                                    }, 8000);
                                 }, function(error) {
                                     console.log("Error: Could not trigger migration", error);
                                     vm.migrating = false;

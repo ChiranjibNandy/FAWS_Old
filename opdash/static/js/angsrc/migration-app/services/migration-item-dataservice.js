@@ -146,7 +146,7 @@
                             instances.push({
                                 source: {
                                     id: item.id,
-                                    region: region,
+                                    region: region.toUpperCase(),
                                 },
                                 destination: {
                                     region: "us-east-1",

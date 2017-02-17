@@ -52,21 +52,23 @@
                                 <td>{{vm.currentUser}}</td>
                                 <td class="rs-table-text ng-binding">{{(batch.start && batch.start * 1000) | date : 'M/dd/yyyy hh:mm a'}}</td>
                                 <td class="rs-table-text">
-                                    <span class="rs-status" ng-show="batch.batch_status===null">Not Configured</span>
+                                    <span class="rs-status" ng-show="batch.batch_status==='not available'">Not Available</span>
                                     <span class="rs-status" ng-show="batch.batch_status==='scheduled'">Scheduled</span>
+                                    <span class="rs-status rs-status-ok" ng-show="batch.batch_status==='in progress'">In Progress</span>
                                     <span class="rs-status rs-status-ok" ng-show="batch.batch_status==='started'">Started</span>
-                                    <span class="rs-status rs-status-error" ng-show="batch.batch_status==='error'">Stopped</span>
+                                    <span class="rs-status rs-status-ok" ng-show="batch.batch_status==='done'">Completed</span>
+                                    <span class="rs-status rs-status-error" ng-show="batch.batch_status==='error'">Error</span>
                                     <span class="rs-status rs-status-warning" ng-show="batch.batch_status==='paused'">Paused</span>
                                 </td>
                                 <td class="rs-table-text">
                                     <div class="rs-progress rs-progress-medium" style="width: 75%;">
                                         <div class="rs-progress-inner">
-                                            <div class="rs-segment" style="width: {{['started', 'paused'].indexOf(batch.batch_status)>=0 ? 50 : 0}}%">
-                                                <div class="rs-bar" ng-class="{'rs-status-ok rs-bar-striped': batch.batch_status==='started', 'rs-status-error': batch.batch_status==='error', 'rs-status-warning': batch.batch_status==='paused'}"></div>
+                                            <div class="rs-segment" style="width: {{['started', 'in progress', 'paused'].indexOf(batch.batch_status)>=0 ? 50 : 0}}%">
+                                                <div class="rs-bar" ng-class="{'rs-status-ok rs-bar-striped': ['started', 'in progress'].indexOf(batch.batch_status)>=0, 'rs-status-error': batch.batch_status==='error', 'rs-status-warning': batch.batch_status==='paused'}"></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <span class="rs-progress-label">{{batch.progress}}%</span>
+                                    <span class="rs-progress-label">{{ ['started', 'in progress', 'paused'].indexOf(batch.batch_status)>=0 ? 50 : 0 }}%</span>
                                 </td>
                                 <td class="rs-table-input">
                                     <div class="rs-btn-group">
@@ -142,7 +144,7 @@
                         </thead>
                         <tbody ng-show="!vm.loading && !vm.completedBatches.loadError && vm.completedBatches.items.length!==0">
                             <tr ng-repeat="batch in vm.completedBatches.items | limitTo : vm.completedBatches.pageSize : (vm.completedBatches.currentPage-1)*vm.completedBatches.pageSize" class="ng-scope">
-                                <td class="rs-table-link large-col"><a ng-link="['CompletedBatchDetails', {batch_id: batch.batch_id}]" class="ng-binding" href="./batch-migration-details">{{batch.batch_name}}</a></td>
+                                <td class="rs-table-link large-col"><a ng-link="['CompletedBatchDetails', {batch_id: batch.batch_id}]" class="ng-binding">{{batch.batch_name}}</a></td>
                                 <td class="rs-table-text ng-binding">{{(batch.start && batch.start * 1000) | date : 'MM/dd/yyyy hh:mm a'}}</td>
                                 <td class="rs-table-text ng-binding" colspan="2">{{batch.end}}</td>
                                 <td><a href="" >Archive</a></td>
