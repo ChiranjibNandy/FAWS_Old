@@ -79,6 +79,7 @@
                     "(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka"];
                     var date = new Date().toTimeString();
                     var timeZone =  date.indexOf("+") === -1 ?date.substr(date.indexOf("-")+1,5):date.substr(date.indexOf("+")+1,5);
+
                     var exactZone = [timeZone.slice(0, 2),':', timeZone.slice(2)].join('');
                     vm.timezone = vm.timeZoneItems.filter(function(item){
                                     if(item.includes(exactZone.trim())){
