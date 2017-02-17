@@ -43,7 +43,7 @@
              * @name migrationApp.controller:rsrecommendationitemCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsrecommendationitem rsrecommendationitem} component
              */
-            controller: ["migrationitemdataservice", "authservice", "$q", "datastoreservice", "$rootRouter","httpwrapper", function (ds, authservice, $q, dataStoreService, $rootRouter,HttpWrapper) {
+            controller: ["migrationitemdataservice", "authservice", "$q", "datastoreservice", "$rootRouter","httpwrapper","$scope", function (ds, authservice, $q, dataStoreService, $rootRouter,HttpWrapper,$scope) {
                 var vm = this;
 
                 vm.$onInit = function() {
@@ -70,7 +70,8 @@
                                         {field: "ip_address", text: "IP Address"},
                                         {field: "aws_region", text: "AWS Region"},
                                         {field: "aws_zone", text: "AWS Zone"},
-                                        {field: "aws_instance", text: "AWS instance"}
+                                        {field: "aws_instance", text: "AWS instance"},
+                                        {field: "cost", text: "Cost"}
                                     ];
                     }else{
                         var servers = dataStoreService.getItems('server');
@@ -195,6 +196,8 @@
                                          });    
                     dataStoreService.storeallItems(allData,'server');     
                     vm.data.splice(vm.data.indexOf(selectedServer[0]), 1);
+                    $scope.$emit("ServerRemoved", vm.data);
+                    $('.rs-tabs').children()[0].children[0].innerHTML = "Servers ("+vm.data.length+")";
                     dataStoreService.setItems({server:vm.data,network:[]});
                 }
 

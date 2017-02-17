@@ -7,7 +7,7 @@
                   <div class="rs-table-overlay-message"></div>
               </div>
           </div>
-          <table class="rs-list-table" ng-show="!vm.noData">
+          <table class="rs-list-table" ng-show="!vm.noData" ng-class="{'recommendServer':  vm.type=='server'}">
               <thead>
                   <tr>
                       <th class="rs-table-status"></th>

@@ -182,7 +182,7 @@ th {
 
 .migration-mgr .rs-list-table td:nth-child(2) a {
     display: inline-block;
-    width: 300px;
+    width: 200px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
