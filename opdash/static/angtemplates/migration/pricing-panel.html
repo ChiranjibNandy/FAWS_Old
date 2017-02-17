@@ -1,5 +1,16 @@
-
-    <div class="rs-inner">
+    <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
+        <div class="rs-table-overlay-content">
+            <div class="rs-table-overlay-message">Loading&hellip;</div>
+        </div>
+    </div>
+    <div ng-show="vm.loadError" class="rs-table-overlay rs-table-overlay-error">
+        <div class="rs-table-overlay-content">
+            <div class="rs-table-overlay-message"><i class="rs-icon-error-indicator"></i>
+                Error encountered. Please try again.
+            </div>
+        </div>
+    </div>
+    <div class="rs-inner" ng-show="!vm.loading && !vm.loadError">
         <div class="info-panel">
             <h3>Current Pricing</h3>
             <p>
@@ -15,7 +26,7 @@
         <div class="white-panel">
             <h3>Projected Pricing</h3>
             <p>
-                <big><b>$420</b>/month</big><br>
+                <big><b>${{vm.totalProjectedPricingSum}}</b>/month</big><br>
                 <small>Current Support Level: <b><a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Navigator</a></b></small>
             </p>
         </div>
@@ -34,7 +45,7 @@
         </div>
         <br>
     </div>
-</div>  
+<!--</div>  -->
  <!-- PRECHECK MODAL -->
 <!--<div id="precheck_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">

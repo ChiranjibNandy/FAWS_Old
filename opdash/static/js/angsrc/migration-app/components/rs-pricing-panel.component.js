@@ -29,13 +29,16 @@
              * @name migrationApp.controller:rspricingCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rspricingpanel rspricingpanel} component
              */
-            controller:["datastoreservice","$rootRouter","httpwrapper","$filter",function(dataStoreService,$rootRouter,HttpWrapper,$filter){
+            controller:["datastoreservice","$rootRouter","httpwrapper","$filter","$timeout","$q",function(dataStoreService,$rootRouter,HttpWrapper,$filter,$timeout,$q){
                 var vm = this;
                 vm.invoiceCoverageStartDate = '';
                 vm.invoiceCoverageEndDate = '';
                 vm.invoiceTotal = '';
+                vm.totalProjectedPricingSum = 0;
 
-                vm.$onInit = function() {
+                vm.$onInit = function() {                
+                    vm.loading = true;
+                    vm.loadError = false;
                     dataStoreService.setRecommendedTotalCost();
                     dataStoreService.setCurrentPricing ();
                     vm.totalCost = dataStoreService.getRecommendedTotalCost();
@@ -44,10 +47,19 @@
                     //vm.data = dataStoreService.getItems(vm.selectedItem);
                     // dataStoreService.setItems(vm.selectedItem);
                     // dataStoreService.getItems(vm.type);
-                    vm.getCurrentPricingDetails();
+                    var currentPricingDetails = vm.getCurrentPricingDetails();
+                    var projectedPricingDetails = vm.getProjectedPricing();
+
+                    //Waits till all the promises are resolved , then only loads the pricing details
+                    $q.all([currentPricingDetails,projectedPricingDetails]).then(function(results) {
+                        vm.loading = false;
+                    }, function(error){
+                        vm.loading = false;
+                        vm.loadError = true;
+                    });
                 };
                    
-                      /**
+                /**
                  * @ngdoc method
                  * @name saveItems
                  * @methodOf migrationApp.controller:rsmigrationrecommendationCtrl
@@ -122,15 +134,31 @@
                  * Gets current pricing amount and the billing period
                  */
                 vm.getCurrentPricingDetails = function(){
-                    HttpWrapper.send('/api/billing/get_latest_bill', {"operation":'GET'})
+                    return HttpWrapper.send('/api/billing/get_latest_bill', {"operation":'GET'})
                     .then(function(result){
-                        console.log("Current Pricing Response: ", result);
                         vm.invoiceCoverageStartDate = $filter('date')(result.invoice.coverageStartDate, "dd/MM/yyyy");
                         vm.invoiceCoverageEndDate = $filter('date')(result.invoice.coverageEndDate, "dd/MM/yyyy");
                         vm.invoiceTotal = result.invoice.invoiceTotal;
                     }, function(error) {
                         console.log("Error: Could not fetch current pricing details", error);
-                    });
+                    }); 
+                }
+
+                /**
+                 * @ngdoc method
+                 * @name getProjectedPricing
+                 * @methodOf migrationApp.controller:rsmigrationrecommendationCtrl
+                 * @description 
+                 * Gets a cumulative projected pricing amount
+                 */
+                vm.getProjectedPricing = function(){
+                    return $timeout(function(){
+                        var selectedPricingMappingObj = dataStoreService.getItems('server');
+                        selectedPricingMappingObj.forEach(function(item){
+                            vm.totalProjectedPricingSum += parseFloat(item.selectedMapping.cost);
+                        });
+                        vm.totalProjectedPricingSum = vm.totalProjectedPricingSum.toFixed(2);
+                    },1000);                                 
                 }
 
                 return vm;
