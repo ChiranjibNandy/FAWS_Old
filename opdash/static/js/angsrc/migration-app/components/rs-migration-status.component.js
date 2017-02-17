@@ -109,8 +109,8 @@
                         HttpWrapper.send(url,{"operation":'GET'})
                                 .then(function(response) {
                                     console.log("Batch: ", response);
-                                    var validCurrentBatchStatus = ["started", "error"];
-                                    var validCompletedBatchStatus = ["completed"];
+                                    var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled"];
+                                    var validCompletedBatchStatus = ["done"];
                                     var jobList = response.job_status_list;
                                     var currentBatches = [];
                                     var completedBatches = [];
