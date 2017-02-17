@@ -61,7 +61,7 @@
                         <div class="rs-row">
                             <div class="span-12">
                                 <!-- SHOW ALERT AFTER CHOICE MADE -->
-                                <div class="alert alert-success animated fadeIn" id="alert" ng-show="vm.showMigrate">
+                                <div class="alert alert-success animated fadeIn" id="alert">
                                     <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
                                     <h3>Migration Summary: {{vm.selectedDate}}</h3>
                                 </div> 
@@ -71,7 +71,7 @@
                                         <div class="rs-control-group">
                                             <div class="rs-controls">
                                                 <label class="rs-radio">
-                                                <input type="checkbox" name="" ng-click="vm.showMigrateNow()">
+                                                <input type="radio" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateNow" ng-click="vm.showTime()">
                                                 <strong>Migrate Now</strong><br>
                                                 </label>
                                             </div>
@@ -79,7 +79,7 @@
                                         <div class="rs-control-group">
                                             <div class="rs-controls">
                                                 <label class="rs-radio">
-                                                <input type="checkbox" ng-modal ="showTime" name="" ng-click="vm.showTime(showTime)" >
+                                                <input type="radio" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateLate" ng-click="vm.showTime()" >
                                                 <strong>Schedule Time</strong><br>
                                                 </label>
                                             </div>
@@ -105,7 +105,7 @@
                                             <div class="rs-control-group">
                                                 <label class="rs-control-label">Time</label>
                                                 <div class="rs-controls">
-                                                    <select name="time" ng-change="vm.timeChange()"  ng-disabled="vm.isDisableDate" ng-options="time for time in vm.timeItems" ng-model="vm.time" class="ng-pristine ng-untouched ng-valid ng-not-empty span2" >
+                                                    <select name="time" ng-change="vm.timezoneChange()"  ng-disabled="vm.isDisableDate" ng-options="time for time in vm.timeItems" ng-model="vm.time" class="ng-pristine ng-untouched ng-valid ng-not-empty span2" >
                                           <option  value="{{vm.time}}">{{vm.time}}</option>
                                         </select>
                                                 </div>  

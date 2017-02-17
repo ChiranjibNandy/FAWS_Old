@@ -23,12 +23,14 @@
              * @name migrationApp.controller:rsschedulemigrationCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsschedulemigration rsschedulemigration} component
              */
-            controller: [ "$rootRouter","datastoreservice","$scope", function($rootRouter,dataStoreService,$scope) {
+            controller: [ "$rootRouter","datastoreservice","$scope","authservice", function($rootRouter,dataStoreService,$scope,authservice) {
                 var vm = this;
 
                 vm.$onInit = function() {
                     $('title')[0].innerHTML =  "Schedule Migration - Rackspace Cloud Migration";
-                    vm.tenant_id = 1024814;//  authservice.getAuth().tenant_id;
+                    console.log(authservice.getAuth().tenant_id);
+                    vm.tenant_id = authservice.getAuth().tenant_id;
+                    vm.scheduleMigration = "migrateNow";
                     vm.timeItems = ["12:00am","12:15am","12:30am","12:45am","1:00am","1:15am","1:30am","1:45am","2:00am","2:15am","2:30am","2:45am","3:00am","3:15am","3:30am","3:45am","4:00am","4:15am","4:30am","4:45am",
                     "5:00am","5:15am","5:30am","5:45am",
                     "06:00am","6:15am","6:30am","6:45am",
@@ -46,42 +48,52 @@
                     vm.timeZoneItems = ["(GMT -12:00) Eniwetok, Kwajalein",
                 "(GMT -11:00) Midway Island, Samoa",
                 "(GMT -10:00) Hawaii",
-                "(GMT -9:00) Alaska",
-                "(GMT -8:00) Pacific Time (US &amp; Canada)",
-                "(GMT -7:00) Mountain Time (US &amp; Canada)",
-                "(GMT -6:00) Central Time (US &amp; Canada), Mexico City",
-                "(GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima",
-                "(GMT -4:30) Caracas",
-                "(GMT -4:00) Atlantic Time (Canada), La Paz, Santiago",
-                "(GMT -3:00) Brazil, Buenos Aires, Georgetown",
-               "(GMT -2:00) Mid-Atlantic",
-                "(GMT -1:00 hour) Azores, Cape Verde Islands",
+                "(GMT -09:00) Alaska",
+                "(GMT -08:00) Pacific Time (US &amp; Canada)",
+                "(GMT -07:00) Mountain Time (US &amp; Canada)",
+                "(GMT -06:00) Central Time (US &amp; Canada), Mexico City",
+                "(GMT -05:00) Eastern Time (US &amp; Canada), Bogota, Lima",
+                "(GMT -04:30) Caracas",
+                "(GMT -04:00) Atlantic Time (Canada), La Paz, Santiago",
+                "(GMT -03:00) Brazil, Buenos Aires, Georgetown",
+               "(GMT -02:00) Mid-Atlantic",
+                "(GMT -01:00 hour) Azores, Cape Verde Islands",
                 "(GMT) Western Europe Time, London, Lisbon, Casablanca, Greenwich",
-               "(GMT +1:00 hour) Brussels, Copenhagen, Madrid, Paris",
-                "(GMT +2:00) Kaliningrad, South Africa, Cairo",
-               "(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg",
-               "(GMT +3:30) Tehran",
-                "(GMT +4:00) Abu Dhabi, Muscat, Yerevan, Baku, Tbilisi",
-                 "(GMT +4:30) Kabul",
-                "(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent",
-                "(GMT +5:30) Mumbai, Kolkata, Chennai, New Delhi",
-                "(GMT +5:45) Kathmandu",
-                "(GMT +6:00) Almaty, Dhaka, Colombo",
-               "(GMT +6:30) Yangon, Cocos Islands",
-                "(GMT +7:00) Bangkok, Hanoi, Jakarta",
-                "(GMT +8:00) Beijing, Perth, Singapore, Hong Kong",
-                "(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk",
-               "(GMT +9:30) Adelaide, Darwin",
+               "(GMT +01:00 hour) Brussels, Copenhagen, Madrid, Paris",
+                "(GMT +02:00) Kaliningrad, South Africa, Cairo",
+               "(GMT +03:00) Baghdad, Riyadh, Moscow, St. Petersburg",
+               "(GMT +03:30) Tehran",
+                "(GMT +04:00) Abu Dhabi, Muscat, Yerevan, Baku, Tbilisi",
+                 "(GMT +04:30) Kabul",
+                "(GMT +05:00) Ekaterinburg, Islamabad, Karachi, Tashkent",
+                "(GMT +05:30) Mumbai, Kolkata, Chennai, New Delhi",
+                "(GMT +05:45) Kathmandu",
+                "(GMT +06:00) Almaty, Dhaka, Colombo",
+               "(GMT +06:30) Yangon, Cocos Islands",
+                "(GMT +07:00) Bangkok, Hanoi, Jakarta",
+                "(GMT +08:00) Beijing, Perth, Singapore, Hong Kong",
+                "(GMT +09:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk",
+               "(GMT +09:30) Adelaide, Darwin",
                 "(GMT +10:00) Eastern Australia, Guam, Vladivostok",
                 "(GMT +11:00) Magadan, Solomon Islands, New Caledonia",
-                    "(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka"]
-                    vm.time =  vm.timeItems[0];//new Date().toLocaleTimeString(); ;
+                    "(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka"];
+                    var date = new Date().toTimeString();
+                    var timeZone =  date.substr(date.indexOf("+")+1,5);
+                    var exactZone = [timeZone.slice(0, 2),':', timeZone.slice(2)].join('');
+                    vm.timezone = vm.timeZoneItems.filter(function(item){
+                                    if(item.includes(exactZone.trim())){
+                                        return item;
+                                    }      
+                                  })[0];
+                    var m = moment();
+                    var roundUp = m.minute() || m.second() || m.millisecond() ? m.add(1, 'hour').startOf('hour') : m.startOf('hour');
+                    vm.time = roundUp.format('h:mma');
+                    
                     vm.initTime =  new Date().toLocaleTimeString();
-                    vm.timezone = vm.timeZoneItems[0]//new Date().toTimeString(); //;
+                   // vm.timezone = vm.timeZoneItems[0]//new Date().toTimeString(); //;
+                   vm.date =new Date();
                     vm.selectedDateHeader = new Date().toLocaleString();//moment().format("MMM Do YYYY")+" at "+vm.time+" "+vm.timezone;
-                    vm.date =new Date();
-                    vm.finalDateForUnixTime = vm.date.toDateString()+ " "+ vm.time +" "+ vm.timezone;
-                     vm.selectedDate =  vm.finalDateForUnixTime;
+                    vm.selectedDate =  moment().format('ddd MMMM Do YYYY')+' '+vm.time+' '+vm.timezone;
                     // console.log(vm.finalDateForUnixTime);
                    //console.log(new Date(vm.finalDateForUnixTime));
                     vm.unixTime = Math.floor(new Date().getTime()/ 1000);
@@ -136,10 +148,9 @@
                  * @description 
                  * Saves the chosen timezone for migration
                  */
-                // vm.timezoneChange = function(){
-                //     dataStoreService.storeDate('timezone',vm.timezone);
-                //     vm.selectedDate = moment(vm.date).format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
-                // };
+                vm.timezoneChange = function(){
+                    vm.selectedDate =  moment().format('ddd MMMM Do YYYY')+' '+vm.time+' '+vm.timezone;
+                };
 
                 /**
                  * @ngdoc method
@@ -186,11 +197,8 @@
                 };
                 
                vm.showTime = function(){
-                   vm.showTimeForm =  !vm.showTimeForm;
+                    vm.showTimeForm =  !vm.showTimeForm;
                };
-               vm.showMigrateNow = function(){
-                  vm.showMigrate = !vm.showMigrate;
-               }
 
                vm.onSaveTime = function(){
                vm.isDisableDate =true;
