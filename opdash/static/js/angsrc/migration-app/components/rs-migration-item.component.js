@@ -43,16 +43,25 @@
              * @name migrationApp.controller:rsmigrationitemCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationitem rsmigrationitem} component
              */
-            controller: ["migrationitemdataservice", "datastoreservice", "serverservice", "$rootRouter", "authservice", "$q", "$scope", function (ds, datastoreservice, ss, $rootRouter, authservice, $q, $scope) {
+            controller: ["migrationitemdataservice", "datastoreservice", "serverservice", "httpwrapper", "$rootRouter", "authservice", "$q", "$scope", function (ds, datastoreservice, ss, HttpWrapper, $rootRouter, authservice, $q, $scope) {
                 var vm = this;
 
                 var mapServerStatus = function(dataList, statusList) {
-                    for(var i=0; i<dataList.length; i++){
-                        var statusItem = statusList.filter(function(item){ return item.server_id === dataList[i].id })[0];
-                        if(statusItem)
-                            dataList[i].migrationStatus = statusItem.status;
-                    }
-                    //dataList[0].migrationStatus = "done";
+                    angular.forEach(dataList, function (server) {
+                        server.canMigrate = true;
+                        angular.forEach(statusList, function (status) {
+                            angular.forEach(status.instances, function (instance) {
+                                if(instance['name'] == server.name){
+                                    if(instance['status'] != 'error'){
+                                        server.canMigrate = false;
+                                    }
+                                    else{
+                                        server.canMigrate = true;
+                                    }
+                                }
+                            });
+                        });
+                    });
                     return dataList;
                 };
 
@@ -113,7 +122,6 @@
                      * @description Set of resources retrieved during first time loading of application
                      */
                     var resources_retrieved = datastoreservice.retrieveallItems(vm.type);
-                    
                     //check if resources already retrieved
                     if(resources_retrieved.length == 0){
                         //During first time loading of resources
@@ -121,11 +129,11 @@
                         var list = ds.getTrimmedAllItems(vm.type);
                         
                         // Retrieve migration item status
-                        // var status = ds.getServerMigrationStatus(vm.tenant_id);
+                        var status = ds.getResourceMigrationStatus(vm.tenant_id);
 
                         // wait for all the promises to resolve
-                        $q.all([list]).then(function(results) {
-                            if(results[0].error){
+                        $q.all([list, status]).then(function(results) {
+                            if(results[0].error|| results[1].error){
                                 vm.loading = false;
                                 vm.loadError = true;
                                 return;
@@ -137,8 +145,13 @@
                             }
 
                             var dataList = results[0].data;
-
-                            vm.items = dataList;
+                            vm.disableSelectAll = false;
+                            vm.items = mapServerStatus(dataList, results[1].job_status_list);
+                            angular.forEach(vm.items, function (server) {
+                                if(server.canMigrate == false){
+                                    vm.disableSelectAll = true;
+                                }
+                            });
                             // if(vm.type === "server")
                             //     vm.items = mapServerStatus(dataList, results[1].server_status);
                             // if(vm.type === "network")

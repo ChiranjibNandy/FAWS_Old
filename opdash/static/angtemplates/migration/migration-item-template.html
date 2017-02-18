@@ -11,7 +11,7 @@
             <tr>
                 <th class="rs-table-status" style="background-color: white"></th>
                 <th class="rs-table-checkbox" style="background-color: white">
-                    <input type="checkbox" ng-model="vm.isAllSelected" ng-change="vm.changeItemSelection()" />
+                    <input type="checkbox" ng-class="{'disabled':vm.disableSelectAll == true}" ng-model="vm.isAllSelected" ng-change="vm.changeItemSelection()" />
                 </th>
                 <th ng-repeat="label in vm.labels" ng-click="vm.sort(label.field)" style="background-color: white">
                     <a class="rs-table-sort rs-table-sort-desc">
