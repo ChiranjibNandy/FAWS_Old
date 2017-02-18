@@ -43,7 +43,7 @@
              * @name migrationApp.controller:rsrecommendationitemCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsrecommendationitem rsrecommendationitem} component
              */
-            controller: ["migrationitemdataservice", "authservice", "$q", "datastoreservice", "$rootRouter","httpwrapper","$scope", function (ds, authservice, $q, dataStoreService, $rootRouter,HttpWrapper,$scope) {
+            controller: ["migrationitemdataservice", "authservice", "$q", "datastoreservice", "$rootRouter","httpwrapper","$rootScope", function (ds, authservice, $q, dataStoreService, $rootRouter,HttpWrapper,$rootScope) {
                 var vm = this;
 
                 vm.$onInit = function() {
@@ -61,8 +61,10 @@
                         });
                         vm.data = dataStoreService.getItems(vm.type);
                         vm.data.map(function(item){
-                            item.selectedMapping = item.mappings[0];
-                            item.isMenuOpen = false;
+                            if(!item.selectedMapping){
+                                item.selectedMapping = item.mappings[0];
+                                item.isMenuOpen = false;
+                            }
                         });
                         dataStoreService.setItems({server:vm.data,network:[]});
                         vm.labels = [
@@ -175,6 +177,7 @@
                         }    
                     });
                     dataStoreService.setItems({server:vm.data,network:[]});
+                    $rootScope.$emit("pricingChanged");
                     $('#modify_modal'+id).modal('hide');
                 };
 
@@ -196,7 +199,7 @@
                                          });    
                     dataStoreService.storeallItems(allData,'server');     
                     vm.data.splice(vm.data.indexOf(selectedServer[0]), 1);
-                    $scope.$emit("ServerRemoved", vm.data);
+                    $rootScope.$emit("pricingChanged");
                     $('.rs-tabs').children()[0].children[0].innerHTML = "Servers ("+vm.data.length+")";
                     dataStoreService.setItems({server:vm.data,network:[]});
                 }

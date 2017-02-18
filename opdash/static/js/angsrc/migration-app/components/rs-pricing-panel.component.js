@@ -29,7 +29,7 @@
              * @name migrationApp.controller:rspricingCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rspricingpanel rspricingpanel} component
              */
-            controller:["datastoreservice","$rootRouter","httpwrapper","$filter","$timeout","$q",function(dataStoreService,$rootRouter,HttpWrapper,$filter,$timeout,$q){
+            controller:["datastoreservice","$rootRouter","httpwrapper","$filter","$timeout","$q","$rootScope",function(dataStoreService,$rootRouter,HttpWrapper,$filter,$timeout,$q,$rootScope){
                 var vm = this;
                 vm.invoiceCoverageStartDate = '';
                 vm.invoiceCoverageEndDate = '';
@@ -144,6 +144,10 @@
                     }); 
                 }
 
+                $rootScope.$on("pricingChanged",function(){
+                    vm.getProjectedPricing();
+                });
+
                 /**
                  * @ngdoc method
                  * @name getProjectedPricing
@@ -154,6 +158,7 @@
                 vm.getProjectedPricing = function(){
                     return $timeout(function(){
                         var selectedPricingMappingObj = dataStoreService.getItems('server');
+                        vm.totalProjectedPricingSum = 0;
                         selectedPricingMappingObj.forEach(function(item){
                             vm.totalProjectedPricingSum += parseFloat(item.selectedMapping.cost);
                         });
