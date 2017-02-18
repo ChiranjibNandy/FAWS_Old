@@ -198,7 +198,12 @@
                 };
                 
                vm.showTime = function(){
-                    vm.showTimeForm =  !vm.showTimeForm;
+                   if(vm.scheduleMigration === "migrateLate"){
+                       vm.showTimeForm =  true;
+                   }else{
+                       vm.showTimeForm =  false;
+                   }
+                    
                };
 
                vm.onSaveTime = function(){
