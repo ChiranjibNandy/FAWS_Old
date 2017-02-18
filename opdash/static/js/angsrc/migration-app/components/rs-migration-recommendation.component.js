@@ -21,8 +21,10 @@
              * @name migrationApp.controller:rsmigrationrecommendationCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationrecommendation rsmigrationrecommendation} component
              */
-            controller: [ "$rootRouter","datastoreservice","$scope", function($rootRouter,datastoreservice,$scope) {
+            controller: [ "$rootRouter","datastoreservice","$scope","authservice", function($rootRouter,datastoreservice,$scope,authservice) {
                 var vm = this;
+                vm.tenant_id = '';
+                vm.tenant_account_name = '';
                 
                 $('title')[0].innerHTML =  "Recommendations - Rackspace Cloud Migration";
                 vm.migrationName = datastoreservice.getScheduleMigration().migrationName;
@@ -38,6 +40,13 @@
                 });  
                 vm.dataNetwork = networkNames.length;
                 vm.editName = false;
+
+                vm.$onInit = function() {
+                    vm.tenant_id = authservice.getAuth().tenant_id;
+                    vm.tenant_account_name = authservice.getAuth().account_name;
+                }
+
+
                 /**
                  * @ngdoc method
                  * @name changeName

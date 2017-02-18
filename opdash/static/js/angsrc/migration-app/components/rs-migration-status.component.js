@@ -87,7 +87,7 @@
                     var auth = authservice.getAuth();
                     vm.userOrTenant = auth.is_racker ? "Tenant" : "User";
                     vm.tenant_id = auth.tenant_id;
-                    vm.currentUser = auth.username;
+                    vm.currentUser = auth.account_name;
 
                     vm.loading = true;
 
@@ -105,6 +105,7 @@
                         //var url = "/static/angassets/migration-status.json";
                         var tenant = authservice.getAuth().tenant_id;
                         var url = "/api/jobs/" + tenant;
+                        console.log(url);
 
                         HttpWrapper.send(url,{"operation":'GET'})
                                 .then(function(response) {

@@ -89,10 +89,12 @@
     {% if g.user_data %}
       "username": "{!g.user_data.username!}",
       "authtoken": "{!g.user_data.authtoken!}",
+      "account_name":null,
       "is_racker": {!'true' if g.user_data.is_racker else 'false'!},
     {% else %}
       "username": null,
       "authtoken": null,
+      "account_name":null,
       "is_racker": null,
     {% endif %}
   };
