@@ -144,8 +144,13 @@
                             }
 
                             var dataList = results[0].data;
-
+                            vm.disableSelectAll = false;
                             vm.items = mapServerStatus(dataList, results[1].job_status_list);
+                            angular.forEach(vm.items, function (server) {
+                                if(server.canMigrate == false){
+                                    vm.disableSelectAll = true;
+                                }
+                            });
                             // if(vm.type === "server")
                             //     vm.items = mapServerStatus(dataList, results[1].server_status);
                             // if(vm.type === "network")
