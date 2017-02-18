@@ -1,4 +1,17 @@
-<div class="rs-container migration-mgr">
+<div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
+    <div class="rs-table-overlay-content">
+        <div class="rs-table-overlay-message">Loading&hellip;</div>
+    </div>
+</div>
+<div ng-show="vm.loadError" class="rs-table-overlay rs-table-overlay-error">
+    <div class="rs-table-overlay-content">
+        <div class="rs-table-overlay-message"><i class="rs-icon-error-indicator"></i>
+            Error encountered. Please try again.
+        </div>
+    </div>
+</div>
+
+<div class="rs-container migration-mgr" ng-show="!vm.loading && !vm.loadError">
     <div class="rs-main ">
         <div class="rs-content rs-panel">
             <div class="rs-inner">
@@ -11,7 +24,7 @@
                         </div>
                     </div>
                 </div>
-                <h3>Accounts (5)</h3>
+                <h3>Accounts ({{vm.items.length}})</h3>
                 <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
                     <table class="rs-list-table rs-embedded-list-table no-truncate-td">
                         <thead>
@@ -45,12 +58,12 @@
                                     </a>
                                 </th>
                         
-                                <th>Actions</th>
+                                <th style="width:123px;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="item in vm.items | limitTo : vm.pageSize : (vm.currentPage-1)*vm.pageSize">
-                                <td class="rs-table-link"><a ng-link="['MigrationStatus']" class="ng-binding" href="migration-status.html">{{item.accountName}}</a></td>
+                                <td class="rs-table-link"><a class="ng-binding" href="" ng-click="vm.setTenantId(item)">{{item.accountName}}</a></td>
                                 <td class="rs-table-text">{{item.serviceLevel}}</td>
                                 <td class="rs-table-text">{{item.accountLevel}}</td>
                                 <td class="rs-table-text ng-binding">{{item.inProgressBatches}}</td>
@@ -62,7 +75,7 @@
                                             <ul class="rs-dropdown-menu visible" ng-show="batch.showSettings">
                                                 <li><span class="rs-dropdown-category">Manage</span></li>
                                                 <li class=""><a href="" ng-click="vm.removeAccount(item.accountName)">Remove from Panel</a></li>
-                                                <li class=""><a href="#">View in Encore</a></li>
+                                                <li class=""><a href="" ng-click="vm.setEncoreLink(item)">View in Encore</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -88,12 +101,12 @@
 
 <div id="add_account_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForAddAccount" aria-hidden="true">
     <div class="modal-body">
-        <h3>Add a new Account</h3>
+        <h3>Add a new Tenant</h3>
         <form class=" " name="addAccountForm" ng-submit="vm.submitAddAccount()">
             <div class="rs-control-group">
                 <div class="rs-controls">
                     <label class="rs-control-label" style="display: inline">
-                        Account Name
+                        Tenant Id
                         <span class="rs-controls" style="display: inline;color:red;">*</span>
                     </label>
                     
