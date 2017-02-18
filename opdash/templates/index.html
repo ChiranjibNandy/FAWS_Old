@@ -26,10 +26,12 @@
                     this.username = user_data.username;
                     this.authtoken = user_data.authtoken;
                     this.tenant_id = user_data.tenant_id;
+                    this.account_name = user_data.account_name;
+                    
                     ase.storeAuth(user_data);
 
                     if(user_data.is_racker) {
-                      $rootRouter.navigate(["Tenant"]);
+                      $rootRouter.navigate(["RackerDash"]);
                     }
                     else{
                       ase.getAuth().tenant_id = user_data.tenant_id;

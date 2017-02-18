@@ -136,8 +136,8 @@
                 vm.getCurrentPricingDetails = function(){
                     return HttpWrapper.send('/api/billing/get_latest_bill', {"operation":'GET'})
                     .then(function(result){
-                        vm.invoiceCoverageStartDate = $filter('date')(result.invoice.coverageStartDate, "dd/MM/yyyy");
-                        vm.invoiceCoverageEndDate = $filter('date')(result.invoice.coverageEndDate, "dd/MM/yyyy");
+                        vm.invoiceCoverageStartDate = $filter('date')(result.invoice.coverageStartDate, "MM/dd/yyyy");
+                        vm.invoiceCoverageEndDate = $filter('date')(result.invoice.coverageEndDate, "MM/dd/yyyy");
                         vm.invoiceTotal = result.invoice.invoiceTotal;
                     }, function(error) {
                         console.log("Error: Could not fetch current pricing details", error);

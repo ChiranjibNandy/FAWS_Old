@@ -26,6 +26,8 @@
              */
             controller: ["authservice", "$scope", "$rootRouter", "datastoreservice", "migrationitemdataservice", "httpwrapper", "$timeout", function(authservice, $scope, $rootRouter, dataStoreService, ds, HttpWrapper, $timeout) {
                 var vm = this;
+                vm.tenant_id = '';
+                vm.tenant_account_name = '';
 
                 vm.$onInit = function() {
                     var status = dataStoreService.getDontShowStatus();
@@ -33,7 +35,10 @@
                         $('#intro_modal').modal('show');
                     }        
                     $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Migration";
-                    authservice.getAuth().tenant_id = 1024814;
+
+                    vm.tenant_id = authservice.getAuth().tenant_id;
+                    vm.tenant_account_name = authservice.getAuth().account_name;
+
                     vm.auth = authservice.getAuth();
                     vm.isRacker = authservice.is_racker;
                     vm.selectedItems = {

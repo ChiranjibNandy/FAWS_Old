@@ -27,8 +27,12 @@
              */
             controller: [ "$rootRouter","datastoreservice","migrationitemdataservice", "$q","httpwrapper", "authservice", "$timeout", function($rootRouter,dataStoreService,ds,$q,HttpWrapper, authservice, $timeout) {
                 var vm = this;
+                vm.tenant_id = '';
+                vm.tenant_account_name = '';
                 
                 vm.$onInit = function() {
+                    vm.tenant_id = authservice.getAuth().tenant_id;
+                    vm.tenant_account_name = authservice.getAuth().account_name;
                     $('title')[0].innerHTML =  "Confirm Migration - Rackspace Cloud Migration";
                     console.log(dataStoreService.selectedDate);
                     var auth = authservice.getAuth();

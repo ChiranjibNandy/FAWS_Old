@@ -27,7 +27,8 @@
                 vm.addedAccount = '';
                 const username = authservice.getAuth().username;
 
-                vm.getTenants = function(){                   
+                vm.getTenants = function(){       
+                    debugger;            
                      return HttpWrapper.send('/api/tenants/get_user_tenants/'+username, {"operation":'GET'})
                     .then(function(result){
                         result.forEach(function(item){
@@ -37,7 +38,7 @@
                                 "accountLevel":item.faws_service_level,
                                 "inProgressBatches":item.migrations_in_progress,
                                 "completedBatches":item.migrations_completed,
-                                "username":item.user_id
+                                "tenant_account_name":item.rax_name
                             });
                         });
                     }).catch(function(error) {
@@ -48,10 +49,13 @@
 
                 // Perfoming controller initialization steps
                 vm.$onInit = function() { 
+                    console.log("In racker dash");
                     vm.pageArray = [];
                     vm.loading = true;
                     vm.loadError = false;
-
+                    vm.loadTenantError = false;
+                    vm.account_name = null;
+                    
                     // populate tenants array
                     var getTenantDetails = vm.getTenants();
 
@@ -88,15 +92,16 @@
                 }
 
                 vm.openAddAccountModalDialog = function(){
+                    vm.loadTenantError = false;
                     $('#add_account_modal').modal('show');
                 }
 
-                vm.submitAddAccount = function() {
-                    $('#add_account_modal').modal('hide');  
+                vm.submitAddAccount = function() { 
                     vm.loading = true;
                     vm.loadError = false;
+                    vm.loadTenantError = false;
+
                     var tenant_id = vm.addedAccount;                
-                    vm.addedAccount = '';
 
                     var requestObj = {
                         "tenant_id":tenant_id,
@@ -108,8 +113,10 @@
                     HttpWrapper.save("/api/tenants/add_user_tenant", {"operation":'POST'}, requestObj)
                     .then(function(result){
                         vm.loading = false;
+                        vm.addedAccount = '';
                         vm.items =[];
-                        
+                        $('#add_account_modal').modal('hide'); 
+
                         result.forEach(function(item){
                             vm.items.push({
                                 "accountName":item.rax_name+" (#"+item.tenant_id+")",
@@ -117,10 +124,12 @@
                                 "accountLevel":item.faws_service_level,
                                 "inProgressBatches":item.migrations_in_progress,
                                 "completedBatches":item.migrations_completed,
-                                "username":item.user_id
+                                "tenant_account_name":item.rax_name
                             });
                         });
                     }).catch(function(error){
+                        vm.loading = false;
+                        vm.loadTenantError = true;   
                         console.log("Error in saving tenant id");
                     });
 
@@ -131,15 +140,24 @@
                     var tenant_id_text = item.accountName;
                     var tenant_id = tenant_id_text.substring(tenant_id_text.lastIndexOf("#")+1,tenant_id_text.lastIndexOf(")"));
                     authservice.getAuth().tenant_id = tenant_id;
-                    authservice.getAuth().username = item.username;
+                    authservice.getAuth().account_name = item.tenant_account_name;
                     $rootRouter.navigate(["MigrationResourceList"]);
                 } 
 
+                vm.setMigrationStatusTenantId = function(item){
+                    var tenant_id_text = item.accountName;
+                    var tenant_id = tenant_id_text.substring(tenant_id_text.lastIndexOf("#")+1,tenant_id_text.lastIndexOf(")"));
+                    authservice.getAuth().tenant_id = tenant_id;
+                    authservice.getAuth().account_name = item.tenant_account_name;
+                    $rootRouter.navigate(["MigrationStatus"]);
+                } 
+
                 vm.setEncoreLink = function(item){
+                    debugger;
                     var tenant_id_text = item.accountName;
                     var tenant_id = tenant_id_text.substring(tenant_id_text.lastIndexOf("#")+1,tenant_id_text.lastIndexOf(")"));
                     var encoreUrl = "https://encore.rackspace.com/accounts/"+tenant_id;
-                    $window.location.href = encoreUrl;
+                    $window.open(encoreUrl, '_blank');
                 } 
 
             }]
