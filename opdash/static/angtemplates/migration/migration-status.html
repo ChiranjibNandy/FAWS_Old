@@ -10,7 +10,7 @@
                 <div class="rs-pull-right">
                     <button class="rs-btn rs-btn-primary" ng-click="vm.startNewMigration()"><i class="fa fa-plus-square fa-fw"></i> Start New Migration</button>
                 </div>
-                <h2>{{vm.userOrTenant}} ( #{{vm.tenant_id}} )</h2>
+                <h2>{{vm.currentUser}} ( #{{vm.tenant_id}} )</h2>
                 <h3>Migrations ({{vm.currentBatches.items.length + vm.completedBatches.items.length}})</h3>
                 <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
                     <table class="rs-list-table rs-embedded-list-table no-truncate-td">
