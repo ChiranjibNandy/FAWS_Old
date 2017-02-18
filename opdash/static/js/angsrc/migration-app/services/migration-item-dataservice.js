@@ -198,6 +198,14 @@
                                   });
             }
 
+            this.getResourceMigrationStatus = function(tenant_id){
+                var url = "/api/jobs/" + tenant_id;
+                return HttpWrapper.send(url,{"operation":'GET'})
+                                  .then(function(response){
+                                      return response;
+                                  });
+            }
+
             return self;
        }]); // end of service definition
 })();
