@@ -85,7 +85,8 @@
 
   var user_data = {
     // Selected Tenant
-    "tenant_id": "{! g.get('tenant_id', "") !}"||null,
+    // "tenant_id": "{! g.get('tenant_id', "") !}"||null,
+    "tenant_id": null,
     {% if g.user_data %}
       "username": "{!g.user_data.username!}",
       "authtoken": "{!g.user_data.authtoken!}",

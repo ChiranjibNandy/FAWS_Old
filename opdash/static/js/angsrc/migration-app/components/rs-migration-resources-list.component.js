@@ -36,9 +36,23 @@
                     }        
                     $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Migration";
 
-                    vm.tenant_id = authservice.getAuth().tenant_id;
-                    vm.tenant_account_name = authservice.getAuth().account_name;
+                    // console.log("is_racker=",authservice.getAuth().is_racker);
 
+                    if(authservice.getAuth().is_racker == false){   //if logged in as customer, tenant_id needs to be assigned here
+                        authservice.getAuth().tenant_id= "1024814"; //temporary hard coded until api is available.
+                        
+                        vm.tenant_id = authservice.getAuth().tenant_id;
+                        var actname = dataStoreService.getAccountName(vm.tenant_id); //setting the accountname through api
+                        actname.then(function() {
+                        vm.tenant_account_name = authservice.getAuth().account_name;}); //waiting api promise to resolve
+                        
+                    }
+                    else{  //if logged in as a racker then it is set by racker dashboard page
+                        vm.tenant_id = authservice.getAuth().tenant_id;
+                        vm.tenant_account_name = authservice.getAuth().account_name;
+                    }
+                    
+                    
                     vm.auth = authservice.getAuth();
                     vm.isRacker = authservice.is_racker;
                     vm.selectedItems = {

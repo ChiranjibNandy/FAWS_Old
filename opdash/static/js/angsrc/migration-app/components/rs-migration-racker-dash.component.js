@@ -28,7 +28,7 @@
                 const username = authservice.getAuth().username;
 
                 vm.getTenants = function(){       
-                    debugger;            
+                    //debugger;            
                      return HttpWrapper.send('/api/tenants/get_user_tenants/'+username, {"operation":'GET'})
                     .then(function(result){
                         result.forEach(function(item){
@@ -55,6 +55,8 @@
                     vm.loadError = false;
                     vm.loadTenantError = false;
                     vm.account_name = null;
+                    authservice.getAuth().tenant_id= null;
+                    // console.log("Onload Tenant_id=",authservice.getAuth().tenant_id);
                     
                     // populate tenants array
                     var getTenantDetails = vm.getTenants();
@@ -153,7 +155,7 @@
                 } 
 
                 vm.setEncoreLink = function(item){
-                    debugger;
+                    //debugger;
                     var tenant_id_text = item.accountName;
                     var tenant_id = tenant_id_text.substring(tenant_id_text.lastIndexOf("#")+1,tenant_id_text.lastIndexOf(")"));
                     var encoreUrl = "https://encore.rackspace.com/accounts/"+tenant_id;

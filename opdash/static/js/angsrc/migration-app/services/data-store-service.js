@@ -346,6 +346,24 @@
                 return reqObj;
             };
 
+            /**
+             * @ngdoc method
+             * @name getAccountName
+             * @methodOf migrationApp.service:datastoreservice
+             * @param {String} tenant_id tenant_id for which the details are to be fetched 
+             * @description 
+             * Invokes "/api/tenants/get_account_info/<tenant_id> API call to fetch the account details of a Tenant.
+             */
+            self.getAccountName = function(tid){
+            // var tid =authservice.getAuth().tenant_id;
+            var url = "/api/tenants/get_account_info/"+tid;
+            return HttpWrapper.send(url,{"operation":'GET'})
+                    .then(function(response){
+                        authservice.getAuth().account_name=response.rax_name; //set the account_name in authservice
+                        // return response.data;
+                   });
+            };
+         
             return self;
         }]); // end of service definition
 })();
