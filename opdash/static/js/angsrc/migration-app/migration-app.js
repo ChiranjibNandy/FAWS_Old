@@ -72,8 +72,8 @@
             { path: "/migration/confirm", component: "rsconfirmmigration", name: "ConfirmMigration" },
             { path: "/migration-status", component: "rsmigrationstatus", name: "MigrationStatus" },
             { path: "/compare-options", component: "rscompareoptions", name: "CompareOptions" },
-            { path: "/migration/current-batch/:batch_id", component: "rscurrentbatchdetails", name: "CurrentBatchDetails" },
-            { path: "/migration/completed-batch/:batch_id", component: "rscompletedbatchdetails", name: "CompletedBatchDetails" }
+            { path: "/migration/current-batch/:job_id", component: "rscurrentbatchdetails", name: "CurrentBatchDetails" },
+            { path: "/migration/completed-batch/:job_id", component: "rscompletedbatchdetails", name: "CompletedBatchDetails" }
         ]
     }); // end of rsMigrationRoot component definition
 })();

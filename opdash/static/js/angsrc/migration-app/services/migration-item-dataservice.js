@@ -8,11 +8,11 @@
      * This service acts as a facade which handles calling the specific service implementation for each resoource type (server, network etc).
      */
     angular.module("migrationApp")
-        .service("migrationitemdataservice", ["serverservice", "networkservice", "contactservice", "httpwrapper",'$filter',"authservice", "datastoreservice", function (serverService, networkService, contactService, HttpWrapper, $filter,authservice, dataStoreService) {
+        .service("migrationitemdataservice", ["serverservice", "networkservice", "contactservice", "httpwrapper",'$filter',"authservice", "datastoreservice", "$q", function (serverService, networkService, contactService, HttpWrapper, $filter,authservice, dataStoreService, $q) {
             var self = this;
 
             var prepareNames = function() {
-                var servers = dataStoreService.selectedItems.server;
+                var servers = dataStoreService.getItems("server");
                 var names = {};
                 names.instances = {};
                 names.networks = {};
@@ -38,7 +38,7 @@
              * This service method returns a promise to fetch the list of resources given _type_ for a tenant.  
              * This operation trims the set of properties available with the service call and returns only the specific properties needed for its representation.
              */
-            this.getTrimmedAllItems = function (type) {
+            this.getTrimmedAllItems = function (type) { // should be moved to dashboard service
                 if (type === "server") {
                     return serverService.getTrimmedList();
                 }
@@ -107,15 +107,19 @@
              * @description 
              * This service method returns an _object_. This object has to be sent while making an HTTP POST request to migrate the resource.
              */
-            this.prepareRequest = function(equipments, batchName){
-                // console.log(dataStoreService.selectedTime.time);
-                var instances = [],networks = [];
-                var auth = authservice.getAuth();
-                var names = prepareNames();
-                var reqObj = {
-                                batch_name: batchName,
-                                //start: dataStoreService.selectedTime.time,
-                                start: parseInt((new Date().getTime()/1000), 10),
+            this.prepareRequest = function(batchName){
+                console.log(dataStoreService.getItems("server"));
+                var equipments = {
+                        instances : dataStoreService.getItems("server"),
+                        networks : dataStoreService.getDistinctNetworks()
+                    },
+                    auth = authservice.getAuth(),
+                    names = prepareNames(),
+                    instancesReqList = [],
+                    networksReqList = [],
+                    reqObj = {
+                                batch_name: dataStoreService.getScheduleMigration().migrationName,
+                                start: dataStoreService.selectedTime.time,
                                 names: names,
                                 source: {
                                     cloud: "rackspace",
@@ -140,49 +144,40 @@
                                 version: "v1"
                             };
 
-                equipments.map(function(item){
-                    if(item.equipmentType === "server"){
-                        var region = serverService.getRegionById(item.id);
-                            instances.push({
-                                source: {
-                                    id: item.id,
-                                    region: region.toUpperCase(),
-                                },
-                                destination: {
-                                    region: "us-east-1",
-                                    zone: "us-east-1a",
-                                    type: item.type
-                                }
-                        });
-                    }else if(item.equipmentType === "network"){
-                        var network = networkService.getNetworkDetails(item.id);
-                        networks.push({
-                            source: {
-                                region: network.region
-                            },
-                            destination: {
-                                region: item.region,
-                                default_zone: "us-east-1a"
-                            },
-                            subnets: "All",
-                            instances: "All",
-                            security_groups: "All"
-                        })
-                    }
-                     else if (item.equipmentType === "files") {
-                        return networkService.getTrimmedList(info);
-                    }
-                    else if (item.equipmentType === "loadBalancers") {
-                        return networkService.getTrimmedList(info);
-                    }
+                // prepare servers/instances request object
+                equipments.instances.map(function(instance){
+                    instancesReqList.push({
+                        source: {
+                            id: instance.id,
+                            region: instance.region.toUpperCase(),
+                        },
+                        destination: {
+                            region: instance.selectedMapping.region.toUpperCase(),
+                            zone: "us-east-1a",
+                            type: instance.selectedMapping.instance_type
+                        }
+                    });
                 });
 
-                if(instances.length > 0 ){
-                    reqObj.resources.instances = instances;
-                }
-                if(networks.length > 0){
-                    reqObj.resources.networks = networks;
-                }
+                // prepare networks request object
+                equipments.networks.map(function(network){
+                    networksReqList.push({
+                        source: {
+                            region: network.region.toUpperCase()
+                        },
+                        destination: {
+                            region: network.destRegion.toUpperCase(),
+                            default_zone: "us-east-1a"
+                        },
+                        subnets: "All",
+                        instances: "All",
+                        security_groups: "All"
+                    });
+                });
+
+                reqObj.resources.instances = instancesReqList;
+                reqObj.resources.networks = networksReqList;
+
                 return reqObj;
             }
 

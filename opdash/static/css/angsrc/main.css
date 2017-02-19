@@ -434,3 +434,9 @@ rscalendaritem > div.week.names > span {
 .recommendServer td:nth-child(-n+3) {
     background: rgba(0, 0, 0, 0.05);
 }
+
+.refresh-icon{
+    font-size: 16px !important;
+    color: #999;
+    cursor: pointer;
+}

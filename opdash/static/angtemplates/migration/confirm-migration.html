@@ -33,9 +33,9 @@
                             <h3>Scheduled Summary <a ng-link="['ScheduleMigration']" class="rs-edit" title="Go to step 3 to choose new Schedule"></a></h3>
                             <hr>
                             <div class="schedule-tile">
-                                <p>Date: {{vm.scheduledDate}}</p>
-                                <p>Time: {{vm.scheduledTime}}</p>
-                                <p>Timezone: {{vm.scheduledTimezone}}</p>
+                                <p>Date: {{vm.schedule.date}}</p>
+                                <p>Time: {{vm.schedule.time}}</p>
+                                <p>Timezone: {{vm.schedule.timezone}}</p>
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                             </h3>
                             <hr>
                             <h3><b>{{vm.cost | currency: '$'}} / month</b> </h3>
-                            <a href="">(See Details)</a>
+                            <small>Current Support Level: <b><a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Navigator</a></b></small>
                         </div>
                     </div>
                 </div>

@@ -363,7 +363,46 @@
                         // return response.data;
                    });
             };
-         
+
+            /*
+             * @name getDistinctNetworks
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Gets the list of distinct networks across all selected servers
+            */
+            self.getDistinctNetworks = function() {
+                var networksList = [];
+                angular.forEach(self.getItems('server'), function (server) {
+                    var region = server.region;
+                    angular.forEach(server.details.networks, function (network) {
+                        if(networksList.indexOf(network.id) == -1) {
+                            network.region = region;
+                            network.destRegion = server.selectedMapping.region;
+                            networksList.push(network);
+                        };
+                    });
+                });
+
+                return networksList;
+            };
+
+            /**
+             * @ngdoc method
+             * @name getProjectedPricing
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Gets projected cost based on selected migrations
+            */
+            self.getProjectedPricing = function() {
+                var instances = self.getItems('server');
+                var totalProjectedPricing = 0;
+                instances.forEach(function(item){
+                    totalProjectedPricing += parseFloat(item.selectedMapping.cost);
+                });
+
+                return totalProjectedPricing;
+            };
+
             return self;
         }]); // end of service definition
 })();
