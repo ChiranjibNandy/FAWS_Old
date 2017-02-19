@@ -21,35 +21,34 @@
                  * @name migrationApp.controller:rsmigrationstatusCtrl
                  * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationstatus rsmigrationstatus} component
                  */
-                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "$filter", function(HttpWrapper, dataStoreService, $rootRouter, authservice, $filter) {
+                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "$filter", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, $filter) {
                     var vm = this;
 
-                    /**
-                     * @ngdoc property
-                     * @name batches
-                     * @propertyOf migrationApp.controller:rsmigrationstatusCtrl
-                     * @type {Array}
-                     * @description List of batch migrations initiated for the current tenant
-                     */
-                    vm.batches = [];
+                    vm.$onInit = function() {
+                        $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
+                        vm.getBatches();
+                    };
+
+                    vm.$routerOnActivate = function(next, previous) {
+                        if(previous && previous.urlPath.indexOf("confirm") > -1){
+                            vm.afterNewMigration = true;
+                            vm.resourceCount = dataStoreService.getMigrationResourceCount();
+                        } else{
+                            vm.afterNewMigration = false;
+                        }
+                    };
 
                     /**
                      * @ngdoc property
-                     * @name scheduledDate
+                     * @name schedule
                      * @propertyOf migrationApp.controller:rsmigrationstatusCtrl
-                     * @type {String}
-                     * @description Date of when migration is scheduled
+                     * @type {Object}
+                     * @description Date and time of when migration is scheduled
                      */
-                    vm.scheduledDate = dataStoreService.getMigrationDate();
-
-                    /**
-                     * @ngdoc property
-                     * @name scheduledTime
-                     * @propertyOf migrationApp.controller:rsmigrationstatusCtrl
-                     * @type {String}
-                     * @description Time when migration is scheduled
-                     */
-                    vm.scheduledTime = dataStoreService.getMigrationTime();
+                    vm.schedule = {
+                        time: dataStoreService.getMigrationDate(),
+                        date: dataStoreService.getMigrationTime()
+                    };
 
                     /**
                      * @ngdoc property
@@ -88,7 +87,6 @@
                     vm.userOrTenant = auth.is_racker ? "Tenant" : "User";
                     vm.tenant_id = auth.tenant_id;
                     vm.currentUser = auth.account_name;
-
                     vm.loading = true;
 
                     vm.$routerOnActivate = function(next, previous) {
@@ -100,14 +98,18 @@
                         }
                     };
 
-                    // gets the list of all batches initiated by the current tenant
-                    var getBatches = function() {
-                        //var url = "/static/angassets/migration-status.json";
-                        var tenant = authservice.getAuth().tenant_id;
-                        var url = "/api/jobs/" + tenant;
-                        console.log(url);
+                    /**
+                     * @ngdoc method
+                     * @name getBatches
+                     * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                     * @param {Boolean} refresh True if the batch list needs to be refreshed
+                     * @description 
+                     * Gets the list of all batches initiated by the current tenant
+                     */
+                    vm.getBatches = function(refresh) {
+                        vm.loading = true;
 
-                        HttpWrapper.send(url,{"operation":'GET'})
+                        dashboardService.getBatches(refresh)
                                 .then(function(response) {
                                     console.log("Batch: ", response);
                                     var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled"];
@@ -138,41 +140,6 @@
                                     vm.completedBatches.loadError = true;
                                     console.log("Dashboard Error: ", errorResponse);
                                 });
-
-                        // var jobApiURL = "/api/job/job-ed80806b-6983-45be-8a6e-620b5b3c97ca";
-                        // HttpWrapper.send(jobApiURL,{"operation":'GET'})
-                        //         .then(function(response) {
-                        //             console.log("Job Details: ", response);
-                        //         }, function(errorResponse) {
-                        //             console.log("Job Error: ", errorResponse);
-                        //         });
-                    };
-
-                    vm.$onInit = function() {
-                        $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
-                        getBatches();
-                    };
-
-                    /**
-                     * @ngdoc method
-                     * @name getItems
-                     * @methodOf migrationApp.controller:rsmigrationstatusCtrl
-                     * @description 
-                     * Pauses migration of resources in this batch
-                     */
-                    vm.pauseBatch = function() {
-                        alert("Pause migration of resources in this batch");
-                    };
-
-                    /**
-                     * @ngdoc method
-                     * @name cancelBatch
-                     * @methodOf migrationApp.controller:rsmigrationstatusCtrl
-                     * @description 
-                     * Cancels migration of resources in this batch
-                     */
-                    vm.cancelBatch = function() {
-                        alert("Cancel migration of resources in this batch");
                     };
 
                     /**
@@ -184,7 +151,6 @@
                      */
                     vm.startNewMigration = function() {
                         dataStoreService.resetAll();
-                        // dataStoreService.setDontShowStatus(false);
                         $rootRouter.navigate(["MigrationResourceList"]);
                     };
                 }]

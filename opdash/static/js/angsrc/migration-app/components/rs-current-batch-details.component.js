@@ -19,13 +19,32 @@
              * @name migrationApp.controller:rscurrentbatchdetailsCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rscurrentbatchdetails rscurrentbatchdetails} component
              */
-            controller: ["$rootRouter",function($rootRouter){
+            controller: ["$rootRouter", "migrationitemdataservice", "dashboardservice", function($rootRouter, ds, dashboardService){
                 var vm = this;
-                var batch_id;
+
+                var getBatchDetails = function(job_id) {
+                    dashboardService.getBatches()
+                            .then(function(response) {
+                                var job = response.job_status_list.find(function(job) {
+                                    return job.job_id === job_id;
+                                });
+                                console.log(job);
+                                vm.job = job;
+                            }, function(errorResponse) {
+
+                            });
+                };
 
                 vm.$routerOnActivate = function(next, previous) {
-                    batch_id = next.params.batch_id;
-                    console.log(batch_id);
+                    getBatchDetails(next.params.job_id);
+                };
+
+                vm.equipmentDetails = function(type, id) {
+                    ds.getTrimmedAllItems(type)
+                        .then(function (response) {
+                            vm.itemDetails = response.data.filter(function (item) { return item.id == id })[0];
+                            console.log(vm.itemDetails);
+                        });
                 };
             }
         ]}); // end of component rscurrentbatchdetails
