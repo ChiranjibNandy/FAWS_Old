@@ -148,11 +148,11 @@
             //var url = "/static/angassets/servers-list.json";
             var url = "/api/compute/us-instances";
 
-            if (!loaded) {
+            // if (!loaded) {
 
                 return HttpWrapper.send(url,{"operation":'GET'})
                                 .then(function(response){
-                                    loaded = true;
+                                    // loaded = true;
                                     servers = {
                                         labels: [
                                                     {field: "name", text: "Server Name"},
@@ -167,9 +167,9 @@
                                     return errorResponse;
                                 });
 
-            } else {
-                return $q.when(servers);
-            }
+            // } else {
+                // return $q.when(servers);
+            // }
         };
 
         /**

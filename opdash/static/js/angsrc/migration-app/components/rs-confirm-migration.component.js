@@ -51,6 +51,20 @@
                     vm.cost = dataStoreService.getProjectedPricing();
                     vm.migrating = false;
                     vm.errorInMigration = false;
+                    vm.saveLaterObj = {
+                        "saveSuccess" : false,
+                        "saveInProgress" : false,
+                        "resultMsg" : "",
+                        "modalName": '#save_for_later'
+                    };
+
+                    vm.cancelnSaveObj = {
+                        "saveSuccess" : false,
+                        "saveInProgress" : false,
+                        "resultMsg" : "",
+                        "modalName": '#cancel_modal'
+                    };
+                    vm.saveProgress = "";
                 };
 
                 /**
@@ -89,6 +103,73 @@
                     vm.editorEnabled = false;
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name saveItems
+                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @description 
+                 * Invokes "/api/users/uidata/" API call for fetching existing saved instances. 
+                 */
+                vm.saveItems = function(buttonDetails) {
+                    var saveInstance = {
+                        recommendations : dataStoreService.getItems('server'),
+                        scheduling_details : dataStoreService.getScheduleMigration(),
+                        step_name: "ConfirmMigration",
+                        migration_schedule: {
+                            migrationName:dataStoreService.getScheduleMigration().migrationName,
+                            time:dataStoreService.getScheduleMigration().time,
+                            timezone:dataStoreService.getScheduleMigration().timezone
+                        }
+                    };
+                    buttonDetails.saveInProgress = true;
+                    dataStoreService.saveItems(saveInstance).then(function(success){
+                        if(success){
+                            buttonDetails.saveInProgress = false;
+                            buttonDetails.saveSuccess = true;
+                            buttonDetails.resultMsg = "Saved your instance successfully with name: "+dataStoreService.getScheduleMigration().migrationName;
+                            $timeout(function () {
+                                buttonDetails.resultMsg = "";
+                            }, 3000);
+                            $timeout(function () {
+                                if(buttonDetails.modalName == '#cancel_modal'){
+                                    $('#cancel_modal').modal('hide');
+                                    $rootRouter.navigate(["MigrationStatus"]);
+                                }
+                            }, 4000);
+                        }else{
+                            buttonDetails.saveInProgress = false;
+                            buttonDetails.saveSuccess = false;
+                            buttonDetails.resultMsg = "Error while saving. Please try again after sometime!!";
+                            $timeout(function () {
+                                buttonDetails.resultMsg = "";
+                            }, 3000);
+                            $timeout(function () {
+                                $(buttonDetails.modalName).modal('hide');
+                            }, 4000);
+                        }
+                    },function(error){
+                        buttonDetails.saveInProgress = false;
+                        buttonDetails.saveSuccess = false;
+                        buttonDetails.resultMsg = "Error while saving. Please try again after sometime!!";
+                        $timeout(function () {
+                            buttonDetails.resultMsg = "";
+                        }, 3000);
+                        $timeout(function () {
+                            $(buttonDetails.modalName).modal('hide');
+                        }, 4000);
+                    });
+                };
+
+
+                vm.submitCancel = function() {
+                    if(vm.saveProgress == 'yes'){
+                        vm.saveItems(vm.cancelnSaveObj);
+                    }
+                    else{
+                        $rootRouter.navigate(["MigrationStatus"]);
+                        $('#cancel_modal').modal('hide');
+                    }
+                }
                 return vm;
             }
         ]}); // end of component definition

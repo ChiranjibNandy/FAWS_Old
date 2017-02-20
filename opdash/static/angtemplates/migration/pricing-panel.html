@@ -33,17 +33,50 @@
         <br>
         
         <div class="rs-row pricing-buttons">
-            <button class="rs-btn span-12" ng-click="vm.saveItems()">Save for later</button>
+            <a class="rs-btn span-12" ng-click="vm.saveItems(vm.saveLaterObj)" ng-hide="vm.saveLaterObj.saveInProgress">Save For Later</a>
+            <a class="rs-btn span-10 disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
+            <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>
+            <!--<button class="rs-btn span-12" ng-click="vm.saveItems()">Save for later</button>-->
         </div>
         
         <div class="rs-row pricing-buttons">
-            <a class="rs-btn span-12" href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>
+            <a class="rs-btn span-12" role="button" ng-click="vm.showCancelDialog()">Cancel Migration</a>
+            <!--<a class="rs-btn span-12" href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>-->
         </div>
         <div class="rs-row">
             <a class="rs-btn span-6" ng-link="['Tenant']"  ng-click="vm.back()">Back</a>
             <a class="rs-btn rs-btn-primary span-6" ng-click="vm.continue()" >Continue</a>
         </div>
+        <div class="rs-row" ng-show="vm.saveLaterObj.resultMsg" ng-style="vm.saveLaterObj.saveSuccess == true ? {color:'green'} : {color:'red'}" >{{vm.saveLaterObj.resultMsg}}</div>
         <br>
+    </div>
+    <div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForCancel" aria-hidden="true">
+        <div class="modal-body">
+            <h3>Would you like to save the selections you've made so far for another time?</h3>
+            <form class=" ">
+                <div class="rs-control-group">
+
+                    <div class="rs-controls">
+                      <label class="rs-radio">
+                        <input type="radio" ng-model="vm.saveProgress" value="yes">
+                        <strong>Yes</strong><br>
+                        <span class="rs-help-block">Save progress for later</span>
+                      </label>
+                      <label class="rs-radio">
+                        <input type="radio" ng-model="vm.saveProgress" value="no">
+                        <strong>No</strong>
+                        <span class="rs-help-block">Cancel and move on</span>
+                      </label>
+                    </div>
+                  </div>
+                    <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button class="rs-btn rs-btn-primary " ng-class="{disabled:vm.saveProgress == ''}" ng-click="vm.submitCancel()" ng-hide="vm.cancelnSaveObj.saveInProgress">Submit</button>
+                    <a class="rs-btn disabled" disabled="disabled" ng-show="vm.cancelnSaveObj.saveInProgress">Submitting...</a>
+                    <i class="rs-processing-indicator" ng-show="vm.cancelnSaveObj.saveInProgress"></i>
+                    <br>
+                    <div ng-show="vm.cancelnSaveObj.resultMsg" ng-style="vm.cancelnSaveObj.saveSuccess == true ? {color:'green'} : {color:'red'}" >{{vm.cancelnSaveObj.resultMsg}}</div>
+            </form>
+        </div>
     </div>
 <!--</div>  -->
  <!-- PRECHECK MODAL -->

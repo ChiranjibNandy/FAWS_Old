@@ -148,7 +148,7 @@
                             vm.disableSelectAll = false;
                             vm.items = mapServerStatus(dataList, results[1].job_status_list);
                             angular.forEach(vm.items, function (server) {
-                                if(server.canMigrate == false){
+                                if(server.canMigrate == false || server.status != 'active'){ 
                                     vm.disableSelectAll = true;
                                 }
                             });

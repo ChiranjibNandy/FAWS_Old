@@ -54,13 +54,16 @@
                 <div class="rs-row">
                     <div class="rs-pull-right">
                         <a class="rs-btn " ng-link="['ScheduleMigration']">Back</a>
-                        <a class="rs-btn" href="">Save for later</a>
-                        <a class="rs-btn " href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>
+                        <a class="rs-btn" ng-click="vm.saveItems(vm.saveLaterObj)" ng-hide="vm.saveLaterObj.saveInProgress">Save For Later</a>
+                        <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
+                        <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>
+                        <a class="rs-btn" role="button" ng-click="vm.showCancelDialog()">Cancel Migration</a>
                         <a class="rs-btn rs-btn-primary " ng-click="vm.migrate()" ng-show="!vm.migrating" ng-class="{'disabled': vm.errorInMigration}">Confirm Migration</a>
                         <a class="rs-btn rs-btn-primary disabled" ng-show="vm.migrating">Processing...</a>
                     </div>
                 </div>
                 <div style="color: red; text-align: right;" ng-show="vm.errorInMigration">Error while trying to migrate</div>
+                <div class="rs-row" ng-show="vm.saveLaterObj.resultMsg" ng-style="vm.saveLaterObj.saveSuccess == true ? {color:'green'} : {color:'red'}" >{{vm.saveLaterObj.resultMsg}}</div>
                 <br>
             </div>
         </div>
@@ -69,31 +72,31 @@
 </div>
 
 <!-- modals -->
-<div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-        <h3>Would you like to save the selections you've made so far for another time?</h3>
-        <br>
-        <form class="">
-            <div class="rs-control-group">
-                <div class="rs-controls">
-                    <label class="rs-radio">
-                    <input type="radio" name="three">
-                    <strong>Yes</strong><br>
-                    <span class="rs-help-block">Save progress for later</span>
-                    </label>
-                    <label class="rs-radio">
-                    <input type="radio" name="three">
-                    <strong>No</strong>
-                    <span class="rs-help-block">Cancel and move on</span>
-                    </label>
-                </div>
-            </div>                  
-        </form>            
+<div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForCancel" aria-hidden="true">
+        <div class="modal-body">
+            <h3>Would you like to save the selections you've made so far for another time?</h3>
+            <form class=" ">
+                <div class="rs-control-group">
+                    <div class="rs-controls">
+                      <label class="rs-radio">
+                        <input type="radio" ng-model="vm.saveProgress" value="yes">
+                        <strong>Yes</strong><br>
+                        <span class="rs-help-block">Save progress for later</span>
+                      </label>
+                      <label class="rs-radio">
+                        <input type="radio" ng-model="vm.saveProgress" value="no">
+                        <strong>No</strong>
+                        <span class="rs-help-block">Cancel and move on</span>
+                      </label>
+                    </div>
+                  </div>
+                    <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button class="rs-btn rs-btn-primary " ng-class="{disabled:vm.saveProgress == ''}" ng-click="vm.submitCancel()" ng-hide="vm.cancelnSaveObj.saveInProgress">Submit</button>
+                    <a class="rs-btn disabled" disabled="disabled" ng-show="vm.cancelnSaveObj.saveInProgress">Submitting...</a>
+                    <i class="rs-processing-indicator" ng-show="vm.cancelnSaveObj.saveInProgress"></i>
+                    <br>
+                    <div ng-show="vm.cancelnSaveObj.resultMsg" ng-style="vm.cancelnSaveObj.saveSuccess == true ? {color:'green'} : {color:'red'}" >{{vm.cancelnSaveObj.resultMsg}}</div>
+            </form>
+        </div>
     </div>
-    <div class="modal-footer">
-        <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="https://mycloud.rackspace.com">Submit</a>
-    </div>
-</div>
 <!-- end modals -->
