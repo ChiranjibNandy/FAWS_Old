@@ -114,6 +114,11 @@
                     vm.isAllselected = false;
                     vm.tenant_id = authservice.getAuth().tenant_id;
                     vm.isRacker = authservice.is_racker;
+                    if(vm.type === "Files" || vm.type === "LoadBalancers"){
+                        vm.noData = true;
+                        vm.loading = false;
+                        return;   
+                    };
                     /**
                      * @ngdoc property
                      * @name resources_retrieved
