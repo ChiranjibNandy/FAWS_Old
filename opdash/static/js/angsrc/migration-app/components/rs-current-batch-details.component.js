@@ -25,7 +25,7 @@
                 var getBatchDetails = function(job_id) {
                     dashboardService.getBatches()
                             .then(function(response) {
-                                var job = response.job_status_list.find(function(job) {
+                                var job = response.jobs.job_status_list.find(function(job) {
                                     return job.job_id === job_id;
                                 });
                                 console.log(job);

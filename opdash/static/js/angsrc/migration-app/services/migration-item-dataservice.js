@@ -119,7 +119,7 @@
                     networksReqList = [],
                     reqObj = {
                                 batch_name: dataStoreService.getScheduleMigration().migrationName,
-                                start: dataStoreService.selectedTime.time,
+                                //start: dataStoreService.selectedTime.time,
                                 names: names,
                                 source: {
                                     cloud: "rackspace",

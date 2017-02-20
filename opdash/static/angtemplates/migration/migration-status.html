@@ -50,10 +50,16 @@
                         </thead>
                         <tbody ng-show="!vm.loading && !vm.currentBatches.loadError && vm.currentBatches.items.length!==0">
                             <tr ng-repeat="batch in vm.currentBatches.items | limitTo : vm.currentBatches.pageSize : (vm.currentBatches.currentPage-1)*vm.currentBatches.pageSize" class="ng-scope">
-                                <td class="rs-table-link"><a ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]" class="ng-binding" href="./batch-migration-details">{{batch.batch_name}}</a></td>
+                                <td class="rs-table-link">
+                                    <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]">{{batch.batch_name}}</a>
+                                    <a ng-show="batch.timestamp" href="javascript:void(0)" ng-click="vm.continueScheduling(batch);">{{batch.instance_name}}</a>
+                                </td>
                                 <td>{{vm.currentUser}}</td>
-                                <td class="rs-table-text ng-binding">{{(batch.start && batch.start * 1000) | date : 'M/dd/yyyy hh:mm a'}}</td>
+                                <td class="rs-table-text ng-binding">
+                                    <span ng-show="!batch.timestamp">{{(batch.start && batch.start * 1000) | date : 'M/dd/yyyy hh:mm a'}}</span>
+                                </td>
                                 <td class="rs-table-text">
+                                    <span class="rs-status" ng-show="batch.timestamp">Not Scheduled</span>
                                     <span class="rs-status" ng-show="batch.batch_status==='not available'">Not Available</span>
                                     <span class="rs-status" ng-show="batch.batch_status==='scheduled'">Scheduled</span>
                                     <span class="rs-status rs-status-ok" ng-show="batch.batch_status==='in progress'">In Progress</span>
@@ -63,14 +69,16 @@
                                     <span class="rs-status rs-status-warning" ng-show="batch.batch_status==='paused'">Paused</span>
                                 </td>
                                 <td class="rs-table-text">
-                                    <div class="rs-progress rs-progress-medium" style="width: 70%;">
-                                        <div class="rs-progress-inner">
-                                            <div class="rs-segment" style="width: {{['started', 'in progress', 'paused'].indexOf(batch.batch_status)>=0 ? 50 : 0}}%">
-                                                <div class="rs-bar" ng-class="{'rs-status-ok rs-bar-striped': ['started', 'in progress'].indexOf(batch.batch_status)>=0, 'rs-status-error': batch.batch_status==='error', 'rs-status-warning': batch.batch_status==='paused'}"></div>
+                                    <div ng-show="!batch.timestamp">
+                                        <div class="rs-progress rs-progress-medium" style="width: 70%;">
+                                            <div class="rs-progress-inner">
+                                                <div class="rs-segment" style="width: {{['started', 'in progress', 'paused'].indexOf(batch.batch_status)>=0 ? 50 : 0}}%">
+                                                    <div class="rs-bar" ng-class="{'rs-status-ok rs-bar-striped': ['started', 'in progress'].indexOf(batch.batch_status)>=0, 'rs-status-error': batch.batch_status==='error', 'rs-status-warning': batch.batch_status==='paused'}"></div>
+                                                </div>
                                             </div>
                                         </div>
+                                        <span class="rs-progress-label">{{ ['started', 'in progress', 'paused'].indexOf(batch.batch_status)>=0 ? 50 : 0 }}%</span>
                                     </div>
-                                    <span class="rs-progress-label">{{ ['started', 'in progress', 'paused'].indexOf(batch.batch_status)>=0 ? 50 : 0 }}%</span>
                                 </td>
                                 <td class="rs-table-input">
                                     <div class="rs-btn-group">
@@ -78,6 +86,7 @@
                                             <div class="rs-cog rs-dropdown-toggle" ng-click="batch.showSettings = !batch.showSettings"></div>
                                             <ul class="rs-dropdown-menu visible" ng-show="batch.showSettings">
                                                 <li><span class="rs-dropdown-category">Manage</span></li>
+                                                <li ng-show="batch.timestamp"><a href="javascript:void(0)" ng-click="vm.continueScheduling(batch)">Continue Scheduling</a></li>
                                                 <li class="disabled"><a href="#">Modify Migration (NA)</a></li>
                                                 <li class="disabled"><a href="#">Cancel Migration (NA)</a></li>
                                             </ul>
@@ -244,4 +253,13 @@
         </div>
     </div>
     <rsinteractivefooter></rsinteractivefooter>
+</div>
+
+<div id="abort_continue" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSelect" aria-hidden="true">
+    <div class="modal-body" style="height: 150px">
+        <h3 style="margin-top: 40px; text-align: center">Migration for one or more resources in this batch has already been scheduled in another batch. Cannot continue.</h3>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
 </div>
