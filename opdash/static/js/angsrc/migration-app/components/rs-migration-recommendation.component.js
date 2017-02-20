@@ -21,31 +21,28 @@
              * @name migrationApp.controller:rsmigrationrecommendationCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationrecommendation rsmigrationrecommendation} component
              */
-            controller: [ "$rootRouter","datastoreservice","$scope","authservice", function($rootRouter,datastoreservice,$scope,authservice) {
+            controller: [ "$rootRouter","datastoreservice","$scope","authservice","$rootScope", function($rootRouter,datastoreservice,$scope,authservice,$rootScope) {
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
-                
-                $('title')[0].innerHTML =  "Recommendations - Rackspace Cloud Migration";
-                vm.migrationName = datastoreservice.getScheduleMigration().migrationName;
-                var servers = datastoreservice.getItems('server');
-                vm.dataServer = servers.length;
-                var networkNames = [];
-                angular.forEach(servers, function (item) {
-                    angular.forEach(item.details.networks, function (network) {
-                        if(networkNames.indexOf(network.name) == -1) {
-                            networkNames.push(network.name);
-                        };
-                    });
-                });  
-                vm.dataNetwork = networkNames.length;
-                vm.editName = false;
-
                 vm.$onInit = function() {
                     vm.tenant_id = authservice.getAuth().tenant_id;
                     vm.tenant_account_name = authservice.getAuth().account_name;
+                    $('title')[0].innerHTML =  "Recommendations - Rackspace Cloud Migration";
+                    vm.migrationName = datastoreservice.getScheduleMigration().migrationName;
+                    var servers = datastoreservice.getItems('server');
+                    vm.dataServer = servers.length;
+                    var networkNames = [];
+                    angular.forEach(servers, function (item) {
+                        angular.forEach(item.details.networks, function (network) {
+                            if(networkNames.indexOf(network.name) == -1) {
+                                networkNames.push(network.name);
+                            };
+                        });
+                    });  
+                    vm.dataNetwork = networkNames.length;
+                    vm.editName = false;
                 }
-
 
                 /**
                  * @ngdoc method

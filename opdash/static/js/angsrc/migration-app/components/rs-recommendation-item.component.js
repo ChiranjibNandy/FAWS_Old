@@ -76,22 +76,7 @@
                                         {field: "cost", text: "Cost"}
                                     ];
                     }else{
-                        var servers = dataStoreService.getItems('server');
-                        var networkNames = [];
-                        vm.data = [];
-                        vm.labels = [
-                                        {field: "name", text: vm.type+" Name"},
-                                        {field: "id", text: "ID"},
-                                        {field: "status", text: "Status"}
-                                    ];
-                        angular.forEach(servers, function (item) {
-                            angular.forEach(item.details.networks, function (network) {
-                                if(networkNames.indexOf(network.name) == -1) {
-                                    networkNames.push(network.name);
-                                    vm.data.push(network);
-                                };
-                            });
-                        });     
+                        vm.fetchNetworks();
                     }
                     
                     // pagination controls
@@ -115,6 +100,29 @@
                     $('#rs-main-panel').css('height','310px');
                 };
 
+                vm.fetchNetworks = function(){
+                    var servers = dataStoreService.getItems('server');
+                    var networkNames = [];
+                    vm.data = [];
+                    vm.labels = [
+                                    {field: "name", text: vm.type+" Name"},
+                                    {field: "id", text: "ID"},
+                                    {field: "status", text: "Status"}
+                                ];
+                    angular.forEach(servers, function (item) {
+                        angular.forEach(item.details.networks, function (network) {
+                            if(networkNames.indexOf(network.name) == -1) {
+                                networkNames.push(network.name);
+                                vm.data.push(network);
+                            };
+                        });
+                    });
+                }
+                if(vm.type === 'network'){
+                    $rootScope.$on('pricingChanged',function(){
+                        vm.fetchNetworks();
+                    });
+                }
                 /**
                  * @ngdoc method
                  * @name getZones
@@ -201,6 +209,7 @@
                     vm.data.splice(vm.data.indexOf(selectedServer[0]), 1);
                     $rootScope.$emit("pricingChanged");
                     $('.rs-tabs').children()[0].children[0].innerHTML = "Servers ("+vm.data.length+")";
+                    if(vm.data.length === 0)  $('.rs-tabs').children()[1].children[0].innerHTML = "Networks (0)";
                     dataStoreService.setItems({server:vm.data,network:[]});
                 }
 

@@ -81,14 +81,7 @@
                 "(GMT +10:00) Eastern Australia, Guam, Vladivostok",
                 "(GMT +11:00) Magadan, Solomon Islands, New Caledonia",
                     "(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka"];
-                    var date = new Date().toTimeString();
-                    var timeZone =  date.indexOf("+") === -1 ?date.substr(date.indexOf("-")+1,5):date.substr(date.indexOf("+")+1,5);
-                    var exactZone = [timeZone.slice(0, 2),':', timeZone.slice(2)].join('');
-                    vm.timezone = vm.timeZoneItems.filter(function(item){
-                                    if(item.includes(exactZone.trim())){
-                                        return item;
-                                    }      
-                                  })[0];
+                    vm.timezone = vm.getDefaultZone();
                     var m = moment();
                     var roundUp = m.minute() || m.second() || m.millisecond() ? m.add(1, 'hour').startOf('hour') : m.startOf('hour');
                     vm.time = roundUp.format('h:mma');
@@ -100,7 +93,7 @@
                     vm.selectedDate =  moment().format('ddd MMMM Do YYYY')+' '+vm.time+' '+vm.timezone;
                     // console.log(vm.finalDateForUnixTime);
                    //console.log(new Date(vm.finalDateForUnixTime));
-                    vm.unixTime = parseInt((new Date().getTime()/1000), 10);
+                    
                     //  console.log(new Date(vm.finalDateForUnixTime));
                     dataStoreService.storeDate('time',vm.time);
                     dataStoreService.storeDate('timezone',vm.timezone);
@@ -109,26 +102,46 @@
                      dataStoreService.getScheduleMigration();//'Migration-' + new Date().toString();
                      //(d.getUTCMonth()+1) +"-"+ d.getUTCDate()+"-"+ d.getUTCFullYear() + + " " + d.getUTCHours() + ":" + d.getUTCMinutes() + ":" + d.getUTCSeconds();;
                     $scope.$watch('vm.migrationName', function() {              
-              vm.selectedTime = {
-                   migrationName: vm.migrationName,
-                   time:vm.unixTime,
-                   timezone:vm.timezone,
-               
-            };
-             dataStoreService.setScheduleMigration(vm.selectedTime);
-             console.log(dataStoreService.getScheduleMigration());
-            vm.editorEnabled = false;
-            vm.showTimeForm = false;
-            vm.showMigrate = false;
-           vm.isDisableDate =false;
-           vm.isModeSave= true;
-    });
+                        vm.storeSelectedTime();
+                        vm.editorEnabled = false;
+                        vm.showTimeForm = false;
+                        vm.showMigrate = false;
+                        vm.isDisableDate =false;
+                        vm.isModeSave= true;
+                    });
          
                     $scope.$on("DateChanged", function(event, item){
                         vm.date = item;
                         vm.selectedDate = moment(item).format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
                     });
                 };
+
+                vm.storeSelectedTime = function(radioButton){
+                    var zone = vm.timezone;
+                    vm.unixTime = parseInt((new Date().getTime()/1000), 10);
+                    if(radioButton === "fromSave"){
+                        vm.unixTime = parseInt((new Date(vm.date).getTime()/1000), 10);    
+                    }else if(radioButton){
+                        zone = vm.getDefaultZone();
+                    }
+                    vm.selectedTime = {
+                                        migrationName: vm.migrationName,
+                                        time:vm.unixTime,
+                                        timezone:zone,
+                                      };
+                    dataStoreService.setScheduleMigration(vm.selectedTime);
+                };
+
+                vm.getDefaultZone = function(){
+                    var date = new Date().toTimeString();
+                    var timeZone =  date.indexOf("+") === -1 ?date.substr(date.indexOf("-")+1,5):date.substr(date.indexOf("+")+1,5);
+                    var exactZone = [timeZone.slice(0, 2),':', timeZone.slice(2)].join('');
+                    return vm.timeZoneItems.filter(function(item){
+                                if(item.includes(exactZone.trim())){
+                                    return item;
+                                }      
+                            })[0];
+                }
 
                 vm.saveItems = function() {
                       $('#cancel_modal').modal('show');
@@ -204,20 +217,25 @@
                vm.showTime = function(){
                    if(vm.scheduleMigration === "migrateLate"){
                        vm.showTimeForm =  true;
+                       vm.selectedDate =  moment(vm.date).format('ddd MMMM Do YYYY')+' '+vm.time+' '+vm.timezone;
                    }else{
+                       var zone = vm.getDefaultZone();
+                       vm.selectedDate =  moment().format('ddd MMMM Do YYYY h:mma')+' '+zone;
+                       vm.storeSelectedTime("migrate now"); 
                        vm.showTimeForm =  false;
                    }
                     
                };
 
-               vm.onSaveTime = function(){
-               vm.isDisableDate =true;
-                vm.isModeSave= false;
-               }
-         vm.onEditTime = function(){
-                vm.isModeSave= true;
-                vm.isDisableDate =false;
-               }
+                vm.onSaveTime = function(){
+                    vm.storeSelectedTime('fromSave');
+                    vm.isDisableDate =true;
+                    vm.isModeSave= false;
+                }
+                vm.onEditTime = function(){
+                    vm.isModeSave= true;
+                    vm.isDisableDate =false;
+                }
                 return vm;
             }
 
