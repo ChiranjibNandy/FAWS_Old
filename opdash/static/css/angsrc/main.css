@@ -440,3 +440,31 @@ rscalendaritem > div.week.names > span {
     color: #999;
     cursor: pointer;
 }
+
+.modal-table-height{
+   height: 300px;
+}
+
+.rs-custom-counter {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.rs-custom-counter li {
+    counter-increment: step-counter;
+    margin-bottom: 10px;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.rs-custom-counter li::before {
+    content: counter(step-counter);
+    margin-right: 5px;
+    font-size: 80%;
+    background-color: rgb(196, 0, 34);
+    color: white;
+    font-weight: bold;
+    padding: 5px 8px;
+    border-radius: 50px;
+}

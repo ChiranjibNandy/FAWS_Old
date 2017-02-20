@@ -21,7 +21,7 @@
              * @name migrationApp.controller:rsmigrationrackerdashCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationrackerdash rsmigrationrackerdash} component
              */
-            controller:["authservice","$scope","httpwrapper","$q","$rootRouter","$window",function(authservice,$scope,HttpWrapper,$q,$rootRouter,$window){
+            controller:["authservice", "datastoreservice", "$scope","httpwrapper","$q","$rootRouter","$window",function(authservice,datastoreservice, $scope,HttpWrapper,$q,$rootRouter,$window){
                 var vm = this;
                 vm.items = [];
                 vm.addedAccount = '';
@@ -50,6 +50,7 @@
                 // Perfoming controller initialization steps
                 vm.$onInit = function() { 
                     console.log("In racker dash");
+                    datastoreservice.resetAll();
                     vm.pageArray = [];
                     vm.loading = true;
                     vm.loadError = false;
