@@ -188,6 +188,7 @@
              * Saves list of resources the user wants to migrate.
              */
             this.setScheduleMigration = function(items){
+                console.log(items);
                 self.selectedTime = items;
             }
             this.getScheduleMigration = function(){
