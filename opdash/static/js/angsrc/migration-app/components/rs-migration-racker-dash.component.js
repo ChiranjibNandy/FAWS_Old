@@ -27,10 +27,10 @@
                 vm.addedAccount = '';
                 const username = authservice.getAuth().username;
 
-                vm.getTenants = function(){       
-                    //debugger;            
+                vm.getTenants = function(){                   
                      return HttpWrapper.send('/api/tenants/get_user_tenants/'+username, {"operation":'GET'})
                     .then(function(result){
+                        vm.loading = false;
                         result.forEach(function(item){
                             vm.items.push({
                                 "accountName":item.rax_name+" (#"+item.tenant_id+")",
@@ -42,6 +42,8 @@
                             });
                         });
                     }).catch(function(error) {
+                        vm.loading = false;
+                        vm.loadError = true;
                         console.log("Error: Could not fetch tenant", error);
                     });
 
@@ -54,6 +56,8 @@
                     vm.loading = true;
                     vm.loadError = false;
                     vm.loadTenantError = false;
+                    vm.saveInProgress = false,
+                    
                     vm.account_name = null;
                     authservice.getAuth().tenant_id= null;
                     // console.log("Onload Tenant_id=",authservice.getAuth().tenant_id);
@@ -96,12 +100,15 @@
                 vm.openAddAccountModalDialog = function(){
                     vm.loadTenantError = false;
                     $('#add_account_modal').modal('show');
+                    vm.addedAccount = '';
                 }
 
                 vm.submitAddAccount = function() { 
                     vm.loading = true;
                     vm.loadError = false;
                     vm.loadTenantError = false;
+
+                    vm.saveInProgress = true;
 
                     var tenant_id = vm.addedAccount;                
 
@@ -115,6 +122,7 @@
                     HttpWrapper.save("/api/tenants/add_user_tenant", {"operation":'POST'}, requestObj)
                     .then(function(result){
                         vm.loading = false;
+                        vm.saveInProgress = false;  
                         vm.addedAccount = '';
                         vm.items =[];
                         $('#add_account_modal').modal('hide'); 
@@ -131,7 +139,9 @@
                         });
                     }).catch(function(error){
                         vm.loading = false;
-                        vm.loadTenantError = true;   
+                        vm.loadTenantError = true; 
+                        
+                        vm.saveInProgress = false;  
                         console.log("Error in saving tenant id");
                     });
 
@@ -155,7 +165,6 @@
                 } 
 
                 vm.setEncoreLink = function(item){
-                    //debugger;
                     var tenant_id_text = item.accountName;
                     var tenant_id = tenant_id_text.substring(tenant_id_text.lastIndexOf("#")+1,tenant_id_text.lastIndexOf(")"));
                     var encoreUrl = "https://encore.rackspace.com/accounts/"+tenant_id;

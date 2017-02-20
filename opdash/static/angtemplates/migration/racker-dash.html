@@ -6,7 +6,7 @@
 <div ng-show="vm.loadError" class="rs-table-overlay rs-table-overlay-error">
     <div class="rs-table-overlay-content">
         <div class="rs-table-overlay-message"><i class="rs-icon-error-indicator"></i>
-            Error encountered. Please try again.
+            Error encountered while fetching tenant data. Please try again after sometime.
         </div>
     </div>
 </div>
@@ -85,7 +85,7 @@
                     </table>
                 </div>
                 <br>
-                  <!-- ********** PAGINATION GOES HERE... ************* -->
+                <!-- ********** PAGINATION GOES HERE... ************* -->
                 <div class="pagination pagination-mini" ng-if="vm.totalItems">
                     <ul>
                         <li ng-class="{disabled: vm.currentPage == 1}" ng-click="vm.currentPage=vm.currentPage-1"><a href="">Prev</a></li>
@@ -114,14 +114,16 @@
                         <input type="text" class="rs-input-large" ng-model="vm.addedAccount" style="margin-top: 5px;margin-left:7px;">
                     </div>
 
-                    <span class="rs-controls" ng-show="vm.loadTenantError" style="display: block;color:red;">* It does not seem to be a valid tenant id. Please check and enter it again.</span>
+                    <span class="rs-controls" ng-show="vm.loadTenantError" style="display: block;color:red;">* Tenant not found. Please try after sometime.</span>
                 </div>
             </div>
             <br>
             <div class="rs-control-group">
                 <div class="rs-btn-group">
-                    <button class="rs-btn rs-btn-primary " ng-disabled="!vm.addedAccount.length" target="_blank" >Submit</button>
-                    <button class="rs-btn rs-btn-link" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button class="rs-btn rs-btn-primary " ng-disabled="!vm.addedAccount.length" target="_blank" ng-hide="vm.saveInProgress">Submit</button>
+                    <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveInProgress">Submitting...</a>
+                    <i class="rs-processing-indicator" ng-show="vm.saveInProgress"></i>
+                    <button class="rs-btn rs-btn-link" data-dismiss="modal" aria-hidden="true">Close</button>                   
                 </div>
             </div>
         </form>
