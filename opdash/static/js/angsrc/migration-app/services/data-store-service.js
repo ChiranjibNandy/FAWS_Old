@@ -270,27 +270,41 @@
                 });
                 return migrationResourceCount;
             };
+
+            /**
+             * @ngdoc method
+             * @name getSavedItems
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Invokes "/api/users/uidata/" API call for fetching exisitng saved instances. 
+            */
+            this.getSavedItems = function() {
+                var getSavedInstancesUrl = "/api/users/uidata/"+authservice.getAuth().tenant_id+"/Saved_Migrations";
+                return HttpWrapper.send(getSavedInstancesUrl, {"operation":'GET'})
+                                  .then(function(result){
+                                      if(result == null){
+                                          result = JSON.stringify({
+                                              'savedDetails': []
+                                          });
+                                      }
+                                      return result;
+                                  },function(error) {
+                                      return false;
+                                  });
+            }
+
             /**
              * @ngdoc method
              * @name saveItems
              * @methodOf migrationApp.service:datastoreservice
              * @description 
-             * Invokes "/api/users/uidata/" API call for fetching exisitng saved instances. 
+             * Saves migration resources and schedules to be used for later reference
             */
-            this.saveItems = function(saveInstance) {   
-                var self = this;
-                var getSavedInstancesUrl = "/api/users/uidata/"+authservice.getAuth().tenant_id+"/Saved_Migrations";
-                return HttpWrapper.send(getSavedInstancesUrl, {"operation":'GET'})
-                    .then(function(result){
-                        if(result == null){
-                            result = JSON.stringify({
-                                'savedDetails': []
-                            });
-                        }
-                        return self.postSavedInstances(JSON.parse(result.savedDetails || '[]'), saveInstance);
-                    },function(error) {
-                        return false;
-                });
+            this.saveItems = function(saveInstance) {
+                return self.getSavedItems()
+                           .then(function(result){
+                               return !result ? result : self.postSavedInstances(JSON.parse(result.savedDetails || '[]'), saveInstance);
+                           });
             };
 
             /**

@@ -8,11 +8,11 @@
      * This service helps to fetch and refresh dashboard data
      */
     angular.module("migrationApp")
-        .service("dashboardservice", ["authservice", "httpwrapper", "$q", function(authservice, HttpWrapper, $q) {
+        .service("dashboardservice", ["authservice", "httpwrapper", "datastoreservice", "$q", function(authservice, HttpWrapper, dataStoreService, $q) {
             var self = this,
                 loaded = false,
-                tenant = null,
-                batches = [];
+                currentTenant = null,
+                batches = {};
 
             /**
              * @ngdoc method
@@ -25,19 +25,24 @@
              */
             self.getBatches = function(refresh) {
                 var tenant_id = authservice.getAuth().tenant_id;
-                var url = "/api/jobs/" + tenant_id;
+                var currentJobsUrl = "/api/jobs/" + tenant_id;
 
-                if (refresh || !loaded || (tenant !== tenant_id)) {
-                    return HttpWrapper.send(url,{"operation":'GET'})
-                                    .then(function(response){
+                if (refresh || !loaded || (currentTenant !== tenant_id)) {
+                    var savedMigrationsTask = dataStoreService.getSavedItems();
+                    var currentJobsTask = HttpWrapper.send(currentJobsUrl,{"operation":'GET'});
+
+                    return $q.all([savedMigrationsTask, currentJobsTask])
+                             .then(function(results) {
+                                        console.log(results);
                                         loaded = true;
-                                        tenant = tenant_id;
-                                        batches = response;
+                                        currentTenant = tenant_id;
+                                        var savedMigrations = [];
+                                        savedMigrations = JSON.parse(results[0].savedDetails || '[]');
+                                        batches = { savedMigrations: savedMigrations, jobs: results[1] };
                                         return batches;
-                                    }, function(errorResponse) {
+                                   }, function(errorResponse) {
                                         return errorResponse;
-                                    });
-
+                                   });
                 } else {
                     return $q.when(batches);
                 }

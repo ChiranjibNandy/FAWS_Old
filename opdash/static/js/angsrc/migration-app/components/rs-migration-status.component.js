@@ -21,8 +21,26 @@
                  * @name migrationApp.controller:rsmigrationstatusCtrl
                  * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationstatus rsmigrationstatus} component
                  */
-                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "$filter", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, $filter) {
+                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "migrationitemdataservice", "$filter", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, ds, $filter) {
                     var vm = this;
+                    var jobList = [];
+
+                    var isValidBatch = function(batch) {
+                        var valid = true;
+                        angular.forEach(batch.selected_resources, function (server) {
+                            angular.forEach(jobList, function (status) {
+                                angular.forEach(status.instances, function (instance) {
+                                    if(instance['name'] == server.name){
+                                        if(instance['status'] != 'error'){
+                                            valid = false;
+                                        }
+                                    }
+                                });
+                            });
+                        });
+                        
+                        return valid;
+                    };
 
                     vm.$onInit = function() {
                         $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
@@ -114,7 +132,7 @@
                                     console.log("Batch: ", response);
                                     var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled"];
                                     var validCompletedBatchStatus = ["done"];
-                                    var jobList = response.job_status_list;
+                                    jobList = response.jobs.job_status_list;
                                     var currentBatches = [];
                                     var completedBatches = [];
 
@@ -125,8 +143,9 @@
                                             completedBatches.push(job);
                                     });
 
-                                    vm.currentBatches.items = $filter('orderBy')(currentBatches, '-start');
-                                    vm.currentBatches.noOfPages = Math.ceil(currentBatches.length / vm.currentBatches.pageSize);
+                                    var savedMigrations = $filter('orderBy')(response.savedMigrations, '-timestamp');
+                                    vm.currentBatches.items = $filter('orderBy')(currentBatches, '-start').concat(savedMigrations);
+                                    vm.currentBatches.noOfPages = Math.ceil(vm.currentBatches.items.length / vm.currentBatches.pageSize);
                                     vm.currentBatches.pages = new Array(vm.currentBatches.noOfPages);
                                     
                                     vm.completedBatches.items = $filter('orderBy')(completedBatches, '-start');
@@ -152,6 +171,28 @@
                     vm.startNewMigration = function() {
                         dataStoreService.resetAll();
                         $rootRouter.navigate(["MigrationResourceList"]);
+                    };
+
+                    vm.continueScheduling = function(batch) {
+                        console.log(batch);
+
+                        if(!isValidBatch(batch)){
+                            $('#abort_continue').modal('show');
+                            return;
+                        }
+
+                        if(batch.step_name === "MigrationResourceList"){
+                            dataStoreService.setItems({'server': batch.selected_resources});
+                        }
+                        else if(batch.step_name === "MigrationRecommendation"){
+                            dataStoreService.setItems({'server': batch.recommendations});
+                        }
+                        else if(batch.step_name === "ScheduleMigration" || batch.step_name === "ConfirmMigration"){
+                            dataStoreService.setItems({'server': batch.recommendations});
+                            dataStoreService.selectedTime = batch["scheduling-details"];
+                        }
+
+                        $rootRouter.navigate([batch.step_name]);
                     };
                 }]
             }); // end of comeponent rsmigrationstatus
