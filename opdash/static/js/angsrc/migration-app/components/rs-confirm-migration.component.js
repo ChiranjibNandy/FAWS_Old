@@ -129,23 +129,19 @@
                             buttonDetails.resultMsg = "Saved your instance successfully with name: "+dataStoreService.getScheduleMigration().migrationName;
                             $timeout(function () {
                                 buttonDetails.resultMsg = "";
-                            }, 3000);
-                            $timeout(function () {
                                 if(buttonDetails.modalName == '#cancel_modal'){
                                     $('#cancel_modal').modal('hide');
                                     $rootRouter.navigate(["MigrationStatus"]);
                                 }
-                            }, 4000);
+                            }, 3000);
                         }else{
                             buttonDetails.saveInProgress = false;
                             buttonDetails.saveSuccess = false;
                             buttonDetails.resultMsg = "Error while saving. Please try again after sometime!!";
                             $timeout(function () {
                                 buttonDetails.resultMsg = "";
-                            }, 3000);
-                            $timeout(function () {
                                 $(buttonDetails.modalName).modal('hide');
-                            }, 4000);
+                            }, 3000);
                         }
                     },function(error){
                         buttonDetails.saveInProgress = false;
@@ -153,10 +149,8 @@
                         buttonDetails.resultMsg = "Error while saving. Please try again after sometime!!";
                         $timeout(function () {
                             buttonDetails.resultMsg = "";
-                        }, 3000);
-                        $timeout(function () {
                             $(buttonDetails.modalName).modal('hide');
-                        }, 4000);
+                        }, 3000);
                     });
                 };
 
@@ -170,6 +164,11 @@
                         $('#cancel_modal').modal('hide');
                     }
                 }
+
+                vm.showCancelDialog = function() {
+                    $('#cancel_modal').modal('show');
+                };
+
                 return vm;
             }
         ]}); // end of component definition

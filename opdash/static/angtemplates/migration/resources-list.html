@@ -19,12 +19,12 @@
                                 <rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>
                             </rs-tab>-->
                             <rs-tab title="Files" ng-if="vm.isRacker" class="disabled">
-                                Files
-                                <!--<rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>-->
+                                <!--Files-->
+                                <rsmigrationitem type="Files" filtervalue="vm.filterSearch"></rsmigrationitem>
                             </rs-tab>
                             <rs-tab title="Load Balancers" ng-if="vm.isRacker" class="disabled">
-                                Load Balancers
-                                <!--<rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>-->
+                                <!--Load Balancers-->
+                                <rsmigrationitem type="LoadBalancers" filtervalue="vm.filterSearch"></rsmigrationitem>
                             </rs-tab>
                             <div class="rs-pull-right" style="margin-top: -49px; margin-left:790px">
                                 <a class="rs-btn" ng-click="vm.cancelMigration()">Cancel Migration</a>
