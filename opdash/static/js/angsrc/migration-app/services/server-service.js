@@ -158,7 +158,8 @@
                                                     {field: "name", text: "Server Name"},
                                                     {field: "ip_address", text: "IP Address"},
                                                     {field: "ram", text: "RAM"},
-                                                    {field: "status", text: "Status"}
+                                                    {field: "server status", text: "Server Status"},
+                                                    {field:"migration status", text:"Migration Status"}
                                                 ],
                                         data: response
                                     };
