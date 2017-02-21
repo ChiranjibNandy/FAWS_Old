@@ -74,7 +74,7 @@
                                             <div class="rs-cog rs-dropdown-toggle" ng-click="batch.showSettings = !batch.showSettings"></div>
                                             <ul class="rs-dropdown-menu visible" ng-show="batch.showSettings">
                                                 <li><span class="rs-dropdown-category">Manage</span></li>
-                                                <li class=""><a href="" ng-click="vm.removeAccount(item.accountName)">Remove from Panel</a></li>
+                                                <li class=""><a href="" ng-click="vm.removeTenantAccount(item)">Remove from Panel</a></li>
                                                 <li class=""><a href="" ng-click="vm.setEncoreLink(item)">View in Encore</a></li>
                                             </ul>
                                         </div>
@@ -83,6 +83,11 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <br>
+                <div class="alert alert-success fade in" ng-show="vm.showFetch">
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                    <strong>Success! </strong> <span>{{vm.fetchResponse}}<span>
                 </div>
                 <br>
                 <!-- ********** PAGINATION GOES HERE... ************* -->
