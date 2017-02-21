@@ -5,10 +5,10 @@
      * @ngdoc object
      * @name migrationApp.object:rsmigrationresourceslist
      * @description
-     * Component to display the _Select Resources_ page. This component is loaded directly on route change.  
-     *   
-     * This component uses the template: **angtemplates/migration/resources-list.html**.  
-     *   
+     * Component to display the _Select Resources_ page. This component is loaded directly on route change.
+     *
+     * This component uses the template: **angtemplates/migration/resources-list.html**.
+     *
      * Its controller {@link migrationApp.controller:rsmigrationresourceslistCtrl rsmigrationresourceslistCtrl} uses the below services:
      *  * {@link migrationApp.service:authservice authservice}
      *  * $scope
@@ -33,26 +33,25 @@
                     var status = dataStoreService.getDontShowStatus();
                     if(status == false){
                         $('#intro_modal').modal('show');
-                    }        
+                    }
                     $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Migration";
 
                     // console.log("is_racker=",authservice.getAuth().is_racker);
 
                     if(authservice.getAuth().is_racker == false){   //if logged in as customer, tenant_id needs to be assigned here
-                        authservice.getAuth().tenant_id= "1024814"; //temporary hard coded until api is available.
-                        
+
                         vm.tenant_id = authservice.getAuth().tenant_id;
                         var actname = dataStoreService.getAccountName(vm.tenant_id); //setting the accountname through api
                         actname.then(function() {
                         vm.tenant_account_name = authservice.getAuth().account_name;}); //waiting api promise to resolve
-                        
+
                     }
                     else{  //if logged in as a racker then it is set by racker dashboard page
                         vm.tenant_id = authservice.getAuth().tenant_id;
                         vm.tenant_account_name = authservice.getAuth().account_name;
                     }
-                    
-                    
+
+
                     vm.auth = authservice.getAuth();
                     vm.isRacker = authservice.is_racker;
                     vm.selectedItems = {
@@ -94,7 +93,7 @@
                  * @name addItem
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
                  * @param {Object} item Object describing the selected resource
-                 * @description 
+                 * @description
                  * Called by child component when an item is selected
                  */
                 vm.addItem = function(item, type) {
@@ -110,7 +109,7 @@
                  * @name removeItem
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
                  * @param {Object} item Object describing the selected resource
-                 * @description 
+                 * @description
                  * Called by child component when an item is removed by user
                  */
                 vm.removeItem = function(item, type) {
@@ -131,8 +130,8 @@
                  * @ngdoc method
                  * @name saveForLater
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
-                 * @description 
-                 * Save instance of Migration for further processing 
+                 * @description
+                 * Save instance of Migration for further processing
                  */
                 vm.saveForLater = function() {
                     if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0) {
@@ -148,13 +147,13 @@
                         $("#no_selection").modal('show');
                     }
                 }
-                
+
                 /**
                  * @ngdoc method
                  * @name saveItems
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
-                 * @description 
-                 * Invokes "/api/users/uidata/" API call for fetching existing saved instances. 
+                 * @description
+                 * Invokes "/api/users/uidata/" API call for fetching existing saved instances.
                  */
                 vm.saveItems = function(buttonDetails) {
                     var saveInstance = {
@@ -206,7 +205,7 @@
                  * @ngdoc method
                  * @name dontShow
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
-                 * @description 
+                 * @description
                  * Consider Dont show checkbox if checked.
                  */
                 vm.dontShow = function() {
@@ -217,7 +216,7 @@
                  * @ngdoc method
                  * @name continue
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
-                 * @description 
+                 * @description
                  * Continue to next step: **Recommendations**
                  */
                 vm.continue = function() {
@@ -241,7 +240,7 @@
                  * @ngdoc method
                  * @name savencontinue
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
-                 * @description 
+                 * @description
                  * Give name for migration and continue to next step: **Recommendations**
                  */
                 vm.savencontinue = function() {
@@ -267,7 +266,7 @@
                  * @ngdoc method
                  * @name cancelMigration
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
-                 * @description 
+                 * @description
                  * Cancel Migration of resources and go back to migration dashboard page.
                  */
                 vm.cancelMigration = function() {
@@ -288,7 +287,7 @@
                  * @ngdoc method
                  * @name submitCancel
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
-                 * @description 
+                 * @description
                  * Cancel Migration of resources and go back to migration dashboard page.
                  */
                 vm.submitCancel = function() {
