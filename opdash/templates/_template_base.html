@@ -86,11 +86,10 @@
 
   var user_data = {
     // Selected Tenant
-    // "tenant_id": "{! g.get('tenant_id', "") !}"||null,
-    "tenant_id": null,
     {% if g.user_data %}
       "username": "{!g.user_data.username!}",
       "authtoken": "{!g.user_data.authtoken!}",
+      "tenant_id": "{! g.user_data.get('tenant_id', "") !}"||null,
       "account_name":null,
       "is_racker": {!'true' if g.user_data.is_racker else 'false'!},
     {% else %}
@@ -98,6 +97,7 @@
       "authtoken": null,
       "account_name":null,
       "is_racker": null,
+      "tenant_id": null
     {% endif %}
   };
 
