@@ -468,3 +468,9 @@ rscalendaritem > div.week.names > span {
     padding: 5px 8px;
     border-radius: 50px;
 }
+
+.fontSize{
+    font-size: 19px;
+    margin-left: 10px;
+    cursor: pointer;
+}
