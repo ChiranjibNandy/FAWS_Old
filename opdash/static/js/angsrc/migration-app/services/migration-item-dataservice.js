@@ -119,7 +119,8 @@
                     networksReqList = [],
                     reqObj = {
                                 batch_name: dataStoreService.getScheduleMigration().migrationName,
-                                //start: dataStoreService.selectedTime.time,
+                                // start: dataStoreService.selectedTime.time,
+                                // start:parseInt((new Date().getTime()/1000), 10),
                                 names: names,
                                 source: {
                                     cloud: "rackspace",
@@ -152,7 +153,7 @@
                             region: instance.region.toUpperCase(),
                         },
                         destination: {
-                            region: instance.selectedMapping.region.toUpperCase(),
+                            region: instance.selectedMapping.region, //.toUpperCase(),
                             zone: "us-east-1a",
                             type: instance.selectedMapping.instance_type
                         }
@@ -166,7 +167,7 @@
                             region: network.region.toUpperCase()
                         },
                         destination: {
-                            region: network.destRegion.toUpperCase(),
+                            region: network.destRegion, //.toUpperCase(),
                             default_zone: "us-east-1a"
                         },
                         subnets: "All",

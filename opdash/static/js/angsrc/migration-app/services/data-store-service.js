@@ -370,13 +370,31 @@
              * Invokes "/api/tenants/get_account_info/<tenant_id> API call to fetch the account details of a Tenant.
              */
             self.getAccountName = function(tid){
-            // var tid =authservice.getAuth().tenant_id;
-            var url = "/api/tenants/get_account_info/"+tid;
-            return HttpWrapper.send(url,{"operation":'GET'})
-                    .then(function(response){
-                        authservice.getAuth().account_name=response.rax_name; //set the account_name in authservice
+                // var tid =authservice.getAuth().tenant_id;
+                var urlactinfo = "/api/tenants/get_account_info/" + tid;
+                
+                return HttpWrapper.send(urlactinfo, { "operation": 'GET' })
+                    .then(function (response) {
+                        authservice.getAuth().account_name = response.rax_name; //set the account_name in authservice
                         // return response.data;
-                   });
+                    });
+            };
+
+            /**
+             * @ngdoc method
+             * @name getAccountTenantid
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Invokes "/api/tenants/get_tenant_id/<auth_token> API call to fetch the Tenant_id of the user.
+             */
+            self.getAccountTenantid = function () {
+                var urltenid = "/api/tenants/get_tenant_id/" + authservice.getAuth().authtoken;
+                
+                return HttpWrapper.send(urltenid, { "operation": 'GET' })
+                    .then(function (response) {
+                        authservice.getAuth().tenant_id = response; //set the tenant_id in authservice
+                        // return response.data;
+                    });
             };
 
             /*
