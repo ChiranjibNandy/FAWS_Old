@@ -303,7 +303,8 @@
             this.saveItems = function(saveInstance) {
                 return self.getSavedItems()
                            .then(function(result){
-                               return !result ? result : self.postSavedInstances(JSON.parse(result.savedDetails || '[]'), saveInstance);
+                               var requestObj = self.objForSaveLater(JSON.parse(result.savedDetails || '[]'), saveInstance);
+                               return !result ? result : self.postSavedInstances(requestObj);
                            });
             };
 
@@ -314,9 +315,9 @@
                  * @description 
                  * Invokes "/api/users/uidata/add" API call for posting saved instance.
             */
-            this.postSavedInstances = function(response,saveInstance) {
+            this.postSavedInstances = function(requestObj) {
                 var self = this;
-                var requestObj = self.objForSaveLater(response, saveInstance);
+                //var requestObj = self.objForSaveLater(response, saveInstance);
                 return HttpWrapper.save("/api/users/uidata/add", {"operation":'POST'}, requestObj)
                     .then(function(result){
                         return true;
