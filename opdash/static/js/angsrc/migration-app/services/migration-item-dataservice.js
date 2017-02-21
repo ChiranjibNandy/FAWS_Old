@@ -120,7 +120,7 @@
                     reqObj = {
                                 batch_name: dataStoreService.getScheduleMigration().migrationName,
                                 // start: dataStoreService.selectedTime.time,
-                                // start:parseInt((new Date().getTime()/1000), 10),
+                                start:parseInt((new Date().getTime()/1000), 10),
                                 names: names,
                                 source: {
                                     cloud: "rackspace",
