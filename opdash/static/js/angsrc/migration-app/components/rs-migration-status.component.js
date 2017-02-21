@@ -232,7 +232,7 @@
                                             // remove from server
                                             var index = -1;
                                             for(var i=0; i<savedMigrations.length; i++){
-                                                if(batch.instance_name === savedMigrations[i].instance_name){
+                                                if(batch.timestamp === savedMigrations[i].timestamp && batch.instance_name === savedMigrations[i].instance_name){
                                                     index = i;
                                                     break;
                                                 }
