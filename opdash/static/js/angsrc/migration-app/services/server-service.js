@@ -9,7 +9,7 @@
      */
     angular.module("migrationApp").factory("serverservice", ["httpwrapper", "$q", "authservice", function (HttpWrapper, $q, authservice) {
         // local variables to help cache data
-        var loaded, servers, self = this;
+        var loaded, servers, self = this, currentTenant = null;
 
         // function to transform the data from api call for overview display
         function trimTransform (data) {
@@ -147,12 +147,14 @@
         self.getAll = function () {
             //var url = "/static/angassets/servers-list.json";
             var url = "/api/compute/us-instances";
+            var tenant_id = authservice.getAuth().tenant_id;
 
-            // if (!loaded) {
+            if (!loaded || (currentTenant !== tenant_id)) {
 
                 return HttpWrapper.send(url,{"operation":'GET'})
                                 .then(function(response){
-                                    // loaded = true;
+                                    loaded = true;
+                                    currentTenant = tenant_id;
                                     servers = {
                                         labels: [
                                                     {field: "name", text: "Server Name"},
@@ -168,9 +170,9 @@
                                     return errorResponse;
                                 });
 
-            // } else {
-                // return $q.when(servers);
-            // }
+            } else {
+                return $q.when(servers);
+            }
         };
 
         /**
