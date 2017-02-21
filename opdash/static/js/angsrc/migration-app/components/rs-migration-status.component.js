@@ -173,6 +173,14 @@
                         $rootRouter.navigate(["MigrationResourceList"]);
                     };
 
+                    /**
+                     * @ngdoc method
+                     * @name continueScheduling
+                     * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                     * @param {Object} batch The batch that needs to be scheduled
+                     * @description 
+                     * Initiates scheduling of migration for a saved migration
+                     */
                     vm.continueScheduling = function(batch) {
                         console.log(batch);
 
@@ -180,6 +188,18 @@
                             $('#abort_continue').modal('show');
                             return;
                         }
+
+                        var allData = dataStoreService.retrieveallItems('server');  
+                        angular.forEach(batch.selected_resources, function (selected) {
+                            angular.forEach(allData, function (server) {
+                                if(selected['id'] == server.id){
+                                        server.selected = true;
+                                };
+                            });
+                        });
+                        
+                        dataStoreService.storeallItems(allData,'server');
+                        dataStoreService.setDontShowStatus(true);
 
                         if(batch.step_name === "MigrationResourceList"){
                             dataStoreService.setItems({'server': batch.selected_resources});
@@ -193,6 +213,47 @@
                         }
 
                         $rootRouter.navigate([batch.step_name]);
+                    };
+
+                    /**
+                     * @ngdoc method
+                     * @name deleteSavedSchedule
+                     * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                     * @param {Object} batch The unsheduled saved batch that needs to be deleted
+                     * @description 
+                     * Deletes a saved unscheduled migration
+                     */
+                    vm.deleteSavedSchedule = function(batch) {
+                        batch.deleting = true;
+                        dataStoreService.getSavedItems()
+                                        .then(function(result){
+                                            var savedMigrations = JSON.parse(result.savedDetails || '[]');
+
+                                            // remove from server
+                                            var index = -1;
+                                            for(var i=0; i<savedMigrations.length; i++){
+                                                if(batch.instance_name === savedMigrations[i].instance_name){
+                                                    index = i;
+                                                    break;
+                                                }
+                                            }
+                                            index!==-1 && savedMigrations.splice(index, 1);
+                                            result.savedDetails = JSON.stringify(savedMigrations);
+                                            
+                                            if(dataStoreService.postSavedInstances(result)){
+                                                // remove from local
+                                                index = -1;
+                                                for(var i=0; i<vm.currentBatches.items.length; i++){
+                                                    if(batch.instance_name === vm.currentBatches.items[i].instance_name){
+                                                        index = i;
+                                                        break;
+                                                    }
+                                                }
+                                                index!==-1 && vm.currentBatches.items.splice(index, 1);
+                                            }else{
+                                                batch.deleting = false;
+                                            }
+                                        });
                     };
                 }]
             }); // end of comeponent rsmigrationstatus

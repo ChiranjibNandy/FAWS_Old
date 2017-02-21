@@ -6,7 +6,9 @@
                     <a class="rs-btn " ng-link="['MigrationStatus']">Back to Dashboard</a>
                 </div>
                 <div class="rs-detail-header-subtitle">Batch Name</div>
-                <h3>{{vm.job.batch_name}}</h3>
+                <h3>{{vm.job.batch_name}}
+                    &nbsp;<i class="refresh-icon fa fa-refresh" title="Refresh Dashboard" ng-click="vm.getBatchDetails(true)" ng-class="{'fa-spin': vm.loading}"></i>
+                </h3>
                 <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
                     <table class="rs-list-table rs-embedded-list-table no-truncate-td">
                         <thead>
@@ -19,7 +21,7 @@
                             <th>Progress</th>
                             <th>Status</th>
                         </thead>
-                        <tbody>
+                        <tbody ng-show="!vm.loading && !vm.loadError">
                             <tr ng-repeat="(id, instance) in vm.job.instances">
                                 <td class="rs-table-link">
                                     <a href="#resource_info" ng-click="vm.equipmentDetails('server', id)" role="button" data-toggle="modal">{{instance.name}}</a>
@@ -32,7 +34,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <span class="rs-progress-label">{{ ['started', 'in progress', 'paused'].indexOf(instance.status)>=0 ? 50 : 0 }}%</span>
+                                    <!--<span class="rs-progress-label">{{ instance.status === 'done' ? 100 : ['started', 'in progress', 'paused'].indexOf(instance.status)>=0 ? 50 : 0 }}%</span>-->
                                 </td>
                                 <td class="rs-table-text">
                                     <span class="rs-status" ng-show="instance.status==='not available'">Not Available</span>
@@ -43,6 +45,22 @@
                                     <span class="rs-status rs-status-error" ng-show="instance.status==='error'">Error</span>
                                     <span class="rs-status rs-status-warning" ng-show="instance.status==='paused'">Paused</span>
                                 </td>
+                            </tr>
+                        </tbody>
+                        <tbody ng-show="vm.loading">
+                            <tr>
+                                <td colspan="3">
+                                    <div class="rs-table-overlay rs-table-overlay-loading">
+                                        <div class="rs-table-overlay-content">
+                                            <div class="rs-table-overlay-message">Loading&hellip;</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody ng-show="!vm.loading && vm.loadError">
+                            <tr>
+                                <td colspan="3" class="collection-error-msg">Error loading data</td>
                             </tr>
                         </tbody>
                     </table>
@@ -61,7 +79,7 @@
                             <th>Progress</th>
                             <th>Status</th>
                         </thead>
-                        <tbody>
+                        <tbody ng-show="!vm.loading && !vm.loadError">
                             <tr ng-repeat="network in vm.job.networks">
                                 <td class="rs-table-link">{{network.name}}</td>
                                 <td class="rs-table-text">
@@ -72,7 +90,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <span class="rs-progress-label">{{ ['started', 'in progress', 'paused'].indexOf(network.status)>=0 ? 50 : 0 }}%</span>
+                                    <!--<span class="rs-progress-label">{{ ['started', 'in progress', 'paused'].indexOf(network.status)>=0 ? 50 : 0 }}%</span>-->
                                 </td>
                                 <td class="rs-table-text">
                                     <span class="rs-status" ng-show="network.status==='not available'">Not Available</span>
@@ -85,6 +103,22 @@
                                 </td>
                             </tr>
                         </tbody>
+                        <tbody ng-show="vm.loading">
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="rs-table-overlay rs-table-overlay-loading">
+                                            <div class="rs-table-overlay-content">
+                                                <div class="rs-table-overlay-message">Loading&hellip;</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody ng-show="!vm.loading && vm.loadError">
+                                <tr>
+                                    <td colspan="3" class="collection-error-msg">Error loading data</td>
+                                </tr>
+                            </tbody>
                     </table>
                 </div>
                 <br>

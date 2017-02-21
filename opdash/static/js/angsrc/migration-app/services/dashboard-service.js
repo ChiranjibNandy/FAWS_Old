@@ -19,9 +19,9 @@
              * @name getBatches
              * @methodOf migrationApp.service:dashboardservice
              * @param {Boolean} refresh True if the batch list needs to be refreshed
-             * @returns {Object} The batch list for a given tenant
+             * @returns {Promise} A promise to fetch the batch list for a given tenant
              * @description 
-             * This service method returns an array containing the list of batches for a tenant
+             * This service method returns a promise to fetch an array containing the list of batches for a tenant
              */
             self.getBatches = function(refresh) {
                 var tenant_id = authservice.getAuth().tenant_id;

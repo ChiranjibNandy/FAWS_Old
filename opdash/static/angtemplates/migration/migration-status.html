@@ -77,7 +77,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <span class="rs-progress-label">{{ ['started', 'in progress', 'paused'].indexOf(batch.batch_status)>=0 ? 50 : 0 }}%</span>
+                                        <!--<span class="rs-progress-label">{{ ['started', 'in progress', 'paused'].indexOf(batch.batch_status)>=0 ? 50 : 0 }}%</span>-->
                                     </div>
                                 </td>
                                 <td class="rs-table-input">
@@ -87,6 +87,10 @@
                                             <ul class="rs-dropdown-menu visible" ng-show="batch.showSettings">
                                                 <li><span class="rs-dropdown-category">Manage</span></li>
                                                 <li ng-show="batch.timestamp"><a href="javascript:void(0)" ng-click="vm.continueScheduling(batch)">Continue Scheduling</a></li>
+                                                <li ng-show="batch.timestamp && !batch.deleting">
+                                                    <a ng-show="!batch.deleting" href="javascript:void(0)" ng-click="vm.deleteSavedSchedule(batch)">Delete</a>
+                                                </li>
+                                                <li class="disabled" ng-show="batch.deleting"><a href="#">Deleting...</a></li>
                                                 <li class="disabled"><a href="#">Modify Migration (NA)</a></li>
                                                 <li class="disabled"><a href="#">Cancel Migration (NA)</a></li>
                                             </ul>
@@ -119,7 +123,7 @@
                     </table>
                 </div>
                 <br>
-                <div class="pagination pagination-mini" ng-show="vm.currentBatches.items.length!==0">
+                <div class="pagination pagination-mini" ng-show="!vm.loading && vm.currentBatches.items.length!==0">
                     <ul>
                         <li><span>Showing {{(vm.currentBatches.currentPage == 1 ? vm.currentBatches.currentPage : ((vm.currentBatches.currentPage-1)*5)+1)}}-{{(vm.currentBatches.currentPage == vm.currentBatches.noOfPages ? vm.currentBatches.items.length : vm.currentBatches.currentPage*5)}} of {{vm.currentBatches.items.length}}</span></li>
                         <li ng-class="{disabled: vm.currentBatches.currentPage == 1}" ng-click="vm.currentBatches.currentPage=vm.currentBatches.currentPage-1"><a href="">Prev</a></li>
@@ -185,7 +189,7 @@
                     </table>
                 </div>
                 <br>
-                <div class="pagination pagination-mini" ng-show="vm.completedBatches.items.length!==0">
+                <div class="pagination pagination-mini" ng-show="!vm.loading && vm.completedBatches.items.length!==0">
                     <ul>
                         <li><span>Showing {{(vm.completedBatches.currentPage == 1 ? vm.completedBatches.currentPage : ((vm.completedBatches.currentPage-1)*5)+1)}}-{{(vm.completedBatches.currentPage == vm.completedBatches.noOfPages ? vm.completedBatches.items.length : vm.completedBatches.currentPage*5)}} of {{vm.completedBatches.items.length}}</span></li>
                         <li ng-class="{disabled: vm.completedBatches.currentPage == 1}" ng-click="vm.completedBatches.currentPage=vm.completedBatches.currentPage-1"><a href="">Prev</a></li>
