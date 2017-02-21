@@ -50,9 +50,12 @@
                             </h3>
                         <div ng-show="vm.editorEnabled">
                           <input ng-model="vm.editedMigrationName" >
-                           <button    role="button" ng-click="vm.save()">Save</button>
-                             or
-                           <button    role="button" ng-click="vm.disableEditor()">cancel</button>.
+                          <span class="fontSize">  
+                    <i class="fa fa-check" ng-click="vm.save()"></i>    
+                </span>
+                <span class="fontSize">
+                    <i class="fa fa-close" ng-click="vm.disableEditor()"></i>
+                </span>
                            </div>
                         </form>
                         </div>
