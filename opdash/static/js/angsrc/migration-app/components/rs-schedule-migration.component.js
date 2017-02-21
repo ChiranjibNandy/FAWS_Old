@@ -102,7 +102,7 @@
                      dataStoreService.getScheduleMigration();//'Migration-' + new Date().toString();
                      //(d.getUTCMonth()+1) +"-"+ d.getUTCDate()+"-"+ d.getUTCFullYear() + + " " + d.getUTCHours() + ":" + d.getUTCMinutes() + ":" + d.getUTCSeconds();;
                     $scope.$watch('vm.migrationName', function() {              
-                        vm.storeSelectedTime();
+                        vm.storeSelectedTime("migrate now");
                         vm.editorEnabled = false;
                         vm.showTimeForm = false;
                         vm.showMigrate = false;
@@ -118,11 +118,12 @@
 
                 vm.storeSelectedTime = function(radioButton){
                     var zone = vm.timezone;
-                    vm.unixTime = parseInt((new Date().getTime()/1000), 10);
+                    vm.unixTime = moment().unix();
                     if(radioButton === "fromSave"){
-                        vm.unixTime = parseInt((new Date(vm.date).getTime()/1000), 10);    
-                    }else if(radioButton){
+                        vm.unixTime = moment(vm.date).unix();    
+                    }else if(radioButton === "migrate now"){
                         zone = vm.getDefaultZone();
+                        vm.unixTime = "";
                     }
                     vm.selectedTime = {
                                         migrationName: vm.migrationName,
@@ -228,9 +229,13 @@
                };
 
                 vm.onSaveTime = function(){
-                    vm.storeSelectedTime('fromSave');
-                    vm.isDisableDate =true;
-                    vm.isModeSave= false;
+                    if(moment().diff(vm.date, 'minutes') > 1){
+                        alert("Please schedule migration for future");
+                    }else{
+                        vm.storeSelectedTime('fromSave');
+                        vm.isDisableDate =true;
+                        vm.isModeSave= false;
+                    }
                 }
                 vm.onEditTime = function(){
                     vm.isModeSave= true;
