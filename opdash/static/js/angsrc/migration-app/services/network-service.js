@@ -8,7 +8,7 @@
      * Service to retrieve all data for network resources
      */
     angular.module("migrationApp")
-        .factory("networkservice", ["httpwrapper", "$q", "authservice", function (HttpWrapper, $q, authservice) {
+        .factory("networkservice", ["httpwrapper", "$q", "authservice", "serverservice", function (HttpWrapper, $q, authservice, serverService) {
             // local variables to help cache data
             var loaded, networks, self = this;
 
@@ -117,10 +117,21 @@
              */
             self.getTrimmedList = function() {
                 var deferred = $q.defer();
-                self.getAll().then(function(response) {
+                serverService.getTrimmedList().then(function(response) {
                     if(response.error)
                         return deferred.resolve(response);
-                    return deferred.resolve(trimTransform(response));
+                    else{
+                        var networkList = [];
+                        angular.forEach(response.data, function (server) {
+                            angular.forEach(server.details.networks, function (network) {
+                                if(networkList.filter(function(listItem) { return listItem.id === network.id }).length === 0) {
+                                    networkList.push(network);
+                                };
+                            });
+                        });
+                        
+                        return deferred.resolve(trimTransform({data: networkList}));
+                    }
                 });
                 return deferred.promise;
             };
