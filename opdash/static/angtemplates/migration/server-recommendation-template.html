@@ -6,8 +6,8 @@
         <a href="#resource_info" role="button" ng-click="vm.equipmentDetails(vm.type, item)" data-toggle="modal">{{item.name}}</a>
     </td>
     <td class="rs-table-text">{{item.ip_address}}</td>
-    <td>{{item.selectedMapping.region}}</td>
-    <td>{{item.selectedMapping.zone || 'us-east-1a 2'}}</td>
+    <td>{{item.selectedMapping.region | convertCase}}</td>
+    <td>{{item.selectedMapping.zone || 'US-East-1a 2'  | convertCase}}</td>
     <td>{{item.selectedMapping.instance_type}}</td>
     <td>{{item.selectedMapping.cost | currency}}</td>
     <td class="rs-table-input">

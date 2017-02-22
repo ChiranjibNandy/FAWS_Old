@@ -46,6 +46,15 @@
         };
     }]);
 
+    migrationApp.filter('convertCase',function(){
+            return function(input){
+                var arrInput =[];
+                arrInput = input.split('-');
+                debugger;
+                return arrInput[0].toUpperCase()+'-'+arrInput[1][0].toUpperCase()+arrInput[1].substr(1).toLowerCase()+'-'+arrInput[2].toLowerCase();
+            }
+    });
+
     /**
      * @ngdoc object
      * @name migrationApp.object:rsmigrationroot
@@ -65,6 +74,7 @@
             { path: "/login", component: "rsmigrationlogin", name: "Login" },
             { path: "/tenant", component: "rsmigrationtenantid", name: "Tenant" },
             { path: "/racker-dashboard", component: "rsmigrationrackerdash", name: "RackerDash" },
+            { path: "/racker-reports", component: "rsmigrationrackerreports", name: "RackerReports"},
             { path: "/equipment-details/:type/:id", component: "rsequipmentdetails", name: "EquipmentDetails" },
             { path: "/migration/resources", component: "rsmigrationresourceslist", name: "MigrationResourceList" },
             { path: "/migration/recommendation", component: "rsmigrationrecommendation", name: "MigrationRecommendation" },

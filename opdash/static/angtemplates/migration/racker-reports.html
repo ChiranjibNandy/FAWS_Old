@@ -1,0 +1,116 @@
+
+<div class="rs-container migration-mgr">
+    <div class="rs-main rs-panel">
+        <div class="rs-content rs-panel">
+            <div class="rs-inner">
+                <h3>Migration Reports</h3>
+                <div class="rs-row">
+                    <div class="span-12">
+                        <canvas id="myChart" width="640" height="200"></canvas>
+                    </div>
+                </div>
+                <div class="rs-row">
+                    <div class="span-6">
+                        <canvas id="myChart2" width="640" height="400"></canvas>
+                    </div>
+                    <div class="span-6">
+                        <canvas id="myPieChart" width="640" height="400"></canvas>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    var tooltip;
+    tooltip = new canon.Tooltip();
+});
+</script>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+        datasets: [{
+            label: 'Metric 1',
+            data: [12, 19, 3, 17, 6, 3, 7],
+            backgroundColor: "rgba(51,51,51,0.2)"
+        }, {
+            label: 'Metric 2',
+            data: [2, 29, 5, 5, 2, 3, 10],
+            backgroundColor: "rgba(0,169,109,0.8)"
+        }]
+        }
+    });
+
+    var ctx = document.getElementById("myChart2");
+    var myChart2 = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+            datasets: [{
+                label: '# of Accounts',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(196,0,34, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(0,169,109,0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(196,0,34,,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(0,169,109,0.1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+    // For a pie chart
+    var ctx = document.getElementById("myPieChart");
+    var myPieChart = new Chart(ctx,{
+        type: 'doughnut',
+        data: {
+        labels: [
+            "Rackspace FAWS",
+            "Migrations",
+            "AWS Accounts"
+        ],
+        datasets: [
+            {
+                data: [300, 50, 100],
+                backgroundColor: [
+                    "#c40022",
+                    "#00A96D",
+                    "#FFCE56"
+                ],
+                hoverBackgroundColor: [
+                    "#c40022",
+                    "#00A96D",
+                    "#FFCE56"
+                ]
+            }]
+        }
+
+    });
+
+    
+</script>
