@@ -202,7 +202,7 @@
                     var allData = dataStoreService.retrieveallItems('server');     
                     var selectedServer = allData.filter(function(item){
                                             if(item.id === id){
-                                                item.selected = false;
+                                                item.selected = !item.selected;
                                                 return item;
                                             };
                                          });    
