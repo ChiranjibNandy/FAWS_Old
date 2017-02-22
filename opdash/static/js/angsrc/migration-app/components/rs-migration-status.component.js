@@ -190,14 +190,15 @@
                             return;
                         }
 
-                        var allData = dataStoreService.retrieveallItems('server');  
-                        angular.forEach(batch.selected_resources, function (selected) {
-                            angular.forEach(allData, function (server) {
+                        var allData = dataStoreService.retrieveallItems('server'); 
+                        angular.forEach(allData, function (server) {
+                            server.selected = false;
+                            angular.forEach(batch.selected_resources, function (selected) {
                                 if(selected['id'] == server.id){
                                         server.selected = true;
-                                };
+                                }
                             });
-                        });
+                        }); 
                         
                         dataStoreService.storeallItems(allData,'server');
                         dataStoreService.setDontShowStatus(true);

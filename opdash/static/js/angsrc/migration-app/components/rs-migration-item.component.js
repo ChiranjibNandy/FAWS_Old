@@ -49,10 +49,11 @@
                 var mapServerStatus = function(dataList, statusList) {
                     angular.forEach(dataList, function (server) {
                         server.canMigrate = true;
-                        server.migStatus = '';
+                        server.migStatus = 'error';
                         angular.forEach(statusList, function (status) {
                             angular.forEach(status.instances, function (instance) {
                                 if(instance['name'] == server.name){
+                                    server.migStatusJobId = status.job_id;
                                     if(instance['status'] != 'error'){
                                         server.canMigrate = false;
                                         server.migStatus = instance['status'];

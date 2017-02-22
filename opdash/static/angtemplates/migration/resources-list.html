@@ -31,7 +31,7 @@
                                 <a class="rs-btn" ng-click="vm.saveForLater()" ng-hide="vm.saveLaterObj.saveInProgress">Save For Later</a>
                                 <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
                                 <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>
-                                <a class="rs-btn rs-btn-primary " ng-click="vm.continue()">Continue</a>
+                                <a class="rs-btn rs-btn-primary " ng-click="vm.savencontinue()">Continue</a>
                             </div>
                         </rs-tabs>
                         <div class="rs-pull-right" ng-show="vm.saveLaterObj.resultMsg" ng-style="vm.saveLaterObj.saveSuccess == true ? {color:'green'} : {color:'red'}" >{{vm.saveLaterObj.resultMsg}}</div>
