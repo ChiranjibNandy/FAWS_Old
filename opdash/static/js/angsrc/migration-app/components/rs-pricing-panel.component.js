@@ -136,18 +136,20 @@
                  * Gets current pricing amount and the billing period
                  */
                 vm.getCurrentPricingDetails = function(){
-                    return HttpWrapper.send('/api/billing/get_latest_bill', {"operation":'GET'})
-                    .then(function(result){
-                        vm.invoiceCoverageStartDate = $filter('date')(result.invoice.coverageStartDate, "MM/dd/yyyy");
-                        vm.invoiceCoverageEndDate = $filter('date')(result.invoice.coverageEndDate, "MM/dd/yyyy");
-                        vm.invoiceTotal = result.invoice.invoiceTotal;
-                    }, function(error) {
-                        console.log("Error: Could not fetch current pricing details", error);
-                    }); 
+                    var invoiceTotal = 0.00;
+                    var date = new Date();
+                    var selectedServers = dataStoreService.getItems('server');
+                    angular.forEach(selectedServers, function (item) {
+                        invoiceTotal += item.details.rax_price;
+                    });
+                    vm.invoiceTotal = invoiceTotal.toFixed(2);
+                    vm.invoiceCoverageStartDate = "01/"+ date.getMonth() +"/"+date.getFullYear();
+                    vm.invoiceCoverageEndDate = "01/"+ date.getMonth()+1 +"/"+date.getFullYear();
                 }
 
                 $rootScope.$on("pricingChanged",function(){
                     vm.getProjectedPricing();
+                    vm.getCurrentPricingDetails();
                 });
 
                 /**
