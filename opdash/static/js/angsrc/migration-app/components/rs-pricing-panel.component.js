@@ -143,8 +143,8 @@
                         invoiceTotal += item.details.rax_price;
                     });
                     vm.invoiceTotal = invoiceTotal.toFixed(2);
-                    vm.invoiceCoverageStartDate = "01/"+ date.getMonth() +"/"+date.getFullYear();
-                    vm.invoiceCoverageEndDate = "01/"+ date.getMonth()+1 +"/"+date.getFullYear();
+                    vm.invoiceCoverageStartDate = parseInt(date.getMonth())+"/01/"+date.getFullYear();
+                    vm.invoiceCoverageEndDate =  parseInt(date.getMonth())+1+"/01/"+date.getFullYear();
                 }
 
                 $rootScope.$on("pricingChanged",function(){
