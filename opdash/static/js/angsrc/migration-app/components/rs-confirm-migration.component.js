@@ -40,8 +40,8 @@
                     vm.userOrTenant = auth.is_racker ? "Tenant" : "User";
 
                     vm.destination = "AWS EC2";
-                    vm.batchName = dataStoreService.getScheduleMigration().migrationName;
-                    vm.tempBatchName = vm.batchName;
+                    vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
+                    vm.changedMigrationName = vm.migrationName;
                     vm.schedule = {
                         date: dataStoreService.getMigrationDate(),
                         time: dataStoreService.getMigrationTime(),
@@ -93,14 +93,27 @@
 
                 /**
                  * @ngdoc method
+                 * @name changeName
+                 * @methodOf migrationApp.controller:rsconfirmmigrationCtrl
+                 * @description 
+                 * Updates migration name
+                 */
+                vm.changeName = function() {
+                    vm.migrationName = vm.changedMigrationName;
+                    dataStoreService.selectedTime.migrationName = vm.migrationName;
+                    vm.editName = false;
+                };
+
+                /**
+                 * @ngdoc method
                  * @name disableEditor
                  * @methodOf migrationApp.controller:rsconfirmmigrationCtrl
                  * @description 
-                 * Disables editing of migration batch name
+                 * Cancels updation of migration name
                  */
-                vm.disableEditor = function() {
-                    vm.tempBatchName = vm.batchName;
-                    vm.editorEnabled = false;
+                vm.revertName = function() {
+                    vm.changedMigrationName = vm.migrationName;
+                    vm.editName = false;
                 };
 
                 /**

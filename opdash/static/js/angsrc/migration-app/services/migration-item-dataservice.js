@@ -119,8 +119,6 @@
                     networksReqList = [],
                     reqObj = {
                                 batch_name: dataStoreService.getScheduleMigration().migrationName,
-                                // start: dataStoreService.selectedTime.time,
-                                start:parseInt((new Date().getTime()/1000), 10),
                                 names: names,
                                 source: {
                                     cloud: "rackspace",
@@ -175,6 +173,12 @@
                         security_groups: "All"
                     });
                 });
+
+                if(dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < moment().unix()){
+                    reqObj.start = moment().unix();
+                }else{
+                    reqObj.start = dataStoreService.selectedTime.time;
+                }
 
                 reqObj.resources.instances = instancesReqList;
                 reqObj.resources.networks = networksReqList;
