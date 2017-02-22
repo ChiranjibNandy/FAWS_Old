@@ -1,28 +1,12 @@
-<!--<script type="text/javascript">
-    (function() {
-        document.getElementById("subNav").style.display = "block";
-        var subMenus = $(".rs-nav-secondary .rs-nav-item");
-        $(subMenus).removeClass("active");
-        $(subMenus).each(function (index) { 
-            if(index > 2){
-               $(subMenus[index]).addClass("disabled"); 
-            }
-            else{
-                $(subMenus[index]).removeClass("disabled");
-            }
-
-        });
-        $(subMenus[2]).addClass("active");
-    })();
+<!-- custon datepicker -->
+<script>
+    var options = {
+        format:"YYYY-MM-DD"
+    };
+    $('#field').datepicker(options);
 </script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        var tooltip;
-        tooltip = new canon.Tooltip();
-    });
-    </script>-->
+<!-- custon datepicker - end -->
 <div style="margin-top:10px;">
-    
 </div>
         <!-- End Primary Nav -->
         <div class="rs-container migration-mgr">
@@ -30,7 +14,7 @@
                 <div class="rs-sidebar rs-pull-right">
                     <rspricingpanel page ="scheduleMigration" migrationName ="vm.migrationName" time="vm.time" timezone="vm.timezone"></rspricingpanel>
                 </div>
- <div class="rs-content rs-panel">
+                <div class="rs-content rs-panel">
                     <!-- Start Stepper -->
                     <rsinteractiveheader pagenum="2"></rsinteractiveheader>
                     <!-- End Stepper -->
@@ -64,7 +48,9 @@
                         <div class="rs-row">
                             <div class="span-12">
                                 <div class="alert alert-success animated fadeIn" id="alert">
-                                    <h3>Migration Summary: {{vm.selectedDate}}</h3>
+                                    <h3><i class="fa fa-check-circle fa-fw"></i> Migration Scheduled for {{vm.selectedDate}} 
+                                    <a href="" ng-click="vm.editBanner()">
+                                        <i class="rs-edit"></i></a></h3>
                                 </div> 
                                 <div class="rs-row">
                                     <div class="span-4">
@@ -91,7 +77,7 @@
                                             <div class="rs-control-group">
                                                 <label class="rs-control-label">Choose Date</label>
                                                 <div class="rs-controls">
-                                                    <input id="field" type="date"  ng-model="vm.date" ng-change="vm.timezoneChange()" ng-disabled="vm.isDisableDate" value={{vm.date}}>
+                                                    <input id="field" ng-model="vm.date" ng-change="vm.timezoneChange()" ng-disabled="vm.isDisableDate" value={{vm.date}}>
                                                 </div>
                                             </div>
                                             <div class="rs-control-group">
