@@ -1,30 +1,3 @@
-<script>
-    $('input.name-input[type="text"]').blur(function() {  
-        if ($.trim(this.value) == ''){  
-            this.value = (this.defaultValue ? this.defaultValue : '');  
-        }
-        else{
-            $(this).prev().prev().html(this.value);
-        }       
-        $(this).hide();
-        $(this).prev().show();
-        $(this).prev().prev().show();
-    });      
-    $('input.name-input[type="text"]').keypress(function(event) {
-        if (event.keyCode == '13') {
-            if ($.trim(this.value) == ''){  
-                this.value = (this.defaultValue ? this.defaultValue : '');  
-            }
-            else
-            {
-                $(this).prev().prev().html(this.value);
-            }           
-            $(this).hide();
-            $(this).prev().show();
-            $(this).prev().prev().show();
-        }
-    });   
-</script>
 <div class="rs-container migration-mgr">
     <div class="rs-main rs-panel">
         <div class="rs-content rs-panel">
@@ -33,25 +6,19 @@
             <div class="rs-inner">
                 <h2>{{vm.tenant_account_name}} ( #{{vm.tenant_id}} )</h2>
                 <div class="migr-name">
-                    <div ng-show="!vm.editorEnabled">
-                        <h3>{{vm.batchName}}</h3>
-                        <span class="edit rs-edit" ng-click="vm.editorEnabled = true; vm.tempBatchName = vm.batchName"></span>
+                    <div ng-show="!vm.editName">
+                        <h3>{{vm.migrationName}}</h3>
+                        <span class="edit rs-edit" ng-click="vm.editName = true; vm.changedMigrationName = vm.migrationName;"></span>
                     </div>
-                    <div ng-show="vm.editorEnabled">
-                        <input ng-model="vm.tempBatchName" class="name-input animated flipInX"/>
+                    <div ng-show="vm.editName">
+                        <input type="text" ng-model="vm.changedMigrationName" class="rs-input-large name-input animated flipInX" style="display: inline-block;" />
                         <span class="fontSize">  
-                            <i class="fa fa-check" ng-click="vm.save()"></i>    
+                            <i class="fa fa-check" ng-click="vm.changeName()"></i>    
                         </span>
                         <span class="fontSize">
-                            <i class="fa fa-close" ng-click="vm.disableEditor()"></i>
+                            <i class="fa fa-close" ng-click="vm.revertName()"></i>
                         </span>
                     </div>
-                    <!--<div ng-show="vm.editorEnabled">
-                        <input type="text" ng-model="vm.tempBatchName" class="name-input animated flipInX" style="display: inline-block;"/>
-                        <a href="javascript:void(0);" ng-click="vm.save()">Save</a>
-                        or
-                        <a href="javascript:void(0);" ng-click="vm.disableEditor()">Cancel</a>
-                    </div>-->
                 </div>
                 <div class="clear"></div>
                 <div class="rs-row">
