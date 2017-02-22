@@ -34,6 +34,7 @@
                     if(status == false){
                         $('#intro_modal').modal('show');
                     }
+                    dataStoreService.setDontShowStatus(true);
                     $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Migration";
 
                     vm.tenant_id = authservice.getAuth().tenant_id; //get Tenant ID
@@ -93,6 +94,7 @@
                  * Called by child component when an item is selected
                  */
                 vm.addItem = function(item, type) {
+                    vm.selectedItems[type] = dataStoreService.getItems(type);
                     if(vm.selectedItems[type].indexOf(item)<0){
                         vm.selectedItems[type].push(item);
                         dataStoreService.setItems(vm.selectedItems);
@@ -109,12 +111,16 @@
                  * Called by child component when an item is removed by user
                  */
                 vm.removeItem = function(item, type) {
-                    if(vm.selectedItems[type].indexOf(item)>=0){
-                        vm.selectedItems[type].splice(vm.selectedItems[type].indexOf(item), 1);
-                        dataStoreService.setItems(vm.selectedItems);
-                        $scope.$broadcast("ItemRemovedForChild", item); // broadcast event to all child components
-                        $scope.$broadcast("ItemsModified");
-                    }
+                    vm.selectedItems[type] = dataStoreService.getItems(type);
+                    angular.forEach(vm.selectedItems[type], function (item_selected, key) {
+                        if(item_selected.id == item.id){
+                            vm.selectedItems[type].splice(key, 1);
+                            dataStoreService.setItems(vm.selectedItems);
+                            $scope.$broadcast("ItemRemovedForChild", item); // broadcast event to all child components
+                            $scope.$broadcast("ItemsModified");
+                            return;
+                        };
+                    });
                 };
 
                 $scope.$on("ItemRemoved", function(event, item){
@@ -240,22 +246,33 @@
                  * Give name for migration and continue to next step: **Recommendations**
                  */
                 vm.savencontinue = function() {
-                    if(vm.migrationName){
-                        vm.selectedTime = {
-                            migrationName:vm.migrationName,
-                            time:'',
-                            timezone:''
-                        };
-                        dataStoreService.setScheduleMigration(vm.selectedTime);
-                        $('#save_for_later').modal('hide');
-                        $('#name_modal').modal('hide');
-                        $('#cancel_modal').modal('hide');
-                        $('#intro_modal').modal('hide');
-                        $('#no_selection').modal('hide');
-                        $rootRouter.navigate(["MigrationRecommendation"]);
+                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0){
+                        dataStoreService.setItems(vm.selectedItems);
+                        dataStoreService.setDontShowStatus(true);
+                        var migrationName = dataStoreService.getScheduleMigration().migrationName;
+                        if(migrationName)
+                            $rootRouter.navigate(["MigrationRecommendation"]);
+                        else{
+                            // migrationName = vm.migrationName;
+                            vm.selectedTime = {
+                                    migrationName:vm.migrationName,
+                                    time:'',
+                                    timezone:''
+                                };
+                            dataStoreService.setScheduleMigration(vm.selectedTime);
+                            $('#save_for_later').modal('hide');
+                            $('#name_modal').modal('hide');
+                            $('#cancel_modal').modal('hide');
+                            $('#intro_modal').modal('hide');
+                            $('#no_selection').modal('hide');
+                            $rootRouter.navigate(["MigrationRecommendation"]);
+                        }
                     }
                     else{
-                        vm.noName = true;
+                        $('#save_for_later').modal('hide');
+                        $('#name_modal').modal('hide');
+                        $("#no_selection").modal('show');
+                        $('#intro_modal').modal('hide');
                     }
                 };
                 /**
