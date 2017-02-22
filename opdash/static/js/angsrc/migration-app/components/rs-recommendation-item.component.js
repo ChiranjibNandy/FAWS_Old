@@ -28,6 +28,7 @@
      * </example>
      */
     angular.module("migrationApp")
+
         .component("rsrecommendationitem", {
             templateUrl: "/static/angtemplates/migration/recommendation-item-template.html",
             bindings: {
