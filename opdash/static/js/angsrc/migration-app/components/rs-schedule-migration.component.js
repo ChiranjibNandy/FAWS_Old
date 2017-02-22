@@ -32,7 +32,7 @@
                     vm.tenant_id = authservice.getAuth().tenant_id;
                     vm.tenant_account_name = authservice.getAuth().account_name;
                     $('title')[0].innerHTML =  "Schedule Migration - Rackspace Cloud Migration";
-                    console.log(authservice.getAuth().tenant_id);
+                    vm.error = false;
                     vm.tenant_id = authservice.getAuth().tenant_id;
                     vm.scheduleMigration = "migrateNow";
                     vm.timeItems = ["12:00am","12:15am","12:30am","12:45am","1:00am","1:15am","1:30am","1:45am","2:00am","2:15am","2:30am","2:45am","3:00am","3:15am","3:30am","3:45am","4:00am","4:15am","4:30am","4:45am",
@@ -116,18 +116,21 @@
                     vm.showTime();
                 }
 
+                vm.getTime = function(){
+                    if(vm.time.indexOf('am') >-1){
+                        return vm.time.replace('am',"");
+                    }else{
+                        var subStr = vm.time.substr(0,vm.time.indexOf(':'));
+                        var calTime = vm.time.replace(subStr,parseInt(subStr)+12);
+                        return calTime.replace('pm','');
+                    }
+                }
+
                 vm.storeSelectedTime = function(radioButton){
                     var zone = vm.timezone;
                     vm.unixTime = moment().unix();
                     if(radioButton === "fromSave"){
-                        var time = "";
-                        if(vm.time.indexOf('am') >-1){
-                            time = vm.time.replace('am',"");
-                        }else{
-                            var subStr = vm.time.substr(0,vm.time.indexOf(':'));
-                            var calTime = vm.time.replace(subStr,parseInt(subStr)+12);
-                            time = calTime.replace('pm','');
-                        }
+                        var time = vm.getTime();
                         vm.unixTime = moment($('#field').val() + " " + time).unix();
                     }else if(radioButton === "migrate now"){
                         zone = vm.getDefaultZone();
@@ -237,9 +240,11 @@
                };
 
                 vm.onSaveTime = function(){
-                    if(moment().diff(moment($('#field').val()), 'minutes') > 1){
-                        alert("Please schedule migration for future");
+                    var time = vm.getTime();
+                    if(moment().diff(moment($('#field').val() + " " + time),'minutes') > 1){
+                        vm.error = true;
                     }else{
+                        vm.error = false;
                         vm.storeSelectedTime('fromSave');
                         vm.timezoneChange();
                         vm.isDisableDate =true;

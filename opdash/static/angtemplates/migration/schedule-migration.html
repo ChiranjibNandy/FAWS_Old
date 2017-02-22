@@ -1,3 +1,11 @@
+<!-- custon datepicker -->
+    <script>
+        var options = {
+            format:"YYYY-MM-DD"
+        };
+        $('#field').datepicker(options);
+    </script>
+    <!-- custon datepicker - end -->
 <div style="margin-top:10px;">
 </div>
         <!-- End Primary Nav -->
@@ -98,7 +106,15 @@
                                                        <!--  <button id="savebtn" class="rs-btn span-2 rs-btn-primary">Save</button> -->
                                                     </div>
                                                 </div>  
-                                            </div>                                     
+                                            </div> 
+                                            <div class="rs-control-group">
+                                                <label class="rs-control-label"></label>
+                                                <div class="rs-controls">
+                                                    <div ng-show="vm.error" style="color:red;">
+                                                        Please select future or current Date/Time
+                                                    </div>                   
+                                                </div>   
+                                            </div>  
                                         </form>   
                                     </div>
                                 </div>         
