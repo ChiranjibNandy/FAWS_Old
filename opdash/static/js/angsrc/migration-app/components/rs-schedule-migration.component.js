@@ -88,9 +88,9 @@
                     
                     vm.initTime =  new Date().toLocaleTimeString();
                    // vm.timezone = vm.timeZoneItems[0]//new Date().toTimeString(); //;
-                   vm.date =new Date();
+                   vm.date =moment().format("YYYY-MM-DD");
                     vm.selectedDateHeader = new Date().toLocaleString();//moment().format("MMM Do YYYY")+" at "+vm.time+" "+vm.timezone;
-                    vm.selectedDate =  moment().format('ddd MMMM Do YYYY')+' '+vm.time+' '+vm.timezone;
+                    vm.selectedDate =  moment().format('MMMM Do YYYY ')+' at '+moment().format('h:mma')+' '+vm.timezone.slice(1,11);
                     // console.log(vm.finalDateForUnixTime);
                    //console.log(new Date(vm.finalDateForUnixTime));
                     
@@ -109,18 +109,26 @@
                         vm.isDisableDate =false;
                         vm.isModeSave= true;
                     });
-         
-                    $scope.$on("DateChanged", function(event, item){
-                        vm.date = item;
-                        vm.selectedDate = moment(item).format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
-                    });
                 };
+
+                vm.editBanner = function(){
+                    vm.scheduleMigration = "migrateLate";
+                    vm.showTime();
+                }
 
                 vm.storeSelectedTime = function(radioButton){
                     var zone = vm.timezone;
                     vm.unixTime = moment().unix();
                     if(radioButton === "fromSave"){
-                        vm.unixTime = moment(vm.date).unix();    
+                        var time = "";
+                        if(vm.time.indexOf('am') >-1){
+                            time = vm.time.replace('am',"");
+                        }else{
+                            var subStr = vm.time.substr(0,vm.time.indexOf(':'));
+                            var calTime = vm.time.replace(subStr,parseInt(subStr)+12);
+                            time = calTime.replace('pm','');
+                        }
+                        vm.unixTime = moment($('#field').val() + " " + time).unix();
                     }else if(radioButton === "migrate now"){
                         zone = vm.getDefaultZone();
                         vm.unixTime = "";
@@ -168,7 +176,7 @@
                  * Saves the chosen timezone for migration
                  */
                 vm.timezoneChange = function(){
-                    vm.selectedDate =  moment(vm.date).format('ddd MMMM Do YYYY')+' '+vm.time+' '+vm.timezone;
+                    vm.selectedDate =  moment($('#field').val()).format('MMMM Do YYYY')+' at '+vm.time+' '+vm.timezone.slice(1,11);
                 };
 
                 /**
@@ -218,10 +226,10 @@
                vm.showTime = function(){
                    if(vm.scheduleMigration === "migrateLate"){
                        vm.showTimeForm =  true;
-                       vm.selectedDate =  moment(vm.date).format('ddd MMMM Do YYYY')+' '+vm.time+' '+vm.timezone;
+                       vm.selectedDate =  moment(vm.date).format('MMMM Do YYYY')+' at '+vm.time+' '+vm.timezone.slice(1,11);
                    }else{
                        var zone = vm.getDefaultZone();
-                       vm.selectedDate =  moment().format('ddd MMMM Do YYYY h:mma')+' '+zone;
+                       vm.selectedDate =  moment().format('MMMM Do YYYY ')+' at '+moment().format('h:mma')+' '+zone.slice(1,11);
                        vm.storeSelectedTime("migrate now"); 
                        vm.showTimeForm =  false;
                    }
@@ -229,10 +237,11 @@
                };
 
                 vm.onSaveTime = function(){
-                    if(moment().diff(vm.date, 'minutes') > 1){
+                    if(moment().diff(moment($('#field').val()), 'minutes') > 1){
                         alert("Please schedule migration for future");
                     }else{
                         vm.storeSelectedTime('fromSave');
+                        vm.timezoneChange();
                         vm.isDisableDate =true;
                         vm.isModeSave= false;
                     }
