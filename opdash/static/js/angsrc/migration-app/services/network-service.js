@@ -130,7 +130,7 @@
                             });
                         });
                         
-                        return deferred.resolve(trimTransform({data: networkList}));
+                        return deferred.resolve({data: networkList});
                     }
                 });
                 return deferred.promise;

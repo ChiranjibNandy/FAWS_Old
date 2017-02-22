@@ -56,8 +56,10 @@
                             <th>Status</th>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="network in vm.job.networks">
-                                <td class="rs-table-link">{{network.name}}</td>
+                            <tr ng-repeat="(id, network) in vm.job.networks">
+                                <td class="rs-table-link">
+                                    <a href="#network_info" ng-click="vm.equipmentDetails('network', id)" role="button" data-toggle="modal">{{network.name}}</a>
+                                </td>
                                 <td class="rs-table-text">
                                     <div class="rs-progress rs-progress-medium" style="width: 50%;">
                                         <div class="rs-progress-inner">
@@ -83,49 +85,10 @@
     <rsinteractivefooter></rsinteractivefooter>
 </div>
 
-<!-- Modal -->
-<div id="resource_info" class="modal hide fade details" tabindex="-1" role="dialog"  aria-hidden="true">
-    <div class="rs-content rs-panel rs-detail-xlarge">
-        <div class="rs-detail-header">
-            <div class="rs-detail-header-subtitle">Server Name</div>
-            <div class="rs-detail-header-title">cloud-endure-demo-A_db_slave One</div>
-        </div>
-        <div class="rs-detail-section">
-            <div class="rs-detail-section-header">
-                <div class="rs-detail-section-title">Server Details</div>
-            </div>
-            <div class="rs-detail-section-body">
-                <ul class="rs-detail-list">
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">Server Status</div>
-                        <div class="rs-detail-value"><span class="rs-status rs-status-ok">Active</span></div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">ID</div>
-                        <div class="rs-detail-value">86753098675309</div>
-                    </li>                        
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key" id="size-key">RAM</div>
-                        <div class="rs-detail-value">                
-                            <span class="rs-progress-label">2 GB</span>
-                        </div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key" id="size-key">Disk</div>
-                        <div class="rs-detail-value">100 GB</div>
-                    </li>        
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">Region</div>
-                        <div class="rs-detail-value">Dallas (DFW)</div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">Server Type</div>
-                        <div class="rs-detail-value">First Generation Server</div>
-                    </li>       
-                </ul>
-            </div>
-        </div>
+<div static-include="'/static/angtemplates/migration/equipment-details.html'"></div>
 
+<div id="network_info" style="width: 750px !important; overflow-y: auto; top: 4% !important" class="modal hide fade details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="rs-content rs-panel rs-detail-xlarge">
         <div class="rs-detail-section">
             <div class="rs-detail-section-header">
                 <div class="rs-detail-section-title">Networks</div>
@@ -136,20 +99,15 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>IPv4</th>
-                                <th>IPv6</th>
+                                <th>ID</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="rs-table-text">PublicNet <span class="rs-quiet">(Internet)</span></td>
-                                <td class="rs-table-text">101.122.11.222</td>
-                                <td class="rs-table-text"><span class="rs-quiet">None</span></td>
-                            </tr>
-                            <tr>
-                                <td class="rs-table-text">ServiceNet <span class="rs-quiet">(Rackspace DFW)</span></td>
-                                <td class="rs-table-text">10.111.22.112</td>
-                                <td class="rs-table-text"><span class="rs-quiet">None</span></td>
+                                <td class="rs-table-text">{{vm.networkDetails.name}}</td>
+                                <td class="rs-table-text">{{vm.networkDetails.id}}</td>
+                                <td class="rs-table-text"><span class="rs-status rs-status-ok">{{vm.networkDetails.status}}</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -157,8 +115,4 @@
             </div>
         </div>
     </div>
-    <div class="modal-footer">
-        <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    </div>
 </div>
-<!-- modal end -->
