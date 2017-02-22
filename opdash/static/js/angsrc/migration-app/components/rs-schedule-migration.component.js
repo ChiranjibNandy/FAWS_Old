@@ -90,8 +90,7 @@
                    // vm.timezone = vm.timeZoneItems[0]//new Date().toTimeString(); //;
                    vm.date =moment().format("YYYY-MM-DD");
                     vm.selectedDateHeader = new Date().toLocaleString();//moment().format("MMM Do YYYY")+" at "+vm.time+" "+vm.timezone;
-
-                    vm.selectedDate =  moment().format('ddd MMMM Do YYYY ')+' at '+moment().format('h:mma')+' '+vm.timezone;
+                    vm.selectedDate =  moment().format('MMMM Do YYYY ')+' at '+moment().format('h:mma')+' '+vm.timezone.slice(1,11);
                     // console.log(vm.finalDateForUnixTime);
                    //console.log(new Date(vm.finalDateForUnixTime));
                     
@@ -177,7 +176,7 @@
                  * Saves the chosen timezone for migration
                  */
                 vm.timezoneChange = function(){
-                    vm.selectedDate =  moment($('#field').val()).format('ddd MMMM Do YYYY')+' at '+vm.time+' '+vm.timezone;
+                    vm.selectedDate =  moment($('#field').val()).format('MMMM Do YYYY')+' at '+vm.time+' '+vm.timezone.slice(1,11);
                 };
 
                 /**
@@ -227,10 +226,10 @@
                vm.showTime = function(){
                    if(vm.scheduleMigration === "migrateLate"){
                        vm.showTimeForm =  true;
-                       vm.selectedDate =  moment(vm.date).format('ddd MMMM Do YYYY')+' at '+vm.time+' '+vm.timezone;
+                       vm.selectedDate =  moment(vm.date).format('MMMM Do YYYY')+' at '+vm.time+' '+vm.timezone.slice(1,11);
                    }else{
                        var zone = vm.getDefaultZone();
-                       vm.selectedDate =  moment().format('ddd MMMM Do YYYY ')+' at '+moment().format('h:mma')+' '+zone;
+                       vm.selectedDate =  moment().format('MMMM Do YYYY ')+' at '+moment().format('h:mma')+' '+zone.slice(1,11);
                        vm.storeSelectedTime("migrate now"); 
                        vm.showTimeForm =  false;
                    }

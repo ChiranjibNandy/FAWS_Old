@@ -1,3 +1,30 @@
+<script>
+    $('input.name-input[type="text"]').blur(function() {  
+        if ($.trim(this.value) == ''){  
+            this.value = (this.defaultValue ? this.defaultValue : '');  
+        }
+        else{
+            $(this).prev().prev().html(this.value);
+        }       
+        $(this).hide();
+        $(this).prev().show();
+        $(this).prev().prev().show();
+    });      
+    $('input.name-input[type="text"]').keypress(function(event) {
+        if (event.keyCode == '13') {
+            if ($.trim(this.value) == ''){  
+                this.value = (this.defaultValue ? this.defaultValue : '');  
+            }
+            else
+            {
+                $(this).prev().prev().html(this.value);
+            }           
+            $(this).hide();
+            $(this).prev().show();
+            $(this).prev().prev().show();
+        }
+    });   
+</script>
 <div class="migration-mgr rs-main rs-panel">
     <div class="rs-sidebar rs-pull-right">
         <rspricingpanel page ="recommendation"></rspricingpanel>
@@ -12,10 +39,13 @@
             <input type="text" class="rs-input-large searchbox rs-pull-right" ng-model="vm.filteredValue" placeholder="filter by keyword or tag...">
             <h3 ng-show="!vm.editName">{{vm.migrationName}} <a role="button" ng-click ="vm.editMigrationName()" class="rs-edit" title="click to edit migration name" ></a></h3>
             <div ng-show="vm.editName">
-                <input ng-model="vm.changedMigrationName" >
-                <button class="rs-primary" role="button" ng-click="vm.changeName()">Save</button>
-                    or
-                <button role="button" ng-click="vm.revertName()">cancel</button>
+                <input ng-model="vm.changedMigrationName" class="name-input animated flipInX"/>
+                <span class="fontSize">  
+                    <i class="fa fa-check" ng-click="vm.changeName()"></i>    
+                </span>
+                <span class="fontSize">
+                    <i class="fa fa-close" ng-click="vm.revertName()"></i>
+                </span>
             </div>
             <div class="clear"></div>    
             <h4>Our recommendation:</h4>

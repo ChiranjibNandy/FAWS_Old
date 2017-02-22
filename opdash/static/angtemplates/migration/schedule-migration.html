@@ -4,6 +4,31 @@
         format:"YYYY-MM-DD"
     };
     $('#field').datepicker(options);
+    $('input.name-input[type="text"]').blur(function() {  
+        if ($.trim(this.value) == ''){  
+            this.value = (this.defaultValue ? this.defaultValue : '');  
+        }
+        else{
+            $(this).prev().prev().html(this.value);
+        }       
+        $(this).hide();
+        $(this).prev().show();
+        $(this).prev().prev().show();
+    });      
+    $('input.name-input[type="text"]').keypress(function(event) {
+        if (event.keyCode == '13') {
+            if ($.trim(this.value) == ''){  
+                this.value = (this.defaultValue ? this.defaultValue : '');  
+            }
+            else
+            {
+                $(this).prev().prev().html(this.value);
+            }           
+            $(this).hide();
+            $(this).prev().show();
+            $(this).prev().prev().show();
+        }
+    });   
 </script>
 <!-- custon datepicker - end -->
 <div style="margin-top:10px;">
@@ -33,13 +58,13 @@
                                 </div>
                             </h3>
                         <div ng-show="vm.editorEnabled">
-                          <input ng-model="vm.editedMigrationName" >
+                          <input ng-model="vm.editedMigrationName" class="name-input animated flipInX"/>
                           <span class="fontSize">  
-                    <i class="fa fa-check" ng-click="vm.save()"></i>    
-                </span>
-                <span class="fontSize">
-                    <i class="fa fa-close" ng-click="vm.disableEditor()"></i>
-                </span>
+                                <i class="fa fa-check" ng-click="vm.save()"></i>    
+                            </span>
+                            <span class="fontSize">
+                                <i class="fa fa-close" ng-click="vm.disableEditor()"></i>
+                            </span>
                            </div>
                         </form>
                         </div>
