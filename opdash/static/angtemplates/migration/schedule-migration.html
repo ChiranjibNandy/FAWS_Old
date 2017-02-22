@@ -48,25 +48,24 @@
                         <h2>{{vm.tenant_account_name}} ( #{{vm.tenant_id}} )</h2>
                         <div class="migr-name">
                             <form>
-                         <h3>
-                             
-                             <div class="rs-control-group" style="width: 250%;">
-                                    <div class="rs-controls" style="width: 40%;float: left;" ng-hide="vm.editorEnabled">{{vm.migrationName}} </div>
-                                    <div class="rs-controls" style="width: 50%;">
-                                        <a  role="button" ng-click ="vm.editMigrationName();" data-toggle="modal" class="rs-edit" title="click to edit migration name" ng-hide="vm.editorEnabled"></a>
+                                <h3>
+                                    <div class="rs-control-group" style="width: 250%;">
+                                        <div class="rs-controls" style="width: 40%;float: left;" ng-hide="vm.editorEnabled">{{vm.migrationName}} </div>
+                                        <div class="rs-controls" style="width: 50%;display:inline-block;">
+                                            <a  role="button" ng-click ="vm.editMigrationName();" data-toggle="modal" class="rs-edit" title="click to edit migration name" ng-hide="vm.editorEnabled"></a>
+                                        </div>
                                     </div>
+                                </h3>
+                                <div ng-show="vm.editorEnabled">
+                                    <input ng-model="vm.editedMigrationName" class="name-input animated flipInX"/>
+                                    <span class="fontSize">  
+                                        <i class="fa fa-check" ng-click="vm.save()"></i>    
+                                    </span>
+                                    <span class="fontSize">
+                                        <i class="fa fa-close" ng-click="vm.disableEditor()"></i>
+                                    </span>
                                 </div>
-                            </h3>
-                        <div ng-show="vm.editorEnabled">
-                          <input ng-model="vm.editedMigrationName" class="name-input animated flipInX"/>
-                          <span class="fontSize">  
-                                <i class="fa fa-check" ng-click="vm.save()"></i>    
-                            </span>
-                            <span class="fontSize">
-                                <i class="fa fa-close" ng-click="vm.disableEditor()"></i>
-                            </span>
-                           </div>
-                        </form>
+                            </form>
                         </div>
                         <div class="clear"></div>
                         <hr>
