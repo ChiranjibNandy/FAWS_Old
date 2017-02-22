@@ -90,6 +90,7 @@
                    // vm.timezone = vm.timeZoneItems[0]//new Date().toTimeString(); //;
                    vm.date =moment().format("YYYY-MM-DD");
                     vm.selectedDateHeader = new Date().toLocaleString();//moment().format("MMM Do YYYY")+" at "+vm.time+" "+vm.timezone;
+
                     vm.selectedDate =  moment().format('ddd MMMM Do YYYY ')+' at '+moment().format('h:mma')+' '+vm.timezone;
                     // console.log(vm.finalDateForUnixTime);
                    //console.log(new Date(vm.finalDateForUnixTime));
