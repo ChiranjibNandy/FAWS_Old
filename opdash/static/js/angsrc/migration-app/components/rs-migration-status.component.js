@@ -24,6 +24,7 @@
                 controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "migrationitemdataservice", "$filter", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, ds, $filter) {
                     var vm = this;
                     var jobList = [];
+                    
 
                     var isValidBatch = function(batch) {
                         var valid = true;

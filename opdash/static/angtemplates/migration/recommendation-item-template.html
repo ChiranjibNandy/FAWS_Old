@@ -48,7 +48,7 @@
                 <h4 class="rs-control-label">AWS Region</h4>
                 <div class="rs-controls">
                   <select ng-model="vm.awsRegion" ng-change="vm.getZones(item)">
-                      <option ng-repeat="region in vm.regions track by $index" value="{{region}}">{{region}}</option>
+                      <option ng-repeat="region in vm.regions track by $index" value="{{region}}">{{region | convertCase}}</option>
                   </select>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                 <h4 class="rs-control-label">AWS Zone</h4>
                 <div class="rs-controls">
                   <select ng-model="vm.awsZone">
-                    <option ng-repeat="zone in vm.zones track by $index" value="{{zone}}">{{zone}}</option>
+                    <option ng-repeat="zone in vm.zones track by $index" value="{{zone}}">{{zone | convertCase}}</option>
                   </select>
                 </div>
             </div>           
