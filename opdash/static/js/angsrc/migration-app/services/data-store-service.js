@@ -236,8 +236,9 @@
              */
             self.getMigrationDate = function() {
                 var dt = self.selectedTime.time * 1000;
-                if(dt){}
+                if(dt){
                     return moment(dt).format("M/DD/YYYY");
+                }
             };
 
             /**
@@ -249,8 +250,9 @@
              */
             self.getMigrationTime = function() {
                 var dt = self.selectedTime.time * 1000;
-                if(dt){}
+                if(dt){
                     return moment(dt).format("hh:mm a");
+                }
             };
 
             /**
