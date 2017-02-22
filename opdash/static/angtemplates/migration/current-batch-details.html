@@ -37,7 +37,7 @@
                                     <!--<span class="rs-progress-label">{{ instance.status === 'done' ? 100 : ['started', 'in progress', 'paused'].indexOf(instance.status)>=0 ? 50 : 0 }}%</span>-->
                                 </td>
                                 <td class="rs-table-text">
-                                    <span class="rs-status" ng-show="instance.status==='not available'">Not Available</span>
+                                    <span class="rs-status" ng-show="instance.status==='not available'">Scheduled</span>
                                     <span class="rs-status" ng-show="instance.status==='scheduled'">Scheduled</span>
                                     <span class="rs-status rs-status-ok" ng-show="instance.status==='in progress'">In Progress</span>
                                     <span class="rs-status rs-status-ok" ng-show="instance.status==='started'">Started</span>
@@ -95,7 +95,7 @@
                                     <!--<span class="rs-progress-label">{{ ['started', 'in progress', 'paused'].indexOf(network.status)>=0 ? 50 : 0 }}%</span>-->
                                 </td>
                                 <td class="rs-table-text">
-                                    <span class="rs-status" ng-show="network.status==='not available'">Not Available</span>
+                                    <span class="rs-status" ng-show="network.status==='not available'">Scheduled</span>
                                     <span class="rs-status" ng-show="network.status==='scheduled'">Scheduled</span>
                                     <span class="rs-status rs-status-ok" ng-show="network.status==='in progress'">In Progress</span>
                                     <span class="rs-status rs-status-ok" ng-show="network.status==='started'">Started</span>
