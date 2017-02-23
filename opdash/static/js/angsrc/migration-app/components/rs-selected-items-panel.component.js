@@ -59,6 +59,14 @@
                     });
                 });
 
+                /**
+                 * @ngdoc method
+                 * @name networksToServer
+                 * @methodOf migrationApp.controller:rsselecteditemspanel
+                 * @param {Object} item _Object_ list of servers selected.
+                 * @description
+                 * Fetch networks associated with server.
+                 */
                 vm.networksToServer = function(item) {
                     vm.networksForServer[item.name] = [];
                     angular.forEach(item.details.networks, function (network) {
@@ -67,6 +75,15 @@
                     return vm.networksForServer[item.name];
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name removeItem
+                 * @methodOf migrationApp.controller:rsselecteditemspanel
+                 * @param {Object} item _Object_ list of servers selected.
+                 * @param {String} type String type of item to be removed.
+                 * @description
+                 * Remove an item from list of items selected.
+                 */
                 vm.removeItem = function(item, type) {
                     if(vm.selectedItems[type].indexOf(item)>=0){
                         $scope.$emit("ItemRemoved", item); // broadcast event to all child components

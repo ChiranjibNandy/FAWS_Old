@@ -46,6 +46,15 @@
             controller: ["migrationitemdataservice", "datastoreservice", "serverservice", "httpwrapper", "$rootRouter", "authservice", "$q", "$scope", function (ds, datastoreservice, ss, HttpWrapper, $rootRouter, authservice, $q, $scope) {
                 var vm = this;
 
+                /**
+                 * @ngdoc method
+                 * @name mapServerStatus
+                 * @methodOf migrationApp.controller:rsmigrationitemCtrl
+                 * @param {Object} dataList _Object_ list of servers to displayed
+                 * @param {Object} statusList _Object_ Batch report to fetch migration status of each servers.
+                 * @description 
+                 * Map each server with its corresponding migration status.
+                 */
                 var mapServerStatus = function(dataList, statusList) {
                     angular.forEach(dataList, function (server) {
                         server.canMigrate = true;
@@ -54,14 +63,22 @@
                             angular.forEach(status.instances, function (instance) {
                                 if(instance['name'] == server.name){
                                     server.migStatusJobId = status.job_id;
-                                    if(instance['status'] != 'error'){
-                                        server.canMigrate = false;
-                                        server.migStatus = instance['status'];
+                                    //Start--to be removed after demo3
+                                    if(status.batch_status == 'error'){
+                                        server.canMigrate = true;
+                                        server.migStatus = status.batch_status;
                                     }
                                     else{
-                                        server.canMigrate = true;
-                                        server.migStatus = instance['status'];
-                                    }
+                                    //End--to be removed after demo3
+                                        if(instance['status'] != 'error'){
+                                            server.canMigrate = false;
+                                            server.migStatus = instance['status'];
+                                        }
+                                        else{
+                                            server.canMigrate = true;
+                                            server.migStatus = instance['status'];
+                                        }
+                                    };
                                 }
                             });
                         });
@@ -109,6 +126,13 @@
                      * @description Set of resources of the given type
                      */
                     vm.items = [];
+                    /**
+                     * @ngdoc property
+                     * @name pageArray
+                     * @propertyOf migrationApp.controller:rsmigrationitemCtrl
+                     * @type {Array}
+                     * @description number of items to be showed per page
+                     */
                     vm.pageArray = [];
                     vm.search = {};
                     vm.loading = true;
@@ -116,7 +140,21 @@
                     vm.noData = false;
                     vm.sortingOrder = true;
                     vm.isAllselected = false;
+                    /**
+                     * @ngdoc property
+                     * @name tenant_id
+                     * @propertyOf migrationApp.controller:rsmigrationitemCtrl
+                     * @type {String}
+                     * @description Tenant ID of the customer
+                     */
                     vm.tenant_id = authservice.getAuth().tenant_id;
+                    /**
+                     * @ngdoc property
+                     * @name isRacker
+                     * @propertyOf migrationApp.controller:rsmigrationitemCtrl
+                     * @type {Boolean}
+                     * @description returns true if user is not customer.
+                     */
                     vm.isRacker = authservice.is_racker;
                     if(vm.type === "Files" || vm.type === "LoadBalancers"){
                         vm.noData = true;
