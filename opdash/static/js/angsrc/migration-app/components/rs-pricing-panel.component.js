@@ -31,8 +31,8 @@
              */
             controller:["datastoreservice","$rootRouter","httpwrapper","$filter","$timeout","$q","$rootScope",function(dataStoreService,$rootRouter,HttpWrapper,$filter,$timeout,$q,$rootScope){
                 var vm = this;
-                vm.invoiceCoverageStartDate = '';
-                vm.invoiceCoverageEndDate = '';
+                //vm.invoiceCoverageStartDate = '';
+                //vm.invoiceCoverageEndDate = '';
                 vm.invoiceTotal = '';
                 vm.totalProjectedPricingSum = 0;
 
@@ -143,8 +143,8 @@
                         invoiceTotal += item.details.rax_price;
                     });
                     vm.invoiceTotal = invoiceTotal.toFixed(2);
-                    vm.invoiceCoverageStartDate = parseInt(date.getMonth())+"/01/"+date.getFullYear();
-                    vm.invoiceCoverageEndDate =  parseInt(date.getMonth())+1+"/01/"+date.getFullYear();
+                    // vm.invoiceCoverageStartDate = parseInt(date.getMonth())+"/01/"+date.getFullYear();
+                    // vm.invoiceCoverageEndDate =  parseInt(date.getMonth())+1+"/01/"+date.getFullYear();
                 }
 
                 $rootScope.$on("pricingChanged",function(){
