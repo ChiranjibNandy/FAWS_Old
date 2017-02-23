@@ -46,6 +46,32 @@
         };
     }]);
 
+    /**
+     * @ngdoc directive
+     * @name migrationApp.directive:setFocus
+     * @restrict AE
+     * @param {String} setFocus ID of the input element to set focus to
+     * @description
+     * Directive to set focus to an input element (by id) on click of a button
+     * @example
+     * <example module="migrationApp">
+     *   <file name="index.html">
+     *      <div static-include="idOfElement"></div>
+     *   </file>
+     * </example>
+     */
+    migrationApp.directive('setFocus', ["$timeout", function($timeout){
+        return {
+            link:  function(scope, element, attrs){
+                $timeout(function(){
+                    element.bind('click', function(){
+                        document.getElementById(attrs.setFocus).focus();
+                    }); 
+                });
+            }
+        }
+    }]);
+
     migrationApp.filter('convertCase',function(){
             return function(input){
                 var arrInput =[];

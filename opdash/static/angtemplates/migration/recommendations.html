@@ -10,9 +10,9 @@
         <div class="rs-inner">
             <h2>{{vm.tenant_account_name}} ( #{{vm.tenant_id}} )</h2>
             <input type="text" class="rs-input-large searchbox rs-pull-right" ng-model="vm.filteredValue" placeholder="filter by keyword or tag...">
-            <h3 ng-show="!vm.editName">{{vm.migrationName}} <a role="button" ng-click ="vm.editMigrationName()" class="rs-edit" title="click to edit migration name" ></a></h3>
+            <h3 ng-show="!vm.editName">{{vm.migrationName}} <a role="button" ng-click ="vm.editMigrationName()" set-focus='migrationName' class="rs-edit" title="click to edit migration name" ></a></h3>
             <div ng-show="vm.editName" style="margin-bottom: 5px;">
-                <input type="text" ng-model="vm.changedMigrationName" class="rs-input-large name-input animated flipInX" style="display: inline-block;"/>
+                <input type="text" id="migrationName" ng-model="vm.changedMigrationName" class="rs-input-large name-input animated flipInX" style="display: inline-block;"/>
                 <span class="fontSize">  
                     <i class="fa fa-check" ng-click="vm.changeName()"></i>    
                 </span>
