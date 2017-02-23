@@ -97,13 +97,14 @@
                                 </td>
                                 <td class="rs-table-text">
                                     <span class="rs-status rs-status-error" ng-show="vm.job.batch_status==='error'">Error</span>
-                                    <span class="rs-status" ng-show="vm.job.batch_status!=='error' && network.status==='not available'">Scheduled</span>
-                                    <span class="rs-status" ng-show="vm.job.batch_status!=='error' && network.status==='scheduled'">Scheduled</span>
-                                    <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status!=='error' && network.status==='in progress'">In Progress</span>
-                                    <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status!=='error' && network.status==='started'">Started</span>
+                                    <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status==='done'">Completed</span>
+                                    <span class="rs-status" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='not available'">Scheduled</span>
+                                    <span class="rs-status" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='scheduled'">Scheduled</span>
+                                    <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='in progress'">In Progress</span>
+                                    <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='started'">Started</span>
                                     <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status!=='error' && network.status==='done'">Completed</span>
-                                    <span class="rs-status rs-status-error" ng-show="vm.job.batch_status!=='error' && network.status==='error'">Error</span>
-                                    <span class="rs-status rs-status-warning" ng-show="vm.job.batch_status!=='error' && network.status==='paused'">Paused</span>
+                                    <span class="rs-status rs-status-error" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='error'">Error</span>
+                                    <span class="rs-status rs-status-warning" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='paused'">Paused</span>
                                 </td>
                             </tr>
                         </tbody>

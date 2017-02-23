@@ -26,6 +26,7 @@
             self.getBatches = function(refresh) {
                 var tenant_id = authservice.getAuth().tenant_id;
                 var currentJobsUrl = "/api/jobs/" + tenant_id;
+                //var currentJobsUrl = "/static/angassets/batch-details.json";
 
                 if (refresh || !loaded || (currentTenant !== tenant_id)) {
                     var savedMigrationsTask = dataStoreService.getSavedItems();
@@ -33,7 +34,7 @@
 
                     return $q.all([savedMigrationsTask, currentJobsTask])
                              .then(function(results) {
-                                        console.log(results);
+                                        console.log(JSON.stringify(results[1]));
                                         loaded = true;
                                         currentTenant = tenant_id;
                                         var savedMigrations = [];

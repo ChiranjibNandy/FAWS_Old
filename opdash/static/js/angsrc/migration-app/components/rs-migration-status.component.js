@@ -21,7 +21,7 @@
                  * @name migrationApp.controller:rsmigrationstatusCtrl
                  * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationstatus rsmigrationstatus} component
                  */
-                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "migrationitemdataservice", "$filter", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, ds, $filter) {
+                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "migrationitemdataservice", "$filter", "$interval", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, ds, $filter, $interval) {
                     var vm = this;
                     var jobList = [];
                     
@@ -127,39 +127,54 @@
                      */
                     vm.getBatches = function(refresh) {
                         vm.loading = true;
+                        var count = 0;
 
-                        dashboardService.getBatches(refresh)
-                                .then(function(response) {
-                                    console.log("Batch: ", response);
-                                    var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled"];
-                                    var validCompletedBatchStatus = ["done"];
-                                    jobList = response.jobs.job_status_list;
-                                    var currentBatches = [];
-                                    var completedBatches = [];
+                        //for(var i=0; i<3; i++){
+                            var intervalPromise = $interval(function(){
+                                count++;
+                                if(count==3) $interval.cancel(intervalPromise);
 
-                                    angular.forEach(jobList, function(job){
-                                        if(validCurrentBatchStatus.indexOf(job.batch_status)>=0)
-                                            currentBatches.push(job);
-                                        if(validCompletedBatchStatus.indexOf(job.batch_status)>=0)
-                                            completedBatches.push(job);
+                                vm.loading = true;
+                                dashboardService.getBatches(refresh)
+                                    .then(function(response) {
+                                        console.log("Batch: ", response);
+                                        var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled"];
+                                        var validCompletedBatchStatus = ["done"];
+                                        jobList = response.jobs.job_status_list;
+                                        var currentBatches = [];
+                                        var completedBatches = [];
+
+                                        angular.forEach(jobList, function(job){
+                                            if(validCurrentBatchStatus.indexOf(job.batch_status)>=0)
+                                                currentBatches.push(job);
+                                            if(validCompletedBatchStatus.indexOf(job.batch_status)>=0)
+                                                completedBatches.push(job);
+                                        });
+
+                                        var savedMigrations = $filter('orderBy')(response.savedMigrations, '-timestamp');
+                                        vm.currentBatches.items = $filter('orderBy')(currentBatches, '-start').concat(savedMigrations);
+                                        vm.currentBatches.noOfPages = Math.ceil(vm.currentBatches.items.length / vm.currentBatches.pageSize);
+                                        vm.currentBatches.pages = new Array(vm.currentBatches.noOfPages);
+                                        
+                                        vm.completedBatches.items = $filter('orderBy')(completedBatches, '-start');
+                                        vm.completedBatches.noOfPages = Math.ceil(completedBatches.length / vm.completedBatches.pageSize);
+                                        vm.completedBatches.pages = new Array(vm.completedBatches.noOfPages);
+
+                                        // temporary fix to show completed batch date time
+                                        angular.forEach(vm.completedBatches.items, function(item){
+                                            dataStoreService.endTime = dataStoreService.endTime ? dataStoreService.endTime : moment().unix();
+                                            item.end = dataStoreService.endTime;
+                                        });
+
+                                        vm.loading = false;
+                                    }, function(errorResponse) {
+                                        vm.loading = false;
+                                        vm.currentBatches.loadError = true;
+                                        vm.completedBatches.loadError = true;
+                                        console.log("Dashboard Error: ", errorResponse);
                                     });
-
-                                    var savedMigrations = $filter('orderBy')(response.savedMigrations, '-timestamp');
-                                    vm.currentBatches.items = $filter('orderBy')(currentBatches, '-start').concat(savedMigrations);
-                                    vm.currentBatches.noOfPages = Math.ceil(vm.currentBatches.items.length / vm.currentBatches.pageSize);
-                                    vm.currentBatches.pages = new Array(vm.currentBatches.noOfPages);
-                                    
-                                    vm.completedBatches.items = $filter('orderBy')(completedBatches, '-start');
-                                    vm.completedBatches.noOfPages = Math.ceil(completedBatches.length / vm.completedBatches.pageSize);
-                                    vm.completedBatches.pages = new Array(vm.completedBatches.noOfPages);
-
-                                    vm.loading = false;
-                                }, function(errorResponse) {
-                                    vm.loading = false;
-                                    vm.currentBatches.loadError = true;
-                                    vm.completedBatches.loadError = true;
-                                    console.log("Dashboard Error: ", errorResponse);
-                                });
+                            }, 3000);
+                        //}
                     };
 
                     /**

@@ -161,7 +161,7 @@
                             <tr ng-repeat="batch in vm.completedBatches.items | limitTo : vm.completedBatches.pageSize : (vm.completedBatches.currentPage-1)*vm.completedBatches.pageSize" class="ng-scope">
                                 <td class="rs-table-link large-col"><a ng-link="['CompletedBatchDetails', {job_id: batch.job_id}]" class="ng-binding">{{batch.batch_name}}</a></td>
                                 <td class="rs-table-text ng-binding">{{(batch.start && batch.start * 1000) | date : 'M/dd/yyyy hh:mm a'}}</td>
-                                <td class="rs-table-text ng-binding" colspan="2">{{batch.end}}</td>
+                                <td class="rs-table-text ng-binding" colspan="2">{{(batch.end && batch.end * 1000) | date : 'M/dd/yyyy hh:mm a'}}</td>
                                 <td><a href="" >Archive</a></td>
                             </tr>
                         </tbody>

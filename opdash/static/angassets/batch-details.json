@@ -1,102 +1,58 @@
 {
-    "server": {
-        "status": "inProgress",
-        "estimatedTimeRemaining": "10 mins 20 secs",
-        "progress": 60,
-        "completedCount": 2,
-        "batchItems": [
-            {
-                "id": 1,
-                "name": "Server 1",
-                "progress": 60,
-                "status": "inProgress",
-                "estimatedTimeRemaining": "10 mins 20 secs"
-            },
-            {
-                "id": 2,
-                "name": "Server 2",
-                "progress": 100,
-                "status": "completed",
-                "estimatedTimeRemaining": "none"
-            },
-            {
-                "id": 3,
-                "name": "Server 3",
-                "progress": 80,
-                "status": "inProgress",
-                "estimatedTimeRemaining": "2 mins"
-            },
-            {
-                "id": 4,
-                "name": "Server 4",
-                "progress": 30,
-                "status": "inProgress",
-                "estimatedTimeRemaining": "13 mins 30 secs"
-            },
-            {
-                "id": 5,
-                "name": "Server 5",
-                "progress": 0,
-                "status": "error",
-                "estimatedTimeRemaining": "none"
-            },
-            {
-                "id": 6,
-                "name": "Server 6",
-                "progress": 20,
-                "status": "inProgress",
-                "estimatedTimeRemaining": "11 mins 15 secs"
-            }
-        ]
-    },
-    "network": {
-        "status": "inProgress",
-        "estimatedTimeRemaining": "5 mins",
-        "progress": 50,
-        "completedCount": 2,
-        "batchItems": [
-            {
-                "id": 1,
-                "name": "Network 1",
-                "progress": 60,
-                "status": "completed",
-                "estimatedTimeRemaining": "3 mins"
-            },
-            {
-                "id": 2,
-                "name": "Network 2",
-                "progress": 0,
-                "status": "error",
-                "estimatedTimeRemaining": "3 mins"
-            },
-            {
-                "id": 3,
-                "name": "Network 3",
-                "progress": 30,
-                "status": "inProgress",
-                "estimatedTimeRemaining": "5 mins"
-            },
-            {
-                "id": 4,
-                "name": "Network 4",
-                "progress": 90,
-                "status": "inProgress",
-                "estimatedTimeRemaining": "30 secs"
-            },
-            {
-                "id": 5,
-                "name": "Network 5",
-                "progress": 100,
-                "status": "completed",
-                "estimatedTimeRemaining": "none"
-            },
-            {
-                "id": 6,
-                "name": "Network 6",
-                "progress": 100,
-                "status": "completed",
-                "estimatedTimeRemaining": "none"
-            }
-        ]
-    }
+	"job_status_list": [{
+		"batch_name": "Migration-23Feb2017-0246pm",
+		"batch_status": "error",
+		"created_at": "2017-02-23T09:16:22.864340",
+		"instances": {
+			"8681a573-3bdb-44bc-b10f-b1a3d14c6e2e": {
+				"name": "test-server-migrate-06",
+				"status": "in progress"
+			}
+		},
+		"job_id": "job-0a9d6b1d-80f0-4332-800e-f1f8cbb9b816",
+		"networks": {
+			"82c76033-56e7-41ea-854f-d834d2fc93ed": {
+				"name": "Test-Migration-Net",
+				"status": "not available"
+			}
+		},
+		"start": 1487841383
+	}, {
+		"batch_name": "Migration-23Feb2017-0906am",
+		"batch_status": "error",
+		"created_at": "2017-02-23T15:06:31.092154",
+		"instances": {
+			"29d21b00-93f3-4cec-b869-0a8b06e89c6d": {
+				"name": "test-server-migrate-10",
+				"status": "in progress"
+			}
+		},
+		"job_id": "job-3a946767-8461-4ae3-aa47-93c2d4c4faea",
+		"networks": {
+			"82c76033-56e7-41ea-854f-d834d2fc93ed": {
+				"name": "Test-Migration-Net",
+				"status": "not available"
+			}
+		},
+		"start": 1487862390
+	}, {
+		"batch_name": "AD_Test_002",
+		"batch_status": "done",
+		"created_at": "2017-02-23T15:13:17.911087",
+		"instances": {
+			"f6b9235a-a1dd-4e7f-b4c3-fc440f036d67": {
+				"name": "test-server-migrate-09",
+				"status": "in progress"
+			}
+		},
+		"job_id": "job-1bf1b8c0-37fb-4398-a832-4394b15a7454",
+		"networks": {
+			"82c76033-56e7-41ea-854f-d834d2fc93ed": {
+				"name": "Test-Migration-Net",
+				"status": "not available"
+			}
+		},
+		"start": 1487862799
+	}],
+	"tenant_id": "1024814"
 }
