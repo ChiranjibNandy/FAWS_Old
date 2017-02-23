@@ -45,16 +45,18 @@
 
                     vm.$onInit = function() {
                         $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
-                        vm.getBatches();
+                       
                     };
 
                     vm.$routerOnActivate = function(next, previous) {
                         if(previous && previous.urlPath.indexOf("confirm") > -1){
+                            vm.refreshFlag=true;
                             vm.afterNewMigration = true;
                             vm.resourceCount = dataStoreService.getMigrationResourceCount();
                         } else{
                             vm.afterNewMigration = false;
                         }
+                         vm.getBatches();
                     };
 
                     /**
@@ -108,14 +110,14 @@
                     vm.currentUser = auth.account_name;
                     vm.loading = true;
 
-                    vm.$routerOnActivate = function(next, previous) {
-                        if(previous && previous.urlPath.indexOf("confirm") > -1){
-                            vm.afterNewMigration = true;
-                            vm.resourceCount = dataStoreService.getMigrationResourceCount();
-                        } else{
-                            vm.afterNewMigration = false;
-                        }
-                    };
+                    // vm.$routerOnActivate = function(next, previous) {
+                    //     if(previous && previous.urlPath.indexOf("confirm") > -1){
+                    //         vm.afterNewMigration = true;
+                    //         vm.resourceCount = dataStoreService.getMigrationResourceCount();
+                    //     } else{
+                    //         vm.afterNewMigration = false;
+                    //     }
+                    // };
 
                     /**
                      * @ngdoc method
@@ -129,11 +131,14 @@
                         vm.loading = true;
                         var count = 0;
 
+                        if (!vm.refreshFlag) count=6;
                         //for(var i=0; i<3; i++){
                             var intervalPromise = $interval(function(){
                                 count++;
-                                if(count==3) $interval.cancel(intervalPromise);
-
+                                if(count==7) {
+                                    $interval.cancel(intervalPromise);
+                                    vm.refreshFlag=false;
+                                }
                                 vm.loading = true;
                                 dashboardService.getBatches(refresh)
                                     .then(function(response) {

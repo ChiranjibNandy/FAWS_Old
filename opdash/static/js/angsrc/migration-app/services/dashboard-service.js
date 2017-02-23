@@ -34,7 +34,7 @@
 
                     return $q.all([savedMigrationsTask, currentJobsTask])
                              .then(function(results) {
-                                        console.log(JSON.stringify(results[1]));
+                                        // console.log(JSON.stringify(results[1]));
                                         loaded = true;
                                         currentTenant = tenant_id;
                                         var savedMigrations = [];
