@@ -3,7 +3,7 @@
 
     /**
      * @ngdoc object
-     * @name migrationApp.object:rsmigrationrackerdashboard
+     * @name migrationApp.object:rsmigrationrackerdash
      * @description
      * Component to display the list of tenants whose resource migration has to be done. This component is loaded directly on route change.  
      *   
@@ -11,6 +11,13 @@
      *   
      * Its controller {@link migrationApp.controller:rsmigrationrackerdashCtrl rsmigrationrackerdashCtrl} uses the below services:
      *  * {@link migrationApp.service:authservice authservice}
+     *  * {@link migrationApp.service:datastoreservice datastoreservice}
+     * $scope
+     * httpwrapper
+     * $q
+     * $rootRouter
+     * $window
+     * $timeout 
      */
     angular.module("migrationApp")
         .component("rsmigrationrackerdash", {
@@ -27,28 +34,34 @@
                 vm.addedAccount = '';
                 const username = authservice.getAuth().username;
 
-                //gets the tenant info when a racker logs in
+                //gets the tenant data list when a racker logs in
                 /**
                  * @ngdoc method
                  * @name getTenants
                  * @methodOf migrationApp.controller:rsmigrationrackerdashCtrl
                  * @description 
-                 * Fetches the tenant info list when a racker logs in.
+                 * Fetches the tenant data list when a racker logs in.
                  */
                 vm.getTenants = function(){                   
                      return HttpWrapper.send('/api/tenants/get_user_tenants/'+username, {"operation":'GET'})
                     .then(function(result){
                         vm.loading = false;
-                        result.forEach(function(item){
-                            vm.items.push({
-                                "accountName":item.rax_name+" (#"+item.tenant_id+")",
-                                "serviceLevel":item.rax_service_level,
-                                "accountLevel":item.faws_service_level,
-                                "inProgressBatches":item.migrations_in_progress,
-                                "completedBatches":item.migrations_completed,
-                                "tenant_account_name":item.rax_name
+                        if(result.length === 0){
+                            vm.noData = true;
+                        }
+                        else {
+                            vm.noData = false;
+                            result.forEach(function(item){
+                                vm.items.push({
+                                    "accountName":item.rax_name+" (#"+item.tenant_id+")",
+                                    "serviceLevel":item.rax_service_level,
+                                    "accountLevel":item.faws_service_level,
+                                    "inProgressBatches":item.migrations_in_progress,
+                                    "completedBatches":item.migrations_completed,
+                                    "tenant_account_name":item.rax_name
+                                });
                             });
-                        });
+                        }
                     }).catch(function(error) {
                         vm.loading = false;
                         vm.loadError = true;
@@ -59,18 +72,80 @@
 
                 //performs controller initialization steps
                 vm.$onInit = function() { 
-                    console.log("In racker dash");
                     datastoreservice.resetAll();
+
+                    /**
+                     * @ngdoc property
+                     * @name pageArray
+                     * @propertyOf migrationApp.controller:rsmigrationrackerdashCtrl
+                     * @type {Array}
+                     * @description Holds an array of pages that display the fetched tenant data list
+                     */
                     vm.pageArray = [];
+
+                    /**
+                     * @ngdoc property
+                     * @name loading
+                     * @propertyOf migrationApp.controller:rsmigrationrackerdashCtrl
+                     * @type {Boolean}
+                     * @description Displays the loading icon till the underlying API call resolves
+                     */
                     vm.loading = true;
+
+                    /**
+                     * @ngdoc property
+                     * @name loadError
+                     * @propertyOf migrationApp.controller:rsmigrationrackerdashCtrl
+                     * @type {Boolean}
+                     * @description Displays an error message indicating that an error has occured while fetching the complete tenant data list
+                     */
                     vm.loadError = false;
+
+                    /**
+                     * @ngdoc property
+                     * @name loadTenantError
+                     * @propertyOf migrationApp.controller:rsmigrationrackerdashCtrl
+                     * @type {Boolean}
+                     * @description Displays an error message indicating that an error has occured while adding a tenant 
+                     */
                     vm.loadTenantError = false;
+
+                     /**
+                     * @ngdoc property
+                     * @name saveInProgress
+                     * @propertyOf migrationApp.controller:rsmigrationrackerdashCtrl
+                     * @type {Boolean}
+                     * @description Displays a processing indicator 
+                     */                   
                     vm.saveInProgress = false,
+
+                    /**
+                     * @ngdoc property
+                     * @name loadTenantError
+                     * @propertyOf migrationApp.controller:rsmigrationrackerdashCtrl
+                     * @type {Boolean}
+                     * @description Displays an error message if any error has occured while adding a tenant 
+                     */
                     vm.showFetch = false;
-                    
+
+                      /**
+                     * @ngdoc property
+                     * @name noData
+                     * @propertyOf migrationApp.controller:rsmigrationrackerdashCtrl
+                     * @type {Boolean}
+                     * @description Displays a message indicating no tenant data in the grid
+                     */
+                    vm.noData = false;
+
+                      /**
+                     * @ngdoc property
+                     * @name loadTenantError
+                     * @propertyOf migrationApp.controller:rsmigrationrackerdashCtrl
+                     * @type {String}
+                     * @description Holds the account name of the selected tenant 
+                     */
                     vm.account_name = null;
                     authservice.getAuth().tenant_id= null;
-                    // console.log("Onload Tenant_id=",authservice.getAuth().tenant_id);
                     
                     // populate tenants array
                     var getTenantDetails = vm.getTenants();
@@ -136,6 +211,17 @@
                     }).catch(function(error){
                         vm.loading = false;
                         vm.loadError = true;
+                        if(vm.items.length === 1){
+                            vm.items.length = 0;
+                            vm.loadError = false;
+                            vm.totalItems = 0;
+                            vm.noData = true;
+                        }
+                        else {
+                            vm.totalItems = vm.items.length;
+                            vm.noData = false;
+                        }
+                        
                         vm.showFetch = false;
                         vm.fetchResponse = "";
                         console.log("Error in removing tenant id");
@@ -170,6 +256,7 @@
                     vm.loadError = false;
                     vm.loadTenantError = false;
                     vm.showFetch = true;
+                    vm.noData = false;
                     vm.fetchResponse = "Successfully added new tenant id";
 
                     vm.saveInProgress = true;
@@ -199,6 +286,7 @@
                                 "tenant_account_name":item.rax_name
                             });
                         });
+                        vm.totalItems = vm.items.length;
                         $timeout(function () {
                             vm.showFetch = false;
                             vm.fetchResponse = "";

@@ -85,6 +85,10 @@
                     </table>
                 </div>
                 <br>
+                <div class="alert alert-info fade in" ng-show="vm.noData" style="text-align: center;">
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                    <strong>No tenant data found. Please add a tenant to continue. </strong>
+                </div>
                 <div class="alert alert-success fade in" ng-show="vm.showFetch">
                     <button type="button" class="close" data-dismiss="alert">x</button>
                     <strong>Success! </strong> <span>{{vm.fetchResponse}}<span>
