@@ -475,7 +475,7 @@ rscalendaritem > div.week.names > span {
     cursor: pointer;
 }
 
-.basePrice{
+#basePrice{
     margin: 0 0 5px;
     color: #545050;
 }
