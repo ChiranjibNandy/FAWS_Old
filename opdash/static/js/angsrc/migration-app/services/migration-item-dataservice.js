@@ -176,6 +176,7 @@
 
                 if(dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < moment().unix()){
                     reqObj.start = moment().unix();
+                    dataStoreService.selectedTime.time = reqObj.start;
                 }else{
                     reqObj.start = dataStoreService.selectedTime.time;
                 }
