@@ -140,6 +140,7 @@
                     vm.noData = false;
                     vm.sortingOrder = true;
                     vm.isAllselected = false;
+                    vm.disableSelectAll = false;
                     /**
                      * @ngdoc property
                      * @name tenant_id
@@ -192,7 +193,6 @@
                             }
 
                             var dataList = results[0].data;
-                            vm.disableSelectAll = false;
                             vm.items = mapServerStatus(dataList, results[1].job_status_list);
                             angular.forEach(vm.items, function (server) {
                                 if(server.canMigrate == false || server.status != 'active'){ 
@@ -233,6 +233,11 @@
                     } else{
                         //For repeated fetch of resources after first time loading.
                         vm.items = datastoreservice.retrieveallItems(vm.type);
+                        angular.forEach(vm.items, function (server) {
+                            if(server.canMigrate == false || server.status != 'active'){ 
+                                vm.disableSelectAll = true;
+                            }
+                        });
                         vm.parent.numOfResources(vm.type, vm.items.length);
                         // pagination controls
                         vm.currentPage = 1;
