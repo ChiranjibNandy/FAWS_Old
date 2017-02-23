@@ -30,6 +30,13 @@
                 vm.tenant_account_name = '';
 
                 vm.$onInit = function() {
+                    /**
+                     * @ngdoc property
+                     * @name status
+                     * @propertyOf migrationApp.controller:rsmigrationresourceslist
+                     * @type {Boolean}
+                     * @description If true, Popup for migration won't be displayed in first step of Migration.
+                     */
                     var status = dataStoreService.getDontShowStatus();
                     if(status == false){
                         $('#intro_modal').modal('show');
@@ -51,6 +58,13 @@
 
                     vm.auth = authservice.getAuth();
                     vm.isRacker = authservice.is_racker;
+                    /**
+                     * @ngdoc property
+                     * @name selectedItems
+                     * @propertyOf migrationApp.controller:rsmigrationresourceslist
+                     * @type {Array}
+                     * @description List of items that are selected for migration
+                     */
                     vm.selectedItems = {
                         server:[],
                         network:[]
@@ -72,6 +86,13 @@
                     };
                     vm.displayMigName = false;
                     var timestmp = moment(d).format("DDMMMYYYY-hhmma");
+                    /**
+                     * @ngdoc property
+                     * @name migrationName
+                     * @propertyOf migrationApp.controller:rsmigrationresourceslist
+                     * @type {String}
+                     * @description Create Migration considering Timestamp.
+                     */
                     vm.migrationName = 'Migration-' + timestmp;
                     vm.noName = false;
                     vm.numOfItems = {
