@@ -12,15 +12,15 @@
     </div>
     <div class="rs-inner" ng-show="!vm.loading && !vm.loadError">
         <div class="info-panel">
-            <h3>Current Pricing</h3>
+            <h3 id="basePrice">Current Base Price</h3>
             <p>
-                Billing Period:
+                <!--Billing Period:
                 <br>
                 <em>{{vm.invoiceCoverageStartDate}} to {{vm.invoiceCoverageEndDate}}</em>
-                <br>
+                <br>-->
                 <big><b>${{vm.invoiceTotal}}</b>/month</big>
                 <br>
-                <a ng-href="https://mybill.rackspace.com/overview" target="_blank"><small>(See Details)</small></a>
+                <small>(for selected resources)</small>
             </p>
         </div>
         <div class="white-panel">
