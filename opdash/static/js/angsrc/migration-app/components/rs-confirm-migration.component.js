@@ -83,7 +83,9 @@
                     HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj)
                                 .then(function(result){
                                     console.log("Migration Response: ", result);
-                                    $rootRouter.navigate(["MigrationStatus"]);
+                                    $timeout(function(){
+                                        $rootRouter.navigate(["MigrationStatus"]);
+                                    }, 5000);
                                 }, function(error) {
                                     console.log("Error: Could not trigger migration", error);
                                     vm.migrating = false;
