@@ -8,7 +8,7 @@
      * Component to display reports pertaining to tenants.
      * 
      * This component uses the template: **angtemplates/migration/racker-reports.html**.  
-     * @example
+     *
      */
     angular.module("migrationApp")
         .component("rsmigrationrackerreports", {
