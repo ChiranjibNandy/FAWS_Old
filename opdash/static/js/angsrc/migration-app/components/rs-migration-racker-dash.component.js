@@ -46,16 +46,22 @@
                      return HttpWrapper.send('/api/tenants/get_user_tenants/'+username, {"operation":'GET'})
                     .then(function(result){
                         vm.loading = false;
-                        result.forEach(function(item){
-                            vm.items.push({
-                                "accountName":item.rax_name+" (#"+item.tenant_id+")",
-                                "serviceLevel":item.rax_service_level,
-                                "accountLevel":item.faws_service_level,
-                                "inProgressBatches":item.migrations_in_progress,
-                                "completedBatches":item.migrations_completed,
-                                "tenant_account_name":item.rax_name
+                        if(result.length === 0){
+                            vm.noData = true;
+                        }
+                        else {
+                            vm.noData = false;
+                            result.forEach(function(item){
+                                vm.items.push({
+                                    "accountName":item.rax_name+" (#"+item.tenant_id+")",
+                                    "serviceLevel":item.rax_service_level,
+                                    "accountLevel":item.faws_service_level,
+                                    "inProgressBatches":item.migrations_in_progress,
+                                    "completedBatches":item.migrations_completed,
+                                    "tenant_account_name":item.rax_name
+                                });
                             });
-                        });
+                        }
                     }).catch(function(error) {
                         vm.loading = false;
                         vm.loadError = true;
@@ -121,6 +127,15 @@
                      * @description Displays an error message if any error has occured while adding a tenant 
                      */
                     vm.showFetch = false;
+
+                      /**
+                     * @ngdoc property
+                     * @name noData
+                     * @propertyOf migrationApp.controller:rsmigrationrackerdashCtrl
+                     * @type {Boolean}
+                     * @description Displays a message indicating no tenant data in the grid
+                     */
+                    vm.noData = false;
 
                       /**
                      * @ngdoc property
@@ -199,6 +214,12 @@
                         if(vm.items.length === 1){
                             vm.items.length = 0;
                             vm.loadError = false;
+                            vm.totalItems = 0;
+                            vm.noData = true;
+                        }
+                        else {
+                            vm.totalItems = vm.items.length;
+                            vm.noData = false;
                         }
                         
                         vm.showFetch = false;
@@ -235,6 +256,7 @@
                     vm.loadError = false;
                     vm.loadTenantError = false;
                     vm.showFetch = true;
+                    vm.noData = false;
                     vm.fetchResponse = "Successfully added new tenant id";
 
                     vm.saveInProgress = true;
@@ -264,6 +286,7 @@
                                 "tenant_account_name":item.rax_name
                             });
                         });
+                        vm.totalItems = vm.items.length;
                         $timeout(function () {
                             vm.showFetch = false;
                             vm.fetchResponse = "";
