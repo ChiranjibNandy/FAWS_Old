@@ -46,6 +46,19 @@
         };
     }]);
 
+
+    migrationApp.directive('setFocus', ["$timeout", function($timeout){
+        return {
+            link:  function(scope, element, attrs){
+                $timeout(function(){
+                    element.bind('click', function(){
+                        document.getElementById(attrs.setFocus).focus();
+                    }); 
+                });
+            }
+        }
+    }]);
+
     migrationApp.filter('convertCase',function(){
             return function(input){
                 var arrInput =[];
