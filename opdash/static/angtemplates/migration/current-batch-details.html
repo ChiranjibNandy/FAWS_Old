@@ -29,8 +29,8 @@
                                 <td class="rs-table-text">
                                     <div class="rs-progress rs-progress-medium" style="width: 50%;">
                                         <div class="rs-progress-inner">
-                                            <div class="rs-segment" style="width: {{vm.job.batch_status==='error' ? 0 : ['started', 'in progress', 'paused'].indexOf(instance.status)>=0 ? 50 : 0}}%">
-                                                <div class="rs-bar" ng-class="{'rs-status-ok rs-bar-striped': ['started', 'in progress'].indexOf(instance.status)>=0, 'rs-status-error': instance.status==='error', 'rs-status-warning': instance.status==='paused'}"></div>
+                                            <div class="rs-segment" style="width: {{vm.job.batch_status==='done' ? 100 : (vm.job.batch_status==='error' ? 0 : ['started', 'in progress', 'paused'].indexOf(vm.job.batch_status)>=0 ? 50 : 0)}}%">
+                                                <div class="rs-bar" ng-class="{'rs-status-ok': vm.job.batch_status==='done', 'rs-status-ok rs-bar-striped': ['started', 'in progress'].indexOf(vm.job.batch_status)>=0, 'rs-status-error': vm.job.batch_status==='error', 'rs-status-warning':vm.job.batch_status ==='paused'}"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -38,13 +38,17 @@
                                 </td>
                                 <td class="rs-table-text">
                                     <span class="rs-status rs-status-error" ng-show="vm.job.batch_status==='error'">Error</span>
-                                    <span class="rs-status" ng-show="vm.job.batch_status!=='error' && instance.status==='not available'">Scheduled</span>
+                                    <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status==='done'">Completed</span>
+                                    <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status==='started'">Started</span>
+                                    <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status==='in progress'">In Progress</span>
+                                    <span class="rs-status" ng-show="vm.job.batch_status==='scheduled'">Scheduled</span>
+                                    <!--<span class="rs-status" ng-show="vm.job.batch_status!=='error' && instance.status==='not available'">Scheduled</span>
                                     <span class="rs-status" ng-show="vm.job.batch_status!=='error' && instance.status==='scheduled'">Scheduled</span>
                                     <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status!=='error' && instance.status==='in progress'">In Progress</span>
                                     <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status!=='error' && instance.status==='started'">Started</span>
                                     <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status!=='error' && instance.status==='done'">Completed</span>
                                     <span class="rs-status rs-status-error" ng-show="vm.job.batch_status!=='error' && instance.status==='error'">Error</span>
-                                    <span class="rs-status rs-status-warning" ng-show="vm.job.batch_status!=='error' && instance.status==='paused'">Paused</span>
+                                    <span class="rs-status rs-status-warning" ng-show="vm.job.batch_status!=='error' && instance.status==='paused'">Paused</span>-->
                                 </td>
                             </tr>
                         </tbody>
@@ -88,8 +92,8 @@
                                 <td class="rs-table-text">
                                     <div class="rs-progress rs-progress-medium" style="width: 50%;">
                                         <div class="rs-progress-inner">
-                                            <div class="rs-segment" style="width: {{vm.job.batch_status==='error' ? 0 : ['started', 'in progress', 'paused'].indexOf(network.status)>=0 ? 50 : 0}}%">
-                                                <div class="rs-bar" ng-class="{'rs-status-ok rs-bar-striped': ['started', 'in progress'].indexOf(network.status)>=0, 'rs-status-error': network.status==='error', 'rs-status-warning': network.status==='paused'}"></div>
+                                            <div class="rs-segment" style="width: {{vm.job.batch_status==='done' ? 100 : (vm.job.batch_status==='error' ? 0 : ['started', 'in progress', 'paused'].indexOf(vm.job.batch_status)>=0 ? 50 : 0)}}%">
+                                                <div class="rs-bar" ng-class="{'rs-status-ok rs-bar-striped': ['started', 'in progress'].indexOf(vm.job.batch_status)>=0, 'rs-status-error': vm.job.batch_status==='error', 'rs-status-warning': vm.job.batch_status==='paused'}"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -98,13 +102,18 @@
                                 <td class="rs-table-text">
                                     <span class="rs-status rs-status-error" ng-show="vm.job.batch_status==='error'">Error</span>
                                     <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status==='done'">Completed</span>
+                                    <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status==='started'">Started</span>
+                                    <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status==='in progress'">In Progress</span>
+                                    <span class="rs-status" ng-show="vm.job.batch_status==='scheduled'">Scheduled</span>
+                                    <!--<span class="rs-status rs-status-error" ng-show="vm.job.batch_status==='error'">Error</span>
+                                    <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status==='done'">Completed</span>
                                     <span class="rs-status" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='not available'">Scheduled</span>
                                     <span class="rs-status" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='scheduled'">Scheduled</span>
                                     <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='in progress'">In Progress</span>
                                     <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='started'">Started</span>
                                     <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status!=='error' && network.status==='done'">Completed</span>
                                     <span class="rs-status rs-status-error" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='error'">Error</span>
-                                    <span class="rs-status rs-status-warning" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='paused'">Paused</span>
+                                    <span class="rs-status rs-status-warning" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='paused'">Paused</span>-->
                                 </td>
                             </tr>
                         </tbody>
