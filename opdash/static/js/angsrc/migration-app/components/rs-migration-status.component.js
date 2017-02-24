@@ -24,7 +24,6 @@
                 controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "migrationitemdataservice", "$filter", "$interval", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, ds, $filter, $interval) {
                     var vm = this;
                     var jobList = [];
-                    
 
                     var isValidBatch = function(batch) {
                         var valid = true;
@@ -45,7 +44,7 @@
 
                     vm.$onInit = function() {
                         $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
-                       
+                        vm.count = 0;
                     };
 
                     vm.$routerOnActivate = function(next, previous) {
@@ -129,13 +128,12 @@
                      */
                     vm.getBatches = function(refresh) {
                         vm.loading = true;
-                        var count = 0;
 
-                        if (!vm.refreshFlag) count=6;
+                        if (!vm.refreshFlag) vm.count=6;
                         //for(var i=0; i<3; i++){
                             var intervalPromise = $interval(function(){
-                                count++;
-                                if(count==7) {
+                                vm.count++;
+                                if(vm.count>4) {
                                     $interval.cancel(intervalPromise);
                                     vm.refreshFlag=false;
                                 }
