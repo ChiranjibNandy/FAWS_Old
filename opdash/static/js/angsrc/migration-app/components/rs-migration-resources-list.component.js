@@ -37,11 +37,11 @@
                      * @type {Boolean}
                      * @description If true, Popup for migration won't be displayed in first step of Migration.
                      */
-                    var status = dataStoreService.getDontShowStatus();
+                    var status = dataStoreService.getDontShowStatus(); //check for flag status created for intorduction Modal.
                     if(status == false){
                         $('#intro_modal').modal('show');
                     }
-                    dataStoreService.setDontShowStatus(true);
+                    dataStoreService.setDontShowStatus(true);//set introduction modal flag to true after first time display.
                     $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Migration";
 
                     vm.tenant_id = authservice.getAuth().tenant_id; //get Tenant ID
@@ -57,6 +57,13 @@
                     } //end of if condition
 
                     vm.auth = authservice.getAuth();
+                    /**
+                     * @ngdoc property
+                     * @name isRacker
+                     * @propertyOf migrationApp.controller:rsmigrationresourceslist
+                     * @type {Boolean}
+                     * @description Returns if logged in user is a Racker. If user is customer, it returns false.
+                     */
                     vm.isRacker = authservice.is_racker;
                     /**
                      * @ngdoc property
@@ -72,6 +79,7 @@
                     vm.filterSearch = "";
                     vm.saveProgress = "";
                     var d = new Date();
+                    //Objects created to fetch results of Save Later API call.
                     vm.saveLaterObj = {
                         "saveSuccess" : false,
                         "saveInProgress" : false,
@@ -102,10 +110,6 @@
                     };
                 }
 
-                vm.numOfResources = function(type, itemLen) {
-                    vm.numOfItems[type] = itemLen;
-                    //vm.ServerTitle = 'Servers' + '(' + vm.numOfItems['server'] + ')';
-                };
                 /**
                  * @ngdoc method
                  * @name addItem
@@ -118,8 +122,8 @@
                     vm.selectedItems[type] = dataStoreService.getItems(type);
                     if(vm.selectedItems[type].indexOf(item)<0){
                         vm.selectedItems[type].push(item);
-                        dataStoreService.setItems(vm.selectedItems);
-                        $scope.$broadcast("ItemsModified");
+                        dataStoreService.setItems(vm.selectedItems);//save items selected for migration in service.
+                        $scope.$broadcast("ItemsModified");//make a function call to child component to enable checkobox for selected items.
                     };
                 }
 
@@ -133,6 +137,7 @@
                  */
                 vm.removeItem = function(item, type) {
                     vm.selectedItems[type] = dataStoreService.getItems(type);
+                    //look for item to be removed in array of selected items and splice it from the array.
                     angular.forEach(vm.selectedItems[type], function (item_selected, key) {
                         if(item_selected.id == item.id){
                             vm.selectedItems[type].splice(key, 1);
@@ -143,7 +148,7 @@
                         };
                     });
                 };
-
+                //catch emit call from child components.
                 $scope.$on("ItemRemoved", function(event, item){
                     // console.log("broadcast invoked");
                     $scope.$broadcast("ItemRemovedForChild", item); // broadcast event to all child components
@@ -175,6 +180,7 @@
                  * @ngdoc method
                  * @name saveItems
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @param {Object} buttonDetails _Object_ assign appropriate values as per API response for save or cancel functionality.
                  * @description
                  * Invokes "/api/users/uidata/" API call for fetching existing saved instances.
                  */
@@ -190,11 +196,13 @@
                         }
                     };
                     buttonDetails.saveInProgress = true;
+                    //make API call(through service) for saving the instance and wait for its response.
                     dataStoreService.saveItems(saveInstance).then(function(success){
                         if(success){
                             buttonDetails.saveInProgress = false;
                             buttonDetails.saveSuccess = true;
                             buttonDetails.resultMsg = "Saved your instance successfully with name: "+dataStoreService.getScheduleMigration().migrationName;
+                            //make the popup or alert message disappear after 3 seconds of API response.
                             $timeout(function () {
                                 buttonDetails.resultMsg = "";
                                 if(buttonDetails.modalName == '#cancel_modal'){
@@ -229,7 +237,7 @@
                  * @name dontShow
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
                  * @description
-                 * Consider Dont show checkbox if checked.
+                 * Consider Dont show checkbox of introduction Modal if checked.
                  */
                 vm.dontShow = function() {
                     dataStoreService.setDontShowStatus(vm.dontshowStatus);
@@ -242,8 +250,10 @@
                  * @description
                  * Continue to next step: **Recommendations**
                  */
-                vm.continue = function() {
+                /**
+                 vm.continue = function() {
                     if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0){
+                        //save all selected items in to "set items" service.
                         dataStoreService.setItems(vm.selectedItems);
                         dataStoreService.setDontShowStatus(true);
                         var migrationName = dataStoreService.getScheduleMigration().migrationName;
@@ -259,12 +269,14 @@
                         $('#intro_modal').modal('hide');
                     }
                 };
+                
+                 */
                 /**
                  * @ngdoc method
                  * @name savencontinue
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
                  * @description
-                 * Give name for migration and continue to next step: **Recommendations**
+                 * Assign Migration considering current Timestamp and continue to next step: **Recommendations**
                  */
                 vm.savencontinue = function() {
                     if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0){

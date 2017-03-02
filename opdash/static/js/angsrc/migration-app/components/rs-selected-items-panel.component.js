@@ -34,23 +34,41 @@
                         server:[],
                         network:[]
                     };
+                    /**
+                     * @ngdoc property
+                     * @name networkCount
+                     * @propertyOf migrationApp.controller:rsselecteditemspanelCtrl
+                     * @type {Integer}
+                     * @description Number of networks associated with servers selected.
+                     */
                     vm.networkCount = 0;
+                    /**
+                     * @ngdoc property
+                     * @name networksList
+                     * @propertyOf migrationApp.controller:rsselecteditemspanelCtrl
+                     * @type {Array}
+                     * @description Resources associated with servers selected.
+                     */
                     vm.networksList = [];
                     vm.networksForServer = {};
                     vm.isRacker = authservice.is_racker;
+                    //Fetch items selected from service.
                     vm.selectedItems.server = dataStoreService.getItems('server');
                 };
 
+                //Catch broadcast requests from parent(rsmigrationresourcelist) component.
                 $scope.$on("ItemsModified", function(event){
                     vm.selectedItems.server = dataStoreService.getItems('server');
                 });
                 
+                //Watch for item selection from list of resources.
                 $scope.$watch('vm.selectedItems.server.length', function () {
                     vm.networkCount = 0;
                     vm.networksList = [];
-                    
+                    //loop through all the servers selected and networks associated with the servers.
                     angular.forEach(vm.selectedItems.server, function (item) {
                         angular.forEach(item.details.networks, function (network) {
+                            //making separate list of networks associated with servers.
                             if(vm.networksList.indexOf(network.name) == -1) {
                                 vm.networkCount += 1;
                                 vm.networksList.push(network.name);
