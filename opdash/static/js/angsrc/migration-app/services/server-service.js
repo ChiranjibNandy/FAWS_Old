@@ -226,11 +226,11 @@
         self.prepareRequest = function(info){
            var region = getRegionById(info.id);
            var auth = authservice.getAuth();
-
+           
            return {
                source: {
                    cloud: "rackspace",
-                   tenantid: "1024814",
+                   tenantid: auth.tenant_id,
                    auth: {
                        method: "key",
                        type: "customer",

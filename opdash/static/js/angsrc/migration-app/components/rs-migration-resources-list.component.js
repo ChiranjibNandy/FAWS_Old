@@ -37,6 +37,9 @@
                      * @type {Boolean}
                      * @description If true, Popup for migration won't be displayed in first step of Migration.
                      */
+
+                    
+
                     var status = dataStoreService.getDontShowStatus();
                     if(status == false){
                         $('#intro_modal').modal('show');
@@ -55,6 +58,21 @@
                     else{  //if logged in as a racker then it was sent by racker-dashboard page
                          vm.tenant_account_name = authservice.getAuth().account_name;
                     } //end of if condition
+
+                    
+                     var cloudDetails = dataStoreService.setCloudAccountDetails();
+                     cloudDetails.then(function() {
+                                
+                                console.log("This is (after) X=",cloudDetails);
+                                console.log("auth.awsAccount",authservice.getAuth().awsAccount);
+                                console.log("auth.accessKey",authservice.getAuth().accessKey);
+                                console.log("auth.secretKey",authservice.getAuth().secretKey);
+                                console.log("auth.rackAPIKey",authservice.getAuth().rackAPIKey);
+                                console.log("auth.tenant_id",authservice.getAuth().tenant_id);
+                                console.log("auth.user",authservice.getAuth().rackUsername);
+                                
+                            }); //waiting api promise to resolve
+                    //  debugger;
 
                     vm.auth = authservice.getAuth();
                     vm.isRacker = authservice.is_racker;
