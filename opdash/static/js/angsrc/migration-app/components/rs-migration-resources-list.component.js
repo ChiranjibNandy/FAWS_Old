@@ -56,6 +56,13 @@
                          vm.tenant_account_name = authservice.getAuth().account_name;
                     } //end of if condition
 
+                    
+                     var cloudDetails = dataStoreService.setCloudAccountDetails();
+                     cloudDetails.then(function() {
+                                console.log("cloudDetails=",cloudDetails);
+                      }); //waiting api promise to resolve
+         
+
                     vm.auth = authservice.getAuth();
                     vm.isRacker = authservice.is_racker;
                     /**

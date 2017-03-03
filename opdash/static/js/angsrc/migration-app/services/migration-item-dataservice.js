@@ -122,7 +122,7 @@
                                 names: names,
                                 source: {
                                     cloud: "rackspace",
-                                    tenantid: "1024814",
+                                    tenantid: auth.tenant_id,
                                     auth: {
                                         method: "key",
                                         type: "customer",

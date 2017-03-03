@@ -106,17 +106,13 @@
                 if(self.is_racker){
                     rackerDetails = angular.copy(userDetails);
                     details = rackerDetails;
+
                 }
                 else{
                     customerDetails = angular.copy(userDetails);
                     details = customerDetails;
+                    details.rackUsername = details.username;
                 }
-
-                details.awsAccount = "rax-9391b0f6b8264c6f8efbe2794a541548";
-                details.accessKey = "AKIAIUHV3Q5R7JDRDRBQ";
-                details.secretKey = "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";
-                details.rackUsername = "RSMTDev1";
-                details.rackAPIKey = "f42046566954470dbaa31d6378916bb1";
             };
 
             /**

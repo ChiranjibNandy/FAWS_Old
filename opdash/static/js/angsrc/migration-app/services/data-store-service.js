@@ -400,6 +400,28 @@
                     });
             };
 
+            /**
+             * @ngdoc method
+             * @name setCloudAccountDetails
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Invokes "/api/get_cloud_credentials/<tenant_id>/<cloud> API call to fetch the Cloud Account details of a Tenant.
+             */
+            self.setCloudAccountDetails = function () {
+                var urlcloud = '/api/tenants/get_cloud_credentials/'+authservice.getAuth().tenant_id+'/aws';
+                console.log("urlcloud=",urlcloud);
+
+                return HttpWrapper.send(urlcloud, { "operation": 'GET' })
+                    .then(function (response) {
+                                authservice.getAuth().awsAccount= response.dest_account;
+                                authservice.getAuth().accessKey = response.dest_auth_accesskey;
+                                authservice.getAuth().secretKey = response.dest_auth_secretkey;
+                                authservice.getAuth().rackAPIKey = response.source_apikey;
+                                //authservice.getAuth().tenant_id = response; //set the tenant_id in authservice
+                        return response.data;
+                    });
+            };
+
             /*
              * @name getDistinctNetworks
              * @methodOf migrationApp.service:datastoreservice
