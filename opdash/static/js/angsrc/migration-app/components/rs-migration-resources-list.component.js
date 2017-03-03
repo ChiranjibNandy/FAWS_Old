@@ -60,14 +60,7 @@
                      var cloudDetails = dataStoreService.setCloudAccountDetails();
                      cloudDetails.then(function() {
                                 console.log("cloudDetails=",cloudDetails);
-                                // console.log("auth.awsAccount",authservice.getAuth().awsAccount);
-                                // console.log("auth.accessKey",authservice.getAuth().accessKey);
-                                // console.log("auth.secretKey",authservice.getAuth().secretKey);
-                                // console.log("auth.rackAPIKey",authservice.getAuth().rackAPIKey);
-                                // console.log("auth.tenant_id",authservice.getAuth().tenant_id);
-                                // console.log("auth.user",authservice.getAuth().rackUsername);
-                                
-                            }); //waiting api promise to resolve
+                      }); //waiting api promise to resolve
          
 
                     vm.auth = authservice.getAuth();
