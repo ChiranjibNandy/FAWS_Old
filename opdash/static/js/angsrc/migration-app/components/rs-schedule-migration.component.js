@@ -118,7 +118,13 @@
 
                 vm.getTime = function(){
                     if(vm.time.indexOf('am') >-1){
-                        return vm.time.replace('am',"");
+                        if(vm.time.indexOf('12') >-1) {
+                            var localTime = vm.time.replace('am',"");
+                            return localTime.replace('12',"00");
+                        }else{
+                            return vm.time.replace('am',"");
+                        } 
+                        
                     }else{
                         var subStr = vm.time.substr(0,vm.time.indexOf(':'));
                         var calTime = vm.time.replace(subStr,parseInt(subStr)+12);
@@ -240,17 +246,20 @@
                };
 
                 vm.onSaveTime = function(){
-                    var time = vm.getTime();
-                    if(moment().diff(moment($('#field').val() + " " + time),'minutes') > 1){
-                        vm.error = true;
-                    }else{
-                        vm.error = false;
-                        vm.storeSelectedTime('fromSave');
-                        vm.timezoneChange();
-                        vm.isDisableDate =true;
-                        vm.isModeSave= false;
-                    }
+                    $timeout(function(){
+                        var time = vm.getTime();
+                        if(moment().diff(moment($('#field').val() + " " + time),'minutes') > 1){
+                            vm.error = true;
+                        }else{
+                            vm.error = false;
+                            vm.storeSelectedTime('fromSave');
+                            vm.timezoneChange();
+                            vm.isDisableDate =true;
+                            vm.isModeSave= false;
+                        }
+                    },1000);
                 }
+
                 vm.onEditTime = function(){
                     vm.isModeSave= true;
                     vm.isDisableDate =false;
