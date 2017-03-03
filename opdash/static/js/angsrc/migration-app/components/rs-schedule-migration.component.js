@@ -23,7 +23,7 @@
              * @name migrationApp.controller:rsschedulemigrationCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsschedulemigration rsschedulemigration} component
              */
-            controller: [ "$rootRouter","datastoreservice","$scope","authservice", function($rootRouter,dataStoreService,$scope,authservice) {
+            controller: [ "$rootRouter","datastoreservice","$scope","authservice","$timeout", function($rootRouter,dataStoreService,$scope,authservice,$timeout) {
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
