@@ -1,11 +1,11 @@
-<!-- custon datepicker -->
+  <!-- custom datepicker -->
     <script>
         var options = {
             format:"YYYY-MM-DD"
         };
         $('#field').datepicker(options);
     </script>
-    <!-- custon datepicker - end -->
+    <!-- custom datepicker - end -->
 <div style="margin-top:10px;">
 </div>
         <!-- End Primary Nav -->
@@ -74,13 +74,13 @@
                                             <div class="rs-control-group">
                                                 <label class="rs-control-label">Choose Date</label>
                                                 <div class="rs-controls">
-                                                    <input id="field" ng-model="vm.date" ng-change="vm.timezoneChange()" ng-disabled="vm.isDisableDate" value={{vm.date}}>
+                                                    <input id="field" ng-model="vm.date" ng-blur="vm.onSaveTime()" value={{vm.date}} >
                                                 </div>
                                             </div>
                                             <div class="rs-control-group">
                                                 <label class="rs-control-label">Time Zone</label>
                                                 <div class="rs-controls">
-                                                   <select name="timezone" ng-change="vm.timezoneChange()" ng-disabled="vm.isDisableDate" ng-options="time for time in vm.timeZoneItems" ng-model="vm.timezone" class="ng-pristine ng-valid ng-not-empty ng-touched span2" >
+                                                   <select name="timezone" ng-change="vm.onSaveTime()" ng-options="time for time in vm.timeZoneItems" ng-model="vm.timezone" class="ng-pristine ng-valid ng-not-empty ng-touched span2" >
                                              <option  value="{{vm.timezone}}">{{vm.timezone}}</option>
                                         </select>
                                                 </div>  
@@ -88,25 +88,13 @@
                                             <div class="rs-control-group">
                                                 <label class="rs-control-label">Time</label>
                                                 <div class="rs-controls">
-                                                    <select name="time" ng-change="vm.timezoneChange()"  ng-disabled="vm.isDisableDate" ng-options="time for time in vm.timeItems" ng-model="vm.time" class="ng-pristine ng-untouched ng-valid ng-not-empty span2" >
+                                                    <select name="time" ng-change="vm.onSaveTime()"  ng-options="time for time in vm.timeItems" ng-model="vm.time" class="ng-pristine ng-untouched ng-valid ng-not-empty span2" >
                                           <option  value="{{vm.time}}">{{vm.time}}</option>
                                         </select>
                                                 </div>  
-                                            </div>  
-                                            <div class="rs-control-group">                                        
-                                                <div class="rs-controls">
-                                                    <div class="rs-row">
-                                                        <a href="#" ng-click="vm.onSaveTime()" class="rs-btn rs-btn-primary span-3" ng-show="vm.isModeSave">Save</a>
-                                                       <!--  <button id="savebtn" class="rs-btn span-2 rs-btn-primary">Save</button> -->
-                                                    </div>
-                                                    <div class="rs-row">
-                                                        <a href="#" ng-click="vm.onEditTime()" class="rs-btn rs-btn-primary span-3" ng-show="!vm.isModeSave">Edit</a>
-                                                       <!--  <button id="savebtn" class="rs-btn span-2 rs-btn-primary">Save</button> -->
-                                                    </div>
-                                                </div>  
                                             </div> 
                                             <div class="rs-control-group">
-                                                <label class="rs-control-label"></label>
+                                                <span style="width: 80px"></span>
                                                 <div class="rs-controls">
                                                     <div ng-show="vm.error" style="color:red;">
                                                         Please select future or current Date/Time
@@ -128,5 +116,3 @@
             </div>
            
         <rsinteractivefooter></rsinteractivefooter>
-
-  
