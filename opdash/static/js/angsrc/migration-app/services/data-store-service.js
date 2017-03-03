@@ -353,6 +353,12 @@
                         "step_name":saveInstance.step_name
                     }];
                 if(preSavedDetails.length > 0){
+                    angular.forEach(preSavedDetails, function (instance, key) {
+                        if(instance.instance_name == self.getScheduleMigration().migrationName) {
+                            preSavedDetails.splice(key, 1);
+                            return;
+                        };
+                    });
                     preSavedDetails.push(savedetails_json[0]);
                     savedetails_json = preSavedDetails;
                 }
