@@ -181,9 +181,10 @@
                     reqObj.start = dataStoreService.selectedTime.time;
                 }
 
-                reqObj.resources.instances = instancesReqList;
-                reqObj.resources.networks = networksReqList;
-
+                reqObj.resources.instances = instancesReqList; //add servers to the resources list
+                if (networksReqList[0] != null){               //add networks to the resources list iff there are any networks
+                    reqObj.resources.networks = networksReqList;
+                 }
                 return reqObj;
             }
 
