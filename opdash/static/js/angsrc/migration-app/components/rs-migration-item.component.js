@@ -59,6 +59,7 @@
                     angular.forEach(dataList, function (server) {
                         server.canMigrate = true;
                         server.migStatus = 'error';
+                        //map status of a server received from Batch response with respect to the server id. 
                         angular.forEach(statusList, function (status) {
                             angular.forEach(status.instances, function (instance) {
                                 if(instance['name'] == server.name){
@@ -71,6 +72,7 @@
                                     else{
                                     //End--to be removed after demo3
                                         if(instance['status'] != 'error'){
+                                            //set status of a server to false if batch migration response is other than 'error'
                                             server.canMigrate = false;
                                             server.migStatus = instance['status'];
                                         }
@@ -86,6 +88,7 @@
                     return dataList;
                 };
 
+                /** 
                 var mapNetworkStatus = function(dataList, statusList) {
                     for(var i=0; i<dataList.length; i++){
                         //item.id === jobsList[i].resources.networks[0].subnets[0].id
@@ -97,6 +100,7 @@
                     //dataList[0].migrationStatus = "done";
                     return dataList;
                 };
+                */
 
                 // Perfoming controller initialization steps
                 vm.$onInit = function() {
@@ -186,6 +190,7 @@
                                 vm.loadError = true;
                                 return;
                             }
+                            //display 'No data found' message when API response is empty.
                             if(results[0].data.length === 0){
                                 vm.noData = true;
                                 vm.loading = false;
@@ -194,6 +199,7 @@
 
                             var dataList = results[0].data;
                             vm.items = mapServerStatus(dataList, results[1].job_status_list);
+                            //check if all the servers can be migrated else disable checkbox(to select all items) at the header of item selection table.
                             angular.forEach(vm.items, function (server) {
                                 if(server.canMigrate == false || server.status != 'active'){ 
                                     vm.disableSelectAll = true;
@@ -208,12 +214,11 @@
                             // if(vm.type === "loadBalancers")
                             //     vm.items = mapNetworkStatus(dataList, results[1].network_status);
                             //Store all retrieved resources in factory variable
-                            datastoreservice.storeallItems(vm.items, vm.type);  
-                            vm.parent.numOfResources(vm.type, vm.items.length); 
+                            datastoreservice.storeallItems(vm.items, vm.type);
                             // pagination controls
                             vm.currentPage = 1;
-                            vm.pageSize = 5; // items per page
-                            vm.totalItems = vm.items.length;
+                            vm.pageSize = 5; // items to be displayed per page
+                            vm.totalItems = vm.items.length; // number of items received.
                             vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
                             for(var i=1;i<=vm.noOfPages;i++){
                                 vm.pageArray.push(i);
@@ -238,7 +243,6 @@
                                 vm.disableSelectAll = true;
                             }
                         });
-                        vm.parent.numOfResources(vm.type, vm.items.length);
                         // pagination controls
                         vm.currentPage = 1;
                         vm.pageSize = 5; // items per page
@@ -265,14 +269,15 @@
 
                     vm.statusFilter = "";
 
-                    $scope.$on("ItemRemovedForChild", function(event, item){
+                    $('#rs-main-panel').css('height','298px');
+                };
+
+                $scope.$on("ItemRemovedForChild", function(event, item){
                         if(item.type === vm.type){
                             //item.selected = false;
                             vm.isAllSelected = false;
                         }
-                    });
-                    $('#rs-main-panel').css('height','298px');
-                };
+                });
 
                 /**
                  * @ngdoc method
@@ -392,54 +397,6 @@
                 vm.equipmentDetails = function(type, itemdetails) {
                     vm.type = type;
                     vm.itemDetails = itemdetails;
-                    // vm.equipStatus = status;
-                    // vm.equipRam = ram;
-                    // vm.equipFlavorDetails = flavorDetails;
-                    // vm.equipRegion = region;
-                    // vm.equipNetworks = networks;
-                    // vm.equipProgress = vm.equipRam/2000*100;
-                    /**
-                     * @ngdoc property
-                     * @name equipment
-                     * @propertyOf migrationApp.controller:rsequipmentdetailsCtrl
-                     * @type {Object}
-                     * @description Object containing details about the equipment
-                     */
-                    vm.equipment = {};
-
-                    /**
-                     * @ngdoc property
-                     * @name tasks
-                     * @propertyOf migrationApp.controller:rsequipmentdetailsCtrl
-                     * @type {Array}
-                     * @description Array containing set of tasks involved in migrating the resource 
-                     */
-                    vm.tasks = [];
-                    // fetch details based on selected migration item
-                    ds.getDetailedList(vm.type)
-                        .then(function (response) {
-                            vm.equipment = response.data.filter(function (item) { return item.id == vm.id })[0];
-                        });
-
-                    /* if(vm.type == 'server'){
-                        ds.getServerMigrationStatus(authservice.getAuth().tenant_id)
-                            .then(function(response){
-                                var jobId = response.server_status
-                                                .filter(function(item){
-                                                    if(item.server_id == vm.id)
-                                                        return item;
-                                                });
-                                if(jobId.length > 0){
-                                    vm.jobId = jobId[0].id;
-                                    ss.getJobTasks(jobId[0].id)
-                                        .then(function(response){
-                                            vm.jobStatus = response.data.results.instances[vm.id].status;
-                                            vm.tasks = response.data.results.instances[vm.id].tasks;
-                                            vm.showData = true;
-                                        });
-                                }                                            
-                            });
-                }*/
                 }
                 return vm;
             }]
