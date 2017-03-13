@@ -257,7 +257,7 @@
                             vm.isDisableDate =true;
                             vm.isModeSave= false;
                         }
-                    },1000);
+                    },0);
                 }
 
                 vm.onEditTime = function(){
