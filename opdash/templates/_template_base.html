@@ -30,8 +30,8 @@
   <link rel="stylesheet" type="text/css" media="screen" href="/static/css/angsrc/login.css?rev={!config['GIT_HASH']!}">
   <link rel="stylesheet" type="text/css" media="screen" href="/static/css/anglib/flex-cal.css?rev={!config['GIT_HASH']!}">
   <link rel="stylesheet" type="text/css" media="screen" href="/static/css/angsrc/migration-mgr.css?rev={!config['GIT_HASH']!}">
-  <link rel="stylesheet" type="text/css" media="screen" href="/static/css/anglib/material.datepicker.css?rev={!config['GIT_HASH']!}">
-  <link rel="stylesheet" type="text/css" media="screen" href="/static/css/anglib/animate.css?rev={!config['GIT_HASH']!}">
+  <link rel="stylesheet" type="text/css" media="screen" href="/static/design/material-datepicker/css/material.datepicker.css?rev={!config['GIT_HASH']!}">
+  <link rel="stylesheet" type="text/css" media="screen" href="/static/design/css/animate.css?rev={!config['GIT_HASH']!}">
 
   <!-- Loading external libraries -->
   {! javascript("anglib/jquery-1.10.0.min.js") !}
@@ -42,8 +42,8 @@
   {! javascript("anglib/bootstrap.min.js") !}
   {! javascript("anglib/fontawesome-1d292fb501.js") !}
   {! javascript("anglib/flex-cal-angular.js") !}
-  {! javascript("anglib/material.datepicker.js") !}
-  {! javascript("anglib/knockout-3.2.0.js") !}
+  {! javascript("../design/material-datepicker/js/material.datepicker.js") !}
+  {! javascript("../design/libs/knockout-3.2.0.js") !}
   {! javascript("anglib/Chart.min.js") !}
   {! javascript("anglib/Chart.bundle.js") !}  
   
@@ -89,6 +89,10 @@
   {! javascript("angsrc/migration-app/components/rs-edit-batchName.component.js") !}
   {! javascript("angsrc/migration-app/components/rs-migration-racker-dash.component.js") !}
   {! javascript("angsrc/migration-app/components/rs-migration-racker-reports.component.js") !}
+
+ <!-- Loading internal spec js files -->
+  {! javascript("angtest/migration-app-test/components-test/rs-schedule-migration.components.spec.js") !}
+
   <script>
 
   var user_data = {
