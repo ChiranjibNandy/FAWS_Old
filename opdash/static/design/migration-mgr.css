@@ -17,9 +17,6 @@
 .grey-txt{
     color: #bbb;
 }
-.rax-red-txt{
-    color: #c40022;
-}
 .light-txt{
     font-weight: 100;
 }
@@ -41,18 +38,6 @@
     margin-top: 5px;
     color: #333;
     display: inline-block;
-}
-.migr-name input[type=text] {
-    display: none;
-    margin-top: 5px;
-}
-
-.migr-name .edit {
-    cursor: pointer;
-    margin-left: 8px;
-}
-.fa-info-circle{
-    font-size: 12px!important;
 }
 #alert{
     background: #f9f9f9;
@@ -266,6 +251,20 @@ th {
     border-top: 1px solid #eee;
 }
 
+.migr-name input[type=text] {
+    display: none;
+    margin-top: 5px;
+}
+
+.migr-name h3 {
+    float: left;
+}
+
+.migr-name .edit {
+    cursor: pointer;
+    margin-left: 10px;
+}
+
 .clear {
     clear: both;
 }
@@ -301,7 +300,6 @@ th {
     filter: alpha(opacity=70);
 }
 
-canon.min.css:1
 
 .alert-schedule {
     background-color: #fff;

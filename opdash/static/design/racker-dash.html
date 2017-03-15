@@ -46,7 +46,7 @@
                     <a href="https://www.rackspace.com/" target="_blank"></a>
                 </div>
                 <ul class="rs-nav" id="links">
-                    <li id="pilot-dashboard" data-nav="dashboard" class="rs-nav-item">
+                    <li id="pilot-dashboard" data-nav="dashboard" class="rs-nav-item active">
                         <a id="pilot-dashboard-link" class="rs-nav-link" data-pilot-tracking-id="dashboard-link" href="racker-dash.html">Accounts Dashboard</a>
                     </li>
                     <li id="pilot-dashboard" data-nav="dashboard" class="rs-nav-item">
@@ -92,7 +92,7 @@
                                         </th>
                                         <th>
                                             <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                <span class="rs-table-sort-text">FAWS Account Level</span>
+                                                <span class="rs-table-sort-text">FAWS Acct. Level</span>
                                                 
                                             </a>
                                         </th>
@@ -103,7 +103,7 @@
                                         </th>
                                         <th>
                                             <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                <span class="rs-table-sort-text">Batches Completed</span>
+                                                <span class="rs-table-sort-text">Completed</span>
                                             </a>
                                         </th>
                                 
@@ -112,11 +112,11 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="step5.html">User Namegoeshere (#1024810)</a></td>
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024810)</a></td>
                                         <td class="rs-table-text">Managed Operations</td>
-                                        <td class="rs-table-text">Aviator</td>
-                                        <td class="rs-table-text ng-binding">2</td>
-                                        <td class="rs-table-text ng-binding">0</td>
+                                        <td class="rs-table-text">Navigator</td>
+                                        <td class="rs-table-text ng-binding">5</td>
+                                        <td class="rs-table-text ng-binding">3</td>
                          
                                         <td class="rs-table-input">
                                             <div class="rs-btn-group">
@@ -128,11 +128,11 @@
                                         </td>
                                     </tr>
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="step5.html">User Namegoeshere (#1024811)</a></td>
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024811)</a></td>
                                         <td class="rs-table-text">Managed Infrastructure</td>
                                         <td class="rs-table-text">Navigator</td>
-                                        <td class="rs-table-text ng-binding">2</td>
                                         <td class="rs-table-text ng-binding">0</td>
+                                        <td class="rs-table-text ng-binding">2</td>
     
                                         <td class="rs-table-input">
                                             <div class="rs-btn-group">
@@ -148,11 +148,11 @@
                                         </td>
                                     </tr>
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="step5.html">User Namegoeshere (#1024812)</a></td>
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024812)</a></td>
                                         <td class="rs-table-text">Managed Infrastructure</td>
                                         <td class="rs-table-text">Navigator</td>
-                                        <td class="rs-table-text ng-binding">7</td>
-                                        <td class="rs-table-text ng-binding">0</td>
+                                        <td class="rs-table-text ng-binding">2</td>
+                                        <td class="rs-table-text ng-binding">5</td>
 
                                         <td class="rs-table-input">
                                             <div class="rs-btn-group">
@@ -163,10 +163,10 @@
                                         </td>
                                     </tr>
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="step5.html">User Namegoeshere (#1024813)</a></td>
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024813)</a></td>
                                         <td class="rs-table-text">Managed Operations</td>
                                         <td class="rs-table-text">Aviator</td>
-                                        <td class="rs-table-text ng-binding">5</td>
+                                        <td class="rs-table-text ng-binding">3</td>
                                         <td class="rs-table-text ng-binding">2</td>
 
                                         <td class="rs-table-input">
@@ -179,11 +179,57 @@
                                         </td>
                                     </tr>
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="step5.html">User Namegoeshere (#1024814)</a></td>
-                                        <td class="rs-table-text">Managed Infrastructure</td>
-                                        <td class="rs-table-text">Simplified AWS</td>
-                                        <td class="rs-table-text ng-binding">1</td>
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024810)</a></td>
+                                        <td class="rs-table-text">Managed Operations</td>
+                                        <td class="rs-table-text">Aviator</td>
+                                        <td class="rs-table-text ng-binding">2</td>
                                         <td class="rs-table-text ng-binding">0</td>
+                         
+                                        <td class="rs-table-input">
+                                            <div class="rs-btn-group">
+                                                <div class="rs-dropdown">
+                                                    <div class="rs-cog rs-dropdown-toggle"></div>
+                                       
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024811)</a></td>
+                                        <td class="rs-table-text">Managed Infrastructure</td>
+                                        <td class="rs-table-text">Navigator</td>
+                                        <td class="rs-table-text ng-binding">0</td>
+                                        <td class="rs-table-text ng-binding">2</td>
+    
+                                        <td class="rs-table-input">
+                                            <div class="rs-btn-group">
+                                                <div class="rs-dropdown">
+                                                    <div class="rs-cog rs-dropdown-toggle"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024812)</a></td>
+                                        <td class="rs-table-text">Managed Infrastructure</td>
+                                        <td class="rs-table-text">Navigator</td>
+                                        <td class="rs-table-text ng-binding">2</td>
+                                        <td class="rs-table-text ng-binding">5</td>
+
+                                        <td class="rs-table-input">
+                                            <div class="rs-btn-group">
+                                                <div class="rs-dropdown">
+                                                    <div class="rs-cog rs-dropdown-toggle"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024813)</a></td>
+                                        <td class="rs-table-text">Managed Operations</td>
+                                        <td class="rs-table-text">Aviator</td>
+                                        <td class="rs-table-text ng-binding">3</td>
+                                        <td class="rs-table-text ng-binding">2</td>
 
                                         <td class="rs-table-input">
                                             <div class="rs-btn-group">
@@ -194,6 +240,69 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024810)</a></td>
+                                        <td class="rs-table-text">Managed Operations</td>
+                                        <td class="rs-table-text">Aviator</td>
+                                        <td class="rs-table-text ng-binding">2</td>
+                                        <td class="rs-table-text ng-binding">0</td>
+                         
+                                        <td class="rs-table-input">
+                                            <div class="rs-btn-group">
+                                                <div class="rs-dropdown">
+                                                    <div class="rs-cog rs-dropdown-toggle"></div>
+                                       
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024811)</a></td>
+                                        <td class="rs-table-text">Managed Infrastructure</td>
+                                        <td class="rs-table-text">Navigator</td>
+                                        <td class="rs-table-text ng-binding">0</td>
+                                        <td class="rs-table-text ng-binding">2</td>
+    
+                                        <td class="rs-table-input">
+                                            <div class="rs-btn-group">
+                                                <div class="rs-dropdown">
+                                                    <div class="rs-cog rs-dropdown-toggle"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024812)</a></td>
+                                        <td class="rs-table-text">Managed Infrastructure</td>
+                                        <td class="rs-table-text">Navigator</td>
+                                        <td class="rs-table-text ng-binding">2</td>
+                                        <td class="rs-table-text ng-binding">5</td>
+
+                                        <td class="rs-table-input">
+                                            <div class="rs-btn-group">
+                                                <div class="rs-dropdown">
+                                                    <div class="rs-cog rs-dropdown-toggle"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024813)</a></td>
+                                        <td class="rs-table-text">Managed Operations</td>
+                                        <td class="rs-table-text">Aviator</td>
+                                        <td class="rs-table-text ng-binding">3</td>
+                                        <td class="rs-table-text ng-binding">2</td>
+
+                                        <td class="rs-table-input">
+                                            <div class="rs-btn-group">
+                                                <div class="rs-dropdown">
+                                                    <div class="rs-cog rs-dropdown-toggle"></div>
+                                       
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
                                    
                                 </tbody>
                             </table>
@@ -214,24 +323,8 @@
                     </div>
                 </div>
             </div>
-            <!-- <br>
-            <div class="rs-row">
-                <div class="span12">
-                    <h4>FAQs + More Information</h4>
-                    <ul>
-                        <li>
-                            <a href="">Mapping of Rackspace Resource to Amazon Web Service Resources</a>
-                        </li>
-                        <li>
-                            <a href="">How will my billing change?</a>
-                        </li>
-                        <li>
-                            <a href="">Learn about the different Fanatical Support for AWS Support Levels</a>
-                        </li>
-                    </ul>
-                </div>            
-            </div>
-            <br> -->
+           <br>
+
         </div>
     </div>
     <br>
