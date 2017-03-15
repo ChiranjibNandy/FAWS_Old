@@ -121,25 +121,9 @@
                                 batch_name: dataStoreService.getScheduleMigration().migrationName,
                                 names: names,
                                 source: {
-                                    cloud: "rackspace",
-                                    tenantid: auth.tenant_id,
-                                    auth: {
-                                        method: "key",
-                                        type: "customer",
-                                        username: auth.rackUsername,
-                                        apikey: auth.rackAPIKey
-                                    }
-                                },
-                                destination: {
-                                    cloud: "aws",
-                                    account: auth.awsAccount,
-                                    auth: {
-                                        method: "keys",
-                                        accesskey: auth.accessKey,
-                                        secretkey: auth.secretKey
-                                    }
-                                },
-                                resources: {},
+                                            tenantid: auth.tenant_id
+                                        },
+                               resources: {},
                                 version: "v1"
                             };
 
@@ -153,6 +137,7 @@
                         destination: {
                             region: instance.selectedMapping.region, //.toUpperCase(),
                             zone: "us-east-1a",
+                            // zone:instance.selectedMapping.zone,
                             type: instance.selectedMapping.instance_type
                         }
                     });
