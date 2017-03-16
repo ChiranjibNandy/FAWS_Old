@@ -21,25 +21,7 @@
                     <hr>
                       <div class="rs-inner">
                         <h2>{{vm.tenant_account_name}} ( #{{vm.tenant_id}} )</h2>
-                        <div class="migr-name">
-                            <h3>
-                                <div class="rs-control-group" style="width: 250%;">
-                                    <div class="rs-controls" style="float: left;" ng-hide="vm.editorEnabled">{{vm.migrationName}} </div>
-                                    <div class="rs-controls" style="width: 50%;display:inline-block;">
-                                        <a  role="button" ng-click ="vm.editMigrationName();" set-focus='migrationName' data-toggle="modal" class="rs-edit" title="click to edit migration name" ng-hide="vm.editorEnabled"></a>
-                                    </div>
-                                </div>
-                            </h3>
-                            <div ng-show="vm.editorEnabled">
-                                <input  id="migrationName" type="text" ng-model="vm.editedMigrationName" class="rs-input-large name-input animated flipInX" style="display: inline-block;" />
-                                <span class="fontSize">  
-                                    <i class="fa fa-check" ng-click="vm.save()"></i>    
-                                </span>
-                                <span class="fontSize">
-                                    <i class="fa fa-close" ng-click="vm.disableEditor()"></i>
-                                </span>
-                            </div>
-                        </div>
+                        <rseditbatchname></rseditbatchname>
                         <div class="clear"></div>
                         <hr>
                         <div class="rs-row">

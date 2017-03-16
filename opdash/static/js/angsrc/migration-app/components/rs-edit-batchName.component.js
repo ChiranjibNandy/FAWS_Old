@@ -49,6 +49,7 @@
                  */
                 vm.editMigrationName = function() {
                     vm.editName = true;
+                    vm.changedMigrationName = vm.migrationName;
                 };
 
                 /**
@@ -59,6 +60,8 @@
                  * Changes the migration batch name and updates it in the service datastoreservice
                  */
                 vm.changeName = function() {
+                    //when name of the batch is changed, the object selectedTime will be updated 
+                    //in data store service
                     if(vm.changedMigrationName){
                         vm.selectedTime = {
                             migrationName:vm.changedMigrationName,

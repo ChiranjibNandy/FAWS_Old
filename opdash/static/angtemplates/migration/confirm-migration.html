@@ -5,21 +5,7 @@
             <hr>
             <div class="rs-inner">
                 <h2>{{vm.tenant_account_name}} ( #{{vm.tenant_id}} )</h2>
-                <div class="migr-name">
-                    <div ng-show="!vm.editName">
-                        <h3>{{vm.migrationName}}</h3>
-                        <span class="edit rs-edit" ng-click="vm.editName = true; vm.changedMigrationName = vm.migrationName;" set-focus='migrationName'></span>
-                    </div>
-                    <div ng-show="vm.editName">
-                        <input  id="migrationName" type="text" ng-model="vm.changedMigrationName" class="rs-input-large name-input animated flipInX" style="display: inline-block;" />
-                        <span class="fontSize">  
-                            <i class="fa fa-check" ng-click="vm.changeName()"></i>    
-                        </span>
-                        <span class="fontSize">
-                            <i class="fa fa-close" ng-click="vm.revertName()"></i>
-                        </span>
-                    </div>
-                </div>
+                <rseditbatchname></rseditbatchname>
                 <div class="clear"></div>
                 <div class="rs-row">
                     <div class="span-6">
