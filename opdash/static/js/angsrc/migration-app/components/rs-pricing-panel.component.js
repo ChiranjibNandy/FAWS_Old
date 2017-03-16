@@ -82,7 +82,6 @@
                  */
                 vm.continue = function() {     
                     vm.selectedTime = dataStoreService.getScheduleMigration();
-                    // console.log(vm.selectedTime);
                     dataStoreService.getItems(vm.selecteditem);
                     if(vm.page==="resources"){
                         if(vm.selecteditem.length>0){

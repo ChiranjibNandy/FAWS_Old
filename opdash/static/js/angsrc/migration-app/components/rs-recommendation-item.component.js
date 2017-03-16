@@ -57,8 +57,7 @@
                             vm.awsRegion = 'us-east-1';
                             vm.getZones();
                         },function(error){
-                            console.log('error');
-                            console.log(error);
+                            console.log('error :', error);
                         });
                         vm.data = dataStoreService.getItems(vm.type);
                         vm.data.map(function(item){
@@ -138,9 +137,8 @@
                         vm.awsZone = zones[0];
                         vm.zones = zones;
                     },function(error){
-                        console.log("error");
-                        console.log(error);
-                    });
+                        console.log("error: ",error);
+                   });
                 };
 
                 /**

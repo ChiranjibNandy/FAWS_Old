@@ -108,8 +108,7 @@
              * This service method returns an _object_. This object has to be sent while making an HTTP POST request to migrate the resource.
              */
             this.prepareRequest = function(batchName){
-                console.log(dataStoreService.getItems("server"));
-                var equipments = {
+               var equipments = {
                         instances : dataStoreService.getItems("server"),
                         networks : dataStoreService.getDistinctNetworks()
                     },
@@ -121,25 +120,9 @@
                                 batch_name: dataStoreService.getScheduleMigration().migrationName,
                                 names: names,
                                 source: {
-                                    cloud: "rackspace",
-                                    tenantid: auth.tenant_id,
-                                    auth: {
-                                        method: "key",
-                                        type: "customer",
-                                        username: auth.rackUsername,
-                                        apikey: auth.rackAPIKey
-                                    }
-                                },
-                                destination: {
-                                    cloud: "aws",
-                                    account: auth.awsAccount,
-                                    auth: {
-                                        method: "keys",
-                                        accesskey: auth.accessKey,
-                                        secretkey: auth.secretKey
-                                    }
-                                },
-                                resources: {},
+                                            tenantid: auth.tenant_id
+                                        },
+                               resources: {},
                                 version: "v1"
                             };
 
@@ -153,6 +136,7 @@
                         destination: {
                             region: instance.selectedMapping.region, //.toUpperCase(),
                             zone: "us-east-1a",
+                            // zone:instance.selectedMapping.zone,
                             type: instance.selectedMapping.instance_type
                         }
                     });

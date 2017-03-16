@@ -20,16 +20,18 @@ lib64/
 parts/
 sdist/
 var/
-docs/
-node_modules/
 *.egg-info/
 .installed.cfg
 *.egg
 .venv
 .DS_Store
 opdash/.DS_Store
-.vscode/
 session/
+
+# Angular documentaion and tests
+docs/
+node_modules/
+.vscode/
 
 
 # PyInstaller

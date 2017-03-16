@@ -91,10 +91,7 @@
                    vm.date =moment().format("YYYY-MM-DD");
                     vm.selectedDateHeader = new Date().toLocaleString();//moment().format("MMM Do YYYY")+" at "+vm.time+" "+vm.timezone;
                     vm.selectedDate =  moment().format('MMMM Do YYYY ')+' at '+moment().format('h:mma')+' '+vm.timezone.slice(1,11);
-                    // console.log(vm.finalDateForUnixTime);
-                   //console.log(new Date(vm.finalDateForUnixTime));
                     
-                    //  console.log(new Date(vm.finalDateForUnixTime));
                     dataStoreService.storeDate('time',vm.time);
                     dataStoreService.storeDate('timezone',vm.timezone);
                     var d = new Date();
@@ -196,7 +193,6 @@
                  * Continue to next step: **Confirm Migration**
                  */
                 vm.continue = function() {
-                    // console.log(vm.selectedTime);
                     $rootRouter.navigate(["ConfirmMigration"]);
                 };
  /**

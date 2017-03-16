@@ -56,13 +56,6 @@
                          vm.tenant_account_name = authservice.getAuth().account_name;
                     } //end of if condition
 
-                    
-                     var cloudDetails = dataStoreService.setCloudAccountDetails();
-                     cloudDetails.then(function() {
-                                console.log("cloudDetails=",cloudDetails);
-                      }); //waiting api promise to resolve
-         
-
                     vm.auth = authservice.getAuth();
                     /**
                      * @ngdoc property
@@ -157,8 +150,7 @@
                 };
                 //catch emit call from child components.
                 $scope.$on("ItemRemoved", function(event, item){
-                    // console.log("broadcast invoked");
-                    $scope.$broadcast("ItemRemovedForChild", item); // broadcast event to all child components
+                  $scope.$broadcast("ItemRemovedForChild", item); // broadcast event to all child components
                 });
 
                 /**

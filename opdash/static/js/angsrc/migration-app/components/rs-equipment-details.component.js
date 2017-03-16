@@ -54,9 +54,7 @@
                     // fetch details based on selected migration item
                     ds.getDetailedList(vm.type)
                         .then(function (response) {
-                            // console.log(response);
                             vm.equipment = response.data.filter(function (item) { return item.id == vm.id })[0];
-                            // console.log(vm.equipment);
                         });
 
                     if(vm.type == 'server'){
