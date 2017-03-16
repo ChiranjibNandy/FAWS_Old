@@ -108,8 +108,7 @@
              * This service method returns an _object_. This object has to be sent while making an HTTP POST request to migrate the resource.
              */
             this.prepareRequest = function(batchName){
-                console.log(dataStoreService.getItems("server"));
-                var equipments = {
+               var equipments = {
                         instances : dataStoreService.getItems("server"),
                         networks : dataStoreService.getDistinctNetworks()
                     },

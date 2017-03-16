@@ -140,7 +140,11 @@
                                 vm.loading = true;
                                 dashboardService.getBatches(refresh)
                                     .then(function(response) {
-                                        console.log("Batch: ", response);
+                                        if (response.error)
+                                            console.log("No data recieved");
+                                        else
+                                            console.log("Batch: ", response);
+
                                         var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled"];
                                         var validCompletedBatchStatus = ["done"];
                                         jobList = response.jobs.job_status_list;

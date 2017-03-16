@@ -82,14 +82,14 @@
                 .success( function(data, status) {
                     if (status === 200 || status === 201 || status === 204){
                         deferred.resolve(data);
-                        console.log(status, data);				
+                        // console.log(status, data);				
                     }else {
-                        console.log(status, data);
+                        // console.log(status, data);
                         deferred.reject({ error: status, data: data });
                     }
             })
             .error(function(data, status){
-                console.log(status, data);
+                // console.log(status, data);
                 deferred.reject({ error: status, data: data });
             });
             return deferred.promise;
