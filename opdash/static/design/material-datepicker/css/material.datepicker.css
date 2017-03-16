@@ -14,7 +14,7 @@
 }
 
 .material-datepicker {
-	font-family: 'Source Sans Pro','Helvetica Neue',sans-serif;
+	/*font-family: 'Source Sans Pro','Helvetica Neue',sans-serif;*/
 	position: absolute;
 	width: 280px;
 	background: #fff;
