@@ -100,6 +100,14 @@
                     $('#rs-main-panel').css('height','310px');
                 };
 
+                /**
+                  * @ngdoc method
+                  * @name fetchNetworks
+                  * @methodOf migrationApp.controller:rsrecommendationitemCtrl
+                  * @description 
+                  * This function helps to get the networks from the selected servers object and also 
+                  * have labels which we are going to populate in the networks tab table.
+                  */
                 vm.fetchNetworks = function(){
                     var servers = dataStoreService.getItems('server');
                     var networkNames = [];
@@ -118,11 +126,14 @@
                         });
                     });
                 }
+
+                //to update the networks when we remove an server.
                 if(vm.type === 'network'){
                     $rootScope.$on('pricingChanged',function(){
                         vm.fetchNetworks();
                     });
                 }
+
                 /**
                  * @ngdoc method
                  * @name getZones
@@ -130,9 +141,11 @@
                  * @description 
                  * This function helps to get the zones based on the region you selected.
                  */
-                vm.getZones = function(item){
+                vm.getZones = function(region){
                     var url =  '/api/ec2/availability_zones/'+vm.awsRegion; 
-                    if(item) vm.getPricingDetails(item);
+                    //If this method is called from modify modal, we will have the region , at that
+                    //time we have to get pricing details.
+                    if(region) vm.getPricingDetails(region);
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(zones){
                         vm.awsZone = zones[0];
                         vm.zones = zones;
@@ -204,18 +217,20 @@
                                                 return item;
                                             };
                                          });    
+                    //it helps to store the updated object back
                     dataStoreService.storeallItems(allData,'server');     
                     vm.data.splice(vm.data.indexOf(selectedServer[0]), 1);
+                    //updating networks tab and pricing panel that an server is removed
                     $rootScope.$emit("pricingChanged");
                     $('.rs-tabs').children()[0].children[0].innerHTML = "Servers ("+vm.data.length+")";
                     if(vm.data.length === 0)  $('.rs-tabs').children()[1].children[0].innerHTML = "Networks (0)";
                     dataStoreService.setItems({server:vm.data,network:[]});
                 }
 
-                vm.equipmentDetails = function(type, itemdetails) {
-                    vm.type = type;
-                    vm.itemDetails = itemdetails;
-                };
+                // vm.equipmentDetails = function(type, itemdetails) {
+                //     vm.type = type;
+                //     vm.itemDetails = itemdetails;
+                // };
                 
                 return vm;
             }]
