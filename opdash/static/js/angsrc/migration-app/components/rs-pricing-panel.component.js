@@ -20,9 +20,6 @@
                 selecteditem: "=",
             },
            
-            //   require: {
-            //      parent: "^^rsmigrationresourceslist,^^rsmigrationrecommendation"
-            // },
             controllerAs: "vm",
             /**
              * @ngdoc controller
@@ -31,11 +28,17 @@
              */
             controller:["datastoreservice","$rootRouter","httpwrapper","$filter","$timeout","$q","$rootScope",function(dataStoreService,$rootRouter,HttpWrapper,$filter,$timeout,$q,$rootScope){
                 var vm = this;
-                //vm.invoiceCoverageStartDate = '';
-                //vm.invoiceCoverageEndDate = '';
+                vm.invoiceCoverageStartDate = '';
+                vm.invoiceCoverageEndDate = '';
                 vm.invoiceTotal = '';
                 vm.totalProjectedPricingSum = 0;
-
+/**
+                 * @ngdoc method
+                 * @name $onInit
+                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                 * @description 
+                 *function called on init of the rspricingCtrl.
+                 */
                 vm.$onInit = function() {                
                     vm.loading = true;
                     vm.loadError = false;
@@ -44,9 +47,6 @@
                     vm.totalCost = dataStoreService.getRecommendedTotalCost();
                     vm.currentPricing = dataStoreService.getCurrentPricing ();
                     vm.savings = (vm.currentPricing - vm.totalCost);           
-                    //vm.data = dataStoreService.getItems(vm.selectedItem);
-                    // dataStoreService.setItems(vm.selectedItem);
-                    // dataStoreService.getItems(vm.type);
                     var currentPricingDetails = vm.getCurrentPricingDetails();
                     var projectedPricingDetails = vm.getProjectedPricing();
 
@@ -83,6 +83,7 @@
                 vm.continue = function() {     
                     vm.selectedTime = dataStoreService.getScheduleMigration();
                     dataStoreService.getItems(vm.selecteditem);
+                    //conditions to checkeck on what page the user is and navigate to the following next page.
                     if(vm.page==="resources"){
                         if(vm.selecteditem.length>0){
                             dataStoreService.setItems(vm.selecteditem);
@@ -101,7 +102,15 @@
                         $rootRouter.navigate(["ConfirmMigration"]);
                     }
                 };
+                /**
+                 * @ngdoc method
+                 * @name back
+                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @description 
+                 * function to go back to previous page. 
+                 */
                 vm.back = function() {
+                    //conditions to checkeck on what page the user is and navigate back to the previous page.
                     if(vm.page==="recommendation"){
                         $rootRouter.navigate(["MigrationResourceList"]);
                     }
@@ -109,6 +118,15 @@
                         $rootRouter.navigate(["MigrationRecommendation"]);
                     }
                 }
+
+/**
+                 * @ngdoc method
+                 * @name showCancelDialog
+                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @description 
+                 * function to cancel the migration. 
+                 */
+
                    vm.showCancelDialog = function() {
                     $('#cancel_modal').modal('show');
                 };
@@ -142,8 +160,8 @@
                         invoiceTotal += item.details.rax_price;
                     });
                     vm.invoiceTotal = invoiceTotal.toFixed(2);
-                    // vm.invoiceCoverageStartDate = parseInt(date.getMonth())+"/01/"+date.getFullYear();
-                    // vm.invoiceCoverageEndDate =  parseInt(date.getMonth())+1+"/01/"+date.getFullYear();
+                    vm.invoiceCoverageStartDate = parseInt(date.getMonth())+"/01/"+date.getFullYear();
+                    vm.invoiceCoverageEndDate =  parseInt(date.getMonth())+1+"/01/"+date.getFullYear();
                 }
 
                 $rootScope.$on("pricingChanged",function(){
@@ -181,6 +199,7 @@
                     var scheduleItem = {};
                     var time = '';
                     var timezone = '';
+                   //conditions to checkeck on what page the user is and save the data and pass on to the next following pages.  
                     if(vm.page==="recommendation"){ 
                         stepName = "MigrationRecommendation";
                         scheduleItem = {};
@@ -236,7 +255,13 @@
                     });
                 };
 
-
+ /**
+                 * @ngdoc method
+                 * @name submitCancel
+                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @description 
+                 * function to cancel the migration. 
+                 */
                 vm.submitCancel = function() {
                     if(vm.saveProgress == 'yes'){
                         vm.saveItems(vm.cancelnSaveObj);

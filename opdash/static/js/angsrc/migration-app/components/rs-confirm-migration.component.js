@@ -43,8 +43,8 @@
                     vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
                     vm.changedMigrationName = vm.migrationName;
                     vm.schedule = {
-                        date: dataStoreService.getMigrationDate() || new Date().toLocaleDateString(),
-                        time: dataStoreService.getMigrationTime() || new Date().toLocaleTimeString(),
+                        date: dataStoreService.getMigrationDate() || new Date().toDateString(),
+                        time: dataStoreService.getMigrationTime() || new Date().toTimeString(),
                         timezone: dataStoreService.selectedTime.timezone
                     };
                     
