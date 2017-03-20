@@ -56,21 +56,27 @@
                         <a id="pilot-dashboard-link" class="rs-nav-link" data-pilot-tracking-id="dashboard-link" href="https://encore.rackspace.com/" target="_blank">Encore</a>
                     </li>
                     <li id="pilot-backups" data-nav="migrations" class="rs-nav-item pilot-nav-item active"">
-                        <a href="racker-migr-dash.html" class="rs-nav-link" role="button" tabindex="0" >Migrations</a>
+                        <a href="racker-migr-dash.html" class="rs-nav-link" role="button" tabindex="0" >Migration Manager</a>
                     </li>
                 </ul>
             </div>
         </div>
         <!-- End Primary Nav -->
         <div class="rs-container migration-mgr">
-            <div class="rs-main ">
+            <a href="racker-migr-dash.html"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
+            <br>
+            <div class="rs-main">
                 <div class="rs-content rs-panel">
                     <div class="rs-inner">
-                        <div class="pull-right">
-                            <a class="rs-btn " href="racker-migr-dash.html">Back to Dashboard</a>
+                        <a href="" class="rs-btn rs-pull-right">See Log</a>
+                        <div class="migr-ddi-name">
+                            <span class="migr-name">
+                                <span><b>For batch:</b> Migration-01Feb2017-0256pm</span>
+                                <input type="text" class="name-input animated flipInX" placeholder="Migration-01Feb2017-0456pm"/> 
+                            </span>                                          
                         </div>
-                        <div class="rs-detail-header-subtitle">Completed Migrations</div>
-                        <h3>Migration-01Feb2017-0256pm</h3>
+                        <br>
+                        <br>
                         <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
                             <table class="rs-list-table rs-embedded-list-table no-truncate-td">
                                 <thead>
@@ -80,8 +86,10 @@
                                             <span class="rs-table-sort-indicator"></span>
                                         </a>
                                     </th>
-                                
-                                    <th>Status</th>                                   
+                                    <th>Status</th>    
+                                    <th>Data Uploaded</th>      
+                                    <th>Destination</th> 
+                                    <th>Completion Time</th>                        
                                 </thead>
                                 <tbody>
                                     <tr>
@@ -92,7 +100,15 @@
                                         <td class="rs-table-text">
                                             <span class="rs-status rs-status-ok">Completed</span>
                                         </td>
-                                        
+                                        <td class="rs-table-text">
+                                            35.4 GB
+                                        </td>
+                                        <td class="rs-table-text">
+                                            US-East-1
+                                        </td>
+                                        <td class="rs-table-text">
+                                            2/1/2017 2:18 PM
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="rs-table-link">
@@ -101,6 +117,15 @@
                            
                                         <td class="rs-table-text">
                                             <span class="rs-status rs-status-ok">Completed</span>
+                                        </td>
+                                        <td class="rs-table-text">
+                                            35.4 GB
+                                        </td>
+                                        <td class="rs-table-text">
+                                            US-East-1
+                                        </td>
+                                        <td class="rs-table-text">
+                                            2/1/2017 2:18 PM
                                         </td>
                                         
                                     </tr>
@@ -111,6 +136,15 @@
                                 
                                         <td class="rs-table-text">
                                             <span class="rs-status rs-status-ok">Completed</span>
+                                        </td>
+                                        <td class="rs-table-text">
+                                            35.4 GB
+                                        </td>
+                                        <td class="rs-table-text">
+                                            US-East-1
+                                        </td>
+                                        <td class="rs-table-text">
+                                            2/1/2017 2:18 PM
                                         </td>
                                         
                                     </tr>
