@@ -8,36 +8,47 @@
 .white-panel h3,
 .plain-panel h3 {
     color: #c40022;
+    margin-bottom: 10px;
 }
 
-.white-panel h3 {
+/*.white-panel h3 {
     margin: 0;
     padding: 0;
-}
+}*/
 .grey-txt{
     color: #bbb;
 }
-.rax-red-txt{
-    color: #c40022;
-}
+
 .light-txt{
     font-weight: 100;
 }
 .plain-panel {
     padding: 1em;
     border: 1px solid #ccc;
-    min-height: 230px;
+    min-height: 210px;
     background: #f9f9f9;
 }
-.plain-panel h2 {
-    margin-bottom: 0;
-}
+
 .plain-panel b {
     color: #333;
 }
+.info-panel {
+    padding: 1em;
+}
+.info-panel h3{
+    margin-bottom: 0;
+}
+
+.info-panel:first-child {
+    padding: 1em;
+}
+
+.pricing-buttons {
+    margin-bottom: 10px;
+}
 .migr-ddi-name {
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 500;
     margin-top: 5px;
     color: #333;
     display: inline-block;
@@ -76,30 +87,9 @@ form .rs-row{
 form .rs-row select, form .rs-row input{
     margin:0;
 }
-.info-panel {
-    padding: 1em;
-}
-.info-panel h3{
-    margin-bottom: 0;
-}
 
-.info-panel:first-child {
-    padding: 1em;
-}
-
-.pricing-buttons {
-    margin-bottom: 10px;
-}
 .rs-control-group h4 > input{
     margin-right: 10px;
-}
-.trash-button {
-    font-size: 16px;
-    color: #979797
-}
-
-.trash-button:hover {
-    color: #333
 }
 
 .rs-success {
@@ -129,9 +119,9 @@ form .rs-row select, form .rs-row input{
     font-size: 80%;
     background-color: #fff;
     color: #333;
-    border: 1px solid #c40022;
+    border: 2px solid #c40022;
     font-weight: bold;
-    padding: 5px 8px;
+    padding: 5px 9px;
     border-radius: 50px;
 }
 
@@ -168,7 +158,7 @@ form .rs-row select, form .rs-row input{
 }
 
 .rs-tr-disabled {
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .rs-inst-types {
@@ -193,6 +183,12 @@ form .rs-row select, form .rs-row input{
 #Servers .rs-list-table th:nth-child(3),#Servers .rs-list-table td:nth-child(3)  {
     padding:0 0 0 5px;
 }
+.rs-list-table.cell-center th:last-child, .rs-list-table.cell-center td:last-child{
+    text-align: center
+}
+.rs-list-table.cell-center th:last-child .rs-dropdown-menu , .rs-list-table.cell-center td:last-child .rs-dropdown-menu {
+    text-align: left;
+}
 .rs-table-status-pending {
     background-color: #999!important;
 }
@@ -206,7 +202,10 @@ form .rs-row select, form .rs-row input{
 /*.migration-mgr .rs-main .rs-panel {
     min-height: 500px;
 }*/
-
+.migration-mgr h4, .modal h4{
+    text-decoration: none;
+    text-transform: none;
+}
 .migration-mgr.rs-container {
     width: 1200px!important;
     padding: 0;
@@ -247,7 +246,6 @@ th {
     display: block;
     width: inherit;
     white-space: normal;
-    overflow: visible;
     text-overflow: inherit;
 }
 
@@ -273,6 +271,11 @@ th {
 .migration-mgr .searchbox {
     margin: 10px 0 0 0;
 }
+.migration-mgr .accounts.searchbox {
+    margin: 1px 0 0 0;
+    margin-right: 5px;
+    height: auto;
+}
 .migration-mgr.racker-dash .rs-panel{
     min-height: 270px;
 }
@@ -294,7 +297,7 @@ th {
 }
 
 /* bootstrap overrides */
-.close {
+.alert .close {
     color: #fff;
     text-shadow: none;
     opacity: 0.7;
@@ -342,7 +345,6 @@ body .modal.details2 {
 
 .modal-body {
     padding: 30px;
-    overflow-y: visible;
 }
 
 .modal img {
@@ -382,18 +384,6 @@ body .modal.details2 {
     color: #999;
     font-size: 10px;
 }
-/* Icon when the collapsible content is shown */
-/*  .accordion-toggle:after {
-    font-family: "FontAwesome";
-    font-size: 10px;
-    margin-left: 5px;
-    content: "\f054";
-  }*/
-/*  .accordion-toggle:after{
-    font-family: "FontAwesome";
-    margin-left: 5px;
-    content: "\f078";
-  }*/
 
 /* Simple setup for stepper */
 
