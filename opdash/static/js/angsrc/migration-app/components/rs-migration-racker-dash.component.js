@@ -313,11 +313,41 @@
                  * sets the tenant id and redirects the racker to the MigrationResourceList page.
                  */
                 vm.setTenantId = function(item){
+                    var doSavedForLaterMigrationsExist = false;
+                    var doResourceMigrationsExist = false;
                     var tenant_id_text = item.accountName;
                     var tenant_id = tenant_id_text.substring(tenant_id_text.lastIndexOf("#")+1,tenant_id_text.lastIndexOf(")"));
                     authservice.getAuth().tenant_id = tenant_id;
                     authservice.getAuth().account_name = item.tenant_account_name;
-                    $rootRouter.navigate(["MigrationResourceList"]);
+
+                    var getSavedInstancesUrl = "/api/users/uidata/"+tenant_id+"/Saved_Migrations";
+                    var savedMigrationPromise = HttpWrapper.send(getSavedInstancesUrl, {"operation":'GET'})
+                    .then(function(result){
+                        if(result != null && result.savedDetails.length !=0){
+                            doSavedForLaterMigrationsExist = true;
+                        }
+                    },function(error) {
+                        doSavedForLaterMigrationsExist = false;
+                    });
+
+                    var url = "/api/jobs/" + tenant_id;
+                    var resourceMigrationPromise = HttpWrapper.send(url,{"operation":'GET'})
+                    .then(function(response){
+                        if(response != null && response.job_status_list.length != 0){
+                            doResourceMigrationsExist = true;
+                        }
+                    },function(error) {
+                        doResourceMigrationsExist = false;
+                    });
+
+                    $q.all([savedMigrationPromise,resourceMigrationPromise]).then(function(result){
+                        if(doSavedForLaterMigrationsExist == false && doResourceMigrationsExist == false){
+                            $rootRouter.navigate(["MigrationResourceList"]);                          
+                        }
+                        else{
+                            $rootRouter.navigate(["MigrationStatus"]);
+                        }
+                    });                    
                 } 
 
                 //sets the tenant id and redirects the racker to the MigrationStatus page
