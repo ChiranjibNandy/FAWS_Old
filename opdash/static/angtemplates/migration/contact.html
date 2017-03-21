@@ -1,19 +1,22 @@
- <div class="span-4 ">
-    <div class="rs-pull-right">
-        <h4>Support</h4>
-        <div class="support-icons">
-            <a href="#" ng-click="showPopover(vm)" class=""><i class="fa fa-phone fa-fw fa-2x"></i></a>
-            <a ng-href="https://mycloud.rackspace.com/cloud/{{vm.tenant_id}}/tickets" target="_blank" class=""><i class="fa fa-ticket fa-fw fa-2x"></i></a>
-        </div>
-    </div>
+<div class="support-icons rs-pull-right">
+    <span>Support</span>
+    <a href="#" ng-click="showPopover(vm)" class=""><i class="fa fa-phone fa-fw fa-2x"></i></a>
+    <a ng-href="https://mycloud.rackspace.com/cloud/{{vm.tenant_id}}/tickets" target="_blank" class=""><i class="fa fa-ticket fa-fw fa-2x"></i></a>
 </div>
- <!-- Phone Number Modal -->
+
+<!-- Phone Number Modal -->
 <div class="modal" id="phoneNumberModal" ng-show="popoverIsVisible">
     <br>
     <div class="modal-body">
-        <center><h5 class="rs-page-title">Support Contact Phone Numbers</h5></center>
+        <center>
+            <h5 class="rs-page-title">Support Contact Phone Numbers</h5>
+        </center>
         <div>
-            <center><div><h3>{{vm.contactNumbers[0]}}</h3></div></center>
+            <center>
+                <div>
+                    <h3>{{vm.contactNumbers[0]}}</h3>
+                </div>
+            </center>
         </div>
     </div>
     <div class="modal-footer">

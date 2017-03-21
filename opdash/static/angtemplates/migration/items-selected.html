@@ -1,37 +1,37 @@
 <div class="plain-panel" ng-style="{'min-height': vm.showrec === 'true' ? '230px' : 'initial'}">
     <!--<div class="span-8">-->
-    <h4 ng-show="vm.showrec === 'false'">Items Selected</h4>
-    <h3 ng-show="vm.showrec === 'true'">Selected Resources <a ng-link="['MigrationResourceList']" class="rs-edit" title="Go to step 1 to choose resources to migrate"></a></h3>
+    <h4 ng-show="vm.showrec === 'false'">Items Selected <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h4>
+    <h3 ng-show="vm.showrec === 'true'">Selected Resources
+        <a ng-link="['MigrationResourceList']" class="rs-edit" title="Go to step 1 to choose resources to migrate"></a>
+    </h3>
     <hr>
     <div class="accordion" id="accordion2" ng-hide="vm.selectedItems.server.length == 0">
         <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}">
             <div class="accordion-heading ">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#server-name">
-                    <b class=""> Servers ({{vm.selectedItems.server.length}})  <i class="fa fa-caret-down"></i></b>
+                    <b class=""> Servers ({{vm.selectedItems.server.length}})</b>
                 </a>
             </div>
             <div id="server-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
-                <div class="selected-items" ng-repeat="item in vm.selectedItems.server">
-                  <a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'server')"><i class="fa fa-times"></i></a>  <b title="({{item.details.networks.length}}) Networks: {{vm.networksToServer(item).toString()}}"> {{item.name}} </b>
-                  <i class="fa fa-arrow-right fa fw" ng-if="vm.showrec == 'true'"></i><span ng-if="vm.showrec == 'true'"> {{item.mappings[0].region}} - {{item.mappings[0].zone || 'US-East-1a 2'}} - {{item.mappings[0].instance_type}} </span>
+                <div class="accordion-inner">
+                    <div class="selected-items" ng-repeat="item in vm.selectedItems.server">
+                        <a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'server')"><i class="fa fa-times-circle"></i></a><b title="({{item.details.networks.length}}) Networks: {{vm.networksToServer(item).toString()}}"> {{item.name}} </b>
+                        <i class="fa fa-arrow-right fa fw" ng-if="vm.showrec == 'true'"></i><span ng-if="vm.showrec == 'true'"> {{item.mappings[0].region}} - {{item.mappings[0].zone || 'US-East-1a 2'}} - {{item.mappings[0].instance_type}} </span>
+                    </div>
                 </div>
-                <!--<div class="accordion-inner ">                displayRecommendations: "<",
-
-                    <ul class="inline">
-                        <li ng-repeat="item in vm.selectedItems.server">{{item.name}}</li>
-                    </ul>
-                </div>-->
             </div>
         </div>
         <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}">
             <div class="accordion-heading ">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#file-name">
-                    <b class="">  Networks ({{vm.networkCount}}) <i class="fa fa-caret-down"></i></b>
+                    <b class="">  Networks ({{vm.networkCount}})</b>
                 </a>
             </div>
-            <div id="file-name" class="accordion-body collapse" ng-if="vm.selectedItems.server.length > 0">
-                <div class="selected-items" ng-repeat="network in vm.networksList">
-                  <a class= "disabled" href="#" ng-click="vm.removeItem(item,'server')"><i class="fa fa-times"></i></a> {{network}} 
+            <div id="file-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
+                <div class="accordion-inner">
+                    <div class="selected-items" ng-repeat="network in vm.networksList">
+                        <a class="disabled" href="#" ng-click="vm.removeItem(item,'server')"><i class="fa fa-times-circle"></i></a>                        {{network}}
+                    </div>
                 </div>
                 <!--<div class="accordion-inner">
                     <ul class="inline">
@@ -69,3 +69,17 @@
     </div>
     <div ng-show="vm.selectedItems.server.length == 0" style="color:red; text-align: center">No items selected</div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".accordion-heading + .collapse:not(.in)").prev().append("<i class='fa fa-chevron-down'></i>");
+        $(".accordion-heading + .collapse.in").prev().append("<i class='fa fa-chevron-up'></i>");
+        $('.accordion-heading a').click(function () {
+            $('.plain-panel').find('.collapse.in').prev().find("i").removeClass("fa-chevron-up").addClass(
+                "fa-chevron-down");
+            $(this).parents('.accordion-heading').find("i.fa-chevron-down").removeClass(
+                "fa-chevron-down").addClass("fa-chevron-up");
+            $(this).parents('.plain-panel').find('.collapse.in').prev().find("i.fa-chevron-up").removeClass(
+                "fa-chevron-up").addClass("fa-chevron-down");
+        });
+    });
+</script>

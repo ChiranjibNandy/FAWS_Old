@@ -1,10 +1,56 @@
-.site-rev span { color: transparent; }
+.site-rev span {
+    color: transparent;
+}
+
 .site-rev span:hover {
-	color: inherit;
-	transition: color;
-	transition-delay: 2s;
+    color: inherit;
+    transition: color;
+    transition-delay: 2s;
 }
 
 .capitalize {
-  text-transform: capitalize;
+    text-transform: capitalize;
+}
+
+body .modal.details {
+    width: 750px;
+    /* must be half of the width, minus scrollbar on the left (30px) */
+    margin-left: -375px;
+}
+
+#scheduleform {
+    min-height: 200px;
+}
+
+.selected-items a {
+    color: #ccc;
+}
+
+.selected-items .rs-status {
+    background-color: #777;
+}
+
+.selected-items b::before {
+    font-family: 'FontAwesome';
+    content: "\f05a";
+    margin-left: 5px;
+}
+
+.modal th:last-child,
+.modal td:last-child {
+    text-align: right;
+}
+
+.migr-name input[type=text] {
+    display: none;
+    margin-top: 5px;
+}
+
+.migr-name h3 {
+    float: left;
+}
+
+.migr-name .edit {
+    cursor: pointer;
+    margin-left: 10px;
 }

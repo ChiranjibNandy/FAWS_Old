@@ -1,85 +1,79 @@
-    <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
-        <div class="rs-table-overlay-content">
-            <div class="rs-table-overlay-message">Loading&hellip;</div>
+<div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
+    <div class="rs-table-overlay-content">
+        <div class="rs-table-overlay-message">Loading&hellip;</div>
+    </div>
+</div>
+<div ng-show="vm.loadError" class="rs-table-overlay rs-table-overlay-error">
+    <div class="rs-table-overlay-content">
+        <div class="rs-table-overlay-message"><i class="rs-icon-error-indicator"></i> Error encountered. Please try again.
         </div>
     </div>
-    <div ng-show="vm.loadError" class="rs-table-overlay rs-table-overlay-error">
-        <div class="rs-table-overlay-content">
-            <div class="rs-table-overlay-message"><i class="rs-icon-error-indicator"></i>
-                Error encountered. Please try again.
-            </div>
-        </div>
+</div>
+<div class="rs-inner" ng-show="!vm.loading && !vm.loadError">
+    <div class="info-panel">
+        <h3 id="basePrice">Current Pricing</h3>
+        <p>
+            Billing Period:
+            <br>
+            <em>{{vm.invoiceCoverageStartDate}} to {{vm.invoiceCoverageEndDate}}</em>
+            <br>
+            <big><b>${{vm.invoiceTotal}}</b>/month</big>
+            <br>
+            <a href=""><small>(See Details)</small></a>
+        </p>
     </div>
-    <div class="rs-inner" ng-show="!vm.loading && !vm.loadError">
-        <div class="info-panel">
-            <h3 id="basePrice">Current Pricing</h3>
-            <p>
-                Billing Period:
-                <br>
-                <em>{{vm.invoiceCoverageStartDate}} to {{vm.invoiceCoverageEndDate}}</em>
-                <br>
-                <big><b>${{vm.invoiceTotal}}</b>/month</big>
-                <br>
-                <a href=""><small>(See Details)</small></a>
-            </p>
-        </div>
-        <div class="white-panel">
-            <h3>Projected Pricing</h3>
-            <p>
-                <big><b>${{vm.totalProjectedPricingSum}}</b>/month</big><br>
-                <small>Current Support Level: <b><a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Navigator</a></b></small>
-            </p>
-        </div>
-        <br>
-        
-        <div class="rs-row pricing-buttons">
-            <a class="rs-btn span-12" ng-click="vm.saveItems(vm.saveLaterObj)" ng-hide="vm.saveLaterObj.saveInProgress">Save For Later</a>
-            <a class="rs-btn span-10 disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
-            <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>
-            <!--<button class="rs-btn span-12" ng-click="vm.saveItems()">Save for later</button>-->
-        </div>
-        
-        <div class="rs-row pricing-buttons">
-            <a class="rs-btn span-12" role="button" ng-click="vm.showCancelDialog()">Cancel Migration</a>
-            <!--<a class="rs-btn span-12" href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>-->
-        </div>
-        <div class="rs-row">
-            <a class="rs-btn span-6" ng-click="vm.back()">Back</a>
-            <a class="rs-btn rs-btn-primary span-6" ng-click="vm.continue()" >Continue</a>
-        </div>
-        <div class="rs-row" ng-show="vm.saveLaterObj.resultMsg" ng-style="vm.saveLaterObj.saveSuccess == true ? {color:'green'} : {color:'red'}" >{{vm.saveLaterObj.resultMsg}}</div>
-        <br>
+    <div class="white-panel">
+        <h3>Projected Pricing</h3>
+        <p>
+            <big><b>${{vm.totalProjectedPricingSum}}</b>/month</big><br>
+            <small>Current Support Level: <b><a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Navigator</a></b></small>
+        </p>
     </div>
-    <div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForCancel" aria-hidden="true">
-        <div class="modal-body">
-            <h3>Would you like to save the selections you've made so far for another time?</h3>
-            <form class=" ">
-                <div class="rs-control-group">
+    <br>
 
-                    <div class="rs-controls">
-                      <label class="rs-radio">
+    <div class="rs-row pricing-buttons">
+        <!--<a class="rs-btn span-12" ng-click="vm.saveItems(vm.saveLaterObj)" ng-hide="vm.saveLaterObj.saveInProgress">Save For Later</a>
+            <a class="rs-btn span-10 disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
+            <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>-->
+        <a class="rs-btn span-12" role="button" ng-click="vm.showCancelDialog()">Cancel Migration</a>
+        <!--<a class="rs-btn span-12" href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>-->
+    </div>
+    <div class="rs-row">
+        <a class="rs-btn span-6" ng-click="vm.back()">Back</a>
+        <a class="rs-btn rs-btn-primary span-6" ng-click="vm.continue()">Continue</a>
+    </div>
+    <br>
+</div>
+<div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForCancel" aria-hidden="true">
+    <div class="modal-body">
+        <h3>Would you like to save the selections you've made so far for another time?</h3>
+        <form class=" ">
+            <div class="rs-control-group">
+
+                <div class="rs-controls">
+                    <label class="rs-radio">
                         <input type="radio" ng-model="vm.saveProgress" value="yes">
                         <strong>Yes</strong><br>
                         <span class="rs-help-block">Save progress for later</span>
                       </label>
-                      <label class="rs-radio">
+                    <label class="rs-radio">
                         <input type="radio" ng-model="vm.saveProgress" value="no">
                         <strong>No</strong>
                         <span class="rs-help-block">Cancel and move on</span>
                       </label>
-                    </div>
-                  </div>
-                    <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                    <button class="rs-btn rs-btn-primary " ng-class="{disabled:vm.saveProgress == ''}" ng-click="vm.submitCancel()" ng-hide="vm.cancelnSaveObj.saveInProgress">Submit</button>
-                    <a class="rs-btn disabled" disabled="disabled" ng-show="vm.cancelnSaveObj.saveInProgress">Submitting...</a>
-                    <i class="rs-processing-indicator" ng-show="vm.cancelnSaveObj.saveInProgress"></i>
-                    <br>
-                    <div ng-show="vm.cancelnSaveObj.resultMsg" ng-style="vm.cancelnSaveObj.saveSuccess == true ? {color:'green'} : {color:'red'}" >{{vm.cancelnSaveObj.resultMsg}}</div>
-            </form>
-        </div>
+                </div>
+            </div>
+            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="rs-btn rs-btn-primary " ng-class="{disabled:vm.saveProgress == ''}" ng-click="vm.submitCancel()" ng-hide="vm.cancelnSaveObj.saveInProgress">Submit</button>
+            <a class="rs-btn disabled" disabled="disabled" ng-show="vm.cancelnSaveObj.saveInProgress">Submitting...</a>
+            <i class="rs-processing-indicator" ng-show="vm.cancelnSaveObj.saveInProgress"></i>
+            <br>
+            <div ng-show="vm.cancelnSaveObj.resultMsg" ng-style="vm.cancelnSaveObj.saveSuccess == true ? {color:'green'} : {color:'red'}">{{vm.cancelnSaveObj.resultMsg}}</div>
+        </form>
     </div>
+</div>
 <!--</div>  -->
- <!-- PRECHECK MODAL -->
+<!-- PRECHECK MODAL -->
 <!--<div id="precheck_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>

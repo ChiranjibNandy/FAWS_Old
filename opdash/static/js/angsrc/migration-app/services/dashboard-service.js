@@ -1,4 +1,4 @@
-(function () {
+(function() {
     "use strict";
 
     /**
@@ -30,19 +30,19 @@
 
                 if (refresh || !loaded || (currentTenant !== tenant_id)) {
                     var savedMigrationsTask = dataStoreService.getSavedItems();
-                    var currentJobsTask = HttpWrapper.send(currentJobsUrl,{"operation":'GET'});
+                    var currentJobsTask = HttpWrapper.send(currentJobsUrl, { "operation": 'GET' });
 
                     return $q.all([savedMigrationsTask, currentJobsTask])
-                             .then(function(results) {
-                                        loaded = true;
-                                        currentTenant = tenant_id;
-                                        var savedMigrations = [];
-                                        savedMigrations = JSON.parse(results[0].savedDetails || '[]');
-                                        batches = { savedMigrations: savedMigrations, jobs: results[1] };
-                                        return batches;
-                                   }, function(errorResponse) {
-                                        return errorResponse;
-                                   });
+                        .then(function(results) {
+                            loaded = true;
+                            currentTenant = tenant_id;
+                            var savedMigrations = [];
+                            savedMigrations = JSON.parse(results[0].savedDetails || '[]');
+                            batches = { savedMigrations: savedMigrations, jobs: results[1] };
+                            return batches;
+                        }, function(errorResponse) {
+                            return errorResponse;
+                        });
                 } else {
                     return $q.when(batches);
                 }
