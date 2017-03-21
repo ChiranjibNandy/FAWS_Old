@@ -27,7 +27,13 @@
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
-
+/**
+                 * @ngdoc method
+                 * @name $onInit
+                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                 * @description 
+                 *function called on init of the rsschedulemigrationCtrl.
+                 */
                 vm.$onInit = function() {
                     vm.tenant_id = authservice.getAuth().tenant_id;
                     vm.tenant_account_name = authservice.getAuth().account_name;
@@ -84,20 +90,16 @@
                     vm.timezone = vm.getDefaultZone();
                     var m = moment();
                     var roundUp = m.minute() || m.second() || m.millisecond() ? m.add(1, 'hour').startOf('hour') : m.startOf('hour');
-                    vm.time = roundUp.format('h:mma');
-                    
+                    vm.time = roundUp.format('h:mma');  
                     vm.initTime =  new Date().toLocaleTimeString();
-                   // vm.timezone = vm.timeZoneItems[0]//new Date().toTimeString(); //;
-                   vm.date =moment().format("YYYY-MM-DD");
-                    vm.selectedDateHeader = new Date().toLocaleString();//moment().format("MMM Do YYYY")+" at "+vm.time+" "+vm.timezone;
+                    vm.date =moment().format("YYYY-MM-DD");
+                    vm.selectedDateHeader = new Date().toLocaleString();
                     vm.selectedDate =  moment().format('MMMM Do YYYY ')+' at '+moment().format('h:mma')+' '+vm.timezone.slice(1,11);
-                    
                     dataStoreService.storeDate('time',vm.time);
                     dataStoreService.storeDate('timezone',vm.timezone);
                     var d = new Date();
                    vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
-                     dataStoreService.getScheduleMigration();//'Migration-' + new Date().toString();
-                     //(d.getUTCMonth()+1) +"-"+ d.getUTCDate()+"-"+ d.getUTCFullYear() + + " " + d.getUTCHours() + ":" + d.getUTCMinutes() + ":" + d.getUTCSeconds();;
+                     dataStoreService.getScheduleMigration();
                     $scope.$watch('vm.migrationName', function() {              
                         vm.storeSelectedTime("migrate now");
                         vm.editorEnabled = false;
@@ -107,11 +109,26 @@
                         vm.isModeSave= true;
                     });
                 };
+ /**
+                 * @ngdoc method
+                 * @name editBanner
+                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                 * @description 
+                 *function to edit the banner message on date change
+                 */
 
                 vm.editBanner = function(){
                     vm.scheduleMigration = "migrateLate";
                     vm.showTime();
                 }
+
+                /**
+                 * @ngdoc method
+                 * @name getTime
+                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                 * @description 
+                 *function to get the time
+                 */
 
                 vm.getTime = function(){
                     if(vm.time.indexOf('am') >-1){
@@ -128,14 +145,22 @@
                         return calTime.replace('pm','');
                     }
                 }
-
+/**
+                 * @ngdoc method
+                 * @name storeSelectedTime
+                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                 * @description 
+                 *function to store the selected time
+                 */
                 vm.storeSelectedTime = function(radioButton){
                     var zone = vm.timezone;
                     vm.unixTime = moment().unix();
+                    //setting unixTime based on radio button selection.
                     if(radioButton === "fromSave"){
                         var time = vm.getTime();
                         vm.unixTime = moment($('#field').val() + " " + time).unix();
-                    }else if(radioButton === "migrate now"){
+                    }
+                    else if(radioButton === "migrate now"){
                         zone = vm.getDefaultZone();
                         vm.unixTime = "";
                     }
@@ -146,7 +171,13 @@
                                       };
                     dataStoreService.setScheduleMigration(vm.selectedTime);
                 };
-
+/**
+                 * @ngdoc method
+                 * @name getDefaultZone
+                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                 * @description 
+                 *function to get the default time zone
+                 */
                 vm.getDefaultZone = function(){
                     var date = new Date().toTimeString();
                     var timeZone =  date.indexOf("+") === -1 ?date.substr(date.indexOf("-")+1,5):date.substr(date.indexOf("+")+1,5);
@@ -157,23 +188,19 @@
                                 }      
                             })[0];
                 }
+             /**
+                 * @ngdoc method
+                 * @name saveItems
+                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                 * @description 
+                 *function to save the schedule migration items
+                 */   
 
                 vm.saveItems = function() {
                       $('#cancel_modal').modal('show');
                     alert("Saving items: To be implemented");
                 };
-                /**
-                 * @ngdoc method
-                 * @name timeChange
-                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
-                 * @description 
-                 * Saves the chosen time for migration
-                 */
-                // vm.timeChange = function(){
-                //     dataStoreService.storeDate('time',vm.time);
-                //     vm.selectedDate = moment(vm.date).format("MMM Do YYYY")+" at "+vm.time+" in "+vm.timezone;
-                // };
-
+                
                 /**
                  * @ngdoc method
                  * @name timezoneChange
@@ -206,6 +233,7 @@
                  vm.editorEnabled = true;
                  vm.editedMigrationName = vm.migrationName;
                       };
+
                       /**
                  * @ngdoc method
                  * @name disableEditor
@@ -216,6 +244,7 @@
                 vm.disableEditor = function() {
                  vm.editorEnabled = false;
                    };
+
                    /**
                  * @ngdoc method
                  * @name save
@@ -228,11 +257,20 @@
                 vm.disableEditor();
                 };
                 
+                   /**
+                 * @ngdoc method
+                 * @name showTime
+                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                 * @description 
+                 * show migration scheduled time based on migrate now check or schedule time check**
+                 */
                vm.showTime = function(){
+                   //check to show scheduled migration time on banner based on the radio button check.
                    if(vm.scheduleMigration === "migrateLate"){
                        vm.showTimeForm =  true;
                        vm.selectedDate =  moment(vm.date).format('MMMM Do YYYY')+' at '+vm.time+' '+vm.timezone.slice(1,11);
-                   }else{
+                   }
+                   else{
                        var zone = vm.getDefaultZone();
                        vm.selectedDate =  moment().format('MMMM Do YYYY ')+' at '+moment().format('h:mma')+' '+zone.slice(1,11);
                        vm.storeSelectedTime("migrate now"); 
@@ -240,8 +278,14 @@
                    }
                     
                };
-
-                vm.onSaveTime = function(){
+  /**
+                 * @ngdoc method
+                 * @name onSaveTime
+                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                 * @description 
+                 *  save scheduled time  **
+                 */
+              vm.onSaveTime = function(){
                     $timeout(function(){
                         var time = vm.getTime();
                         if(moment().diff(moment($('#field').val() + " " + time),'minutes') > 1){
