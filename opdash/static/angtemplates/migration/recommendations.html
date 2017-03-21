@@ -1,27 +1,63 @@
-<div class="migration-mgr rs-main rs-panel">
-    <div class="rs-sidebar rs-pull-right">
-        <rspricingpanel page ="recommendation"></rspricingpanel>
-    </div>
-    <div class="rs-content rs-panel">
-        <!-- Start Stepper -->
-        <rsinteractiveheader pagenum="1"></rsinteractiveheader>
-        <!-- End Stepper -->
-        <hr>
-        <div class="rs-inner">
-            <h2>{{vm.tenant_account_name}} ( #{{vm.tenant_id}} )</h2>
+<div class="rs-container migration-mgr">
+    <br>
+    <a href="#cancel_modal" role="button" data-toggle="modal"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
+    <!--<div class="rs-main ">-->
+    <!--<br>
+        
+<a href="#cancel_modal" role="button" data-toggle="modal"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>-->
+    <br><br>
+    <div class="rs-main rs-panel">
+        <div class="rs-sidebar rs-pull-right">
+            <rspricingpanel page="recommendation"></rspricingpanel>
+        </div>
+        <!--<br><br>-->
+        <div class="rs-content rs-panel">
+            <!-- Start Stepper -->
+            <rsnavigationpanel pagenum="1"></rsnavigationpanel>
+            <!-- End Stepper -->
+            <hr>
+            <div class="rs-inner recommend">
+                <div class="rs-row">
+                    <div class="span-7">
+                        <div class="migr-ddi-name">
+                            {{vm.tenant_account_name}} ( #{{vm.tenant_id}} )<span class="rax-red-txt">|</span>
+                            <span class="migr-name">
+                                    <rseditbatchname></rseditbatchname>
+                            </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="span-5">
+                        <rscontact></rscontact>
+                    </div>
+                </div>
+                <hr>
+                <!--<h2>{{vm.tenant_account_name}} ( #{{vm.tenant_id}} )</h2>
             <input type="text" class="rs-input-large searchbox rs-pull-right" ng-model="vm.filteredValue" placeholder="filter by keyword or tag...">
             <rseditbatchname></rseditbatchname>
             <div class="clear"></div>    
-            <h4>Our recommendation:</h4>
-            <rs-tabs alignment="horizontal">
-                <rs-tab title="Servers ({{vm.dataServer}})">
-                    <rsrecommendationitem type="server" filtervalue="vm.filteredValue"></rsrecommendationitem>
-                </rs-tab>
-                <rs-tab title="Networks ({{vm.dataNetwork}})">
-                    <rsrecommendationitem type="network" filtervalue="vm.filteredValue"></rsrecommendationitem>
-                </rs-tab>
-            </rs-tabs>
-            <br>
+            <h3 ng-show="!vm.editName">{{vm.migrationName}}
+                <a role="button" ng-click="vm.editMigrationName()" set-focus='migrationName' class="rs-edit" title="click to edit migration name"></a>
+            </h3>-->
+                <div class="clear"></div>
+                <div class="rs-row">
+                    <div class="span-8">
+                        <h3>Here is our recommendation for AWS migration: <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h3>
+                    </div>
+                    <div class="span-4">
+                        <input type="text" class="rs-input-large searchbox rs-pull-right" ng-model="vm.filteredValue" placeholder="filter by keyword or tag...">
+                    </div>
+                </div>
+                <rs-tabs alignment="horizontal">
+                    <rs-tab title="Servers ({{vm.dataServer}})">
+                        <rsrecommendationitem type="server" filtervalue="vm.filteredValue"></rsrecommendationitem>
+                    </rs-tab>
+                    <rs-tab title="Networks ({{vm.dataNetwork}})">
+                        <rsrecommendationitem type="network" filtervalue="vm.filteredValue"></rsrecommendationitem>
+                    </rs-tab>
+                </rs-tabs>
+                <br>
+            </div>
         </div>
     </div>
 </div>

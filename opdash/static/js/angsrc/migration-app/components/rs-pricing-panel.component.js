@@ -95,7 +95,8 @@
                     } 
                     else if(vm.page==="recommendation"){ 
                         // $('#precheck_modal').modal('show');
-                        $rootRouter.navigate(["ScheduleMigration"]);
+                        //$rootRouter.navigate(["ScheduleMigration"]);
+                        $rootRouter.navigate(["ConfirmMigration"]);
                     }
                     else if(vm.page==="scheduleMigration"){
                         dataStoreService.setScheduleMigration(vm.selectedTime);  
@@ -142,7 +143,8 @@
                  * page.
                  */
                 vm.continueToSchedule = function(){
-                    $rootRouter.navigate(["ScheduleMigration"]);
+                    $rootRouter.navigate(["ConfirmMigration"]);
+                    // $rootRouter.navigate(["ScheduleMigration"]);
                 }
 
                 /**

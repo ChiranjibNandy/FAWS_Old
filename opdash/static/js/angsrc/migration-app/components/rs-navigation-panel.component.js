@@ -3,29 +3,29 @@
 
     /**
      * @ngdoc object
-     * @name migrationApp.object:rsinteractiveheader
+     * @name migrationApp.object:navigationpanel
      * @description
-     * Component to have a interactive header in every page.  
+     * Component to have a navigation panel in every page.  
      *   
-     * This component uses the template: **angtemplates/migration/interactive-header.html**. It uses the controller {@link migrationApp.controller:rsinteractiveheaderCtrl rsinteractiveheaderCtrl}.  
+     * This component uses the template: **angtemplates/migration/navigation-panel.html**. It uses the controller {@link migrationApp.controller:navigationpanelCtrl navigationpanelCtrl}.  
      * @example
      * <example module="migrationApp">
      *   <file name="index.html">
-     *      <rsinteractiveheader error-message="Some error message"></rsinteractiveheader>
+     *      <navigationpanel error-message="Some error message"></navigationpanel>
      *   </file>
      * </example>
      */
     angular.module("migrationApp")
-        .component("rsinteractiveheader", {
-            templateUrl: "/static/angtemplates/migration/interactive-header.html",
+        .component("rsnavigationpanel", {
+            templateUrl: "/static/angtemplates/migration/navigation-panel.html",
             bindings: {
                 pagenum: "<" // type parameter to be supplied (eg: server, network etc)
             },
             controllerAs: "vm",
             /**
              * @ngdoc controller
-             * @name migrationApp.controller:rsinteractiveheaderCtrl
-             * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsinteractiveheader rsinteractiveheader} component
+             * @name migrationApp.controller:navigationpanelCtrl
+             * @description Controller to handle all view-model interactions of {@link migrationApp.object:navigationpanel navigationpanel} component
              */
             controller: ["datastoreservice", function (dataStoreService) {
                 var vm = this;

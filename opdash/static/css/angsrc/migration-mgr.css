@@ -16,6 +16,18 @@
     padding: 0;
 }
 
+.grey-txt {
+    color: #bbb;
+}
+
+.rax-red-txt {
+    color: #c40022;
+}
+
+.light-txt {
+    font-weight: 100;
+}
+
 .plain-panel {
     padding: 1em;
     border: 1px solid #ccc;
@@ -23,22 +35,83 @@
     background: #f9f9f9;
 }
 
+.plain-panel h2 {
+    margin-bottom: 0;
+}
+
 .plain-panel b {
     color: #333;
+}
+
+.migr-ddi-name {
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 5px;
+    color: #333;
+    display: inline-block;
+}
+
+.migr-name input[type=text] {
+    display: none;
+    margin-top: 5px;
+}
+
+.migr-name .edit {
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+.fa-info-circle {
+    font-size: 12px!important;
+}
+
+#alert {
+    background: #f9f9f9;
+    padding: 2em;
+    border: 1px solid #ccc;
+    margin: 1em 0;
+}
+
+#alert h3 {
+    margin: 0;
+}
+
+.edit-time a {
+    color: #333;
+}
+
+.edit-time a:hover {
+    color: #1e6ec1;
+    text-decoration: none!important;
+}
+
+form .rs-row {
+    margin-bottom: 10px;
+}
+
+form .rs-row select,
+form .rs-row input {
+    margin: 0;
 }
 
 .info-panel {
     padding: 1em;
 }
 
+.info-panel h3 {
+    margin-bottom: 0;
+}
+
 .info-panel:first-child {
     padding: 1em;
-    /*  border-bottom: 2px solid #fff;
-  margin-bottom: 1em;*/
 }
 
 .pricing-buttons {
     margin-bottom: 10px;
+}
+
+.rs-control-group h4>input {
+    margin-right: 10px;
 }
 
 .trash-button {
@@ -55,7 +128,7 @@
 }
 
 .rs-center {
-    text-align: center;
+    text-align: center!important;
 }
 
 .rs-custom-counter {
@@ -66,7 +139,7 @@
 
 .rs-custom-counter li {
     counter-increment: step-counter;
-    margin-bottom: 10px;
+    margin: 15px 0;
     font-style: italic;
     font-weight: 500;
 }
@@ -75,8 +148,9 @@
     content: counter(step-counter);
     margin-right: 5px;
     font-size: 80%;
-    background-color: rgb(196, 0, 34);
-    color: white;
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #c40022;
     font-weight: bold;
     padding: 5px 8px;
     border-radius: 50px;
@@ -84,42 +158,38 @@
 
 .selected-items {
     display: block;
-    /*    max-width: 180px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: #fff;*/
     padding-right: 5px;
     margin-bottom: 5PX;
 }
 
-.support-icons {
-    margin: 1em auto;
-}
-
-.support-icons a i {
-    width: 40px;
-    height: 40px;
-    border-radius: 40px;
-    line-height: 40px;
-    border: 1px solid #777;
-    color: #333;
-    margin-right: 5px;
-    background: #ddd;
+.selected-items .rs-status {
+    font-size: 10px;
+    background: #999;
 }
 
 .selected-items a {
-    color: #ccc;
+    color: #555;
 }
 
-.selected-items .rs-status {
-    background-color: #777;
+.selected-items b {
+    color: #999
 }
 
-.selected-items b::before {
-    font-family: 'FontAwesome';
-    content: "\f05a";
+.support-icons {
+    background: #eee;
+    padding: 5px 10px;
+}
+
+.support-icons a i {
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    line-height: 20px;
+    color: #333;
+    background: #fff;
+    border: 1px solid #999;
     margin-left: 5px;
+    font-size: 12px;
 }
 
 .rs-tr-disabled {
@@ -146,12 +216,27 @@
 
 /* canon style overrides  */
 
+#Servers .rs-list-table th:nth-child(3),
+#Servers .rs-list-table td:nth-child(3) {
+    padding: 0 0 0 5px;
+}
+
+.rs-table-status-pending {
+    background-color: #999!important;
+}
+
+.migration-mgr .rs-embedded-list-table-wrapper {
+    border: 1px solid #e7e7e7;
+}
+
 .migration-mgr .rs-main {
     margin: 10px 0;
 }
-.migration-mgr .rs-main .rs-panel {
+
+
+/*.migration-mgr .rs-main .rs-panel {
     min-height: 500px;
-}
+}*/
 
 .migration-mgr.rs-container {
     width: 1200px!important;
@@ -160,6 +245,10 @@
 
 .migration-mgr .rs-list-table .rs-btn-group {
     margin: 0;
+}
+
+.migration-mgr .rs-dropdown-menu {
+    right: 0;
 }
 
 .migration-mgr .rs-table-header,
@@ -171,9 +260,7 @@ th {
 .migration-mgr tr:nth-child(even) {
     background: #f9f9f9;
 }
-.modal th:last-child, .modal td:last-child {
-    text-align: right;
-}
+
 .migration-mgr .recommend .rs-list-table thead th:nth-child(-n+2) {
     background: rgba(0, 0, 0, .15);
 }
@@ -184,7 +271,7 @@ th {
 
 .migration-mgr .rs-list-table td:nth-child(2) a {
     display: inline-block;
-    width: 200px;
+    width: 300px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -202,6 +289,10 @@ th {
     background: rgba(0, 0, 0, 0.05);
 }
 
+.migration-mgr .secondary-table th {
+    background: rgba(0, 0, 0, 0.075);
+}
+
 .migration-mgr .secondary-table tr:nth-child(even) {
     background: transparent;
 }
@@ -211,26 +302,16 @@ th {
     border-top: 1px solid #eee;
 }
 
-.migr-name input[type=text] {
-    display: none;
-    margin-top: 5px;
-}
-
-.migr-name h3 {
-    float: left;
-}
-
-.migr-name .edit {
-    cursor: pointer;
-    margin-left: 10px;
-}
-
 .clear {
     clear: both;
 }
 
 .migration-mgr .searchbox {
-    margin: 0;
+    margin: 10px 0 0 0;
+}
+
+.migration-mgr.racker-dash .rs-panel {
+    min-height: 270px;
 }
 
 
@@ -250,9 +331,17 @@ th {
     background-repeat: no-repeat;
 }
 
+
 /* bootstrap overrides */
 
-.alert-schedule {
+.close {
+    color: #fff;
+    text-shadow: none;
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+}
+
+canon.min.css:1 .alert-schedule {
     background-color: #fff;
     border: 4px solid #000;
     color: #c40022;
@@ -278,9 +367,9 @@ th {
 }
 
 body .modal.details {
-    width: 750px;
+    width: 850px;
     /* must be half of the width, minus scrollbar on the left (30px) */
-    margin-left: -375px;
+    margin-left: -425px;
 }
 
 body .modal.details2 {
@@ -291,10 +380,16 @@ body .modal.details2 {
 
 .modal-body {
     padding: 30px;
+    overflow-y: visible;
 }
 
 .modal img {
     width: 100%;
+}
+
+.modal .rs-panel {
+    box-shadow: none;
+    border: 1px solid #ccc;
 }
 
 .accordion-group {
@@ -323,6 +418,29 @@ body .modal.details2 {
     padding: 5px;
     color: #777;
 }
+
+.accordion-heading i {
+    color: #999;
+    font-size: 10px;
+}
+
+
+/* Icon when the collapsible content is shown */
+
+
+/*  .accordion-toggle:after {
+    font-family: "FontAwesome";
+    font-size: 10px;
+    margin-left: 5px;
+    content: "\f054";
+  }*/
+
+
+/*  .accordion-toggle:after{
+    font-family: "FontAwesome";
+    margin-left: 5px;
+    content: "\f078";
+  }*/
 
 
 /* Simple setup for stepper */
@@ -405,14 +523,14 @@ body .modal.details2 {
 .mdl-stepper-horizontal-alternative .mdl-stepper-step.active-step .mdl-stepper-circle {
     background-color: #fff;
     border: 2px solid #c40022;
-    color: #c40022;
+    color: #333;
 }
 
 .mdl-stepper-horizontal-alternative .mdl-stepper-step.step-done .mdl-stepper-circle:before {
     content: "\2714";
 }
 
-.mdl-stepper-horizontal-alternative .mdl-stepper-step.step-done a:hover > .mdl-stepper-circle:before {
+.mdl-stepper-horizontal-alternative .mdl-stepper-step.step-done a:hover>.mdl-stepper-circle:before {
     content: "\270E";
 }
 
@@ -489,7 +607,4 @@ body .modal.details2 {
     left: 0;
     right: 50%;
     margin-right: 20px;
-}
-#scheduleform{
-        min-height: 200px;
 }

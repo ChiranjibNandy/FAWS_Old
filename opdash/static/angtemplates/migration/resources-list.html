@@ -1,49 +1,65 @@
 <div class="rs-wrapper">
-        <div class="migration-mgr rs-container ">
-            <div class="rs-main ">
-                <div class="rs-content rs-panel">
-                    <!-- Start Stepper -->
-                   <rsinteractiveheader pagenum="0"></rsinteractiveheader>
-                    <!-- End Stepper -->
+    <div class="migration-mgr rs-container ">
+        <br>
+        <a href="#cancel_modal" role="button" data-toggle="modal"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
+        <div class="rs-main ">
+            <div class="rs-content rs-panel">
+                <!-- Start Stepper -->
+                <rsnavigationpanel pagenum="0"></rsnavigationpanel>
+                <!-- End Stepper -->
+                <hr>
+                <div class="rs-inner">
+                    <div class="rs-row">
+                        <div class="span-6">
+                            <div class="migr-ddi-name">{{vm.tenant_account_name}} #{{vm.tenant_id}}</div>
+                        </div>
+                        <div class="span-6">
+                            <rscontact></rscontact>
+                        </div>
+                    </div>
                     <hr>
-                    <div class="rs-inner">
-                        <h2>{{vm.tenant_account_name}} #{{vm.tenant_id}}</h2>
-                        <input type="text" class="rs-input-large searchbox rs-pull-right" ng-model="vm.filterSearch" placeholder="filter by keyword or tag...">
-                        <h4>Select Resources</h4>
-                        <br>
-                        <rs-tabs alignment="horizontal">
-                            <rs-tab title="Servers" >
-                                <rsmigrationitem type="server" filtervalue="vm.filterSearch"></rsmigrationitem>
-                             </rs-tab>
-                            <!--<rs-tab title="Networks">
+                    <div class="rs-row">
+                        <div class="span-6">
+                            <h3>Select Resources you want to migrate <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h3>
+                        </div>
+                        <div class="span-6">
+                            <input type="text" class="rs-input-large searchbox rs-pull-right" ng-model="vm.filterSearch" placeholder="filter by keyword or tag...">
+                        </div>
+                    </div>
+                    <br>
+                    <rs-tabs alignment="horizontal">
+                        <rs-tab title="Servers">
+                            <rsmigrationitem type="server" filtervalue="vm.filterSearch"></rsmigrationitem>
+                        </rs-tab>
+                        <!--<rs-tab title="Networks">
                                 <rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>
                             </rs-tab>-->
-                            <rs-tab title="Files" ng-if="vm.isRacker" class="disabled">
-                                <!--Files-->
-                                <rsmigrationitem type="Files" filtervalue="vm.filterSearch"></rsmigrationitem>
-                            </rs-tab>
-                            <rs-tab title="Load Balancers" ng-if="vm.isRacker" class="disabled">
-                                <!--Load Balancers-->
-                                <rsmigrationitem type="LoadBalancers" filtervalue="vm.filterSearch"></rsmigrationitem>
-                            </rs-tab>
-                            <div class="rs-pull-right" style="margin-top: -49px; margin-left:790px">
-                                <a class="rs-btn" ng-click="vm.cancelMigration()">Cancel Migration</a>
-                                <a class="rs-btn" ng-click="vm.saveForLater()" ng-hide="vm.saveLaterObj.saveInProgress">Save For Later</a>
-                                <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
-                                <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>
-                                <a class="rs-btn rs-btn-primary " ng-click="vm.savencontinue()">Continue</a>
-                            </div>
-                        </rs-tabs>
-                        <div class="rs-pull-right" ng-show="vm.saveLaterObj.resultMsg" ng-style="vm.saveLaterObj.saveSuccess == true ? {color:'green'} : {color:'red'}" >{{vm.saveLaterObj.resultMsg}}</div>
-                        <br>
-                        <rsselecteditemspanel showrec="false"></rsselecteditemspanel>
-                    </div>
+                        <rs-tab title="Files" ng-if="vm.isRacker" class="disabled">
+                            <!--Files-->
+                            <rsmigrationitem type="Files" filtervalue="vm.filterSearch"></rsmigrationitem>
+                        </rs-tab>
+                        <rs-tab title="Load Balancers" ng-if="vm.isRacker" class="disabled">
+                            <!--Load Balancers-->
+                            <rsmigrationitem type="LoadBalancers" filtervalue="vm.filterSearch"></rsmigrationitem>
+                        </rs-tab>
+                        <div class="rs-pull-right" style="margin-top: -49px; margin-left:790px">
+                            <a class="rs-btn" ng-click="vm.cancelMigration()">Cancel Migration</a>
+                            <!--<a class="rs-btn" ng-click="vm.saveForLater()" ng-hide="vm.saveLaterObj.saveInProgress">Save For Later</a>
+                            <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
+                            <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>-->
+                            <a class="rs-btn rs-btn-primary " ng-click="vm.savencontinue()">Continue</a>
+                        </div>
+                    </rs-tabs>
+                    <div class="rs-pull-right" ng-show="vm.saveLaterObj.resultMsg" ng-style="vm.saveLaterObj.saveSuccess == true ? {color:'green'} : {color:'red'}">{{vm.saveLaterObj.resultMsg}}</div>
+                    <br>
+                    <rsselecteditemspanel showrec="false"></rsselecteditemspanel>
                 </div>
             </div>
-             <rsinteractivefooter></rsinteractivefooter>
         </div>
+        <rsinteractivefooter></rsinteractivefooter>
     </div>
-    <!--<div id="name_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForSelect" aria-hidden="true">
+</div>
+<!--<div id="name_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForSelect" aria-hidden="true">
         <div class="modal-body">
             <h3>What would you like to name your migration?</h3>
             <form class=" ">
@@ -60,105 +76,107 @@
         </div>
     </div>-->
 
-    <div id="no_selection" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSelect" aria-hidden="true">
-        <div class="modal-body" style="height: 150px">
-            <h3 style="line-height: 136px; text-align: center">Please select some items to migrate</h3>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
+<div id="no_selection" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSelect" aria-hidden="true">
+    <div class="modal-body" style="height: 150px">
+        <h3 style="line-height: 136px; text-align: center">Please select some items to migrate</h3>
     </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</div>
 
-    <div id="save_for_later" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSave" aria-hidden="true">
-        <div class="modal-body">
-            <h3>Please name your Migration in order to save this instance</h3>
-            <form class=" ">
-                <div class="rs-control-group">
-                    <label class="rs-control-label">Name your migration and click '<b>Save </b>' to save this instance</label>
-                    <div class="rs-controls">
-                        <input type="text" ng-model="vm.migrationName" placeholder="{{vm.migrationName}}">
-                        <!--<span ng-show="vm.noName" style="color:red">Please name this instance!</span>-->
-                    </div>
+<div id="save_for_later" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSave" aria-hidden="true">
+    <div class="modal-body">
+        <h3>Please name your Migration in order to save this instance</h3>
+        <form class=" ">
+            <div class="rs-control-group">
+                <label class="rs-control-label">Name your migration and click '<b>Save </b>' to save this instance</label>
+                <div class="rs-controls">
+                    <input type="text" ng-model="vm.migrationName" placeholder="{{vm.migrationName}}">
+                    <!--<span ng-show="vm.noName" style="color:red">Please name this instance!</span>-->
                 </div>
-                <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                <a class="rs-btn rs-btn-primary" ng-class="{disabled:vm.migrationName == ''}" ng-click="vm.saveItems(vm.saveLaterObj)" ng-hide="vm.saveLaterObj.saveInProgress">Save</a>
-                <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
-                <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>
-                <br>
-                <div ng-show="vm.saveLaterObj.resultMsg" ng-style="vm.saveLaterObj.saveSuccess == true ? {color:'green'} : {color:'red'}" >{{vm.saveLaterObj.resultMsg}}</div>
-            </form>
-        </div>
+            </div>
+            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <a class="rs-btn rs-btn-primary" ng-class="{disabled:vm.migrationName == ''}" ng-click="vm.saveItems(vm.saveLaterObj)" ng-hide="vm.saveLaterObj.saveInProgress">Save</a>
+            <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
+            <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>
+            <br>
+            <div ng-show="vm.saveLaterObj.resultMsg" ng-style="vm.saveLaterObj.saveSuccess == true ? {color:'green'} : {color:'red'}">{{vm.saveLaterObj.resultMsg}}</div>
+        </form>
     </div>
+</div>
 
-    <div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForCancel" aria-hidden="true">
-        <div class="modal-body">
-            <h3>Would you like to save the selections you've made so far for another time?</h3>
-            <form class=" ">
-                <div class="rs-control-group">
+<div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForCancel" aria-hidden="true">
+    <div class="modal-body">
+        <h3>Would you like to save the selections you've made so far for another time?</h3>
+        <form class=" ">
+            <div class="rs-control-group">
 
-                    <div class="rs-controls">
-                      <label class="rs-radio">
+                <div class="rs-controls">
+                    <label class="rs-radio">
                         <input type="radio" ng-model="vm.saveProgress" value="yes">
                         <strong>Yes</strong><br>
                         <span class="rs-help-block">Save progress for later</span>
                       </label>
-                      <label ng-show="vm.displayMigName" class="rs-control-label">Name your migration and click '<b>Submit </b>' to save this instance</label>
-                      <div ng-show="vm.displayMigName" class="rs-controls">
+                    <label ng-show="vm.displayMigName" class="rs-control-label">Name your migration and click '<b>Submit </b>' to save this instance</label>
+                    <div ng-show="vm.displayMigName" class="rs-controls">
                         <input type="text" ng-model="vm.migrationName" placeholder="{{vm.migrationName}}">
-                      </div>
-                      <label class="rs-radio">
+                    </div>
+                    <label class="rs-radio">
                         <input type="radio" ng-model="vm.saveProgress" value="no">
                         <strong>No</strong>
                         <span class="rs-help-block">Cancel and move on</span>
                       </label>
-                    </div>
-                  </div>
-                    <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                    <button class="rs-btn rs-btn-primary " ng-class="{disabled:vm.saveProgress == '' || !vm.migrationName}" ng-click="vm.submitCancel()" ng-hide="vm.cancelnSaveObj.saveInProgress">Submit</button>
-                    <a class="rs-btn disabled" disabled="disabled" ng-show="vm.cancelnSaveObj.saveInProgress">Submitting...</a>
-                    <i class="rs-processing-indicator" ng-show="vm.cancelnSaveObj.saveInProgress"></i>
-                    <br>
-                    <div ng-show="vm.cancelnSaveObj.resultMsg" ng-style="vm.cancelnSaveObj.saveSuccess == true ? {color:'green'} : {color:'red'}" >{{vm.cancelnSaveObj.resultMsg}}</div>
-            </form>
-        </div>
-    </div>
-
-    <div class="modal hide fade details" id="intro_modal">
-        <br>
-        <div class="modal-body">
-            <h2 class="rs-page-title">Welcome to the Rackspace Migration Manager!</h2>
-            <!-- <h3>On average, our customers save more than 20% by migrating from Rackspace Public Cloud to Managed AWS. All while keeping the fanatical support they love.</h3> -->
-            <br>
-            <div class="rs-row">
-                <div class="span-6">
-                    <h3>Migrate in just 4 easy steps:</h3>
-                    <ol class="rs-custom-counter">
-                        <li>Choose resources to migrate</li>
-                        <li>Get our recommendation and make modifications</li>
-                        <li>Schedule your migration</li>
-                        <li> Migrate</li>
-                    </ol>
-                    <br>
-                    <b>Need more information?</b><br>
-
-                    <a href="https://www.rackspace.com/en-us/managed-aws" target="_blank">Rackspace Managed AWS</a>
-                    <br>
-                    <a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Pricing and Support Levels</a>
-                </div>
-                <div class="span-6">
-                    <img src="/static/img/migr-mgr-screen.png" alt="">
                 </div>
             </div>
-            <br>        
+            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="rs-btn rs-btn-primary " ng-class="{disabled:vm.saveProgress == '' || !vm.migrationName}" ng-click="vm.submitCancel()"
+                ng-hide="vm.cancelnSaveObj.saveInProgress">Submit</button>
+            <a class="rs-btn disabled" disabled="disabled" ng-show="vm.cancelnSaveObj.saveInProgress">Submitting...</a>
+            <i class="rs-processing-indicator" ng-show="vm.cancelnSaveObj.saveInProgress"></i>
+            <br>
+            <div ng-show="vm.cancelnSaveObj.resultMsg" ng-style="vm.cancelnSaveObj.saveSuccess == true ? {color:'green'} : {color:'red'}">{{vm.cancelnSaveObj.resultMsg}}</div>
+        </form>
+    </div>
+</div>
+
+<div class="modal hide animated fadeIn details" id="intro_modal">
+    <br>
+    <div class="modal-body">
+        <h2 class="rs-page-title">Welcome to the Rackspace Migration Manager!</h2>
+        <!-- <h3>On average, our customers save more than 20% by migrating from Rackspace Public Cloud to Managed AWS. All while keeping the fanatical support they love.</h3> -->
+        <br>
+        <div class="rs-row">
+            <div class="span-7">
+                <h2>Migrate in just 3 easy steps:</h2>
+                <big>
+                        <ol class="rs-custom-counter">
+                            <li><b>Choose resources to migrate</b></li>
+                            <li><b>Get our recommendation and make modifications</b></li>
+                            <li><b>Schedule and confirm migration</b></li>
+                        </ol>
+                    </big>
+                <br>
+                <h3>Need more information?</h3>
+
+                <a href="https://www.rackspace.com/en-us/managed-aws" target="_blank">Rackspace Managed AWS</a>
+                <br>
+                <a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Pricing and Support Levels</a>
+            </div>
+            <div class="span-5 rs-center">
+                <img src="/static/img/monitor.png" alt="">
+            </div>
         </div>
-        <div class="modal-footer">
-            <div class="rs-pull-left">
-                <label class="rs-checkbox">
+        <br>
+    </div>
+    <div class="modal-footer">
+        <div class="rs-pull-left">
+            <label class="rs-checkbox">
                     <input type="checkbox" ng-change="vm.dontShow()" ng-model="vm.dontshowStatus">
                     Don't show this again
                 </label>
-            </div>                      
-            <a ng-click="vm.submitCancel()" class="rs-btn">Cancel</a>
-            <a href="#" class="rs-btn rs-btn-primary" data-dismiss="modal">Start a Migration</a>
         </div>
+        <a ng-click="vm.submitCancel()" class="rs-btn">Cancel</a>
+        <a href="#" class="rs-btn rs-btn-primary" data-dismiss="modal">Start a Migration</a>
     </div>
+</div>

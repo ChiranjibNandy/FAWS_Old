@@ -16,11 +16,11 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         'node_modules/angular/angular.js',
-        'node_modules/angular-mocks/angular-mocks.js',
-        'node_modules/angular1-component-router/angular_1_router.js',
-        '../angsrc/migration-app/migration-app.js',
-        '../angsrc/**/*.js',
-        '../angtest/migration-app-test/**/*.spec.js'
+            'node_modules/angular-mocks/angular-mocks.js',
+            'node_modules/angular1-component-router/angular_1_router.js',
+            '../angsrc/migration-app/migration-app.js',
+            '../angsrc/migration-app/**/*.js',
+            'migration-app-test/**/*.spec.js'
     ],
 
 
