@@ -127,61 +127,65 @@
                      * Gets the list of all batches initiated by the current tenant
                      */
                     vm.getBatches = function(refresh) {
-                        vm.loading = true;
+                        if(refresh)
+                            vm.manualRefresh = true;
 
-                        if (!vm.refreshFlag) vm.count=6;
-                        //for(var i=0; i<3; i++){
-                            var intervalPromise = $interval(function(){
-                                vm.count++;
-                                if(vm.count>4) {
-                                    $interval.cancel(intervalPromise);
-                                    vm.refreshFlag=false;
-                                }
+                        if (!vm.refreshFlag) 
+                            vm.count=6;
+                        
+                        var intervalPromise = $interval(function(){
+                            vm.count++;
+                            if(vm.count>4) {
+                                $interval.cancel(intervalPromise);
+                                vm.refreshFlag=false;
+                            }
+                            if(!refresh)
                                 vm.loading = true;
-                                dashboardService.getBatches(refresh)
-                                    .then(function(response) {
-                                        if (response.error)
-                                            console.log("No data recieved");
-                                        else
-                                            console.log("Batch: ", response);
 
-                                        var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled"];
-                                        var validCompletedBatchStatus = ["done"];
-                                        jobList = response.jobs.job_status_list;
-                                        var currentBatches = [];
-                                        var completedBatches = [];
+                            dashboardService.getBatches(refresh)
+                                .then(function(response) {
+                                    if (response.error)
+                                        console.log("No data recieved");
+                                    else
+                                        console.log("Batch: ", response);
 
-                                        angular.forEach(jobList, function(job){
-                                            if(validCurrentBatchStatus.indexOf(job.batch_status)>=0)
-                                                currentBatches.push(job);
-                                            if(validCompletedBatchStatus.indexOf(job.batch_status)>=0)
-                                                completedBatches.push(job);
-                                        });
+                                    var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled"];
+                                    var validCompletedBatchStatus = ["done"];
+                                    jobList = response.jobs.job_status_list;
+                                    var currentBatches = [];
+                                    var completedBatches = [];
 
-                                        var savedMigrations = $filter('orderBy')(response.savedMigrations, '-timestamp');
-                                        vm.currentBatches.items = $filter('orderBy')(currentBatches, '-start').concat(savedMigrations);
-                                        vm.currentBatches.noOfPages = Math.ceil(vm.currentBatches.items.length / vm.currentBatches.pageSize);
-                                        vm.currentBatches.pages = new Array(vm.currentBatches.noOfPages);
-                                        
-                                        vm.completedBatches.items = $filter('orderBy')(completedBatches, '-start');
-                                        vm.completedBatches.noOfPages = Math.ceil(completedBatches.length / vm.completedBatches.pageSize);
-                                        vm.completedBatches.pages = new Array(vm.completedBatches.noOfPages);
-
-                                        // temporary fix to show completed batch date time
-                                        angular.forEach(vm.completedBatches.items, function(item){
-                                            dataStoreService.endTime = dataStoreService.endTime ? dataStoreService.endTime : moment().unix();
-                                            item.end = dataStoreService.endTime;
-                                        });
-
-                                        vm.loading = false;
-                                    }, function(errorResponse) {
-                                        vm.loading = false;
-                                        vm.currentBatches.loadError = true;
-                                        vm.completedBatches.loadError = true;
-                                        console.log("Dashboard Error: ", errorResponse);
+                                    angular.forEach(jobList, function(job){
+                                        if(validCurrentBatchStatus.indexOf(job.batch_status)>=0)
+                                            currentBatches.push(job);
+                                        if(validCompletedBatchStatus.indexOf(job.batch_status)>=0)
+                                            completedBatches.push(job);
                                     });
-                            }, 3000);
-                        //}
+
+                                    var savedMigrations = $filter('orderBy')(response.savedMigrations, '-timestamp');
+                                    vm.currentBatches.items = $filter('orderBy')(currentBatches, '-start').concat(savedMigrations);
+                                    vm.currentBatches.noOfPages = Math.ceil(vm.currentBatches.items.length / vm.currentBatches.pageSize);
+                                    vm.currentBatches.pages = new Array(vm.currentBatches.noOfPages);
+                                    
+                                    vm.completedBatches.items = $filter('orderBy')(completedBatches, '-start');
+                                    vm.completedBatches.noOfPages = Math.ceil(completedBatches.length / vm.completedBatches.pageSize);
+                                    vm.completedBatches.pages = new Array(vm.completedBatches.noOfPages);
+
+                                    // temporary fix to show completed batch date time
+                                    angular.forEach(vm.completedBatches.items, function(item){
+                                        dataStoreService.endTime = dataStoreService.endTime ? dataStoreService.endTime : moment().unix();
+                                        item.end = dataStoreService.endTime;
+                                    });
+
+                                    vm.loading = false;
+                                    vm.manualRefresh = false;
+                                }, function(errorResponse) {
+                                    vm.loading = false;
+                                    vm.currentBatches.loadError = true;
+                                    vm.completedBatches.loadError = true;
+                                    console.log("Dashboard Error: ", errorResponse);
+                                });
+                        }, 3000);
                     };
 
                     /**

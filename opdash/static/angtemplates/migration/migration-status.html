@@ -7,17 +7,36 @@
     <div class="rs-main rs-panel">
         <div class="rs-content rs-panel">
             <div class="rs-inner">
-                <div class="rs-pull-right">
-                    <button class="rs-btn rs-btn-primary" ng-click="vm.startNewMigration()"><i class="fa fa-plus-square fa-fw"></i> Start New Migration</button>
+                <div class="rs-row">
+                    <div class="span-8">
+                        <div class="migr-ddi-name">
+                            {{vm.currentUser}} ( #{{vm.tenant_id}} )
+                        </div>
+                    </div>
+                    <div class="span-4">
+                        <div class="support-icons rs-pull-right">
+                            <rscontact></rscontact>
+                        </div> 
+                    </div>                  
                 </div>
-                <h2>{{vm.currentUser}} ( #{{vm.tenant_id}} )</h2>
-                <h3>Migrations ({{vm.currentBatches.items.length + vm.completedBatches.items.length}}) 
-                    &nbsp;<i class="refresh-icon fa fa-refresh" title="Refresh Dashboard" ng-click="vm.getBatches(true)" ng-class="{'fa-spin': vm.loading}"></i>
-                </h3>
-                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
+                <hr>
+                <div class="rs-row">
+                    <div class="span-8">
+                        <h3>Welcome to your Migration Dashboard, you have <b>{{vm.currentBatches.items.length + vm.completedBatches.items.length}} batches</b> running.</h3> 
+                    </div>
+                    <div class="span-4 ">
+                        <div class="pull-right">
+                            <button class="rs-btn" ng-click="vm.getBatches(true)"><i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i> Refresh</button>
+                            <button class="rs-btn rs-btn-primary" ng-click="vm.startNewMigration()"><i class="fa fa-plus-square fa-fw"></i> Start New Migration</button>
+                        </div>
+                    </div>                        
+                </div>
+
+                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container table-justify">
                     <table class="rs-list-table rs-embedded-list-table no-truncate-td">
                         <thead>
                             <tr>
+                                <th class="rs-table-status"></th>
                                 <th class="large-col">
                                     <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
                                         <span class="rs-table-sort-text">Batch Queue</span>
@@ -42,14 +61,15 @@
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
-                                <th>
+                                <!--<th>
                                     <span class="rs-table-sort-text">Progress</span>
-                                </th>
+                                </th>-->
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody ng-show="!vm.loading && !vm.currentBatches.loadError && vm.currentBatches.items.length!==0">
                             <tr ng-repeat="batch in vm.currentBatches.items | limitTo : vm.currentBatches.pageSize : (vm.currentBatches.currentPage-1)*vm.currentBatches.pageSize" class="ng-scope">
+                                <td class="rs-table-status tip" ng-class="{'rs-table-status-pending': batch.batch_status==='not available', 'rs-table-status-pending': batch.batch_status==='scheduled', 'rs-table-status-ok': batch.batch_status==='in progress', 'rs-table-status-warning': batch.batch_status==='in progress', 'rs-table-status-error': batch.batch_status==='error', 'rs-table-status-pending': batch.timestamp}"></td>
                                 <td class="rs-table-link">
                                     <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]">{{batch.batch_name}}</a>
                                     <a ng-show="batch.timestamp" href="javascript:void(0)" ng-click="vm.continueScheduling(batch);">{{batch.instance_name}}</a>
@@ -59,16 +79,16 @@
                                     <span ng-show="!batch.timestamp">{{(batch.start && batch.start * 1000) | date : 'M/dd/yyyy hh:mm a'}}</span>
                                 </td>
                                 <td class="rs-table-text">
-                                    <span class="rs-status" ng-show="batch.timestamp">Not Scheduled</span>
-                                    <span class="rs-status" ng-show="batch.batch_status==='not available'">Not Available</span>
-                                    <span class="rs-status" ng-show="batch.batch_status==='scheduled'">Scheduled</span>
-                                    <span class="rs-status rs-status-ok" ng-show="batch.batch_status==='in progress'">In Progress</span>
-                                    <span class="rs-status rs-status-ok" ng-show="batch.batch_status==='started'">Started</span>
-                                    <span class="rs-status rs-status-ok" ng-show="batch.batch_status==='done'">Completed</span>
-                                    <span class="rs-status rs-status-error" ng-show="batch.batch_status==='error'">Error</span>
-                                    <span class="rs-status rs-status-warning" ng-show="batch.batch_status==='paused'">Paused</span>
+                                    <span class="rs-status-disabled" ng-show="batch.timestamp">Not Scheduled</span>
+                                    <span class="rs-status-disabled" ng-show="batch.batch_status==='not available'">Not Available</span>
+                                    <span class="rs-status-disabled" ng-show="batch.batch_status==='scheduled'">Scheduled</span>
+                                    <span class="rs-status-ok" ng-show="batch.batch_status==='in progress'">In Progress</span>
+                                    <span class="rs-status-ok" ng-show="batch.batch_status==='started'">Started</span>
+                                    <span class="rs-status-ok" ng-show="batch.batch_status==='done'">Completed</span>
+                                    <span class="rs-status-error" ng-show="batch.batch_status==='error'">Error</span>
+                                    <span class="rs-status-warning" ng-show="batch.batch_status==='paused'">Paused</span>
                                 </td>
-                                <td class="rs-table-text">
+                                <!--<td class="rs-table-text">
                                     <div ng-show="!batch.timestamp">
                                         <div class="rs-progress rs-progress-medium" style="width: 70%;">
                                             <div class="rs-progress-inner">
@@ -77,9 +97,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--<span class="rs-progress-label">{{ ['started', 'in progress', 'paused'].indexOf(batch.batch_status)>=0 ? 50 : 0 }}%</span>-->
+                                        <span class="rs-progress-label">{{ ['started', 'in progress', 'paused'].indexOf(batch.batch_status)>=0 ? 50 : 0 }}%</span>
                                     </div>
-                                </td>
+                                </td>-->
                                 <td class="rs-table-input">
                                     <div class="rs-btn-group">
                                         <div class="rs-dropdown">
@@ -91,6 +111,7 @@
                                                     <a ng-show="!batch.deleting" href="javascript:void(0)" ng-click="vm.deleteSavedSchedule(batch)">Delete</a>
                                                 </li>
                                                 <li class="disabled" ng-show="batch.deleting"><a href="#">Deleting...</a></li>
+                                                <li><a href="#">See log</a></li>
                                                 <li class="disabled"><a href="#">Modify Migration (NA)</a></li>
                                                 <li class="disabled"><a href="#">Cancel Migration (NA)</a></li>
                                             </ul>
@@ -201,23 +222,26 @@
                     <div class="span-6">
                         <div class="rs-facet-section">
                             <div class="rs-facet-section-body">
-                                <h3>Alerts (2)</h3>
-                                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
+                                <h3>Alerts (2)  <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h3>
+                                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container" style="margin-top: 0;">
                                     <table class="rs-list-table rs-embedded-list-table">
                                         <thead>
                                             <tr>
-                                                <th>Alert Type</th>
+                                                <th>Alert Types</th>
+                                                <th>Date/Time</th>
                                                 <th>Message</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td><span class="rs-status rs-status-warning">Warning</span></td>
-                                                <td><a href="">I am a warning</a></td>
+                                                <td class="rs-table-text ng-binding">2/1/2017 2:18 PM</td>
+                                                <td><a href="">Taking a long time to migrate</a></td>
                                             </tr>
                                             <tr>
                                                 <td><span class="rs-status rs-status-error">Error</span></td>
-                                                <td><a href="">I am an Error</a></td>
+                                                <td class="rs-table-text ng-binding">2/11/2017 1:00 AM</td>
+                                                <td><a href="">Problem while starting this batch. Will be retried.</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -228,8 +252,38 @@
                     <div class="span-6">
                         <div class="rs-facet-section">
                             <div class="rs-facet-section-body">
-                                <h3>Tickets (2)</h3>
-                                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
+                                <a href="" class="rs-btn rs-btn-link rs-pull-right">See All <i class="fa fa-angle-right"></i></a>
+                                <h3>Tickets (2)  <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h3>
+                                <div class="">
+                                    <table class="rs-list-table rs-embedded-list-table-wrapper">
+                                        <thead>
+                                            <tr>
+                                                <th>Ticket Number</th>
+                                                <th>Date/Time</th>
+                                                <th>Message</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><a href="">578390-23345</a></td>
+                                                <td class="rs-table-text ng-binding">12/1/2016 1:00 PM</td>
+                                                <td>Taking a long time to migrate</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="">102998-24432</a></td>
+                                                <td class="rs-table-text ng-binding">3/5/2017 3:00 PM</td>
+                                                <td>Problem while starting this batch. Will be retried.</td>
+                                            </tr>
+                                            <!--<tr>
+                                                <td><a href="">876309-44432</a></td>
+                                                <td class="rs-table-text ng-binding">1/19/2017 8:00 PM</td>
+                                                <td>Problem while starting this batch. Will be retried.</td>
+                                            </tr>-->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <!--<div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
                                     <table class="rs-list-table rs-embedded-list-table">
                                         <thead>
                                             <tr>
@@ -248,7 +302,8 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>
+                                </div>-->
+
                             </div>
                         </div>
                     </div>
