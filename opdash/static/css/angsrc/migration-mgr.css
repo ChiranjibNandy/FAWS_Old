@@ -5,7 +5,6 @@
     padding: 1em;
     border: 1px solid #ccc;
 }
-
 .white-panel h3,
 .plain-panel h3 {
     color: #c40022;
@@ -15,34 +14,27 @@
     margin: 0;
     padding: 0;
 }
-
-.grey-txt {
+.grey-txt{
     color: #bbb;
 }
-
-.rax-red-txt {
+.rax-red-txt{
     color: #c40022;
 }
-
-.light-txt {
+.light-txt{
     font-weight: 100;
 }
-
 .plain-panel {
     padding: 1em;
     border: 1px solid #ccc;
     min-height: 230px;
     background: #f9f9f9;
 }
-
 .plain-panel h2 {
     margin-bottom: 0;
 }
-
 .plain-panel b {
     color: #333;
 }
-
 .migr-ddi-name {
     font-size: 16px;
     font-weight: 400;
@@ -50,7 +42,6 @@
     color: #333;
     display: inline-block;
 }
-
 .migr-name input[type=text] {
     display: none;
     margin-top: 5px;
@@ -60,45 +51,35 @@
     cursor: pointer;
     margin-left: 8px;
 }
-
-.fa-info-circle {
+.fa-info-circle{
     font-size: 12px!important;
 }
-
-#alert {
+#alert{
     background: #f9f9f9;
     padding: 2em;
     border: 1px solid #ccc;
-    margin: 1em 0;
+    margin:1em 0;
 }
-
-#alert h3 {
-    margin: 0;
+#alert h3{
+    margin:0;
 }
-
-.edit-time a {
+.edit-time a{
     color: #333;
 }
-
-.edit-time a:hover {
-    color: #1e6ec1;
+.edit-time a:hover{
+    color:#1e6ec1;
     text-decoration: none!important;
 }
-
-form .rs-row {
+form .rs-row{
     margin-bottom: 10px;
 }
-
-form .rs-row select,
-form .rs-row input {
-    margin: 0;
+form .rs-row select, form .rs-row input{
+    margin:0;
 }
-
 .info-panel {
     padding: 1em;
 }
-
-.info-panel h3 {
+.info-panel h3{
     margin-bottom: 0;
 }
 
@@ -109,11 +90,9 @@ form .rs-row input {
 .pricing-buttons {
     margin-bottom: 10px;
 }
-
-.rs-control-group h4>input {
+.rs-control-group h4 > input{
     margin-right: 10px;
 }
-
 .trash-button {
     font-size: 16px;
     color: #979797
@@ -161,25 +140,21 @@ form .rs-row input {
     padding-right: 5px;
     margin-bottom: 5PX;
 }
-
-.selected-items .rs-status {
+.selected-items .rs-status{
     font-size: 10px;
     background: #999;
 }
-
 .selected-items a {
     color: #555;
 }
-
-.selected-items b {
+.selected-items b{
     color: #999
 }
-
-.support-icons {
+.support-icons{
     background: #eee;
     padding: 5px 10px;
-}
 
+}
 .support-icons a i {
     width: 20px;
     height: 20px;
@@ -215,16 +190,12 @@ form .rs-row input {
 
 
 /* canon style overrides  */
-
-#Servers .rs-list-table th:nth-child(3),
-#Servers .rs-list-table td:nth-child(3) {
-    padding: 0 0 0 5px;
+#Servers .rs-list-table th:nth-child(3),#Servers .rs-list-table td:nth-child(3)  {
+    padding:0 0 0 5px;
 }
-
 .rs-table-status-pending {
     background-color: #999!important;
 }
-
 .migration-mgr .rs-embedded-list-table-wrapper {
     border: 1px solid #e7e7e7;
 }
@@ -232,8 +203,6 @@ form .rs-row input {
 .migration-mgr .rs-main {
     margin: 10px 0;
 }
-
-
 /*.migration-mgr .rs-main .rs-panel {
     min-height: 500px;
 }*/
@@ -246,11 +215,9 @@ form .rs-row input {
 .migration-mgr .rs-list-table .rs-btn-group {
     margin: 0;
 }
-
-.migration-mgr .rs-dropdown-menu {
+.migration-mgr .rs-dropdown-menu{
     right: 0;
 }
-
 .migration-mgr .rs-table-header,
 th {
     font-weight: 700;
@@ -260,7 +227,6 @@ th {
 .migration-mgr tr:nth-child(even) {
     background: #f9f9f9;
 }
-
 .migration-mgr .recommend .rs-list-table thead th:nth-child(-n+2) {
     background: rgba(0, 0, 0, .15);
 }
@@ -271,7 +237,7 @@ th {
 
 .migration-mgr .rs-list-table td:nth-child(2) a {
     display: inline-block;
-    width: 300px;
+    width: 200px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -288,15 +254,13 @@ th {
 .migration-mgr .secondary-table {
     background: rgba(0, 0, 0, 0.05);
 }
-
-.migration-mgr .secondary-table th {
+.migration-mgr .secondary-table th{
     background: rgba(0, 0, 0, 0.075);
 }
 
 .migration-mgr .secondary-table tr:nth-child(even) {
     background: transparent;
 }
-
 .migration-mgr .rs-detail-section-header {
     padding: 20px 20px 0px;
     border-top: 1px solid #eee;
@@ -309,11 +273,9 @@ th {
 .migration-mgr .searchbox {
     margin: 10px 0 0 0;
 }
-
-.migration-mgr.racker-dash .rs-panel {
+.migration-mgr.racker-dash .rs-panel{
     min-height: 270px;
 }
-
 
 /* Reach styles */
 
@@ -331,9 +293,7 @@ th {
     background-repeat: no-repeat;
 }
 
-
 /* bootstrap overrides */
-
 .close {
     color: #fff;
     text-shadow: none;
@@ -341,7 +301,7 @@ th {
     filter: alpha(opacity=70);
 }
 
-canon.min.css:1 .alert-schedule {
+.alert-schedule {
     background-color: #fff;
     border: 4px solid #000;
     color: #c40022;
@@ -386,12 +346,10 @@ body .modal.details2 {
 .modal img {
     width: 100%;
 }
-
-.modal .rs-panel {
+.modal .rs-panel{
     box-shadow: none;
-    border: 1px solid #ccc;
+    border:1px solid #ccc;
 }
-
 .accordion-group {
     margin-bottom: 0px;
     border: none;
@@ -418,30 +376,22 @@ body .modal.details2 {
     padding: 5px;
     color: #777;
 }
-
 .accordion-heading i {
     color: #999;
     font-size: 10px;
 }
-
-
 /* Icon when the collapsible content is shown */
-
-
 /*  .accordion-toggle:after {
     font-family: "FontAwesome";
     font-size: 10px;
     margin-left: 5px;
     content: "\f054";
   }*/
-
-
 /*  .accordion-toggle:after{
     font-family: "FontAwesome";
     margin-left: 5px;
     content: "\f078";
   }*/
-
 
 /* Simple setup for stepper */
 
@@ -530,7 +480,7 @@ body .modal.details2 {
     content: "\2714";
 }
 
-.mdl-stepper-horizontal-alternative .mdl-stepper-step.step-done a:hover>.mdl-stepper-circle:before {
+.mdl-stepper-horizontal-alternative .mdl-stepper-step.step-done a:hover > .mdl-stepper-circle:before {
     content: "\270E";
 }
 
