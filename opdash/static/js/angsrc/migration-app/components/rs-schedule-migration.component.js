@@ -104,6 +104,7 @@
                         vm.storeSelectedTime("migrate now");
                         vm.editorEnabled = false;
                         vm.showTimeForm = false;
+                        vm.showMigrationTime=false;
                         vm.showMigrate = false;
                         vm.isDisableDate =false;
                         vm.isModeSave= true;
@@ -268,6 +269,7 @@
                    //check to show scheduled migration time on banner based on the radio button check.
                    if(vm.scheduleMigration === "migrateLate"){
                        vm.showTimeForm =  true;
+                       vm.showMigrationTime =false;
                        vm.selectedDate =  moment(vm.date).format('MMMM Do YYYY')+' at '+vm.time+' '+vm.timezone.slice(1,11);
                    }
                    else{
@@ -275,6 +277,7 @@
                        vm.selectedDate =  moment().format('MMMM Do YYYY ')+' at '+moment().format('h:mma')+' '+zone.slice(1,11);
                        vm.storeSelectedTime("migrate now"); 
                        vm.showTimeForm =  false;
+                       vm.showMigrationTime =true;
                    }
                     
                };

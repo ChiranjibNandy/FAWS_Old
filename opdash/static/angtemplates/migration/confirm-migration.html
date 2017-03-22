@@ -32,33 +32,24 @@
                     <div class="span-6">
                         <rsselecteditemspanel showrec="true"></rsselecteditemspanel>
                     </div>
-                    <div class="span-3">
-                        <div class="plain-panel rs-center">
-                            <h3>Scheduled Time <a ng-link="['ScheduleMigration']" class="rs-edit" title="Go to step 3 to choose new Schedule"></a></h3>
-                            <h3>Scheduled Summary
-                                <a ng-link="['ScheduleMigration']" class="rs-edit" title="Go to step 3 to choose new Schedule"></a>
-                            </h3>
-                            <hr>
-                                    <h2>{{vm.schedule.date}} <br>
-                                    <small>at {{vm.schedule.time}} </small></h2>
-                            <!--<div class="schedule-tile">
-                                <p>Date: {{vm.schedule.date}}</p>
-                                <p>Time: {{vm.schedule.time}}</p>
-                                <p>Timezone: {{vm.schedule.timezone}}</p>
-                            </div>-->
-                        </div>
-                    </div>
+
                     <div class="span-3">
                         <div class="plain-panel rs-center">
                             <h3>Projected Cost
                                 <!--<a href=""><i id="tooltip-demo" class="rs-icon-help" title="click to see more details about pricing."></i></a>-->
                             </h3>
                             <hr>
-                            <h3><b>{{vm.cost | currency: '$'}} / month</b> </h3>
-                           <a href="">(See Details)</a>
+                            <h2><b>{{vm.cost | currency: '$'}} / month</b><a href=""><i class="fa fa-info-circle fa-fw"></i></a> </h2>
+                           <p>
+                                        Current Support Level: <br>
+                                        <big><b><a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Navigator</a></b></big><br>
+                                        <small>* Navigator cost not reflected here.</small>
+                                    </p>
                         </div>
                     </div>
+                      <rsschedulemigration></rsschedulemigration>
                 </div>
+              
                 <br>
                 <div class="rs-row">
                     <div class="rs-pull-right">
