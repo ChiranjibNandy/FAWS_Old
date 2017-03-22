@@ -184,6 +184,10 @@
                     $('#cancel_modal').modal('show');
                 };
 
+                 vm.showConfirmMigrateDialog = function() {
+                    $('#confirm-migration-modal').modal('show');
+                };
+
                 return vm;
             }
         ]}); // end of component definition

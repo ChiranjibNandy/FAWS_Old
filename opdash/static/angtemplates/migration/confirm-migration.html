@@ -61,7 +61,7 @@
                         <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
                         <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>-->
                         <a class="rs-btn" role="button" ng-click="vm.showCancelDialog()">Cancel Migration</a>
-                        <a class="rs-btn rs-btn-primary " ng-click="vm.migrate()" ng-show="!vm.migrating" ng-class="{'disabled': vm.errorInMigration}">Confirm Migration</a>
+                        <a class="rs-btn rs-btn-primary " ng-click=" vm.showConfirmMigrateDialog()"  ng-class="{'disabled': vm.errorInMigration}">Confirm Migration</a>
                         <a class="rs-btn rs-btn-primary disabled" ng-show="vm.migrating">Processing...</a>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
 <!-- modals -->
 <div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForCancel" aria-hidden="true">
     <div class="modal-body">
-        <h3>Would you like to save the selections you've made so far for another time?</h3>
+        <h3>You have chosen this time for your migration.</h3>
         <form class=" ">
             <div class="rs-control-group">
                 <div class="rs-controls">
@@ -103,4 +103,21 @@
         </form>
     </div>
 </div>
+  <!-- confrm migration modal -->
+    <div id="confirm-migration-modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <h3>You have chosen this time for your migration.</h3>
+        </div>
+        <div class="modal-body">
+            <h3>{{vm.schedule.date}} at {{vm.schedule.time}}</h3> 
+            <p>Is this correct?</p>
+            <div class="rs-control-group">
+               <a ng-click="vm.migrate()" ng-show="!vm.migrating" class="rs-btn rs-btn-primary">Yes, Continue</a>  
+               <a class="rs-btn" data-dismiss="modal" aria-hidden="true">No, Go back</a>
+            </div> 
+        </div>
+        <div class="modal-footer">   
+        </div>
+    </div>
+    <!-- end modals -->
 <!-- end modals -->
