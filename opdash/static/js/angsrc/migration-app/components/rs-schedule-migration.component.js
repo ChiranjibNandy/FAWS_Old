@@ -40,7 +40,7 @@
                     $('title')[0].innerHTML =  "Schedule Migration - Rackspace Cloud Migration";
                     vm.error = false;
                     vm.tenant_id = authservice.getAuth().tenant_id;
-                    vm.scheduleMigration = "migrateNow";
+                   // vm.scheduleMigration = "migrateNow";
                     vm.timeItems = ["12:00am","12:15am","12:30am","12:45am","1:00am","1:15am","1:30am","1:45am","2:00am","2:15am","2:30am","2:45am","3:00am","3:15am","3:30am","3:45am","4:00am","4:15am","4:30am","4:45am",
                         "5:00am", "5:15am", "5:30am", "5:45am",
                         "06:00am", "6:15am", "6:30am", "6:45am",
@@ -274,7 +274,7 @@
                    }
                    else{
                        var zone = vm.getDefaultZone();
-                       vm.selectedDate =  moment().format('MMMM Do YYYY ')+' at '+moment().format('h:mma')+' '+zone.slice(1,11);
+                       vm.selectedDate =  moment().format('MM/DD/YYYY ')+' at '+moment().format('h:mma')+' '+zone.slice(1,11);
                        vm.storeSelectedTime("migrate now"); 
                        vm.showTimeForm =  false;
                        vm.showMigrationTime =true;
