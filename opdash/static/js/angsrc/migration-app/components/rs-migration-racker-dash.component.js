@@ -323,7 +323,7 @@
                     var getSavedInstancesUrl = "/api/users/uidata/"+tenant_id+"/Saved_Migrations";
                     var savedMigrationPromise = HttpWrapper.send(getSavedInstancesUrl, {"operation":'GET'})
                     .then(function(result){
-                        if(result != null && result.savedDetails.length !=0){
+                        if(result !== null && result.savedDetails.length !== 0){
                             doSavedForLaterMigrationsExist = true;
                         }
                     },function(error) {
@@ -333,7 +333,7 @@
                     var url = "/api/jobs/" + tenant_id;
                     var resourceMigrationPromise = HttpWrapper.send(url,{"operation":'GET'})
                     .then(function(response){
-                        if(response != null && response.job_status_list.length != 0){
+                        if(response !== null && response.job_status_list.length !== 0){
                             doResourceMigrationsExist = true;
                         }
                     },function(error) {
@@ -341,7 +341,7 @@
                     });
 
                     $q.all([savedMigrationPromise,resourceMigrationPromise]).then(function(result){
-                        if(doSavedForLaterMigrationsExist == false && doResourceMigrationsExist == false){
+                        if(doSavedForLaterMigrationsExist === false && doResourceMigrationsExist === false){
                             $rootRouter.navigate(["MigrationResourceList"]);                          
                         }
                         else{

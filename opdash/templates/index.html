@@ -20,7 +20,7 @@
                   authtoken: "@"
                 },
                 controllerAs: "vm",
-                controller: ["authservice","$rootRouter", function(ase,$rootRouter) {
+                controller: ["authservice","$rootRouter","httpwrapper","$q", function(ase,$rootRouter,HttpWrapper,$q){
                   this.$onInit = function () {
                     // This sets the default values
                     this.username = user_data.username;
@@ -28,17 +28,46 @@
                     this.tenant_id = user_data.tenant_id;
                     this.account_name = user_data.account_name;
 
-                    // console.log(this.tenant_id);
-                    // console.log(this.username);
-
                     ase.storeAuth(user_data);
 
                     if(user_data.is_racker) {
                       $rootRouter.navigate(["RackerDash"]);
                     }
                     else{
+                      debugger;
                       // ase.getAuth().tenant_id = user_data.tenant_id;
                       // ase.getAuth().account_name = this.account_name;
+                      var doSavedForLaterMigrationsExist = false;
+                      var doResourceMigrationsExist = false;
+                      var tenant_id = user_data.tenant_id;
+                      var getSavedInstancesUrl = "/api/users/uidata/"+tenant_id+"/Saved_Migrations";
+                      var savedMigrationPromise = HttpWrapper.send(getSavedInstancesUrl, {"operation":'GET'})
+                      .then(function(result){
+                          if(result !== null && result.savedDetails.length !== 0){
+                              doSavedForLaterMigrationsExist = true;
+                          }
+                      },function(error) {
+                          doSavedForLaterMigrationsExist = false;
+                      });
+
+                      var url = "/api/jobs/" + tenant_id;
+                      var resourceMigrationPromise = HttpWrapper.send(url,{"operation":'GET'})
+                      .then(function(response){
+                          if(response !== null && response.job_status_list.length !== 0){
+                              doResourceMigrationsExist = true;
+                          }
+                      },function(error) {
+                          doResourceMigrationsExist = false;
+                      });
+
+                      $q.all([savedMigrationPromise,resourceMigrationPromise]).then(function(result){
+                          if(doSavedForLaterMigrationsExist === false && doResourceMigrationsExist === false){
+                              $rootRouter.navigate(["MigrationResourceList"]);                          
+                          }
+                          else{
+                              $rootRouter.navigate(["MigrationStatus"]);
+                          }
+                      });  
                       $rootRouter.navigate(["MigrationResourceList"]);
                     }
                   }

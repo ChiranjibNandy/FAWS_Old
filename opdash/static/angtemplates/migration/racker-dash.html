@@ -66,8 +66,8 @@
                                 <td class="rs-table-link"><a class="ng-binding" href="" ng-click="vm.setTenantId(item)">{{item.accountName}}</a></td>
                                 <td class="rs-table-text">{{item.serviceLevel}}</td>
                                 <td class="rs-table-text">{{item.accountLevel}}</td>
-                                <td class="rs-table-link"><a class="ng-binding" href="" ng-click="vm.setMigrationStatusTenantId(item)">{{item.inProgressBatches}}</a></td>
-                                <td class="rs-table-link"><a class="ng-binding" href="" ng-click="vm.setMigrationStatusTenantId(item)">{{item.completedBatches}}</a></td>
+                                <td class="rs-table-text">{{item.inProgressBatches}}</td>
+                                <td class="rs-table-text">{{item.completedBatches}}</td>
                                 <td class="rs-table-input">
                                     <div class="rs-btn-group">
                                         <div class="rs-dropdown">
@@ -139,3 +139,7 @@
     </div>
 </div>
 
+<script type="text/javascript">
+        document.getElementById("pilot-backups").style.visibility = "hidden";
+        document.getElementById("pilot-dashboard-account-dashboard").className += "pilot-nav-item active";
+</script>
