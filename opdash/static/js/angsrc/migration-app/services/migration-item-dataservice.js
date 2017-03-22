@@ -8,19 +8,19 @@
      * This service acts as a facade which handles calling the specific service implementation for each resoource type (server, network etc).
      */
     angular.module("migrationApp")
-        .service("migrationitemdataservice", ["serverservice", "networkservice", "contactservice", "httpwrapper",'$filter',"authservice", "datastoreservice", "$q", function (serverService, networkService, contactService, HttpWrapper, $filter,authservice, dataStoreService, $q) {
-            var self = this;
+        .service("migrationitemdataservice", ["serverservice", "networkservice", "contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q", function (serverService, networkService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q) {
+            var loaded, loadbalancers, self = this, currentTenant = null;
 
-            var prepareNames = function() {
+            var prepareNames = function () {
                 var servers = dataStoreService.getItems("server");
                 var names = {};
                 names.instances = {};
                 names.networks = {};
 
-                angular.forEach(servers, function(item) {
+                angular.forEach(servers, function (item) {
                     names.instances[item.id] = item.name;
                     var networks = item.details.networks;
-                    angular.forEach(networks, function(item) {
+                    angular.forEach(networks, function (item) {
                         names.networks[item.id] = item.name;
                     });
                 });
@@ -41,15 +41,12 @@
             this.getTrimmedAllItems = function (type) { // should be moved to dashboard service
                 if (type === "server") {
                     return serverService.getTrimmedList();
-                }
-                else if (type === "network") {
+                } else if (type === "network") {
                     return networkService.getTrimmedList();
-                }
-                 else if (type === "files") {
-                    return networkService.getTrimmedList();
-                }
-                 else if (type === "loadBalancers") {
-                    return networkService.getTrimmedList();
+                // } else if (type === "files") {
+                //     return networkService.getTrimmedList();
+                } else if (type === "LoadBalancers") {
+                    return self.getLoadBalancers();
                 }
             }
 
@@ -62,20 +59,16 @@
              * @description 
              * This service method returns a promise to fetch the detailed list of resources of given _type_ for a tenant.
              */
-            this.getDetailedList = function(type) {
+            this.getDetailedList = function (type) {
                 if (type === "server") {
                     return serverService.getDetailedList();
-                }
-                else if (type === "network") {
+                } else if (type === "network") {
                     return networkService.getDetailedList();
-                }
-                else if (type === "files") {
+                } else if (type === "files") {
                     return networkService.getTrimmedList();
-                }
-                else if (type === "loadBalancers") {
+                } else if (type === "LoadBalancers") {
                     return networkService.getTrimmedList();
-                }
-                else if (type === "contactNumbers") {
+                } else if (type === "contactNumbers") {
                     return contactService.getContactNumbers();
                 }
             }
@@ -91,9 +84,9 @@
              * @description 
              * This service method returns a promise to fetch the pricing details to migrate a resource.
              */
-            this.getPricingDetails = function(type, flavor, ram) {
+            this.getPricingDetails = function (type, flavor, ram) {
                 if (type === "server") {
-                   return serverService.getPricingDetails(flavor, ram);
+                    return serverService.getPricingDetails(flavor, ram);
                 }
             };
 
@@ -107,27 +100,27 @@
              * @description 
              * This service method returns an _object_. This object has to be sent while making an HTTP POST request to migrate the resource.
              */
-            this.prepareRequest = function(batchName){
-               var equipments = {
-                        instances : dataStoreService.getItems("server"),
-                        networks : dataStoreService.getDistinctNetworks()
+            this.prepareRequest = function (batchName) {
+                var equipments = {
+                        instances: dataStoreService.getItems("server"),
+                        networks: dataStoreService.getDistinctNetworks()
                     },
                     auth = authservice.getAuth(),
                     names = prepareNames(),
                     instancesReqList = [],
                     networksReqList = [],
                     reqObj = {
-                                batch_name: dataStoreService.getScheduleMigration().migrationName,
-                                names: names,
-                                source: {
-                                            tenantid: auth.tenant_id
-                                        },
-                               resources: {},
-                                version: "v1"
-                            };
+                        batch_name: dataStoreService.getScheduleMigration().migrationName,
+                        names: names,
+                        source: {
+                            tenantid: auth.tenant_id
+                        },
+                        resources: {},
+                        version: "v1"
+                    };
 
                 // prepare servers/instances request object
-                equipments.instances.map(function(instance){
+                equipments.instances.map(function (instance) {
                     instancesReqList.push({
                         source: {
                             id: instance.id,
@@ -143,7 +136,7 @@
                 });
 
                 // prepare networks request object
-                equipments.networks.map(function(network){
+                equipments.networks.map(function (network) {
                     networksReqList.push({
                         source: {
                             region: network.region.toUpperCase()
@@ -158,40 +151,95 @@
                     });
                 });
 
-                if(dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < moment().unix()){
+                if (dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < moment().unix()) {
                     reqObj.start = moment().unix();
                     dataStoreService.selectedTime.time = reqObj.start;
-                }else{
+                } else {
                     reqObj.start = dataStoreService.selectedTime.time;
                 }
 
                 reqObj.resources.instances = instancesReqList; //add servers to the resources list
-                if (networksReqList[0] != null){               //add networks to the resources list iff there are any networks
+                if (networksReqList[0] != null) { //add networks to the resources list iff there are any networks
                     reqObj.resources.networks = networksReqList;
-                 }
+                }
                 return reqObj;
             }
 
-            this.getServerMigrationStatus = function(tenant_id){
+            this.getServerMigrationStatus = function (tenant_id) {
                 var url = "/api/server_status/" + tenant_id;
-                return HttpWrapper.send(url,{"operation":'GET'})
-                                  .then(function(response){
-                                      var status = {
-                                          server_status: response.server_status,
-                                          network_status: response.network_status
-                                      };
-                                      return status;
-                                  });
+                return HttpWrapper.send(url, {
+                        "operation": 'GET'
+                    })
+                    .then(function (response) {
+                        var status = {
+                            server_status: response.server_status,
+                            network_status: response.network_status
+                        };
+                        return status;
+                    });
             }
 
-            this.getResourceMigrationStatus = function(tenant_id){
+            this.getResourceMigrationStatus = function (tenant_id) {
                 var url = "/api/jobs/" + tenant_id;
-                return HttpWrapper.send(url,{"operation":'GET'})
-                                  .then(function(response){
-                                      return response;
-                                  });
+                return HttpWrapper.send(url, {
+                        "operation": 'GET'
+                    })
+                    .then(function (response) {
+                        return response;
+                    });
             }
+
+            /**
+             * @ngdoc method
+             * @name getAll
+             * @methodOf migrationApp.service:serverservice
+             * @returns {Promise} a promise to fetch all servers.
+             * @description 
+             * Gets the entire list of servers in its raw JSON form, from the api.
+             */
+            this.getLoadBalancers = function () {
+                //var url = "/static/angassets/servers-list.json";
+                var url = "/api/clb/get_all";
+                var tenant_id = authservice.getAuth().tenant_id;
+
+                if (!loaded || (currentTenant !== tenant_id)) {
+
+                    return HttpWrapper.send(url, {
+                            "operation": 'GET'
+                        })
+                        .then(function (response) {
+                            loaded = true;
+                            currentTenant = tenant_id;
+                            loadbalancers = {
+                                labels: [{
+                                        field: "name",
+                                        text: "CLB Name"
+                                    },
+                                    {
+                                        field: "clb status",
+                                        text: "CLB Status"
+                                    },
+                                    {
+                                        field: "id",
+                                        text: "CLB ID"
+                                    },
+                                    {
+                                        field: "migration status",
+                                        text: "Migration Status"
+                                    }
+                                ],
+                                data: response
+                            };
+                            return loadbalancers;
+                        }, function (errorResponse) {
+                            return errorResponse;
+                        });
+
+                } else {
+                    return $q.when(loadbalancers);
+                }
+            };
 
             return self;
-       }]); // end of service definition
+        }]); // end of service definition
 })();

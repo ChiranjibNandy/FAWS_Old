@@ -161,7 +161,7 @@
                      * @description returns true if user is not customer.
                      */
                     vm.isRacker = authservice.is_racker;
-                    if(vm.type === "Files" || vm.type === "LoadBalancers"){
+                    if(vm.type === "Files"){
                         vm.noData = true;
                         vm.loading = false;
                         return;   
@@ -200,8 +200,8 @@
                             var dataList = results[0].data;
                             vm.items = mapServerStatus(dataList, results[1].job_status_list);
                             //check if all the servers can be migrated else disable checkbox(to select all items) at the header of item selection table.
-                            angular.forEach(vm.items, function (server) {
-                                if(server.canMigrate == false || server.status != 'active'){ 
+                            angular.forEach(vm.items, function (item) {
+                                if(item.canMigrate == false || item.status.toLowerCase() != 'active'){ 
                                     vm.disableSelectAll = true;
                                 }
                             });
@@ -222,7 +222,7 @@
                             vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
                             for(var i=1;i<=vm.noOfPages;i++){
                                 vm.pageArray.push(i);
-                            };      
+                            };    
                             vm.searchField = results[0].labels[0].field;
                             vm.labels = results[0].labels; // set table headers
                             //Store all labels in factory variable
@@ -238,8 +238,8 @@
                     } else{
                         //For repeated fetch of resources after first time loading.
                         vm.items = datastoreservice.retrieveallItems(vm.type);
-                        angular.forEach(vm.items, function (server) {
-                            if(server.canMigrate == false || server.status != 'active'){ 
+                        angular.forEach(vm.items, function (item) {
+                            if(item.canMigrate == false || item.status.toLowerCase() != 'active'){ 
                                 vm.disableSelectAll = true;
                             }
                         });
@@ -395,8 +395,7 @@
                  * display equipment details for a perticular resource.
                  */
                 vm.equipmentDetails = function(type, itemdetails) {
-                    vm.type = type;
-                    vm.itemDetails = itemdetails;
+                    vm.parent.equipmentDetailsModal(type, itemdetails);
                 }
                 return vm;
             }]

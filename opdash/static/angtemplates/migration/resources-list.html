@@ -34,13 +34,13 @@
                         <!--<rs-tab title="Networks">
                                 <rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>
                             </rs-tab>-->
+                        <rs-tab title="Load Balancers" ng-if="vm.isRacker">
+                            <!--Load Balancers-->
+                            <rsmigrationitem type="LoadBalancers" filtervalue="vm.filterSearch"></rsmigrationitem>
+                        </rs-tab>
                         <rs-tab title="Files" ng-if="vm.isRacker" class="disabled">
                             <!--Files-->
                             <rsmigrationitem type="Files" filtervalue="vm.filterSearch"></rsmigrationitem>
-                        </rs-tab>
-                        <rs-tab title="Load Balancers" ng-if="vm.isRacker" class="disabled">
-                            <!--Load Balancers-->
-                            <rsmigrationitem type="LoadBalancers" filtervalue="vm.filterSearch"></rsmigrationitem>
                         </rs-tab>
                         <div class="rs-pull-right" style="margin-top: -49px; margin-left:790px">
                             <a class="rs-btn" ng-click="vm.cancelMigration()">Cancel Migration</a>
@@ -180,3 +180,4 @@
         <a href="#" class="rs-btn rs-btn-primary" data-dismiss="modal">Start a Migration</a>
     </div>
 </div>
+<div static-include="'/static/angtemplates/migration/equipment-details.html'"></div>

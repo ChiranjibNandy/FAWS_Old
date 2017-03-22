@@ -74,7 +74,8 @@
                      */
                     vm.selectedItems = {
                         server:[],
-                        network:[]
+                        network:[],
+                        LoadBalancers:[]
                     };
                     vm.filterSearch = "";
                     vm.saveProgress = "";
@@ -161,7 +162,7 @@
                  * Save instance of Migration for further processing
                  */
                 vm.saveForLater = function() {
-                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0) {
+                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0) {
                         var migration_name = dataStoreService.getScheduleMigration().migrationName;
                         if(migration_name){
                             vm.saveItems(vm.saveLaterObj);
@@ -278,7 +279,7 @@
                  * Assign Migration considering current Timestamp and continue to next step: **Recommendations**
                  */
                 vm.savencontinue = function() {
-                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0){
+                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0){
                         dataStoreService.setItems(vm.selectedItems);
                         dataStoreService.setDontShowStatus(true);
                         var migrationName = dataStoreService.getScheduleMigration().migrationName;
@@ -315,7 +316,7 @@
                  * Cancel Migration of resources and go back to migration dashboard page.
                  */
                 vm.cancelMigration = function() {
-                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0){
+                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0){
                         $('#cancel_modal').modal('show');
                     }
                     else{
@@ -353,6 +354,12 @@
                     $('#name_modal').modal('hide');
                     $('#intro_modal').modal('hide');
                     $('#no_selection').modal('hide');
+                };
+
+                vm.equipmentDetailsModal = function(type, itemdetails) {
+                    vm.itemType = type;
+                    vm.itemDetails = itemdetails;
+                    $('#resource_info').modal('show');
                 }
 
                 return vm;

@@ -66,7 +66,7 @@
                                 item.isMenuOpen = false;
                             }
                         });
-                        dataStoreService.setItems({server:vm.data,network:[]});
+                        dataStoreService.setItems({server:vm.data,network:[],LoadBalancers:dataStoreService.getItems('LoadBalancers')});
                         vm.labels = [
                                         {field: "name", text: vm.type+" Name"},
                                         {field: "ip_address", text: "IP Address"},
@@ -196,7 +196,7 @@
                             server.selectedMapping.zone = vm.awsZone || server.selectedMapping.zone;
                         }    
                     });
-                    dataStoreService.setItems({server:vm.data,network:[]});
+                    dataStoreService.setItems({server:vm.data,network:[],LoadBalancers:dataStoreService.getItems('LoadBalancers')});
                     $rootScope.$emit("pricingChanged");
                     $('#modify_modal'+id).modal('hide');
                 };
@@ -224,7 +224,7 @@
                     $rootScope.$emit("pricingChanged");
                     $('.rs-tabs').children()[0].children[0].innerHTML = "Servers ("+vm.data.length+")";
                     if(vm.data.length === 0)  $('.rs-tabs').children()[1].children[0].innerHTML = "Networks (0)";
-                    dataStoreService.setItems({server:vm.data,network:[]});
+                    dataStoreService.setItems({server:vm.data,network:[],LoadBalancers:dataStoreService.getItems('LoadBalancers')});
                 }
 
                 // vm.equipmentDetails = function(type, itemdetails) {

@@ -21,7 +21,7 @@
                 server:[],
                 network:[],
                 files:[],
-                loadbalancers:[]
+                LoadBalancers:[]
             };
             /**
               * @ngdoc property
@@ -42,7 +42,8 @@
              */
             self.selectedItems = {
                 server:[],
-                network:[]
+                network:[],
+                LoadBalancers:[]
             };
             self.selectedRecommendedItems = [];
             self.selectedDate = {
@@ -207,7 +208,7 @@
                     server:[],
                     network:[],
                     files:[],
-                    loadbalancers:[]
+                    LoadBalancers:[]
                 };
                 self.labelsServer = [];
                 self.labelsNetwork = [];

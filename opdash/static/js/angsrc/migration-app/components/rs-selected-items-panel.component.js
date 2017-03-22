@@ -32,7 +32,8 @@
                 vm.$onInit = function() {
                     vm.selectedItems = {
                         server:[],
-                        network:[]
+                        network:[],
+                        LoadBalancers:[]
                     };
                     /**
                      * @ngdoc property
@@ -54,11 +55,13 @@
                     vm.isRacker = authservice.is_racker;
                     //Fetch items selected from service.
                     vm.selectedItems.server = dataStoreService.getItems('server');
+                    vm.selectedItems.LoadBalancers = dataStoreService.getItems('LoadBalancers');
                 };
 
                 //Catch broadcast requests from parent(rsmigrationresourcelist) component.
                 $scope.$on("ItemsModified", function(event){
                     vm.selectedItems.server = dataStoreService.getItems('server');
+                    vm.selectedItems.LoadBalancers = dataStoreService.getItems('LoadBalancers');
                 });
                 
                 //Watch for item selection from list of resources.
