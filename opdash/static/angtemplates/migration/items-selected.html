@@ -1,7 +1,11 @@
 <div class="plain-panel" ng-style="{'min-height': vm.showrec === 'true' ? '230px' : 'initial'}">
+     <a href="racker-step1.html"  class="rs-btn rs-btn-action rs-pull-right">
+                                       Modify
+                                    </a>
+    
     <!--<div class="span-8">-->
     <h4 ng-show="vm.showrec === 'false'">Items Selected <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h4>
-    <h3 ng-show="vm.showrec === 'true'">Selected Resources
+    <h3 ng-show="vm.showrec === 'true'">Resources Selected 
         <a ng-link="['MigrationResourceList']" class="rs-edit" title="Go to step 1 to choose resources to migrate"></a>
     </h3>
     <hr>
