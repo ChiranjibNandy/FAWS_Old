@@ -6,12 +6,13 @@
         <a href="#resource_info" role="button" ng-click="vm.equipmentDetails(vm.type, item)" data-toggle="modal">{{item.name}}</a>
     </td>
     <td class="rs-table-text">{{item.ip_address}}</td>
-    <td>{{item.selectedMapping.region | convertCase}}</td>
-    <td>{{item.selectedMapping.zone || 'US-East-1a 2'  | convertCase}}</td>
-    <td>{{item.selectedMapping.instance_type}}</td>
-    <td>{{item.selectedMapping.cost | currency}}</td>
-    <td class="rs-table-input">
-        <div class="rs-btn-group">
+    <td class="rs-table-text"><i class="fa fa-arrow-right rs-status-ok"></i>{{item.selectedMapping.region | convertCase}}</td>
+    <td class="rs-table-text">{{item.selectedMapping.zone || 'US-East-1a 2'  | convertCase}}</td>
+    <td class="rs-table-text">{{item.selectedMapping.instance_type}}</td>
+    <td class="rs-table-text">{{item.selectedMapping.cost | currency}}</td>
+    <td class="rs-table-cog">
+        <a href="{{'#modify_modal'+ item.id}}" ng-click="vm.showModifyModal(item)" role="button" data-toggle="modal" class="rs-btn rs-btn-action">Modify</a>
+        <!--<div class="rs-btn-group">
             <div class="rs-dropdown">
                 <div class="rs-cog rs-dropdown-toggle" ng-click="item.isMenuOpen = !item.isMenuOpen"></div>
                 <ul class="rs-dropdown-menu visible recommendationsMenu" ng-show="item.isMenuOpen">
@@ -24,6 +25,6 @@
                     </li>
                 </ul>
             </div>
-        </div>
+        </div>-->
     </td>
 </tr>
