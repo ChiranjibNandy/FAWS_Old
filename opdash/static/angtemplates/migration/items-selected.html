@@ -1,5 +1,5 @@
 <div class="plain-panel" ng-style="{'min-height': vm.showrec === 'true' ? '230px' : 'initial'}">
-     <a href="racker-step1.html"  class="rs-btn rs-btn-action rs-pull-right">
+     <a ng-link="['MigrationResourceList']" ng-show="vm.showrec === 'true'" class="rs-btn rs-btn-action rs-pull-right">
                                        Modify
                                     </a>
     
@@ -9,8 +9,8 @@
         <a ng-link="['MigrationResourceList']" class="rs-edit" title="Go to step 1 to choose resources to migrate"></a>
     </h3>
     <hr>
-    <div class="accordion" id="accordion2" ng-hide="vm.selectedItems.server.length == 0">
-        <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}">
+    <div class="accordion" id="accordion2">
+        <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}" ng-hide="vm.selectedItems.server.length == 0">
             <div class="accordion-heading ">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#server-name">
                     <b class=""> Servers ({{vm.selectedItems.server.length}})</b>
@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}">
+        <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}" ng-hide="vm.selectedItems.server.length == 0">
             <div class="accordion-heading ">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#file-name">
                     <b class="">  Networks ({{vm.networkCount}})</b>
@@ -34,14 +34,24 @@
             <div id="file-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
                 <div class="accordion-inner">
                     <div class="selected-items" ng-repeat="network in vm.networksList">
-                        <a class="disabled" href="#" ng-click="vm.removeItem(item,'server')"><i class="fa fa-times-circle"></i></a>                        {{network}}
+                        <a class="disabled" href="#" ng-click="vm.removeItem(item,'server')"><i class="fa fa-times-circle"></i></a>&nbsp;&nbsp;{{network}}
                     </div>
                 </div>
-                <!--<div class="accordion-inner">
-                    <ul class="inline">
-                        <li ng-repeat="network in vm.networksList">{{network.name}}</li>
-                    </ul>
-                </div>-->
+            </div>
+        </div>
+        <div class="accordion-group" ng-class="{disabled:vm.selectedItems.LoadBalancers.length == 0}" ng-hide="vm.selectedItems.LoadBalancers.length == 0">
+            <div class="accordion-heading ">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#clb-name">
+                    <b class=""> Load Balancers ({{vm.selectedItems.LoadBalancers.length}})</b>
+                </a>
+            </div>
+            <div id="clb-name" class="accordion-body collapse " ng-if="vm.selectedItems.LoadBalancers.length > 0">
+                <div class="accordion-inner">
+                    <div class="selected-items" ng-repeat="item in vm.selectedItems.LoadBalancers">
+                        <a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'LoadBalancers')"><i class="fa fa-times-circle"></i></a>&nbsp;&nbsp;{{item.name}}
+                        <i class="fa fa-arrow-right fa fw" ng-if="vm.showrec == 'true'"></i><span ng-if="vm.showrec == 'true'"> {{item.mappings[0].region}} - {{item.mappings[0].zone || 'US-East-1a 2'}} - {{item.mappings[0].instance_type}} </span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="accordion-group disabled" ng-if="vm.isRacker" style="display: none">
@@ -57,21 +67,8 @@
                 </div>
             </div>
         </div>
-        <div class="accordion-group disabled" ng-if="vm.isRacker" style="display: none">
-            <div class="accordion-heading ">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#cdn-name">
-                    <b class="">Load Balancers (0) <i class="fa fa-caret-down"></i></b>
-                </a>
-            </div>
-            <div id="cdn-name" class="accordion-body collapse">
-                <div class="accordion-inner">
-                    <ul class="inline">
-                    </ul>
-                </div>
-            </div>
-        </div>
     </div>
-    <div ng-show="vm.selectedItems.server.length == 0" style="color:red; text-align: center">No items selected</div>
+    <div ng-show="vm.selectedItems.server.length == 0 && vm.selectedItems.LoadBalancers.length == 0" style="color:red; text-align: center">No items selected</div>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
