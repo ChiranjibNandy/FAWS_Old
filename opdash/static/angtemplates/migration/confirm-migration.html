@@ -21,7 +21,7 @@
                         <rscontact></rscontact>
                     </div>
                 </div>
-                <hr>
+                
                 <div class="rs-row">
                     <div class="span-12">
                         <h3>Review configurations and schedule your migration</h3>
@@ -32,33 +32,27 @@
                     <div class="span-6">
                         <rsselecteditemspanel showrec="true"></rsselecteditemspanel>
                     </div>
+
                     <div class="span-3">
                         <div class="plain-panel rs-center">
-                            <h3>Scheduled Time <a ng-link="['ScheduleMigration']" class="rs-edit" title="Go to step 3 to choose new Schedule"></a></h3>
-                            <h3>Scheduled Summary
-                                <a ng-link="['ScheduleMigration']" class="rs-edit" title="Go to step 3 to choose new Schedule"></a>
-                            </h3>
-                            <hr>
-                                    <h2>{{vm.schedule.date}} <br>
-                                    <small>at {{vm.schedule.time}} </small></h2>
-                            <!--<div class="schedule-tile">
-                                <p>Date: {{vm.schedule.date}}</p>
-                                <p>Time: {{vm.schedule.time}}</p>
-                                <p>Timezone: {{vm.schedule.timezone}}</p>
-                            </div>-->
-                        </div>
-                    </div>
-                    <div class="span-3">
-                        <div class="plain-panel rs-center">
+                             <a href="racker-step2.html"  class="rs-btn rs-btn-action rs-pull-right">
+                                       Modify
+                                    </a>   
                             <h3>Projected Cost
                                 <!--<a href=""><i id="tooltip-demo" class="rs-icon-help" title="click to see more details about pricing."></i></a>-->
                             </h3>
                             <hr>
-                            <h3><b>{{vm.cost | currency: '$'}} / month</b> </h3>
-                           <a href="">(See Details)</a>
+                            <h2><b>{{vm.cost | currency: '$'}} / month</b><a href=""><i class="fa fa-info-circle fa-fw"></i></a> </h2>
+                           <p>
+                                        Current Support Level: <br>
+                                        <big><b><a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Navigator</a></b></big><br>
+                                        <small>* Navigator cost not reflected here.</small>
+                                    </p>
                         </div>
                     </div>
+                      <rsschedulemigration></rsschedulemigration>
                 </div>
+              
                 <br>
                 <div class="rs-row">
                     <div class="rs-pull-right">
@@ -67,7 +61,7 @@
                         <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
                         <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>-->
                         <a class="rs-btn" role="button" ng-click="vm.showCancelDialog()">Cancel Migration</a>
-                        <a class="rs-btn rs-btn-primary " ng-click="vm.migrate()" ng-show="!vm.migrating" ng-class="{'disabled': vm.errorInMigration}">Confirm Migration</a>
+                        <a class="rs-btn rs-btn-primary " ng-click=" vm.showConfirmMigrateDialog()"  ng-class="{'disabled': vm.errorInMigration}">Confirm Migration</a>
                         <a class="rs-btn rs-btn-primary disabled" ng-show="vm.migrating">Processing...</a>
                     </div>
                 </div>
@@ -84,7 +78,7 @@
 <!-- modals -->
 <div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForCancel" aria-hidden="true">
     <div class="modal-body">
-        <h3>Would you like to save the selections you've made so far for another time?</h3>
+        <h3>You have chosen this time for your migration.</h3>
         <form class=" ">
             <div class="rs-control-group">
                 <div class="rs-controls">
@@ -109,4 +103,21 @@
         </form>
     </div>
 </div>
+  <!-- confrm migration modal -->
+    <div id="confirm-migration-modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <h3>You have chosen this time for your migration.</h3>
+        </div>
+        <div class="modal-body">
+            <h3>{{vm.schedule.date}} at {{vm.schedule.time}}</h3> 
+            <p>Is this correct?</p>
+            <div class="rs-control-group">
+               <a ng-click="vm.migrate()" ng-show="!vm.migrating" class="rs-btn rs-btn-primary">Yes, Continue</a>  
+               <a class="rs-btn" data-dismiss="modal" aria-hidden="true">No, Go back</a>
+            </div> 
+        </div>
+        <div class="modal-footer">   
+        </div>
+    </div>
+    <!-- end modals -->
 <!-- end modals -->
