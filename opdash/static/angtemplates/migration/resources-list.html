@@ -181,3 +181,15 @@
     </div>
 </div>
 <div static-include="'/static/angtemplates/migration/equipment-details.html'"></div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var index,elements = $('li[class*=" racker-nav-item active"]');
+        if(elements.length != 0){
+            for(index =0;index<elements.length;index++){
+                var id = elements[index].id;
+                document.getElementById(id).className -= " racker-nav-item active";
+            }
+        }
+        document.getElementById("racker-migration-mgr").style.visibility = "visible";
+    });
+</script>
