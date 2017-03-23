@@ -56,6 +56,15 @@
                     //Fetch items selected from service.
                     vm.selectedItems.server = dataStoreService.getItems('server');
                     vm.selectedItems.LoadBalancers = dataStoreService.getItems('LoadBalancers');
+
+                    $("#accordion2").delegate('.accordion-heading a', "click", function () {
+                        $('.plain-panel').find('.collapse.in').prev().find("i").removeClass("fa-chevron-up").addClass(
+                            "fa-chevron-down");
+                        $(this).parents('.accordion-heading').find("i.fa-chevron-down").removeClass(
+                            "fa-chevron-down").addClass("fa-chevron-up");
+                        $(this).parents('.plain-panel').find('.collapse.in').prev().find("i.fa-chevron-up").removeClass(
+                            "fa-chevron-up").addClass("fa-chevron-down");
+                    });
                 };
 
                 //Catch broadcast requests from parent(rsmigrationresourcelist) component.
@@ -83,7 +92,7 @@
                 /**
                  * @ngdoc method
                  * @name networksToServer
-                 * @methodOf migrationApp.controller:rsselecteditemspanel
+                 * @methodOf migrationApp.controller:rsselecteditemspanelCtrl
                  * @param {Object} item _Object_ list of servers selected.
                  * @description
                  * Fetch networks associated with server.
@@ -99,7 +108,7 @@
                 /**
                  * @ngdoc method
                  * @name removeItem
-                 * @methodOf migrationApp.controller:rsselecteditemspanel
+                 * @methodOf migrationApp.controller:rsselecteditemspanelCtrl
                  * @param {Object} item _Object_ list of servers selected.
                  * @param {String} type String type of item to be removed.
                  * @description
