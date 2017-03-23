@@ -237,7 +237,7 @@ th {
 
 .migration-mgr .rs-list-table td:nth-child(2) a {
     display: inline-block;
-    width: 200px;
+    width: 104px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

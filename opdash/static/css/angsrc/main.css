@@ -475,3 +475,7 @@ rscalendaritem > div.week.names > span {
     margin: 0 0 5px;
     color: #545050;
 }
+
+.pullLeft{
+    margin-left: -10px;
+}

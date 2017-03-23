@@ -73,10 +73,19 @@
                                         {field: "aws_region", text: "AWS Region"},
                                         {field: "aws_zone", text: "AWS Zone"},
                                         {field: "aws_instance", text: "AWS instance"},
-                                        {field: "cost", text: "Cost"}
+                                        {field: "storage", text: "Storage"},
+                                        {field: "cost", text: "Cost/Month"}
                                     ];
-                    }else{
+                    }else if (vm.type === "network"){
                         vm.fetchNetworks();
+                    }else{
+                        vm.data = dataStoreService.getItems("LoadBalancers");
+                        vm.labels = [
+                                        {field: "name", text: "CLB Name"},
+                                        {field: "status", text: "CLB Status"},
+                                        {field: "id", text: "CLB Id"},
+                                        {field: "migrationStatus", text: "Migration Status"}
+                                    ];
                     }
                     
                     // pagination controls
@@ -227,10 +236,10 @@
                     dataStoreService.setItems({server:vm.data,network:[],LoadBalancers:dataStoreService.getItems('LoadBalancers')});
                 }
 
-                // vm.equipmentDetails = function(type, itemdetails) {
-                //     vm.type = type;
-                //     vm.itemDetails = itemdetails;
-                // };
+                vm.equipmentDetails = function(type, itemdetails) {
+                    vm.itemType = type;
+                    vm.itemDetails = itemdetails;
+                };
                 
                 return vm;
             }]
