@@ -27,6 +27,7 @@
 $(document).ready(function() {
     var tooltip;
     tooltip = new canon.Tooltip();
+    debugger;
 });
 </script>
 <script>
@@ -112,5 +113,15 @@ $(document).ready(function() {
 
     });
 
-    
+    debugger;
+
+    var index,elements = $('li[class*=" pilot-nav-item active"]');
+    if(elements.length != 0){
+        for(index =0;index<elements.length;index++){
+            var id = elements[index].id;
+            document.getElementById(id).className -= " pilot-nav-item active";
+        }
+    }
+    document.getElementById("pilot-backups").style.visibility = "hidden";
+    document.getElementById("pilot-dashboard-reports").className += " pilot-nav-item active";
 </script>
