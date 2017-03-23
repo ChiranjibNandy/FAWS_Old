@@ -15,6 +15,7 @@
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#server-name">
                     <b class=""> Servers ({{vm.selectedItems.server.length}})</b>
                 </a>
+                <i class='fa fa-chevron-down'></i>
             </div>
             <div id="server-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
                 <div class="accordion-inner">
@@ -30,6 +31,7 @@
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#file-name">
                     <b class="">  Networks ({{vm.networkCount}})</b>
                 </a>
+                <i class='fa fa-chevron-down'></i>
             </div>
             <div id="file-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
                 <div class="accordion-inner">
@@ -44,6 +46,7 @@
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#clb-name">
                     <b class=""> Load Balancers ({{vm.selectedItems.LoadBalancers.length}})</b>
                 </a>
+                <i class='fa fa-chevron-down'></i>
             </div>
             <div id="clb-name" class="accordion-body collapse " ng-if="vm.selectedItems.LoadBalancers.length > 0">
                 <div class="accordion-inner">
@@ -59,6 +62,7 @@
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#block-name">
                     <b class=""> Files (0) <i class="fa fa-caret-down"></i></b>
                 </a>
+                <i class='fa fa-chevron-down'></i>
             </div>
             <div id="block-name" class="accordion-body collapse">
                 <div class="accordion-inner">
@@ -70,7 +74,7 @@
     </div>
     <div ng-show="vm.selectedItems.server.length == 0 && vm.selectedItems.LoadBalancers.length == 0" style="color:red; text-align: center">No items selected</div>
 </div>
-<script type="text/javascript">
+<!--<script type="text/javascript">
     $(document).ready(function () {
         $(".accordion-heading + .collapse:not(.in)").prev().append("<i class='fa fa-chevron-down'></i>");
         $(".accordion-heading + .collapse.in").prev().append("<i class='fa fa-chevron-up'></i>");
@@ -83,4 +87,4 @@
                 "fa-chevron-up").addClass("fa-chevron-down");
         });
     });
-</script>
+</script>-->

@@ -69,7 +69,7 @@
                         </thead>
                         <tbody ng-show="!vm.loading && !vm.currentBatches.loadError && vm.currentBatches.items.length!==0">
                             <tr ng-repeat="batch in vm.currentBatches.items | limitTo : vm.currentBatches.pageSize : (vm.currentBatches.currentPage-1)*vm.currentBatches.pageSize" class="ng-scope">
-                                <td class="rs-table-status tip" ng-class="{'rs-table-status-pending': batch.batch_status==='not available', 'rs-table-status-pending': batch.batch_status==='scheduled', 'rs-table-status-ok': batch.batch_status==='in progress', 'rs-table-status-warning': batch.batch_status==='in progress', 'rs-table-status-error': batch.batch_status==='error', 'rs-table-status-pending': batch.timestamp}"></td>
+                                <td class="rs-table-status tip" ng-class="{'rs-table-status-pending': batch.batch_status==='not available', 'rs-table-status-pending': batch.batch_status==='scheduled', 'rs-table-status-ok': batch.batch_status==='in progress', 'rs-table-status-error': batch.batch_status==='error', 'rs-table-status-pending': batch.timestamp}"></td>
                                 <td class="rs-table-link">
                                     <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]">{{batch.batch_name}}</a>
                                     <a ng-show="batch.timestamp" href="javascript:void(0)" ng-click="vm.continueScheduling(batch);">{{batch.instance_name}}</a>

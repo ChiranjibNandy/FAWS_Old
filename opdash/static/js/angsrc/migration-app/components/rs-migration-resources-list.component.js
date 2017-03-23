@@ -30,13 +30,7 @@
                 vm.tenant_account_name = '';
 
                 vm.$onInit = function() {
-                    /**
-                     * @ngdoc property
-                     * @name status
-                     * @propertyOf migrationApp.controller:rsmigrationresourceslist
-                     * @type {Boolean}
-                     * @description If true, Popup for migration won't be displayed in first step of Migration.
-                     */
+                    // If status is true, popup for migration won't be displayed in first step of Migration.
                     var status = dataStoreService.getDontShowStatus(); //check for flag status created for intorduction Modal.
                     if(status == false){
                         $('#intro_modal').modal('show');
@@ -60,7 +54,7 @@
                     /**
                      * @ngdoc property
                      * @name isRacker
-                     * @propertyOf migrationApp.controller:rsmigrationresourceslist
+                     * @propertyOf migrationApp.controller:rsmigrationresourceslistCtrl
                      * @type {Boolean}
                      * @description Returns if logged in user is a Racker. If user is customer, it returns false.
                      */
@@ -68,7 +62,7 @@
                     /**
                      * @ngdoc property
                      * @name selectedItems
-                     * @propertyOf migrationApp.controller:rsmigrationresourceslist
+                     * @propertyOf migrationApp.controller:rsmigrationresourceslistCtrl
                      * @type {Array}
                      * @description List of items that are selected for migration
                      */
@@ -98,7 +92,7 @@
                     /**
                      * @ngdoc property
                      * @name migrationName
-                     * @propertyOf migrationApp.controller:rsmigrationresourceslist
+                     * @propertyOf migrationApp.controller:rsmigrationresourceslistCtrl
                      * @type {String}
                      * @description Create Migration considering Timestamp.
                      */
