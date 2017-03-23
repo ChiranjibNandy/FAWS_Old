@@ -1,0 +1,13 @@
+<tr ng-repeat="item in vm.data | filter: vm.filtervalue | limitTo : vm.pageSize : (vm.currentPage-1)*vm.pageSize">
+    <td class="rs-table-status"
+            ng-class="{'rs-table-status-ok': item.status=='active', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
+    </td>
+    <td class="rs-table-link">
+        <a href="#resource_info" role="button" ng-click="vm.equipmentDetails(vm.type, item)" data-toggle="modal" title="{{item.name}}">{{item.name}}</a>
+    </td>
+    <td class="rs-table-text">{{item.status | lowercase}}</td>
+    <td class="rs-table-text">{{item.id}}</td>
+    <td class="rs-table-text">
+        {{item.migStatus}}
+    </td>
+</tr>

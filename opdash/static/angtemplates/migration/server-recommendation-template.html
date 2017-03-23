@@ -3,12 +3,13 @@
             ng-class="{'rs-table-status-ok': item.status=='active', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
     </td>
     <td class="rs-table-link">
-        <a href="#resource_info" role="button" ng-click="vm.equipmentDetails(vm.type, item)" data-toggle="modal">{{item.name}}</a>
+        <a href="#resource_info" role="button" ng-click="vm.equipmentDetails(vm.type, item)" data-toggle="modal" title="{{item.name}}">{{item.name}}</a>
     </td>
     <td class="rs-table-text">{{item.ip_address}}</td>
-    <td class="rs-table-text"><i class="fa fa-arrow-right rs-status-ok"></i>{{item.selectedMapping.region | convertCase}}</td>
+    <td class="rs-table-text"><i class="fa fa-arrow-right rs-status-ok pullLeft"></i>{{item.selectedMapping.region | convertCase}}</td>
     <td class="rs-table-text">{{item.selectedMapping.zone || 'US-East-1a 2'  | convertCase}}</td>
     <td class="rs-table-text">{{item.selectedMapping.instance_type}}</td>
+    <td class="rs-table-text">{{item.selectedMapping.storage}}</td>
     <td class="rs-table-text">{{item.selectedMapping.cost | currency}}</td>
     <td class="rs-table-cog">
         <a href="{{'#modify_modal'+ item.id}}" ng-click="vm.showModifyModal(item)" role="button" data-toggle="modal" class="rs-btn rs-btn-action">Modify</a>
