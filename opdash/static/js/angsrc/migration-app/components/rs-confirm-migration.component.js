@@ -77,9 +77,10 @@
                 vm.migrate = function(){
                     var requestObj;
                     vm.migrating = true;
+                    $('#confirm-migration-modal').modal('hide');
                     requestObj = ds.prepareRequest();
                     console.log(requestObj);
-
+  
                     HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj)
                                 .then(function(result){
                                     console.log("Migration Response: ", result);
@@ -91,6 +92,8 @@
                                     vm.migrating = false;
                                     vm.errorInMigration = true;
                                 });
+
+                               
                 };
 
                 /**
