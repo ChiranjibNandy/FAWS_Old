@@ -111,14 +111,14 @@ $(document).ready(function() {
         }
 
     });
-
-    var index,elements = $('li[class*=" pilot-nav-item active"]');
+    debugger;
+    var index,elements = $('li[class*=" racker-nav-item active"]');
     if(elements.length != 0){
         for(index =0;index<elements.length;index++){
             var id = elements[index].id;
-            document.getElementById(id).className -= " pilot-nav-item active";
+            document.getElementById(id).className -= " racker-nav-item active";
         }
     }
-    document.getElementById("pilot-backups").style.visibility = "hidden";
-    document.getElementById("pilot-dashboard-reports").className += " pilot-nav-item active";
+    document.getElementById("racker-migration-mgr").style.visibility = "hidden";
+    document.getElementById("racker-reports").className += " racker-nav-item active";
 </script>
