@@ -332,7 +332,9 @@
                 document.getElementById(id).className -= " racker-nav-item active";
             }
         }
-        document.getElementById("racker-migration-mgr").style.visibility = "visible";
-        document.getElementById("racker-migration-mgr").className += " racker-nav-item active";
+        if(document.getElementById("racker-migration-mgr")){
+            document.getElementById("racker-migration-mgr").style.visibility = "visible";
+            document.getElementById("racker-migration-mgr").className += " racker-nav-item active";
+        }
     });
 </script>

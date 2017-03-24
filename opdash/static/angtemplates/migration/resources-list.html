@@ -190,6 +190,7 @@
                 document.getElementById(id).className -= " racker-nav-item active";
             }
         }
-        document.getElementById("racker-migration-mgr").style.visibility = "visible";
+        if(document.getElementById("racker-migration-mgr"))
+            document.getElementById("racker-migration-mgr").style.visibility = "visible";
     });
 </script>
