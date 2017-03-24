@@ -12,7 +12,7 @@
     <title>Rackspace Migration Manager</title>
     <link rel="stylesheet" type="text/css" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest//canon.min.css">
     <!-- Custom styles  -->
-    <link href="css/animate.css" rel="stylesheet">    
+    <link href="css/animate.css" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/migration-mgr.css" rel="stylesheet">
@@ -55,8 +55,8 @@
                     <li id="pilot-dashboard" data-nav="dashboard" class="rs-nav-item">
                         <a id="pilot-dashboard-link" class="rs-nav-link" data-pilot-tracking-id="dashboard-link" href="https://encore.rackspace.com/" target="_blank">Encore</a>
                     </li>
-                    <li id="pilot-backups" data-nav="migrations" class="rs-nav-item pilot-nav-item active"">
-                        <a href="racker-migr-dash.html" class="rs-nav-link" role="button" tabindex="0" >Migration Manager</a>
+                    <li id="pilot-dashboard" data-nav="migrations" class="rs-nav-item active">
+                        <a id="pilot-dashboard-link" class="rs-nav-link" data-pilot-tracking-id="dashboard-link" href="racker-migr-dash.html" target="_blank">Migration Manager</a>
                     </li>
                 </ul>
             </div>
@@ -68,16 +68,10 @@
             <div class="rs-main">
                 <div class="rs-content rs-panel">
                     <div class="rs-inner">
-
-                        <div class="migr-ddi-name">
-                            <b>For batch:</b>
-                            <span class="migr-name">
-                                <span> Migration-01Feb2017-0256pm</span><span class="edit rs-edit" title="rename"></span>  
-                                <input type="text" class="name-input animated flipInX" placeholder="Migration-01Feb2017-0456pm"/> 
-                            </span>                                          
-                        </div>
-                        <br>
-                        <br>
+                        <div class="migr-ddi-name">User Namegoeshere (#1024814)</div>
+                        <div class="migr-name">
+                            My_Migration_01 / Active Migrations
+                         </div>
                         <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
                             <table class="rs-list-table rs-embedded-list-table no-truncate-td cell-center">
                                 <thead>
@@ -87,9 +81,9 @@
                                             <span class="rs-table-sort-indicator"></span>
                                         </a>
                                     </th>
-                                    <th>Status</th>    
-                                    <th>Data Uploaded</th>      
-                                    <th>Destination</th> 
+                                    <th>Status</th>
+                                    <th>Data Uploaded</th>
+                                    <th>Destination</th>
                                     <th>ETA</th>
                                     <th>Actions</th>
                                 </thead>
@@ -107,7 +101,7 @@
                                         <td class="rs-table-text">
                                             US-East-1
                                         </td>
-                                        <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !== '-1'"> TBD </td> 
+                                        <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !== '-1'"> TBD </td>
                                         <td class="rs-table-input">
                                             <div>
                                                 <a href="" class="rs-btn rs-btn-primary">Start</a>
@@ -128,10 +122,10 @@
                                         <td class="rs-table-text">
                                             TBD
                                         </td>
-                                        <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !== '-1'"> TBD </td> 
+                                        <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !== '-1'"> TBD </td>
                                         <td class="rs-table-input">
                                             <div>
-                                                 <a href="" class="rs-btn rs-btn-primary">Configure</a>
+                                                <a href="" class="rs-btn rs-btn-primary">Configure</a>
                                                 <a href="" class="rs-btn">Cancel</a>
                                             </div>
                                         </td>
@@ -144,12 +138,12 @@
                                             <span class="rs-status-warning">Paused</span>
                                         </td>
                                         <td class="rs-table-text">
-                                           1.38 GB of 3.04 GB
+                                            1.38 GB of 3.04 GB
                                         </td>
                                         <td class="rs-table-text">
                                             US-East-1
                                         </td>
-                                        <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !== '-1'"> TBD </td> 
+                                        <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !== '-1'"> TBD </td>
                                         <td class="rs-table-input">
                                             <div>
                                                 <a href="" class="rs-btn rs-btn-primary">Resume</a>
@@ -164,27 +158,26 @@
                         <div class="rs-facet-section-body">
                             <h3>Alerts <span class="rs-quiet">(2)</span></h3>
                             <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
-                                <table class="rs-list-table rs-embedded-list-table">
+                                <table class=" rs-embedded-list-table">
                                     <thead>
                                         <tr>
-                                            <th>Alert Types</th>
+                                            <th class="rs-table-status"></th>
                                             <th>Message</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><span class="rs-status rs-status-warning">Warning</span></td>
-                                            <td><a href="">Taking a long time to migrate</a></td>
+                                            <td class="rs-table-status rs-table-status-warning tip"></td>
+                                            <td><a href="">cloud-endure-demo-A_db_slave 3 Taking a long time to migrate</a></td>
                                         </tr>
                                         <tr>
-                                            <td><span class="rs-status rs-status-error">Error</span></td>
+                                            <td class="rs-table-status rs-table-status-error tip"></td>
                                             <td><a href="">Problem while starting this batch. Will be retried.</a></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                    
                         <br>
                     </div>
                 </div>
@@ -206,9 +199,8 @@
             </ul>
         </div>
     </div>
-
     <!-- Modal -->
-    <div id="resource_info" class="modal hide fade details" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div id="resource_info" class="modal hide fade details" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
             <div class="rs-detail-header-subtitle">Server Name</div>
@@ -228,18 +220,17 @@
                         <li class="rs-detail-item">
                             <div class="rs-detail-key">ID</div>
                             <div class="rs-detail-value">86753098675309</div>
-                        </li>                        
+                        </li>
                         <li class="rs-detail-item">
                             <div class="rs-detail-key" id="size-key">RAM</div>
                             <div class="rs-detail-value">
-                
                                 <span class="rs-progress-label">2 GB</span>
                             </div>
                         </li>
                         <li class="rs-detail-item">
                             <div class="rs-detail-key" id="size-key">Disk</div>
                             <div class="rs-detail-value">100 GB</div>
-                        </li>        
+                        </li>
                         <li class="rs-detail-item">
                             <div class="rs-detail-key">Region</div>
                             <div class="rs-detail-value">Dallas (DFW)</div>
@@ -247,7 +238,7 @@
                         <li class="rs-detail-item">
                             <div class="rs-detail-key">Server Type</div>
                             <div class="rs-detail-value">First Generation Server</div>
-                        </li>       
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -292,16 +283,19 @@
         $('#myModal').modal('show');
     });
     </script>
-    <script type="text/javascript">
-    $(document).ready(function() {
-        var tooltip;
-        tooltip = new canon.Tooltip();
-    });
-    </script>
     <script type="application/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
     <script type="application/javascript" src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
     <script src="js/bootstrap.js"></script>
-     <!-- name edit script -->
+    <script src="js/bootstrap-tooltip.js"></script>
+    <script src="js/bootstrap-popover.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('[data-toggle="popover"]').popover({
+            html: true
+        });
+    });
+    </script>
+    <!-- name edit script -->
     <script type="text/javascript">
     $(document).ready(function() {
         $('.edit').click(function() {
