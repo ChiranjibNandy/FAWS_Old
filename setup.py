@@ -16,6 +16,6 @@ setup(
     version='0.0.1',
     packages=find_packages(),
     include_package_data=True,
-    package_dir={},
+    package_dir={'opdash-cp': 'opdash-cp'},
     install_requires=install_reqs,
 )

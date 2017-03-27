@@ -22,23 +22,30 @@ RUN apt-get -qq update && \
 	apt-get -qq upgrade && \
 	apt-get -qqy install \
 		libpython-dev \
+		libffi-dev \
+		libssl-dev \
 		python-dev \
 		python-pip \
-		libffi-dev \
-		libssl-dev
+		python-setuptools \
+		xmlsec1
 
 # Update pip
 RUN pip install -U pip
-RUN pip install -U setuptools
 
-# SAML
-RUN apt-get -qqy install \
-		libxml2-dev \
-		libxmlsec1-dev
+# Install Requirements
+# Copy Requirements.txt file
+#ADD requirements.txt .
+#RUN pip install -r requirements.txt
 
-RUN pip install -U dm.xmlsec.binding
+# Create Application Directory Structure
+#RUN mkdir -p /var/www/opdash
 
-		
+# Copy Starting Python File to Container
+#COPY . /var/www/opdash
+
+# Set the current directory
+#WORKDIR /var/www/opdash
+
 COPY . /opdash
 
 WORKDIR /opdash
@@ -49,7 +56,7 @@ RUN pip install -e .
 EXPOSE 5000
 
 # Set Debug Environment
-ENV UI_DEPLOY_ENVIRON='StagingConfig'
+ENV UI_DEPLOY_ENVIRON='DockerConfig'
 
 # Use this entrypoint if you want to go to a bash shell
 #ENTRYPOINT ["/bin/bash"]

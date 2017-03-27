@@ -1,6 +1,6 @@
-from flask import current_app
 import requests
 import json
+import logging
 
 
 class Identity(object):
@@ -8,7 +8,7 @@ class Identity(object):
     def __init__(self, identity_url):
 
         self._identity_url = identity_url
-        self.logger = current_app.logger
+        self.logger = logging.getLogger(__name__)
 
     def auth_username_and_password(self, username, password):
         """

@@ -20,9 +20,6 @@ def load_configuration(app):
     app.config['SSL_KEY'] = environ.get('UI_SSL_KEY', None)
     app.config['SSL_CRT'] = environ.get('UI_SSL_CERT', None)
 
-    # Path to SAML Folder
-    app.config['SAML_PATH'] = app.root_path + "/saml"
-
     # DONT BELIEVE THESE ARE NEEDED ANYMORE
     # app.config['CSRF_SESSION_KEY'] = environ.get(
     #     'UI_CSRF_SESSION_KEY', uuid4())
@@ -44,13 +41,10 @@ class BaseConfig(object):
     DEBUG = False
     USE_RELOADER = False
 
-    CP_BASE_URL = environ.get(
-        'CP_BASE_URL',
-        'https://staging.migration.rackspace.net')
-
     API_BASE_URL = environ.get(
         'API_BASE_URL',
-        'http://opdash-api-dev.us-east-1.elasticbeanstalk.com')
+        'http://opdash-api-dev.us-east-1.elasticbeanstalk.com'
+    )
 
     IDENTITY_URL = "https://identity-internal.api.rackspacecloud.com/v2.0"
 
@@ -62,10 +56,7 @@ class BaseConfig(object):
         "LOGOUT_URL": '/logout',
     }
 
-    SAML_LOGIN_URL = 'https://login.rackspace.com'
-
-    # Application threads:
-    # A common general assumption is using 2 per available
+    # Application threads. A common general assumption is using 2 per available
     # processor core - to handle incoming requests using one and performing
     # background operations using the other.
     THREADS_PER_PAGE = 2
@@ -104,53 +95,6 @@ class DebugConfig(object):
 
 class DockerConfig(object):
     PORT = 5000
-
-
-class StagingConfig(object):
-
-    PORT = 5000
-
-    # API_BASE_URL = environ.get(
-    #     'API_BASE_URL',
-    #     'http://opdash-api-staging.us-east-1.elasticbeanstalk.com'
-    # )
-    #
-    # PILOT = {
-    #     "PILOT_URL": 'https://hap-n01.staging.dfw.pilot.rackspace.net/v1/',
-    #     "PRODUCT": '',  # we don't have a product in the menu yet
-    #     "MYCLOUD_URL": 'https://ui.staging.reach.rackspace.com/',
-    #     "LOGOUT_URL": '/logout',
-    # }
-    #
-    # IDENTITY_URL = (
-    #     "https://staging.identity-internal.api.rackspacecloud.com/v2.0"
-    # )
-    #
-    # SAML_LOGIN_URL = 'https://staging.astra.rackspace.com'
-
-    CP_BASE_URL = environ.get(
-        'CP_BASE_URL',
-        'https://staging.migration.rackspace.net')
-
-    API_BASE_URL = environ.get(
-        'API_BASE_URL',
-        'http://opdash-api-dev.us-east-1.elasticbeanstalk.com')
-
-    # PILOT HEADER CONFIGURATION ITEMS
-    PILOT = {
-        "PILOT_URL": 'https://prod.pilot.api.rackspacecloud.com/v1/',
-        "PRODUCT": '',  # we don't have a product in the menu yet
-        "MYCLOUD_URL": 'https://mycloud.rackspace.com',
-        "LOGOUT_URL": '/logout',
-    }
-
-    IDENTITY_URL = (
-        "https://identity-internal.api.rackspacecloud.com/v2.0")
-
-    SAML_LOGIN_URL = 'https://astra.rackspace.com'
-
-    DEBUG = True
-    USE_RELOADER = True
 
 
 class LocalConfig(object):

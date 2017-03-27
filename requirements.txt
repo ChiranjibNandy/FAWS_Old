@@ -3,8 +3,3 @@ requests
 redis
 waitress
 flask-caching
-
-# ONELOGIN PYTHON-SAML
-isodate
-defusedxml
-python-saml
