@@ -3,7 +3,7 @@ from opdash.controllers.errors import register_error_handlers
 from opdash.controllers.proxy import register_api_proxy
 from opdash.configs import load_configuration
 
-from opdash.controllers import unsecure, customer, racker
+from opdash.controllers import unsecure, customer, racker, saml, login
 from flask_caching import Cache
 import waitress
 
@@ -49,6 +49,8 @@ def build_app():
     app.register_blueprint(unsecure.mod)
     app.register_blueprint(racker.mod)
     app.register_blueprint(customer.mod)
+    app.register_blueprint(saml.mod)
+    app.register_blueprint(login.mod)
 
     return app, context
 
