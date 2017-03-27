@@ -12,7 +12,7 @@
     <title>Rackspace Migration Manager</title>
     <link rel="stylesheet" type="text/css" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest//canon.min.css">
     <!-- Custom styles  -->
-    <link href="css/animate.css" rel="stylesheet">    
+    <link href="css/animate.css" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/migration-mgr.css" rel="stylesheet">
@@ -21,18 +21,18 @@
 <body>
     <!-- Fixed navbar -->
     <div class="rs-wrapper">
-         <!-- Utility Nav -->
+        <!-- Utility Nav -->
         <div class="rs-nav-utility">
             <div class="rs-container">
                 <ul class="rs-nav">
-                    <li class="rs-nav-item "><a class="rs-nav-link" href="">Rackspace Cloud</a></li>
+                    <li class="rs-nav-item"><a class="rs-nav-link" href="">Rackspace Cloud</a></li>
                     <li class="rs-nav-item"><a class="rs-nav-link" href="">Fanatical Support for AWS</a></li>
                 </ul>
                 <ul class="rs-nav rs-pull-right">
                     <li class="rs-nav-item rs-dropdown rs-utility-dropdown">
                         <a class="rs-nav-link rs-dropdown-toggle" href="">Username123 <i class="rs-caret"></i></a>
                     </li>
-                    <li class="rs-nav-item ">
+                    <li class="rs-nav-item">
                         <a class="rs-nav-link" href="">Logout</a>
                     </li>
                 </ul>
@@ -40,7 +40,7 @@
         </div>
         <!-- End Utility Nav -->
         <!-- Primary Nav -->
-         <div class="rs-nav-primary">
+        <div class="rs-nav-primary">
             <div class="rs-container">
                 <div class="rs-nav-brand">
                     <a href="https://www.rackspace.com/" target="_blank"></a>
@@ -55,40 +55,45 @@
                     <li id="pilot-dashboard" data-nav="dashboard" class="rs-nav-item">
                         <a id="pilot-dashboard-link" class="rs-nav-link" data-pilot-tracking-id="dashboard-link" href="https://encore.rackspace.com/" target="_blank">Encore</a>
                     </li>
-                    <li id="pilot-backups" data-nav="migrations" class="rs-nav-item pilot-nav-item active"">
-                        <a href="racker-migr-dash.html" class="rs-nav-link" role="button" tabindex="0" >Migration Manager</a>
+                    <li id="pilot-dashboard" data-nav="migrations" class="rs-nav-item active">
+                        <a id="pilot-dashboard-link" class="rs-nav-link" data-pilot-tracking-id="dashboard-link" href="racker-migr-dash.html" target="_blank">Migration Manager</a>
                     </li>
                 </ul>
             </div>
         </div>
         <!-- End Primary Nav -->
-    
         <br>
-        <div class="migration-mgr rs-container ">
-            <a href="#cancel_modal" role="button" data-toggle="modal"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
-            <br><br>
+        <div class="migration-mgr rs-container">
+            <a href="#cancel_modal" role="button" data-toggle="modal" class="migr-link animated fadeIn"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
+            <br>
+            <br>
             <div class="rs-main rs-panel">
                 <div class="rs-sidebar rs-pull-right">
                     <div class="rs-inner">
                         <div class="info-panel">
-                            <h3>Current Base Price </h3>
-                            <p>                                
-                                <big><b>$18.00</b>/month</big> <a href=""><i class="fa fa-info-circle fa-fw"></i></a><br>
+                            <h3>Current Base Cost <a href="#" role="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="Support and Storage costs in the current and projected pricing are determined by... <a href='' title='test add link'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></h3>
+                            <p>
+                                <big><b>$18.00</b>/month</big> 
+                                <br>
                                 <small>* For selected resources</small>
                             </p>
-                        </div>
-                        <div class="white-panel">
-                            <h3>Projected Pricing</h3>
-                            <p>                                
-                                <big><b>$20.00</b>/month</big> <a href=""><i class="fa fa-info-circle fa-fw"></i></a><br>
-                                Current Support Level: <b><a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Navigator</a></b><br>
+                            <hr class="dash">
+                            <h4>Current Support Level </h4>
+                            <p>
+                                <big><b>Navigator</b> <a href="#" role="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="<b>Navigator® Monthly Service Fee starts at $400</b>. 100% certified AWS engineers deliver Fanatical Support for AWS 24x7x365. Certified Level 1 Payment Card Industry (PCI) Service Provider on AWS. We can act as a business associate to support customers with HIPAA workloads on AWS. Personal contact to assist with onboarding. A combined set of AWS and Rackspace recommendations from certified AWS architects <a href='https://www.rackspace.com/en-us/managed-aws/features' target='_blank'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></big>
+                                <br>
                                 <small>* Navigator cost not reflected here.</small>
                             </p>
                         </div>
-                        <br>                        
+                        <div class="white-panel">
+                            <h3>Projected Cost <a href="#" role="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="This is a monthly estimate based on current AWS pricing. <a href='' title='test add link'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></h3>
+                            <p>
+                                <big><b>$20.00</b>/month</big> 
+                            </p>
+                        </div>
+                        <br>
                         <div class="rs-row pricing-buttons">
                             <a class="rs-btn span-12" href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>
-                    
                         </div>
                         <div class="rs-row">
                             <a class="rs-btn span-6" ng-link="['Tenant']" href="racker-step1.html">Back</a>
@@ -128,38 +133,26 @@
                     <!-- End Stepper -->
                     <hr>
                     <div class="rs-inner recommend">
-
-                        <div class="rs-row">
-                            <div class="span-8">
-                                <div class="migr-ddi-name">
-                                    User Namegoeshere (#1024814) <span class="rax-red-txt">| </span>
-                                    <span class="migr-name">
-                                        <span>Migration-01Feb2017-0456pm</span> <span class="edit rs-edit" title="Change name"></span>  
-                                        <input type="text" class="name-input animated flipInX" placeholder="Migration-01Feb2017-0456pm"/> 
-                                    </span>                                          
-                                </div>
-                            </div>
-                            <div class="span-4">                                             
-                                <div class="support-icons rs-pull-right">
-                                    <span>Support</span>
-                                    <a href="tel:18009614454" title="Call direct for FAWS support"><i class="fa fa-phone fa-fw"></i></a>
-                                    <a href="#" title="Go to Tickets"><i class="fa fa-ticket fa-fw"></i></a>
-                                </div>                                
-                            </div>
+                        <div class="migr-ddi-name">User Namegoeshere (#1024814)</div>
+                        <div class="migr-name">
+                            <span>My_Migration_01</span><span class="edit rs-edit" title="Change name"></span>
+                            <input type="text" class="name-input animated flipInX" placeholder="My_Migration_01" />
                         </div>
-                        <br>
                         <div class="rs-row">
                             <div class="span-8">
-                                <h3>Here is our recommendation for AWS migration: <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h3>
+                                <h3>Based on your selections, here are our recommendations <a href="#" role="button" data-trigger="hover" data-placement="bottom" data-toggle="popover" title="" data-content="You can modify these configurations to your specifications by choosing the edit icon in the last column."><i class="fa fa-info-circle rs-quiet"></i></a></h3>
                             </div>
-                            <div class="span-4">                                             
-                                <input type="text" class="rs-input-large searchbox rs-pull-right" placeholder="filter by keyword or tag...">     
+                            <div class="span-4">
+                                <div class="search rs-pull-right">
+                                    <span class="fa fa-search"></span>
+                                    <input class="rs-input-large" placeholder="filter by keyword or tag...">
+                                </div>
                             </div>
                         </div>
                         <ul class="rs-tabs">
                             <li class="active"><a href="#Servers">Servers <span class="rs-quiet">(1)</span></a></li>
-                            <li class="hover"><a href="#Load">Files<span class="rs-quiet">(3)</span></a></li>
-                            <li class="hover"><a href="#Load">Blocks<span class="rs-quiet">(5)</span></a></li>
+                            <li class="hover"><a href="#Load">Files <span class="rs-quiet">(3)</span></a></li>
+                            <li class="hover"><a href="#Load">Blocks <span class="rs-quiet">(5)</span></a></li>
                             <li class="hover"><a href="#Load">Load Balancers <span class="rs-quiet">(0)</span></a></li>
                             <li class="hover"><a href="#Load">CDN <span class="rs-quiet">(1)</span></a></li>
                             <li class="hover"><a href="#Load">DNS <span class="rs-quiet">(3)</span></a></li>
@@ -169,18 +162,14 @@
                             <div class="rs-tab-pane active" id="Servers">
                                 <table class="rs-list-table">
                                     <thead>
+                                        <th class="rs-table-status"></th>
                                         <th>
                                             <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
                                                 <span class="rs-table-sort-text">Server </span>
                                                 <span class="rs-table-sort-indicator"></span>
                                             </a>
                                         </th>
-                                        <th>
-                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                <span class="rs-table-sort-text">IP Address </span>
-                                                <span class="rs-table-sort-indicator"></span>
-                                            </a>
-                                        </th>
+                                        <th>IP Address</th>
                                         <th></th>
                                         <th>
                                             <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
@@ -206,10 +195,11 @@
                                                 <span class="rs-table-sort-indicator"></span>
                                             </a>
                                         </th>
-                                        <th class="rs-table-cog"></th>
+                                        <th class="rs-table-cog rs-center">Actions</th>
                                     </thead>
                                     <tbody>
                                         <tr>
+                                            <td class="rs-table-status rs-table-status-ok tip"></td>
                                             <td class="rs-table-link">
                                                 <a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave One</a>
                                             </td>
@@ -219,13 +209,14 @@
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
                                             <td class="rs-table-text">$2</td>
-                                            <td class="rs-table-cog">
-                                                <a href="#modify_modal" data-toggle="modal" class="rs-btn rs-btn-action">
-                                                   Modify
+                                            <td class="rs-table-cog rs-center">
+                                                <a href="#modify_modal" data-toggle="modal" class="rs-btn-action">
+                                                    <i class="rs-edit" title="Modify this"></i>
                                                 </a>
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td class="rs-table-status rs-table-status-ok tip"></td>
                                             <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Two</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td><i class="fa fa-arrow-right rs-status-ok"></i></td>
@@ -233,13 +224,14 @@
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
                                             <td class="rs-table-text">$5</td>
-                                            <td class="rs-table-cog">
-                                                <a href="#modify_modal" data-toggle="modal" class="rs-btn rs-btn-action">
-                                                   Modify
+                                            <td class="rs-table-cog rs-center">
+                                                <a href="#modify_modal" data-toggle="modal" class="rs-btn-action">
+                                                    <i class="rs-edit" title="Modify this"></i>
                                                 </a>
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td class="rs-table-status rs-table-status-ok tip"></td>
                                             <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Three</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td><i class="fa fa-arrow-right rs-status-ok"></i></td>
@@ -247,13 +239,14 @@
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
                                             <td class="rs-table-text">$7</td>
-                                            <td class="rs-table-cog">
-                                                <a href="#modify_modal" data-toggle="modal" class="rs-btn rs-btn-action">
-                                                   Modify
+                                            <td class="rs-table-cog rs-center">
+                                                <a href="#modify_modal" data-toggle="modal" class="rs-btn-action">
+                                                    <i class="rs-edit" title="Modify this"></i>
                                                 </a>
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td class="rs-table-status rs-table-status-ok tip"></td>
                                             <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Four</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td><i class="fa fa-arrow-right rs-status-ok"></i></td>
@@ -261,13 +254,14 @@
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
                                             <td class="rs-table-text">$2</td>
-                                            <td class="rs-table-cog">
-                                                <a href="#modify_modal" data-toggle="modal" class="rs-btn rs-btn-action">
-                                                   Modify
+                                            <td class="rs-table-cog rs-center">
+                                                <a href="#modify_modal" data-toggle="modal" class="rs-btn-action">
+                                                    <i class="rs-edit" title="Modify this"></i>
                                                 </a>
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td class="rs-table-status rs-table-status-ok tip"></td>
                                             <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Five</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td><i class="fa fa-arrow-right rs-status-ok"></i></td>
@@ -275,13 +269,14 @@
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
                                             <td class="rs-table-text">$2</td>
-                                            <td class="rs-table-cog">
-                                                <a href="#modify_modal" data-toggle="modal" class="rs-btn rs-btn-action">
-                                                   Modify
+                                            <td class="rs-table-cog rs-center">
+                                                <a href="#modify_modal" data-toggle="modal" class="rs-btn-action">
+                                                    <i class="rs-edit" title="Modify this"></i>
                                                 </a>
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td class="rs-table-status rs-table-status-ok tip"></td>
                                             <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Six</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td><i class="fa fa-arrow-right rs-status-ok"></i></td>
@@ -289,13 +284,13 @@
                                             <td class="rs-table-text">US-East-1a</td>
                                             <td class="rs-table-text">t2 small</td>
                                             <td class="rs-table-text">$2</td>
-                                            <td class="rs-table-cog">
-                                                <a href="#modify_modal" data-toggle="modal" class="rs-btn rs-btn-action">
-                                                   Modify
+                                            <td class="rs-table-cog rs-center">
+                                                <a href="#modify_modal" data-toggle="modal" class="rs-btn-action">
+                                                    <i class="rs-edit" title="Modify this"></i>
                                                 </a>
                                             </td>
                                         </tr>
-                                    </tbody>   
+                                    </tbody>
                                 </table>
                             </div>
                             <div class="rs-tab-pane" id="Load">
@@ -303,7 +298,7 @@
                             </div>
                         </div>
                         <br>
-                        <div class="pagination pagination-mini" >
+                        <div class="pagination pagination-mini">
                             <ul>
                                 <li><span>Showing 6 of 10</span></li>
                                 <li><a href="#">Prev</a></li>
@@ -312,15 +307,14 @@
                                 <li><a href="#">3</a></li>
                                 <li><a href="#">4</a></li>
                                 <li><a href="#">5</a></li>
-                                <li><a href="#">Next</a></li>  
-                                <li><a href="#">See All</a></li>                                
+                                <li><a href="#">Next</a></li>
+                                <li><a href="#">See All</a></li>
                             </ul>
-                        </div>                      
-                    
+                        </div>
                     </div>
                 </div>
             </div>
-            <br>    
+            <br>
         </div>
     </div>
     <br>
@@ -337,7 +331,6 @@
             </ul>
         </div>
     </div>
-
     <!-- Modals -->
     <!-- RESOURCE DETAILS MODAL -->
     <div id="resource_info" class="modal hide animated fadeIn details full" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -347,7 +340,6 @@
             <div class="rs-detail-header-title">cloud-endure-demo-A_db_slave One</div>
         </div>
         <div class="modal-body">
-            
             <div class="rs-detail-section-header">
                 <div class="rs-detail-section-title">Server Details</div>
             </div>
@@ -360,18 +352,17 @@
                     <li class="rs-detail-item">
                         <div class="rs-detail-key">ID</div>
                         <div class="rs-detail-value">86753098675309</div>
-                    </li>                        
+                    </li>
                     <li class="rs-detail-item">
                         <div class="rs-detail-key" id="size-key">RAM</div>
                         <div class="rs-detail-value">
-            
                             <span class="rs-progress-label">2 GB</span>
                         </div>
                     </li>
                     <li class="rs-detail-item">
                         <div class="rs-detail-key" id="size-key">Disk</div>
                         <div class="rs-detail-value">100 GB</div>
-                    </li>        
+                    </li>
                     <li class="rs-detail-item">
                         <div class="rs-detail-key">Region</div>
                         <div class="rs-detail-value">Dallas (DFW)</div>
@@ -379,10 +370,9 @@
                     <li class="rs-detail-item">
                         <div class="rs-detail-key">Server Type</div>
                         <div class="rs-detail-value">First Generation Server</div>
-                    </li>       
+                    </li>
                 </ul>
             </div>
-
             <div class="rs-detail-section-header">
                 <div class="rs-detail-section-title">Networks</div>
             </div>
@@ -411,23 +401,22 @@
                     </table>
                 </div>
             </div>
-           
         </div>
         <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
     </div>
-
     <!-- MODIFY MODAL -->
     <div id="modify_modal" class="modal hide animated fadeIn details" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-            <h3>Modify Configuration</h3>
+            <h3>Modify Configurations </h3>
         </div>
         <div class="modal-body">
-            <h4>What you have currently <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h4>
+            <big><b>What you have currently</b> <a href="#" role="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" title="" data-content="Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. <a href='' title='test add link'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></big>
+            <br>
+            <br>
             <div class="rs-panel">
-
                 <table class="rs-list-table rs-embedded-list-table">
                     <thead>
                         <tr>
@@ -452,41 +441,41 @@
                 </table>
             </div>
             <br>
-            <h4>Choose a new configuration <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h4>
+            <big><b>Choose a new configuration</b> <a href="#" role="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" title="" data-content="Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. <a href='' title='test add link'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></big>
+            <br>
             <br>
             <form class="rs-form-horizontal rs-form-medium">
                 <div class="rs-row">
                     <div class="span-3">
                         <div class="rs-detail-item">
-                          <div class="rs-detail-key"><b>AWS Region</b></div>
-                          <div class="rs-detail-value">
-                            <select>
-                                <option>US-East-1</option>
-                                <option>US-East-1</option>
-                                <option>US-East-1</option>
-                                <option>US-East-1</option>
-                              </select>
+                            <div class="rs-detail-key"><b>AWS Region</b></div>
+                            <div class="rs-detail-value">
+                                <select>
+                                    <option>US-East-1</option>
+                                    <option>US-East-1</option>
+                                    <option>US-East-1</option>
+                                    <option>US-East-1</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                     <div class="span-3">
                         <div class="rs-detail-item">
-                          <div class="rs-detail-key"><b>AWS Zone</b></div>
-                          <div class="rs-detail-value">
-                            <select>
-                                <option>US-East-1a 1</option>
-                                <option>US-East-1a 2</option>
-                                <option>US-East-1a 3</option>
-                                <option>US-East-1a 3</option>
-                              </select>
+                            <div class="rs-detail-key"><b>AWS Zone</b></div>
+                            <div class="rs-detail-value">
+                                <select>
+                                    <option>US-East-1a 1</option>
+                                    <option>US-East-1a 2</option>
+                                    <option>US-East-1a 3</option>
+                                    <option>US-East-1a 3</option>
+                                </select>
                             </div>
-                        </div> 
+                        </div>
                     </div>
-                </div>            
-                      
+                </div>
             </form>
             <div class="rs-embedded-list-table-wrapper rs-embedded-large">
-                <table class="rs-list-table rs-embedded-list-table">
+                <table class="rs-list-table rs-embedded-list-table rs-select-table">
                     <thead>
                         <tr>
                             <th class="rs-table-checkbox"></th>
@@ -498,15 +487,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr class="selected">
                             <td class="rs-table-checkbox">
-                                <input type="radio" />
+                                <input type="radio" checked="checked" />
                             </td>
                             <td class="rs-table-text">t2.small</td>
                             <td class="rs-table-text">1</td>
                             <td class="rs-table-text">2 GB</td>
                             <td class="rs-table-text">EBS-Only</td>
-                            <td class="rs-table-text">$0.00</td>
+                            <td class="rs-table-text">$2.00</td>
                         </tr>
                         <tr>
                             <td class="rs-table-checkbox">
@@ -516,17 +505,17 @@
                             <td class="rs-table-text">2</td>
                             <td class="rs-table-text">8 GB</td>
                             <td class="rs-table-text">EBS-Only</td>
-                            <td class="rs-table-text">$0.00</td>
+                            <td class="rs-table-text">$3.00</td>
                         </tr>
-                        <tr class="selected">
-                            <td class="rs-table-checkbox" >
-                                <input type="radio" / checked="checked">
+                        <tr>
+                            <td class="rs-table-checkbox">
+                                <input type="radio" />
                             </td>
                             <td class="rs-table-text">m3.large</td>
                             <td class="rs-table-text">2</td>
                             <td class="rs-table-text">7.5 GB</td>
                             <td class="rs-table-text">1 x 32</td>
-                            <td class="rs-table-text">$0.00</td>
+                            <td class="rs-table-text">$5.00</td>
                         </tr>
                         <tr>
                             <td class="rs-table-checkbox">
@@ -536,7 +525,7 @@
                             <td class="rs-table-text">2</td>
                             <td class="rs-table-text">3.75 GB</td>
                             <td class="rs-table-text">EBS-Only</td>
-                            <td class="rs-table-text">$0.00</td>
+                            <td class="rs-table-text">$12.00</td>
                         </tr>
                         <tr>
                             <td class="rs-table-checkbox">
@@ -546,14 +535,14 @@
                             <td class="rs-table-text">2</td>
                             <td class="rs-table-text">3.75 GB</td>
                             <td class="rs-table-text">2 x 16</td>
-                            <td class="rs-table-text">$0.00</td>
+                            <td class="rs-table-text">$20.00</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
             <button class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true">Save Changes</button>
             <!-- replace 'data-dismiss="modal" aria-hidden="true"' on 'Save Changes' -->
         </div>
@@ -566,28 +555,24 @@
         </div>
         <div class="modal-body">
             <div class="rs-row rs-center">
-                <a class="rs-btn rs-btn-primary " ng-click="vm.continue()" href="racker-migr-dash.html">Save Progress</a>                    
-                <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="racker-migr-dash.html">Discard </a>
+                <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="racker-migr-dash.html">Save Progress</a>
+                <a class="rs-btn" ng-click="vm.continue()" href="racker-migr-dash.html">Discard </a>
             </div>
         </div>
-        <div class="modal-footer">            
+        <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
     </div>
-
     <!-- PRECHECK MODAL -->
     <div id="precheck_modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-header">
+        <div class="modal-body">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
             <h3 class="rs-page-title"><i class="fa fa-warning fa-fw"></i> Uh oh! There are issues...</h3>
-         </div>
-         <div class="modal-body">
             <ul>
-                <li><b>Issue 1:</b> There are incompatible configurations.</li>
-                <li><b>Issue 2:</b> Dependant files are missing.</li>
-                <li><b>Issue 3:</b> Everything has gone haywire!</li>
+                <li><b><em>Issue 1:</em></b> There are incompatible configurations.</li>
+                <li><b><em>Issue 2:</em></b> Dependant files are missing.</li>
+                <li><b><em>Issue 3</em>:</b> cloud-endure-demo-A_db_slave 3 is has gone totally haywire!!! I would really go back and fix this if I were you!... Thank God I'm not!</li>
             </ul>
-            <p><strong>I really would fix this if I were you!</strong></p>        
         </div>
         <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Go Back</button>
@@ -595,54 +580,50 @@
         </div>
     </div>
     <!-- end modals -->
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            var tooltip;
-            tooltip = new canon.Tooltip();
-        });
-    </script>
     <script src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="js/bootstrap-modal.js"></script>
+    <script src="js/bootstrap-tooltip.js"></script>
+    <script src="js/bootstrap-popover.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('[data-toggle="popover"]').popover({
+            html: true
+        });
+    });
+    </script>
     <!-- name edit script -->
     <script type="text/javascript">
-        $(document).ready(function(){   
-            $('.edit').click(function(){
-                $(this).hide();
-                $(this).prev().hide();
-                $(this).next().show();
-                $(this).next().select();
-            });         
-            $('input.name-input[type="text"]').blur(function() {  
-                 if ($.trim(this.value) == ''){  
-                     this.value = (this.defaultValue ? this.defaultValue : '');  
-                 }
-                 else{
-                     $(this).prev().prev().html(this.value);
-                 }       
-                 $(this).hide();
-                 $(this).prev().show();
-                 $(this).prev().prev().show();
-             });      
-              $('input.name-input[type="text"]').keypress(function(event) {
-                  if (event.keyCode == '13') {
-                      if ($.trim(this.value) == ''){  
-                         this.value = (this.defaultValue ? this.defaultValue : '');  
-                     }
-                     else
-                     {
-                         $(this).prev().prev().html(this.value);
-                     }           
-                     $(this).hide();
-                     $(this).prev().show();
-                     $(this).prev().prev().show();
-                  }
-              });         
+    $(document).ready(function() {
+        $('.edit').click(function() {
+            $(this).hide();
+            $(this).prev().hide();
+            $(this).next().show();
+            $(this).next().select();
         });
-    </script>
-    <script type="text/javascript">
-        document.getElementById("SAWS").disabled = true;
+        $('input.name-input[type="text"]').blur(function() {
+            if ($.trim(this.value) == '') {
+                this.value = (this.defaultValue ? this.defaultValue : '');
+            } else {
+                $(this).prev().prev().html(this.value);
+            }
+            $(this).hide();
+            $(this).prev().show();
+            $(this).prev().prev().show();
+        });
+        $('input.name-input[type="text"]').keypress(function(event) {
+            if (event.keyCode == '13') {
+                if ($.trim(this.value) == '') {
+                    this.value = (this.defaultValue ? this.defaultValue : '');
+                } else {
+                    $(this).prev().prev().html(this.value);
+                }
+                $(this).hide();
+                $(this).prev().show();
+                $(this).prev().prev().show();
+            }
+        });
+    });
     </script>
 </body>
 

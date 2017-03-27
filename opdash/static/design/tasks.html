@@ -12,7 +12,7 @@
     <title>Rackspace Migration Manager</title>
     <link rel="stylesheet" type="text/css" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest//canon.min.css">
     <!-- Custom styles  -->
-    <link href="css/animate.css" rel="stylesheet">    
+    <link href="css/animate.css" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/migration-mgr.css" rel="stylesheet">
@@ -219,6 +219,7 @@
                 </ul>
             </div>
         </div>
+        <!-- End Primary Nav -->
         <div class="rs-container migration-mgr">
             <a href="step5.html"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
             <br>
@@ -227,116 +228,74 @@
                     <div class="rs-inner">
                         <div class="migr-ddi-name">User Namegoeshere (#1024814)</div>
                         <div class="migr-name">
-                            My_Migration_01<span class="edit rs-edit" title="Change name"></span>
-                            <input type="text" class="name-input animated flipInX" placeholder="Migration-01Feb2017-0456pm" />
+                            My_Migration_01 / Tasks                            
                         </div>
                         <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
                             <table class="rs-list-table rs-embedded-list-table no-truncate-td cell-center">
                                 <thead>
-                                    <th>
-                                        <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                            <span class="rs-table-sort-text">Server </span>
-                                            <span class="rs-table-sort-indicator"></span>
-                                        </a>
-                                    </th>
+                                    <th>Task</th>
                                     <th>Status</th>
-                                    <th>Data Uploaded</th>
+                                    <th>Issue</th>
                                     <th>Destination</th>
-                                    <th>ETA</th>
                                     <th>Actions</th>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="rs-table-link">
-                                            <a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave 1</a>
+                                        <td class="rs-table-text">
+                                            Task title
                                         </td>
                                         <td class="rs-table-text">
-                                            <span class="rs-status-disabled">Scheduled</span>
+                                            Scheduled
                                         </td>
                                         <td class="rs-table-text">
-                                            0
+                                            None
                                         </td>
                                         <td class="rs-table-text">
                                             US-East-1
                                         </td>
-                                        <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !== '-1'"> TBD </td>
                                         <td class="rs-table-input">
-                                            <div>
-                                                <a href="" class="rs-btn rs-btn-primary">Start</a>
-                                                <a href="" class="rs-btn">Cancel</a>
-                                            </div>
+                                            <a href="" class="rs-btn">Complete</a>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="rs-table-link">
-                                            <a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave 2</a>
+                                        <td class="rs-table-text">
+                                            Task title
                                         </td>
                                         <td class="rs-table-text">
                                             <span class="rs-status-disabled">Not Configured</span>
                                         </td>
                                         <td class="rs-table-text">
-                                            0
+                                            None
                                         </td>
                                         <td class="rs-table-text">
                                             TBD
                                         </td>
-                                        <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !== '-1'"> TBD </td>
                                         <td class="rs-table-input">
-                                            <div>
-                                                <a href="" class="rs-btn rs-btn-primary">Configure</a>
-                                                <a href="" class="rs-btn">Cancel</a>
-                                            </div>
+                                            <a href="" class="rs-btn">Complete</a>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="rs-table-link">
-                                            <a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave 3</a>
+                                        <td class="rs-table-text">
+                                            Task Title
                                         </td>
                                         <td class="rs-table-text">
                                             <span class="rs-status-warning">Paused</span>
                                         </td>
                                         <td class="rs-table-text">
-                                            1.38 GB of 3.04 GB
+                                            Taking too long to initiate
                                         </td>
                                         <td class="rs-table-text">
                                             US-East-1
                                         </td>
-                                        <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !== '-1'"> TBD </td>
                                         <td class="rs-table-input">
-                                            <div>
-                                                <a href="" class="rs-btn rs-btn-primary">Resume</a>
-                                                <a href="" class="rs-btn">Cancel</a>
-                                            </div>
+                                            <a href="" class="rs-btn">Complete</a>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <br>
-                        <div class="rs-facet-section-body">
-                            <h3>Alerts <span class="rs-quiet">(2)</span></h3>
-                            <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
-                                <table class=" rs-embedded-list-table">
-                                    <thead>
-                                        <tr>
-                                            <th class="rs-table-status"></th>
-                                            <th>Message</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="rs-table-status rs-table-status-warning tip"></td>
-                                            <td><a href="">cloud-endure-demo-A_db_slave 3 Taking a long time to migrate</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="rs-table-status rs-table-status-error tip"></td>
-                                            <td><a href="">Problem while starting this batch. Will be retried.</a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <br>
+
                     </div>
                 </div>
             </div>
@@ -358,89 +317,9 @@
         </div>
     </div>
     <!-- Modal -->
-    <div id="resource_info" class="modal hide fade details" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-            <div class="rs-detail-header-subtitle">Server Name</div>
-            <div class="rs-detail-header-title">cloud-endure-demo-A_db_slave One</div>
-        </div>
-        <div class="modal-body">
-            <div class="rs-detail-section">
-                <div class="rs-detail-section-header">
-                    <div class="rs-detail-section-title">Server Details</div>
-                </div>
-                <div class="rs-detail-section-body">
-                    <ul class="rs-detail-list">
-                        <li class="rs-detail-item">
-                            <div class="rs-detail-key">Server Status</div>
-                            <div class="rs-detail-value"><span class="rs-status rs-status-ok">Active</span></div>
-                        </li>
-                        <li class="rs-detail-item">
-                            <div class="rs-detail-key">ID</div>
-                            <div class="rs-detail-value">86753098675309</div>
-                        </li>
-                        <li class="rs-detail-item">
-                            <div class="rs-detail-key" id="size-key">RAM</div>
-                            <div class="rs-detail-value">
-                                <span class="rs-progress-label">2 GB</span>
-                            </div>
-                        </li>
-                        <li class="rs-detail-item">
-                            <div class="rs-detail-key" id="size-key">Disk</div>
-                            <div class="rs-detail-value">100 GB</div>
-                        </li>
-                        <li class="rs-detail-item">
-                            <div class="rs-detail-key">Region</div>
-                            <div class="rs-detail-value">Dallas (DFW)</div>
-                        </li>
-                        <li class="rs-detail-item">
-                            <div class="rs-detail-key">Server Type</div>
-                            <div class="rs-detail-value">First Generation Server</div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="rs-detail-section">
-                <div class="rs-detail-section-header">
-                    <div class="rs-detail-section-title">Networks</div>
-                </div>
-                <div class="rs-detail-section-body">
-                    <div class="rs-embedded-list-table-wrapper rs-embedded-small">
-                        <table class="rs-list-table rs-embedded-list-table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>IPv4</th>
-                                    <th>IPv6</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="rs-table-text">PublicNet <span class="rs-quiet">(Internet)</span></td>
-                                    <td class="rs-table-text">101.122.11.222</td>
-                                    <td class="rs-table-text"><span class="rs-quiet">None</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="rs-table-text">ServiceNet <span class="rs-quiet">(Rackspace DFW)</span></td>
-                                    <td class="rs-table-text">10.111.22.112</td>
-                                    <td class="rs-table-text"><span class="rs-quiet">None</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        </div>
-    </div>
+
     <!-- modal end -->
-    <script type="text/javascript">
-    $(window).load(function() {
-        $('#myModal').modal('show');
-    });
-    </script>
+
     <script type="application/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
     <script type="application/javascript" src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
     <script src="js/bootstrap.js"></script>
@@ -453,39 +332,7 @@
         });
     });
     </script>
-    <!-- name edit script -->
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $('.edit').click(function() {
-            $(this).hide();
-            $(this).prev().hide();
-            $(this).next().show();
-            $(this).next().select();
-        });
-        $('input.name-input[type="text"]').blur(function() {
-            if ($.trim(this.value) == '') {
-                this.value = (this.defaultValue ? this.defaultValue : '');
-            } else {
-                $(this).prev().prev().html(this.value);
-            }
-            $(this).hide();
-            $(this).prev().show();
-            $(this).prev().prev().show();
-        });
-        $('input.name-input[type="text"]').keypress(function(event) {
-            if (event.keyCode == '13') {
-                if ($.trim(this.value) == '') {
-                    this.value = (this.defaultValue ? this.defaultValue : '');
-                } else {
-                    $(this).prev().prev().html(this.value);
-                }
-                $(this).hide();
-                $(this).prev().show();
-                $(this).prev().prev().show();
-            }
-        });
-    });
-    </script>
+
 </body>
 
 </html>

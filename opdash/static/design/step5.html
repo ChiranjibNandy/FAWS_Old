@@ -12,7 +12,7 @@
     <title>Rackspace Migration Manager</title>
     <link rel="stylesheet" type="text/css" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest//canon.min.css">
     <!-- Custom styles  -->
-    <link href="css/animate.css" rel="stylesheet">    
+    <link href="css/animate.css" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/migration-mgr.css" rel="stylesheet">
@@ -195,26 +195,27 @@
                         <a id="pilot-dashboard-link" class="rs-nav-link" data-pilot-tracking-id="dashboard-link" href="https://mycloud.rackspace.com/cloud/453265/home">Dashboard</a>
                     </li>
                     <li id="pilot-servers" data-nav="servers" class="rs-nav-item pilot-nav-item">
-                        <div class="rs-nav-link" data-pilot-tracking-id="servers-dropdown" role="button" tabindex="0" >Servers</div>
+                        <div class="rs-nav-link" data-pilot-tracking-id="servers-dropdown" role="button" tabindex="0">Servers</div>
                     </li>
                     <li id="pilot-orchestration" data-nav="orchestration" class="rs-nav-item pilot-nav-item">
-                        <div class="rs-nav-link" data-pilot-tracking-id="orchestration-dropdown" role="button" tabindex="0" >Orchestration</div>
+                        <div class="rs-nav-link" data-pilot-tracking-id="orchestration-dropdown" role="button" tabindex="0">Orchestration</div>
                     </li>
                     <li id="pilot-networking" data-nav="networking" class="rs-nav-item pilot-nav-item">
-                        <div class="rs-nav-link" data-pilot-tracking-id="networking-dropdown" role="button" tabindex="0" >Networking</div>
+                        <div class="rs-nav-link" data-pilot-tracking-id="networking-dropdown" role="button" tabindex="0">Networking</div>
                     </li>
                     <li id="pilot-storage" data-nav="storage" class="rs-nav-item pilot-nav-item">
-                        <div class="rs-nav-link" data-pilot-tracking-id="storage-dropdown" role="button" tabindex="0" >Storage</div>
+                        <div class="rs-nav-link" data-pilot-tracking-id="storage-dropdown" role="button" tabindex="0">Storage</div>
                     </li>
                     <li id="pilot-databases" data-nav="databases" class="rs-nav-item pilot-nav-item">
-                        <div class="rs-nav-link" data-pilot-tracking-id="database-dropdown" role="button" tabindex="0" >Databases</div>
+                        <div class="rs-nav-link" data-pilot-tracking-id="database-dropdown" role="button" tabindex="0">Databases</div>
                     </li>
                     <li id="pilot-backups" data-nav="backups" class="rs-nav-item pilot-nav-item">
-                        <div class="rs-nav-link" data-pilot-tracking-id="backups-dropdown" role="button" tabindex="0" >Backups</div>
+                        <div class="rs-nav-link" data-pilot-tracking-id="backups-dropdown" role="button" tabindex="0">Backups</div>
                     </li>
-                    <li id="pilot-backups" data-nav="migrations" class="rs-nav-item pilot-nav-item active"">
-                        <a href="step5.html" class="rs-nav-link" role="button" tabindex="0" >Migration Manager</a>
+                    <li id="pilot-backups" data-nav="backups" class="rs-nav-item pilot-nav-item active">
+                        <div class="rs-nav-link" data-pilot-tracking-id="backups-dropdown" role="button" tabindex="0">Migration Manager</div>
                     </li>
+
                 </ul>
             </div>
         </div>
@@ -228,38 +229,21 @@
             <div class="rs-main rs-panel">
                 <div class="rs-content rs-panel">
                     <div class="rs-inner">
-                    
+                        <div class="migr-ddi-name">User Namegoeshere (#1024814)</div>
                         <div class="rs-row">
                             <div class="span-8">
-                                <div class="migr-ddi-name">
-                                    User Namegoeshere (#1024814)                                        
-                                </div>
-                            </div>  
-                            <div class="span-4">
-                                <div class="support-icons rs-pull-right">
-                                    <span>Support</span>
-                                    <a href="tel:18009614454" title="Call direct for FAWS support"><i class="fa fa-phone fa-fw"></i></a>
-                                    <a href="#" title="Go to Tickets"><i class="fa fa-ticket fa-fw"></i></a>
-                                </div> 
-                            </div>                  
-                        </div>
-
-                        <hr>
-
-                        <div class="rs-row">
-                            <div class="span-8">
-                                <h3>Welcome to your Migration Dashboard, you have <b>5 batches</b> running.</h3> 
+                                <h3>Welcome to your Migration Dashboard, you have <b><em>5 batches</em></b>.</h3> 
                             </div>
-                            <div class="span-4 ">
+                            <div class="span-4">
                                 <div class="pull-right">
-                                    <a href="" class="rs-btn "><i class="fa fa-refresh"></i> Refresh</a>
+                                    <a href="#" class="rs-btn"><i class="fa fa-refresh"></i> Refresh</a>
                                     <a class="rs-btn rs-btn-primary" href="step1.html"><i class="fa fa-plus-square fa-fw"></i> Start New Migration</a>
                                 </div>
                             </div>                        
                         </div>
 
                         <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container table-justify">
-                            <table class="rs-list-table rs-embedded-list-table no-truncate-td">
+                            <table class="rs-list-table rs-embedded-list-table no-truncate-td cell-center">
                                 <thead>
                                     <tr>
                                         <th class="rs-table-status"></th>
@@ -290,30 +274,30 @@
                                         </th>
                                        <!--  <th>
                                             <span class="rs-table-sort-text">Progress</span>
-                                        </th>
+                                        </th>-->
                                         <th>
                                             <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
                                                 <span class="rs-table-sort-text">ETA</span>
                                                 <span class="rs-table-sort-indicator"></span>
                                             </a>
-                                        </th> -->
-                                        <th class="rs-table-cog"></th>
+                                        </th> 
+                                        <th class="rs-table-cog rs-center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress: '!'+ '100'}" class="ng-scope">
                                         <td class="rs-table-status rs-table-status-pending tip"></td>
                                         
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-batch-current.html">Migration-01Feb2017-0456pm</a></td>
+                                        <td class="rs-table-link"><a ng-link="[ 'BatchMigrationDetails']" class="ng-binding" href="batch-current.html">My_Migration_01</a></td>
                                         <td class="rs-table-text ng-binding">User</td>
                                         <td class="rs-table-text ng-binding">TBD</td>
                                         <td class="rs-table-text"><span class="rs-status-disabled">Not Configured</span></td>
                                <!--          <td class="rs-table-text">
                                            
                                             <span class="rs-progress-label">0%</span>
-                                        </td>
-                                        <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !== '-1'"> TBD </td> -->
-                                        <td class="rs-table-input">
+                                        </td>-->
+                                        <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !=='-1'"> TBD </td> 
+                                        <td class="rs-table-input rs-center">
                                             <div class="rs-btn-group">
                                                 <div class="rs-dropdown">
                                                     <div class="rs-cog rs-dropdown-toggle"></div>
@@ -329,14 +313,15 @@
                                     </tr>
                                    
                     
-                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress: '!'+ '100'}" class="ng-scope">
                                         <td class="rs-table-status rs-table-status-pending tip"></td>
                                         
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-batch-current.html">Migration-01Feb2017-0456pm</a></td>
+                                        <td class="rs-table-link"><a ng-link="[ 'BatchMigrationDetails']" class="ng-binding" href="batch-current.html">My_Migration_01</a></td>
                                         <td class="rs-table-text ng-binding">User</td>
                                         <td class="rs-table-text ng-binding">2/1/2017 2:18 PM</td>
                                         <td class="rs-table-text"><span class="rs-status-disabled">Scheduled</span></td>
-                                        <td class="rs-table-input">
+                                        <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !=='-1'"> TBD </td>
+                                        <td class="rs-table-input rs-center">
                                             <div class="rs-btn-group">
                                                 <a href="" class="rs-cog"></a>
                                             </div>
@@ -345,61 +330,66 @@
 
                                     
                                     <!-- end ngRepeat: batch in vm.batches | filter : {progress:'!'+'100'} -->
-                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress: '!'+ '100'}" class="ng-scope">
                                         <td class="rs-table-status rs-table-status-ok tip"></td>
                                         
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-batch-current.html" >Migration-01Feb2017-0456pm</a></td>
+                                        <td class="rs-table-link"><a ng-link="[ 'BatchMigrationDetails']" class="ng-binding" href="batch-current.html" >My_Migration_02</a></td>
                                         <td class="rs-table-text ng-binding">User</td>
                                         <td class="rs-table-text ng-binding">1/1/2017 1:25 AM</td>
                                         <td class="rs-table-text"><span class="rs-status-ok">In Progress</span></td>
-                                        <td class="rs-table-input">
+                                        <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !=='-1'"> 1/2/2017 </td>
+                                        <td class="rs-table-input rs-center">
                                             <div class="rs-btn-group">
                                                 <a href="" class="rs-cog"></a>
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress: '!'+ '100'}" class="ng-scope">
                                         <td class="rs-table-status rs-table-status-warning tip"></td>
                                         
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-batch-current.html">Migration-01Feb2017-0456pm</a></td>
+                                        <td class="rs-table-link"><a ng-link="[ 'BatchMigrationDetails']" class="ng-binding" href="batch-current.html">My_Migration_03</a></td>
                                         <td class="rs-table-text ng-binding">Racker</td>
                                         <td class="rs-table-text ng-binding">1/1/2017 12:18 AM</td>
                                         <td class="rs-table-text"><span class="rs-status-warning">Paused</span></td>
-                                        <td class="rs-table-input">
+                                        <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !=='-1'"> TBD</td>
+                                        <td class="rs-table-input rs-center">
                                             <div class="rs-btn-group">
                                                 <a href="" class="rs-cog"></a>
                                             </div>
                                         </td>
                                     </tr>
                                     <!-- ngRepeat: batch in vm.batches | filter : {progress:'!'+'100'} -->
-                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress: '!'+ '100'}" class="ng-scope">
                                         <td class="rs-table-status rs-table-status-error tip"></td>
                                         
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-batch-current.html">Migration-01Feb2017-0456pm</a></td>
+                                        <td class="rs-table-link"><a ng-link="[ 'BatchMigrationDetails']" class="ng-binding" href="batch-current.html">My_Migration_04</a></td>
                                         <td class="rs-table-text ng-binding">Racker</td>
                                         <td class="rs-table-text ng-binding">1/1/2017 4:23 PM</td>
                                         <td class="rs-table-text"><span class="rs-status-error">Stopped</span></td>
-                                        <td class="rs-table-input">
+                                        <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !=='-1'"> TBD </td>
+                                        <td class="rs-table-input rs-center">
                                             <div class="rs-btn-group">
                                                 <div class="rs-dropdown">
                                                     <div class="rs-cog rs-dropdown-toggle"></div>
                                                     <ul class="rs-dropdown-menu visible">
                                                         <li><span class="rs-dropdown-category">Manage</span></li>
-                                                        <li><a href="#">See Log</a></li>
-        
+                                                        <li><a href="#">Modify</a></li>
+                                                        <li><a href="#">Migrate Now</a></li>
+                                                        <li><a href="#">Cancel</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress: '!'+ '100'}" class="ng-scope">
                                         <td class="rs-table-status rs-table-status-warning tip"></td>
                                         
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-batch-current.html">Migration-01Feb2017-0456pm</a></td>
+                                        <td class="rs-table-link"><a ng-link="[ 'BatchMigrationDetails']" class="ng-binding" href="batch-current.html">My_Migration_05</a></td>
                                         <td class="rs-table-text ng-binding">Racker</td>
                                         <td class="rs-table-text ng-binding">1/1/2017 12:18 AM</td>
                                         <td class="rs-table-text"><span class="rs-status-warning">Preparing Migration</span></td>
-                                        <td class="rs-table-input">
+                                        <td class="rs-table-text ng-binding ng-scope" ng-if="batch.est_completion_time !=='-1'"> TBD </td>
+                                        <td class="rs-table-input rs-center">
                                             <div class="rs-btn-group">
                                                 <a href="" class="rs-cog"></a>
                                             </div>
@@ -415,9 +405,6 @@
                                 <li><a href="#">Prev</a></li>
                                 <li><a href="#">1</a></li>
                                 <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
                                 <li><a href="#">Next</a></li>   
                                 <li><a href="#">See All</a></li>                               
                             </ul>
@@ -427,6 +414,7 @@
                             <table class="rs-list-table rs-embedded-list-table secondary-table">
                                 <thead>
                                     <tr>
+                                        <th class="rs-table-status"></th>
                                         <th>
                                             <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
                                                 <span class="rs-table-sort-text">Completed Batches</span>
@@ -449,28 +437,50 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-batch-completed.html">Migration-01Feb2017-0456pm</a></td>
-                                        <td class="rs-table-text ng-binding">1/12/2017 10:18 PM</td>
-                                        <td class="rs-table-text ng-binding" colspan="2">1/13/2017 01:08 AM</td>
-                                        <td class="rs-table-input rs-input-medium rs-center">
-                                            <a href="#" class="rs-btn">Archive</a>
-                                        </td>
-                                    </tr>
-                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-batch-completed.html">Migration-01Feb2017-0456pm</a></td>
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress: '100'}" class="ng-scope">
+                                        <td class="rs-table-status rs-table-status-ok tip"></td>
+                                        <td class="rs-table-link"><a ng-link="[ 'BatchMigrationDetails']" class="ng-binding" href="batch-completed.html">My_Migration_01</a></td>
                                         <td class="rs-table-text ng-binding">10/12/2016 12:18 AM</td>
                                         <td class="rs-table-text ng-binding" colspan="2">12/11/2016 5:23 PM</td>
-                                        <td class="rs-table-input rs-input-medium rs-center">
-                                            <a href="#" class="rs-btn">Archive</a>
+                                        <td class="rs-table-input rs-center">
+                                            <div class="rs-btn-group">
+                                                <div class="rs-dropdown">
+                                                    <div class="rs-cog rs-dropdown-toggle"></div>
+                                                    <ul class="rs-dropdown-menu visible">
+                                                        <li><span class="rs-dropdown-category">Manage</span></li>
+                                                        <li><a href="#">See Log</a></li>
+                                                        <li><a href="#">Remove</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
-                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-batch-completed.html">Migration-01Feb2017-0456pm</a></td>
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress: '100'}" class="ng-scope">
+                                        <td class="rs-table-status rs-table-status-ok tip"></td>
+                                        <td class="rs-table-link"><a ng-link="[ 'BatchMigrationDetails']" class="ng-binding" href="batch-completed.html">My_Migration_02</a></td>
+                                        <td class="rs-table-text ng-binding">1/12/2017 10:18 PM</td>
+                                        <td class="rs-table-text ng-binding" colspan="2">1/13/2017 01:08 AM</td>
+                                        <td class="rs-table-input rs-center">
+                                            <div class="rs-btn-group">
+                                                <div class="rs-dropdown">
+                                                    <div class="rs-cog"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress: '100'}" class="ng-scope">
+                                        <td class="rs-table-status rs-table-status-ok tip"></td>
+                                        <td class="rs-table-link"><a ng-link="[ 'BatchMigrationDetails']" class="ng-binding" href="batch-completed.html">My_Migration_03</a></td>
                                         <td class="rs-table-text ng-binding">10/16/2016 12:18 AM</td>
                                         <td class="rs-table-text ng-binding" colspan="2">10/18/2016 5:23 PM</td>
-                                        <td class="rs-table-input rs-input-medium rs-center">
-                                            <a href="#" class="rs-btn">Archive</a>
+                                        <td class="rs-table-input rs-center">
+                                            <div class="rs-btn-group">
+                                                <div class="rs-dropdown">
+                                                    <div class="rs-cog"></div>
+             
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -479,7 +489,7 @@
                         <br>
                         <div class="pagination pagination-mini" >
                             <ul>
-                                <li><span>Showing 6 of 10</span></li>
+                                <li><span>Showing 3 of 10</span></li>
                                 <li><a href="#">Prev</a></li>
                                 <li><a href="#">1</a></li>
                                 <li><a href="#">2</a></li>
@@ -494,26 +504,35 @@
                             <div class="span-6">
                                 <div class="rs-facet-section">
                                     <div class="rs-facet-section-body">
-                                        <h3>Alerts (2)  <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h3>
-                                        <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
-                                            <table class="rs-list-table rs-embedded-list-table">
+                                        <h3>Alerts <span class="rs-quiet">(3)</span></h3>
+                                        <div class="rs-embedded-list-table-wrapper rs-embedded-small migration-status-list-container">
+                                            <table class="rs-list-table rs-embedded-list-table rs-select-table">
                                                 <thead>
                                                     <tr>
-                                                        <th>Alert Types</th>
-                                                        <th>Date/Time</th>
+                                                        <th class="rs-table-status"></th>
+                                                        <th>Batch Name</th>
+                                                        <th>Date</th>
                                                         <th>Message</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td><span class="rs-status rs-status-warning">Warning</span></td>
-                                                        <td class="rs-table-text ng-binding">2/1/2017 2:18 PM</td>
-                                                        <td><a href="">Taking a long time to migrate</a></td>
+                                                        <td class="rs-table-status rs-table-status-warning tip"></td>
+                                                        <td>My_Migration_03</td>
+                                                        <td class="rs-table-text ng-binding">2/1/2017</td>
+                                                        <td><a href="tasks.html" class="rs-btn rs-btn-link" role="button" data-trigger="hover" data-placement="left" data-toggle="popover" data-content="Manage tasks">Taking a long time to migrate</a></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><span class="rs-status rs-status-error">Error</span></td>
-                                                        <td class="rs-table-text ng-binding">2/11/2017 1:00 AM</td>
-                                                        <td><a href="">Problem while starting this batch. Will be retried.</a></td>
+                                                        <td class="rs-table-status rs-table-status-error tip"></td>
+                                                        <td>My_Migration_04</td>
+                                                        <td class="rs-table-text ng-binding">2/11/2017</td>
+                                                        <td><a href="tasks.html" class="rs-btn rs-btn-link" role="button" data-trigger="hover" data-placement="left" data-toggle="popover" data-content="Manage tasks">Problem while starting this batch. Will be retried.</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="rs-table-status rs-table-status-warning tip"></td>
+                                                        <td>My_Migration_05</td>
+                                                        <td class="rs-table-text ng-binding">2/11/2017</td>
+                                                        <td><a href="tasks.html" class="rs-btn rs-btn-link" role="button" data-trigger="hover" data-placement="left" data-toggle="popover" data-content="Manage tasks">Problem while starting this batch. Will be retried.</a></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -524,10 +543,11 @@
                             <div class="span-6">
                                 <div class="rs-facet-section">
                                     <div class="rs-facet-section-body">
-                                        <a href="" class="rs-btn rs-btn-link rs-pull-right">See All <i class="fa fa-angle-right"></i></a>
-                                        <h3>Tickets (3)  <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h3>
-                                        <div class="">
-                                            <table class="rs-list-table rs-embedded-list-table-wrapper">
+                                        
+                                        <a href="https://mycloud.rackspace.com/cloud/453265/tickets" class="rs-btn rs-btn-link rs-pull-right" target="_blank" role="button" data-trigger="hover" data-placement="left" data-toggle="popover"  data-content="See all tickets within Rackspace Reach">See All Tickets <i class="fa fa-angle-double-right"></i></a> 
+                                        <h3>Tickets <span class="rs-quiet">(3)</span> </h3>
+                                        <div>
+                                            <table class="rs-list-table rs-embedded-list-table-wrapper rs-embedded-small rs-select-table">
                                                 <thead>
                                                     <tr>
                                                         <th>Ticket Number</th>
@@ -596,15 +616,16 @@
         </div>
     </div>
     
-    <script type="text/javascript">
-    $(document).ready(function() {
-        var tooltip;
-        tooltip = new canon.Tooltip();
-    });
-    </script>
     <script type="application/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
     <script type="application/javascript" src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap-tooltip.js"></script>
+    <script src="js/bootstrap-popover.js"></script>
+    <script>
+      $(document).ready(function(){
+          $('[data-toggle="popover"]').popover({html:true}); 
+      });
+    </script> 
 </body>
 
 </html>
