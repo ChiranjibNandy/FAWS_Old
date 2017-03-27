@@ -425,9 +425,15 @@
                                     <h3>Schedule Migration </h3>
                                     <hr>
                                     <!-- Shows present time by default -->
-                                    <div class="rs-control-group">
+                                    <!-- <div class="rs-control-group">
                                         <h4><input type="radio" name="three" onclick="show('schedule'), hide('scheduleform')" > Initiate migration now </h4>
                                         <h4><input type="radio" name="three" title="Schedule for later" onclick="show('scheduleform')"> Schedule for later</h4>
+                                    </div> -->
+                                    <div class="rs-control-group">
+                                        <h4>Choose a Time:</h4>
+                                        <a id="now" name="now" onclick="show('schedule'), hide('scheduleform')"><i class="fa fa-clock-o fa-fw"> </i> Initiate Migration Now</a>
+                                        <a id="later" name="later" onclick="show('scheduleform'), hide('schedule')"><i class="fa fa-calendar fa-fw"></i> Schedule for Later</a>   
+
                                     </div>
                                     <div class="animated fadeIn" id="schedule" style="display: none;">
                                         <div class="alert alert-warning">

@@ -14,6 +14,14 @@
 .schedule-panel .white-panel .alert {
     padding: 5px 10px 0;
 }
+.schedule-panel .white-panel a{
+    margin-bottom: 10px;
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
 
 .white-panel h3,
 .plain-panel h3 {
@@ -311,7 +319,7 @@ a:hover,
 }
 
 .migration-mgr .secondary-table th {
-    background: rgba(0, 0, 0, 0.075);
+    background: #fff;
 }
 
 .migration-mgr .secondary-table tr:nth-child(even) {
@@ -459,6 +467,11 @@ body .modal.details2 {
 
 .modal ul li {
     margin-bottom: 10px;
+}
+.modal .rs-list-table th {
+    font-weight: 700;
+    color: #333;
+    font-size: 12px;
 }
 /* accordion */
 .accordion-group {
