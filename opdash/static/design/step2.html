@@ -476,6 +476,9 @@
                     <h4>FAQs + More Information</h4>
                     <ul>
                         <li>
+                            <a href="#intro_modal" role="button" data-toggle="modal">See Intro</a>
+                        </li>
+                        <li>
                             <a href="https://support.rackspace.com/how-to/mapping-of-amazon-web-services-resources-to-rackspace-resources/" target="_blank">Mapping of Rackspace Resource to Amazon Web Service Resources</a>
                         </li>
                         <li>
@@ -504,6 +507,58 @@
         </div>
     </div>
     <!-- Modals -->
+    <!-- intro modal -->
+    <div class="modal hide animated fadeIn details" id="intro_modal">
+        <div class="modal-body">
+            <h1 class="rs-page-title">Welcome to the Rackspace Migration Manager!</h1>
+            <hr>
+            <div class="rs-row">
+                <div class="span-7">
+                    <h3>Migrate in just 3 easy steps:</h3>
+                    <big>
+                        <ol class="rs-custom-counter">
+                            <li><b>Select resources to migrate</b></li>
+                            <li><b>Get our recommendation and make modifications</b></li>
+                            <li><b>Schedule and confirm migration</b></li>
+                        </ol>
+                    </big>
+                    <div class="alert alert-warning animated fadeIn">
+                        <p><b>We notice you don't have a Fanatical AWS account.</b> Fear not, we are creating a new account for you. You can also <a href="https://cart.rackspace.com/aws" target="_blank"><u>create an account</u></a></p>
+                    </div>
+                    <div class="alert alert-success animated fadeIn">
+                        <p><b>We notice you already have a Fanatical AWS account.</b> We will use that account for you to migrate. You can also <a href="https://cart.rackspace.com/aws" target="_blank"><u>create a new account</u></a>.</p>
+                    </div>
+                    <div class="alert alert-success animated fadeIn">
+                        <p><b>We notice you have multiple Fanatical AWS accounts.</b> Which of the following would you like to use to migrate?<br>
+                        <select>
+                            <option>Account 1</option>
+                            <option>Account 2</option>
+                            <option>Account 3</option>
+                        </select>
+                        <br>
+                         You can also <a href="https://cart.rackspace.com/aws" target="_blank"><u>create a new account</u></a>.</p>
+                    </div>
+                    <h3><em>Need more information?</em></h3>
+                    <a href="https://www.rackspace.com/en-us/managed-aws" target="_blank">Rackspace Managed AWS</a>
+                    <br>
+                    <a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Pricing and Support Levels</a>
+                </div>
+                <div class="span-5 rs-center">
+                    <img src="images/monitor.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="rs-pull-left">
+                <label class="rs-checkbox">
+                    <input type="checkbox"> Don't show this again
+                </label>
+            </div>
+            <a href="https://mycloud.rackspace.com" class="rs-btn"  data-trigger="hover" data-placement="left" data-toggle="popover" data-content="Warning: This will take you out of the Migration Manager"><i class="fa fa-info-circle fa-fw rs-quiet"></i> Cancel</a>
+            <a href="step5.html" class="rs-btn">Go to Migration Dashboard</a>
+            <a class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true" href="#name_modal" role="button" data-toggle="modal">Start a Migration</a>
+        </div>
+    </div>
     <!-- RESOURCE DETAILS MODAL -->
     <div id="resource_info" class="modal hide animated fadeIn details" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-header">
