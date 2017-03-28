@@ -1,102 +1,165 @@
-
-<div class="rs-container migration-mgr">
-    <div class="rs-main rs-panel">
-        <div class="rs-content rs-panel">
-            <div class="rs-inner">
-                <h3>Sample Migration Report</h3>
-                <div class="rs-row">
-                    <div class="span-12">
-                        <canvas id="myChart" width="640" height="200"></canvas>
+<div class="rs-container migration-mgr racker-dash">
+    <div class="rs-main">
+        <div class="rs-content">
+            <div class="">
+                <div class="rs-row rs-panel">
+                    <div class="rs-inner">
+                        <div class="span-12">
+                            <select name="" id="" class="rs-pull-right">
+                                <option value="">Year</option>
+                                <option value="">Month</option>
+                                <option value="">Week</option>
+                            </select>
+                            <h3>Number of Customers vs. Rackers that have initiated a migration in 2017</h3>
+                            <canvas id="myChart" width="100" height="20"></canvas>
+                            <br>
+                        </div>
                     </div>
                 </div>
+                <br>
                 <div class="rs-row">
-                    <div class="span-6">
-                        <canvas id="myChart2" width="640" height="400"></canvas>
+                    <div class="span-6 rs-panel">
+                        <div class="rs-inner">
+                            <select name="" id="" class="rs-pull-right">
+                                <option value="">Week</option>
+                                <option value="">Month</option>
+                                <option value="">Year</option>
+                            </select>
+                            <h4>Avg. instances per migration</h4>
+                            <canvas id="myChart2" width="100" height="40"></canvas>
+                        </div>
                     </div>
-                    <div class="span-6">
-                        <canvas id="myPieChart" width="640" height="400"></canvas>
+                    <div class="span-6 rs-panel">
+                        <div class="rs-inner">
+                            <select name="" id="" class="rs-pull-right">
+                                <option value="">Week</option>
+                                <option value="">Month</option>
+                                <option value="">Year</option>
+                            </select>
+                            <h4>Avg. duration per migration </h4>
+                            <canvas id="myChart4" width="100" height="40"></canvas>
+                        </div>
                     </div>
                 </div>
-            
+                <br>
+                <div class="rs-row">
+                        <div class="span-6 rs-panel">
+                        <div class="rs-inner">
+                            <select name="" id="" class="rs-pull-right">
+                                <option value="">Week</option>
+                                <option value="">Month</option>
+                                <option value="">Year</option>
+                            </select>
+                            <h4>Overall Data Transfer per Migration</h4>
+                            <canvas id="myChart7" width="100" height="40"></canvas>
+                        </div>
+                    </div>
+                    <div class="span-6 rs-panel">
+                        <div class="rs-inner">
+                            <select name="" id="" class="rs-pull-right">
+                                <option value="">Option</option>
+                            </select>
+                            <h4>Overall migration status <a href=""><i id="tooltip-demo" class="rs-icon-help" title="Click to see why some failed"></i></a></h4>
+                            <canvas id="myChart3" width="100" height="40"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="rs-row">
+                    <div class="span-6 rs-panel">
+                        <div class="rs-inner">
+                            <select name="" id="" class="rs-pull-right">
+                                <option value="">Week</option>
+                                <option value="">Month</option>
+                                <option value="">Year</option>
+                            </select>
+                            <h4>Tickets </h4>
+                            <canvas id="myChart5" width="100" height="40"></canvas>
+                        </div>
+                    </div>
+                    <div class="span-6 rs-panel">
+                        <div class="rs-inner">
+                            <select name="" id="" class="rs-pull-right">
+                                <option value="">Option</option>
+                            </select>
+                            <h4>Price Comparison</h4>
+                            <canvas id="myChart6" width="100" height="40"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
-$(document).ready(function() {
-    var tooltip;
-    tooltip = new canon.Tooltip();
-});
-</script>
-<script>
+
+    $(document).ready(function() {
+        var tooltip;
+        tooltip = new canon.Tooltip();
+    });
+    </script>
+    <script>
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-        datasets: [{
-            label: 'Metric 1',
-            data: [12, 19, 3, 17, 6, 3, 7],
-            backgroundColor: "rgba(51,51,51,0.2)"
-        }, {
-            label: 'Metric 2',
-            data: [2, 29, 5, 5, 2, 3, 10],
-            backgroundColor: "rgba(0,169,109,0.8)"
-        }]
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            datasets: [{
+                label: 'Initiated by Racker',
+                data: [12, 19, 3, 17, 6, 3, 7, 2, 4, 9, 20, 30],
+                backgroundColor: "rgba(0,169,109,0.6)"
+            }, {
+                label: 'Initiated by Customer',
+                data: [2, 29, 5, 5, 2, 3, 10, 8, 5, 3, 8, 1],
+                backgroundColor: "rgba(30,110,193,0.6)"
+            }]
         }
     });
 
-    var ctx = document.getElementById("myChart2");
+    var ctx = document.getElementById("myChart2").getContext('2d');
     var myChart2 = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+            labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7"],
             datasets: [{
-                label: '# of Accounts',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(196,0,34, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(0,169,109,0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(196,0,34,,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(0,169,109,0.1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
+                label: 'Racker',
+                data: [12, 19, 3, 17, 28, 24, 7],
+                backgroundColor: "rgba(0,169,109,0.7)"
+            }, {
+                label: 'Customer',
+                data: [30, 29, 5, 5, 20, 3, 10],
+                backgroundColor: "rgba(30,110,193,0.7)"
             }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
         }
     });
-    // For a pie chart
-    var ctx = document.getElementById("myPieChart");
-    var myPieChart = new Chart(ctx,{
+
+    var ctx = document.getElementById("myChart4");
+    var myChart4 = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7"],
+            datasets: [{
+                label: 'Average',
+                data: [30, 22, 7, 59, 23, 4, 7],
+                backgroundColor: "rgba(0,0,0,0.4)",
+                borderColor: "rgba(0,0,0,0.4)"
+            }]
+        }
+    });
+
+    // pie chart
+    var ctx = document.getElementById("myChart3");
+    var myChart3 = new Chart(ctx, {
         type: 'doughnut',
         data: {
-        labels: [
-            "Rackspace FAWS",
-            "Migrations",
-            "AWS Accounts"
-        ],
-        datasets: [
-            {
-                data: [300, 50, 100],
+            labels: [
+                "Failed",
+                "Succeed",
+                "Paused"
+            ],
+            datasets: [{
+                data: [10, 350, 30],
                 backgroundColor: [
                     "#c40022",
                     "#00A96D",
@@ -109,8 +172,54 @@ $(document).ready(function() {
                 ]
             }]
         }
-
     });
+
+
+    var ctx = document.getElementById("myChart7");
+    var myChart4 = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7"],
+            datasets: [{
+                label: 'Average',
+                data: [700, 420, 700, 509, 630, 400, 370],
+                backgroundColor: "rgba(0,0,0,0.4)",
+                borderColor: "rgba(0,0,0,0.4)"
+            }]
+        }
+    });
+
+    var ctx = document.getElementById("myChart5");
+    var myChart5 = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7"],
+            datasets: [{
+                label: 'Average per user',
+                data: [2, 10, 3, 8, 1, 3, 0],
+                backgroundColor: "rgba(196,0,34,0.4)",
+                borderColor: "rgba(196,0,34,0.6)"
+            }]
+        }
+    });
+
+    var ctx = document.getElementById("myChart6").getContext('2d');
+    var myChart6 = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["Metric 1", "Metric 2", "Metric 3", "Metric 4", "Metric 5", "Metric 6", "Metric 7"],
+            datasets: [{
+                label: 'Cloud Server',
+                data: [12, 19, 8, 12, 22, 11, 27],
+                backgroundColor: "rgba(0,169,109,0.7)"
+            }, {
+                label: 'AWS',
+                data: [20, 23, 5, 7, 20, 13, 20],
+                backgroundColor: "rgba(255,206,86,0.7)"
+            }]
+        }
+    });
+
     var index,elements = $('li[class*=" racker-nav-item active"]');
     if(elements.length != 0){
         for(index =0;index<elements.length;index++){
