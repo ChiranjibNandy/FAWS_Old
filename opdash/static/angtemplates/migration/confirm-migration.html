@@ -11,14 +11,11 @@
                 <div class="rs-row">
                     <div class="span-8">
                         <div class="migr-ddi-name">
-                            {{vm.tenant_account_name}} ( #{{vm.tenant_id}} ) <span class="rax-red-txt">| </span>
-                            <span class="migr-name">
-                                <rseditbatchname></rseditbatchname>
-                            </span>
+                            {{vm.tenant_account_name}} ( #{{vm.tenant_id}} )
+                            <div class="migr-name">
+                                  <rseditbatchname></rseditbatchname>         
                         </div>
-                    </div>
-                    <div class="span-4">
-                        <rscontact></rscontact>
+                        </div>
                     </div>
                 </div>
                 
@@ -35,15 +32,15 @@
 
                     <div class="span-3">
                         <div class="plain-panel rs-center">
-                             <a href="racker-step2.html"  class="rs-btn rs-btn-action rs-pull-right">
-                                       Modify
-                                    </a>   
-                            <h3>Projected Cost
-                                <!--<a href=""><i id="tooltip-demo" class="rs-icon-help" title="click to see more details about pricing."></i></a>-->
-                            </h3>
-                            <hr>
-                            <h2><b>{{vm.cost | currency: '$'}} / month</b><a href=""><i class="fa fa-info-circle fa-fw"></i></a> </h2>
-                           <p>
+                             <a href="racker-step2.html"  class=" rs-btn-action rs-pull-right">
+                                <i class="rs-edit" title="Modify this"></i>
+                                    </a>
+                                    <h3 style="text-align: left;">Projected Cost </h3>
+                                    
+                                    
+                                     <h2 style="text-align: left;">{{vm.cost | currency: '$'}}<small>/month</small> <a href="" role="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="Monthly support and storage costs... <a href='' title='test add link'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></h2>
+                                     <hr>
+                                    <p style="text-align: left;">
                                         Current Support Level: <br>
                                         <big><b><a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Navigator</a></b></big><br>
                                         <small>* Navigator cost not reflected here.</small>

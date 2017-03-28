@@ -5,8 +5,8 @@
         };
         $('#field').datepicker(options);
     </script>
-                            <div class="span-3">
-                                <div class="plain-panel">
+                            <div class="span-3 schedule-panel">
+                                <div class="white-panel">
                                     <h3>Schedule Migration</h3>
                                     <hr>                                    
                                     <!-- Shows present time by default -->  
@@ -15,35 +15,37 @@
                                        <h4> <input type="radio" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateLate" ng-click="vm.showTime()" > Schedule for later</h4>
                                     </div>                                   
                                     <div class="animated fadeIn" id="schedule"   ng-show="vm.showMigrationTime">
-                                        <p>You have chose to schedule your migration for:
-                                        <b>{{ vm.selectedDate}}</b></p>
+                                     <div class="alert alert-warning">   <p>You have chose to schedule your migration for:
+                                        <b>{{ vm.selectedDate}}</b></p></div>
                                     </div>
-                                   <div class="span-8 animated fadeIn"  id="scheduleform" style="min-height: 200px;">
-                                        <form class="rs-form-horizontal rs-form-small" ng-show="vm.showTimeForm"  >
-                                            <div class="rs-control-group">
-                                                <label class="rs-control-label">Choose Date</label>
-                                                <div class="rs-controls">
-                                                    <input id="field" ng-model="vm.date" ng-blur="vm.onSaveTime()" value={{vm.date}} class="span-12" style="width: 121px;">
-                                                </div>
+                                   <div class="animated fadeIn"  id="scheduleform" style="min-height: 200px;">
+                                        <form class="rs-row" ng-show="vm.showTimeForm"  >
+                                            <div class="rs-row">
+                                                <input id="field"  placeholder="Choose Date" ng-model="vm.date" ng-blur="vm.onSaveTime()" value={{vm.date}} class="span-12" style="width: 121px;">
                                             </div>
-                                            <div class="rs-control-group">
-                                                <label class="rs-control-label">Time Zone</label>
-                                                <div class="rs-controls">
+                                
+            
+                                            <div class="rs-row">
+                                                <!--<label class="rs-control-label">Time Zone</label>-->
+                                                <!--<div class="rs-controls">-->
                                                    <select name="timezone" ng-change="vm.onSaveTime()" ng-options="time for time in vm.timeZoneItems" ng-model="vm.timezone" style="width: 113px;" class="ng-pristine ng-valid ng-not-empty ng-touched span-6"  >
                                              <option  value="{{vm.timezone}}">{{vm.timezone}}</option>
                                         </select>
-                                                </div>  
+                                         <select name="time" ng-change="vm.onSaveTime()"  ng-options="time for time in vm.timeItems" ng-model="vm.time"  style="width: 113px;" class="ng-pristine ng-untouched ng-valid ng-not-empty span-6" >
+                                          <option  value="{{vm.time}}">{{vm.time}}</option>
+                                        </select>
+                                                <!--</div>  -->
                                             </div> 
-                                            <div class="rs-control-group">
+                                            <!--<div class="rs-control-group">
                                                 <label class="rs-control-label">Time</label>
                                                 <div class="rs-controls">
                                                     <select name="time" ng-change="vm.onSaveTime()"  ng-options="time for time in vm.timeItems" ng-model="vm.time"  style="width: 113px;" class="ng-pristine ng-untouched ng-valid ng-not-empty span-6" >
                                           <option  value="{{vm.time}}">{{vm.time}}</option>
                                         </select>
                                                 </div>  
-                                            </div>  
+                                            </div>  -->
 
-                                            </div> 
+                                            <!--</div> -->
                                             <div class="rs-control-group">
                                                 <span style="width: 80px"></span>
                                                 <div class="rs-controls">
