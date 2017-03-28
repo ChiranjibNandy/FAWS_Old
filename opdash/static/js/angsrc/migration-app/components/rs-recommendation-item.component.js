@@ -74,7 +74,8 @@
                                         {field: "aws_zone", text: "AWS Zone"},
                                         {field: "aws_instance", text: "AWS instance"},
                                         {field: "storage", text: "Storage"},
-                                        {field: "cost", text: "Cost/Month"}
+                                        {field: "cost", text: "Cost/Month"},
+                                        {field: "action", text: "Actions"}
                                     ];
                     }else if (vm.type === "network"){
                         vm.fetchNetworks();
@@ -185,8 +186,9 @@
                  * @description 
                  * This function helps to populate the pricing details when the modal is clicked first time.
                  */
-                vm.showModifyModal = function(item){
+                vm.showModifyModal = function(item,id){
                     item.isMenuOpen = !item.isMenuOpen;
+                    $(id).modal('show');
                     vm.getPricingDetails(item);
                 };
 
@@ -237,8 +239,8 @@
                 }
 
                 vm.equipmentDetails = function(type, itemdetails) {
-                    vm.itemType = type;
-                    vm.itemDetails = itemdetails;
+                    if (type === "loadbalancers") type = "LoadBalancers";
+                    vm.parent.equipmentDetails(type, itemdetails);
                 };
                 
                 return vm;
