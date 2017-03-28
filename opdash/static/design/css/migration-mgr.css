@@ -14,13 +14,19 @@
 .schedule-panel .white-panel .alert {
     padding: 5px 10px 0;
 }
+.schedule-panel .white-panel .rs-control-group{
+    margin-bottom: 15px;
+}
 .schedule-panel .white-panel a{
-    margin-bottom: 10px;
+    padding: 5px;
     display: block;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 14px;
     text-decoration: none;
     cursor: pointer;
+    color: #333;
+}
+.schedule-panel .white-panel a:hover{
+    background: #eee;
 }
 
 .white-panel h3,
@@ -198,6 +204,9 @@ form .rs-row input {
 
 
 /* canon style overrides  */
+.modal select{
+    margin: 10px 0;
+}
 
 .modal .rs-form-horizontal.rs-form-medium .rs-control-label,
 .modal .rs-form-create.rs-form-medium .rs-control-label {
@@ -221,10 +230,6 @@ a:hover,
 
 .rs-table-status-pending {
     background-color: #999!important;
-}
-
-.migration-mgr .rs-embedded-list-table-wrapper {
-    border: 1px solid #e7e7e7;
 }
 
 .migration-mgr .rs-table-link>a,
@@ -277,7 +282,7 @@ a:hover,
 }
 
 .migration-mgr .rs-dropdown-menu {
-    right: 0;
+    /*right: 0;*/
     text-align: left;
 }
 
