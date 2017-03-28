@@ -17,7 +17,7 @@
 .schedule-panel .white-panel .rs-control-group{
     margin-bottom: 15px;
 }
-.schedule-panel .white-panel a{
+.schedule-panel .white-panel .rs-control-group a{
     padding: 5px;
     display: block;
     font-size: 14px;
@@ -25,7 +25,7 @@
     cursor: pointer;
     color: #333;
 }
-.schedule-panel .white-panel a:hover{
+.schedule-panel .white-panel .rs-control-group a:hover{
     background: #eee;
 }
 
