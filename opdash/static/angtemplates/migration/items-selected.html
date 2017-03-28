@@ -1,12 +1,9 @@
-<div class="plain-panel" ng-style="{'min-height': vm.showrec === 'true' ? '230px' : 'initial'}">
-     <a ng-link="['MigrationResourceList']" ng-show="vm.showrec === 'true'" class="rs-btn rs-btn-action rs-pull-right">
-                                       Modify
-                                    </a>
+<div class="plain-panel" ng-style="{'min-height': vm.showrec === 'true' ? '240px' : 'initial'}">
     
     <!--<div class="span-8">-->
     <h4 ng-show="vm.showrec === 'false'">Items Selected <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h4>
     <h3 ng-show="vm.showrec === 'true'">Resources Selected 
-        <a ng-link="['MigrationResourceList']" class="rs-edit" title="Go to step 1 to choose resources to migrate"></a>
+        <a ng-link="['MigrationResourceList']" class="rs-btn-action rs-pull-right" title="Go to step 1 to choose resources to migrate"></a>
     </h3>
     <hr>
     <div class="accordion" id="accordion2">
