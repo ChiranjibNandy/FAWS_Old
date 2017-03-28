@@ -19,14 +19,14 @@
              * @name migrationApp.controller:rscurrentbatchdetailsCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rscurrentbatchdetails rscurrentbatchdetails} component
              */
-            controller: ["$rootRouter", "migrationitemdataservice", "dashboardservice", function($rootRouter, ds, dashboardService){
+            controller: ["$rootRouter", "migrationitemdataservice", "dashboardservice", "authservice", function($rootRouter, ds, dashboardService, authservice){
                 var vm = this;
+                var job_id;
 
                 /**
                  * @ngdoc method
                  * @name getBatchDetails
                  * @methodOf migrationApp.controller:rscurrentbatchdetailsCtrl
-                 * @param {String} job_id The job id of the batch to get details of
                  * @param {Boolean} refresh True if the batch list needs to be refreshed
                  * @description 
                  * Gets details of a job
@@ -36,19 +36,26 @@
                     dashboardService.getBatches(refresh)
                             .then(function(response) {
                                 var job = response.jobs.job_status_list.find(function(job) {
-                                    return job.job_id === vm.job_id;
+                                    return job.job_id === job_id;
                                 });
                                 console.log(job);
                                 vm.job = job;
                                 vm.loading = false;
+                                vm.lastRefreshTime = new Date().getTime();
                             }, function(errorResponse) {
                                 vm.loading = false;
                                 vm.loadError = true;
                             });
                 };
 
+                vm.$onInit = function(){
+                    var auth = authservice.getAuth();
+                    vm.tenant_id = auth.tenant_id;
+                    vm.currentUser = auth.account_name;
+                };
+
                 vm.$routerOnActivate = function(next, previous) {
-                    vm.job_id = next.params.job_id;
+                    job_id = next.params.job_id;
                     vm.getBatchDetails();
                 };
 
