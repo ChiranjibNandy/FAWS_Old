@@ -146,6 +146,42 @@
                      */
                     vm.account_name = null;
                     authservice.getAuth().tenant_id= null;
+
+                    /**
+                     * @ngdoc property
+                     * @name currentPage
+                     * @propertyOf migrationApp.controller:rsmigrationrackerdashCtrl
+                     * @type {Number}
+                     * @description Holds current page number
+                     */
+                    vm.currentPage = 0;
+
+                    /**
+                     * @ngdoc property
+                     * @name pageSize
+                     * @propertyOf migrationApp.controller:rsmigrationrackerdashCtrl
+                     * @type {Number}
+                     * @description Holds the number of maximum items current page can contain
+                     */                  
+                    vm.pageSize = 0;
+
+                    /**
+                     * @ngdoc property
+                     * @name totalItems
+                     * @propertyOf migrationApp.controller:rsmigrationrackerdashCtrl
+                     * @type {Number}
+                     * @description Holds the number of total items 
+                     */                    
+                    vm.totalItems = 0;
+
+                    /**
+                     * @ngdoc property
+                     * @name noOfPages
+                     * @propertyOf migrationApp.controller:rsmigrationrackerdashCtrl
+                     * @type {Number}
+                     * @description Holds the total number of pages of the pagination control 
+                     */                     
+                    vm.noOfPages = 0;
                     
                     // populate tenants array
                     var getTenantDetails = vm.getTenants();
@@ -156,12 +192,22 @@
 
                         // pagination controls
                         vm.currentPage = 1;
-                        vm.pageSize = 3; // items per page
+                        vm.pageSize = 2; // items per page
                         vm.totalItems = vm.items.length;
                         vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
                         for(var i=1;i<=vm.noOfPages;i++){
                             vm.pageArray.push(i);
                         };  
+
+                        // vm.showAllTenantInfo = function(){
+                        //     vm.currentPage = 1;
+                        //     vm.pageSize = vm.items.length;
+                        //     vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
+                        //     vm.pageArray = [];
+                        //     for(var i=1;i<=vm.noOfPages;i++){
+                        //         vm.pageArray.push(i);
+                        //     };                                                        
+                        // }
                     }, function(error){
                         vm.loading = false;
                         vm.loadError = true;
@@ -202,6 +248,16 @@
                                 "tenant_account_name":item.rax_name
                             });
                         });
+
+                        // Refresh pagination controls
+                        vm.currentPage = 1;
+                        vm.pageSize = 2; // items per page
+                        vm.totalItems = vm.items.length;
+                        vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
+                        vm.pageArray = [];
+                        for(var i=1;i<=vm.noOfPages;i++){
+                            vm.pageArray.push(i);
+                        }; 
 
                         $timeout(function () {
                             vm.showFetch = false;
@@ -286,7 +342,17 @@
                                 "tenant_account_name":item.rax_name
                             });
                         });
+
+                        // Refresh pagination controls
+                        vm.currentPage = 1;
+                        vm.pageSize = 2; // items per page
                         vm.totalItems = vm.items.length;
+                        vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
+                        vm.pageArray = [];
+                        for(var i=1;i<=vm.noOfPages;i++){
+                            vm.pageArray.push(i);
+                        }; 
+
                         $timeout(function () {
                             vm.showFetch = false;
                             vm.fetchResponse = "";

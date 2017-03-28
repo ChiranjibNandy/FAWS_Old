@@ -3,8 +3,8 @@ button, a.rs-nav-link, .rs-tabs>li.active>a{
 }
 
 th{
-    padding-top: 10px;
-    padding-bottom: 10px;
+    /*padding-top: 10px;
+    padding-bottom: 10px;*/
     white-space: nowrap;
     text-transform: capitalize;
     font-weight: bold;
@@ -478,4 +478,21 @@ rscalendaritem > div.week.names > span {
 
 .pullLeft{
     margin-left: -10px;
+}
+
+.search {
+    position: relative;
+}
+
+.search input {
+    text-indent: 30px;
+    padding: 4px
+}
+
+.search .fa-search {
+    position: absolute;
+    top: 6px;
+    left: 7px;
+    font-size: 15px;
+    color: #ccc;
 }
