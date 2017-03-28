@@ -109,6 +109,11 @@
                     $rootRouter.navigate(["ScheduleMigration"]);
                 };
 
+                vm.equipmentDetails = function(type, itemdetails) {
+                    vm.itemType = type;
+                    vm.itemDetails = itemdetails;
+                    $("#resource_info").modal('show');
+                };
                 return vm;
             }
         ]}); // end of component definition
