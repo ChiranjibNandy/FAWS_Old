@@ -79,7 +79,7 @@
                             </div>
                             <div class="span-4">
                                 <div class="pull-right">
-                                    <a href="#" class="rs-btn"><i class="fa fa-refresh"></i> Refresh</a>
+                                    <a href="" class="rs-btn"><i class="fa fa-refresh fa-fw"></i> <small><em class="rs-quiet">Refreshed 2 mins ago.</em></small></a>
                                     <a class="rs-btn rs-btn-primary" href="racker-step1.html"><i class="fa fa-plus-square fa-fw"></i> Start New Migration</a>
                                 </div>
                             </div>
@@ -266,17 +266,7 @@
                                         <td class="rs-table-text ng-binding">10/12/2016 12:18 AM</td>
                                         <td class="rs-table-text ng-binding" colspan="2">12/11/2016 5:23 PM</td>
                                         <td class="rs-table-input rs-center">
-                                            <div class="rs-btn-group">
-                                                <div class="rs-dropdown">
-                                                    <div class="rs-cog rs-dropdown-toggle"></div>
-                                                    <ul class="rs-dropdown-menu visible">
-                                                        <li><span class="rs-dropdown-category">Manage</span></li>
-                                                        <!-- <li><a href="#">See Archive</a></li> -->
-                                                        <li><a href="#">See Log</a></li>
-                                                        <li><a href="#">Remove</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                            <a class="rs-btn rs-btn-primary"> See Log</a>
                                         </td>
                                     </tr>
                                     <tr ng-repeat="batch in vm.batches | filter : {progress: '100'}" class="ng-scope">
@@ -285,11 +275,7 @@
                                         <td class="rs-table-text ng-binding">1/12/2017 10:18 PM</td>
                                         <td class="rs-table-text ng-binding" colspan="2">1/13/2017 01:08 AM</td>
                                         <td class="rs-table-input rs-center">
-                                            <div class="rs-btn-group">
-                                                <div class="rs-dropdown">
-                                                    <div class="rs-cog"></div>
-                                                </div>
-                                            </div>
+                                            <a class="rs-btn rs-btn-primary"> See Log</a>
                                         </td>
                                     </tr>
                                     <tr ng-repeat="batch in vm.batches | filter : {progress: '100'}" class="ng-scope">
@@ -298,11 +284,7 @@
                                         <td class="rs-table-text ng-binding">10/16/2016 12:18 AM</td>
                                         <td class="rs-table-text ng-binding" colspan="2">10/18/2016 5:23 PM</td>
                                         <td class="rs-table-input rs-center">
-                                            <div class="rs-btn-group">
-                                                <div class="rs-dropdown">
-                                                    <div class="rs-cog"></div>
-                                                </div>
-                                            </div>
+                                            <a class="rs-btn rs-btn-primary"> See Log</a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -343,19 +325,19 @@
                                                         <td class="rs-table-status rs-table-status-warning tip"></td>
                                                         <td>My_Migration_03</td>
                                                         <td class="rs-table-text ng-binding">2/1/2017</td>
-                                                        <td><a href="racker-tasks.html" class="rs-btn rs-btn-link" role="button" data-trigger="hover" data-placement="left" data-toggle="popover" data-content="Manage tasks">Taking a long time to migrate</a></td>
+                                                        <td><a href="racker-tasks.html" class="rs-btn rs-btn-link">Taking a long time to migrate</a></td>
                                                     </tr>
                                                     <tr>
                                                         <td class="rs-table-status rs-table-status-error tip"></td>
                                                         <td>My_Migration_04</td>
                                                         <td class="rs-table-text ng-binding">2/11/2017</td>
-                                                        <td><a href="racker-tasks.html" class="rs-btn rs-btn-link" role="button" data-trigger="hover" data-placement="left" data-toggle="popover" data-content="Manage tasks">Problem while starting this batch. Will be retried.</a></td>
+                                                        <td><a href="racker-tasks.html" class="rs-btn rs-btn-link">Problem while starting this batch. Will be retried.</a></td>
                                                     </tr>
                                                     <tr>
                                                         <td class="rs-table-status rs-table-status-warning tip"></td>
                                                         <td>My_Migration_05</td>
                                                         <td class="rs-table-text ng-binding">2/11/2017</td>
-                                                        <td><a href="racker-tasks.html" class="rs-btn rs-btn-link" role="button" data-trigger="hover" data-placement="left" data-toggle="popover" data-content="Manage tasks">Problem while starting this batch. Will be retried.</a></td>
+                                                        <td><a href="racker-tasks.html" class="rs-btn rs-btn-link">Problem while starting this batch. Will be retried.</a></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -366,7 +348,7 @@
                             <div class="span-6">
                                 <div class="rs-facet-section">
                                     <div class="rs-facet-section-body">
-                                        <a href="https://mycloud.rackspace.com/cloud/453265/tickets" class="rs-btn rs-btn-link rs-pull-right" target="_blank" role="button" data-trigger="hover" data-placement="left" data-toggle="popover" data-content="Got to tickets in Rackspace Reach">See All <i class="fa fa-angle-double-right"></i></a>
+                                        <a href="https://mycloud.rackspace.com/cloud/453265/tickets" class="rs-btn rs-btn-link rs-pull-right" target="_blank" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Got to tickets in Rackspace Reach">See All <i class="fa fa-angle-double-right"></i></a>
                                         <h3>Tickets <span class="rs-quiet">(3)</span> </h3>
                                         <div>
                                             <table class="rs-list-table rs-select-table">
