@@ -429,9 +429,9 @@
                                         <h4><input type="radio" name="three" title="Schedule for later" onclick="show('scheduleform')"> Schedule for later</h4>
                                     </div> -->
                                     <div class="rs-control-group">
-                                        <h4>Choose a Time:</h4>
-                                        <a id="now" name="now" onclick="show('schedule'), hide('scheduleform')"><i class="fa fa-clock-o fa-fw"> </i> Initiate Migration Now <i class="fa fa-angle-double-right"></i></a>
-                                        <a id="later" name="later" onclick="show('scheduleform'), hide('schedule')"><i class="fa fa-calendar fa-fw"></i> Schedule for Later <i class="fa fa-angle-double-right"></i></a>  
+                                        
+                                        <b><a id="now" name="now" onclick="show('schedule'), hide('scheduleform')"><i class="fa fa-clock-o fa-fw"> </i> Initiate Migration Now <i class="fa fa-angle-double-right"></i></a></b>
+                                        <b><a id="later" name="later" onclick="show('scheduleform'), hide('schedule')"><i class="fa fa-calendar fa-fw"></i> Schedule for Later <i class="fa fa-angle-double-right"></i></a>  </b>
                                     </div>
                                     <div class="animated fadeIn" id="schedule" style="display: none;">
                                         <div class="alert alert-warning">
@@ -470,7 +470,7 @@
                         <div class="rs-pull-right">
                             <a href="step2.html" class="rs-btn" ng-link="[ 'Tenant']">Back</a>
                             <a href="#cancel_modal" class="rs-btn" role="button" data-toggle="modal">Cancel Migration</a>
-                            <a href="#confirm-migration-modal" class="rs-btn rs-btn-primary" role="button" data-toggle="modal">Confirm &amp; Schedule</a>
+                            <a href="racker-migr-dash.html" class="rs-btn rs-btn-primary">Confirm &amp; Schedule</a>
                         </div>
                         <br>
                     </div>
@@ -582,7 +582,7 @@
         </div>
     </div>
     <!-- confrm migration modal -->
-    <div id="confirm-migration-modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- <div id="confirm-migration-modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <div class="rs-row">
                 <div class="span-5">
@@ -590,64 +590,32 @@
                 </div>
                 <div class="span-7">
                     <br>
-                    <h3>Create a FAWS account &amp; confirm your migration.</h3>
+                    <h3>Confirm your Migration &amp; FAWS account. </h3>
                 </div>
             </div>
         </div>
         <div class="modal-body">
+            <h3>User Namegoeshere (#1024814)</h3>
             <form class="rs-form-horizontal rs-form-medium">
                 <div class="rs-control-group success">
-                    <label class="rs-control-label">Email address</label>
+                     <label class="rs-control-label"><b>Yup this is me!</b></label>
                     <div class="rs-controls">
-                        <input type="text" class="rs-input-xlarge">
-                        <span class="rs-help-block">* Use a valid email address.</span>
-                    </div>
+                        <input type="radio" name="" value="">                         
+                    </div>                   
                 </div>
-                <div class="rs-control-group">
-                    <label class="rs-control-label">Create a username</label>
+                <div class="rs-control-group success">
+                    <label class="rs-control-label"><b>Create another account</b></label>
                     <div class="rs-controls">
-                        <input type="text" class="rs-input-xlarge">
-                        <span class="rs-help-block">* Use 6-16 alphanumeric characters.</span>
-                    </div>
-                </div>
-                <div class="rs-control-group">
-                    <label class="rs-control-label"><a href="#" role="button" data-trigger="hover" data-placement="right" data-toggle="popover" data-content="Length must be between 8 and 100 characters.
-                Password must contain at least one uppercase, lowercase, and numeric characters. 
-                Can start with or include any of the following special characters: 
-                ~ ! @ # $ % ^ & * _ - + = ` | \ ( ) { } [ ] : ;  <> , . ? / £
-                Password cannot begin with a space, but it can contain a space."><i class="fa fa-info-circle rs-quiet"></i></a> Create your Password </label>
-                    <div class="rs-controls">
-                        <input type="text" class="rs-input-xlarge">
-                    </div>
-                </div>
-                <div class="rs-control-group">
-                    <label class="rs-control-label">Select a security question</label>
-                    <div class="rs-controls">
-                        <select id="security_question" name="security_question" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" security-field="" questions="[&quot;What is the location of a dream vacation?&quot;,&quot;Where is the best place to live?&quot;,&quot;What is your favorite book?&quot;,&quot;What is your favorite color?&quot;,&quot;Who let the dogs out?&quot;,&quot;What is your pass phrase?&quot;]" required="" ng-model="signup.contacts.contact[0].user.secretQA.question" ng-options="q.value as q.label for q in securityQuestions">
-                            <option value="string:" label="- Select your security question -" selected="selected">- Select your security question -</option>
-                            <option value="string:What is the location of a dream vacation?" label="What is the location of a dream vacation?">What is the location of a dream vacation?</option>
-                            <option value="string:Where is the best place to live?" label="Where is the best place to live?">Where is the best place to live?</option>
-                            <option value="string:What is your favorite book?" label="What is your favorite book?">What is your favorite book?</option>
-                            <option value="string:What is your favorite color?" label="What is your favorite color?">What is your favorite color?</option>
-                            <option value="string:Who let the dogs out?" label="Who let the dogs out?">Who let the dogs out?</option>
-                            <option value="string:What is your pass phrase?" label="What is your pass phrase?">What is your pass phrase?</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="rs-control-group">
-                    <label class="rs-control-label">Enter your answer</label>
-                    <div class="rs-controls">
-                        <input type="text" class="rs-input-xlarge">
-                    </div>
+                        <input type="radio" name="" value="">                         
+                    </div>                    
                 </div>
             </form>
-            <br>
         </div>
         <div class="modal-footer">
             <a href="step5.html" class="rs-btn rs-btn-primary">Submit &amp; Continue </a>
             <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
         </div>
-    </div>
+    </div> -->
     <!-- end modals -->
     <script>
     function show(target) {
