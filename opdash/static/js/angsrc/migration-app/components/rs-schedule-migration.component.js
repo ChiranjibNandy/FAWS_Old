@@ -23,7 +23,7 @@
              * @name migrationApp.controller:rsschedulemigrationCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsschedulemigration rsschedulemigration} component
              */
-            controller: [ "$rootRouter","datastoreservice","$scope","authservice","$timeout", function($rootRouter,dataStoreService,$scope,authservice,$timeout) {
+            controller: [ "$rootRouter","datastoreservice","$scope","authservice","$timeout","$rootScope", function($rootRouter,dataStoreService,$scope,authservice,$timeout,$rootScope) {
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
@@ -55,11 +55,12 @@
                         "6:30pm", "6:45pm", "7:00pm", "7:15pm", "7:30pm", "7:45pm",
                         "8:00pm", "8:15pm", "8:30pm", "8:45pm", "9:00pm", "9:15pm",
                         "9:30pm", "9:45pm", "10:00pm", "10:15pm", "10:30pm", "10:45pm", "11:00pm", "11:15pm", "11:30pm", "11:45pm"];
-                    vm.timeZoneItems = ["(GMT -12:00) Eniwetok, Kwajalein",
-                        "(GMT -11:00) Midway Island, Samoa",
+                     vm.timeZoneItems = //["EST","CST","MST","PST"];
+                    ["(GMT -12:00) Eniwetok, Kwajalein",
+                         "(GMT -11:00) Midway Island, Samoa",
                         "(GMT -10:00) Hawaii",
-                        "(GMT -09:00) Alaska",
-                        "(GMT -08:00) Pacific Time (US & Canada)",
+                       "(GMT -09:00) Alaska",
+                       "(GMT -08:00) Pacific Time (US & Canada)",
                         "(GMT -07:00) Mountain Time (US & Canada)",
                         "(GMT -06:00) Central Time (US & Canada), Mexico City",
                         "(GMT -05:00) Eastern Time (US & Canada), Bogota, Lima",
@@ -279,7 +280,7 @@
                        vm.showTimeForm =  false;
                        vm.showMigrationTime =true;
                    }
-                    
+                     $rootScope.$emit("vm.scheduleMigration",vm.scheduleMigration);
                };
   /**
                  * @ngdoc method

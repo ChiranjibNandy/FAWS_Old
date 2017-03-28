@@ -25,7 +25,7 @@
              * @name migrationApp.controller:rsconfirmmigrationCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsconfirmmigration rsconfirmmigration} component
              */
-            controller: [ "$rootRouter","datastoreservice","migrationitemdataservice", "$q","httpwrapper", "authservice", "$timeout", function($rootRouter,dataStoreService,ds,$q,HttpWrapper, authservice, $timeout) {
+            controller: [ "$rootRouter","datastoreservice","migrationitemdataservice", "$q","httpwrapper", "authservice", "$timeout","$rootScope", function($rootRouter,dataStoreService,ds,$q,HttpWrapper, authservice, $timeout,$rootScope) {
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
@@ -67,6 +67,12 @@
                     vm.saveProgress = "";
                 };
 
+ $rootScope.$on("vm.scheduleMigration",function(event,value){
+     console.log(value);
+     value=true;
+     vm.scheduleMigration = value;
+     
+ });
                 /**
                  * @ngdoc method
                  * @name migrate
