@@ -21,7 +21,7 @@
                  * @name migrationApp.controller:rsmigrationstatusCtrl
                  * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationstatus rsmigrationstatus} component
                  */
-                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "migrationitemdataservice", "$filter", "$interval", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, ds, $filter, $interval) {
+                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "migrationitemdataservice", "alertsservice", "$filter", "$interval", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, ds, alertsService, $filter, $interval) {
                     var vm = this;
                     var jobList = [];
 
@@ -45,6 +45,7 @@
                     vm.$onInit = function() {
                         $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
                         vm.count = 0;
+                        vm.is_racker = authservice.getAuth().is_racker;
                     };
 
                     vm.$routerOnActivate = function(next, previous) {
@@ -55,7 +56,8 @@
                         } else{
                             vm.afterNewMigration = false;
                         }
-                         vm.getBatches();
+                        vm.getBatches();
+                        vm.getAllAlerts();
                     };
 
                     /**
@@ -108,15 +110,6 @@
                     vm.tenant_id = auth.tenant_id;
                     vm.currentUser = auth.account_name;
                     vm.loading = true;
-
-                    // vm.$routerOnActivate = function(next, previous) {
-                    //     if(previous && previous.urlPath.indexOf("confirm") > -1){
-                    //         vm.afterNewMigration = true;
-                    //         vm.resourceCount = dataStoreService.getMigrationResourceCount();
-                    //     } else{
-                    //         vm.afterNewMigration = false;
-                    //     }
-                    // };
 
                     /**
                      * @ngdoc method
@@ -179,6 +172,7 @@
 
                                     vm.loading = false;
                                     vm.manualRefresh = false;
+                                    vm.lastRefreshTime = new Date().getTime();
                                 }, function(errorResponse) {
                                     vm.loading = false;
                                     vm.currentBatches.loadError = true;
@@ -186,6 +180,14 @@
                                     console.log("Dashboard Error: ", errorResponse);
                                 });
                         }, 3000);
+                    };
+
+                    vm.getAllAlerts = function(refresh) {
+                        alertsService.getAllAlerts(refresh)
+                                     .then(function(result) {
+                                         console.log("Component: ", result);
+                                         vm.alerts = result;
+                                     });
                     };
 
                     /**

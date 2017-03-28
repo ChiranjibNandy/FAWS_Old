@@ -1,14 +1,22 @@
 <div class="rs-container migration-mgr">
+    <a ng-link="['MigrationStatus']"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
+    <br>
     <div class="rs-main ">
         <div class="rs-content rs-panel">
             <div class="rs-inner">
-                <div class="pull-right">
-                    <a class="rs-btn " ng-link="['MigrationStatus']">Back to Dashboard</a>
+                <div class="rs-row">
+                    <div class="span-8">
+                        <div class="migr-ddi-name">{{vm.currentUser}} ( #{{vm.tenant_id}} )</div>
+                        <div class="migr-name">{{vm.job.batch_name}} / Active Migrations</div>
+                    </div>
+                    <div class="span-4">
+                        <div class="pull-right">
+                            <button class="rs-btn" ng-click="vm.getBatchDetails(true)"><i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading}"></i> Refresh</button>
+                            <a href="" class="rs-btn" style="padding-left: 45px; padding-right: 45px;">See Log</a>
+                            <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.loadError">Last refreshed at: {{vm.lastRefreshTime | date : 'M/dd/yyyy hh:mm a'}}</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="rs-detail-header-subtitle">Batch Name</div>
-                <h3>{{vm.job.batch_name}}
-                    &nbsp;<i class="refresh-icon fa fa-refresh" title="Refresh Dashboard" ng-click="vm.getBatchDetails(true)" ng-class="{'fa-spin': vm.loading}"></i>
-                </h3>
                 <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
                     <table class="rs-list-table rs-embedded-list-table no-truncate-td">
                         <thead>
@@ -18,15 +26,15 @@
                                     <span class="rs-table-sort-indicator"></span>
                                 </a>
                             </th>
-                            <th>Progress</th>
                             <th>Status</th>
+                            <th>Actions</th>
                         </thead>
                         <tbody ng-show="!vm.loading && !vm.loadError">
                             <tr ng-repeat="(id, instance) in vm.job.instances">
                                 <td class="rs-table-link">
                                     <a href="#resource_info" ng-click="vm.equipmentDetails('server', id)" role="button" data-toggle="modal">{{instance.name}}</a>
                                 </td>
-                                <td class="rs-table-text">
+                                <!--<td class="rs-table-text">
                                     <div class="rs-progress rs-progress-medium" style="width: 50%;">
                                         <div class="rs-progress-inner">
                                             <div class="rs-segment" style="width: {{vm.job.batch_status==='done' ? 100 : (vm.job.batch_status==='error' ? 0 : ['started', 'in progress', 'paused'].indexOf(vm.job.batch_status)>=0 ? 50 : 0)}}%">
@@ -34,8 +42,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--<span class="rs-progress-label">{{ instance.status === 'done' ? 100 : ['started', 'in progress', 'paused'].indexOf(instance.status)>=0 ? 50 : 0 }}%</span>-->
-                                </td>
+                                    <span class="rs-progress-label">{{ instance.status === 'done' ? 100 : ['started', 'in progress', 'paused'].indexOf(instance.status)>=0 ? 50 : 0 }}%</span>
+                                </td>-->
                                 <td class="rs-table-text">
                                     <span class="rs-status-error" ng-show="vm.job.batch_status==='error'">Error</span>
                                     <span class="rs-status-ok" ng-show="vm.job.batch_status==='done'">Completed</span>
@@ -44,13 +52,13 @@
                                     <span class="rs-status-disabled" ng-show="vm.job.batch_status==='scheduled'">Scheduled</span>
                                     <span class="rs-status-disabled" ng-show="vm.job.batch_status==='not available'">Not Available</span>
                                     <span class="rs-status-warning" ng-show="vm.job.batch_status==='paused'">Paused</span>
-                                    <!--<span class="rs-status" ng-show="vm.job.batch_status!=='error' && instance.status==='not available'">Scheduled</span>
-                                    <span class="rs-status" ng-show="vm.job.batch_status!=='error' && instance.status==='scheduled'">Scheduled</span>
-                                    <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status!=='error' && instance.status==='in progress'">In Progress</span>
-                                    <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status!=='error' && instance.status==='started'">Started</span>
-                                    <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status!=='error' && instance.status==='done'">Completed</span>
-                                    <span class="rs-status rs-status-error" ng-show="vm.job.batch_status!=='error' && instance.status==='error'">Error</span>
-                                    <span class="rs-status rs-status-warning" ng-show="vm.job.batch_status!=='error' && instance.status==='paused'">Paused</span>-->
+                                </td>
+                                <td class="rs-table-input">
+                                    <div>
+                                        <a href="" class="rs-btn rs-btn-primary" ng-show="vm.job.batch_status!=='paused'">Start</a>
+                                        <a href="" class="rs-btn rs-btn-primary" ng-show="vm.job.batch_status==='paused'">Resume</a>
+                                        <a href="" class="rs-btn">Cancel</a>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -83,15 +91,14 @@
                                     <span class="rs-table-sort-indicator"></span>
                                 </a>
                             </th>
-                            <th>Progress</th>
-                            <th>Status</th>
+                            <th colspan="2">Status</th>
                         </thead>
                         <tbody ng-show="!vm.loading && !vm.loadError">
                             <tr ng-repeat="(id, network) in vm.job.networks">
                                 <td class="rs-table-link">
                                     <a href="#network_info" ng-click="vm.equipmentDetails('network', id)" role="button" data-toggle="modal">{{network.name}}</a>
                                 </td>
-                                <td class="rs-table-text">
+                                <!--<td class="rs-table-text">
                                     <div class="rs-progress rs-progress-medium" style="width: 50%;">
                                         <div class="rs-progress-inner">
                                             <div class="rs-segment" style="width: {{vm.job.batch_status==='done' ? 100 : (vm.job.batch_status==='error' ? 0 : ['started', 'in progress', 'paused'].indexOf(vm.job.batch_status)>=0 ? 50 : 0)}}%">
@@ -99,9 +106,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--<span class="rs-progress-label">{{ ['started', 'in progress', 'paused'].indexOf(network.status)>=0 ? 50 : 0 }}%</span>-->
-                                </td>
-                                <td class="rs-table-text">
+                                    <span class="rs-progress-label">{{ ['started', 'in progress', 'paused'].indexOf(network.status)>=0 ? 50 : 0 }}%</span>
+                                </td>-->
+                                <td colspan="2" class="rs-table-text">
                                     <span class="rs-status-error" ng-show="vm.job.batch_status==='error'">Error</span>
                                     <span class="rs-status-ok" ng-show="vm.job.batch_status==='done'">Completed</span>
                                     <span class="rs-status-ok" ng-show="vm.job.batch_status==='started'">Started</span>
@@ -109,21 +116,12 @@
                                     <span class="rs-status-disabled" ng-show="vm.job.batch_status==='scheduled'">Scheduled</span>
                                     <span class="rs-status-disabled" ng-show="vm.job.batch_status==='not available'">Not Available</span>
                                     <span class="rs-status-warning" ng-show="vm.job.batch_status==='paused'">Paused</span>
-                                    <!--<span class="rs-status rs-status-error" ng-show="vm.job.batch_status==='error'">Error</span>
-                                    <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status==='done'">Completed</span>
-                                    <span class="rs-status" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='not available'">Scheduled</span>
-                                    <span class="rs-status" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='scheduled'">Scheduled</span>
-                                    <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='in progress'">In Progress</span>
-                                    <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='started'">Started</span>
-                                    <span class="rs-status rs-status-ok" ng-show="vm.job.batch_status!=='error' && network.status==='done'">Completed</span>
-                                    <span class="rs-status rs-status-error" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='error'">Error</span>
-                                    <span class="rs-status rs-status-warning" ng-show="vm.job.batch_status!=='error' && vm.job.batch_status!=='done' && network.status==='paused'">Paused</span>-->
                                 </td>
                             </tr>
                         </tbody>
                         <tbody ng-show="vm.loading">
                                 <tr>
-                                    <td colspan="3">
+                                    <td colspan="2">
                                         <div class="rs-table-overlay rs-table-overlay-loading">
                                             <div class="rs-table-overlay-content">
                                                 <div class="rs-table-overlay-message">Loading&hellip;</div>
@@ -134,7 +132,7 @@
                             </tbody>
                             <tbody ng-show="!vm.loading && vm.loadError">
                                 <tr>
-                                    <td colspan="3" class="collection-error-msg">Error loading data</td>
+                                    <td colspan="2" class="collection-error-msg">Error loading data</td>
                                 </tr>
                             </tbody>
                     </table>
@@ -142,23 +140,23 @@
                 <br>
 
                 <div class="rs-facet-section-body">
-                    <h3>Alerts (2)</h3>
+                    <h3>Alerts <span class="rs-quiet">(2)</span></h3>
                     <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
-                        <table class="rs-list-table rs-embedded-list-table no-truncate-td">
+                        <table class=" rs-embedded-list-table">
                             <thead>
                                 <tr>
-                                    <th>Alert Type</th>
+                                    <th class="rs-table-status"></th>
                                     <th>Message</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><span class="rs-status rs-status-warning">Warning</span></td>
-                                    <td><a href="">I am a warning</a></td>
+                                    <td class="rs-table-status rs-table-status-warning tip"></td>
+                                    <td><a href="">cloud-endure-demo-A_db_slave 3 Taking a long time to migrate</a></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="rs-status rs-status-error">Error</span></td>
-                                    <td><a href="">I am an Error</a></td>
+                                    <td class="rs-table-status rs-table-status-error tip"></td>
+                                    <td><a href="">Problem while starting this batch. Will be retried.</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -169,7 +167,6 @@
             </div>
         </div>
     </div>
-    <rsinteractivefooter></rsinteractivefooter>
 </div>
 
 <div static-include="'/static/angtemplates/migration/equipment-details.html'"></div>

@@ -19,10 +19,12 @@
              * @name migrationApp.controller:rscompletedbatchdetailsCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rscompletedbatchdetails rscompletedbatchdetails} component
              */
-            controller: ["$rootRouter", "migrationitemdataservice", "dashboardservice", function($rootRouter, ds, dashboardService){
+            controller: ["$rootRouter", "migrationitemdataservice", "dashboardservice", "authservice", function($rootRouter, ds, dashboardService, authservice){
                 var vm = this;
+                var job_id;
 
                 var getBatchDetails = function(job_id) {
+                    vm.loading = true;
                     dashboardService.getBatches()
                             .then(function(response) {
                                 var job = response.jobs.job_status_list.find(function(job) {
@@ -30,13 +32,22 @@
                                 });
                                 console.log(job);
                                 vm.job = job;
+                                vm.loading = false;
                             }, function(errorResponse) {
-
+                                vm.loading = false;
+                                vm.loadError = true;
                             });
                 };
 
+                vm.$onInit = function(){
+                    var auth = authservice.getAuth();
+                    vm.tenant_id = auth.tenant_id;
+                    vm.currentUser = auth.account_name;
+                };
+
                 vm.$routerOnActivate = function(next, previous) {
-                    getBatchDetails(next.params.job_id);
+                    job_id = next.params.job_id;
+                    getBatchDetails(job_id);
                 };
 
                 vm.equipmentDetails = function(type, id) {

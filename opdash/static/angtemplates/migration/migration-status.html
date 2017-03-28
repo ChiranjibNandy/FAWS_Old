@@ -12,26 +12,16 @@
                         <div class="migr-ddi-name">
                             {{vm.currentUser}} ( #{{vm.tenant_id}} )
                         </div>
-                    </div>
-                    <div class="span-4">
-                        <div class="support-icons rs-pull-right">
-                            <rscontact></rscontact>
-                        </div> 
-                    </div>                  
-                </div>
-                <hr>
-                <div class="rs-row">
-                    <div class="span-8">
-                        <h3>Welcome to your Migration Dashboard, you have <b>{{vm.currentBatches.items.length + vm.completedBatches.items.length}} batches</b> running.</h3> 
+                        <h3>Welcome to your Migration Dashboard, you have <b><em>{{vm.currentBatches.items.length + vm.completedBatches.items.length}} batches</em></b>.</h3> 
                     </div>
                     <div class="span-4 ">
                         <div class="pull-right">
                             <button class="rs-btn" ng-click="vm.getBatches(true)"><i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i> Refresh</button>
                             <button class="rs-btn rs-btn-primary" ng-click="vm.startNewMigration()"><i class="fa fa-plus-square fa-fw"></i> Start New Migration</button>
+                            <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed at: {{vm.lastRefreshTime | date : 'M/dd/yyyy hh:mm a'}}</div>
                         </div>
-                    </div>                        
+                    </div>
                 </div>
-
                 <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container table-justify">
                     <table class="rs-list-table rs-embedded-list-table no-truncate-td">
                         <thead>
@@ -157,6 +147,7 @@
                     <table class="rs-list-table rs-embedded-list-table secondary-table">
                         <thead>
                             <tr>
+                                <th class="rs-table-status"></th>
                                 <th>
                                     <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
                                         <span class="rs-table-sort-text">Completed Batches</span>
@@ -175,15 +166,16 @@
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
-                                <th>Actions</th>
+                                <th ng-show="vm.is_racker">Actions</th>
                             </tr>
                         </thead>
                         <tbody ng-show="!vm.loading && !vm.completedBatches.loadError && vm.completedBatches.items.length!==0">
                             <tr ng-repeat="batch in vm.completedBatches.items | limitTo : vm.completedBatches.pageSize : (vm.completedBatches.currentPage-1)*vm.completedBatches.pageSize" class="ng-scope">
+                                <td class="rs-table-status rs-table-status-ok tip"></td>
                                 <td class="rs-table-link large-col"><a ng-link="['CompletedBatchDetails', {job_id: batch.job_id}]" class="ng-binding">{{batch.batch_name}}</a></td>
                                 <td class="rs-table-text ng-binding">{{(batch.start && batch.start * 1000) | date : 'M/dd/yyyy hh:mm a'}}</td>
                                 <td class="rs-table-text ng-binding" colspan="2">{{(batch.end && batch.end * 1000) | date : 'M/dd/yyyy hh:mm a'}}</td>
-                                <td><a href="" >Archive</a></td>
+                                <td ng-show="vm.is_racker"><a href="" >See Log</a></td>
                             </tr>
                         </tbody>
                         <tbody ng-show="vm.loading">
@@ -199,12 +191,12 @@
                         </tbody>
                         <tbody ng-show="!vm.loading && !vm.completedBatches.loadError && vm.completedBatches.items.length===0">
                             <tr>
-                                <td colspan="5" class="empty-collection-info">You don't have any completed batches</td>
+                                <td colspan="6" class="empty-collection-info">You don't have any completed batches</td>
                             </tr>
                         </tbody>
                         <tbody ng-show="!vm.loading && vm.completedBatches.loadError">
                             <tr>
-                                <td colspan="5" class="collection-error-msg">Error loading data</td>
+                                <td colspan="6" class="collection-error-msg">Error loading data</td>
                             </tr>
                         </tbody>
                     </table>
@@ -222,7 +214,7 @@
                     <div class="span-6">
                         <div class="rs-facet-section">
                             <div class="rs-facet-section-body">
-                                <h3>Alerts (2)  <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h3>
+                                <h3>Alerts <span class="rs-quiet">(2)</span></h3>
                                 <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container" style="margin-top: 0;">
                                     <table class="rs-list-table rs-embedded-list-table">
                                         <thead>
@@ -253,7 +245,7 @@
                         <div class="rs-facet-section">
                             <div class="rs-facet-section-body">
                                 <a href="" class="rs-btn rs-btn-link rs-pull-right">See All <i class="fa fa-angle-right"></i></a>
-                                <h3>Tickets (2)  <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h3>
+                                <h3>Tickets <span class="rs-quiet">(3)</span></h3>
                                 <div class="">
                                     <table class="rs-list-table rs-embedded-list-table-wrapper">
                                         <thead>
@@ -274,11 +266,11 @@
                                                 <td class="rs-table-text ng-binding">3/5/2017 3:00 PM</td>
                                                 <td>Problem while starting this batch. Will be retried.</td>
                                             </tr>
-                                            <!--<tr>
+                                            <tr>
                                                 <td><a href="">876309-44432</a></td>
                                                 <td class="rs-table-text ng-binding">1/19/2017 8:00 PM</td>
                                                 <td>Problem while starting this batch. Will be retried.</td>
-                                            </tr>-->
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -311,7 +303,6 @@
             </div>
         </div>
     </div>
-    <rsinteractivefooter></rsinteractivefooter>
 </div>
 
 <div id="abort_continue" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSelect" aria-hidden="true">
