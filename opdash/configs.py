@@ -3,6 +3,9 @@ from os import environ
 
 
 def load_configuration(app):
+    # TODO(Team): Remove configs.py once config.yml is settled.
+    # NOTE: Leaving this for now as reference and will remove in a separate
+    # pull request / commit.
 
     app.config.from_object('opdash.configs.BaseConfig')
 

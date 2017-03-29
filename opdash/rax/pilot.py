@@ -6,12 +6,10 @@ import json
 def get_pilot_header(authtoken, tenant_id):
 
     # get config
-    pilot_config = current_app.config.get("PILOT")
-
-    product = pilot_config["PRODUCT"]
-    pilot_url = pilot_config["PILOT_URL"]
-    mycloud_url = pilot_config["MYCLOUD_URL"]
-    logout_url = pilot_config["LOGOUT_URL"]
+    product = current_app.config["PILOT_PRODUCT"]
+    pilot_url = current_app.config["PILOT_URL"]
+    mycloud_url = current_app.config["PILOT_MYCLOUD_URL"]
+    logout_url = current_app.config["PILOT_LOGOUT_URL"]
 
     pilot_header = "<h2>Pilot Header Not Loaded</h2>"
 

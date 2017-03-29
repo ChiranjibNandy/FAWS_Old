@@ -3,3 +3,6 @@ requests
 redis
 waitress
 flask-caching
+boto3
+pyyaml
+pycrypto

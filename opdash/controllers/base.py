@@ -57,7 +57,7 @@ class UnsecureBlueprint(Blueprint):
     def register(self, app, options, first_registration=False):
 
         self._app = app
-        self._identity_url = app.config["IDENTITY_URL"]
+        self._identity_url = app.config["RAX_IDENTITY_URL"]
 
         # Prepare Each Request
         self.before_request(self.on_before_request)
