@@ -200,15 +200,15 @@
                                             <td class="rs-table-text"><span class="rs-status-error">Error</span></td>
                                             <td class="rs-table-text">Unable to migrate</td>
                                         </tr>
-                                        <tr>
+                                        <tr class="rs-tr-disabled" >
                                             <td class="rs-table-status rs-table-status-ok tip"></td>
                                             <td class="rs-table-checkbox">
-                                                <input type="checkbox" />
+                                                <input type="checkbox" disabled />
                                             </td>
                                             <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Five</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">1024 MB</td>
-                                            <td class="rs-table-text"><span class="rs-status-ok">Active</span></td>
+                                            <td class="rs-table-text"><span class="rs-status-ok">Migrated</span></td>
                                             <td class="rs-table-text">Migrated successfully</td>
                                         </tr>
                                         <tr>
@@ -232,7 +232,7 @@
                         <br>
                         <div class="rs-pull-right">
                             <a class="rs-btn" href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>
-                            <a class="rs-btn rs-btn-primary" href="racker-step2.html">Continue</a>
+                            <a class="rs-btn rs-btn-primary" href="#name_modal" role="button" data-toggle="modal">Continue</a>
                         </div>
                         <div class="pagination pagination-mini">
                             <ul>
@@ -345,17 +345,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="accordion-group">
+                                <!-- <div class="accordion-group">
                                     <div class="accordion-heading">
                                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#dns-name">
-                                            <b>DNS <span class="rs-quiet">(0)</span> <!--  --></b>
+                                            <b>DNS <span class="rs-quiet">(0)</span> </b>
                                         </a>
                                     </div>
                                     <div id="dns-name" class="accordion-body collapse">
                                         <div class="accordion-inner">
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="accordion-group">
                                     <div class="accordion-heading">
                                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#db-name">
@@ -490,10 +490,10 @@
         </div>
         <div class="modal-body">
             <div class="rs-control-group">
-                <label class="rs-control-label"><big> <b>Create a Migration Name</b></big></label>
+                <label class="rs-control-label"><big> <b>* Create a Migration Name</b></big></label>
                 <div class="rs-controls">
                     <input type="text" class="name-input rs-input-xlarge" placeholder="My_Migration_01" />
-                    <span class="rs-help-block">(Might as well have fun with it!) </span>
+                
                 </div>
             </div>
         </div>
@@ -503,9 +503,7 @@
                     <input type="checkbox"> Don't show this again
                 </label>
             </div>
-            <a class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true">Save &amp; Continue</a>
-            <a href="https://mycloud.rackspace.com" class="rs-btn"  role="button" data-trigger="hover" data-placement="left" data-toggle="popover" data-content="Warning: This will take you out of the Migration Manager"><i class="fa fa-info-circle fa-fw rs-quiet"></i>Cancel</a>
-
+            <a class="rs-btn rs-btn-primary" href="racker-step2.html">Save &amp; Continue</a>
         </div>
     </div>
 
@@ -542,11 +540,6 @@
     </script>
 
     <!-- launch name modal - for racker POV only in this case -->
-    <script type="text/javascript">
-    $(window).load(function() {
-        $('#name_modal').modal('show');
-    });
-    </script>
 
     <script type="text/javascript">
     $('#selectAll').click(function(e) {

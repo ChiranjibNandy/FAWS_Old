@@ -266,7 +266,7 @@
                             <li class="hover"><a href="#Load">Blocks <span class="rs-quiet">(5)</span></a></li>
                             <li class="hover"><a href="#Load">Load Balancers <span class="rs-quiet">(2)</span></a></li>
                             <li class="hover"><a href="#Load">CDN <span class="rs-quiet">(3)</span></a></li>
-                            <li class="hover"><a href="#Load">DNS <span class="rs-quiet">(0)</span></a></li>
+                            <!-- <li class="hover"><a href="#Load">DNS <span class="rs-quiet">(0)</span></a></li> -->
                             <li class="hover"><a href="#Load">Databases <span class="rs-quiet">(4)</span></a></li>
                         </ul>
                         <div class="rs-tab-content">
@@ -353,15 +353,15 @@
                                             <td class="rs-table-text"><span class="rs-status-error">Error</span></td>
                                             <td class="rs-table-text">Unable to migrate</td>
                                         </tr>
-                                        <tr>
+                                         <tr class="rs-tr-disabled" >
                                             <td class="rs-table-status rs-table-status-ok tip"></td>
                                             <td class="rs-table-checkbox">
-                                                <input type="checkbox" />
+                                                <input type="checkbox" disabled />
                                             </td>
                                             <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Five</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">1024 MB</td>
-                                            <td class="rs-table-text"><span class="rs-status-ok">Active</span></td>
+                                            <td class="rs-table-text"><span class="rs-status-ok">Migrated</span></td>
                                             <td class="rs-table-text">Migrated successfully</td>
                                         </tr>
                                         <tr>
@@ -385,7 +385,7 @@
                         <br>
                         <div class="rs-pull-right">
                             <a class="rs-btn" href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>
-                            <a class="rs-btn rs-btn-primary" href="step2.html" >Continue</a>
+                            <a class="rs-btn rs-btn-primary" href="#name_modal" role="button" data-toggle="modal" >Continue</a>
                         </div>
                         <div class="pagination pagination-mini">
                             <ul>
@@ -498,17 +498,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="accordion-group">
+                                <!-- <div class="accordion-group">
                                     <div class="accordion-heading">
                                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#dns-name">
-                                            <b>DNS <span class="rs-quiet">(0)</span> <!--  --></b>
+                                            <b>DNS <span class="rs-quiet">(0)</span> </b>
                                         </a>
                                     </div>
                                     <div id="dns-name" class="accordion-body collapse">
                                         <div class="accordion-inner">
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="accordion-group">
                                     <div class="accordion-heading">
                                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#db-name">
@@ -544,7 +544,7 @@
                     <h4>FAQs + More Information</h4>
                     <ul>
                         <li>
-                            <a href="#intro_modal" role="button" data-toggle="modal">See Intro</a>
+                            <a href="https://cart.rackspace.com/aws" target="_blank">Create New FAWS Account</a>
                         </li>
                         <li>
                             <a href="https://support.rackspace.com/how-to/mapping-of-amazon-web-services-resources-to-rackspace-resources/" target="_blank">Mapping of Rackspace Resource to Amazon Web Service Resources</a>
@@ -670,73 +670,6 @@
         </div>
     </div>
 
-    <!-- setup FAWS account modal -->
-    <div id="faws-account-modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-header">
-            <div class="rs-row">
-                <div class="span-5">
-                    <img src="images/FAWS-logo.jpg" alt="FAWS logo" class="FAWS-logo">
-                </div>
-                <div class="span-7">
-                    <br>
-                    <h3>Create a FAWS account &amp; confirm your migration.</h3>
-                </div>
-            </div>
-        </div>
-        <div class="modal-body">
-            <form class="rs-form-horizontal rs-form-medium">
-                <div class="rs-control-group success">
-                    <label class="rs-control-label">Email address</label>
-                    <div class="rs-controls">
-                        <input type="text" class="rs-input-xlarge">
-                        <span class="rs-help-block">* Use a valid email address.</span>
-                    </div>
-                </div>
-                <div class="rs-control-group">
-                    <label class="rs-control-label">Create a username</label>
-                    <div class="rs-controls">
-                        <input type="text" class="rs-input-xlarge">
-                        <span class="rs-help-block">* Use 6-16 alphanumeric characters.</span>
-                    </div>
-                </div>
-                <div class="rs-control-group">
-                    <label class="rs-control-label"><a href="#" role="button" data-trigger="hover" data-placement="right" data-toggle="popover" data-content="Length must be between 8 and 100 characters.
-                Password must contain at least one uppercase, lowercase, and numeric characters. 
-                Can start with or include any of the following special characters: 
-                ~ ! @ # $ % ^ & * _ - + = ` | \ ( ) { } [ ] : ;  <> , . ? / £
-                Password cannot begin with a space, but it can contain a space."><i class="fa fa-info-circle rs-quiet"></i></a> Create your Password </label>
-                    <div class="rs-controls">
-                        <input type="text" class="rs-input-xlarge">
-                    </div>
-                </div>
-                <div class="rs-control-group">
-                    <label class="rs-control-label">Select a security question</label>
-                    <div class="rs-controls">
-                        <select id="security_question" name="security_question" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" security-field="" questions="[&quot;What is the location of a dream vacation?&quot;,&quot;Where is the best place to live?&quot;,&quot;What is your favorite book?&quot;,&quot;What is your favorite color?&quot;,&quot;Who let the dogs out?&quot;,&quot;What is your pass phrase?&quot;]" required="" ng-model="signup.contacts.contact[0].user.secretQA.question" ng-options="q.value as q.label for q in securityQuestions">
-                            <option value="string:" label="- Select your security question -" selected="selected">- Select your security question -</option>
-                            <option value="string:What is the location of a dream vacation?" label="What is the location of a dream vacation?">What is the location of a dream vacation?</option>
-                            <option value="string:Where is the best place to live?" label="Where is the best place to live?">Where is the best place to live?</option>
-                            <option value="string:What is your favorite book?" label="What is your favorite book?">What is your favorite book?</option>
-                            <option value="string:What is your favorite color?" label="What is your favorite color?">What is your favorite color?</option>
-                            <option value="string:Who let the dogs out?" label="Who let the dogs out?">Who let the dogs out?</option>
-                            <option value="string:What is your pass phrase?" label="What is your pass phrase?">What is your pass phrase?</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="rs-control-group">
-                    <label class="rs-control-label">Enter your answer</label>
-                    <div class="rs-controls">
-                        <input type="text" class="rs-input-xlarge">
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <a class="rs-btn rs-btn-primary" href="#name_modal" role="button" data-toggle="modal" data-dismiss="modal" aria-hidden="true">Submit &amp; Continue </a>
-            <a href="#" class="rs-btn"  role="button" role="button" data-toggle="modal" data-dismiss="modal" aria-hidden="true">Cancel</a>
-        </div>
-    </div>
-
     <!-- name migration modal -->
     <div id="name_modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
@@ -745,10 +678,9 @@
         </div>
         <div class="modal-body">
             <div class="rs-control-group">
-                <label class="rs-control-label"><big> <b>Create a Migration Name</b></big></label>
+                <label class="rs-control-label"><big> <b>* Create a Migration Name</b></big></label>
                 <div class="rs-controls">
-                    <input type="text" class="name-input rs-input-xlarge" placeholder="My_Migration_01" />
-                    <span class="rs-help-block">(Might as well have fun with it!) </span>
+                    <input type="text" class="name-input rs-input-xlarge" placeholder="My_Migration_01"/>
                 </div>
             </div>
         </div>
@@ -758,8 +690,8 @@
                     <input type="checkbox"> Don't show this again
                 </label>
             </div>
-            <a class="rs-btn rs-btn-primary"  data-dismiss="modal" aria-hidden="true">Save &amp; Continue</a>
-            <a href="https://mycloud.rackspace.com" class="rs-btn"  role="button" data-trigger="hover" data-placement="left" data-toggle="popover" data-content="Warning: This will take you out of the Migration Manager"><i class="fa fa-info-circle fa-fw rs-quiet"></i>Cancel</a>
+            <a class="rs-btn rs-btn-primary" href="step2.html">Save &amp; Continue</a>
+       
         </div>
     </div>
 
@@ -779,10 +711,10 @@
                         </ol>
                     </big>
                     <div class="alert alert-warning animated fadeIn">
-                        <p><b>We notice you don't have a Fanatical AWS account.</b> Fear not, we are creating a new account for you. You can also <a href="https://cart.rackspace.com/aws" target="_blank"><u>create an account</u></a></p>
+                        <p><b>We notice you don't have a Fanatical AWS account.</b> We will create a new account for you. If you would like to create and link a new or additional account <a href="https://cart.rackspace.com/aws" target="_blank"><u>click here</u></a></p>
                     </div>
                     <div class="alert alert-success animated fadeIn">
-                        <p><b>We notice you already have a Fanatical AWS account.</b> We will use that account for you to migrate. You can also <a href="https://cart.rackspace.com/aws" target="_blank"><u>create a new account</u></a>.</p>
+                        <p><b>We notice you already have a Fanatical AWS account.</b> We will link this account for your migratration.  If you would like to create and link a new or additional account <a href="https://cart.rackspace.com/aws" target="_blank"><u>click here</u></a>.</p>
                     </div>
                     <div class="alert alert-success animated fadeIn">
                         <p><b>We notice you have multiple Fanatical AWS accounts.</b><br>
@@ -792,7 +724,8 @@
                             <option>Account 2</option>
                             <option>Account 3</option>
                         </select>
-                        &nbsp; You can also <a href="https://cart.rackspace.com/aws" target="_blank"><u>create a new account</u></a>.</p>
+                        <br>
+                        If you would like to create and link a new or additional account <br><a href="https://cart.rackspace.com/aws" target="_blank"><u>click here</u></a>.</p>
                     </div>
                     <h3><em>Need more information?</em></h3>
                     <a href="https://www.rackspace.com/en-us/managed-aws" target="_blank">Rackspace Managed AWS</a>
@@ -810,9 +743,9 @@
                     <input type="checkbox"> Don't show this again
                 </label>
             </div>
-            <a href="https://mycloud.rackspace.com" class="rs-btn" ><i class="fa fa-info-circle fa-fw rs-quiet" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Warning: This will take you out of the Migration Manager"></i> Cancel</a>
+            <a href="https://mycloud.rackspace.com" class="rs-btn" ><i class="fa fa-info-circle fa-fw rs-quiet" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Warning: This will take you out of the Migration Manager"></i> Cancel Migration</a>
             <a href="step5.html" class="rs-btn">Go to Migration Dashboard</a>
-            <a class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true" href="#name_modal" role="button" data-toggle="modal">Start a Migration</a>
+            <a class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true">Start a Migration</a>
         </div>
     </div>
     <!-- end modals -->
