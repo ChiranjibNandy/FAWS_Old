@@ -560,7 +560,7 @@
                     <input type="checkbox"> Don't show this again
                 </label>
             </div>
-            <a href="https://mycloud.rackspace.com" class="rs-btn"  data-trigger="hover" data-placement="left" data-toggle="popover" data-content="Warning: This will take you out of the Migration Manager"><i class="fa fa-info-circle fa-fw rs-quiet"></i> Cancel</a>
+            <a href="#" class="rs-btn" data-dismiss="modal" aria-hidden="true" > Close</a>
             <a href="step5.html" class="rs-btn">Go to Migration Dashboard</a>
             <a class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true" href="#name_modal" role="button" data-toggle="modal">Start a Migration</a>
         </div>
@@ -656,7 +656,18 @@
     var options = {};
     $('#field').datepicker(options);
     </script>
-    <!-- custon datepicker - end -->
+    <!-- message randomizer - for demo sake -->
+    <script>
+    var elems = $(".alert");
+    if (elems.length) {
+        var keep = Math.floor(Math.random() * elems.length);
+        for (var i = 0; i < elems.length; ++i) {
+            if (i !== keep) {
+                $(elems[i]).hide();
+            }
+        }
+    }
+    </script>
     <!-- name edit script -->
     <script type="text/javascript">
     $(document).ready(function() {

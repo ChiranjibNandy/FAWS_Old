@@ -205,7 +205,7 @@ form .rs-row input {
 
 /* canon style overrides  */
 .modal select{
-    margin: 10px 0;
+    margin: 5px 0 ;
 }
 
 .modal .rs-form-horizontal.rs-form-medium .rs-control-label,
