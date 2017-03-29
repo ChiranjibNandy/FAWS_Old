@@ -412,8 +412,7 @@
                                     <hr>
                                     <h2>$20<small>/month</small> <a href="#" role="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="Monthly support and storage costs... <a href='' title='test add link'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></h2>
                                     <p>
-                                        Current Support Level:
-                                        <br>
+                                        Current Support Level:<br>
                                         <big><b><a href="#" role="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="<b>Navigator® Monthly Service Fee starts at $300</b>. 100% certified AWS engineers deliver Fanatical Support for AWS 24x7x365. Certified Level 1 Payment Card Industry (PCI) Service Provider on AWS. We can act as a business associate to support customers with HIPAA workloads on AWS. Personal contact to assist with onboarding. A combined set of AWS and Rackspace recommendations from certified AWS architects <a href='https://www.rackspace.com/en-us/managed-aws/features' target='_blank'>Learn More</a>">Navigator</a></b></big>
                                         <br>
                                         <small>* Navigator cost not reflected here.</small>
@@ -425,9 +424,14 @@
                                     <h3>Schedule Migration </h3>
                                     <hr>
                                     <!-- Shows present time by default -->
-                                    <div class="rs-control-group">
+                                    <!-- <div class="rs-control-group">
                                         <h4><input type="radio" name="three" onclick="show('schedule'), hide('scheduleform')" > Initiate migration now </h4>
                                         <h4><input type="radio" name="three" title="Schedule for later" onclick="show('scheduleform')"> Schedule for later</h4>
+                                    </div> -->
+                                    <div class="rs-control-group">
+                                        
+                                        <b><a id="now" name="now" onclick="show('schedule'), hide('scheduleform')"><i class="fa fa-clock-o fa-fw"> </i> Initiate Migration Now <i class="fa fa-angle-double-right"></i></a></b>
+                                        <b><a id="later" name="later" onclick="show('scheduleform'), hide('schedule')"><i class="fa fa-calendar fa-fw"></i> Schedule for Later <i class="fa fa-angle-double-right"></i></a>  </b>
                                     </div>
                                     <div class="animated fadeIn" id="schedule" style="display: none;">
                                         <div class="alert alert-warning">
@@ -466,7 +470,7 @@
                         <div class="rs-pull-right">
                             <a href="step2.html" class="rs-btn" ng-link="[ 'Tenant']">Back</a>
                             <a href="#cancel_modal" class="rs-btn" role="button" data-toggle="modal">Cancel Migration</a>
-                            <a href="#confirm-migration-modal" class="rs-btn rs-btn-primary" role="button" data-toggle="modal">Confirm &amp; Schedule</a>
+                            <a href="step5.html" class="rs-btn rs-btn-primary">Confirm &amp; Schedule</a>
                         </div>
                         <br>
                     </div>
@@ -477,6 +481,9 @@
                 <div class="span-12">
                     <h4>FAQs + More Information</h4>
                     <ul>
+                        <li>
+                            <a href="#intro_modal" role="button" data-toggle="modal">See Intro</a>
+                        </li>
                         <li>
                             <a href="https://support.rackspace.com/how-to/mapping-of-amazon-web-services-resources-to-rackspace-resources/" target="_blank">Mapping of Rackspace Resource to Amazon Web Service Resources</a>
                         </li>
@@ -506,6 +513,58 @@
         </div>
     </div>
     <!-- modals -->
+    <!-- intro modal -->
+    <div class="modal hide animated fadeIn details" id="intro_modal">
+        <div class="modal-body">
+            <h1 class="rs-page-title">Welcome to the Rackspace Migration Manager!</h1>
+            <hr>
+            <div class="rs-row">
+                <div class="span-7">
+                    <h3>Migrate in just 3 easy steps:</h3>
+                    <big>
+                        <ol class="rs-custom-counter">
+                            <li><b>Select resources to migrate</b></li>
+                            <li><b>Get our recommendation and make modifications</b></li>
+                            <li><b>Schedule and confirm migration</b></li>
+                        </ol>
+                    </big>
+                    <div class="alert alert-warning animated fadeIn">
+                        <p><b>We notice you don't have a Fanatical AWS account.</b> Fear not, we are creating a new account for you. You can also <a href="https://cart.rackspace.com/aws" target="_blank"><u>create an account</u></a></p>
+                    </div>
+                    <div class="alert alert-success animated fadeIn">
+                        <p><b>We notice you already have a Fanatical AWS account.</b> We will use that account for you to migrate. You can also <a href="https://cart.rackspace.com/aws" target="_blank"><u>create a new account</u></a>.</p>
+                    </div>
+                    <div class="alert alert-success animated fadeIn">
+                        <p><b>We notice you have multiple Fanatical AWS accounts.</b> Which of the following would you like to use to migrate?<br>
+                        <select>
+                            <option>Account 1</option>
+                            <option>Account 2</option>
+                            <option>Account 3</option>
+                        </select>
+                        <br>
+                         You can also <a href="https://cart.rackspace.com/aws" target="_blank"><u>create a new account</u></a>.</p>
+                    </div>
+                    <h3><em>Need more information?</em></h3>
+                    <a href="https://www.rackspace.com/en-us/managed-aws" target="_blank">Rackspace Managed AWS</a>
+                    <br>
+                    <a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Pricing and Support Levels</a>
+                </div>
+                <div class="span-5 rs-center">
+                    <img src="images/monitor.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="rs-pull-left">
+                <label class="rs-checkbox">
+                    <input type="checkbox"> Don't show this again
+                </label>
+            </div>
+            <a href="https://mycloud.rackspace.com" class="rs-btn"  data-trigger="hover" data-placement="left" data-toggle="popover" data-content="Warning: This will take you out of the Migration Manager"><i class="fa fa-info-circle fa-fw rs-quiet"></i> Cancel</a>
+            <a href="step5.html" class="rs-btn">Go to Migration Dashboard</a>
+            <a class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true" href="#name_modal" role="button" data-toggle="modal">Start a Migration</a>
+        </div>
+    </div>
     <!-- cancel migration modal -->
     <div id="cancel_modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
@@ -523,7 +582,7 @@
         </div>
     </div>
     <!-- confrm migration modal -->
-    <div id="confirm-migration-modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- <div id="confirm-migration-modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <div class="rs-row">
                 <div class="span-5">
@@ -531,64 +590,32 @@
                 </div>
                 <div class="span-7">
                     <br>
-                    <h3>Create a FAWS account &amp; confirm your migration.</h3>
+                    <h3>Confirm your Migration &amp; FAWS account. </h3>
                 </div>
             </div>
         </div>
         <div class="modal-body">
+            <h3>User Namegoeshere (#1024814)</h3>
             <form class="rs-form-horizontal rs-form-medium">
                 <div class="rs-control-group success">
-                    <label class="rs-control-label">Email address</label>
+                     <label class="rs-control-label"><b>Yup this is me!</b></label>
                     <div class="rs-controls">
-                        <input type="text" class="rs-input-xlarge">
-                        <span class="rs-help-block">* Use a valid email address.</span>
-                    </div>
+                        <input type="radio" name="" value="">                         
+                    </div>                   
                 </div>
-                <div class="rs-control-group">
-                    <label class="rs-control-label">Create a username</label>
+                <div class="rs-control-group success">
+                    <label class="rs-control-label"><b>Create another account</b></label>
                     <div class="rs-controls">
-                        <input type="text" class="rs-input-xlarge">
-                        <span class="rs-help-block">* Use 6-16 alphanumeric characters.</span>
-                    </div>
-                </div>
-                <div class="rs-control-group">
-                    <label class="rs-control-label"><a href="#" role="button" data-trigger="hover" data-placement="right" data-toggle="popover" data-content="Length must be between 8 and 100 characters.
-                Password must contain at least one uppercase, lowercase, and numeric characters. 
-                Can start with or include any of the following special characters: 
-                ~ ! @ # $ % ^ & * _ - + = ` | \ ( ) { } [ ] : ;  <> , . ? / £
-                Password cannot begin with a space, but it can contain a space."><i class="fa fa-info-circle rs-quiet"></i></a> Create your Password </label>
-                    <div class="rs-controls">
-                        <input type="text" class="rs-input-xlarge">
-                    </div>
-                </div>
-                <div class="rs-control-group">
-                    <label class="rs-control-label">Select a security question</label>
-                    <div class="rs-controls">
-                        <select id="security_question" name="security_question" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" security-field="" questions="[&quot;What is the location of a dream vacation?&quot;,&quot;Where is the best place to live?&quot;,&quot;What is your favorite book?&quot;,&quot;What is your favorite color?&quot;,&quot;Who let the dogs out?&quot;,&quot;What is your pass phrase?&quot;]" required="" ng-model="signup.contacts.contact[0].user.secretQA.question" ng-options="q.value as q.label for q in securityQuestions">
-                            <option value="string:" label="- Select your security question -" selected="selected">- Select your security question -</option>
-                            <option value="string:What is the location of a dream vacation?" label="What is the location of a dream vacation?">What is the location of a dream vacation?</option>
-                            <option value="string:Where is the best place to live?" label="Where is the best place to live?">Where is the best place to live?</option>
-                            <option value="string:What is your favorite book?" label="What is your favorite book?">What is your favorite book?</option>
-                            <option value="string:What is your favorite color?" label="What is your favorite color?">What is your favorite color?</option>
-                            <option value="string:Who let the dogs out?" label="Who let the dogs out?">Who let the dogs out?</option>
-                            <option value="string:What is your pass phrase?" label="What is your pass phrase?">What is your pass phrase?</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="rs-control-group">
-                    <label class="rs-control-label">Enter your answer</label>
-                    <div class="rs-controls">
-                        <input type="text" class="rs-input-xlarge">
-                    </div>
+                        <input type="radio" name="" value="">                         
+                    </div>                    
                 </div>
             </form>
-            <br>
         </div>
         <div class="modal-footer">
             <a href="step5.html" class="rs-btn rs-btn-primary">Submit &amp; Continue </a>
             <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
         </div>
-    </div>
+    </div> -->
     <!-- end modals -->
     <script>
     function show(target) {

@@ -295,6 +295,18 @@
                                                 <span class="rs-table-sort-indicator"></span>
                                             </a>
                                         </th>
+                                        <th>
+                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                <span class="rs-table-sort-text">Server Status</span>
+                                                <span class="rs-table-sort-indicator"></span>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                                <span class="rs-table-sort-text">Migration Status</span>
+                                                <span class="rs-table-sort-indicator"></span>
+                                            </a>
+                                        </th>
                                     </thead>
                                     <tbody>
                                         <tr>
@@ -305,6 +317,8 @@
                                             <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave One</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">1024 MB</td>
+                                            <td class="rs-table-text"><span class="rs-status-ok">Active</span></td>
+                                            <td class="rs-table-text">Ready</td>
                                         </tr>
                                         <tr>
                                             <td class="rs-table-status rs-table-status-warning tip"></td>
@@ -314,6 +328,8 @@
                                             <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Two</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">1024 MB</td>
+                                            <td class="rs-table-text"><span class="rs-status-warning">Inactive</span></td>
+                                            <td class="rs-table-text">Not ready</td>
                                         </tr>
                                         <tr>
                                             <td class="rs-table-status rs-table-status-ok tip"></td>
@@ -323,6 +339,8 @@
                                             <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Three</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">1024 MB</td>
+                                            <td class="rs-table-text"><span class="rs-status-ok">Active</span></td>
+                                            <td class="rs-table-text">Ready</td>
                                         </tr>
                                         <tr class="rs-tr-disabled" title="This server is unable to be selected. Learn More">
                                             <td class="rs-table-status rs-table-status-error tip"></td>
@@ -332,6 +350,8 @@
                                             <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Four</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">1024 MB</td>
+                                            <td class="rs-table-text"><span class="rs-status-error">Error</span></td>
+                                            <td class="rs-table-text">Unable to migrate</td>
                                         </tr>
                                         <tr>
                                             <td class="rs-table-status rs-table-status-ok tip"></td>
@@ -341,6 +361,8 @@
                                             <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Five</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">1024 MB</td>
+                                            <td class="rs-table-text"><span class="rs-status-ok">Active</span></td>
+                                            <td class="rs-table-text">Migrated successfully</td>
                                         </tr>
                                         <tr>
                                             <td class="rs-table-status rs-table-status-ok tip"></td>
@@ -350,6 +372,8 @@
                                             <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Six</a></td>
                                             <td class="rs-table-text">64.49.226.84</td>
                                             <td class="rs-table-text">1024 MB</td>
+                                            <td class="rs-table-text"><span class="rs-status-ok">Active</span></td>
+                                            <td class="rs-table-text">Ready</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -516,8 +540,12 @@
             <br>
             <div class="rs-row">
                 <div class="span-12">
+                    <!-- migration footer -->
                     <h4>FAQs + More Information</h4>
                     <ul>
+                        <li>
+                            <a href="#intro_modal" role="button" data-toggle="modal">See Intro</a>
+                        </li>
                         <li>
                             <a href="https://support.rackspace.com/how-to/mapping-of-amazon-web-services-resources-to-rackspace-resources/" target="_blank">Mapping of Rackspace Resource to Amazon Web Service Resources</a>
                         </li>
@@ -594,8 +622,8 @@
                     <div class="rs-detail-section-title">Networks</div>
                 </div>
                 <div class="rs-detail-section-body">
-                    <div class="rs-embedded-list-table-wrapper rs-embedded-small">
-                        <table class="rs-list-table rs-embedded-list-table">
+                    <div>
+                        <table class="rs-list-table">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -751,23 +779,20 @@
                         </ol>
                     </big>
                     <div class="alert alert-warning animated fadeIn">
-                        <p><b>We notice you don't have a Fanatical AWS account.</b> You can <a href="#faws-account-modal" data-dismiss="modal" role="button" data-toggle="modal"><u>create one now</u></a> or once you've confirmed your migration in <b>step 3</b>.</p>
+                        <p><b>We notice you don't have a Fanatical AWS account.</b> Fear not, we are creating a new account for you. You can also <a href="https://cart.rackspace.com/aws" target="_blank"><u>create an account</u></a></p>
                     </div>
                     <div class="alert alert-success animated fadeIn">
-                        <p><b>We notice you already have a Fanatical AWS account.</b> We will use that account for you to migrate. You can also <a href="#faws-account-modal" data-dismiss="modal" role="button" data-toggle="modal"><u>create a new one</u></a> now, or once you've confirmed your migration in <b>step 3</b>.</p>
+                        <p><b>We notice you already have a Fanatical AWS account.</b> We will use that account for you to migrate. You can also <a href="https://cart.rackspace.com/aws" target="_blank"><u>create a new account</u></a>.</p>
                     </div>
                     <div class="alert alert-success animated fadeIn">
-                        <p><b><!-- Multiple FAWS Accounts:  -->We notice you have multiple Fanatical AWS accounts. Which of the following would you like to use to migrate?</b>
-                            <br>
-                            <label class="rs-checkbox">
-                                <input type="checkbox">
-                                <em>Account 1</em>
-                            </label>
-                            <label class="rs-checkbox">
-                                <input type="checkbox">
-                                <em>Account 2</em>
-                            </label>
-                            You can also <a href="#faws-account-modal" data-dismiss="modal" role="button" data-toggle="modal"><u>create a new one</u></a> now, or once you've confirmed your migration in <b>step 3</b>.</p>
+                        <p><b>We notice you have multiple Fanatical AWS accounts.</b> Which of the following would you like to use to migrate?<br>
+                        <select>
+                            <option>Account 1</option>
+                            <option>Account 2</option>
+                            <option>Account 3</option>
+                        </select>
+                        <br>
+                         You can also <a href="https://cart.rackspace.com/aws" target="_blank"><u>create a new account</u></a>.</p>
                     </div>
                     <h3><em>Need more information?</em></h3>
                     <a href="https://www.rackspace.com/en-us/managed-aws" target="_blank">Rackspace Managed AWS</a>
@@ -785,7 +810,7 @@
                     <input type="checkbox"> Don't show this again
                 </label>
             </div>
-            <a href="https://mycloud.rackspace.com" class="rs-btn"  data-trigger="hover" data-placement="left" data-toggle="popover" data-content="Warning: This will take you out of the Migration Manager"><i class="fa fa-info-circle fa-fw rs-quiet"></i> Cancel</a>
+            <a href="https://mycloud.rackspace.com" class="rs-btn" ><i class="fa fa-info-circle fa-fw rs-quiet" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Warning: This will take you out of the Migration Manager"></i> Cancel</a>
             <a href="step5.html" class="rs-btn">Go to Migration Dashboard</a>
             <a class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true" href="#name_modal" role="button" data-toggle="modal">Start a Migration</a>
         </div>

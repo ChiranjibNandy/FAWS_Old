@@ -78,8 +78,9 @@
                             </div>
                         </div>
                         <h3>Accounts <span class="rs-quiet">(5)</span></h3>
-                        <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
-                            <table class="rs-list-table rs-embedded-list-table no-truncate-td">
+                        <br>
+                        <div class="migration-status-list-container">
+                            <table class="rs-list-table no-truncate-td">
                                 <thead>
                                     <tr>
                                         <th>
@@ -213,101 +214,6 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024812)</a></td>
-                                        <td class="rs-table-text">Managed Infrastructure</td>
-                                        <td class="rs-table-text">Navigator</td>
-                                        <td class="rs-table-text ng-binding">2</td>
-                                        <td class="rs-table-text ng-binding">5</td>
-
-                                        <td class="rs-table-input">
-                                            <div class="rs-btn-group">
-                                                <div class="rs-dropdown">
-                                                    <div class="rs-cog rs-dropdown-toggle"></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024813)</a></td>
-                                        <td class="rs-table-text">Managed Operations</td>
-                                        <td class="rs-table-text">Aviator</td>
-                                        <td class="rs-table-text ng-binding">3</td>
-                                        <td class="rs-table-text ng-binding">2</td>
-
-                                        <td class="rs-table-input">
-                                            <div class="rs-btn-group">
-                                                <div class="rs-dropdown">
-                                                    <div class="rs-cog rs-dropdown-toggle"></div>
-                                       
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024810)</a></td>
-                                        <td class="rs-table-text">Managed Operations</td>
-                                        <td class="rs-table-text">Aviator</td>
-                                        <td class="rs-table-text ng-binding">2</td>
-                                        <td class="rs-table-text ng-binding">0</td>
-                         
-                                        <td class="rs-table-input">
-                                            <div class="rs-btn-group">
-                                                <div class="rs-dropdown">
-                                                    <div class="rs-cog rs-dropdown-toggle"></div>
-                                       
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024811)</a></td>
-                                        <td class="rs-table-text">Managed Infrastructure</td>
-                                        <td class="rs-table-text">Navigator</td>
-                                        <td class="rs-table-text ng-binding">0</td>
-                                        <td class="rs-table-text ng-binding">2</td>
-    
-                                        <td class="rs-table-input">
-                                            <div class="rs-btn-group">
-                                                <div class="rs-dropdown">
-                                                    <div class="rs-cog rs-dropdown-toggle"></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024812)</a></td>
-                                        <td class="rs-table-text">Managed Infrastructure</td>
-                                        <td class="rs-table-text">Navigator</td>
-                                        <td class="rs-table-text ng-binding">2</td>
-                                        <td class="rs-table-text ng-binding">5</td>
-
-                                        <td class="rs-table-input">
-                                            <div class="rs-btn-group">
-                                                <div class="rs-dropdown">
-                                                    <div class="rs-cog rs-dropdown-toggle"></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024813)</a></td>
-                                        <td class="rs-table-text">Managed Operations</td>
-                                        <td class="rs-table-text">Aviator</td>
-                                        <td class="rs-table-text ng-binding">3</td>
-                                        <td class="rs-table-text ng-binding">2</td>
-
-                                        <td class="rs-table-input">
-                                            <div class="rs-btn-group">
-                                                <div class="rs-dropdown">
-                                                    <div class="rs-cog rs-dropdown-toggle"></div>
-                                       
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                   
                                 </tbody>
                             </table>
                         </div>
@@ -354,19 +260,10 @@
             <h3>Add an Account</h3>
         </div>
         <div class="modal-body"> 
-            <h4>Select User DDI</h4>
-            <select>
-                <option>User Namegoeshere (#1024814)</option>
-                <option>User Namegoeshere (#1024814)</option>
-                <option>User Namegoeshere (#1024814)</option>
-                <option>User Namegoeshere (#1024814)</option>
-            </select>
-            &nbsp;or&nbsp;
             <input type="text" class="rs-input-large" placeholder="Search for an account">
         </div>
         <div class="modal-footer"> 
             <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Cancel </a>
-            <a class="rs-btn" data-dismiss="modal" aria-hidden="true"><i class="fa fa-minus-square fa-fw"></i> Discard </a>
             <a class="rs-btn rs-btn-primary " data-dismiss="modal" aria-hidden="true"><i class="fa fa-plus-square fa-fw"></i> Add</a>  
         </div>
     </div>
