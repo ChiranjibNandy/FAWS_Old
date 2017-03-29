@@ -31,7 +31,7 @@ def login_post():
 
     if username and rsa_token:
 
-        identity = Identity(current_app.config["IDENTITY_URL"])
+        identity = Identity(current_app.config["RAX_IDENTITY_URL"])
 
         if is_racker:
             service_catalog = identity.auth_racker_username_and_token(
