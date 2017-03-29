@@ -227,7 +227,7 @@
                 <div class="rs-sidebar rs-pull-right">
                     <div class="rs-inner">
                         <div class="info-panel">
-                            <h3>Current Base Cost <a href="#" role="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="Support and Storage costs in the current and projected pricing are determined by... <a href='' title='test add link'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></h3>
+                            <h3>Current Base Cost</h3>
                             <p>
                                 <big><b>$18.00</b>/month</big> 
                                 <br>
@@ -236,13 +236,13 @@
                             <hr class="dash">
                             <h4>Current Support Level </h4>
                             <p>
-                                <big><b>Navigator</b> <a href="#" role="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="<b>Navigator® Monthly Service Fee starts at $400</b>. 100% certified AWS engineers deliver Fanatical Support for AWS 24x7x365. Certified Level 1 Payment Card Industry (PCI) Service Provider on AWS. We can act as a business associate to support customers with HIPAA workloads on AWS. Personal contact to assist with onboarding. A combined set of AWS and Rackspace recommendations from certified AWS architects <a href='https://www.rackspace.com/en-us/managed-aws/features' target='_blank'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></big>
+                                <big><b>Navigator</b> <a href="#" role="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="<b>Navigator Monthly Service Fee starts at $400</b>. We can act as a business associate to support customers with HIPAA workloads on AWS. Personal contact to assist with onboarding. A combined set of AWS and Rackspace recommendations from certified AWS architects <a href='https://www.rackspace.com/en-us/managed-aws/features' target='_blank'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></big>
                                 <br>
                                 <small>* Navigator cost not reflected here.</small>
                             </p>
                         </div>
                         <div class="white-panel">
-                            <h3>Projected Cost <a href="#" role="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="This is a monthly estimate based on current AWS pricing. <a href='' title='test add link'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></h3>
+                            <h3>Projected Cost <a href="#" role="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="The projected pricing consist of infrastructure costs only, and support costs are not included in the provided price.  <a href='' target='_blank'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></h3>
                             <p>
                                 <big><b>$20.00</b>/month</big> 
                             </p>
@@ -554,7 +554,7 @@
                     <input type="checkbox"> Don't show this again
                 </label>
             </div>
-            <a href="https://mycloud.rackspace.com" class="rs-btn"  data-trigger="hover" data-placement="left" data-toggle="popover" data-content="Warning: This will take you out of the Migration Manager"><i class="fa fa-info-circle fa-fw rs-quiet"></i> Cancel</a>
+            <a href="#" class="rs-btn" data-dismiss="modal" aria-hidden="true"> Close</a>
             <a href="step5.html" class="rs-btn">Go to Migration Dashboard</a>
             <a class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true" href="#name_modal" role="button" data-toggle="modal">Start a Migration</a>
         </div>
@@ -642,7 +642,7 @@
             <h3>Modify Configurations </h3>
         </div>
         <div class="modal-body">
-            <big><b>What you have currently</b> <a href="#" role="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" title="" data-content="Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. <a href='' title='test add link'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></big>
+            <big><b>What you have currently</b> <a href="#" role="button" data-trigger="hover" data-placement="bottom" data-toggle="popover" title="" data-content="This is the current set up you have within Rackspace Cloud Server. "><i class="fa fa-info-circle rs-quiet"></i></a></big>
             <br>
             <br>
            
@@ -670,7 +670,7 @@
             </table>
             
             <br>
-            <big><b>Choose a new configuration</b> <a href="#" role="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" title="" data-content="Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. <a href='' title='test add link'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></big>
+            <big><b>Choose a new configuration</b> <a href="#" role="button" data-trigger="hover" data-placement="bottom" data-toggle="popover" title="" data-content="Please feel free to choose a different option that will fit your specifications. The pre-selected option is the optimal configuration we recommend based on your current setup. "><i class="fa fa-info-circle rs-quiet"></i></a></big>
             <br>
             <br>
             <form class="rs-form-horizontal rs-form-medium">
@@ -913,6 +913,18 @@
             html: true
         });
     });
+    </script>
+    <!-- message randomizer - for demo sake -->
+    <script>
+    var elems = $(".alert");
+    if (elems.length) {
+        var keep = Math.floor(Math.random() * elems.length);
+        for (var i = 0; i < elems.length; ++i) {
+            if (i !== keep) {
+                $(elems[i]).hide();
+            }
+        }
+    }
     </script>
     <!-- name edit script -->
     <script type="text/javascript">
