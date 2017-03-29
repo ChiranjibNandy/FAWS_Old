@@ -11,8 +11,20 @@
 </div>
 <div class="rs-inner" ng-show="!vm.loading && !vm.loadError">
     <div class="info-panel">
-        <h3 id="basePrice">Current Pricing</h3>
+        <h3 id="basePrice">Current Base Cost <a href="#" role="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="Support and Storage costs in the current and projected pricing are determined by... <a href='' title='test add link'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></h3>
         <p>
+            <big><b>${{vm.invoiceTotal}}</b>/month</big>
+            <br>
+            <small>* For selected resources</small>
+        </p>
+        <hr class="dash">
+        <h4>Current Support Level </h4>
+        <p>
+            <big><b>Navigator</b> <a href="#" role="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="<b>Navigator® Monthly Service Fee starts at $400</b>. 100% certified AWS engineers deliver Fanatical Support for AWS 24x7x365. Certified Level 1 Payment Card Industry (PCI) Service Provider on AWS. We can act as a business associate to support customers with HIPAA workloads on AWS. Personal contact to assist with onboarding. A combined set of AWS and Rackspace recommendations from certified AWS architects <a href='https://www.rackspace.com/en-us/managed-aws/features' target='_blank'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></big>
+            <br>
+            <small>* Navigator cost not reflected here.</small>
+        </p>
+        <!--<p>
             Billing Period:
             <br>
             <em>{{vm.invoiceCoverageStartDate}} to {{vm.invoiceCoverageEndDate}}</em>
@@ -20,13 +32,13 @@
             <big><b>${{vm.invoiceTotal}}</b>/month</big>
             <br>
             <a href=""><small>(See Details)</small></a>
-        </p>
+        </p>-->
     </div>
     <div class="white-panel">
-        <h3>Projected Pricing</h3>
+        <h3>Projected Cost</h3>
         <p>
             <big><b>${{vm.totalProjectedPricingSum}}</b>/month</big><br>
-            <small>Current Support Level: <b><a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Navigator</a></b></small>
+            <!--<small>Current Support Level: <b><a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Navigator</a></b></small>-->
         </p>
     </div>
     <br>

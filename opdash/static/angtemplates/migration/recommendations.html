@@ -13,20 +13,19 @@
                 <div class="rs-row">
                     <div class="span-8">
                         <div class="migr-ddi-name">
-                            {{vm.tenant_account_name}} ( #{{vm.tenant_id}} )<span class="rax-red-txt">|</span>
+                            {{vm.tenant_account_name}} ( #{{vm.tenant_id}} )<br><br>    
                             <span class="migr-name">
                                 <rseditbatchname></rseditbatchname>
                             </span>
                         </div>
                     </div>
-                    <div class="span-4">                                             
+                    <!--<div class="span-4">                                             
                         <rscontact></rscontact>
-                    </div>
+                    </div>-->
                 </div>
-                <hr>
                 <div class="rs-row">
                     <div class="span-8">
-                        <h3>Here is our recommendation for AWS migration: <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h3>
+                        <h3>Based on your selections, here are our recommendations: <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h3>
                     </div>
                     <div class="span-4">         
                         <input type="text" class="rs-input-large searchbox rs-pull-right" ng-model="vm.filteredValue" placeholder="filter by keyword or tag...">
