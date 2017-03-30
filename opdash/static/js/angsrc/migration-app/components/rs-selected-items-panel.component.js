@@ -69,8 +69,8 @@
 
                 //Catch broadcast requests from parent(rsmigrationresourcelist) component.
                 $scope.$on("ItemsModified", function(event){
-                    vm.selectedItems.server = dataStoreService.getItems('server');
-                    vm.selectedItems.LoadBalancers = dataStoreService.getItems('LoadBalancers');
+                    // vm.selectedItems.server = dataStoreService.getItems('server');
+                    vm.selectedItems = dataStoreService.getItems();
                 });
                 
                 //Watch for item selection from list of resources.

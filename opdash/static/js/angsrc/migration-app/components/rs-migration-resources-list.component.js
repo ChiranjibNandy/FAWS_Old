@@ -28,6 +28,7 @@
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
+                vm.saveClicked = false;
 
                 vm.$onInit = function() {
                     // If status is true, popup for migration won't be displayed in first step of Migration.
@@ -131,7 +132,7 @@
                  * Called by child component when an item is removed by user
                  */
                 vm.removeItem = function(item, type) {
-                    vm.selectedItems[type] = dataStoreService.getItems(type);
+                    vm.selectedItems = dataStoreService.getItems();
                     //look for item to be removed in array of selected items and splice it from the array.
                     angular.forEach(vm.selectedItems[type], function (item_selected, key) {
                         if(item_selected.id == item.id){
@@ -239,20 +240,30 @@
 
                 /**
                  * @ngdoc method
+                 * @name dontShowNameModal
+                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @description
+                 * Consider Dont show checkbox of Modal where user can name a Migration if checked.
+                 */
+                vm.dontShowNameModal = function() {
+                    dataStoreService.setDontShowNameModal(vm.dontshowNameModal);
+                };
+
+                /**
+                 * @ngdoc method
                  * @name continue
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
                  * @description
                  * Continue to next step: **Recommendations**
                  */
-                /**
                  vm.continue = function() {
-                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0){
-                        //save all selected items in to "set items" service.
-                        dataStoreService.setItems(vm.selectedItems);
-                        dataStoreService.setDontShowStatus(true);
+                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0){
+                        vm.nameStatus = dataStoreService.getdontShowNameModal(); //check for flag status created for Modal where user can name a migration.
                         var migrationName = dataStoreService.getScheduleMigration().migrationName;
-                        if(migrationName)
-                            $rootRouter.navigate(["MigrationRecommendation"]);
+                        if(vm.nameStatus || migrationName){
+                            vm.migrationName = migrationName;
+                            vm.savencontinue();
+                        }
                         else
                             $('#name_modal').modal('show');
                     }
@@ -264,7 +275,6 @@
                     }
                 };
                 
-                 */
                 /**
                  * @ngdoc method
                  * @name savencontinue
@@ -273,9 +283,12 @@
                  * Assign Migration considering current Timestamp and continue to next step: **Recommendations**
                  */
                 vm.savencontinue = function() {
-                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0){
-                        dataStoreService.setItems(vm.selectedItems);
+                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0){
+                        if(vm.selectedItems.server.length > 0 || vm.selectedItems.LoadBalancers.length > 0){
+                            dataStoreService.setItems(vm.selectedItems);
+                        }                
                         dataStoreService.setDontShowStatus(true);
+                        dataStoreService.setDontShowNameModal(true);
                         var migrationName = dataStoreService.getScheduleMigration().migrationName;
                         if(migrationName)
                             $rootRouter.navigate(["MigrationRecommendation"]);

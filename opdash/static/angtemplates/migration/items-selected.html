@@ -1,5 +1,5 @@
 <div class="plain-panel" ng-style="{'min-height': vm.showrec === 'true' ? '240px' : 'initial'}">
-     <a ng-link="['MigrationResourceList']" class="rs-btn-action rs-pull-right"><i class="rs-edit" title="Modify this"></i> </a>
+     <a ng-link="['MigrationResourceList']" ng-show="vm.showrec === 'true'" class="rs-btn-action rs-pull-right"><i class="rs-edit" title="Modify this"></i> </a>
     <!--<div class="span-8">-->
     <h4 ng-show="vm.showrec === 'false'">Items Selected <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h4>
     <h3 ng-show="vm.showrec === 'true'">Resources Selected 

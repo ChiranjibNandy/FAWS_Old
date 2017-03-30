@@ -132,6 +132,10 @@
                     $('#cancel_modal').modal('show');
                 };
 
+                $rootScope.$on("showCancelModal", function(event){
+                    $('#cancel_modal').modal('show');
+                });
+
                 /**
                  * @ngdoc method
                  * @name continueToSchedule
@@ -215,7 +219,7 @@
                         timezone = dataStoreService.getScheduleMigration().timezone;
                     }
                     var saveInstance = {
-                        recommendations : dataStoreService.getItems('server'),
+                        recommendations : dataStoreService.getItems(),
                         scheduling_details : scheduleItem,
                         step_name: stepName,
                         migration_schedule: {

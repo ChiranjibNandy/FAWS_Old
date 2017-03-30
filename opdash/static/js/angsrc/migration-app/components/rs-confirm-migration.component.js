@@ -138,7 +138,7 @@
                  */
                 vm.saveItems = function(buttonDetails) {
                     var saveInstance = {
-                        recommendations : dataStoreService.getItems('server'),
+                        recommendations : dataStoreService.getItems(),
                         scheduling_details : dataStoreService.getScheduleMigration(),
                         step_name: "ConfirmMigration",
                         migration_schedule: {
