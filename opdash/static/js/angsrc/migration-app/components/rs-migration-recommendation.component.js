@@ -114,6 +114,11 @@
                     vm.itemDetails = itemdetails;
                     $("#resource_info").modal('show');
                 };
+
+                vm.goToDashboard = function() {
+                    $rootScope.$broadcast("showCancelModal");
+                }
+                
                 return vm;
             }
         ]}); // end of component definition

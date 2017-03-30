@@ -31,6 +31,7 @@
               * @description Flag to avoid repeated dispaly of sliding window at initial step of migration
              */
             self.dontShowStatus = false;
+            self.dontShowNameModal = false
             self.labelsServer = [];
             self.labelsNetwork = [];
             /**
@@ -66,6 +67,18 @@
             };
 
             /**
+              * @ngdoc property
+              * @name userPreferences
+              * @propertyOf migrationApp.service:datastoreservice
+              * @type {Array}
+              * @description Logging user preferences for every migration.
+             */
+            self.userPreferences = {
+                displayIntroModal:false,
+                selectedItems:{},
+                schedulingDetails:{}
+            };
+            /**
              * @ngdoc method
              * @name setItems
              * @methodOf migrationApp.service:datastoreservice
@@ -98,7 +111,12 @@
              * Retrieves list of all resources that were saved after application was loaded.
              */
             this.retrieveallItems = function(type){
-                return self.resourceItems[type];
+                if(type){
+                    return self.resourceItems[type];
+                }
+                else{
+                    return self.resourceItems;
+                }
             }
 
             /**
@@ -137,7 +155,12 @@
              */
             this.getItems = function(type){
                 //return self.selectedItems.filter(function(item){return item.type === type;});
-                 return self.selectedItems[type];
+                 if(type){
+                    return self.selectedItems[type];
+                }
+                else{
+                    return self.selectedItems;
+                }
             }
 
             //store items in the recommendation page
@@ -203,6 +226,14 @@
                return self.dontShowStatus;
             }
 
+            this.setDontShowNameModal = function(status){
+               self.dontShowNameModal = status;
+            }
+
+            this.getdontShowNameModal = function(){
+               return self.dontShowNameModal;
+            }
+
             self.resetAll = function(){
                 self.resourceItems = {
                     server:[],
@@ -210,10 +241,12 @@
                     files:[],
                     LoadBalancers:[]
                 };
+                self.dontShowNameModal = false;
                 self.labelsServer = [];
                 self.labelsNetwork = [];
                 self.selectedItems.server = [];
                 self.selectedItems.network = [];
+                self.selectedItems.LoadBalancers = [];
                 self.labelsServer = [];
                 self.labelsNetwork = [];
                 self.selectedDate = {};
@@ -347,7 +380,7 @@
                     [{
                         "instance_name":self.getScheduleMigration().migrationName,
                         "timestamp":moment().format('MMDYYYYhmmss'), //(so we know when was it saved)
-                        "selected_resources": self.getItems('server'),
+                        "selected_resources": self.getItems(),
                         "recommendations":saveInstance.recommendations,
                         "scheduling-details":saveInstance.scheduling_details,
                         "step_name":saveInstance.step_name

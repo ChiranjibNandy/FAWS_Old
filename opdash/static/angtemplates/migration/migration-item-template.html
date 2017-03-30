@@ -14,7 +14,7 @@
                     <input type="checkbox" ng-class="{'disabled':vm.disableSelectAll == true}" ng-model="vm.isAllSelected" ng-change="vm.changeItemSelection()" />
                 </th>
                 <th ng-repeat="label in vm.labels" ng-click="vm.sort(label.field)" style="background-color: white">
-                    <a class="rs-table-sort rs-table-sort-desc">
+                    <a href="javascript:void(0)"class="rs-table-sort rs-table-sort-desc">
                         <span class="rs-table-sort-text">{{label.text}}</span>
                         <span class="rs-table-sort-indicator"></span>
                     </a>

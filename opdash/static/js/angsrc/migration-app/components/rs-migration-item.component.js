@@ -214,6 +214,18 @@
                             // if(vm.type === "loadBalancers")
                             //     vm.items = mapNetworkStatus(dataList, results[1].network_status);
                             //Store all retrieved resources in factory variable
+                            var savedItems = datastoreservice.getItems(vm.type);
+                            if(savedItems.length != 0){
+                                angular.forEach(vm.items, function (item) {
+                                    for(var i=0;i<savedItems.length;i++){
+                                        item.selected = false;
+                                        if(savedItems[i].name == item.name){
+                                            item.selected = true;
+                                            break
+                                        };
+                                    };
+                                });
+                            };
                             datastoreservice.storeallItems(vm.items, vm.type);
                             // pagination controls
                             vm.currentPage = 1;
@@ -256,6 +268,17 @@
                         vm.loading = false;
                         
                         var servers_selected = datastoreservice.getItems(vm.type);
+                        if(servers_selected.length != 0){
+                            angular.forEach(vm.items, function (item) {
+                                for(var i=0;i<servers_selected.length;i++){
+                                    item.selected = false;
+                                    if(servers_selected[i].name == item.name){
+                                        item.selected = true;
+                                        break
+                                    };
+                                };
+                            });
+                        };
                         angular.forEach(servers_selected, function (item_selected) {
                              vm.parent.addItem(item_selected, vm.type);
                          });
