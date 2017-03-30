@@ -25,7 +25,7 @@
              */
             self.getAllAlerts = function(refresh) {
                 var tenant_id = authservice.getAuth().tenant_id;
-                var alertsApiUrl = "/api/alerts/" + tenant_id + "/all";
+                var alertsApiUrl = "/api/alerts/all";
 
                 if (refresh || !loaded || (currentTenant !== tenant_id)) {
                     return HttpWrapper.send(alertsApiUrl, { "operation": 'GET' })
