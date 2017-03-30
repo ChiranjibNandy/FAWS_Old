@@ -250,16 +250,16 @@ a:hover,
     clear: both;
 }
 
-.migration-mgr .search {
+.migration-mgr .search, .modal .search {
     position: relative;
 }
 
-.migration-mgr .search input {
+.migration-mgr .search input, .modal .search input {
     text-indent: 30px;
-    padding: 4px
+    line-height: 20px;
 }
 
-.migration-mgr .search .fa-search {
+.migration-mgr .search .fa-search, .modal .search .fa-search  {
     position: absolute;
     top: 6px;
     left: 7px;
