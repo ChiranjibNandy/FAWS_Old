@@ -71,7 +71,9 @@
      console.log(value);
      value=true;
      vm.scheduleMigration = value;
-     
+ });
+  $rootScope.$on("scheduleMigrationSelectedDate",function(event,value){
+     vm.schedule.date = value;
  });
                 /**
                  * @ngdoc method

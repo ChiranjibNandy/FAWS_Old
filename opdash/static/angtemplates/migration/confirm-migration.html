@@ -30,24 +30,27 @@
                     <div class="span-6">
                         <rsselecteditemspanel showrec="true"></rsselecteditemspanel>
                     </div>
-
-                    <div class="span-3">
-                        <div class="plain-panel rs-center">
-                             <a href="racker-step2.html"  class=" rs-btn-action rs-pull-right">
-                                <i class="rs-edit" title="Modify this"></i>
+                            <div class="span-3">
+                                <div class="plain-panel">
+                                    <a ng-link="['MigrationRecommendation']" class=" rs-btn-action rs-pull-right">
+                                        <i class="rs-edit" title="Modify this"></i>
                                     </a>
-                                    <h3 style="text-align: left;">Projected Cost </h3>
                                     
-<hr>
-                                     <h2 style="text-align: left;">{{vm.cost | currency: '$'}}<small>/month</small> <a href="" role="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="Monthly support and storage costs... <a href='' title='test add link'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></h2>
-                                     
-                                    <p style="text-align: left;">
-                                        Current Support Level: <br>
-                                        <big><b><a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Navigator</a></b></big><br>
-                                        <small>* Navigator cost not reflected here.</small>
+                                    <h3>Projected Cost <a href="#" role="button" data-trigger="focus" data-placement="top" data-toggle="popover" data-content="The projected pricing consist of infrastructure costs only, and support costs are not included in the provided price.  <a href='' target='_blank'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></h3>
+                                    <hr>                           
+                                    <p>
+                                        <big><b>{{vm.cost | currency: '$'}}</b>/month </big> <a href="https://www.rackspace.com/en-us/calculator" target="_blank"><i class="fa fa-calculator fa-fw" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Click here to quickly estimate the cost of your cloud environment."></i></a>
                                     </p>
-                        </div>
-                    </div>
+                                    <hr class="dash">
+                                    <big><b>Support Level</b> </big>
+                                    <p>
+                                        <big>Navigator <a href="#" role="button" data-trigger="focus" data-placement="top" data-toggle="popover" data-content="<b>Navigator Monthly Service Fee starts at $400</b>. We can act as a business associate to support customers with HIPAA workloads on AWS. Personal contact to assist with onboarding. A combined set of AWS and Rackspace recommendations from certified AWS architects <a href='https://www.rackspace.com/en-us/managed-aws/features' target='_blank'>Learn More</a>"><i class="fa fa-info-circle rs-quiet"></i></a></big>
+                                        <br>
+                                        <small>* Navigator cost not reflected here.</small>
+                                    </p> 
+                                </div>
+                            </div>
+                    
                       <rsschedulemigration></rsschedulemigration>
                 </div>
               
@@ -107,7 +110,7 @@
             <h3>You have chosen this time for your migration.</h3>
         </div>
         <div class="modal-body">
-            <h3>{{vm.schedule.date}} at {{vm.schedule.time}}</h3> 
+            <h3>{{vm.schedule.date}} </h3> 
             <p>Is this correct?</p>
             <div class="rs-control-group">
                <a ng-click="vm.migrate()" ng-show="!vm.migrating" class="rs-btn rs-btn-primary">Yes, Continue</a>  
@@ -119,3 +122,16 @@
     </div>
     <!-- end modals -->
 <!-- end modals -->
+  </script>
+    <!-- accordion icon behavior -->
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $(".accordion-heading + .collapse:not(.in)").prev().append("<i class='fa fa-chevron-down'></i>");
+        $(".accordion-heading + .collapse.in").prev().append("<i class='fa fa-chevron-up'></i>");
+        $('.accordion-heading a').click(function() {
+            $('.plain-panel').find('.collapse.in').prev().find("i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
+            $(this).parents('.accordion-heading').find("i.fa-chevron-down").removeClass("fa-chevron-down").addClass("fa-chevron-up");
+            $(this).parents('.plain-panel').find('.collapse.in').prev().find("i.fa-chevron-up").removeClass("fa-chevron-up").addClass("fa-chevron-down");
+        });
+    });
+    </script>
