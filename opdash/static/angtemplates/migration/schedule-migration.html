@@ -37,7 +37,7 @@
                                     <div class="animated fadeIn" id="scheduleform" >
                                         <form ng-show="vm.showTimeForm">
                                              <div class="rs-row">
-                                                <input id="field" placeholder="Choose Date" class="span-12">
+                                                <input id="field" placeholder="Choose Date" class="span-12" ng-model="vm.date" ng-blur="vm.onSaveTime()">
                                             </div>
                                             <div class="rs-row">
                                                 <select name="timezone" ng-change="vm.onSaveTime()" ng-options="time for time in vm.timeZoneItems" ng-model="vm.timezone1" style="width: 113px;" class="ng-pristine ng-valid ng-not-empty ng-touched span-6"  >
