@@ -28,7 +28,7 @@ describe('Service: datastoreservice', function() {
                 "Cache-Control": "no-cache"
             }
             /* Code Under Test */
-        $http.get("/api/users/uidata/" + tenant_ids[2] + "/Saved_Migrations", headers)
+        $http.get("/api/users/uidata/Saved_Migrations", headers)
             .success(function(data, status) {
                 $scope.valid = true;
                 $scope.response = data;
@@ -40,7 +40,7 @@ describe('Service: datastoreservice', function() {
         /* End */
 
         $httpBackend
-            .when('GET', "/api/users/uidata/" + tenant_ids[2] + "/Saved_Migrations", headers)
+            .when('GET', "/api/users/uidata/Saved_Migrations", headers)
             .respond(200);
 
         $httpBackend.flush();

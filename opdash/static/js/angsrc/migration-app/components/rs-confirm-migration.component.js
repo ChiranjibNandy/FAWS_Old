@@ -89,7 +89,7 @@
                     requestObj = ds.prepareRequest();
                     console.log(requestObj);
   
-                    HttpWrapper.save("/api/job", {"operation":'POST'}, requestObj)
+                    HttpWrapper.save("/api/jobs", {"operation":'POST'}, requestObj)
                                 .then(function(result){
                                     console.log("Migration Response: ", result);
                                     $timeout(function(){

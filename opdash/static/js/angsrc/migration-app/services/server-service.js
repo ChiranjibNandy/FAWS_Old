@@ -206,7 +206,7 @@
          * Get the list of all tasks involved in migration of a server
          */
         self.getJobTasks = function(jobId){
-            var url = "/api/job/"+jobId;
+            var url = "/api/jobs/"+jobId;
             return HttpWrapper.send(url,{"operation":'GET'})
                     .then(function (response) {
                         return {

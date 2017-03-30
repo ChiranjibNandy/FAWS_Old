@@ -281,7 +281,7 @@
              * Invokes "/api/users/uidata/" API call for fetching exisitng saved instances. 
             */
             this.getSavedItems = function() {
-                var getSavedInstancesUrl = "/api/users/uidata/"+authservice.getAuth().tenant_id+"/Saved_Migrations";
+                var getSavedInstancesUrl = "/api/users/uidata/Saved_Migrations";
                 return HttpWrapper.send(getSavedInstancesUrl, {"operation":'GET'})
                                   .then(function(result){
                                       if(result == null){
@@ -380,7 +380,7 @@
              */
             self.getAccountName = function(tid){
                 // var tid =authservice.getAuth().tenant_id;
-                var urlactinfo = "/api/tenants/get_account_info/" + tid;
+                var urlactinfo = "/api/tenants/get_account_info";
                 
                 return HttpWrapper.send(urlactinfo, { "operation": 'GET' })
                     .then(function (response) {

@@ -39,7 +39,7 @@
                       var doSavedForLaterMigrationsExist = false;
                       var doResourceMigrationsExist = false;
                       var tenant_id = user_data.tenant_id;
-                      var getSavedInstancesUrl = "/api/users/uidata/"+tenant_id+"/Saved_Migrations";
+                      var getSavedInstancesUrl = "/api/users/uidata/Saved_Migrations";
                       var savedMigrationPromise = HttpWrapper.send(getSavedInstancesUrl, {"operation":'GET'})
                       .then(function(result){
                           if(result !== null && result.savedDetails.length !== 0){
@@ -49,7 +49,7 @@
                           doSavedForLaterMigrationsExist = false;
                       });
 
-                      var url = "/api/jobs/" + tenant_id;
+                      var url = "/api/jobs/all";
                       var resourceMigrationPromise = HttpWrapper.send(url,{"operation":'GET'})
                       .then(function(response){
                           if(response !== null && response.job_status_list.length !== 0){

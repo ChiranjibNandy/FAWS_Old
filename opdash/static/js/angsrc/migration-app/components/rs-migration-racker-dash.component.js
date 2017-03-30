@@ -386,7 +386,7 @@
                     authservice.getAuth().tenant_id = tenant_id;
                     authservice.getAuth().account_name = item.tenant_account_name;
 
-                    var getSavedInstancesUrl = "/api/users/uidata/"+tenant_id+"/Saved_Migrations";
+                    var getSavedInstancesUrl = "/api/users/uidata/Saved_Migrations";
                     var savedMigrationPromise = HttpWrapper.send(getSavedInstancesUrl, {"operation":'GET'})
                     .then(function(result){
                         if(result !== null && result.savedDetails.length !== 0){
