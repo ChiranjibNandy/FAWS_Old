@@ -24,6 +24,7 @@
     text-decoration: none;
     cursor: pointer;
     color: #333;
+    font-weight: bold;
 }
 .schedule-panel .white-panel .rs-control-group a:hover{
     background: #eee;
@@ -65,6 +66,10 @@
     border-top: 2px dashed #ccc;
     background: none;
     height:0;
+}
+hr.dash{
+     margin: 5px 5px 7px 5px
+
 }
 .pricing-buttons {
     margin-bottom: 10px;
@@ -205,7 +210,7 @@ form .rs-row input {
 
 /* canon style overrides  */
 .modal select{
-    margin: 10px 0;
+    margin: 5px 0 0;
 }
 
 .modal .rs-form-horizontal.rs-form-medium .rs-control-label,

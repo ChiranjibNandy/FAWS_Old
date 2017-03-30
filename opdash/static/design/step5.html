@@ -413,7 +413,7 @@
                         </div>  
                     
                         <div class="migration-status-list-container table-justify">
-                            <table class="rs-list-table secondary-table">
+                            <table class="rs-list-table secondary-table rs-select-table">
                                 <thead>
                                     <tr>
                                         <th class="rs-table-status"></th>
@@ -443,8 +443,7 @@
                                         <td class="rs-table-status rs-table-status-ok tip"></td>
                                         <td class="rs-table-link"><a ng-link="[ 'BatchMigrationDetails']" class="ng-binding" href="batch-completed.html">My_Migration_01</a></td>
                                         <td class="rs-table-text ng-binding">10/12/2016 12:18 AM</td>
-                                        <td class="rs-table-text ng-binding" colspan="2">12/11/2016 5:23 PM</td>
-                                        
+                                        <td class="rs-table-text ng-binding" colspan="2">12/11/2016 5:23 PM</td>                                       
                                     </tr>
                                     <tr ng-repeat="batch in vm.batches | filter : {progress: '100'}" class="ng-scope">
                                         <td class="rs-table-status rs-table-status-ok tip"></td>
@@ -479,80 +478,73 @@
                             </ul>
                         </div>  
                         <div class="rs-row">
-                            <div class="span-6">
-                                <div class="rs-facet-section">
-                                    <div class="rs-facet-section-body">
-                                        <h3>Alerts <span class="rs-quiet">(3)</span></h3>
-                                        <div class="migration-status-list-container">
-                                            <table class="rs-list-table rs-select-table">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="rs-table-status"></th>
-                                                        <th>Batch Name</th>
-                                                        <th>Date</th>
-                                                        <th>Message</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="rs-table-status rs-table-status-warning tip"></td>
-                                                        <td>My_Migration_03</td>
-                                                        <td class="rs-table-text ng-binding">2/1/2017</td>
-                                                        <td><a href="tasks.html" class="rs-btn rs-btn-link">Taking a long time to migrate</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="rs-table-status rs-table-status-error tip"></td>
-                                                        <td>My_Migration_04</td>
-                                                        <td class="rs-table-text ng-binding">2/11/2017</td>
-                                                        <td><a href="tasks.html" class="rs-btn rs-btn-link">Problem while starting this batch. Will be retried.</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="rs-table-status rs-table-status-warning tip"></td>
-                                                        <td>My_Migration_05</td>
-                                                        <td class="rs-table-text ng-binding">2/11/2017</td>
-                                                        <td><a href="tasks.html" class="rs-btn rs-btn-link">Problem while starting this batch. Will be retried.</a></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="span-6">      
+                                <h3>Alerts <span class="rs-quiet">(3)</span></h3>                                
+                                <table class="rs-list-table rs-select-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="rs-table-status"></th>
+                                            <th>Batch Name</th>
+                                            <th>Date</th>
+                                            <th>Message</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>    
+                                            
+                                            <td class="rs-table-status rs-table-status-warning tip"></td>
+                                            <td>My_Migration_03</td>
+                                            <td class="rs-table-text ng-binding">2/1/2017</td>
+                                            <td><a href="tasks.html" class="rs-btn rs-btn-link">Taking a long time to migrate</a></td>
+                                        </tr>
+                                        <tr>    
+                                            
+                                            <td class="rs-table-status rs-table-status-error tip"></td>
+                                            <td>My_Migration_04</td>
+                                            <td class="rs-table-text ng-binding">2/11/2017</td>
+                                            <td><a href="tasks.html" class="rs-btn rs-btn-link">Problem while starting this batch. Will be retried.</a></td>
+                                        </tr>
+                                        <tr>    
+                                            
+                                            <td class="rs-table-status rs-table-status-warning tip"></td>
+                                            <td>My_Migration_05</td>
+                                            <td class="rs-table-text ng-binding">2/11/2017</td>
+                                            <td><a href="tasks.html" class="rs-btn rs-btn-link">Problem while starting this batch. Will be retried.</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>                                      
+                                  
                             </div>
-                            <div class="span-6">
-                                <div class="rs-facet-section">
-                                    <div class="rs-facet-section-body">                                        
-                                        <a href="https://mycloud.rackspace.com/cloud/453265/tickets" class="rs-btn rs-btn-link rs-pull-right" target="_blank" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"  data-content="See all tickets within Rackspace Reach">See All <i class="fa fa-angle-double-right"></i></a> 
-                                        <h3>Tickets <span class="rs-quiet">(3)</span> </h3>
-                                        <div>
-                                            <table class="rs-list-table rs-select-table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Ticket Number</th>
-                                                        <th>Date/Time</th>
-                                                        <th>Message</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td><a href="">578390-23345</a></td>
-                                                        <td class="rs-table-text ng-binding">12/1/2016 1:00 PM</td>
-                                                        <td>Taking a long time to migrate</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><a href="">102998-24432</a></td>
-                                                        <td class="rs-table-text ng-binding">3/5/2017 3:00 PM</td>
-                                                        <td>Problem while starting this batch. Will be retried.</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><a href="">876309-44432</a></td>
-                                                        <td class="rs-table-text ng-binding">1/19/2017 8:00 PM</td>
-                                                        <td>Problem while starting this batch. Will be retried.</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="span-6">                                                                    
+                                <a href="https://mycloud.rackspace.com/cloud/453265/tickets" class="rs-btn rs-btn-link rs-pull-right" target="_blank" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"  data-content="See all tickets within Rackspace Reach">See All <i class="fa fa-angle-double-right"></i></a> 
+                                <h3>Tickets <span class="rs-quiet">(3)</span> </h3>                             
+                                <table class="rs-list-table rs-select-table">
+                                    <thead>
+                                        <tr>
+                                           
+                                            <th>Ticket Number</th>
+                                            <th>Date/Time</th>
+                                            <th>Message</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><a href="">578390-23345</a></td>
+                                            <td class="rs-table-text ng-binding">12/1/2016 1:00 PM</td>
+                                            <td>Taking a long time to migrate</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="">102998-24432</a></td>
+                                            <td class="rs-table-text ng-binding">3/5/2017 3:00 PM</td>
+                                            <td>Problem while starting this batch. Will be retried.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="">876309-44432</a></td>
+                                            <td class="rs-table-text ng-binding">1/19/2017 8:00 PM</td>
+                                            <td>Problem while starting this batch. Will be retried.</td>
+                                        </tr>
+                                    </tbody>
+                                </table> 
                             </div>
                         </div>
                     </div>
@@ -564,7 +556,7 @@
                     <h4>FAQs + More Information</h4>
                     <ul>
                         <li>
-                            <a href="#intro_modal" role="button" data-toggle="modal">See Intro</a>
+                            <a href="https://cart.rackspace.com/aws" target="_blank">Create New FAWS Account</a>
                         </li>
                         <li>
                             <a href="https://support.rackspace.com/how-to/mapping-of-amazon-web-services-resources-to-rackspace-resources/" target="_blank">Mapping of Rackspace Resource to Amazon Web Service Resources</a>
@@ -595,59 +587,7 @@
             </ul>
         </div>
     </div>
-    <!-- modals -->
-    <!-- intro modal -->
-    <div class="modal hide animated fadeIn details" id="intro_modal">
-        <div class="modal-body">
-            <h1 class="rs-page-title">Welcome to the Rackspace Migration Manager!</h1>
-            <hr>
-            <div class="rs-row">
-                <div class="span-7">
-                    <h3>Migrate in just 3 easy steps:</h3>
-                    <big>
-                        <ol class="rs-custom-counter">
-                            <li><b>Select resources to migrate</b></li>
-                            <li><b>Get our recommendation and make modifications</b></li>
-                            <li><b>Schedule and confirm migration</b></li>
-                        </ol>
-                    </big>
-                    <div class="alert alert-warning animated fadeIn">
-                        <p><b>We notice you don't have a Fanatical AWS account.</b> Fear not, we are creating a new account for you. You can also <a href="https://cart.rackspace.com/aws" target="_blank"><u>create an account</u></a></p>
-                    </div>
-                    <div class="alert alert-success animated fadeIn">
-                        <p><b>We notice you already have a Fanatical AWS account.</b> We will use that account for you to migrate. You can also <a href="https://cart.rackspace.com/aws" target="_blank"><u>create a new account</u></a>.</p>
-                    </div>
-                    <div class="alert alert-success animated fadeIn">
-                        <p><b>We notice you have multiple Fanatical AWS accounts.</b> Which of the following would you like to use to migrate?<br>
-                        <select>
-                            <option>Account 1</option>
-                            <option>Account 2</option>
-                            <option>Account 3</option>
-                        </select>
-                        <br>
-                         You can also <a href="https://cart.rackspace.com/aws" target="_blank"><u>create a new account</u></a>.</p>
-                    </div>
-                    <h3><em>Need more information?</em></h3>
-                    <a href="https://www.rackspace.com/en-us/managed-aws" target="_blank">Rackspace Managed AWS</a>
-                    <br>
-                    <a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Pricing and Support Levels</a>
-                </div>
-                <div class="span-5 rs-center">
-                    <img src="images/monitor.png" alt="">
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <div class="rs-pull-left">
-                <label class="rs-checkbox">
-                    <input type="checkbox"> Don't show this again
-                </label>
-            </div>
-            <a href="https://mycloud.rackspace.com" class="rs-btn"  data-trigger="hover" data-placement="left" data-toggle="popover" data-content="Warning: This will take you out of the Migration Manager"><i class="fa fa-info-circle fa-fw rs-quiet"></i> Cancel</a>
-            <a href="step5.html" class="rs-btn">Go to Migration Dashboard</a>
-            <a class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true" href="#name_modal" role="button" data-toggle="modal">Start a Migration</a>
-        </div>
-    </div>
+
     <script type="application/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
     <script type="application/javascript" src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
     <script src="js/bootstrap.js"></script>
@@ -658,6 +598,18 @@
           $('[data-toggle="popover"]').popover({html:true}); 
       });
     </script> 
+    <!-- message randomizer - for demo sake -->
+    <script>
+    var elems = $(".alert");
+    if (elems.length) {
+        var keep = Math.floor(Math.random() * elems.length);
+        for (var i = 0; i < elems.length; ++i) {
+            if (i !== keep) {
+                $(elems[i]).hide();
+            }
+        }
+    }
+    </script>
 </body>
 
 </html>

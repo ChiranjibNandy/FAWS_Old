@@ -60,7 +60,7 @@ $.fn.datepicker = function (options) {
 
 	// setup option values
 	var defaults = {
-		format: "DD/MM/YYYY",
+		format: "MM/DD/YYYY",
 		colour: "#009688"
 	};
 	var options = $.extend(defaults, options);
