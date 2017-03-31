@@ -396,7 +396,7 @@
                         doSavedForLaterMigrationsExist = false;
                     });
 
-                    var url = "/api/jobs";
+                    var url = "/api/jobs/all";
                     var resourceMigrationPromise = HttpWrapper.send(url,{"operation":'GET'})
                     .then(function(response){
                         if(response !== null && response.job_status_list.length !== 0){

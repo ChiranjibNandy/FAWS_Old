@@ -180,7 +180,7 @@
             }
 
             this.getResourceMigrationStatus = function (tenant_id) {
-                var url = "/api/jobs/" + tenant_id;
+                var url = "/api/jobs/all";
                 return HttpWrapper.send(url, {
                         "operation": 'GET'
                     })
