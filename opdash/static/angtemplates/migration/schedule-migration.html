@@ -40,11 +40,10 @@
                                                 <input id="field" placeholder="Choose Date" class="span-12" ng-model="vm.date" ng-blur="vm.onSaveTime()">
                                             </div>
                                             <div class="rs-row">
-                                                <select name="timezone" ng-change="vm.onSaveTime()" ng-options="time for time in vm.timeZoneItems" ng-model="vm.timezone1" style="width: 113px;" class="ng-pristine ng-valid ng-not-empty ng-touched span-6"  >
-                                             <option  value="{{vm.timezone1}}">{{vm.timezone1}}</option>
+                                                <select name="timezone" ng-change="vm.onSaveTime()" ng-options="timezone.slice(13,17) for timezone in vm.timeZoneItems" ng-model="vm.timezone1" style="width: 113px;" class="ng-pristine ng-valid ng-not-empty ng-touched span-6"  >
                                         </select>
                                          <select name="time" ng-change="vm.onSaveTime()"  ng-options="time for time in vm.timeItems" ng-model="vm.time"  style="width: 113px;" class="ng-pristine ng-untouched ng-valid ng-not-empty span-6" >
-                                          <option  value="{{vm.time}}">{{vm.time}}</option>
+                                        
                                         </select>  
                                             </div>
                                              <div class="rs-control-group">
