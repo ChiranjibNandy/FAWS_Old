@@ -56,10 +56,10 @@
                         "8:00pm", "8:15pm", "8:30pm", "8:45pm", "9:00pm", "9:15pm",
                         "9:30pm", "9:45pm", "10:00pm", "10:15pm", "10:30pm", "10:45pm", "11:00pm", "11:15pm", "11:30pm", "11:45pm"];
                      vm.timeZoneItems =  [
-                       "(GMT -08:00) Pacific Time (US & Canada)",
-                        "(GMT -07:00) Mountain Time (US & Canada)",
-                        "(GMT -06:00) Central Time (US & Canada), Mexico City",
-                        "(GMT -05:00) Eastern Time (US & Canada), Bogota, Lima"];
+                       "(GMT -08:00) PST",
+                        "(GMT -07:00) MST",
+                        "(GMT -06:00) CST",
+                        "(GMT -05:00) EST"];
                         vm.timezone1 =vm.timeZoneItems[0];
                     // ["(GMT -12:00) Eniwetok, Kwajalein",
                     //      "(GMT -11:00) Midway Island, Samoa",
