@@ -157,9 +157,9 @@ th{
     margin-top: 0;
 }
 
-.migration-status-list-container .rs-list-table {
+/*.migration-status-list-container .rs-list-table {
     table-layout: fixed;
-}
+}*/
 
 .support-icon{
     display: inline-block;

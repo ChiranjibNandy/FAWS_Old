@@ -161,7 +161,7 @@
                      * @name pageSize
                      * @propertyOf migrationApp.controller:rsmigrationrackerdashCtrl
                      * @type {Number}
-                     * @description Holds the number of maximum items current page can contain
+                     * @description Holds the number of maximum items current a page can contain
                      */                  
                     vm.pageSize = 0;
 
@@ -179,7 +179,7 @@
                      * @name noOfPages
                      * @propertyOf migrationApp.controller:rsmigrationrackerdashCtrl
                      * @type {Number}
-                     * @description Holds the total number of pages of the pagination control 
+                     * @description Holds the total number of pages that are part of the pagination control 
                      */                     
                     vm.noOfPages = 0;
                     
@@ -192,22 +192,13 @@
 
                         // pagination controls
                         vm.currentPage = 1;
-                        vm.pageSize = 2; // items per page
+                        vm.pageSize = 5; // items per page
                         vm.totalItems = vm.items.length;
                         vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
                         for(var i=1;i<=vm.noOfPages;i++){
                             vm.pageArray.push(i);
                         };  
 
-                        // vm.showAllTenantInfo = function(){
-                        //     vm.currentPage = 1;
-                        //     vm.pageSize = vm.items.length;
-                        //     vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
-                        //     vm.pageArray = [];
-                        //     for(var i=1;i<=vm.noOfPages;i++){
-                        //         vm.pageArray.push(i);
-                        //     };                                                        
-                        // }
                     }, function(error){
                         vm.loading = false;
                         vm.loadError = true;
@@ -251,7 +242,7 @@
 
                         // Refresh pagination controls
                         vm.currentPage = 1;
-                        vm.pageSize = 2; // items per page
+                        vm.pageSize = 5; // items per page
                         vm.totalItems = vm.items.length;
                         vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
                         vm.pageArray = [];
@@ -307,7 +298,8 @@
                  * @description 
                  * fetches the tenant info for the newly entered tenant id.
                  */
-                vm.submitAddAccount = function() { 
+                vm.submitAddAccount = function(accountData) { 
+                    debugger;
                     vm.loading = true;
                     vm.loadError = false;
                     vm.loadTenantError = false;
@@ -345,7 +337,7 @@
 
                         // Refresh pagination controls
                         vm.currentPage = 1;
-                        vm.pageSize = 2; // items per page
+                        vm.pageSize = 5; // items per page
                         vm.totalItems = vm.items.length;
                         vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
                         vm.pageArray = [];
