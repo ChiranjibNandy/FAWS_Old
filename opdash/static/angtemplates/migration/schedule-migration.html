@@ -6,26 +6,15 @@
         $('#field').datepicker(options);
     </script>
      <div class="span-3 schedule-panel">
-                                <div class="white-panel">
+                                <div class="white-panel" style="height: 240px;">
                                     <h3>Schedule Migration </h3>
                                     <hr>
                                     <!-- Shows present time by default -->
                                     <div class="rs-control-group">
-                                       
-                                        <a style=" padding: 5px;
-    display: block;
-    font-size: 14px;
-    text-decoration: none;
-    cursor: pointer;
-    color: #333;
-    font-weight: bold;"id="now" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateNow" ng-click=" vm.showInitiateMigrateNow()"><i class="fa fa-clock-o fa-fw"> </i> Initiate Migration Now <i class="fa fa-angle-double-right"></i></a>
-                                        <a style=" padding: 5px;
-    display: block;
-    font-size: 14px;
-    text-decoration: none;
-    cursor: pointer;
-    color: #333;
-    font-weight: bold;" id="now" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateLate" ng-click="vm.showTime()"><i class="fa fa-calendar fa-fw"></i> Schedule for Later <i class="fa fa-angle-double-right"></i></a>  
+                                      <a style=" padding: 5px;display: block;font-size: 14px;text-decoration: none;cursor: pointer;color: #333;font-weight: bold;"id="now" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateNow" ng-click=" vm.showInitiateMigrateNow()">
+                                          <i class="fa fa-clock-o fa-fw"> </i> Initiate Migration Now <i class="fa fa-angle-double-right"></i></a>
+                                        <a style=" padding: 5px; display: block;font-size: 14px;text-decoration: none;cursor: pointer;color: #333;font-weight: bold;" id="now" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateLate" ng-click="vm.showTime()">
+                                            <i class="fa fa-calendar fa-fw"></i> Schedule for Later <i class="fa fa-angle-double-right"></i></a>  
                                     </div>
                                     
                                      <div class="animated fadeIn" id="schedule" ng-show="vm.showMigrationTime" >
@@ -34,6 +23,7 @@
                                                 <b>{{ vm.selectedDate}}</b></p>
                                         </div>
                                     </div>
+                    
                                     <div class="animated fadeIn" id="scheduleform" >
                                         <form ng-show="vm.showTimeForm">
                                              <div class="rs-row">
