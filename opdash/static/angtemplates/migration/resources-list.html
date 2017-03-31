@@ -25,17 +25,17 @@
                     </div>
                     <br>
                     <rs-tabs alignment="horizontal">
-                        <rs-tab title="Servers">
+                        <rs-tab title="Servers" showtab="true">
                             <rsmigrationitem type="server" filtervalue="vm.filterSearch"></rsmigrationitem>
                         </rs-tab>
                         <!--<rs-tab title="Networks">
                                 <rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>
                             </rs-tab>-->
-                        <rs-tab title="Load Balancers" ng-if="vm.isRacker">
+                        <rs-tab title="Load Balancers" ng-if="vm.isRacker" showtab="true">
                             <!--Load Balancers-->
                             <rsmigrationitem type="LoadBalancers" filtervalue="vm.filterSearch"></rsmigrationitem>
                         </rs-tab>
-                        <rs-tab title="Files" ng-if="vm.isRacker" class="disabled">
+                        <rs-tab title="Files" ng-if="vm.isRacker" class="disabled" showtab="true">
                             <!--Files-->
                             <rsmigrationitem type="Files" filtervalue="vm.filterSearch"></rsmigrationitem>
                         </rs-tab>

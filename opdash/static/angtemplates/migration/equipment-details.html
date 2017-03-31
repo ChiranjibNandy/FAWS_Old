@@ -137,6 +137,34 @@
             </div>
         </div>
     </div>
+    <div class="rs-content rs-panel rs-detail-xlarge" ng-if="vm.itemType == 'network'">
+        <div class="rs-detail-header">
+            <div class="rs-detail-header-subtitle">Network Name</div>
+            <div class="rs-detail-header-title">{{vm.itemDetails.name}}</div>
+        </div>
+        <div class="rs-detail-section">
+            <div class="rs-detail-section-header">
+                <div class="rs-detail-section-title">Network Details</div>
+            </div>
+            <div class="rs-detail-section-body">
+                <ul class="rs-detail-list">
+                    <li class="rs-detail-item">
+                        <div class="rs-detail-key">Network Status</div>
+                        <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.status}}</span></div>
+                    </li>
+                    <li class="rs-detail-item">
+                        <div class="rs-detail-key">ID</div>
+                        <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
+                    </li>
+                    <li class="rs-detail-item">
+                        <div class="rs-detail-key" id="size-key">Shared</div>
+                        <div class="rs-detail-value">{{vm.itemDetails.shared}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
     <div class="modal-footer">
         <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
     </div>
