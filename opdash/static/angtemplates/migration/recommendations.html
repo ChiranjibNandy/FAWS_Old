@@ -32,13 +32,13 @@
                     </div>
                 </div>                  
                 <rs-tabs alignment="horizontal">
-                    <rs-tab title="Servers ({{vm.dataServer}})">
+                    <rs-tab title="Servers ({{vm.dataServer}})" showtab="{{vm.dataServer != 0}}">
                         <rsrecommendationitem type="server" filtervalue="vm.filteredValue"></rsrecommendationitem>
                     </rs-tab>
-                    <rs-tab title="Networks ({{vm.dataNetwork}})">
+                    <rs-tab title="Networks ({{vm.dataNetwork}})" showtab="{{vm.dataNetwork != 0}}">
                         <rsrecommendationitem type="network" filtervalue="vm.filteredValue"></rsrecommendationitem>
                     </rs-tab>
-                    <rs-tab title="Load Balancers ({{vm.dataLoadBalancers}})">
+                    <rs-tab title="Load Balancers ({{vm.dataLoadBalancers}})" showtab="{{vm.dataLoadBalancers != 0}}">
                         <rsrecommendationitem type="loadbalancers" filtervalue="vm.filteredValue"></rsrecommendationitem>
                     </rs-tab>
                 </rs-tabs>

@@ -29,7 +29,8 @@
                 tabs: '^^rsTabs'
             },
             bindings: {
-                title: "@"
+                title: "@",
+                showtab: "@"
             },
             template: "<div ng-show='vm.tab.active' ng-transclude></div>",
             controllerAs: "vm",
@@ -55,7 +56,7 @@
                     };
 
                     // add current tab to the group
-                    vm.tabs.addTab(vm.tab);
+                    if(vm.showtab == "true") vm.tabs.addTab(vm.tab);
                 }
             }
         }); // end of component rsTab
