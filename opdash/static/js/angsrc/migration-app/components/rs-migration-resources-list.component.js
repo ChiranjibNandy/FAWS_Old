@@ -97,7 +97,7 @@
                      * @type {String}
                      * @description Create Migration considering Timestamp.
                      */
-                    vm.migrationName = 'Migration-' + timestmp;
+                    vm.migrationName = 'My Migration';
                     vm.noName = false;
                     vm.numOfItems = {
                         server:0,
