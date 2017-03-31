@@ -19,9 +19,12 @@
              * @name migrationApp.controller:rscurrentbatchdetailsCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rscurrentbatchdetails rscurrentbatchdetails} component
              */
-            controller: ["$rootRouter", "migrationitemdataservice", "dashboardservice", "authservice", function($rootRouter, ds, dashboardService, authservice){
+            controller: ["$rootRouter", "migrationitemdataservice", "dashboardservice", "authservice", "$interval", function($rootRouter, ds, dashboardService, authservice, $interval){
                 var vm = this;
                 var job_id;
+                var lastRefreshIntervalPromise;
+
+                vm.timeSinceLastRefresh = 0;
 
                 /**
                  * @ngdoc method
@@ -33,6 +36,12 @@
                  */
                 vm.getBatchDetails = function(refresh) {
                     vm.loading = true;
+
+                    if(refresh){
+                        vm.timeSinceLastRefresh = 0;
+                        $interval.cancel(lastRefreshIntervalPromise);
+                    }
+
                     dashboardService.getBatches(refresh)
                             .then(function(response) {
                                 var job = response.jobs.job_status_list.find(function(job) {
@@ -41,7 +50,9 @@
                                 console.log(job);
                                 vm.job = job;
                                 vm.loading = false;
-                                vm.lastRefreshTime = new Date().getTime();
+                                lastRefreshIntervalPromise = $interval(function(){
+                                    vm.timeSinceLastRefresh++;
+                                }, 60000);
                             }, function(errorResponse) {
                                 vm.loading = false;
                                 vm.loadError = true;

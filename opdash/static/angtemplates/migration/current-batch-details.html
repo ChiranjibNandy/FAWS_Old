@@ -11,9 +11,12 @@
                     </div>
                     <div class="span-4">
                         <div class="pull-right">
-                            <button class="rs-btn" ng-click="vm.getBatchDetails(true)"><i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading}"></i> Refresh</button>
+                            <button class="rs-btn" ng-click="vm.getBatchDetails(true)">
+                                <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading}"></i>
+                                <small><em class="rs-quiet">Refresh</em></small>
+                            </button>
                             <a href="" class="rs-btn" style="padding-left: 45px; padding-right: 45px;">See Log</a>
-                            <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.loadError">Last refreshed at: {{vm.lastRefreshTime | date : 'M/dd/yyyy hh:mm a'}}</div>
+                            <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1 ? " mins ": " min ") + "ago"}}</div>
                         </div>
                     </div>
                 </div>

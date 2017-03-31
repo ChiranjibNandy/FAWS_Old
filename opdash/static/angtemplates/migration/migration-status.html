@@ -16,37 +16,40 @@
                     </div>
                     <div class="span-4 ">
                         <div class="pull-right">
-                            <button class="rs-btn" ng-click="vm.getBatches(true)"><i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i> Refresh</button>
+                            <button class="rs-btn" ng-click="vm.getBatches(true)">
+                                <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i> 
+                                <small><em class="rs-quiet">Refresh</em></small>
+                            </button>
                             <button class="rs-btn rs-btn-primary" ng-click="vm.startNewMigration()"><i class="fa fa-plus-square fa-fw"></i> Start New Migration</button>
-                            <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed at: {{vm.lastRefreshTime | date : 'M/dd/yyyy hh:mm a'}}</div>
+                            <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1 ? " mins ": " min ") + "ago"}}</div>
                         </div>
                     </div>
                 </div>
-                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container table-justify">
-                    <table class="rs-list-table rs-embedded-list-table no-truncate-td">
+                <div class="migration-status-list-container table-justify">
+                    <table class="rs-list-table no-truncate-td cell-center">
                         <thead>
                             <tr>
                                 <th class="rs-table-status"></th>
-                                <th class="large-col">
-                                    <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                <th>
+                                    <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('current_batch', 'batch_name')" ng-class="{'rs-table-sort-asc': vm.sortBy['current_batch']==='batch_name', 'rs-table-sort-desc': vm.sortBy['current_batch']==='-batch_name'}">
                                         <span class="rs-table-sort-text">Batch Queue</span>
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
                                 <th>
-                                    <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                    <a href="javascript:void(0);" class="rs-table-sort">
                                         <span class="rs-table-sort-text">Batch Initiated by</span>
-                                        <span class="rs-table-sort-indicator"></span>
+                                        <!--<span class="rs-table-sort-indicator"></span>-->
                                     </a>
                                 </th>
                                 <th>
-                                    <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                    <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('current_batch', 'start')" ng-class="{'rs-table-sort-asc': vm.sortBy['current_batch']==='start', 'rs-table-sort-desc': vm.sortBy['current_batch']==='-start'}">
                                         <span class="rs-table-sort-text">Start Date/Time</span>
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
                                 <th>
-                                    <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                    <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('current_batch', 'batch_status')" ng-class="{'rs-table-sort-asc': vm.sortBy['current_batch']==='batch_status', 'rs-table-sort-desc': vm.sortBy['current_batch']==='-batch_status'}">
                                         <span class="rs-table-sort-text">Status</span>
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
@@ -54,11 +57,11 @@
                                 <!--<th>
                                     <span class="rs-table-sort-text">Progress</span>
                                 </th>-->
-                                <th>Actions</th>
+                                <th class="rs-table-cog rs-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody ng-show="!vm.loading && !vm.currentBatches.loadError && vm.currentBatches.items.length!==0">
-                            <tr ng-repeat="batch in vm.currentBatches.items | limitTo : vm.currentBatches.pageSize : (vm.currentBatches.currentPage-1)*vm.currentBatches.pageSize" class="ng-scope">
+                            <tr ng-repeat="batch in vm.currentBatches.items | orderBy: 'vm.sortBy.current_batch' | limitTo : vm.currentBatches.pageSize : (vm.currentBatches.currentPage-1)*vm.currentBatches.pageSize" class="ng-scope">
                                 <td class="rs-table-status tip" ng-class="{'rs-table-status-pending': batch.batch_status==='not available', 'rs-table-status-pending': batch.batch_status==='scheduled', 'rs-table-status-ok': batch.batch_status==='in progress', 'rs-table-status-error': batch.batch_status==='error', 'rs-table-status-pending': batch.timestamp}"></td>
                                 <td class="rs-table-link">
                                     <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]">{{batch.batch_name}}</a>
@@ -90,11 +93,11 @@
                                         <span class="rs-progress-label">{{ ['started', 'in progress', 'paused'].indexOf(batch.batch_status)>=0 ? 50 : 0 }}%</span>
                                     </div>
                                 </td>-->
-                                <td class="rs-table-input">
+                                <td class="rs-table-input rs-center">
                                     <div class="rs-btn-group">
                                         <div class="rs-dropdown">
                                             <div class="rs-cog rs-dropdown-toggle" ng-click="batch.showSettings = !batch.showSettings"></div>
-                                            <ul class="rs-dropdown-menu visible" ng-show="batch.showSettings">
+                                            <ul class="rs-dropdown-menu visible" ng-show="batch.showSettings" style="right: 0 !important">
                                                 <li><span class="rs-dropdown-category">Manage</span></li>
                                                 <li ng-show="batch.timestamp"><a href="javascript:void(0)" ng-click="vm.continueScheduling(batch)">Continue Scheduling</a></li>
                                                 <li ng-show="batch.timestamp && !batch.deleting">
@@ -143,25 +146,25 @@
                     </ul>
                 </div>  
             
-                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
-                    <table class="rs-list-table rs-embedded-list-table secondary-table">
+                <div class="migration-status-list-container table-justify">
+                    <table class="rs-list-table secondary-table">
                         <thead>
                             <tr>
                                 <th class="rs-table-status"></th>
                                 <th>
-                                    <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                    <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('completed_batch', 'batch_name')" ng-class="{'rs-table-sort-asc': vm.sortBy['completed_batch']==='batch_name', 'rs-table-sort-desc': vm.sortBy['completed_batch']==='-batch_name'}">
                                         <span class="rs-table-sort-text">Completed Batches</span>
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
                                 <th>
-                                    <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                    <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('completed_batch', 'start')" ng-class="{'rs-table-sort-asc': vm.sortBy['completed_batch']==='start', 'rs-table-sort-desc': vm.sortBy['completed_batch']==='-start'}">
                                         <span class="rs-table-sort-text">Start Date/Time</span>
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
                                 <th colspan="2">
-                                    <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                    <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('completed_batch', 'end')" ng-class="{'rs-table-sort-asc': vm.sortBy['completed_batch']==='end', 'rs-table-sort-desc': vm.sortBy['completed_batch']==='-end'}">
                                         <span class="rs-table-sort-text">Completed Date/Time</span>
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
@@ -170,12 +173,12 @@
                             </tr>
                         </thead>
                         <tbody ng-show="!vm.loading && !vm.completedBatches.loadError && vm.completedBatches.items.length!==0">
-                            <tr ng-repeat="batch in vm.completedBatches.items | limitTo : vm.completedBatches.pageSize : (vm.completedBatches.currentPage-1)*vm.completedBatches.pageSize" class="ng-scope">
+                            <tr ng-repeat="batch in vm.completedBatches.items | orderBy: vm.sortBy.completed_batch | limitTo : vm.completedBatches.pageSize : (vm.completedBatches.currentPage-1)*vm.completedBatches.pageSize" class="ng-scope">
                                 <td class="rs-table-status rs-table-status-ok tip"></td>
                                 <td class="rs-table-link large-col"><a ng-link="['CompletedBatchDetails', {job_id: batch.job_id}]" class="ng-binding">{{batch.batch_name}}</a></td>
                                 <td class="rs-table-text ng-binding">{{(batch.start && batch.start * 1000) | date : 'M/dd/yyyy hh:mm a'}}</td>
                                 <td class="rs-table-text ng-binding" colspan="2">{{(batch.end && batch.end * 1000) | date : 'M/dd/yyyy hh:mm a'}}</td>
-                                <td ng-show="vm.is_racker"><a href="" >See Log</a></td>
+                                <td ng-show="vm.is_racker"><a href="" class="rs-btn rs-btn-primary">See Log</a></td>
                             </tr>
                         </tbody>
                         <tbody ng-show="vm.loading">
@@ -219,21 +222,21 @@
                                     <table class="rs-list-table rs-embedded-list-table">
                                         <thead>
                                             <tr>
-                                                <th>Alert Types</th>
-                                                <th>Date/Time</th>
+                                                <th>Batch Name</th>
+                                                <th>Date</th>
                                                 <th>Message</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><span class="rs-status rs-status-warning">Warning</span></td>
-                                                <td class="rs-table-text ng-binding">2/1/2017 2:18 PM</td>
-                                                <td><a href="">Taking a long time to migrate</a></td>
+                                        <tbody ng-show="!vm.loadingAlerts && vm.alerts.length>0">
+                                            <tr ng-repeat="alert in vm.alerts">
+                                                <td><span class="rs-status" ng-class="{'rs-status-warning': alert.type==='warning', 'rs-status-error': alert.type==='error'}">alert.type</span></td>
+                                                <td class="rs-table-text ng-binding">alert.date</td>
+                                                <td><a href="">alert.message</a></td>
                                             </tr>
+                                        </tbody>
+                                        <tbody ng-show="!vm.loadingAlerts && vm.alerts.length===0">
                                             <tr>
-                                                <td><span class="rs-status rs-status-error">Error</span></td>
-                                                <td class="rs-table-text ng-binding">2/11/2017 1:00 AM</td>
-                                                <td><a href="">Problem while starting this batch. Will be retried.</a></td>
+                                                <td colspan="3" class="empty-collection-info">You don't have any alerts</td>
                                             </tr>
                                         </tbody>
                                     </table>
