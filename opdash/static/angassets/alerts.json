@@ -1,0 +1,14 @@
+[
+  {
+    "job-id": "job-56d50e1a-ce7f-4be8-a1fa-8cdb734cd3d6",
+    "messages": [
+      {
+        "message": "Collect migration state information for instance <Compute-594d9a31-1cf4-4aa7-ab37-b2ac33bc9e71>",
+        "type": "error"
+      }
+    ],
+    "resource-id": "594d9a31-1cf4-4aa7-ab37-b2ac33bc9e71",
+    "resource-name": "test-server-migrate-08",
+    "resource-type": "instance"
+  }
+]

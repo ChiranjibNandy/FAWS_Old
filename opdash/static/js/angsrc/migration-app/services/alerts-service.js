@@ -25,15 +25,28 @@
              */
             self.getAllAlerts = function(refresh) {
                 var tenant_id = authservice.getAuth().tenant_id;
-                var alertsApiUrl = "/api/alerts/all";
+                //var alertsApiUrl = "/api/alerts/all";
+                var alertsApiUrl = "/static/angassets/alerts.json";
 
                 if (refresh || !loaded || (currentTenant !== tenant_id)) {
                     return HttpWrapper.send(alertsApiUrl, { "operation": 'GET' })
                                       .then(function(result) {
                                             loaded = true;
                                             currentTenant = tenant_id;
-                                            alerts = result;
-                                            console.log("Alerts: ", result);
+                                            var tempAlerts = [];
+
+                                            for(var j=0; j<result.length; j++){
+                                                var msgs = angular.copy(result[j].messages);
+                                                for(var k=0; k<msgs.length; k++){
+                                                    msgs[k].job_id = result[j]["job-id"];
+                                                    msgs[k].resource_id = result[j]["resource-id"];
+                                                    msgs[k].resource_name = result[j]["resource-name"];
+                                                    msgs[k].resource_type = result[j]["resource-type"];
+                                                }
+                                                tempAlerts = tempAlerts.concat(msgs);
+                                            }
+                                            alerts = tempAlerts;
+                                            console.log("Alerts: ", alerts);
                                             return alerts;
                                         }, function(errorResponse) {
                                             return errorResponse;

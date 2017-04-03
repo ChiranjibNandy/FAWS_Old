@@ -99,7 +99,7 @@
                         <tbody ng-show="!vm.loading && !vm.loadError">
                             <tr ng-repeat="(id, network) in vm.job.networks">
                                 <td class="rs-table-link">
-                                    <a href="#network_info" ng-click="vm.equipmentDetails('network', id)" role="button" data-toggle="modal">{{network.name}}</a>
+                                    <a href="#resource_info" ng-click="vm.equipmentDetails('network', id)" role="button" data-toggle="modal">{{network.name}}</a>
                                 </td>
                                 <!--<td class="rs-table-text">
                                     <div class="rs-progress rs-progress-medium" style="width: 50%;">
@@ -172,34 +172,4 @@
     </div>
 </div>
 
-<div static-include="'/static/angtemplates/migration/equipment-details.html'"></div>
-
-<div id="network_info" style="width: 750px !important; overflow-y: auto; top: 4% !important" class="modal hide fade details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-    <div class="rs-content rs-panel rs-detail-xlarge">
-        <div class="rs-detail-section">
-            <div class="rs-detail-section-header">
-                <div class="rs-detail-section-title">Networks</div>
-            </div>
-            <div class="rs-detail-section-body">
-                <div class="rs-embedded-list-table-wrapper rs-embedded-small">
-                    <table class="rs-list-table rs-embedded-list-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>ID</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="rs-table-text">{{vm.networkDetails.name}}</td>
-                                <td class="rs-table-text">{{vm.networkDetails.id}}</td>
-                                <td class="rs-table-text"><span class="rs-status rs-status-ok">{{vm.networkDetails.status}}</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<div ng-include="'/static/angtemplates/migration/equipment-details.html'"></div>
