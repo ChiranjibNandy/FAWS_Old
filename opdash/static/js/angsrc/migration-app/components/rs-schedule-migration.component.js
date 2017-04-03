@@ -216,7 +216,7 @@
                  * Saves the chosen timezone for migration
                  */
                 vm.timezoneChange = function(){
-                    vm.selectedDate =  moment($('#field').val()).format('MMMM Do YYYY')+' at '+vm.time+' '+vm.timezone1.slice(1,11);
+                    vm.selectedDate =  moment($('#field').val()).format('MMMM Do YYYY')+' at '+vm.time+' '+vm.timezone1.slice(13,17);
                     $rootScope.$emit("scheduleMigrationSelectedDate",vm.selectedDate);
                 };
  /**
