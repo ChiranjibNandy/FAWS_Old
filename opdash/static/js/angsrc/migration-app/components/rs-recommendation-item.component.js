@@ -49,7 +49,8 @@
 
                 vm.$onInit = function() {
                     vm.recSelectedItems = dataStoreService.getRecommendedItems() || [];
-                    
+                    vm.propertyName = "name";
+                    vm.reverse = false;
                     if(vm.type === "server"){
                         var url = '/api/ec2/regions'; 
                         HttpWrapper.send(url,{"operation":'GET'}).then(function(result){
@@ -70,9 +71,9 @@
                         vm.labels = [
                                         {field: "name", text: vm.type+" Name"},
                                         {field: "ip_address", text: "IP Address"},
-                                        {field: "aws_region", text: "AWS Region"},
-                                        {field: "aws_zone", text: "AWS Zone"},
-                                        {field: "aws_instance", text: "AWS instance"},
+                                        {field: "region", text: "AWS Region"},
+                                        {field: "zone", text: "AWS Zone"},
+                                        {field: "instance_type", text: "AWS instance"},
                                         {field: "storage", text: "Storage"},
                                         {field: "cost", text: "Cost/Month"},
                                         {field: "action", text: "Actions"}
@@ -136,6 +137,11 @@
                         });
                     });
                 }
+
+                vm.sortBy = function(propertyName) {
+                    vm.reverse = (vm.propertyName === propertyName) ? !vm.reverse : false;
+                    vm.propertyName = propertyName;
+                };
 
                 //to update the networks when we remove an server.
                 if(vm.type === 'network'){
@@ -202,7 +208,8 @@
                 vm.saveUpdatedObject  = function(id){
                     vm.data.filter(function(server){
                         if(server.id == id){
-                            server.selectedMapping = server.pricingOptions[parseInt(vm.selectedConfiguration)];
+                            var selectedConfiguration = parseInt(vm.selectedConfiguration) || 0;
+                            server.selectedMapping = server.pricingOptions[selectedConfiguration];
                             server.selectedMapping.zone = vm.awsZone || server.selectedMapping.zone;
                         }    
                     });

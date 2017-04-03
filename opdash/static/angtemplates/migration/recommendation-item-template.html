@@ -12,9 +12,9 @@
                   <tr>
                       <th class="rs-table-status"></th>
                       <th ng-repeat="item in vm.labels">
-                        <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                        <a href="#list-table" class="rs-table-sort" ng-class=" {'rs-table-sort-asc': vm.reverse, 'rs-table-sort-desc': !vm.reverse}" ng-click="vm.sortBy(item.field)">
                             <span class="rs-table-sort-text">{{item.text}} </span>
-                            <span class="rs-table-sort-indicator"></span>
+                            <span class="rs-table-sort-indicator" ng-show="vm.propertyName == item.field"></span>
                         </a>
                       </th>
                       <th ng-show="vm.type === 'server'"></th>
