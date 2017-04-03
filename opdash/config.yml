@@ -2,15 +2,19 @@
   # Quick place to check for what environment the currently executing code is in. Vision here is to assist with logging or similar activities.
 - ENVIRONMENT: local
 
-  # Location where the migrator service is running
-- API_BASE_URL: http://opdash-api-dev.us-east-1.elasticbeanstalk.com
-
   # Environment variable key to use when looking for an additional configuration to load. EX: use export OPDASH_API_CONFIG="/some/path/to/file.yml"
   #
   # NOTE: To encrypt your config file run python with the current app in path then run opdash_api.encryption_helper.encrypt_file({key}, {file}[, {out_file}])
   # where "key" is the encryption file and "file" is the input file. Optionally an output file can be specified. To decrypt a file use
   # opdash_api.encryption_helper.decrypt_file({key}, {file}[, {out_file}]). Please see ENVIRONMENT -> CONFIG_LOCAL_KEY also.
 - CONFIG_OVERRIDE_ENV_VAR: OPDASH_CP_CONFIG
+
+- API:
+    # Location where the migrator service is running
+    BASE_URL: http://opdash-api-dev.us-east-1.elasticbeanstalk.com
+
+    # Timeout value in seconds for calls made to the API_BASE_URL
+    PROXY_TIMEOUT: 15
 
 - ENCRYPTION:
     # Environment variable key used when looking for the decryption key to decrypt an encrypted configuration during local development.
