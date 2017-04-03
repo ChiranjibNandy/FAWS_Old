@@ -16,7 +16,7 @@ def register_api_proxy(app):
         api_host = app.config.get('API_BASE_URL')
 
         # Request timeout in seconds
-        proxy_timeout = 15
+        proxy_timeout = app.config.get('API_PROXY_TIMEOUT', 15)
 
         # We only allow these headers
         headers = {
