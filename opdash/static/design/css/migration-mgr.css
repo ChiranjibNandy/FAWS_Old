@@ -14,10 +14,12 @@
 .schedule-panel .white-panel .alert {
     padding: 5px 10px 0;
 }
-.schedule-panel .white-panel .rs-control-group{
+
+.schedule-panel .white-panel .rs-control-group {
     margin-bottom: 15px;
 }
-.schedule-panel .white-panel .rs-control-group a{
+
+.schedule-panel .white-panel .rs-control-group a {
     padding: 5px;
     display: block;
     font-size: 14px;
@@ -26,7 +28,8 @@
     color: #333;
     font-weight: bold;
 }
-.schedule-panel .white-panel .rs-control-group a:hover{
+
+.schedule-panel .white-panel .rs-control-group a:hover {
     background: #eee;
 }
 
@@ -35,15 +38,20 @@
     color: #c40022;
     margin-bottom: 10px;
 }
+
 .rs-sidebar .white-panel h3,
 .rs-sidebar .plain-panel h3 {
     margin-bottom: 0px;
 }
+
 .plain-panel {
     padding: 1em;
     border: 1px solid #ccc;
     min-height: 240px;
     background: #f9f9f9;
+}
+.plain-panel.resources {
+    min-height: 50px;
 }
 
 .plain-panel b {
@@ -61,16 +69,18 @@
 .info-panel:first-child {
     padding: 1em;
 }
-.dash{
+
+.dash {
     border: 0 none;
     border-top: 2px dashed #ccc;
     background: none;
-    height:0;
+    height: 0;
 }
-hr.dash{
-     margin: 5px 5px 7px 5px
 
+hr.dash {
+    margin: 5px 5px 7px 5px
 }
+
 .pricing-buttons {
     margin-bottom: 10px;
 }
@@ -209,7 +219,8 @@ form .rs-row input {
 
 
 /* canon style overrides  */
-.modal select{
+
+.modal select {
     margin: 5px 0 0;
 }
 
@@ -250,16 +261,19 @@ a:hover,
     clear: both;
 }
 
-.migration-mgr .search, .modal .search {
+.migration-mgr .search,
+.modal .search {
     position: relative;
 }
 
-.migration-mgr .search input, .modal .search input {
+.migration-mgr .search input,
+.modal .search input {
     text-indent: 30px;
     line-height: 20px;
 }
 
-.migration-mgr .search .fa-search, .modal .search .fa-search  {
+.migration-mgr .search .fa-search,
+.modal .search .fa-search {
     position: absolute;
     top: 6px;
     left: 7px;
@@ -269,7 +283,7 @@ a:hover,
 
 .migration-mgr.racker-dash .rs-panel {
     min-height: 270px;
-} 
+}
 
 .migration-mgr h4,
 .modal h4 {
@@ -351,7 +365,6 @@ a:hover,
 }
 
 
-
 /* Reach styles */
 
 .rs-nav-utility .rs-nav-item.active .rs-nav-link {
@@ -371,36 +384,40 @@ a:hover,
 
 /* bootstrap overrides */
 
+
 /* alerts */
+
+.alert select {
+    padding: 0;
+    height: 0;
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: top;
+    zoom: 1;
+    border-radius: 0;
+    background: transparent;
+    border: transparent;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+select:focus,
+select:active {
+    border: transparent;
+    outline: 0;
+}
 
 .alert {
     text-shadow: none;
     margin-bottom: 30px;
 }
 
-#alert h3 {
-    margin: 0;
-}
-
-.alert.alert-warning {
-    color: rgba(51, 51, 51, 0.7);
-}
-
-.alert.alert-success {
-    color: rgba(251, 251, 251, 0.85);
-}
-
 .alert a {
     font-weight: bold;
 }
 
-.alert.alert-warning a {
-    color: #000;
-}
-
-.alert.alert-success a,
-.alert.alert-success b {
-    color: #fff;
+#alert h3 {
+    margin: 0;
 }
 
 .alert .close {
@@ -416,28 +433,59 @@ a:hover,
     color: #c40022;
 }
 
+.alert.alert-warning a {
+    color: #000;
+}
+
+.alert.alert-warning {
+    background-color: #FFCE56;
+    border-color: transparent;
+    color:rgba(51, 51, 51, 0.85);
+}
+
+.alert.alert-success {
+    color: rgba(251, 251, 251, 0.85);
+}
+
 .alert-success {
     background-color: #00a96d;
     border-color: transparent;
     color: #fff;
 }
 
-.alert-success h4 {
+.alert-success h4, .alert-success h3, .alert-error h4, .alert-error h3 {
+    color: #fff;
+}
+.alert-warning h4, .alert-warning h3{
+    color:#333;
+}
+.alert.alert-success a,
+.alert.alert-success b {
     color: #fff;
 }
 
-.alert-warning {
-    background-color: #FFCE56;
+.alert-error {
+    background-color: #c40022;
     border-color: transparent;
+    color: rgba(251, 251, 251, 0.75);
+}
+
+.alert .alert-error select {
     color: #fff;
 }
 
-
+.alert.alert-error a,
+.alert.alert-error b {
+    color: #fff;
+}
 
 .pagination {
     margin: 0 0 20px;
 }
+
+
 /* modals */
+
 body .modal.details {
     width: 850px;
     margin-left: -425px;
@@ -478,12 +526,41 @@ body .modal.details2 {
 .modal ul li {
     margin-bottom: 10px;
 }
+
 .modal .rs-list-table th {
     font-weight: 700;
     color: #333;
     font-size: 12px;
 }
+
+.modal.modal-error .modal-header {
+    background-color: #c40022;
+    border-color: transparent;
+    color: rgba(251, 251, 251, 0.75);
+    border-radius: 5px 5px 0 0;
+}
+.modal.modal-success .modal-header {
+    background-color: #00a96d;
+    border-color: transparent;
+    color: #fff;
+     border-radius: 5px 5px 0 0;
+}
+.modal.modal-warning .modal-header {
+    background-color: #FFCE56;
+    border-color: transparent;
+    rgba(51, 51, 51, 0.7);
+     border-radius: 5px 5px 0 0;
+
+}
+.modal.modal-warning .modal-header a, .modal.modal-warning .modal-header h3 {
+    color: #000;
+}
+.modal.modal-error .modal-header h3, .modal.modal-success .modal-header h3{
+    color: #fff;
+}
+
 /* accordion */
+
 .accordion-group {
     margin-bottom: 0px;
     border: none;
@@ -518,6 +595,7 @@ body .modal.details2 {
 
 
 /* Simple setup for stepper */
+
 
 /* SOURCE ---- https://codepen.io/sharafat_8271/pen/KVWMXP */
 
