@@ -99,6 +99,7 @@
                                     console.log("Error: Could not trigger migration", error);
                                     vm.migrating = false;
                                     vm.errorInMigration = true;
+                                    vm.scheduleMigration =true;
                                 });
 
                                
