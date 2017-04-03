@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div style="margin-top: 10px; text-align: right;" ng-show="vm.migrating" >Preparing and sending migration request...<i class="fa fa-refresh fa-spin" style="font-size:16px"></i></div>
-                <div style="color: red; text-align: right;" ng-show="vm.errorInMigration" >Error while trying to migrate</div>
+                <div style="color: red; text-align: right;" ng-show="vm.errorInMigration && !vm.migrating" >Error while trying to migrate</div>
                 <div class="rs-row" style="text-align: right;" ng-show="vm.saveLaterObj.resultMsg" ng-style="vm.saveLaterObj.saveSuccess == true ? {color:'green'} : {color:'red'}">{{vm.saveLaterObj.resultMsg}}</div>
                 <br>
             </div>
@@ -113,7 +113,7 @@
             <h3>{{vm.schedule.date}} </h3> 
             <p>Is this correct?</p>
             <div class="rs-control-group">
-               <a ng-click="vm.migrate()" ng-show="!vm.migrating" class="rs-btn rs-btn-primary">Yes, Continue</a>  
+               <a ng-click="vm.migrate()" ng-show="!vm.migrating"  class="rs-btn rs-btn-primary">Yes, Continue</a>  
                <a class="rs-btn" data-dismiss="modal" aria-hidden="true">No, Go back</a>
             </div> 
         </div>
