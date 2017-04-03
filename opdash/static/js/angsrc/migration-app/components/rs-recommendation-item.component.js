@@ -188,7 +188,6 @@
                  */
                 vm.showModifyModal = function(item,id){
                     item.isMenuOpen = !item.isMenuOpen;
-                    $(id).modal('show');
                     vm.getPricingDetails(item);
                 };
 
