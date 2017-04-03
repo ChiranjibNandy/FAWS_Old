@@ -167,7 +167,21 @@
                                     if (validCompletedBatchStatus.indexOf(job.batch_status) >= 0)
                                         completedBatches.push(job);
                                 });
-                                var savedMigrations = $filter('orderBy')(response.savedMigrations, '-timestamp');
+
+                                var tempSavedMigrations = [];
+                                for(var j=0; j<response.savedMigrations.length; j++){
+                                    var t = {};
+                                    t.batch_name = response.savedMigrations[j].instance_name;
+                                    t.recommendations = response.savedMigrations[j].recommendations;
+                                    t["scheduling-details"] = response.savedMigrations[j]["scheduling-details"];
+                                    t.selected_resources = response.savedMigrations[j].selected_resources;
+                                    t.step_name = response.savedMigrations[j].step_name;
+                                    t.timestamp = response.savedMigrations[j].timestamp;
+                                    
+                                    tempSavedMigrations.push(t);
+                                }
+
+                                var savedMigrations = $filter('orderBy')(tempSavedMigrations, '-timestamp');
                                 vm.currentBatches.items = $filter('orderBy')(currentBatches, '-start').concat(savedMigrations);
                                 vm.currentBatches.noOfPages = Math.ceil(vm.currentBatches.items.length / vm.currentBatches.pageSize);
                                 vm.currentBatches.pages = new Array(vm.currentBatches.noOfPages);

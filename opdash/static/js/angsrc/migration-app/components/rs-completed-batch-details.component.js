@@ -54,10 +54,8 @@
                     ds.getTrimmedAllItems(type)
                         .then(function (response) {
                             var details = response.data.filter(function (item) { return item.id == id })[0];
-                            if(type === "server")
-                                vm.itemDetails = details;
-                            else if(type === "network")
-                                vm.networkDetails = details;
+                            vm.itemType = type;
+                            vm.itemDetails = details;
                         });
                 };
             }

@@ -14,6 +14,21 @@
 .schedule-panel .white-panel .alert {
     padding: 5px 10px 0;
 }
+.schedule-panel .white-panel .rs-control-group{
+    margin-bottom: 15px;
+}
+.schedule-panel .white-panel .rs-control-group a{
+    padding: 5px;
+    display: block;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    color: #333;
+    font-weight: bold;
+}
+.schedule-panel .white-panel .rs-control-group a:hover{
+    background: #eee;
+}
 
 .white-panel h3,
 .plain-panel h3 {
@@ -51,6 +66,10 @@
     border-top: 2px dashed #ccc;
     background: none;
     height:0;
+}
+hr.dash{
+     margin: 5px 5px 7px 5px
+
 }
 .pricing-buttons {
     margin-bottom: 10px;
@@ -190,6 +209,9 @@ form .rs-row input {
 
 
 /* canon style overrides  */
+.modal select{
+    margin: 5px 0 0;
+}
 
 .modal .rs-form-horizontal.rs-form-medium .rs-control-label,
 .modal .rs-form-create.rs-form-medium .rs-control-label {
@@ -213,10 +235,6 @@ a:hover,
 
 .rs-table-status-pending {
     background-color: #999!important;
-}
-
-.migration-mgr .rs-embedded-list-table-wrapper {
-    border: 1px solid #e7e7e7;
 }
 
 .migration-mgr .rs-table-link>a,
@@ -269,7 +287,7 @@ a:hover,
 }
 
 .migration-mgr .rs-dropdown-menu {
-    right: 0;
+    /*right: 0;*/
     text-align: left;
 }
 
@@ -293,7 +311,6 @@ a:hover,
 
 .migration-mgr .rs-list-table td:nth-child(2) a {
     display: inline-block;
-    width: 117px;
     max-width: 200px;
     white-space: nowrap;
     overflow: hidden;
@@ -312,7 +329,7 @@ a:hover,
 }
 
 .migration-mgr .secondary-table th {
-    background: rgba(0, 0, 0, 0.075);
+    background: #fff;
 }
 
 .migration-mgr .secondary-table tr:nth-child(even) {
@@ -460,6 +477,11 @@ body .modal.details2 {
 
 .modal ul li {
     margin-bottom: 10px;
+}
+.modal .rs-list-table th {
+    font-weight: 700;
+    color: #333;
+    font-size: 12px;
 }
 /* accordion */
 .accordion-group {
@@ -658,4 +680,13 @@ body .modal.details2 {
     left: 0;
     right: 50%;
     margin-right: 20px;
+}
+#now {
+    padding: 5px;
+    display: block;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    color: #333;
+    font-weight: bold;
 }

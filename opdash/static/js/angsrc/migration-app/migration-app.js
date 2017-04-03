@@ -107,7 +107,8 @@
             { path: "/migration/confirm", component: "rsconfirmmigration", name: "ConfirmMigration" },
             { path: "/migration-status", component: "rsmigrationstatus", name: "MigrationStatus" },
             { path: "/migration/current-batch/:job_id", component: "rscurrentbatchdetails", name: "CurrentBatchDetails" },
-            { path: "/migration/completed-batch/:job_id", component: "rscompletedbatchdetails", name: "CompletedBatchDetails" }
+            { path: "/migration/completed-batch/:job_id", component: "rscompletedbatchdetails", name: "CompletedBatchDetails" },
+            { path: "/migration/batch-task-list/:job_id", component: "rsbatchtasklist", name: "BatchTaskList" }
         ]
     }); // end of rsMigrationRoot component definition
 })();
