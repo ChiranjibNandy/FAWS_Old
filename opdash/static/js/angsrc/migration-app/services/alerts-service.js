@@ -33,7 +33,7 @@
                                             loaded = true;
                                             currentTenant = tenant_id;
                                             alerts = result;
-                                            console.log("Alerts Service: ", result);
+                                            console.log("Alerts: ", result);
                                             return alerts;
                                         }, function(errorResponse) {
                                             return errorResponse;

@@ -24,6 +24,8 @@
                 controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "migrationitemdataservice", "alertsservice", "$filter", "$interval", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, ds, alertsService, $filter, $interval) {
                     var vm = this;
                     var jobList = [];
+                    var lastRefreshIntervalPromise;
+
                 var isValidBatch = function (batch) {
                     var valid = true;
                     angular.forEach(batch.selected_resources, function (item) {
@@ -44,23 +46,27 @@
                     return valid;
                 };
 
-                    vm.$onInit = function() {
-                        $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
-                        vm.count = 0;
-                        vm.is_racker = authservice.getAuth().is_racker;
+                vm.$onInit = function() {
+                    $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
+                    vm.count = 0;
+                    vm.is_racker = authservice.getAuth().is_racker;
+                    vm.sortBy = {
+                        current_batch: 'start',
+                        completed_batch: 'start'
                     };
+                };
 
-                    vm.$routerOnActivate = function(next, previous) {
-                        if(previous && previous.urlPath.indexOf("confirm") > -1){
-                            vm.refreshFlag=true;
-                            vm.afterNewMigration = true;
-                            vm.resourceCount = dataStoreService.getMigrationResourceCount();
-                        } else{
-                            vm.afterNewMigration = false;
-                        }
-                        vm.getBatches();
-                        vm.getAllAlerts();
-                    };
+                vm.$routerOnActivate = function(next, previous) {
+                    if(previous && previous.urlPath.indexOf("confirm") > -1){
+                        vm.refreshFlag=true;
+                        vm.afterNewMigration = true;
+                        vm.resourceCount = dataStoreService.getMigrationResourceCount();
+                    } else{
+                        vm.afterNewMigration = false;
+                    }
+                    vm.getBatches();
+                    vm.getAllAlerts();
+                };
 
                 /**
                  * @ngdoc property
@@ -112,6 +118,9 @@
                 vm.tenant_id = auth.tenant_id;
                 vm.currentUser = auth.account_name;
                 vm.loading = true;
+                vm.timeSinceLastRefresh = 0;
+                vm.alerts = [];
+                vm.loadingAlerts = true;
 
                 /**
                  * @ngdoc method
@@ -122,8 +131,11 @@
                  * Gets the list of all batches initiated by the current tenant
                  */
                 vm.getBatches = function (refresh) {
-                    if (refresh)
+                    if (refresh){
                         vm.manualRefresh = true;
+                        vm.timeSinceLastRefresh = 0;
+                        $interval.cancel(lastRefreshIntervalPromise);
+                    }
 
                     if (!vm.refreshFlag)
                         vm.count = 6;
@@ -172,7 +184,9 @@
 
                                 vm.loading = false;
                                 vm.manualRefresh = false;
-                                vm.lastRefreshTime = new Date().getTime();
+                                lastRefreshIntervalPromise = $interval(function(){
+                                    vm.timeSinceLastRefresh++;
+                                }, 60000);
                             }, function (errorResponse) {
                                 vm.loading = false;
                                 vm.currentBatches.loadError = true;
@@ -182,13 +196,14 @@
                     }, 3000);
                 };
 
-                    vm.getAllAlerts = function(refresh) {
-                        alertsService.getAllAlerts(refresh)
-                                     .then(function(result) {
-                                         console.log("Component: ", result);
-                                         vm.alerts = result;
-                                     });
-                    };
+                vm.getAllAlerts = function(refresh) {
+                    vm.loadingAlerts = true;
+                    alertsService.getAllAlerts(refresh)
+                                    .then(function(result) {
+                                        vm.alerts = result;
+                                        vm.loadingAlerts = false;
+                                    });
+                };
 
                 /**
                  * @ngdoc method
@@ -269,30 +284,37 @@
 
                             // remove from server
                             var index = -1;
-                            for (var i = 0; i < savedMigrations.length; i++) {
-                                if (batch.timestamp === savedMigrations[i].timestamp && batch.instance_name === savedMigrations[i].instance_name) {
+                            for(var i=0; i<savedMigrations.length; i++){
+                                if(batch.timestamp === savedMigrations[i].timestamp && batch.instance_name === savedMigrations[i].instance_name){
                                     index = i;
                                     break;
                                 }
                             }
-                            index !== -1 && savedMigrations.splice(index, 1);
+                            index!==-1 && savedMigrations.splice(index, 1);
                             result.savedDetails = JSON.stringify(savedMigrations);
-
-                            if (dataStoreService.postSavedInstances(result)) {
+                            
+                            if(dataStoreService.postSavedInstances(result)){
                                 // remove from local
                                 index = -1;
-                                for (var i = 0; i < vm.currentBatches.items.length; i++) {
-                                    if (batch.instance_name === vm.currentBatches.items[i].instance_name) {
+                                for(var i=0; i<vm.currentBatches.items.length; i++){
+                                    if(batch.instance_name === vm.currentBatches.items[i].instance_name){
                                         index = i;
                                         break;
                                     }
                                 }
-                                index !== -1 && vm.currentBatches.items.splice(index, 1);
-                            } else {
+                                index!==-1 && vm.currentBatches.items.splice(index, 1);
+                            }else{
                                 batch.deleting = false;
                             }
                         });
-                };
-            }]
-        }); // end of comeponent rsmigrationstatus
+                    };
+
+                    vm.setSortBy = function(batch, sortBy) {
+                        if(vm.sortBy[batch] === sortBy && vm.sortBy[batch][0] !== "-")
+                            vm.sortBy[batch] = "-" + sortBy;
+                        else
+                            vm.sortBy[batch] = sortBy;
+                    };
+                }]
+            }); // end of comeponent rsmigrationstatus
 })();
