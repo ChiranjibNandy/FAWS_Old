@@ -25,7 +25,7 @@
              */
             self.getBatches = function(refresh) {
                 var tenant_id = authservice.getAuth().tenant_id;
-                var currentJobsUrl = "/api/jobs/" + tenant_id;
+                var currentJobsUrl = "/api/jobs/all";
                 //var currentJobsUrl = "/static/angassets/batch-details.json";
 
                 if (refresh || !loaded || (currentTenant !== tenant_id)) {
