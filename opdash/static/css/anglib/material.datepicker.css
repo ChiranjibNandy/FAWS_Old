@@ -14,15 +14,17 @@
 }
 
 .material-datepicker {
-	font-family: 'Source Sans Pro','Helvetica Neue',sans-serif;
 	position: absolute;
+	bottom: 0;
+	left: 50%;
 	width: 280px;
 	background: #fff;
 	border:1px solid gray;
 	z-index: 1000000;
 	margin:10px 0 20px;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.35);
 }
-.material-datepicker:after{
+/*.material-datepicker:after{
 	bottom: 100%;
 	left: 20%;
 	border: solid transparent;
@@ -34,7 +36,7 @@
 	border-bottom-color: #565656;
 	border-width: 10px;
 	margin-left: -10px;
-}
+}*/
 .material-datepicker:focus {
 	outline: none;
 }
