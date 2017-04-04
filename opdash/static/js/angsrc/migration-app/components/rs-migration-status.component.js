@@ -64,7 +64,7 @@
                     } else{
                         vm.afterNewMigration = false;
                     }
-                    vm.getBatches();
+                    vm.getBatches(true);
                     vm.getAllAlerts();
                 };
 
