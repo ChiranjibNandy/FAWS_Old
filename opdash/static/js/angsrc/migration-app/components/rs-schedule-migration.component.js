@@ -290,8 +290,7 @@
                  *  save scheduled time  **
                  */
               vm.onSaveTime = function(){
-                  debugger;
-                    $timeout(function(){
+                  $timeout(function(){
                         var time = vm.getTime();
                         if(moment().diff(moment($('#field').val() + " " + time),'minutes') > 1){
                             vm.error = true;
