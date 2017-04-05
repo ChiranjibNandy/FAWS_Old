@@ -299,7 +299,6 @@
                  * fetches the tenant info for the newly entered tenant id.
                  */
                 vm.submitAddAccount = function(accountData) { 
-                    debugger;
                     vm.loading = true;
                     vm.loadError = false;
                     vm.loadTenantError = false;
