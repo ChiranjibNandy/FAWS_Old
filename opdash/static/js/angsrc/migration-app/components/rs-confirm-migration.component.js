@@ -42,6 +42,7 @@
                     vm.destination = "AWS EC2";
                     vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
                     vm.changedMigrationName = vm.migrationName;
+                   
                     vm.schedule = {
                         date: dataStoreService.getMigrationDate() || new Date().toDateString(),
                         time: dataStoreService.getMigrationTime() || new Date().toTimeString(),
@@ -67,10 +68,12 @@
                     vm.saveProgress = "";
                 };
 
- $rootScope.$on("vm.scheduleMigration",function(event,value){
+
+ $rootScope.$on("vm.scheduleMigration",function(event,value,selectedDate){
      console.log(value);
-     value=true;
+    // value=true;
      vm.scheduleMigration = value;
+      vm.schedule.date =value;
  });
   $rootScope.$on("scheduleMigrationSelectedDate",function(event,value){
      vm.schedule.date = value;
@@ -196,7 +199,7 @@
                     $('#cancel_modal').modal('show');
                 };
 
-                 vm.showConfirmMigrateDialog = function() {
+                 vm.showConfirmMigrateDialog = function(scheduleMigration) {
                     $('#confirm-migration-modal').modal('show');
                 };
 

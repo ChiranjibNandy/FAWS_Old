@@ -56,10 +56,10 @@
                         "8:00pm", "8:15pm", "8:30pm", "8:45pm", "9:00pm", "9:15pm",
                         "9:30pm", "9:45pm", "10:00pm", "10:15pm", "10:30pm", "10:45pm", "11:00pm", "11:15pm", "11:30pm", "11:45pm"];
                      vm.timeZoneItems =  [
-                       "(GMT -08:00) Pacific Time (US & Canada)",
-                        "(GMT -07:00) Mountain Time (US & Canada)",
-                        "(GMT -06:00) Central Time (US & Canada), Mexico City",
-                        "(GMT -05:00) Eastern Time (US & Canada), Bogota, Lima"];
+                       "(GMT -08:00) PST",
+                        "(GMT -07:00) MST",
+                        "(GMT -06:00) CST",
+                        "(GMT -05:00) EST"];
                         vm.timezone1 =vm.timeZoneItems[0];
                     // ["(GMT -12:00) Eniwetok, Kwajalein",
                     //      "(GMT -11:00) Midway Island, Samoa",
@@ -267,8 +267,9 @@
                    vm.migrateLate =true;
                        vm.showTimeForm =  true;
                        vm.showMigrationTime =false;
-                       vm.selectedDate =  moment(vm.date).format('MMMM Do YYYY')+' at '+vm.time+' '+vm.timezone1[0];
+                       vm.selectedDate =  moment(vm.date).format('MMMM Do YYYY')+' at '+vm.time+' '+vm.timezone1.slice(13,17);
                      $rootScope.$emit("vm.scheduleMigration",vm.migrateLate);
+                       $rootScope.$emit("vm.scheduleMigration", vm.selectedDate);
                };
 
                vm.showInitiateMigrateNow = function(){
@@ -279,6 +280,7 @@
                     vm.showTimeForm =  false;
                     vm.selectedDate =  moment().format('MM/DD/YYYY ')+' at '+moment().format('h:mma')+' '+new Date().toTimeString().slice(8,42);
                     $rootScope.$emit("vm.scheduleMigration", vm.migrateNow);
+                    $rootScope.$emit("vm.scheduleMigration", vm.selectedDate);
                }
   /**
                  * @ngdoc method
@@ -288,6 +290,7 @@
                  *  save scheduled time  **
                  */
               vm.onSaveTime = function(){
+                  debugger;
                     $timeout(function(){
                         var time = vm.getTime();
                         if(moment().diff(moment($('#field').val() + " " + time),'minutes') > 1){
@@ -308,6 +311,7 @@
                 }
                 return vm;
             }
+            
 
         ]}); // end of component definition
 })();

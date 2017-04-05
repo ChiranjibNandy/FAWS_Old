@@ -6,26 +6,15 @@
         $('#field').datepicker(options);
     </script>
      <div class="span-3 schedule-panel">
-                                <div class="white-panel">
+                                <div class="white-panel" style="height: 240px;">
                                     <h3>Schedule Migration </h3>
                                     <hr>
                                     <!-- Shows present time by default -->
                                     <div class="rs-control-group">
-                                       
-                                        <a style=" padding: 5px;
-    display: block;
-    font-size: 14px;
-    text-decoration: none;
-    cursor: pointer;
-    color: #333;
-    font-weight: bold;"id="now" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateNow" ng-click=" vm.showInitiateMigrateNow()"><i class="fa fa-clock-o fa-fw"> </i> Initiate Migration Now <i class="fa fa-angle-double-right"></i></a>
-                                        <a style=" padding: 5px;
-    display: block;
-    font-size: 14px;
-    text-decoration: none;
-    cursor: pointer;
-    color: #333;
-    font-weight: bold;" id="now" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateLate" ng-click="vm.showTime()"><i class="fa fa-calendar fa-fw"></i> Schedule for Later <i class="fa fa-angle-double-right"></i></a>  
+                                      <a style=" padding: 5px;display: block;font-size: 14px;text-decoration: none;cursor: pointer;color: #333;font-weight: bold;"id="now" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateNow" ng-click=" vm.showInitiateMigrateNow()">
+                                          <i class="fa fa-clock-o fa-fw"> </i> Initiate Migration Now <i class="fa fa-angle-double-right"></i></a>
+                                        <a style=" padding: 5px; display: block;font-size: 14px;text-decoration: none;cursor: pointer;color: #333;font-weight: bold;" id="now" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateLate" ng-click="vm.showTime()">
+                                            <i class="fa fa-calendar fa-fw"></i> Schedule for Later <i class="fa fa-angle-double-right"></i></a>  
                                     </div>
                                     
                                      <div class="animated fadeIn" id="schedule" ng-show="vm.showMigrationTime" >
@@ -34,17 +23,17 @@
                                                 <b>{{ vm.selectedDate}}</b></p>
                                         </div>
                                     </div>
-                                    <div class="animated fadeIn" id="scheduleform" >
-                                        <form ng-show="vm.showTimeForm">
+                    
+                                    <div class="animated fadeIn" id="scheduleform" ng-if="vm.showTimeForm">
+                                        <form >
                                              <div class="rs-row">
                                                 <input id="field" placeholder="Choose Date" class="span-12" ng-model="vm.date" ng-blur="vm.onSaveTime()">
                                             </div>
                                             <div class="rs-row">
-                                                <select name="timezone" ng-change="vm.onSaveTime()" ng-options="time for time in vm.timeZoneItems" ng-model="vm.timezone1" style="width: 113px;" class="ng-pristine ng-valid ng-not-empty ng-touched span-6"  >
-                                             <option  value="{{vm.timezone1}}">{{vm.timezone1}}</option>
+                                                <select name="timezone" ng-change="vm.onSaveTime()" ng-options="timezone.slice(13,17) for timezone in vm.timeZoneItems" ng-model="vm.timezone1" style="width: 113px;" class="ng-pristine ng-valid ng-not-empty ng-touched span-6"  >
                                         </select>
                                          <select name="time" ng-change="vm.onSaveTime()"  ng-options="time for time in vm.timeItems" ng-model="vm.time"  style="width: 113px;" class="ng-pristine ng-untouched ng-valid ng-not-empty span-6" >
-                                          <option  value="{{vm.time}}">{{vm.time}}</option>
+                                        
                                         </select>  
                                             </div>
                                              <div class="rs-control-group">
@@ -60,167 +49,6 @@
                                    
                                 </div>
                                 </div>
-     <!--<div class="span-3 schedule-panel">
-                                <div class="white-panel">
-                                    <h3>Schedule Migration </h3>
-                                    <hr>
-                                   
-                                    <div class="rs-control-group">
-                                        <h4> <input type="radio" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateNow" ng-click="vm.showTime()"> Initiate migration now <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h4> 
-                                       <h4> <input type="radio" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateLate" ng-click="vm.showTime()" > Schedule for later</h4>
-                                    </div>
-                                    <div class="animated fadeIn" id="schedule" ng-show="vm.showMigrationTime">
-                                        <div class="alert alert-warning">
-                                            <p>You have chose to schedule your migration for:
-                                        <b>{{ vm.selectedDate}}</b></p>
-                                        </div>
-                                    </div>
-                                    <div class="animated fadeIn" id="scheduleform"  ng-show="vm.showTimeForm">
-                                        <form>
-                                            <div class="rs-row">
-                                                <input id="field" placeholder="Choose Date" class="span-12">
-                                            </div>
-                                            <div class="rs-row">
-                                                <select name="timezone" ng-change="vm.onSaveTime()" ng-options="time for time in vm.timeZoneItems" ng-model="vm.timezone" style="width: 113px;" class="ng-pristine ng-valid ng-not-empty ng-touched span-6"  >
-                                             <option  value="{{vm.timezone}}">{{vm.timezone}}</option>
-                                        </select>
-                                         <select name="time" ng-change="vm.onSaveTime()"  ng-options="time for time in vm.timeItems" ng-model="vm.time"  style="width: 113px;" class="ng-pristine ng-untouched ng-valid ng-not-empty span-6" >
-                                          <option  value="{{vm.time}}">{{vm.time}}</option>
-                                        </select>  
-                                            </div>
-                                            <div class="rs-control-group">
-                                                <span style="width: 80px"></span>
-                                                <div class="rs-controls">
-                                                    <div ng-show="vm.error" style="color:red;">
-                                                        Please select future or current Date/Time
-                                                    </div>                   
-                                                </div>   
-                                            </div>  
-                                        </form>
-                                        <div id="placeholder"></div>
-                                    </div>
-                                </div>
-                            </div>-->
-
-                        <!--      <div class="span-3 ">
-                                <div class="white-panel">
-                                    <h3>Schedule Migration</h3>
-                                    <hr>                                    
-                                     
-                                    <div class="rs-control-group">
-                                       <h4> <input type="radio" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateNow" ng-click="vm.showTime()"> Initiate migration now <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h4> 
-                                       <h4> <input type="radio" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateLate" ng-click="vm.showTime()" > Schedule for later</h4>
-                                    </div>                                   
-                                    <div class="animated fadeIn" id="schedule"   ng-show="vm.showMigrationTime">
-                                     <div class="alert alert-warning">   <p>You have chose to schedule your migration for:
-                                        <b>{{ vm.selectedDate}}</b></p></div>
-                                    </div>
-                                   <div class="animated fadeIn"  id="scheduleform" style="min-height: 200px;">
-                                        <form class="rs-row" ng-show="vm.showTimeForm"  >
-                                            <div class="rs-row">
-                                                <input id="field"  placeholder="Choose Date" ng-model="vm.date" ng-blur="vm.onSaveTime()" value={{vm.date}} class="span-12" style="width: 121px;">
-                                            </div>
-                                
-            
-                                            <div class="rs-row">
-                                              
-                                                   <select name="timezone" ng-change="vm.onSaveTime()" ng-options="time for time in vm.timeZoneItems" ng-model="vm.timezone" style="width: 113px;" class="ng-pristine ng-valid ng-not-empty ng-touched span-6"  >
-                                             <option  value="{{vm.timezone}}">{{vm.timezone}}</option>
-                                        </select>
-                                         <select name="time" ng-change="vm.onSaveTime()"  ng-options="time for time in vm.timeItems" ng-model="vm.time"  style="width: 113px;" class="ng-pristine ng-untouched ng-valid ng-not-empty span-6" >
-                                          <option  value="{{vm.time}}">{{vm.time}}</option>
-                                        </select>  
-                                            </div> 
-                                            <div class="rs-control-group">
-                                                <span style="width: 80px"></span>
-                                                <div class="rs-controls">
-                                                    <div ng-show="vm.error" style="color:red;">
-                                                        Please select future or current Date/Time
-                                                    </div>                   
-                                                </div>   
-                                            </div>  
-                                        </form>   
-                                    </div>
-                            </div>
-                        </div> --> 
-    <!-- custom datepicker - end -->
-                    <!--<div class="span-3">
-                        <div class="plain-panel ">
-                            <h3>Scheduled Migration <a ng-link="['ScheduleMigration']"  title="Go to step 3 to choose new Schedule"></a></h3>
-                            <hr>
-                                    <div class="clear"></div>
-                        <hr>
-                        <div class="rs-row">
-                            <div class="span-12"> 
-                                <div class="rs-row">
-                                    <div class="span-4">
-                                        <div class="rs-control-group">
-                                            <div class="rs-controls">
-                                                <label class="rs-radio">
-                                                <input type="radio" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateNow" ng-click="vm.showTime()">
-                                                <strong>Migrate Now</strong><br>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="rs-control-group">
-                                            <div class="rs-controls">
-                                                <label class="rs-radio">
-                                                <input type="radio" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateLate" ng-click="vm.showTime()" >
-                                                <strong>Schedule Time</strong><br>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                          
-                                    <div class="span-8 animated fadeIn"  id="scheduleform" style="min-height: 200px;">
-                                        <form class="rs-form-horizontal rs-form-small" ng-show="vm.showTimeForm">
-                                            <div class="rs-control-group">
-                                                <label class="rs-control-label">Choose Date</label>
-                                                <div class="rs-controls">
-                                                    <input id="field" ng-model="vm.date" ng-blur="vm.onSaveTime()" value={{vm.date}} >
-                                                </div>
-                                            </div>
-                                            <div class="rs-control-group">
-                                                <label class="rs-control-label">Time Zone</label>
-                                                <div class="rs-controls">
-                                                   <select name="timezone" ng-change="vm.onSaveTime()" ng-options="time for time in vm.timeZoneItems" ng-model="vm.timezone" class="ng-pristine ng-valid ng-not-empty ng-touched span2" >
-                                             <option  value="{{vm.timezone}}">{{vm.timezone}}</option>
-                                        </select>
-                                                </div>  
-                                            </div> 
-                                            <div class="rs-control-group">
-                                                <label class="rs-control-label">Time</label>
-                                                <div class="rs-controls">
-                                                    <select name="time" ng-change="vm.onSaveTime()"  ng-options="time for time in vm.timeItems" ng-model="vm.time" class="ng-pristine ng-untouched ng-valid ng-not-empty span2" >
-                                          <option  value="{{vm.time}}">{{vm.time}}</option>
-                                        </select>
-                                                </div>  
-                                            </div>  
-
-                                            </div> 
-                                            <div class="rs-control-group">
-                                                <span style="width: 80px"></span>
-                                                <div class="rs-controls">
-                                                    <div ng-show="vm.error" style="color:red;">
-                                                        Please select future or current Date/Time
-                                                    </div>                   
-                                                </div>   
-                                            </div>  
-                                        </form>   
-                                    </div>
-                                </div>         
-                            </div>             
-                        </div>
-                        <br>
-                        <br><br>
-                    <br>
-                      
-                </div>
-            </div>
-            
-            </div>-->
-           
-        
                             
                         </div>
                     </div>              
