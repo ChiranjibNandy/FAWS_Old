@@ -62,7 +62,7 @@
                         <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
                         <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>-->
                         <a class="rs-btn" role="button" ng-click="vm.showCancelDialog()">Cancel Migration</a>
-                        <a class="rs-btn rs-btn-primary " ng-click=" vm.showConfirmMigrateDialog()"   ng-disabled="!vm.scheduleMigration">Confirm & Schedule</a>
+                        <a class="rs-btn rs-btn-primary " role="button" ng-click=" vm.showConfirmMigrateDialog(scheduleMigration)"   ng-disabled="!vm.scheduleMigration">Confirm & Schedule</a>
                         <a class="rs-btn rs-btn-primary disabled" ng-show="vm.migrating">Processing...</a>
                     </div>
                 </div>
