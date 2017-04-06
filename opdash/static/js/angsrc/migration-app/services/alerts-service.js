@@ -11,8 +11,12 @@
         .service("alertsservice", ["authservice", "httpwrapper", "$q", function(authservice, HttpWrapper, $q) {
             var self = this,
                 loaded = false,
+                taskListLoaded = false,
                 currentTenant = null,
-                alerts = [];
+                currentJobID = null,
+                alerts = [],
+                batchName,
+                taskList = [];
 
             /**
              * @ngdoc method
@@ -25,8 +29,9 @@
              */
             self.getAllAlerts = function(refresh) {
                 var tenant_id = authservice.getAuth().tenant_id;
-                //var alertsApiUrl = "/api/alerts/all";
-                var alertsApiUrl = "/static/angassets/alerts.json";
+                var alertsApiUrl = "/api/alerts/all";
+                //var alertsApiUrl = "/api/alerts/job/job-56d50e1a-ce7f-4be8-a1fa-8cdb734cd3d6";
+                //var alertsApiUrl = "/static/angassets/alerts.json";
 
                 if (refresh || !loaded || (currentTenant !== tenant_id)) {
                     return HttpWrapper.send(alertsApiUrl, { "operation": 'GET' })
@@ -46,7 +51,7 @@
                                                 tempAlerts = tempAlerts.concat(msgs);
                                             }
                                             alerts = tempAlerts;
-                                            console.log("Alerts: ", alerts);
+                                            //console.log("Alerts: ", alerts);
                                             return alerts;
                                         }, function(errorResponse) {
                                             return errorResponse;
@@ -55,6 +60,33 @@
                     return $q.when(alerts);
                 }
             };
+
+            self.getJobTasks = function(job_id, refresh) {
+                var url = "/api/tasks/" + job_id;
+
+                if (refresh || !taskListLoaded || (currentJobID !== job_id)) {
+                    return HttpWrapper.send(url, { "operation": 'GET' })
+                                      .then(function(result) {
+                                            taskListLoaded = true;
+                                            currentJobID = job_id;
+                                            var tempTaskList = [];
+                                            var resources = result.resources;
+
+                                            for(var j=0; j<resources.length; j++){
+                                                var tasks = angular.copy(resources[j].tasks);
+                                                tempTaskList = tempTaskList.concat(tasks);
+                                            }
+                                            taskList = tempTaskList;
+                                            batchName = result["batch-name"];
+                                            //console.log("Task List: ", taskList);
+                                            return { batchName: batchName, taskList: taskList };
+                                        }, function(errorResponse) {
+                                            return errorResponse;
+                                        });
+                } else {
+                    return $q.when({ batchName: batchName, taskList: taskList });
+                }
+            }
 
             return self;
         }]); // end of service definition
