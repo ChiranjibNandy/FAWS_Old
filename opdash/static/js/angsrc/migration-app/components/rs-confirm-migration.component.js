@@ -88,15 +88,13 @@
                 vm.migrate = function(){
                     var requestObj;
                     vm.migrating = true;
-                    $('#confirm-migration-modal').modal('hide');
+                    $('#confirm-migration-modal').modal('hide');     
                     requestObj = ds.prepareRequest();
                     console.log(requestObj);
-  
                     HttpWrapper.save("/api/jobs", {"operation":'POST'}, requestObj)
                                 .then(function(result){
                                     console.log("Migration Response: ", result);
-                                    $timeout(function(){
-                                        $rootRouter.navigate(["MigrationStatus"]);
+                                    $timeout(function(){    
                                     }, 5000);
                                 }, function(error) {
                                     console.log("Error: Could not trigger migration", error);
@@ -104,7 +102,7 @@
                                     vm.errorInMigration = true;
                                     vm.scheduleMigration =true;
                                 });
-
+                            $rootRouter.navigate(["MigrationStatus"]);
                                
                 };
 
@@ -202,8 +200,12 @@
                  vm.showConfirmMigrateDialog = function(scheduleMigration) {
                     $('#confirm-migration-modal').modal('show');
                 };
-
+ vm.showProjectedCostCalculation = function(projectedCalculation) {
+                    $('#calculator_modal').modal('show');
+                };
+                
                 return vm;
+                
             }
         ]}); // end of component definition
 })();
