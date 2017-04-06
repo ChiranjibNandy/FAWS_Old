@@ -31,6 +31,7 @@
               * @description Flag to avoid repeated dispaly of sliding window at initial step of migration
              */
             self.dontShowStatus = false;
+            self.showWelcomeModal = true;
             self.dontShowNameModal = false
             self.labelsServer = [];
             self.labelsNetwork = [];
@@ -226,6 +227,14 @@
                return self.dontShowStatus;
             }
 
+            this.setShowWelcomeModal = function(status){
+               self.showWelcomeModal = status;
+            }
+
+            this.getShowWelcomeModal = function(){
+               return self.showWelcomeModal;
+            }
+            
             this.setDontShowNameModal = function(status){
                self.dontShowNameModal = status;
             }
@@ -478,6 +487,47 @@
                 return totalProjectedPricing;
             };
 
-            return self;
+            self.getUserProfile = function () {
+                var userLog_json =
+                    {
+                        "Tenantid": authservice.getAuth().tenant_id.toString(),
+                        "Preferences": {
+                            "introModalDisplayStatus": self.showWelcomeModal,
+                            "showMigrationNameWindow": self.dontShowNameModal
+                        },
+                        "UserLog": [
+                            {
+                                "MigrationName": self.getScheduleMigration().migrationName,
+                                "Timestamp": moment().format('MMDYYYYhmmss'),
+                                "Resourceslist": self.getItems(),
+                                "Status": "Saved",
+                                "Triggredby": authservice.getAuth().account_name
+                            }
+                        ]
+                    };
+                var profileObj =
+                    {
+                        "tenant_id": authservice.getAuth().tenant_id.toString(),
+                        "context": "Profile_Logging",
+                        "savedDetails": JSON.stringify(userLog_json)
+                    };
+                return profileObj;
+            };
+
+            this.fetchUserProfile = function() {
+                var getSavedInstancesUrl = "/api/users/uidata/Profile_Logging";
+                return HttpWrapper.send(getSavedInstancesUrl, {"operation":'GET'})
+                                  .then(function(result){
+                                      if(result == null){
+                                          result = JSON.stringify({
+                                              'savedDetails': []
+                                          });
+                                      }
+                                      return result;
+                                  },function(error) {
+                                      return false;
+                                  });
+            }
+                return self;
         }]); // end of service definition
 })();

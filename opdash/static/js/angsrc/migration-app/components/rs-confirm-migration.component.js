@@ -91,6 +91,13 @@
                     $('#confirm-migration-modal').modal('hide');     
                     requestObj = ds.prepareRequest();
                     console.log(requestObj);
+                    //log user profile
+                    // if(dataStoreService.postSavedInstances(dataStoreService.getUserProfile())){
+                    //     console.log("success");
+                    // }else{
+                    //     console.log("fail");
+                    // }
+                        
                     HttpWrapper.save("/api/jobs", {"operation":'POST'}, requestObj)
                                 .then(function(result){
                                     console.log("Migration Response: ", result);

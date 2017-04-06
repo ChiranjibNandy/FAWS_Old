@@ -31,6 +31,11 @@
                 vm.saveClicked = false;
 
                 vm.$onInit = function() {
+                    //testing
+                    // dataStoreService.fetchUserProfile()
+                    //     .then(function (result) {
+                    //         var profileDetails = JSON.parse(result.savedDetails || '[]');
+                    //     });
                     // If status is true, popup for migration won't be displayed in first step of Migration.
                     var status = dataStoreService.getDontShowStatus(); //check for flag status created for intorduction Modal.
                     if(status == false){
@@ -235,7 +240,7 @@
                  * Consider Dont show checkbox of introduction Modal if checked.
                  */
                 vm.dontShow = function() {
-                    dataStoreService.setDontShowStatus(vm.dontshowStatus);
+                    dataStoreService.setShowWelcomeModal(!(vm.dontshowStatus));
                 };
 
                 /**
@@ -325,6 +330,10 @@
                 vm.cancelMigration = function() {
                     if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0){
                         $('#cancel_modal').modal('show');
+                        var migration_name = dataStoreService.getScheduleMigration().migrationName;
+                        if(!migration_name && !vm.displayMigName){
+                            vm.displayMigName = true;
+                        };
                     }
                     else{
                         $('#save_for_later').modal('hide');
@@ -345,13 +354,14 @@
                  */
                 vm.submitCancel = function() {
                     if(vm.saveProgress == 'yes'){
-                        var migration_name = dataStoreService.getScheduleMigration().migrationName;
-                        if(!migration_name && !vm.displayMigName){
-                            vm.displayMigName = true;
-                        }
-                        else{
-                            vm.saveItems(vm.cancelnSaveObj);
-                        };
+                        // var migration_name = dataStoreService.getScheduleMigration().migrationName;
+                        // if(!migration_name && !vm.displayMigName){
+                        //     vm.displayMigName = true;
+                        // }
+                        // else{
+                        vm.saveItems(vm.cancelnSaveObj);
+                        vm.displayMigName = false;
+                        //};
                     }
                     else{
                         $rootRouter.navigate(["MigrationStatus"]);

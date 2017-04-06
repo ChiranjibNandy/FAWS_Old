@@ -145,6 +145,8 @@
                     vm.sortingOrder = true;
                     vm.isAllselected = false;
                     vm.disableSelectAll = false;
+                    vm.reverse = false;
+                    vm.propertyName = "name";
                     /**
                      * @ngdoc property
                      * @name tenant_id
@@ -352,6 +354,7 @@
                  * Function to sort resource list
                  */
                 vm.sort = function(item){
+                    vm.propertyName = item;
                     var items = vm.items;
                     if(vm.sortingOrder){
                         items.sort(function(a,b){
