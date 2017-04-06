@@ -29,7 +29,7 @@
                 tabs: '^^rsTabs'
             },
             bindings: {
-                title: "@",
+                tabtitle: "@",
                 showtab: "@"
             },
             template: "<div ng-show='vm.tab.active' ng-transclude></div>",
@@ -51,7 +51,7 @@
                      * @description Object with tab details containing tab title and its state (active/inactive)
                      */
                     vm.tab = {
-                        title: vm.title,
+                        tabtitle: vm.tabtitle,
                         active: false
                     };
 

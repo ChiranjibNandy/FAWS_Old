@@ -9,10 +9,9 @@
     <td class="rs-table-text"><i class="fa fa-arrow-right rs-status-ok pullLeft"></i>{{item.selectedMapping.region }}</td>
     <td class="rs-table-text">{{item.selectedMapping.zone || 'US-East-1a'  }}</td>
     <td class="rs-table-text">{{item.selectedMapping.instance_type}}</td>
-    <td class="rs-table-text">{{item.selectedMapping.storage}}</td>
     <td class="rs-table-text">{{item.selectedMapping.cost | currency}}</td>
     <td class="rs-table-cog">
-        <a href="{{'#modify_modal'+ item.id}}" ng-click="vm.showModifyModal(item,'#modify_modal'+ item.id)" data-toggle="modal" class="rs-btn-action">
+        <a href="#" ng-click="vm.showModifyModal(item,'#modify_modal'+ item.id)" data-toggle="modal" class="rs-btn-action">
             <i class="rs-edit" title="Modify this"></i>
         </a>
         <!--<a href="{{'#modify_modal'+ item.id}}" ng-click="vm.showModifyModal(item,'#modify_modal'+ item.id)" role="button" data-toggle="modal" class="rs-btn rs-btn-action">Modify</a>-->
