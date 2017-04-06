@@ -308,6 +308,13 @@
                     vm.isModeSave= true;
                     vm.isDisableDate =false;
                 }
+                
+            vm.showDatePicker =function(){
+                var options = {
+                            format:"YYYY-MM-DD"
+                };
+                $('#field').datepicker(options);
+                }   
                 return vm;
             }
             
