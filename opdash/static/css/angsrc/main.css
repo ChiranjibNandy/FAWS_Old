@@ -478,6 +478,7 @@ rscalendaritem > div.week.names > span {
 
 .pullLeft{
     margin-left: -10px;
+    padding: 4px;
 }
 
 .search {
@@ -495,4 +496,8 @@ rscalendaritem > div.week.names > span {
     left: 7px;
     font-size: 15px;
     color: #ccc;
+}
+
+thead{
+    line-height: 40px;
 }

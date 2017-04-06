@@ -1,3 +1,10 @@
+  <script>
+    $(document).ready(function() {
+        $('[data-toggle="popover"]').popover({
+            html: true
+        });
+    });
+</script>
   <div class="rs-tab-content">
       <div class="rs-tab-pane active" id="Servers">
           <div ng-show="vm.noData" class="rs-table-overlay">
@@ -39,37 +46,40 @@
     <!-- ********** MODAL CODE GOES HERE... ************* -->
     <div ng-repeat="item in vm.data" id="{{'modify_modal'+item.id}}" class="modal hide animated fadeIn details" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Modify Configuration</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                <i class="fa fa-times"></i>
+            </button>
+            <h3>Modify Configurations </h3>
         </div>
         <div class="modal-body">
-            <h4>What you have currently <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h4>
-            <div class="rs-panel">
-                <table class="rs-list-table rs-embedded-list-table">
-                    <thead>
-                        <tr>
-                            <th class="rs-table-checkbox"></th>
-                            <th>Instance Type</th>
-                            <th>VCPU</th>
-                            <th>Memory</th>
-                            <th>Storage</th>
-                            <th>Cost</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="">
-                            <td class="rs-table-checkbox"><img src="/static/img/rackspace-logo.svg" alt=""></td>
-                            <td class="rs-table-text">{{item.selectedMapping.instance_type}} (Current)</td>
-                            <td class="rs-table-text">{{item.selectedMapping.vcpu}}</td>
-                            <td class="rs-table-text">{{item.selectedMapping.memory}}</td>
-                            <td class="rs-table-text">{{item.selectedMapping.storage}}</td>
-                            <td class="rs-table-text">{{item.selectedMapping.cost | currency}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <big><b>What you have currently</b> <a href="#" role="button" data-trigger="hover" data-placement="right" data-toggle="popover" title="This is the current set up you have within Rackspace Cloud Server." data-content="This is the current set up you have within Rackspace Cloud Server. "><i class="fa fa-info-circle rs-quiet"></i></a></big>
             <br>
-            <h4>Choose a new configuration <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h4>
+            <br>
+            <table class="rs-list-table">
+                <thead>
+                    <tr>
+                        <th class="rs-table-checkbox"></th>
+                        <th>Instance Type</th>
+                        <th>VCPU</th>
+                        <th>Memory</th>
+                        <th>Storage</th>
+                        <th>Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="">
+                        <td class="rs-table-checkbox"><img src="/static/img/rackspace-logo.svg" alt=""></td>
+                        <td class="rs-table-text">{{item.details.flavor_details.name}} (Current)</td>
+                        <td class="rs-table-text">{{item.details.flavor_details.vcpus}}</td>
+                        <td class="rs-table-text">{{item.details.flavor_details.memory}}</td>
+                        <td class="rs-table-text">{{item.details.flavor_details.storage}}</td>
+                        <td class="rs-table-text">{{item.details.rax_price | currency}}</td>
+                    </tr>
+                </tbody>
+            </table>
+             <br>
+            <big><b>Choose a new configuration</b> <a href="#" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" title="" data-content="Please feel free to choose a different option that will fit your specifications. The pre-selected option is the optimal configuration we recommend based on your current setup. "><i class="fa fa-info-circle rs-quiet"></i></a></big>
+            <br>
             <br>
             <form class="rs-form-horizontal rs-form-medium">
                 <div class="rs-row">
@@ -95,8 +105,8 @@
                     </div>
                 </div>      
             </form>  
-            <div class="rs-embedded-list-table-wrapper rs-embedded-large">
-                <table class="rs-list-table rs-embedded-list-table">
+            <div>
+                <table class="rs-list-table rs-select-table">
                     <thead>
                         <tr>
                             <th class="rs-table-checkbox"></th>
@@ -108,7 +118,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="server in item.pricingOptions track by $index" class="rs-inst-types">
+                        <tr ng-repeat="server in item.pricingOptions track by $index" class="">
                             <td class="rs-table-checkbox">    
                                 <input type="radio" name="{{'selection'+item.name }}" ng-model="vm.selectedConfiguration" ng-value="$index"/>
                             </td>

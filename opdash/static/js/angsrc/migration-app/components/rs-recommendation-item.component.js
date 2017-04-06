@@ -74,7 +74,6 @@
                                         {field: "region", text: "AWS Region"},
                                         {field: "zone", text: "AWS Zone"},
                                         {field: "instance_type", text: "AWS instance"},
-                                        {field: "storage", text: "Storage"},
                                         {field: "cost", text: "Cost/Month"},
                                         {field: "action", text: "Actions"}
                                     ];
@@ -194,6 +193,7 @@
                  */
                 vm.showModifyModal = function(item,id){
                     item.isMenuOpen = !item.isMenuOpen;
+                    $(id).modal('show');
                     vm.getPricingDetails(item);
                 };
 
