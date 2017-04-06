@@ -88,8 +88,7 @@
                 vm.migrate = function(){
                     var requestObj;
                     vm.migrating = true;
-                    $('#confirm-migration-modal').modal('hide');
-                     $rootRouter.navigate(["MigrationStatus"]);
+                    $('#confirm-migration-modal').modal('hide');     
                     requestObj = ds.prepareRequest();
                     console.log(requestObj);
                     HttpWrapper.save("/api/jobs", {"operation":'POST'}, requestObj)
@@ -103,7 +102,7 @@
                                     vm.errorInMigration = true;
                                     vm.scheduleMigration =true;
                                 });
-
+                            $rootRouter.navigate(["MigrationStatus"]);
                                
                 };
 
@@ -204,6 +203,7 @@
  vm.showProjectedCostCalculation = function(projectedCalculation) {
                     $('#calculator_modal').modal('show');
                 };
+                
                 return vm;
                 
             }
