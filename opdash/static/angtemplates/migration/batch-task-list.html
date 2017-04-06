@@ -4,72 +4,46 @@
     <div class="rs-main">
         <div class="rs-content rs-panel">
             <div class="rs-inner">
-                <div class="pull-right">
-                    <a href="" class="rs-btn"><i class="fa fa-refresh fa-fw"></i> <small><em class="rs-quiet">Refreshed 2 mins ago.</em></small></a>        
-                </div>
-                <div class="migr-ddi-name">User Namegoeshere (#1024814)</div>
-                <div class="migr-name">
-                    My_Migration_01 / Tasks                            
+                <div class="rs-row">
+                    <div class="span-10">
+                        <div class="migr-ddi-name">
+                            {{vm.currentUser}} ( #{{vm.tenant_id}} )
+                        </div>
+                        <div class="migr-name">
+                            {{vm.batchName ? "Tasks" : vm.batchName + "/ Tasks"}}
+                        </div>
+                    </div>
+                    <div class="span-2">
+                        <button class="rs-btn" ng-click="vm.getJobTasks(true)">
+                            <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i> 
+                            <small><em class="rs-quiet">Refresh</em></small>
+                        </button>
+                        <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1 ? " mins ": " min ") + "ago"}}</div>
+                    </div>
                 </div>
                 <div class="migration-status-list-container">
                     <table class="rs-list-table no-truncate-td cell-center">
                         <thead>
                             <th>Task</th>
                             <th>Status</th>
-                            <th>Issue</th>
-                            <th>Destination</th>
-                            <th>Actions</th>
+                            <th>Description</th>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr ng-repeat="task in vm.tasks">
                                 <td class="rs-table-text">
-                                    Task title
-                                </td>
-                                <td class="rs-table-text">
-                                    Scheduled
+                                    {{task.name}}
                                 </td>
                                 <td class="rs-table-text">
-                                    None
+                                    <span class="rs-status-disabled" ng-show="task.status==='not available'">Not Available</span>
+                                    <span class="rs-status-disabled" ng-show="task.status==='scheduled'">Scheduled</span>
+                                    <span class="rs-status-ok" ng-show="task.status==='in progress'">In Progress</span>
+                                    <span class="rs-status-ok" ng-show="task.status==='started'">Started</span>
+                                    <span class="rs-status-ok" ng-show="task.status==='done'">Completed</span>
+                                    <span class="rs-status-error" ng-show="task.status==='error'">Error</span>
+                                    <span class="rs-status-warning" ng-show="task.status==='paused'">Paused</span>
                                 </td>
                                 <td class="rs-table-text">
-                                    US-East-1
-                                </td>
-                                <td class="rs-table-input">
-                                    <a href="" class="rs-btn">Complete</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="rs-table-text">
-                                    Task title
-                                </td>
-                                <td class="rs-table-text">
-                                    <span class="rs-status-disabled">Not Configured</span>
-                                </td>
-                                <td class="rs-table-text">
-                                    None
-                                </td>
-                                <td class="rs-table-text">
-                                    TBD
-                                </td>
-                                <td class="rs-table-input">
-                                    <a href="" class="rs-btn">Complete</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="rs-table-text">
-                                    Task Title
-                                </td>
-                                <td class="rs-table-text">
-                                    <span class="rs-status-warning">Paused</span>
-                                </td>
-                                <td class="rs-table-text">
-                                    Taking too long to initiate
-                                </td>
-                                <td class="rs-table-text">
-                                    US-East-1
-                                </td>
-                                <td class="rs-table-input">
-                                    <a href="" class="rs-btn">Complete</a>
+                                    {{task.details}}
                                 </td>
                             </tr>
                         </tbody>
