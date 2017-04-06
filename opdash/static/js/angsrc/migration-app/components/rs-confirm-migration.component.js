@@ -202,7 +202,9 @@
                  vm.showConfirmMigrateDialog = function(scheduleMigration) {
                     $('#confirm-migration-modal').modal('show');
                 };
-
+ vm.showProjectedCostCalculation = function(projectedCalculation) {
+                    $('#calculator_modal').modal('show');
+                };
                 return vm;
             }
         ]}); // end of component definition
