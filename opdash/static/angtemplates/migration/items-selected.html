@@ -1,17 +1,17 @@
 <div class="plain-panel" ng-style="{'min-height': vm.showrec === 'true' ? '240px' : 'initial'}">
      <a ng-link="['MigrationResourceList']" ng-show="vm.showrec === 'true'" class="rs-btn-action rs-pull-right"><i class="rs-edit" title="Modify this"></i> </a>
     <!--<div class="span-8">-->
-    <h4 ng-show="vm.showrec === 'false'">Items Selected <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h4>
+    <h4 ng-show="vm.showrec === 'false'">Items Selected</h4>
     <h3 ng-show="vm.showrec === 'true'">Resources Selected 
     </h3>
-    <hr>
+    <hr style="margin-bottom: 10px !important;">
     <div class="accordion" id="accordion2">
         <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}" ng-hide="vm.selectedItems.server.length == 0">
             <div class="accordion-heading ">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#server-name">
                     <b class=""> Servers ({{vm.selectedItems.server.length}})</b>
+                    <i class='fa fa-chevron-down'></i>
                 </a>
-                <i class='fa fa-chevron-down'></i>
             </div>
             <div id="server-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
                 <div class="accordion-inner">
@@ -26,13 +26,13 @@
             <div class="accordion-heading ">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#file-name">
                     <b class="">  Networks ({{vm.networkCount}})</b>
+                    <i class='fa fa-chevron-down'></i>
                 </a>
-                <i class='fa fa-chevron-down'></i>
             </div>
             <div id="file-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
                 <div class="accordion-inner">
                     <div class="selected-items" ng-repeat="network in vm.networksList">
-                        <a class="disabled" href="#" ng-click="vm.removeItem(item,'server')"><i class="fa fa-times-circle"></i></a>&nbsp;&nbsp;{{network}}
+                        <a class="disabled" href="#" ng-click="vm.removeItem(item,'server')"></a><b>&nbsp;{{network}} </b>
                     </div>
                 </div>
             </div>
@@ -41,13 +41,13 @@
             <div class="accordion-heading ">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#clb-name">
                     <b class=""> Load Balancers ({{vm.selectedItems.LoadBalancers.length}})</b>
+                    <i class='fa fa-chevron-down'></i>
                 </a>
-                <i class='fa fa-chevron-down'></i>
             </div>
             <div id="clb-name" class="accordion-body collapse " ng-if="vm.selectedItems.LoadBalancers.length > 0">
                 <div class="accordion-inner">
                     <div class="selected-items" ng-repeat="item in vm.selectedItems.LoadBalancers">
-                        <a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'LoadBalancers')"><i class="fa fa-times-circle"></i></a>&nbsp;&nbsp;{{item.name}}
+                        <a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'LoadBalancers')"></a><b>&nbsp;{{item.name}}</b>
                         <i class="fa fa-arrow-right fa fw" ng-if="vm.showrec == 'true'"></i><span ng-if="vm.showrec == 'true'"> {{item.mappings[0].region}} - {{item.mappings[0].zone || 'US-East-1a 2'}} - {{item.mappings[0].instance_type}} </span>
                     </div>
                 </div>
@@ -57,8 +57,8 @@
             <div class="accordion-heading ">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#block-name">
                     <b class=""> Files (0) <i class="fa fa-caret-down"></i></b>
+                    <i class='fa fa-chevron-down'></i>
                 </a>
-                <i class='fa fa-chevron-down'></i>
             </div>
             <div id="block-name" class="accordion-body collapse">
                 <div class="accordion-inner">
