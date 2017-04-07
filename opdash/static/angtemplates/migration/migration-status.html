@@ -62,12 +62,12 @@
                         </thead>
                         <tbody ng-show="!vm.loading && !vm.currentBatches.loadError && vm.currentBatches.items.length!==0">
                             <tr ng-repeat="batch in vm.currentBatches.items | orderBy: vm.sortBy.current_batch | limitTo : vm.currentBatches.pageSize : (vm.currentBatches.currentPage-1)*vm.currentBatches.pageSize" class="ng-scope">
-                                <td class="rs-table-status tip" ng-class="{'rs-table-status-pending': batch.batch_status==='not available', 'rs-table-status-pending': batch.batch_status==='scheduled', 'rs-table-status-ok': batch.batch_status==='in progress', 'rs-table-status-error': batch.batch_status==='error', 'rs-table-status-pending': batch.timestamp}"></td>
+                                <td class="rs-table-status tip" ng-class="{'rs-table-status-pending': (batch.batch_status==='not available' || batch.timestamp ||  batch.batch_status==='scheduled'), 'rs-table-status-ok': batch.batch_status==='in progress', 'rs-table-status-error': batch.batch_status==='error'}"></td>
                                 <td class="rs-table-link">
                                     <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]">{{batch.batch_name}}</a>
                                     <a ng-show="batch.timestamp" href="javascript:void(0)" ng-click="vm.continueScheduling(batch);">{{batch.batch_name}}</a>
                                 </td>
-                                <td>{{vm.currentUser}}</td>
+                                <td>{{vm.batchInitiatedBy}}</td>
                                 <td class="rs-table-text ng-binding">
                                     <span ng-show="!batch.timestamp">{{(batch.start && batch.start * 1000) | date : 'M/dd/yyyy hh:mm a'}}</span>
                                 </td>
@@ -96,7 +96,7 @@
                                 <td class="rs-table-input rs-center">
                                     <div class="rs-btn-group">
                                         <div class="rs-dropdown">
-                                            <div class="rs-cog rs-dropdown-toggle" ng-click="batch.showSettings = !batch.showSettings"></div>
+                                            <div class="rs-cog rs-dropdown-toggle" ng-click="vm.showActionList(batch)"></div>
                                             <ul class="rs-dropdown-menu visible" ng-show="batch.showSettings" style="right: 0 !important">
                                                 <li><span class="rs-dropdown-category">Manage</span></li>
                                                 <li ng-show="batch.timestamp"><a href="javascript:void(0)" ng-click="vm.continueScheduling(batch)">Continue Scheduling</a></li>
@@ -104,7 +104,7 @@
                                                     <a ng-show="!batch.deleting" href="javascript:void(0)" ng-click="vm.deleteSavedSchedule(batch)">Delete</a>
                                                 </li>
                                                 <li class="disabled" ng-show="batch.deleting"><a href="#">Deleting...</a></li>
-                                                <li><a href="#">See log</a></li>
+                                                <!--<li><a href="#">See log</a></li>-->
                                                 <li class="disabled"><a href="#">Modify Migration (NA)</a></li>
                                                 <li class="disabled"><a href="#">Cancel Migration (NA)</a></li>
                                             </ul>
