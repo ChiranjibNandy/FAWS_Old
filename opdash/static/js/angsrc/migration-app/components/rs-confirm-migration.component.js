@@ -68,12 +68,11 @@
                     vm.saveProgress = "";
                 };
 
-
                 $rootScope.$on("vm.scheduleMigration", function (event, value, selectedDate) {
                     console.log(value);
-                    // value=true;
                     vm.scheduleMigration = value;
                     vm.schedule.date = value;
+                    dataStoreService.selectedTime.time = moment().unix();
                 });
                 $rootScope.$on("scheduleMigrationSelectedDate", function (event, value) {
                     vm.schedule.date = value;
