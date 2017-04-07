@@ -64,7 +64,7 @@
     SECRET_ACCESS_KEY:
 
     # AWS Redis URL
-    REDIS_URL: op-cp-redis.d0x7cq.ng.0001.use1.cache.amazonaws.com
+    REDIS_URL: opdash-redis.d0x7cq.ng.0001.use1.cache.amazonaws.com
 
 - OPDASH_API:
 
