@@ -226,11 +226,11 @@
                     <div class="rs-inner">
                         <!-- <a href="" class="rs-btn rs-pull-right">See Log</a> -->
                         <div class="pull-right">
-                            <a href="" class="rs-btn"><i class="fa fa-refresh fa-fw"></i> <small><em class="rs-quiet">Refreshed 2 mins ago.</em></small></a>
+                            <a href="" class="rs-btn"><i class="fa fa-refresh fa-fw"></i> Refresh</a>
                         </div>
-                        <div class="migr-ddi-name">User Namegoeshere (#1024814)</div>
+                        <!-- <div class="migr-ddi-name">UserName (#1024814)</div> -->
                         <div class="migr-name">
-                            My_Migration_01<span class="edit rs-edit" title="Change name"></span>  
+                            Migration_01<span class="edit rs-edit" title="Change name"></span>  
                             <input type="text" class="name-input animated flipInX" placeholder="Migration-01Feb2017-0456pm"/> 
                         </div>  
                         <ul class="rs-tabs">
@@ -341,8 +341,9 @@
     </div>
 
     <!-- Modal -->
-    <div id="resource_info" class="modal hide fade details" tabindex="-1" role="dialog"  aria-hidden="true">
-        <div class="rs-content rs-panel rs-detail-xlarge">
+    <div id="resource_info" class="modal hide animated fadeIn details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
             <div class="rs-detail-header">
                 <div class="rs-detail-header-subtitle">Server Name</div>
                 <div class="rs-detail-header-title">cloud-endure-demo-A_db_slave One</div>
@@ -360,17 +361,17 @@
                         <li class="rs-detail-item">
                             <div class="rs-detail-key">ID</div>
                             <div class="rs-detail-value">86753098675309</div>
-                        </li>                        
+                        </li>
                         <li class="rs-detail-item">
                             <div class="rs-detail-key" id="size-key">RAM</div>
-                            <div class="rs-detail-value">                
+                            <div class="rs-detail-value">
                                 <span class="rs-progress-label">2 GB</span>
                             </div>
                         </li>
                         <li class="rs-detail-item">
                             <div class="rs-detail-key" id="size-key">Disk</div>
                             <div class="rs-detail-value">100 GB</div>
-                        </li>        
+                        </li>
                         <li class="rs-detail-item">
                             <div class="rs-detail-key">Region</div>
                             <div class="rs-detail-value">Dallas (DFW)</div>
@@ -378,11 +379,10 @@
                         <li class="rs-detail-item">
                             <div class="rs-detail-key">Server Type</div>
                             <div class="rs-detail-value">First Generation Server</div>
-                        </li>       
+                        </li>
                     </ul>
                 </div>
             </div>
-
             <div class="rs-detail-section">
                 <div class="rs-detail-section-header">
                     <div class="rs-detail-section-title">Networks</div>
