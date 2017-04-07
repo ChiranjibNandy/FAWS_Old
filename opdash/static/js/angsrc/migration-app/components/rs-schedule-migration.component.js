@@ -23,25 +23,25 @@
              * @name migrationApp.controller:rsschedulemigrationCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsschedulemigration rsschedulemigration} component
              */
-            controller: [ "$rootRouter","datastoreservice","$scope","authservice","$timeout","$rootScope", function($rootRouter,dataStoreService,$scope,authservice,$timeout,$rootScope) {
+            controller: ["$rootRouter", "datastoreservice", "$scope", "authservice", "$timeout", "$rootScope", function ($rootRouter, dataStoreService, $scope, authservice, $timeout, $rootScope) {
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
-/**
-                 * @ngdoc method
-                 * @name $onInit
-                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
-                 * @description 
-                 *function called on init of the rsschedulemigrationCtrl.
-                 */
-                vm.$onInit = function() {
+                /**
+                                 * @ngdoc method
+                                 * @name $onInit
+                                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                                 * @description 
+                                 *function called on init of the rsschedulemigrationCtrl.
+                                 */
+                vm.$onInit = function () {
                     vm.tenant_id = authservice.getAuth().tenant_id;
                     vm.tenant_account_name = authservice.getAuth().account_name;
-                    $('title')[0].innerHTML =  "Schedule Migration - Rackspace Cloud Migration";
+                    $('title')[0].innerHTML = "Schedule Migration - Rackspace Cloud Migration";
                     vm.error = false;
                     vm.tenant_id = authservice.getAuth().tenant_id;
-                   // vm.scheduleMigration = "migrateNow";
-                    vm.timeItems = ["12:00am","12:15am","12:30am","12:45am","1:00am","1:15am","1:30am","1:45am","2:00am","2:15am","2:30am","2:45am","3:00am","3:15am","3:30am","3:45am","4:00am","4:15am","4:30am","4:45am",
+                    // vm.scheduleMigration = "migrateNow";
+                    vm.timeItems = ["12:00am", "12:15am", "12:30am", "12:45am", "1:00am", "1:15am", "1:30am", "1:45am", "2:00am", "2:15am", "2:30am", "2:45am", "3:00am", "3:15am", "3:30am", "3:45am", "4:00am", "4:15am", "4:30am", "4:45am",
                         "5:00am", "5:15am", "5:30am", "5:45am",
                         "06:00am", "6:15am", "6:30am", "6:45am",
                         "7:00am", "7:15am", "7:30am", "7:45am",
@@ -55,12 +55,12 @@
                         "6:30pm", "6:45pm", "7:00pm", "7:15pm", "7:30pm", "7:45pm",
                         "8:00pm", "8:15pm", "8:30pm", "8:45pm", "9:00pm", "9:15pm",
                         "9:30pm", "9:45pm", "10:00pm", "10:15pm", "10:30pm", "10:45pm", "11:00pm", "11:15pm", "11:30pm", "11:45pm"];
-                     vm.timeZoneItems =  [
-                       "(GMT -08:00) PST",
-                        "(GMT -07:00) MST",
-                        "(GMT -06:00) CST",
-                        "(GMT -05:00) EST"];
-                        vm.timezone1 =vm.timeZoneItems[0];
+                    vm.timeZoneItems = [
+                        "(GMT -08:00) (Pacific Daylight Time)   PST",
+                        "(GMT -07:00) (Mountain Daylight Time)  MST",
+                        "(GMT -06:00) (Central Daylight Time)   CST",
+                        "(GMT -05:00) (Eastern Daylight Time)   EST"];
+                    vm.timezone1 = vm.timeZoneItems[0];
                     // ["(GMT -12:00) Eniwetok, Kwajalein",
                     //      "(GMT -11:00) Midway Island, Samoa",
                     //     "(GMT -10:00) Hawaii",
@@ -96,35 +96,35 @@
                     vm.timezone = vm.getDefaultZone();
                     var m = moment();
                     var roundUp = m.minute() || m.second() || m.millisecond() ? m.add(1, 'hour').startOf('hour') : m.startOf('hour');
-                    vm.time = roundUp.format('h:mma');  
-                    vm.initTime =  new Date().toLocaleTimeString();
-                    vm.date =moment().format("YYYY-MM-DD");
+                    vm.time = roundUp.format('h:mma');
+                    vm.initTime = new Date().toLocaleTimeString();
+                    vm.date = moment().format("YYYY-MM-DD");
                     vm.selectedDateHeader = new Date().toLocaleString();
-                    vm.selectedDate =  moment().format('MMMM Do YYYY ')+' at '+moment().format('h:mma')+' '+new Date().toTimeString().slice(8,42);
-                    dataStoreService.storeDate('time',vm.time);
-                    dataStoreService.storeDate('timezone',vm.timezone);
+                    vm.selectedDate = moment().format('MMMM Do YYYY ') + ' at ' + moment().format('h:mma') + ' ' + new Date().toTimeString().slice(8, 42);
+                    dataStoreService.storeDate('time', vm.time);
+                    dataStoreService.storeDate('timezone', vm.timezone);
                     var d = new Date();
-                   vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
-                     dataStoreService.getScheduleMigration();
-                    $scope.$watch('vm.migrationName', function() {              
+                    vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
+                    dataStoreService.getScheduleMigration();
+                    $scope.$watch('vm.migrationName', function () {
                         vm.storeSelectedTime("migrate now");
                         vm.editorEnabled = false;
                         vm.showTimeForm = false;
-                        vm.showMigrationTime=false;
+                        vm.showMigrationTime = false;
                         vm.showMigrate = false;
-                        vm.isDisableDate =false;
-                        vm.isModeSave= true;
+                        vm.isDisableDate = false;
+                        vm.isModeSave = true;
                     });
                 };
- /**
-                 * @ngdoc method
-                 * @name editBanner
-                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
-                 * @description 
-                 *function to edit the banner message on date change
-                 */
+                /**
+                                * @ngdoc method
+                                * @name editBanner
+                                * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                                * @description 
+                                *function to edit the banner message on date change
+                                */
 
-                vm.editBanner = function(){
+                vm.editBanner = function () {
                     vm.scheduleMigration = "migrateLate";
                     vm.showTime();
                 }
@@ -137,77 +137,78 @@
                  *function to get the time
                  */
 
-                vm.getTime = function(){
-                    if(vm.time.indexOf('am') >-1){
-                        if(vm.time.indexOf('12') >-1) {
-                            var localTime = vm.time.replace('am',"");
-                            return localTime.replace('12',"00");
-                        }else{
-                            return vm.time.replace('am',"");
-                        } 
-                        
-                    }else{
-                        var subStr = vm.time.substr(0,vm.time.indexOf(':'));
-                        var calTime = vm.time.replace(subStr,parseInt(subStr)+12);
-                        return calTime.replace('pm','');
+                vm.getTime = function () {
+                    if (vm.time.indexOf('am') > -1) {
+                        if (vm.time.indexOf('12') > -1) {
+                            var localTime = vm.time.replace('am', "");
+                            return localTime.replace('12', "00");
+                        } else {
+                            return vm.time.replace('am', "");
+                        }
+
+                    } else {
+                        var subStr = vm.time.substr(0, vm.time.indexOf(':'));
+                        var calTime = vm.time.replace(subStr, parseInt(subStr) + 12);
+                        return calTime.replace('pm', '');
                     }
                 }
-/**
-                 * @ngdoc method
-                 * @name storeSelectedTime
-                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
-                 * @description 
-                 *function to store the selected time
-                 */
-                vm.storeSelectedTime = function(radioButton){
+
+                /**
+                                 * @ngdoc method
+                                 * @name storeSelectedTime
+                                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                                 * @description 
+                                 *function to store the selected time
+                                 */
+                vm.storeSelectedTime = function (radioButton) {
                     var zone = vm.timezone;
                     vm.unixTime = moment().unix();
                     //setting unixTime based on radio button selection.
-                    if(radioButton === "fromSave"){
+                    if (radioButton === "fromSave") {
                         var time = vm.getTime();
                         vm.unixTime = moment($('#field').val() + " " + time).unix();
                     }
-                    else if(radioButton === "migrate now"){
+                    else if (radioButton === "migrate now") {
                         zone = vm.getDefaultZone();
                         vm.unixTime = "";
                     }
                     vm.selectedTime = {
-                                        migrationName: vm.migrationName,
-                                        time:vm.unixTime,
-                                        timezone:zone,
-                                      };
+                        migrationName: vm.migrationName,
+                        time: vm.unixTime,
+                        timezone: zone,
+                    };
                     dataStoreService.setScheduleMigration(vm.selectedTime);
                 };
-/**
-                 * @ngdoc method
-                 * @name getDefaultZone
-                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
-                 * @description 
-                 *function to get the default time zone
-                 */
-                vm.getDefaultZone = function(){
+                /**
+                                 * @ngdoc method
+                                 * @name getDefaultZone
+                                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                                 * @description 
+                                 *function to get the default time zone
+                                 */
+                vm.getDefaultZone = function () {
                     var date = new Date().toTimeString();
-                    var timeZone =  date.indexOf("+") === -1 ?date.substr(date.indexOf("-")+1,5):date.substr(date.indexOf("+")+1,5);
-                    var exactZone = [timeZone.slice(0, 2),':', timeZone.slice(2)].join('');
-                    return vm.timeZoneItems.filter(function(item){
-                                if(item.includes(exactZone.trim())){
-                                    return item;
-                                }      
-                            })[0];
+                    var timeZone = date.indexOf("+") === -1 ? date.substr(date.indexOf("-") + 1, 5) : date.substr(date.indexOf("+") + 1, 5);
+                    var exactZone = [timeZone.slice(0, 2), ':', timeZone.slice(2)].join('');
+                    return vm.timeZoneItems.filter(function (item) {
+                        if (item.includes(exactZone.trim())) {
+                            return item;
+                        }
+                    })[0];
                 }
-             /**
-                 * @ngdoc method
-                 * @name saveItems
-                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
-                 * @description 
-                 *function to save the schedule migration items
-                 */   
+                /**
+                    * @ngdoc method
+                    * @name saveItems
+                    * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                    * @description 
+                    *function to save the schedule migration items
+                    */
 
-                vm.saveItems = function() {
-                      $('#cancel_modal').modal('show');
+                vm.saveItems = function () {
+                    $('#cancel_modal').modal('show');
                     alert("Saving items: To be implemented");
                 };
-                
+
                 /**
                  * @ngdoc method
                  * @name timezoneChange
@@ -215,103 +216,110 @@
                  * @description 
                  * Saves the chosen timezone for migration
                  */
-                vm.timezoneChange = function(){
-                    vm.selectedDate =  moment($('#field').val()).format('MMMM Do YYYY')+' at '+vm.time+' '+vm.timezone1.slice(13,17);
-                    $rootScope.$emit("scheduleMigrationSelectedDate",vm.selectedDate);
+                vm.timezoneChange = function () {
+                    vm.selectedDate = moment($('#field').val()).format('MMMM Do YYYY') + ' at ' + vm.time + ' ' + vm.timezone1.slice(0,36);
+                    $rootScope.$emit("scheduleMigrationSelectedDate", vm.selectedDate);
                 };
- /**
-                 * @ngdoc method
-                 * @name editMigrationName
-                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
-                 * @description 
-                 * Edit migration name**
-                 */
-                 vm.editMigrationName = function() {
-                 vm.editorEnabled = true;
-                 vm.editedMigrationName = vm.migrationName;
-                      };
-
-                      /**
-                 * @ngdoc method
-                 * @name disableEditor
-                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
-                 * @description 
-                 * Cancel edit migration name**
-                 */
-                vm.disableEditor = function() {
-                 vm.editorEnabled = false;
-                   };
-
-                   /**
-                 * @ngdoc method
-                 * @name save
-                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
-                 * @description 
-                 * Save edited migration name**
-                 */
-                vm.save = function() {
-                vm.migrationName  = vm.editedMigrationName;
-                vm.disableEditor();
+                /**
+                                * @ngdoc method
+                                * @name editMigrationName
+                                * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                                * @description 
+                                * Edit migration name**
+                                */
+                vm.editMigrationName = function () {
+                    vm.editorEnabled = true;
+                    vm.editedMigrationName = vm.migrationName;
                 };
-                
-                   /**
-                 * @ngdoc method
-                 * @name showTime
-                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
-                 * @description 
-                 * show migration scheduled time based on migrate now check or schedule time check**
-                 */
-               vm.showTime = function(){
-                   //check to show scheduled migration time on banner based on the radio button check.
-                   vm.migrateNow =false;
-                   vm.migrateLate =true;
-                       vm.showTimeForm =  true;
-                       vm.showMigrationTime =false;
-                       vm.selectedDate =  moment(vm.date).format('MMMM Do YYYY')+' at '+vm.time+' '+vm.timezone1.slice(13,17);
-                     $rootScope.$emit("vm.scheduleMigration",vm.migrateLate);
-                       $rootScope.$emit("vm.scheduleMigration", vm.selectedDate);
-               };
 
-               vm.showInitiateMigrateNow = function(){
-                    vm.migrateNow =true;
-                   vm.migrateLate =false;
+                /**
+           * @ngdoc method
+           * @name disableEditor
+           * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+           * @description 
+           * Cancel edit migration name**
+           */
+                vm.disableEditor = function () {
+                    vm.editorEnabled = false;
+                };
+
+                /**
+              * @ngdoc method
+              * @name save
+              * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+              * @description 
+              * Save edited migration name**
+              */
+                vm.save = function () {
+                    vm.migrationName = vm.editedMigrationName;
+                    vm.disableEditor();
+                };
+
+                /**
+              * @ngdoc method
+              * @name showTime
+              * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+              * @description 
+              * show migration scheduled time based on migrate now check or schedule time check**
+              */
+                vm.showTime = function () {
+                    //check to show scheduled migration time on banner based on the radio button check.
+                    vm.migrateNow = false;
+                    vm.migrateLate = true;
+                    vm.migrateLateValue = "migrateLate";
+                    vm.showTimeForm = true;
+                    vm.showMigrationTime = false;
+                    vm.selectedDate = moment(vm.date).format('MMMM Do YYYY') + ' at ' + vm.time + ' ' + vm.timezone1.slice(0,36);
+                    $rootScope.$emit("vm.scheduleMigration", vm.migrateLate);
+                    $rootScope.$emit("vm.scheduleMigration", vm.selectedDate);
+                    $rootScope.$emit("vm.scheduleMigrationValue", vm.migrateLateValue);
+                    console.log(vm.migrateLateValue);
+                };
+
+                vm.showInitiateMigrateNow = function () {
+                    vm.migrateNow = true;
+                    vm.migrateLate = false;
+                    vm.migrateNowValue = "migrateNow";
                     var zone = vm.timezone;
-                    vm.showMigrationTime =true;
-                    vm.showTimeForm =  false;
-                    vm.selectedDate =  moment().format('MM/DD/YYYY ')+' at '+moment().format('h:mma')+' '+new Date().toTimeString().slice(8,42);
+                    vm.showMigrationTime = true;
+                    vm.showTimeForm = false;
+                    vm.selectedDate = moment().format('MM/DD/YYYY ') + ' at ' + moment().format('h:mma') + ' ' + new Date().toTimeString().slice(8, 42);
                     $rootScope.$emit("vm.scheduleMigration", vm.migrateNow);
                     $rootScope.$emit("vm.scheduleMigration", vm.selectedDate);
-               }
-  /**
-                 * @ngdoc method
-                 * @name onSaveTime
-                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
-                 * @description 
-                 *  save scheduled time  **
-                 */
-              vm.onSaveTime = function(){
-                  $timeout(function(){
+                    $rootScope.$emit("vm.scheduleMigrationValue", vm.migrateNowValue);
+                    console.log(vm.migrateNowValue);
+                }
+                /**
+                               * @ngdoc method
+                               * @name onSaveTime
+                               * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                               * @description 
+                               *  save scheduled time  **
+                               */
+                vm.onSaveTime = function () {
+                    $timeout(function () {
                         var time = vm.getTime();
-                        if(moment().diff(moment($('#field').val() + " " + time),'minutes') > 1){
+                        if (moment().diff(moment($('#field').val() + " " + time), 'minutes') > 1) {
                             vm.error = true;
-                        }else{
+                        } else {
                             vm.error = false;
                             vm.storeSelectedTime('fromSave');
                             vm.timezoneChange();
-                            vm.isDisableDate =true;
-                            vm.isModeSave= false;
+                            vm.isDisableDate = true;
+                            vm.isModeSave = false;
                         }
-                    },0);
+                    }, 0);
                 }
 
-                vm.onEditTime = function(){
-                    vm.isModeSave= true;
-                    vm.isDisableDate =false;
+                vm.onEditTime = function () {
+                    vm.isModeSave = true;
+                    vm.isDisableDate = false;
                 }
-                
+
                 return vm;
             }
-            
 
-        ]}); // end of component definition
+
+            ]
+        }); // end of component definition
 })();
