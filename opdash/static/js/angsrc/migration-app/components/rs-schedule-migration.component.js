@@ -56,10 +56,10 @@
                         "8:00pm", "8:15pm", "8:30pm", "8:45pm", "9:00pm", "9:15pm",
                         "9:30pm", "9:45pm", "10:00pm", "10:15pm", "10:30pm", "10:45pm", "11:00pm", "11:15pm", "11:30pm", "11:45pm"];
                     vm.timeZoneItems = [
-                        "(GMT -08:00) PST",
-                        "(GMT -07:00) MST",
-                        "(GMT -06:00) CST",
-                        "(GMT -05:00) EST"];
+                        "(GMT -08:00) (Pacific Daylight Time)   PST",
+                        "(GMT -07:00) (Mountain Daylight Time)  MST",
+                        "(GMT -06:00) (Central Daylight Time)   CST",
+                        "(GMT -05:00) (Eastern Daylight Time)   EST"];
                     vm.timezone1 = vm.timeZoneItems[0];
                     // ["(GMT -12:00) Eniwetok, Kwajalein",
                     //      "(GMT -11:00) Midway Island, Samoa",
@@ -152,7 +152,7 @@
                         return calTime.replace('pm', '');
                     }
                 }
-                
+
                 /**
                                  * @ngdoc method
                                  * @name storeSelectedTime
@@ -217,7 +217,7 @@
                  * Saves the chosen timezone for migration
                  */
                 vm.timezoneChange = function () {
-                    vm.selectedDate = moment($('#field').val()).format('MMMM Do YYYY') + ' at ' + vm.time + ' ' + vm.timezone1;
+                    vm.selectedDate = moment($('#field').val()).format('MMMM Do YYYY') + ' at ' + vm.time + ' ' + vm.timezone1.slice(0,36);
                     $rootScope.$emit("scheduleMigrationSelectedDate", vm.selectedDate);
                 };
                 /**
@@ -269,7 +269,7 @@
                     vm.migrateLateValue = "migrateLate";
                     vm.showTimeForm = true;
                     vm.showMigrationTime = false;
-                    vm.selectedDate = moment(vm.date).format('MMMM Do YYYY') + ' at ' + vm.time + ' ' + vm.timezone1;
+                    vm.selectedDate = moment(vm.date).format('MMMM Do YYYY') + ' at ' + vm.time + ' ' + vm.timezone1.slice(0,36);
                     $rootScope.$emit("vm.scheduleMigration", vm.migrateLate);
                     $rootScope.$emit("vm.scheduleMigration", vm.selectedDate);
                     $rootScope.$emit("vm.scheduleMigrationValue", vm.migrateLateValue);
