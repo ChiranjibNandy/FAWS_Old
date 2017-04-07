@@ -28,7 +28,7 @@
              * @name migrationApp.controller:rsmigrationrackerdashCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationrackerdash rsmigrationrackerdash} component
              */
-            controller:["authservice", "datastoreservice", "$scope","httpwrapper","$q","$rootRouter","$window","$timeout",function(authservice,datastoreservice, $scope,HttpWrapper,$q,$rootRouter,$window,$timeout){
+            controller:["authservice", "datastoreservice", "$scope","httpwrapper","$q","$rootRouter","$window","$timeout","$rootScope",function(authservice,datastoreservice, $scope,HttpWrapper,$q,$rootRouter,$window,$timeout,$rootScope){
                 var vm = this;
                 vm.items = [];
                 vm.addedAccount = '';
@@ -73,6 +73,14 @@
                 //performs controller initialization steps
                 vm.$onInit = function() { 
                     datastoreservice.resetAll();
+                    $rootScope.$on("vm.MigrationName",function(event,value){
+                        console.log(value);
+                     vm.migrationName = value;
+                        });
+                         $rootScope.$on("vm.MigrationTime",function(event,value){
+                        console.log(value);
+                     vm.migrationTime = value;
+                        });
 
                     /**
                      * @ngdoc property

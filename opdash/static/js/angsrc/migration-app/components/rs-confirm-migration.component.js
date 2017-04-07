@@ -25,15 +25,15 @@
              * @name migrationApp.controller:rsconfirmmigrationCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsconfirmmigration rsconfirmmigration} component
              */
-            controller: [ "$rootRouter","datastoreservice","migrationitemdataservice", "$q","httpwrapper", "authservice", "$timeout","$rootScope", function($rootRouter,dataStoreService,ds,$q,HttpWrapper, authservice, $timeout,$rootScope) {
+            controller: ["$rootRouter", "datastoreservice", "migrationitemdataservice", "$q", "httpwrapper", "authservice", "$timeout", "$rootScope", function ($rootRouter, dataStoreService, ds, $q, HttpWrapper, authservice, $timeout, $rootScope) {
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
-                
-                vm.$onInit = function() {
+
+                vm.$onInit = function () {
                     vm.tenant_id = authservice.getAuth().tenant_id;
                     vm.tenant_account_name = authservice.getAuth().account_name;
-                    $('title')[0].innerHTML =  "Confirm Migration - Rackspace Cloud Migration";
+                    $('title')[0].innerHTML = "Confirm Migration - Rackspace Cloud Migration";
                     var auth = authservice.getAuth();
                     vm.tenant_id = auth.tenant_id;
                     vm.tenant_name = auth.rackUsername;
@@ -42,42 +42,42 @@
                     vm.destination = "AWS EC2";
                     vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
                     vm.changedMigrationName = vm.migrationName;
-                   
+
                     vm.schedule = {
                         date: dataStoreService.getMigrationDate() || new Date().toDateString(),
                         time: dataStoreService.getMigrationTime() || new Date().toTimeString(),
                         timezone: dataStoreService.selectedTime.timezone
                     };
-                    
+
                     vm.cost = dataStoreService.getProjectedPricing();
                     vm.migrating = false;
                     vm.errorInMigration = false;
                     vm.saveLaterObj = {
-                        "saveSuccess" : false,
-                        "saveInProgress" : false,
-                        "resultMsg" : "",
+                        "saveSuccess": false,
+                        "saveInProgress": false,
+                        "resultMsg": "",
                         "modalName": '#save_for_later'
                     };
 
                     vm.cancelnSaveObj = {
-                        "saveSuccess" : false,
-                        "saveInProgress" : false,
-                        "resultMsg" : "",
+                        "saveSuccess": false,
+                        "saveInProgress": false,
+                        "resultMsg": "",
                         "modalName": '#cancel_modal'
                     };
                     vm.saveProgress = "";
                 };
 
 
- $rootScope.$on("vm.scheduleMigration",function(event,value,selectedDate){
-     console.log(value);
-    // value=true;
-     vm.scheduleMigration = value;
-      vm.schedule.date =value;
- });
-  $rootScope.$on("scheduleMigrationSelectedDate",function(event,value){
-     vm.schedule.date = value;
- });
+                $rootScope.$on("vm.scheduleMigration", function (event, value, selectedDate) {
+                    console.log(value);
+                    // value=true;
+                    vm.scheduleMigration = value;
+                    vm.schedule.date = value;
+                });
+                $rootScope.$on("scheduleMigrationSelectedDate", function (event, value) {
+                    vm.schedule.date = value;
+                });
                 /**
                  * @ngdoc method
                  * @name migrate
@@ -85,32 +85,34 @@
                  * @description 
                  * Starts a batch to migrate all resources selected by user
                  */
-                vm.migrate = function(){
+                vm.migrate = function () {
                     var requestObj;
                     vm.migrating = true;
-                    $('#confirm-migration-modal').modal('hide');     
+                    $('#confirm-migration-modal').modal('hide');
                     requestObj = ds.prepareRequest();
                     console.log(requestObj);
+                    $rootScope.$emit("vm.MigrationName", dataStoreService.selectedTime.migrationName);
+                    console.log(dataStoreService.selectedTime.migrationName);
+                    $rootScope.$emit("vm.MigrationTime", dataStoreService.selectedTime.time);
+                    console.log(dataStoreService.selectedTime.time);
                     //log user profile
                     // if(dataStoreService.postSavedInstances(dataStoreService.getUserProfile())){
                     //     console.log("success");
                     // }else{
                     //     console.log("fail");
-                    // }
-                        
-                    HttpWrapper.save("/api/jobs", {"operation":'POST'}, requestObj)
-                                .then(function(result){
-                                    console.log("Migration Response: ", result);
-                                    $timeout(function(){    
-                                    }, 5000);
-                                }, function(error) {
-                                    console.log("Error: Could not trigger migration", error);
-                                    vm.migrating = false;
-                                    vm.errorInMigration = true;
-                                    vm.scheduleMigration =true;
-                                });
-                            $rootRouter.navigate(["MigrationStatus"]);
-                               
+                    // }   
+                    HttpWrapper.save("/api/jobs", { "operation": 'POST' }, requestObj)
+                        .then(function (result) {
+                            console.log("Migration Response: ", result);
+                            $timeout(function () {
+                            }, 5000);
+                        }, function (error) {
+                            console.log("Error: Could not trigger migration", error);
+                            vm.migrating = false;
+                            vm.errorInMigration = true;
+                            vm.scheduleMigration = true;
+                        });
+                    $rootRouter.navigate(["MigrationStatus"]);
                 };
 
                 /**
@@ -120,10 +122,11 @@
                  * @description 
                  * Updates migration name
                  */
-                vm.changeName = function() {
+                vm.changeName = function () {
                     vm.migrationName = vm.changedMigrationName;
                     dataStoreService.selectedTime.migrationName = vm.migrationName;
                     vm.editName = false;
+                    $rootScope.$emit("vm.MigrationName", dataStoreService.selectedTime.migrationName);
                 };
 
                 /**
@@ -133,8 +136,9 @@
                  * @description 
                  * Cancels updation of migration name
                  */
-                vm.revertName = function() {
+                vm.revertName = function () {
                     vm.changedMigrationName = vm.migrationName;
+                    $rootScope.$emit("vm.MigrationName", dataStoreService.selectedTime.migrationName);
                     vm.editName = false;
                 };
 
@@ -145,31 +149,31 @@
                  * @description 
                  * Invokes "/api/users/uidata/" API call for fetching existing saved instances. 
                  */
-                vm.saveItems = function(buttonDetails) {
+                vm.saveItems = function (buttonDetails) {
                     var saveInstance = {
-                        recommendations : dataStoreService.getItems(),
-                        scheduling_details : dataStoreService.getScheduleMigration(),
+                        recommendations: dataStoreService.getItems(),
+                        scheduling_details: dataStoreService.getScheduleMigration(),
                         step_name: "ConfirmMigration",
                         migration_schedule: {
-                            migrationName:dataStoreService.getScheduleMigration().migrationName,
-                            time:dataStoreService.getScheduleMigration().time,
-                            timezone:dataStoreService.getScheduleMigration().timezone
+                            migrationName: dataStoreService.getScheduleMigration().migrationName,
+                            time: dataStoreService.getScheduleMigration().time,
+                            timezone: dataStoreService.getScheduleMigration().timezone
                         }
                     };
                     buttonDetails.saveInProgress = true;
-                    dataStoreService.saveItems(saveInstance).then(function(success){
-                        if(success){
+                    dataStoreService.saveItems(saveInstance).then(function (success) {
+                        if (success) {
                             buttonDetails.saveInProgress = false;
                             buttonDetails.saveSuccess = true;
-                            buttonDetails.resultMsg = "Saved your instance successfully with name: "+dataStoreService.getScheduleMigration().migrationName;
+                            buttonDetails.resultMsg = "Saved your instance successfully with name: " + dataStoreService.getScheduleMigration().migrationName;
                             $timeout(function () {
                                 buttonDetails.resultMsg = "";
-                                if(buttonDetails.modalName == '#cancel_modal'){
+                                if (buttonDetails.modalName == '#cancel_modal') {
                                     $('#cancel_modal').modal('hide');
                                     $rootRouter.navigate(["MigrationStatus"]);
                                 }
                             }, 3000);
-                        }else{
+                        } else {
                             buttonDetails.saveInProgress = false;
                             buttonDetails.saveSuccess = false;
                             buttonDetails.resultMsg = "Error while saving. Please try again after sometime!!";
@@ -178,7 +182,7 @@
                                 $(buttonDetails.modalName).modal('hide');
                             }, 3000);
                         }
-                    },function(error){
+                    }, function (error) {
                         buttonDetails.saveInProgress = false;
                         buttonDetails.saveSuccess = false;
                         buttonDetails.resultMsg = "Error while saving. Please try again after sometime!!";
@@ -190,29 +194,30 @@
                 };
 
 
-                vm.submitCancel = function() {
-                    if(vm.saveProgress == 'yes'){
+                vm.submitCancel = function () {
+                    if (vm.saveProgress == 'yes') {
                         vm.saveItems(vm.cancelnSaveObj);
                     }
-                    else{
+                    else {
                         $rootRouter.navigate(["MigrationStatus"]);
                         $('#cancel_modal').modal('hide');
                     }
                 }
 
-                vm.showCancelDialog = function() {
+                vm.showCancelDialog = function () {
                     $('#cancel_modal').modal('show');
                 };
 
-                 vm.showConfirmMigrateDialog = function(scheduleMigration) {
+                vm.showConfirmMigrateDialog = function (scheduleMigration) {
                     $('#confirm-migration-modal').modal('show');
                 };
- vm.showProjectedCostCalculation = function(projectedCalculation) {
+                vm.showProjectedCostCalculation = function (projectedCalculation) {
                     $('#calculator_modal').modal('show');
                 };
-                
+
                 return vm;
-                
+
             }
-        ]}); // end of component definition
+            ]
+        }); // end of component definition
 })();
