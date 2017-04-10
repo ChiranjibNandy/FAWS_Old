@@ -34,7 +34,7 @@
                         <thead>
                             <tr>
                                 <th>
-                                    <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                    <a href="#list-table" class="rs-table-sort" ng-click="vm.setSortBy('accountName')" ng-class="{'rs-table-sort-asc': vm.sortVal  === 'accountName', 'rs-table-sort-desc': vm.sortVal === '-accountName'}">
                                         <span class="rs-table-sort-text">Account Name</span>
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
@@ -66,7 +66,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in vm.items | limitTo : vm.pageSize : (vm.currentPage-1)*vm.pageSize">
+                            <tr ng-repeat="item in vm.items | orderBy : vm.sortVal | limitTo : vm.pageSize : (vm.currentPage-1)*vm.pageSize">
                                 <td class="rs-table-link"><a class="ng-binding" href="" ng-click="vm.setTenantId(item)">{{item.accountName}}</a></td>
                                 <td class="rs-table-text">{{item.serviceLevel}}</td>
                                 <td class="rs-table-text">{{item.accountLevel}}</td>
