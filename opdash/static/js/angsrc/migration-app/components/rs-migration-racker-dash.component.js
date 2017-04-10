@@ -212,7 +212,12 @@
                         vm.loadError = true;
                     });
                  
-                   
+                    $(document).on("click", function() {
+                        console.log("Document clicked");
+                        $timeout(function() {
+                            resetActionFlags();
+                        });
+                    });
                 }
 
                 //removes the selected tenant data from the tenant info grid
@@ -445,6 +450,21 @@
                     var encoreUrl = "https://encore.rackspace.com/accounts/"+tenant_id;
                     $window.open(encoreUrl, '_blank');
                 } 
+
+                var resetActionFlags = function() {
+                    console.log("In function()");
+                    for(var i=0; i<vm.items.length; i++){
+                        vm.items[i].showSettings = false;
+                    }
+                };
+
+                vm.showActionList = function(batch) {
+                        console.log("In show action list");
+                        resetActionFlags();
+                        $timeout(function(){
+                            batch.showSettings = true;
+                        }, 50);
+                };
 
             }]
         });

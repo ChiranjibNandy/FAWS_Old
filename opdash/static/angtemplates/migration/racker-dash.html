@@ -20,7 +20,7 @@
                         <div class="rs-controls">
                             <div class="search rs-pull-left">
                                 <span class="fa fa-search"></span>
-                                <input class="rs-input-large" placeholder="Search account name">
+                                <input class="rs-input-large" placeholder="Filter accounts">
                             </div>
                             &nbsp;
                             <a class="rs-btn rs-btn-primary" href="" ng-click="vm.openAddAccountModalDialog()"><i class="fa fa-plus-square fa-fw"></i> Add Accounts</a>
@@ -75,8 +75,8 @@
                                 <td class="rs-table-input">
                                     <div class="rs-btn-group">
                                         <div class="rs-dropdown">
-                                            <div class="rs-cog rs-dropdown-toggle" ng-click="batch.showSettings = !batch.showSettings"></div>
-                                            <ul class="rs-dropdown-menu visible" ng-show="batch.showSettings">
+                                            <div class="rs-cog rs-dropdown-toggle" ng-click="vm.showActionList(item)"></div>
+                                            <ul class="rs-dropdown-menu visible" ng-show="item.showSettings" style="right: 0 !important">
                                                 <li><span class="rs-dropdown-category">Manage</span></li>
                                                 <li class=""><a href="" ng-click="vm.removeTenantAccount(item)">Remove from Panel</a></li>
                                                 <li class=""><a href="" ng-click="vm.setEncoreLink(item)">View in Encore</a></li>
@@ -105,7 +105,6 @@
                         <li ng-class="{disabled: vm.currentPage == 1}" ng-click="vm.currentPage=vm.currentPage-1"><a href="">Prev</a></li>
                         <li ng-repeat="n in vm.pageArray" ng-click="vm.currentPage = $index+1"><a href="">{{n}}</a></li>
                         <li ng-class="{disabled: vm.currentPage == vm.noOfPages}" ng-click="vm.currentPage=vm.currentPage+1"><a href="">Next</a></li>
-                        <!--<li ng-click="vm.showAllTenantInfo()"><a href="">See All</a></li>-->
                     </ul>
                 </div>
             </div>
@@ -116,19 +115,11 @@
 <div id="add_account_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForAddAccount" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-        <h3>Add an Account</h3>
+        <h3>Add accounts</h3>
     </div>
     <div class="modal-body">
-        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-        <h3>Add a new Tenant</h3>-->
-        <!--<form class=" " name="addAccountForm" ng-submit="vm.submitAddAccount()">-->
         <div class="rs-control-group">
-            <div class="rs-controls">
-                <!--<label class="rs-control-label" style="display: inline">
-                    Tenant Id
-                    <span class="rs-controls" style="display: inline;color:red;">*</span>
-                </label>-->
-                
+            <div class="rs-controls">              
                 <div class="rs-controls" style="display: inline">
                     <input type="text" class="rs-input-large" placeholder="Search for an account" ng-model="vm.addedAccount">
                 </div>
@@ -137,29 +128,11 @@
         </div>
     </div>
     <div class="modal-footer"> 
-        <!--<div class="rs-control-group">
-            <div class="rs-btn-group">
-                <button class="rs-btn rs-btn-primary " ng-disabled="!vm.addedAccount.length" target="_blank" ng-hide="vm.saveInProgress">Submit</button>
-                <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveInProgress">Submitting...</a>
-                <i class="rs-processing-indicator" ng-show="vm.saveInProgress"></i>
-                <button class="rs-btn rs-btn-link" data-dismiss="modal" aria-hidden="true">Close</button>                   
-            </div>
-        </div>-->
         <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Cancel </a>
-        <a class="rs-btn rs-btn-primary " ng-click="vm.submitAddAccount(vm.addedAccount)" aria-hidden="true" ng-disabled="!vm.addedAccount.length" target="_blank" ng-hide="vm.saveInProgress"><i class="fa fa-plus-square fa-fw"></i> Add</a>  
+        <a class="rs-btn rs-btn-primary " ng-click="vm.submitAddAccount(vm.addedAccount)" aria-hidden="true" ng-disabled="!vm.addedAccount.length" target="_blank" ng-hide="vm.saveInProgress">Continue</a>  
         <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveInProgress">Submitting...</a>
         <i class="rs-processing-indicator" ng-show="vm.saveInProgress"></i>
     </div>
-        <!--<br>
-        <div class="rs-control-group">
-            <div class="rs-btn-group">
-                <button class="rs-btn rs-btn-primary " ng-disabled="!vm.addedAccount.length" target="_blank" ng-hide="vm.saveInProgress">Submit</button>
-                <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveInProgress">Submitting...</a>
-                <i class="rs-processing-indicator" ng-show="vm.saveInProgress"></i>
-                <button class="rs-btn rs-btn-link" data-dismiss="modal" aria-hidden="true">Close</button>                   
-            </div>
-        </div>-->
-        <!--</form>-->
 </div>
 
 <script type="text/javascript">
