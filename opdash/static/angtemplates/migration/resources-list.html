@@ -8,6 +8,10 @@
                 <!-- End Stepper -->
                 <hr>
                 <div class="rs-inner">
+                    <div class="alert alert-success small-alert animated fadeIn" ng-show="!vm.fawsAcctStatus">
+                        <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
+                        <b>We notice you don't have a Fanatical AWS account.</b> One will be created on step 3 on confirmed migration.
+                    </div>
                     <div class="rs-row">
                         <div class="span-6">
                             <div class="migr-ddi-name">{{vm.tenant_account_name}} #{{vm.tenant_id}}</div>
@@ -163,31 +167,7 @@
                     </ol>
                 </big>
                 <br>
-                <div class="alert alert-warning animated fadeIn">
-                    <p><b>We notice you don't have a Fanatical AWS account.</b> We will create a new account for you. If you would like to create and link a new or additional account <a href="https://cart.rackspace.com/aws" target="_blank"><u>click here</u></a></p>
-                </div>
-                <div class="alert alert-success animated fadeIn" style="display: none">
-                    <p><b>We notice you already have a Fanatical AWS account.</b> We will use that account for you to migrate.
-                        You can also
-                        <a href="#faws-account-modal" data-dismiss="modal" role="button" data-toggle="modal">
-                            <u>create a new one</u>
-                        </a> now, or once you've confirmed your migration in <b>step 3</b>.</p>
-                </div>
-                <div class="alert alert-success animated fadeIn" style="display: none">
-                    <p><b><!-- Multiple FAWS Accounts:  -->We notice you have multiple Fanatical AWS accounts. Which of the following would you like to use to migrate?</b>
-                        <br>
-                        <label class="rs-checkbox">
-                                <input type="checkbox">
-                                <em>Account 1</em>
-                            </label>
-                        <label class="rs-checkbox">
-                                <input type="checkbox">
-                                <em>Account 2</em>
-                            </label> You can also
-                        <a href="#faws-account-modal" data-dismiss="modal" role="button" data-toggle="modal">
-                            <u>create a new one</u>
-                        </a> now, or once you've confirmed your migration in <b>step 3</b>.</p>
-                </div>
+                <br>
                 <h3>Need more information?</h3>
 
                 <a href="https://www.rackspace.com/en-us/managed-aws" target="_blank">Rackspace Managed AWS</a>
