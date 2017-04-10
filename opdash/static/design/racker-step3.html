@@ -99,15 +99,36 @@
                     <!-- End Stepper -->
                     <hr>
                     <div class="rs-inner">
-                        <div class="migr-ddi-name">User Namegoeshere (#1024814)</div>
+                        <div class="migr-ddi-name">
+                            UserName (#1024814)
+                            <!-- will show only if FAWS account detected -->
+                            <i class="fa fa-arrow-right fa-fw"></i>
+                            <div class="rs-dropdown rs-primary-dropdown">
+                                <a class="rs-dropdown-toggle" href="javascript:void(0);"> FAWS AccountName (#1234567) <!-- <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="blah blah">New</a></span> --> <i class="rs-caret"></i></a>
+                                <ul class="rs-dropdown-menu hidden">
+                                    <li class="rs-dropdown-item">
+                                        <span class="rs-dropdown-category">Choose which account to link:</span>
+                                    </li>
+                                    <li class="rs-dropdown-item">
+                                        <select name="" id="">
+                                            <option value="">FAWS AccountName (#1234567)</option>
+                                            <option value="">FAWS AccountName (#2345678)</option>
+                                            <option value="">FAWS AccountName (#3456789)</option>
+                                        </select>
+                                    </li>
+                                    <li class="rs-dropdown-item"><a class="rs-dropdown-link" href="">Create a new FAWS account</a></li>
+                                </ul>
+                            </div>
+                            <!-- FAWS account end -->
+                        </div>
                         <div class="migr-name">
-                            <span>My_Migration_01</span> <span class="edit rs-edit" title="Change name"></span>
-                            <input type="text" class="name-input animated flipInX" placeholder="Migration-01Feb2017-0456pm" />
+                            <span>Migration_01</span> <span class="edit rs-edit" title="Change name"></span>
+                            <input type="text" class="name-input animated flipInX" placeholder="Migration-01" />
                         </div>
                         <h3>Review configurations and schedule your migration</h3>
-                        <div class="rs-row">
+                        <div class="rs-row animated fadeIn step3-containers">
                             <div class="span-6">
-                                <div class="plain-panel">
+                                <div class="plain-panel ">
                                     <a href="racker-step1.html" class="rs-btn-action rs-pull-right"><i class="rs-edit" title="Modify this"></i> </a>
                                     <h3>Resources Selected</h3>
                                     <hr>
@@ -115,30 +136,34 @@
                                         <div class="accordion-group">
                                             <div class="accordion-heading">
                                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#server-name">
-                                                    <b> Servers <span class="rs-quiet">(4)</span></b>
+                                                    <b class="item-name"> Servers <span class="rs-quiet">(4) <i class="fa fa-chevron-down"></i></span></b>
                                                 </a>
                                             </div>
                                             <div id="server-name" class="accordion-body collapse">
-                                                <div class="accordion-inner ">
+                                                <div class="accordion-inner">
                                                     <div class="selected-items">
-                                                        <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw rs-status-ok"></i> <small class="rs-status">US-East-1</small> <small class="rs-status">US-East-1a</small> <small class="rs-status">t2 small</small>
+                                                        <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b>
                                                     </div>
                                                     <div class="selected-items">
-                                                        <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw rs-status-ok"></i> <small class="rs-status">US-East-1</small> <small class="rs-status">US-East-1a</small> <small class="rs-status">t2 small</small>
+                                                        <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b>
                                                     </div>
                                                     <div class="selected-items">
-                                                        <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw rs-status-ok"></i> <small class="rs-status">US-East-1</small> <small class="rs-status">US-East-1a</small> <small class="rs-status">t2 small</small>
+                                                        <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b>
                                                     </div>
                                                     <div class="selected-items">
-                                                        <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b> <i class="fa fa-arrow-right fa fw rs-status-ok"></i> <small class="rs-status">US-East-1</small> <small class="rs-status">US-East-1a</small> <small class="rs-status">t2 small</small>
+                                                        <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b>
+                                                    </div>
+                                                    <div class="selected-items">
+                                                        <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                          
                                         <div class="accordion-group">
                                             <div class="accordion-heading">
                                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#file-name">
-                                                    <b>  Files <span class="rs-quiet">(2)</span> </b>
+                                                    <b>Files <span class="rs-quiet">(2) <i class="fa fa-chevron-down"></i></span> </b>
                                                 </a>
                                             </div>
                                             <div id="file-name" class="accordion-body collapse">
@@ -155,7 +180,7 @@
                                         <div class="accordion-group">
                                             <div class="accordion-heading">
                                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#block-name">
-                                                    <b> Blocks <span class="rs-quiet">(2)</span> </b>
+                                                    <b> Blocks <span class="rs-quiet">(2) <i class="fa fa-chevron-down"></i></span> </b>
                                                 </a>
                                             </div>
                                             <div id="block-name" class="accordion-body collapse">
@@ -172,7 +197,7 @@
                                         <div class="accordion-group">
                                             <div class="accordion-heading">
                                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#LB-name">
-                                                    <b>Load Balancers <span class="rs-quiet">(2)</span> </b>
+                                                    <b>Load Balancers <span class="rs-quiet">(2) <i class="fa fa-chevron-down"></i></span> </b>
                                                 </a>
                                             </div>
                                             <div id="LB-name" class="accordion-body collapse">
@@ -189,7 +214,7 @@
                                         <div class="accordion-group">
                                             <div class="accordion-heading">
                                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#cdn-name">
-                                                    <b>CDN <span class="rs-quiet">(2)</span> </b>
+                                                    <b>CDN <span class="rs-quiet">(2) <i class="fa fa-chevron-down"></i></span> </b>
                                                 </a>
                                             </div>
                                             <div id="cdn-name" class="accordion-body collapse">
@@ -203,21 +228,21 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="accordion-group">
+                                        <!-- <div class="accordion-group">
                                             <div class="accordion-heading">
                                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#dns-name">
-                                                    <b>DNS <span class="rs-quiet">(0)</span> <!--  --></b>
+                                                    <b>DNS <span class="rs-quiet">(0)</span> </b>
                                                 </a>
                                             </div>
                                             <div id="dns-name" class="accordion-body collapse">
                                                 <div class="accordion-inner">
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="accordion-group">
                                             <div class="accordion-heading">
                                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#db-name">
-                                                    <b>Databases <span class="rs-quiet">(4)</span> </b>
+                                                    <b>Databases <span class="rs-quiet">(4) <i class="fa fa-chevron-down"></i></span> </b>
                                                 </a>
                                             </div>
                                             <div id="db-name" class="accordion-body collapse">
@@ -245,19 +270,24 @@
                                     <a href="racker-step2.html" class=" rs-btn-action rs-pull-right">
                                         <i class="rs-edit" title="Modify this"></i>
                                     </a>
-                                    
                                     <h3>Projected Cost <a href="#" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="The projected pricing consist of infrastructure costs only, and support costs are not included in the provided price."><i class="fa fa-info-circle rs-quiet"></i></a></h3>
-                                    <hr>                           
+                                    <hr>
                                     <p>
-                                        <big><b>$20.00</b>/month </big> <br>
+                                        <big><b>$20.00</b>/month </big>
+                                        <br>
                                         <a href="#calculator_modal" role="button" data-toggle="modal"><i class="fa fa-calculator fa-fw" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Click here to estimate the cost of your predicted usage."></i></a> <small>Calculate Usage Costs</small>
                                     </p>
                                     <hr class="dash">
                                     <big><b>Support Level</b> </big>
                                     <p>
-                                        <big>Navigator <a href="#" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="<b>Navigator Monthly Service Fee starts at $400</b>. We can act as a business associate to support customers with HIPAA workloads on AWS. Personal contact to assist with onboarding. A combined set of AWS and Rackspace recommendations from certified AWS architects"><i class="fa fa-info-circle rs-quiet"></i></a></big>
+                                        Navigator <sup>&#174;</sup> <i class="fa fa-info-circle rs-quiet" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="<b>Navigator Monthly Service Fee starts at $400</b>. We can act as a business associate to support customers with HIPAA workloads on AWS. Personal contact to assist with onboarding. A combined set of AWS and Rackspace recommendations from certified AWS architects"></i>
                                         <br>
                                         <small>* Navigator cost not reflected here.</small>
+                                        <br>
+                                        <small>Legal <a data-html="true"  data-placement="top" data-toggle="popover" data-content="<b>Please note that we may place a $1 authorization hold to confirm your account.</b> <br>
+                                        <small>(Our lawyers make us say this)</small>
+                                        <br> Your use of Rackspace websites is subject to the <a href='http://www.rackspace.com/information/legal/websiteterms?_ga=1.254955403.24213883.1488833556' target='_blank'>Website Terms</a>." ><i class="fa fa-info-circle rs-quiet"></i></a>
+                                        </small>
                                     </p>
                                 </div>
                             </div>
@@ -308,12 +338,16 @@
                         </div>
                         <br>
                         <div class="rs-pull-right">
+                            <div class="faws-legal-txt">
+                                <input id="accept_terms" name="accept_terms" type="checkbox" ng-model="signup.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required"> <span ng-bind-html="translateWithHtml(termsCheckboxLabel)" class="ng-binding"> I acknowledge that I have read and accept the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a> and the <a href="http://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Terms and Conditions</a>.</span>
+                            </div>
                             <a class="rs-btn" ng-link="[ 'Tenant']" href="racker-step2.html">Back</a>
                             <a class="rs-btn" href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>
                             <!-- should be disabled until schedule checkbox clicked -->
                             <a href="racker-migr-dash.html" class="rs-btn rs-btn-primary disabled">Confirm &amp; Schedule</a>
                         </div>
-                        <br>
+                        <div class="clear"></div>
+          
                     </div>
                 </div>
             </div>
@@ -348,16 +382,27 @@
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
     </div>
-    <!-- cancel migration modal -->
-    <div id="cancel_modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- cancel migration modal -->
+    <div id="cancel_modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-            <h3>Would you like to save the selections you've made for another time?</h3>
+            <h3>Would you like to save progress for another time?</h3>
         </div>
         <div class="modal-body">
-            <div class="rs-row rs-center">
-                <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="racker-migr-dash.html">Save Progress</a>
-                <a class="rs-btn" ng-click="vm.continue()" href="racker-migr-dash.html">Discard </a>
+            <a class="rs-btn rs-btn-primary" id="save-progress" name="save-progress" onclick="show('name-migr')">Yes</a>
+            <a class="rs-btn" ng-click="vm.continue()" href="racker-migr-dash.html">Discard </a>
+            <br>
+            <br>
+            <div id="name-migr" style="display:none">
+                <div class="rs-control-group">
+                    <label class="rs-control-label"><b>Create a migration name</b></label>
+                    <div class="rs-controls">
+                        <input type="text" class="name-input rs-input-xlarge" placeholder="Migration_01" />
+
+                    </div>
+                    <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="racker-migr-dash.html">Save Progress</a>
+                </div>
+                
             </div>
         </div>
         <div class="modal-footer">
@@ -435,7 +480,7 @@
     });
     </script>
     <!-- accordion icon behavior -->
-    <script type="text/javascript">
+<!--     <script type="text/javascript">
     $(document).ready(function() {
         $(".accordion-heading + .collapse:not(.in)").prev().append("<i class='fa fa-chevron-down'></i>");
         $(".accordion-heading + .collapse.in").prev().append("<i class='fa fa-chevron-up'></i>");
@@ -445,7 +490,7 @@
             $(this).parents('.plain-panel').find('.collapse.in').prev().find("i.fa-chevron-up").removeClass("fa-chevron-up").addClass("fa-chevron-down");
         });
     });
-    </script>
+    </script> -->
 </body>
 
 </html>

@@ -12,7 +12,7 @@
     <title>Rackspace Migration Manager</title>
     <link rel="stylesheet" type="text/css" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest//canon.min.css">
     <!-- Custom styles  -->
-    <link href="css/animate.css" rel="stylesheet">    
+    <link href="css/animate.css" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/migration-mgr.css" rel="stylesheet">
@@ -69,11 +69,10 @@
                                 <div class="rs-controls">
                                     <div class="search rs-pull-left">
                                         <span class="fa fa-search"></span>
-                                        <input class="rs-input-large" placeholder="Search account name">
+                                        <input class="rs-input-large" placeholder="Filter accounts">
                                     </div>
                                     &nbsp;
                                     <a class="rs-btn rs-btn-primary" href="#add_account_modal" role="button" data-toggle="modal"><i class="fa fa-plus-square fa-fw"></i> Add Accounts</a>
-                                    
                                 </div>
                             </div>
                         </div>
@@ -92,13 +91,11 @@
                                         <th>
                                             <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
                                                 <span class="rs-table-sort-text">Service Level</span>
-                                                
                                             </a>
                                         </th>
                                         <th>
                                             <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
                                                 <span class="rs-table-sort-text">FAWS Acct. Level</span>
-                                                
                                             </a>
                                         </th>
                                         <th>
@@ -111,39 +108,21 @@
                                                 <span class="rs-table-sort-text">Completed</span>
                                             </a>
                                         </th>
-                                
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024810)</a></td>
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">UserName (#1024810)</a></td>
                                         <td class="rs-table-text">Managed Operations</td>
                                         <td class="rs-table-text">Navigator</td>
                                         <td class="rs-table-text ng-binding">5</td>
                                         <td class="rs-table-text ng-binding">3</td>
-                         
                                         <td class="rs-table-input">
                                             <div class="rs-btn-group">
                                                 <div class="rs-dropdown">
                                                     <div class="rs-cog rs-dropdown-toggle"></div>
-                                       
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024811)</a></td>
-                                        <td class="rs-table-text">Managed Infrastructure</td>
-                                        <td class="rs-table-text">Navigator</td>
-                                        <td class="rs-table-text ng-binding">0</td>
-                                        <td class="rs-table-text ng-binding">2</td>
-    
-                                        <td class="rs-table-input">
-                                            <div class="rs-btn-group">
-                                                <div class="rs-dropdown">
-                                                    <div class="rs-cog rs-dropdown-toggle"></div>
-                                                    <ul class="rs-dropdown-menu visible">
+                                                    <ul class="rs-dropdown-menu hidden">
                                                         <li><span class="rs-dropdown-category">Manage</span></li>
                                                         <li><a href="#">Remove from Panel</a></li>
                                                         <li><a href="#">View in Encore</a></li>
@@ -153,12 +132,30 @@
                                         </td>
                                     </tr>
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024812)</a></td>
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">UserName (#1024811)</a></td>
+                                        <td class="rs-table-text">Managed Infrastructure</td>
+                                        <td class="rs-table-text">Navigator</td>
+                                        <td class="rs-table-text ng-binding">0</td>
+                                        <td class="rs-table-text ng-binding">2</td>
+                                        <td class="rs-table-input">
+                                            <div class="rs-btn-group">
+                                                <div class="rs-dropdown">
+                                                    <div class="rs-cog rs-dropdown-toggle"></div>
+                                                    <ul class="rs-dropdown-menu hidden">
+                                                        <li><span class="rs-dropdown-category">Manage</span></li>
+                                                        <li><a href="#">Remove from Panel</a></li>
+                                                        <li><a href="#">View in Encore</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">UserName (#1024812)</a></td>
                                         <td class="rs-table-text">Managed Infrastructure</td>
                                         <td class="rs-table-text">Navigator</td>
                                         <td class="rs-table-text ng-binding">2</td>
                                         <td class="rs-table-text ng-binding">5</td>
-
                                         <td class="rs-table-input">
                                             <div class="rs-btn-group">
                                                 <div class="rs-dropdown">
@@ -168,48 +165,58 @@
                                         </td>
                                     </tr>
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024813)</a></td>
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">UserName (#1024813)</a></td>
                                         <td class="rs-table-text">Managed Operations</td>
                                         <td class="rs-table-text">Aviator</td>
                                         <td class="rs-table-text ng-binding">3</td>
                                         <td class="rs-table-text ng-binding">2</td>
-
                                         <td class="rs-table-input">
                                             <div class="rs-btn-group">
                                                 <div class="rs-dropdown">
                                                     <div class="rs-cog rs-dropdown-toggle"></div>
-                                       
+                                                    <ul class="rs-dropdown-menu hidden">
+                                                        <li><span class="rs-dropdown-category">Manage</span></li>
+                                                        <li><a href="#">Remove from Panel</a></li>
+                                                        <li><a href="#">View in Encore</a></li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024810)</a></td>
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">UserName (#1024810)</a></td>
                                         <td class="rs-table-text">Managed Operations</td>
                                         <td class="rs-table-text">Aviator</td>
                                         <td class="rs-table-text ng-binding">2</td>
                                         <td class="rs-table-text ng-binding">0</td>
-                         
                                         <td class="rs-table-input">
                                             <div class="rs-btn-group">
                                                 <div class="rs-dropdown">
                                                     <div class="rs-cog rs-dropdown-toggle"></div>
-                                       
+                                                    <ul class="rs-dropdown-menu hidden">
+                                                        <li><span class="rs-dropdown-category">Manage</span></li>
+                                                        <li><a href="#">Remove from Panel</a></li>
+                                                        <li><a href="#">View in Encore</a></li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr ng-repeat="batch in vm.batches | filter : {progress:'!'+'100'}" class="ng-scope">
-                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">User Namegoeshere (#1024811)</a></td>
+                                        <td class="rs-table-link"><a ng-link="['BatchMigrationDetails']" class="ng-binding" href="racker-migr-dash.html">UserName (#1024811)</a></td>
                                         <td class="rs-table-text">Managed Infrastructure</td>
                                         <td class="rs-table-text">Navigator</td>
                                         <td class="rs-table-text ng-binding">0</td>
                                         <td class="rs-table-text ng-binding">2</td>
-    
                                         <td class="rs-table-input">
                                             <div class="rs-btn-group">
                                                 <div class="rs-dropdown">
                                                     <div class="rs-cog rs-dropdown-toggle"></div>
+                                                    <ul class="rs-dropdown-menu hidden">
+                                                        <li><span class="rs-dropdown-category">Manage</span></li>
+                                                        <li><a href="#">Remove from Panel</a></li>
+                                                        <li><a href="#">View in Encore</a></li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </td>
@@ -218,7 +225,7 @@
                             </table>
                         </div>
                         <br>
-                        <div class="pagination pagination-mini" >
+                        <div class="pagination pagination-mini">
                             <ul>
                                 <li><span>Showing 6 of 10</span></li>
                                 <li><a href="#">Prev</a></li>
@@ -227,15 +234,14 @@
                                 <li><a href="#">3</a></li>
                                 <li><a href="#">4</a></li>
                                 <li><a href="#">5</a></li>
-                                <li><a href="#">Next</a></li>   
-                                <li><a href="#">See All</a></li>                                
+                                <li><a href="#">Next</a></li>
+                                <li><a href="#">See All</a></li>
                             </ul>
-                        </div>  
+                        </div>
                     </div>
                 </div>
             </div>
-           <br>
-
+            <br>
         </div>
     </div>
     <br>
@@ -252,33 +258,52 @@
             </ul>
         </div>
     </div>
-
     <!-- cancel migration modal -->
     <div id="add_account_modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-            <h3>Add an Account</h3>
+            <h3>Add accounts</h3>
         </div>
-        <div class="modal-body"> 
-            <input type="text" class="rs-input-large" placeholder="Search for an account">
+        <div class="modal-body">
+            <div class="search">
+                <span class="fa fa-search"></span>
+                <input class="rs-input-large" name="search" placeholder="Search for DDI Account" id="find_ddi_account" autocomplete="false">
+                <a class="rs-btn rs-btn-primary" href=""><i class="fa fa-plus-square fa-fw"></i> Add</a>
+            </div>
+            <br>
+            <div class="selected-items">
+                <a href="#"><i class="fa fa-times-circle"></i></a> <b> Namegoeshere (#1024814)</b>
+            </div>
+            <div class="selected-items">
+                <a href="#"><i class="fa fa-times-circle"></i></a> <b> Namegoeshere (#1024814)</b>
+            </div>
         </div>
-        <div class="modal-footer"> 
+        <div class="modal-footer">
             <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Cancel </a>
-            <a class="rs-btn rs-btn-primary " data-dismiss="modal" aria-hidden="true"><i class="fa fa-plus-square fa-fw"></i> Add</a>  
+            <a class="rs-btn rs-btn-primary " data-dismiss="modal" aria-hidden="true"> Continue</a>
         </div>
     </div>
-
     <script type="application/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
     <script type="application/javascript" src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/bootstrap-tooltip.js"></script>
     <script src="js/bootstrap-popover.js"></script>
-
     <script>
-      $(document).ready(function(){
-          $('[data-toggle="popover"]').popover({html:true}); 
-      });
-    </script> 
+    $(document).ready(function() {
+        $('[data-toggle="popover"]').popover({
+            html: true
+        });
+    });
+    </script>
+    <!-- dropdowns -->
+    <script type="application/javascript">
+    $(document).ready(function() {
+        $('.rs-dropdown').each(function(i, element) {
+            var menu = new canon.Menu();
+            menu.attach(element);
+        });
+    });
+    </script>
 </body>
 
 </html>

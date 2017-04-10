@@ -247,8 +247,33 @@
                     </div>
                     <!-- End Stepper -->
                     <hr>
-                    <div class="rs-inner">                      
-                        <div class="migr-ddi-name">User Namegoeshere (#1024814)</div>
+                    <div class="rs-inner">
+                        <!--      <div class="alert alert-success animated fadeIn" >
+                            <h4>We notice you don't have a Fanatical AWS account so we created a new FAWS account for you... see below <i class="fa fa-arrow-down"></i></h4>            
+                       
+                        </div>   -->
+                        <div class="migr-ddi-name">
+                            UserName (#1024814)
+                            <!-- will show only if FAWS account detected -->
+                            <i class="fa fa-arrow-right fa-fw"></i>
+                            <div class="rs-dropdown rs-primary-dropdown">
+                                <a class="rs-dropdown-toggle" href="javascript:void(0);"> FAWS AccountName (#1234567) <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="blah blah">New</a></span> <i class="rs-caret"></i></a>
+                                <ul class="rs-dropdown-menu hidden">
+                                    <li class="rs-dropdown-item">
+                                        <span class="rs-dropdown-category">Choose which account to link:</span>
+                                    </li>
+                                    <li class="rs-dropdown-item">
+                                        <select name="" id="">
+                                            <option value="">FAWS AccountName (#1234567)</option>
+                                            <option value="">FAWS AccountName (#2345678)</option>
+                                            <option value="">FAWS AccountName (#3456789)</option>
+                                        </select>
+                                    </li>
+                                    <li class="rs-dropdown-item"><a class="rs-dropdown-link" href="">Create a new FAWS account</a></li>
+                                </ul>
+                            </div>
+                            <!-- FAWS account end -->
+                        </div>
                         <div class="rs-row">
                             <div class="span-6">
                                 <h3>Select Resources <a href="#" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="As you select your resources, keep in mind that all dependencies associated will also be selected and displayed below in <b>'Items Selected'</b>. Any resources that do not pass a pre-check will have a <span class='rs-status-error'>red</span> indicator. Similarly any potentially problematic resources will have a <span class='rs-status-warning'>yellow</span> indicator."><i class="fa fa-info-circle fa-fw rs-quiet"></i></a></h3>
@@ -271,41 +296,26 @@
                         </ul>
                         <div class="rs-tab-content">
                             <div class="rs-tab-pane active" id="Servers">
-                                <table class="rs-list-table">
+                                <table class="rs-list-table keywords">
                                     <thead>
                                         <th class="rs-table-status"></th>
                                         <th class="rs-table-checkbox">
                                             <input type="checkbox" id="selectAll" />
                                         </th>
                                         <th>
-                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                <span class="rs-table-sort-text">Server </span>
-                                                <span class="rs-table-sort-indicator"></span>
-                                            </a>
+                                            <span class="rs-table-sort-text">Server </span>
                                         </th>
                                         <th>
-                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                <span class="rs-table-sort-text">IP Address </span>
-                                                <span class="rs-table-sort-indicator"></span>
-                                            </a>
+                                            <span class="rs-table-sort-text">IP Address </span>
                                         </th>
                                         <th>
-                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                <span class="rs-table-sort-text">RAM</span>
-                                                <span class="rs-table-sort-indicator"></span>
-                                            </a>
+                                            <span class="rs-table-sort-text">RAM</span>
                                         </th>
                                         <th>
-                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                <span class="rs-table-sort-text">Server Status</span>
-                                                <span class="rs-table-sort-indicator"></span>
-                                            </a>
+                                            <span class="rs-table-sort-text">Server Status</span>
                                         </th>
                                         <th>
-                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                <span class="rs-table-sort-text">Migration Status</span>
-                                                <span class="rs-table-sort-indicator"></span>
-                                            </a>
+                                            <span class="rs-table-sort-text">Migration Status</span>
                                         </th>
                                     </thead>
                                     <tbody>
@@ -353,7 +363,7 @@
                                             <td class="rs-table-text"><span class="rs-status-error">Error</span></td>
                                             <td class="rs-table-text">Unable to migrate</td>
                                         </tr>
-                                         <tr class="rs-tr-disabled" >
+                                        <tr class="rs-tr-disabled">
                                             <td class="rs-table-status rs-table-status-ok tip"></td>
                                             <td class="rs-table-checkbox">
                                                 <input type="checkbox" disabled />
@@ -385,7 +395,7 @@
                         <br>
                         <div class="rs-pull-right">
                             <a class="rs-btn" href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>
-                            <a class="rs-btn rs-btn-primary" href="#name_modal" role="button" data-toggle="modal" >Continue</a>
+                            <a class="rs-btn rs-btn-primary" href="step2.html">Continue</a>
                         </div>
                         <div class="pagination pagination-mini">
                             <ul>
@@ -400,14 +410,13 @@
                                 <li><a href="#">See All</a></li>
                             </ul>
                         </div>
-                        <div class="plain-panel">
-                            <h4>Items Selected</h4>
-                            <hr>
+                        <div class="plain-panel resources">
+                            <h3>Items Selected</h3>
                             <div class="accordion" id="accordion2">
                                 <div class="accordion-group">
                                     <div class="accordion-heading">
                                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#server-name">
-                                            <b> Servers <span class="rs-quiet">(4)</span></b>
+                                            <b class="item-name"> Servers <span class="rs-quiet">(4) <i class="fa fa-chevron-down"></i></span></b>
                                         </a>
                                     </div>
                                     <div id="server-name" class="accordion-body collapse">
@@ -426,108 +435,6 @@
                                             </div>
                                             <div class="selected-items">
                                                 <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group">
-                                    <div class="accordion-heading">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#file-name">
-                                            <b>  Files <span class="rs-quiet">(2)</span> </b>
-                                        </a>
-                                    </div>
-                                    <div id="file-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  filename1</b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  filename1</b>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group">
-                                    <div class="accordion-heading">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#block-name">
-                                            <b> Blocks <span class="rs-quiet">(2)</span> </b>
-                                        </a>
-                                    </div>
-                                    <div id="block-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  BlockName1</b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  BlockName1</b>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group">
-                                    <div class="accordion-heading">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#LB-name">
-                                            <b>Load Balancers <span class="rs-quiet">(2)</span> </b>
-                                        </a>
-                                    </div>
-                                    <div id="LB-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> LBname1b </b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> LBname1b</b>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-group">
-                                    <div class="accordion-heading">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#cdn-name">
-                                            <b>CDN <span class="rs-quiet">(2)</span> </b>
-                                        </a>
-                                    </div>
-                                    <div id="cdn-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  CDNname1b</b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  CDNname1b</b>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- <div class="accordion-group">
-                                    <div class="accordion-heading">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#dns-name">
-                                            <b>DNS <span class="rs-quiet">(0)</span> </b>
-                                        </a>
-                                    </div>
-                                    <div id="dns-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <div class="accordion-group">
-                                    <div class="accordion-heading">
-                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#db-name">
-                                            <b>Databases <span class="rs-quiet">(4)</span> </b>
-                                        </a>
-                                    </div>
-                                    <div id="db-name" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
-                                            </div>
-                                            <div class="selected-items" title="cloud-endure-demo-B_wordpress_2">
-                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))">  Database Name1b</b>
                                             </div>
                                         </div>
                                     </div>
@@ -652,49 +559,31 @@
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
     </div>
-
     <!-- cancel migration modal -->
-    <div id="cancel_modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="cancel_modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-            <h3>Would you like to save the selections you've made for another time?</h3>
+            <h3>Would you like to save progress for another time?</h3>
         </div>
         <div class="modal-body">
-            <div class="rs-row rs-center">
-                <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="step5.html">Save Progress</a>
-                <a class="rs-btn" ng-click="vm.continue()" href="step5.html">Discard </a>
+            <a class="rs-btn rs-btn-primary" id="save-progress" name="save-progress" onclick="show('name-migr')">Yes</a>
+            <a class="rs-btn" ng-click="vm.continue()" href="step5.html">Discard </a>
+            <br>
+            <br>
+            <div id="name-migr" style="display:none">
+                <div class="rs-control-group">
+                    <label class="rs-control-label"><b>Create a migration name</b></label>
+                    <div class="rs-controls">
+                        <input type="text" class="name-input rs-input-xlarge" placeholder="Migration_01" />
+                    </div>
+                    <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="step5.html">Save Progress</a>
+                </div>
             </div>
         </div>
         <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
     </div>
-
-    <!-- name migration modal -->
-    <div id="name_modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-            <h3>What would you like to name your migration?</h3>
-        </div>
-        <div class="modal-body">
-            <div class="rs-control-group">
-                <label class="rs-control-label"><big> <b>* Create a Migration Name</b></big></label>
-                <div class="rs-controls">
-                    <input type="text" class="name-input rs-input-xlarge" placeholder="My_Migration_01"/>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <div class="rs-pull-left">
-                <label class="rs-checkbox">
-                    <input type="checkbox"> Don't show this again
-                </label>
-            </div>
-            <a class="rs-btn rs-btn-primary" href="step2.html">Save &amp; Continue</a>
-       
-        </div>
-    </div>
-
     <!-- intro modal -->
     <div class="modal hide animated fadeIn details" id="intro_modal">
         <div class="modal-body">
@@ -702,7 +591,8 @@
             <hr>
             <div class="rs-row">
                 <div class="span-7">
-                    <h3>Migrate in just 3 easy steps:</h3>
+                    <br>
+                    <h2>Migrate in just 3 easy steps:</h2>
                     <big>
                         <ol class="rs-custom-counter">
                             <li><b>Select resources to migrate</b></li>
@@ -710,23 +600,8 @@
                             <li><b>Schedule and confirm migration</b></li>
                         </ol>
                     </big>
-                    <div class="alert alert-warning animated fadeIn">
-                        <p><b>We notice you don't have a Fanatical AWS account.</b> We will create a new account for you. If you would like to create and link a new or additional account <a href="https://cart.rackspace.com/aws" target="_blank"><u>click here</u></a></p>
-                    </div>
-                    <div class="alert alert-success animated fadeIn">
-                        <p><b>We notice you already have a Fanatical AWS account.</b> We will link this account for your migratration.  If you would like to create and link a new or additional account <a href="https://cart.rackspace.com/aws" target="_blank"><u>click here</u></a>.</p>
-                    </div>
-                    <div class="alert alert-success animated fadeIn">
-                        <p><b>We notice you have multiple Fanatical AWS accounts.</b><br>
-                         Which of the following would you like to use to migrate?<br>
-                        <select>
-                            <option>Account 1</option>
-                            <option>Account 2</option>
-                            <option>Account 3</option>
-                        </select>
-                        <br>
-                        If you would like to create and link a new or additional account <br><a href="https://cart.rackspace.com/aws" target="_blank"><u>click here</u></a>.</p>
-                    </div>
+                    <br>
+                    <br>
                     <h3><em>Need more information?</em></h3>
                     <a href="https://www.rackspace.com/en-us/managed-aws" target="_blank">Rackspace Managed AWS</a>
                     <br>
@@ -743,14 +618,79 @@
                     <input type="checkbox"> Don't show this again
                 </label>
             </div>
-            <a href="https://mycloud.rackspace.com" class="rs-btn" ><i class="fa fa-info-circle fa-fw rs-quiet" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Warning: This will take you out of the Migration Manager"></i> Cancel Migration</a>
+            <a href="https://mycloud.rackspace.com" class="rs-btn"><i class="fa fa-info-circle fa-fw rs-quiet" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Warning: This will take you out of the Migration Manager"></i> Cancel Migration</a>
             <a href="step5.html" class="rs-btn">Go to Migration Dashboard</a>
             <a class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true">Start a Migration</a>
         </div>
     </div>
+    <!-- alert modals -->
+    <!-- <div class="modal modal-error hide details animated fadeIn" id="alert_modal">
+        <div class="modal-header">            
+
+            <h3>We notice you don't have a Fanatical AWS account...</h3>            
+        </div>
+        <div class="modal-body">
+            <p><big>We will create a new account for you, but if you would like to create and link a new account <a href="https://cart.rackspace.com/aws" target="_blank"><u>click here</u></a></big></p>
+        </div>        
+    </div>  
+
+    <div class="modal modal-warning hide details animated fadeIn" id="alert_modal">
+        <div class="modal-header">            
+
+            <h3>We notice you have multiple Fanatical AWS accounts...</h3>            
+        </div>
+        <div class="modal-body">
+            <p><big>Choose which of the following 
+            <select>
+            <option><u>Accounts</u></option>
+            <option>Account 1</option>
+            <option>Account 2</option>
+            <option>Account 3</option>
+        </select>
+         would you like to use to migrate. If you would like to create and link a new or additional account <a href="https://cart.rackspace.com/aws" target="_blank"><u>click here</u></a>.</big></p>
+        </div>        
+    </div>
+
+    <div class="modal modal-success hide details animated fadeIn" id="alert_modal">
+        <div class="modal-header">            
+            <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+            <h3>We notice you already have a Fanatical AWS account...</h3>            
+        </div>
+        <div class="modal-body">
+            <p><big>We will link this account for your migratration.  If you would like to create and link a new or additional account <a href="https://cart.rackspace.com/aws" target="_blank"><u>click here</u></a>.</big></p>
+        </div>        
+    </div> -->
+    <!-- alerts -->
+    <!-- <div class="alert alert-success animated fadeIn" >
+        <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
+        <h3>We notice you already have a Fanatical AWS account.</h3> 
+        <p>We will link this account for your migratration.  If you would like to create and link a new or additional account <a href="https://cart.rackspace.com/aws" target="_blank"><u>click here</u></a>.</p>
+    </div>
+    <div class="alert alert-warning animated fadeIn" >
+        <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
+        <h3>We notice you have multiple Fanatical AWS accounts.</h3>
+         <p>Choose which of the following 
+         <select>
+            <option><u>Accounts</u></option>
+            <option>Account 1</option>
+            <option>Account 2</option>
+            <option>Account 3</option>
+        </select>
+         would you like to use to migrate. If you would like to create and link a new or additional account <a href="https://cart.rackspace.com/aws" target="_blank"><u>click here</u></a>.</p>
+    </div> -->
     <!-- end modals -->
+    <script>
+    function show(target) {
+        document.getElementById(target).style.display = 'block';
+    }
+
+    function hide(target) {
+        document.getElementById(target).style.display = 'none';
+    }
+    </script>
     <script src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
     <!-- bootstrap -->
     <script src="js/bootstrap-collapse.js"></script>
     <script src="js/bootstrap-modal.js"></script>
@@ -767,11 +707,20 @@
     <script type="text/javascript">
     $(window).load(function() {
         $('#intro_modal').modal('show');
+
     });
     </script>
-    <!-- message randomizer - for demo sake -->
+    <!-- message autoclose timer -->
     <script>
-    var elems = $(".alert");
+    window.setTimeout(function() {
+        $(".alert").fadeTo(500, 0).slideUp(500, function() {
+            $(this).remove();
+        });
+    }, 8000);
+    </script>
+    <!-- message randomizer - for demo sake -->
+    <!-- <script>
+    var elems = $("#alert_modal");
     if (elems.length) {
         var keep = Math.floor(Math.random() * elems.length);
         for (var i = 0; i < elems.length; ++i) {
@@ -780,7 +729,7 @@
             }
         }
     }
-    </script>
+    </script> -->
     <!-- select all checkbox -->
     <script>
     $('#selectAll').click(function(e) {
@@ -788,7 +737,7 @@
     });
     </script>
     <!-- chevron icon state -->
-    <script type="text/javascript">
+    <!--     <script type="text/javascript">
     $(document).ready(function() {
         $(".accordion-heading + .collapse:not(.in)").prev().append("<i class='fa fa-chevron-down'></i>");
         $(".accordion-heading + .collapse.in").prev().append("<i class='fa fa-chevron-up'></i>");
@@ -797,6 +746,21 @@
             $(this).parents('.accordion-heading').find("i.fa-chevron-down").removeClass("fa-chevron-down").addClass("fa-chevron-up");
             $(this).parents('.plain-panel').find('.collapse.in').prev().find("i.fa-chevron-up").removeClass("fa-chevron-up").addClass("fa-chevron-down");
         });
+    });
+    </script> -->
+    <!-- dropdowns -->
+    <script type="application/javascript">
+    $(document).ready(function() {
+        $('.rs-dropdown').each(function(i, element) {
+            var menu = new canon.Menu();
+            menu.attach(element);
+        });
+    });
+    </script>
+    <!-- table sorter -->
+    <script type="text/javascript">
+    $(function() {
+        $('.keywords').tablesorter();
     });
     </script>
 </body>
