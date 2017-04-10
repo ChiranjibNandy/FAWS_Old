@@ -194,6 +194,8 @@
                     // populate tenants array
                     var getTenantDetails = vm.getTenants();
 
+                    vm.sortVal = "";
+
                     //Waits till all the promises are resolved , then only loads the pricing details
                     $q.all([getTenantDetails]).then(function(results) {
                         vm.loading = false;
@@ -445,6 +447,14 @@
                     var encoreUrl = "https://encore.rackspace.com/accounts/"+tenant_id;
                     $window.open(encoreUrl, '_blank');
                 } 
+
+                vm.setSortBy = function(sortByItem){
+                    if(vm.sortVal === sortByItem){
+                        vm.sortVal  = "-"+vm.sortVal;
+                    }
+                    else 
+                        vm.sortVal = sortByItem;
+                }
 
             }]
         });

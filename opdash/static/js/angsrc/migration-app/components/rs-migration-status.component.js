@@ -56,6 +56,15 @@
                     $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
                     vm.count = 0;
                     vm.is_racker = authservice.getAuth().is_racker;
+                    if(authservice.getAuth().is_racker == false){   //get Account Name
+                        var actname = dataStoreService.getAccountName(vm.tenant_id); //this service method is setting the accountname through api
+                        actname.then(function() {
+                            vm.currentUser = authservice.getAuth().account_name;
+                        }); //waiting api promise to resolve
+                    }
+                    else{  //if logged in as a racker then it was sent by racker-dashboard page
+                         vm.currentUser = authservice.getAuth().account_name;
+                    } //end of if condition
                     vm.sortBy = {
                         current_batch: 'start',
                         completed_batch: 'start'
@@ -130,7 +139,6 @@
                 vm.userOrTenant = auth.is_racker ? "Tenant" : "User";
                 vm.tenant_id = auth.tenant_id;
                 vm.batchInitiatedBy = auth.username;
-                vm.currentUser = auth.account_name;
                 vm.loading = true;
                 vm.timeSinceLastRefresh = 0;
                 vm.alerts = [];
