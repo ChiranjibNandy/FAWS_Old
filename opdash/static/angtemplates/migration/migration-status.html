@@ -169,7 +169,7 @@
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
-                                <th ng-show="vm.is_racker">Actions</th>
+                                <!--<th ng-show="vm.is_racker">Actions</th>-->
                             </tr>
                         </thead>
                         <tbody ng-show="!vm.loading && !vm.completedBatches.loadError && vm.completedBatches.items.length!==0">
@@ -178,12 +178,12 @@
                                 <td class="rs-table-link large-col"><a ng-link="['CompletedBatchDetails', {job_id: batch.job_id}]" class="ng-binding">{{batch.batch_name}}</a></td>
                                 <td class="rs-table-text ng-binding">{{(batch.start && batch.start * 1000) | date : 'M/dd/yyyy hh:mm a'}}</td>
                                 <td class="rs-table-text ng-binding" colspan="2">{{(batch.end && batch.end * 1000) | date : 'M/dd/yyyy hh:mm a'}}</td>
-                                <td ng-show="vm.is_racker"><a href="" class="rs-btn rs-btn-primary">See Log</a></td>
+                                <!--<td ng-show="vm.is_racker"><a href="" class="rs-btn rs-btn-primary">See Log</a></td>-->
                             </tr>
                         </tbody>
                         <tbody ng-show="vm.loading">
                             <tr>
-                                <td colspan="6">
+                                <td colspan="5">
                                     <div class="rs-table-overlay rs-table-overlay-loading">
                                         <div class="rs-table-overlay-content">
                                             <div class="rs-table-overlay-message">Loading&hellip;</div>
@@ -194,12 +194,12 @@
                         </tbody>
                         <tbody ng-show="!vm.loading && !vm.completedBatches.loadError && vm.completedBatches.items.length===0">
                             <tr>
-                                <td colspan="6" class="empty-collection-info">You don't have any completed batches</td>
+                                <td colspan="5" class="empty-collection-info">You don't have any completed batches</td>
                             </tr>
                         </tbody>
                         <tbody ng-show="!vm.loading && vm.completedBatches.loadError">
                             <tr>
-                                <td colspan="6" class="collection-error-msg">Error loading data</td>
+                                <td colspan="5" class="collection-error-msg">Error loading data</td>
                             </tr>
                         </tbody>
                     </table>
@@ -230,7 +230,7 @@
                                         <tbody ng-show="!vm.loadingAlerts && vm.alerts.length>0">
                                             <tr ng-repeat="alert in vm.alerts">
                                                 <td><span class="rs-status" ng-class="{'rs-status-warning': alert.type==='warning', 'rs-status-error': alert.type==='error'}">{{alert.type}}</span></td>
-                                                <td class="rs-table-text ng-binding">{{alert.date}}</td>
+                                                <td class="rs-table-text ng-binding">{{alert.timestamp | date : 'M/dd/yyyy'}}</td>
                                                 <td><a ng-link="['BatchTaskList', {job_id: alert.job_id}]">{{alert.message}}</a></td>
                                             </tr>
                                         </tbody>

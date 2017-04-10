@@ -71,7 +71,6 @@
                     };
 
                     $(document).on("click", function() {
-                        console.log("clicked");
                         $timeout(function() {
                             resetActionFlags();
                         });
@@ -291,7 +290,7 @@
                     //dataStoreService.storeallItems(allData.server, 'server');
                     //dataStoreService.storeallItems(allData.LoadBalancers, 'LoadBalancers');
                     dataStoreService.setDontShowStatus(true);
-                    dataStoreService.selectedTime.migrationName = batch.instance_name;
+                    dataStoreService.selectedTime.migrationName = batch.batch_name;
                     //console.log("batch details: "+JSON.stringify(batch.selected_resources));
                     if (batch.step_name === "MigrationResourceList") {
                         dataStoreService.setItems(batch.selected_resources);
@@ -318,11 +317,11 @@
                     dataStoreService.getSavedItems()
                         .then(function (result) {
                             var savedMigrations = JSON.parse(result.savedDetails || '[]');
-
+                            
                             // remove from server
                             var index = -1;
                             for(var i=0; i<savedMigrations.length; i++){
-                                if(batch.timestamp === savedMigrations[i].timestamp && batch.instance_name === savedMigrations[i].instance_name){
+                                if(batch.timestamp === savedMigrations[i].timestamp && batch.batch_name === savedMigrations[i].instance_name){
                                     index = i;
                                     break;
                                 }
@@ -334,12 +333,19 @@
                                 // remove from local
                                 index = -1;
                                 for(var i=0; i<vm.currentBatches.items.length; i++){
-                                    if(batch.instance_name === vm.currentBatches.items[i].instance_name){
+                                    if(batch.batch_name === vm.currentBatches.items[i].batch_name){
                                         index = i;
                                         break;
                                     }
                                 }
-                                index!==-1 && vm.currentBatches.items.splice(index, 1);
+                                if(index!==-1){
+                                    vm.currentBatches.items.splice(index, 1);
+                                    vm.currentBatches.noOfPages = Math.ceil(vm.currentBatches.items.length / vm.currentBatches.pageSize);
+                                    vm.currentBatches.pages = new Array(vm.currentBatches.noOfPages);
+                                    
+                                    if(vm.currentBatches.currentPage > vm.currentBatches.pages.length)
+                                        vm.currentBatches.currentPage--;
+                                }
                             }else{
                                 batch.deleting = false;
                             }
