@@ -69,11 +69,11 @@
                 <div class="rs-content rs-panel">
                     <div class="rs-inner">
                         <div class="pull-right">
-                            <a href="" class="rs-btn"><i class="fa fa-refresh fa-fw"></i> <small><em class="rs-quiet">Refreshed 2 mins ago.</em></small></a>
+                            <a href="" class="rs-btn"><i class="fa fa-refresh fa-fw"></i> Refresh</a>
                         </div>
-                        <div class="migr-ddi-name">User Namegoeshere (#1024814)</div>
+                        <div class="migr-ddi-name">UserName (#1024814)</div>
                         <div class="migr-name">
-                            My_Migration_01 / Active Migrations
+                            Migration_01 / Active Migrations
                          </div>
                         <div class="migration-status-list-container">
                             <table class="rs-list-table no-truncate-td cell-center">
@@ -203,13 +203,13 @@
         </div>
     </div>
     <!-- Modal -->
-    <div id="resource_info" class="modal hide fade details" tabindex="-1" role="dialog" aria-hidden="true">
+   <div id="resource_info" class="modal hide animated fadeIn details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-            <div class="rs-detail-header-subtitle">Server Name</div>
-            <div class="rs-detail-header-title">cloud-endure-demo-A_db_slave One</div>
-        </div>
-        <div class="modal-body">
+            <div class="rs-detail-header">
+                <div class="rs-detail-header-subtitle">Server Name</div>
+                <div class="rs-detail-header-title">cloud-endure-demo-A_db_slave One</div>
+            </div>
             <div class="rs-detail-section">
                 <div class="rs-detail-section-header">
                     <div class="rs-detail-section-title">Server Details</div>
@@ -250,8 +250,8 @@
                     <div class="rs-detail-section-title">Networks</div>
                 </div>
                 <div class="rs-detail-section-body">
-                    <div class="rs-embedded-list-table-wrapper rs-embedded-small">
-                        <table class="rs-list-table rs-embedded-list-table">
+                    <div>
+                        <table class="rs-list-table">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -280,7 +280,7 @@
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
     </div>
-    <!-- modal end -->
+        <!-- modal end -->
     <script type="text/javascript">
     $(window).load(function() {
         $('#myModal').modal('show');

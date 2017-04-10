@@ -69,28 +69,36 @@
             <br>
             <div class="rs-main rs-panel">
                 <div class="rs-sidebar rs-pull-right">
+                    
                     <div class="rs-inner">
                         <div class="info-panel">
                             <h3>Current Cost </h3>
                             <p>
-                                <big><b>$18.00</b>/month</big> 
+                                <big><b>$18.00</b>/month</big>
                                 <br>
                                 <small>*For resources selected in <b>Step 1</b></small>
-                            </p>                            
+                            </p>
                         </div>
                         <div class="white-panel">
                             <h3>Projected Cost <a href="#" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="The projected pricing consist of infrastructure costs only, and support costs are not included in the provided price."><i class="fa fa-info-circle rs-quiet"></i></a></h3>
                             <p>
-                                <big><b>$20.00</b>/month </big> <br>
+                                <big><b>$20.00</b>/month </big>
+                                <br>
                                 <a href="#calculator_modal" role="button" data-toggle="modal"><i class="fa fa-calculator fa-fw" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Click here to estimate the cost of your predicted usage."></i></a> <small>Calculate Usage Costs</small>
                             </p>
                             <hr class="dash">
                             <big><b>Support Level</b> </big>
                             <p>
-                                <big>Navigator <a href="#" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="<b>Navigator Monthly Service Fee starts at $400</b>. We can act as a business associate to support customers with HIPAA workloads on AWS. Personal contact to assist with onboarding. A combined set of AWS and Rackspace recommendations from certified AWS architects"><i class="fa fa-info-circle rs-quiet"></i></a></big>
+                                Navigator <sup>&#174;</sup> <i class="fa fa-info-circle rs-quiet" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="<b>Navigator Monthly Service Fee starts at $400</b>. We can act as a business associate to support customers with HIPAA workloads on AWS. Personal contact to assist with onboarding. A combined set of AWS and Rackspace recommendations from certified AWS architects"></i>
                                 <br>
                                 <small>* Navigator cost not reflected here.</small>
-                            </p>                            
+                                <br>
+                                <small>Legal <a data-html="true" data-placement="top" data-toggle="popover" data-content="<b>Please note that we may place a $1 authorization hold to confirm your account.</b> <br>
+                                <small>(Our lawyers make us say this)</small>
+                                <br> Your use of Rackspace websites is subject to the <a href='http://www.rackspace.com/information/legal/websiteterms?_ga=1.254955403.24213883.1488833556' target='_blank'>Website Terms</a>.
+                                <br> <small>* click <i class='fa fa-info-circle rs-quiet'></i> again to close.</small>"><i class="fa fa-info-circle rs-quiet"></i></a>
+                                </small>
+                            </p>
                         </div>
                         <br>
                         <div class="rs-row pricing-buttons">
@@ -103,6 +111,7 @@
                         <br>
                     </div>
                 </div>
+                
                 <div class="rs-content rs-panel">
                     <!-- Start Stepper -->
                     <div class="mdl-card mdl-shadow--2dp">
@@ -134,10 +143,31 @@
                     <!-- End Stepper -->
                     <hr>
                     <div class="rs-inner recommend">
-                        <div class="migr-ddi-name">User Namegoeshere (#1024814)</div>
+                        <div class="migr-ddi-name">
+                            UserName (#1024814)
+                            <!-- will show only if FAWS account detected -->
+                            <i class="fa fa-arrow-right fa-fw"></i>
+                            <div class="rs-dropdown rs-primary-dropdown">
+                                <a class="rs-dropdown-toggle" href="javascript:void(0);"> FAWS AccountName (#1234567) <!-- <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="blah blah">New</a></span> --> <i class="rs-caret"></i></a>
+                                <ul class="rs-dropdown-menu hidden">
+                                    <li class="rs-dropdown-item">
+                                        <span class="rs-dropdown-category">Choose which account to link:</span>
+                                    </li>
+                                    <li class="rs-dropdown-item">
+                                        <select name="" id="">
+                                            <option value="">FAWS AccountName (#1234567)</option>
+                                            <option value="">FAWS AccountName (#2345678)</option>
+                                            <option value="">FAWS AccountName (#3456789)</option>
+                                        </select>
+                                    </li>
+                                    <li class="rs-dropdown-item"><a class="rs-dropdown-link" href="">Create a new FAWS account</a></li>
+                                </ul>
+                            </div>
+                            <!-- FAWS account end -->
+                        </div>
                         <div class="migr-name">
-                            <span>My_Migration_01</span><span class="edit rs-edit" title="Change name"></span>
-                            <input type="text" class="name-input animated flipInX" placeholder="My_Migration_01" />
+                            <span>Migration_01</span><span class="edit rs-edit" title="Change name"></span>
+                            <input type="text" class="name-input animated flipInX" placeholder="Migration_01" />
                         </div>
                         <div class="rs-row">
                             <div class="span-8">
@@ -161,40 +191,27 @@
                         </ul>
                         <div class="rs-tab-content">
                             <div class="rs-tab-pane active" id="Servers">
-                                <table class="rs-list-table">
+                                <table class="rs-list-table keywords"> 
                                     <thead>
                                         <th class="rs-table-status"></th>
                                         <th>
-                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                <span class="rs-table-sort-text">Server </span>
-                                                <span class="rs-table-sort-indicator"></span>
-                                            </a>
+                                           <span class="rs-table-sort-text">Server </span>
                                         </th>
-                                        <th>IP Address</th>
+                                        <th>
+                                            <span class="rs-table-sort-text">IP Address</span>
+                                        </th>
                                         <th></th>
                                         <th>
-                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                <span class="rs-table-sort-text">AWS Region</span>
-                                                <span class="rs-table-sort-indicator"></span>
-                                            </a>
+                                           <span class="rs-table-sort-text">AWS Region</span>
                                         </th>
                                         <th>
-                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                <span class="rs-table-sort-text">AWS Zone</span>
-                                                <span class="rs-table-sort-indicator"></span>
-                                            </a>
+                                           <span class="rs-table-sort-text">AWS Zone</span>
                                         </th>
                                         <th>
-                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                <span class="rs-table-sort-text">AWS Instance</span>
-                                                <span class="rs-table-sort-indicator"></span>
-                                            </a>
+                                            <span class="rs-table-sort-text">AWS Instance</span>
                                         </th>
                                         <th>
-                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                <span class="rs-table-sort-text">Cost</span>
-                                                <span class="rs-table-sort-indicator"></span>
-                                            </a>
+                                           <span class="rs-table-sort-text">Cost</span>
                                         </th>
                                         <th class="rs-table-cog rs-center">Actions</th>
                                     </thead>
@@ -204,7 +221,7 @@
                                             <td class="rs-table-link">
                                                 <a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave One</a>
                                             </td>
-                                            <td class="rs-table-text">64.49.226.84</td>
+                                            <td class="rs-table-text">64.49.226.82</td>
                                             <td><i class="fa fa-arrow-right rs-status-ok"></i></td>
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
@@ -219,7 +236,7 @@
                                         <tr>
                                             <td class="rs-table-status rs-table-status-ok tip"></td>
                                             <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Two</a></td>
-                                            <td class="rs-table-text">64.49.226.84</td>
+                                            <td class="rs-table-text">64.49.226.81</td>
                                             <td><i class="fa fa-arrow-right rs-status-ok"></i></td>
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
@@ -249,7 +266,7 @@
                                         <tr>
                                             <td class="rs-table-status rs-table-status-ok tip"></td>
                                             <td class="rs-table-link"><a href="#resource_info" role="button" data-toggle="modal">cloud-endure-demo-A_db_slave Four</a></td>
-                                            <td class="rs-table-text">64.49.226.84</td>
+                                            <td class="rs-table-text">64.49.226.80</td>
                                             <td><i class="fa fa-arrow-right rs-status-ok"></i></td>
                                             <td class="rs-table-text">US-East-1</td>
                                             <td class="rs-table-text">US-East-1a</td>
@@ -334,13 +351,13 @@
     </div>
     <!-- Modals -->
     <!-- RESOURCE DETAILS MODAL -->
-    <div id="resource_info" class="modal hide animated fadeIn details full" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="resource_info" class="modal hide animated fadeIn details" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
             <div class="rs-detail-header-subtitle">Server Name</div>
             <div class="rs-detail-header-title">cloud-endure-demo-A_db_slave One</div>
         </div>
-        <div class="modal-body">
+        <div class="rs-detail-section">
             <div class="rs-detail-section-header">
                 <div class="rs-detail-section-title">Server Details</div>
             </div>
@@ -374,33 +391,35 @@
                     </li>
                 </ul>
             </div>
+        </div>
+        <div class="rs-detail-section">
             <div class="rs-detail-section-header">
                 <div class="rs-detail-section-title">Networks</div>
             </div>
             <div class="rs-detail-section-body">
-                
-                <table class="rs-list-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>IPv4</th>
-                            <th>IPv6</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="rs-table-text">PublicNet <span class="rs-quiet">(Internet)</span></td>
-                            <td class="rs-table-text">101.122.11.222</td>
-                            <td class="rs-table-text"><span class="rs-quiet">None</span></td>
-                        </tr>
-                        <tr>
-                            <td class="rs-table-text">ServiceNet <span class="rs-quiet">(Rackspace DFW)</span></td>
-                            <td class="rs-table-text">10.111.22.112</td>
-                            <td class="rs-table-text"><span class="rs-quiet">None</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-                
+                <div>
+                    <table class="rs-list-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>IPv4</th>
+                                <th>IPv6</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="rs-table-text">PublicNet <span class="rs-quiet">(Internet)</span></td>
+                                <td class="rs-table-text">101.122.11.222</td>
+                                <td class="rs-table-text"><span class="rs-quiet">None</span></td>
+                            </tr>
+                            <tr>
+                                <td class="rs-table-text">ServiceNet <span class="rs-quiet">(Rackspace DFW)</span></td>
+                                <td class="rs-table-text">10.111.22.112</td>
+                                <td class="rs-table-text"><span class="rs-quiet">None</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <div class="modal-footer">
@@ -417,7 +436,6 @@
             <big><b>What you have currently</b> <a href="#" role="button" data-trigger="hover" data-placement="right" data-toggle="popover" title="" data-content="This is the current set up you have within Rackspace Cloud Server. "><i class="fa fa-info-circle rs-quiet"></i></a></big>
             <br>
             <br>
-            
             <table class="rs-list-table">
                 <thead>
                     <tr>
@@ -430,7 +448,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="">
+                    <tr>
                         <td class="rs-table-checkbox"><img src="images/rackspace-logo.svg" alt=""></td>
                         <td class="rs-table-text">Next Generation (Current)</td>
                         <td class="rs-table-text">3</td>
@@ -440,7 +458,6 @@
                     </tr>
                 </tbody>
             </table>
-            
             <br>
             <big><b>Choose a new configuration</b> <a href="#" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" title="" data-content="Please feel free to choose a different option that will fit your specifications. The pre-selected option is the optimal configuration we recommend based on your current setup. "><i class="fa fa-info-circle rs-quiet"></i></a></big>
             <br>
@@ -475,72 +492,72 @@
                     </div>
                 </div>
             </form>
-            
-            <table class="rs-list-table rs-select-table">
-                <thead>
-                    <tr>
-                        <th class="rs-table-checkbox"></th>
-                        <th>Instance Type</th>
-                        <th>VCPU</th>
-                        <th>Memory</th>
-                        <th>Storage</th>
-                        <th>Cost</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="selected">
-                        <td class="rs-table-checkbox">
-                            <input type="radio" checked="checked" />
-                        </td>
-                        <td class="rs-table-text">t2.small</td>
-                        <td class="rs-table-text">1</td>
-                        <td class="rs-table-text">2 GB</td>
-                        <td class="rs-table-text">EBS-Only</td>
-                        <td class="rs-table-text">$2.00</td>
-                    </tr>
-                    <tr>
-                        <td class="rs-table-checkbox">
-                            <input type="radio" />
-                        </td>
-                        <td class="rs-table-text">m4.large</td>
-                        <td class="rs-table-text">2</td>
-                        <td class="rs-table-text">8 GB</td>
-                        <td class="rs-table-text">EBS-Only</td>
-                        <td class="rs-table-text">$3.00</td>
-                    </tr>
-                    <tr>
-                        <td class="rs-table-checkbox">
-                            <input type="radio" />
-                        </td>
-                        <td class="rs-table-text">m3.large</td>
-                        <td class="rs-table-text">2</td>
-                        <td class="rs-table-text">7.5 GB</td>
-                        <td class="rs-table-text">1 x 32</td>
-                        <td class="rs-table-text">$5.00</td>
-                    </tr>
-                    <tr>
-                        <td class="rs-table-checkbox">
-                            <input type="radio" />
-                        </td>
-                        <td class="rs-table-text">c4.large</td>
-                        <td class="rs-table-text">2</td>
-                        <td class="rs-table-text">3.75 GB</td>
-                        <td class="rs-table-text">EBS-Only</td>
-                        <td class="rs-table-text">$12.00</td>
-                    </tr>
-                    <tr>
-                        <td class="rs-table-checkbox">
-                            <input type="radio" />
-                        </td>
-                        <td class="rs-table-text">c3.large</td>
-                        <td class="rs-table-text">2</td>
-                        <td class="rs-table-text">3.75 GB</td>
-                        <td class="rs-table-text">2 x 16</td>
-                        <td class="rs-table-text">$20.00</td>
-                    </tr>
-                </tbody>
-            </table>
-           
+            <div>
+                <table class="rs-list-table rs-select-table">
+                    <thead>
+                        <tr>
+                            <th class="rs-table-checkbox"></th>
+                            <th>Instance Type</th>
+                            <th>VCPU</th>
+                            <th>Memory</th>
+                            <th>Storage</th>
+                            <th>Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="selected">
+                            <td class="rs-table-checkbox">
+                                <input type="radio" checked="checked" />
+                            </td>
+                            <td class="rs-table-text">t2.small</td>
+                            <td class="rs-table-text">1</td>
+                            <td class="rs-table-text">2 GB</td>
+                            <td class="rs-table-text">EBS-Only</td>
+                            <td class="rs-table-text">$2.00</td>
+                        </tr>
+                        <tr>
+                            <td class="rs-table-checkbox">
+                                <input type="radio" />
+                            </td>
+                            <td class="rs-table-text">m4.large</td>
+                            <td class="rs-table-text">2</td>
+                            <td class="rs-table-text">8 GB</td>
+                            <td class="rs-table-text">EBS-Only</td>
+                            <td class="rs-table-text">$3.00</td>
+                        </tr>
+                        <tr>
+                            <td class="rs-table-checkbox">
+                                <input type="radio" />
+                            </td>
+                            <td class="rs-table-text">m3.large</td>
+                            <td class="rs-table-text">2</td>
+                            <td class="rs-table-text">7.5 GB</td>
+                            <td class="rs-table-text">1 x 32</td>
+                            <td class="rs-table-text">$5.00</td>
+                        </tr>
+                        <tr>
+                            <td class="rs-table-checkbox">
+                                <input type="radio" />
+                            </td>
+                            <td class="rs-table-text">c4.large</td>
+                            <td class="rs-table-text">2</td>
+                            <td class="rs-table-text">3.75 GB</td>
+                            <td class="rs-table-text">EBS-Only</td>
+                            <td class="rs-table-text">$12.00</td>
+                        </tr>
+                        <tr>
+                            <td class="rs-table-checkbox">
+                                <input type="radio" />
+                            </td>
+                            <td class="rs-table-text">c3.large</td>
+                            <td class="rs-table-text">2</td>
+                            <td class="rs-table-text">3.75 GB</td>
+                            <td class="rs-table-text">2 x 16</td>
+                            <td class="rs-table-text">$20.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
@@ -562,30 +579,134 @@
         </div>
     </div>
     <!-- cancel migration modal -->
-    <div id="cancel_modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="cancel_modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-            <h3>Would you like to save the selections you've made for another time?</h3>
+            <h3>Would you like to save progress for another time?</h3>
         </div>
         <div class="modal-body">
-            <div class="rs-row rs-center">
-                <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="racker-migr-dash.html">Save Progress</a>
-                <a class="rs-btn" ng-click="vm.continue()" href="racker-migr-dash.html">Discard </a>
+            <a class="rs-btn rs-btn-primary" id="save-progress" name="save-progress" onclick="show('name-migr')">Yes</a>
+            <a class="rs-btn" ng-click="vm.continue()" href="racker-migr-dash.html">Discard </a>
+            <br>
+            <br>
+            <div id="name-migr" style="display:none">
+                <div class="rs-control-group">
+                    <label class="rs-control-label"><b>Create a migration name</b></label>
+                    <div class="rs-controls">
+                        <input type="text" class="name-input rs-input-xlarge" placeholder="Migration_01" />
+                    </div>
+                    <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="racker-migr-dash.html">Save Progress</a>
+                </div>
             </div>
         </div>
         <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
     </div>
-    <!-- PRECHECK MODAL -->
-    <div id="precheck_modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-body">
+    <!-- SEE PRICING DETAILS MODAL -->
+    <div id="pricing-details_modal" class="modal hide animated fadeIn details" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-            <h3 class="rs-page-title"><i class="fa fa-warning fa-fw"></i> Uh oh! There are issues...</h3>
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">Select FAWS Account Level</div>
+                </div>
+                <div class="rs-detail-section-body">
+                    <div>
+                        <table class="rs-list-table rs-select-table">
+                            <thead>
+                                <tr>
+                                    <th class="rs-table-radio"></th>
+                                    <th class="rs-table-cog"></th>
+                                    <th>
+                                        <a href="javascript:void(0);" class="rs-table-sort">
+                                            <span class="rs-table-sort-text">Service</span>
+                                            <span class="rs-table-sort-indicator"></span>
+                                        </a>
+                                    </th>
+                                    <th>Description</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="rs-table-radio">
+                                        <input type="radio" name="" checked="checked">
+                                    </td>
+                                    <td>
+                                        <img src="images/navigator-icon.png">
+                                    </td>
+                                    <td class="rs-table-text"><strong>Navigator</strong></td>
+                                    <td class="rs-table-text">Tooling and Automation + Certified AWS experts when you need them.</td>
+                                    <td>$400</td>
+                                </tr>
+                                <tr>
+                                    <td class="rs-table-radio">
+                                        <input type="radio" name="">
+                                    </td>
+                                    <td>
+                                        <img src="images/aviator-icon.png">
+                                    </td>
+                                    <td class="rs-table-text"><strong>Aviator</strong></td>
+                                    <td class="rs-table-text">Our certified experts will manage your AWS 24x7.</td>
+                                    <td>$2500</td>
+                                </tr>
+                                <tr>
+                                    <td class="rs-table-radio">
+                                        <input type="radio" id="SAWS">
+                                    </td>
+                                    <td>
+                                        <img src="images/simplified-aws.jpg">
+                                    </td>
+                                    <td class="rs-table-text"><strong>Simplified AWS</strong></td>
+                                    <td class="rs-table-text">TBD</td>
+                                    <td>TBD</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                    <div>
+                        <table class="rs-list-table rs-select-table">
+                            <tbody>
+                                <tr>
+                                    <td>Estimated Costs for Selected Resources</td>
+                                    <td><span class="rs-pull-right">$20</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                    <div>
+                        <table class="rs-list-table rs-select-table">
+                            <tbody>
+                                <tr class="rs-inst-types">
+                                    <td><strong>Projected New Cost</strong></td>
+                                    <td><span class="rs-pull-right"><strong>$420</strong></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="racker-migr-dash.html">Submit</a>
+            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+    </div>
+    <!-- PRECHECK MODAL -->
+    <div class="modal modal-error hide animated fadeIn" id="precheck_modal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+            <h3><i class="fa fa-warning fa-fw"></i> Uh oh! We found some issues...</h3>
+        </div>
+        <div class="modal-body">
             <ul>
                 <li><b><em>Issue 1:</em></b> There are incompatible configurations.</li>
                 <li><b><em>Issue 2:</em></b> Dependant files are missing.</li>
-                <li><b><em>Issue 3</em>:</b> cloud-endure-demo-A_db_slave 3 is has gone totally haywire!!! I would really go back and fix this if I were you!... Thank God I'm not!</li>
+                <li><b><em>Issue 3</em>:</b> cloud-endure-demo-A_db_slave 3 is has corrupt files.</li>
             </ul>
         </div>
         <div class="modal-footer">
@@ -593,9 +714,21 @@
             <a class="rs-btn rs-btn-primary" href="racker-step3.html">Continue</a>
         </div>
     </div>
-    <!-- end modals -->
+    <!-- hide/show scheduling inputs -->
+    <script>
+    function show(target) {
+        document.getElementById(target).style.display = 'block';
+    }
+
+    function hide(target) {
+        document.getElementById(target).style.display = 'none';
+    }
+    </script>
     <script src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
+
+    <script src="js/bootstrap.js"></script>
     <script src="js/bootstrap-modal.js"></script>
     <script src="js/bootstrap-tooltip.js"></script>
     <script src="js/bootstrap-popover.js"></script>
@@ -606,7 +739,16 @@
         });
     });
     </script>
-    <!-- name edit script -->
+    <!-- dropdowns -->
+    <script type="application/javascript">
+    $(document).ready(function() {
+        $('.rs-dropdown').each(function(i, element) {
+            var menu = new canon.Menu();
+            menu.attach(element);
+        });
+    });
+    </script>
+    <!-- edit migration name -->
     <script type="text/javascript">
     $(document).ready(function() {
         $('.edit').click(function() {
@@ -637,6 +779,12 @@
                 $(this).prev().prev().show();
             }
         });
+    });
+    </script>
+    <!-- table sorter -->
+    <script type="text/javascript">
+    $(function() {
+        $('.keywords').tablesorter();
     });
     </script>
 </body>

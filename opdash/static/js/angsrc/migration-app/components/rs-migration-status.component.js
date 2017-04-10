@@ -21,7 +21,7 @@
                  * @name migrationApp.controller:rsmigrationstatusCtrl
                  * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationstatus rsmigrationstatus} component
                  */
-                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "migrationitemdataservice", "alertsservice", "$filter", "$interval", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, ds, alertsService, $filter, $interval) {
+                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "migrationitemdataservice", "alertsservice", "$filter", "$interval", "$timeout", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, ds, alertsService, $filter, $interval, $timeout) {
                     var vm = this;
                     var jobList = [];
                     var lastRefreshIntervalPromise;
@@ -46,6 +46,12 @@
                     return valid;
                 };
 
+                var resetActionFlags = function() {
+                    for(var i=0; i<vm.currentBatches.items.length; i++){
+                        vm.currentBatches.items[i].showSettings = false;
+                    }
+                };
+
                 vm.$onInit = function() {
                     $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
                     vm.count = 0;
@@ -63,6 +69,13 @@
                         current_batch: 'start',
                         completed_batch: 'start'
                     };
+
+                    $(document).on("click", function() {
+                        console.log("clicked");
+                        $timeout(function() {
+                            resetActionFlags();
+                        });
+                    });
                 };
 
                 vm.$routerOnActivate = function(next, previous) {
@@ -125,7 +138,7 @@
                 var auth = authservice.getAuth();
                 vm.userOrTenant = auth.is_racker ? "Tenant" : "User";
                 vm.tenant_id = auth.tenant_id;
-                //vm.currentUser = auth.account_name;
+                vm.batchInitiatedBy = auth.username;
                 vm.loading = true;
                 vm.timeSinceLastRefresh = 0;
                 vm.alerts = [];
@@ -194,7 +207,7 @@
                                 vm.currentBatches.items = $filter('orderBy')(currentBatches, '-start').concat(savedMigrations);
                                 vm.currentBatches.noOfPages = Math.ceil(vm.currentBatches.items.length / vm.currentBatches.pageSize);
                                 vm.currentBatches.pages = new Array(vm.currentBatches.noOfPages);
-
+                                
                                 vm.completedBatches.items = $filter('orderBy')(completedBatches, '-start');
                                 vm.completedBatches.noOfPages = Math.ceil(completedBatches.length / vm.completedBatches.pageSize);
                                 vm.completedBatches.pages = new Array(vm.completedBatches.noOfPages);
@@ -338,6 +351,13 @@
                             vm.sortBy[batch] = "-" + sortBy;
                         else
                             vm.sortBy[batch] = sortBy;
+                    };
+
+                    vm.showActionList = function(batch) {
+                        resetActionFlags();
+                        $timeout(function(){
+                            batch.showSettings = true;
+                        }, 50);
                     };
                 }]
             }); // end of comeponent rsmigrationstatus
