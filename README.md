@@ -49,3 +49,10 @@ sudo docker run --name redis -h redis -it -p 6379 --rm redis
 ```bash
 python application.py
 ```
+
+## Publishing this package
+
+Please see the README for the [faws-migration-jenkins-devpi-server](
+https://github.rackspace.com/qe-neutron-ansible-roles/faws-migration-jenkins-devpi-server)
+repo to learn about publishing this Python package to our internal _devpi_
+(PyPI-compatible) server.
