@@ -257,11 +257,11 @@
                     <hr>
                     <div class="rs-inner">
                         <div class="migr-ddi-name">
-                            UserName (#1024814)
+                            AccountName (#1024814)
                             <!-- will show only if FAWS account detected -->
-                            <i class="fa fa-arrow-right fa-fw"></i>
+                            <!-- <i class="fa fa-arrow-right fa-fw"></i>
                             <div class="rs-dropdown rs-primary-dropdown">
-                                <a class="rs-dropdown-toggle" href="javascript:void(0);"> FAWS AccountName (#1234567) <!-- <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="blah blah">New</a></span> --> <i class="rs-caret"></i></a>
+                                <a class="rs-dropdown-toggle" href="javascript:void(0);"> FAWS AccountName (#1234567)<i class="rs-caret"></i></a>
                                 <ul class="rs-dropdown-menu hidden">
                                     <li class="rs-dropdown-item">
                                         <span class="rs-dropdown-category">Choose which account to link:</span>
@@ -275,7 +275,7 @@
                                     </li>
                                     <li class="rs-dropdown-item"><a class="rs-dropdown-link" href="">Create a new FAWS account</a></li>
                                 </ul>
-                            </div>
+                            </div> -->
                             <!-- FAWS account end -->
                         </div>
                         <div class="migr-name">
@@ -455,7 +455,7 @@
                                         <h4><input type="radio" name="three" title="Schedule for later" onclick="show('scheduleform')"> Schedule for later</h4>
                                     </div> -->
                                     <div class="rs-control-group">
-                                        <a id="now" name="now" onclick="show('schedule'), hide('scheduleform')"><i class="fa fa-clock-o fa-fw"> </i> Initiate Migration Now <i class="fa fa-angle-double-right"></i></a>
+                                        <a id="now" name="now" onclick="show('schedule'), hide('scheduleform')"><i class="fa fa-clock-o fa-fw"> </i> Migrate Now <i class="fa fa-angle-double-right"></i></a>
                                         <a id="later" name="later" onclick="show('scheduleform'), hide('schedule')"><i class="fa fa-calendar fa-fw"></i> Schedule for Later <i class="fa fa-angle-double-right"></i></a>
                                     </div>
                                     <div class="animated fadeIn" id="scheduleform" style="display: none;">
@@ -562,17 +562,14 @@
             <h3>Would you like to save progress for another time?</h3>
         </div>
         <div class="modal-body">
-            <a class="rs-btn rs-btn-primary" id="save-progress" name="save-progress" onclick="show('name-migr')">Yes</a>
-            <a class="rs-btn" ng-click="vm.continue()" href="step5.html">Discard </a>
-            <br>
-            <br>
-            <div id="name-migr" style="display:none">
+            <div>
                 <div class="rs-control-group">
                     <label class="rs-control-label"><b>Create a migration name</b></label>
                     <div class="rs-controls">
                         <input type="text" class="name-input rs-input-xlarge" placeholder="Migration_01" />
                     </div>
                     <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="step5.html">Save Progress</a>
+                    <a class="rs-btn" ng-click="vm.continue()" href="step5.html">Discard </a>
                 </div>
             </div>
         </div>
@@ -581,7 +578,7 @@
         </div>
     </div>
     <!-- confrm migration modal -->
-    <!-- <div id="confirm-migration-modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="confirm-migration-modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <div class="rs-row">
                 <div class="span-5">
@@ -594,7 +591,7 @@
             </div>
         </div>
         <div class="modal-body">
-            <h3>UserName (#1024814)</h3>
+            <h3>AccountName (#1024814)</h3>
             <form class="rs-form-horizontal rs-form-medium">
                 <div class="rs-control-group success">
                      <label class="rs-control-label"><b>Yup this is me!</b></label>
@@ -614,7 +611,7 @@
             <a href="step5.html" class="rs-btn rs-btn-primary">Submit &amp; Continue </a>
             <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
         </div>
-    </div> -->
+    </div>
     <!-- end modals -->
     <script>
     function show(target) {
@@ -714,7 +711,7 @@
     });
     </script>
     <!-- accordion icon -->
-    <script type="text/javascript">
+<!--     <script type="text/javascript">
     $(document).ready(function() {
         $(".accordion-heading + .collapse:not(.in)").prev().append("<i class='fa fa-chevron-down'></i>");
         $(".accordion-heading + .collapse.in").prev().append("<i class='fa fa-chevron-up'></i>");
@@ -724,7 +721,8 @@
             $(this).parents('.plain-panel').find('.collapse.in').prev().find("i.fa-chevron-up").removeClass("fa-chevron-up").addClass("fa-chevron-down");
         });
     });
-    </script>
+    </script> -->
+    <!-- remove disabled class from continue btn -->
     <script>
     $('#accept_terms').change(function() {
         if ($(this).is(":checked")) {

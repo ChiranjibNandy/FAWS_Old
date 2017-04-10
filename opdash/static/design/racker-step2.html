@@ -144,7 +144,7 @@
                     <hr>
                     <div class="rs-inner recommend">
                         <div class="migr-ddi-name">
-                            UserName (#1024814)
+                            AccountName (#1024814)
                             <!-- will show only if FAWS account detected -->
                             <i class="fa fa-arrow-right fa-fw"></i>
                             <div class="rs-dropdown rs-primary-dropdown">
@@ -585,17 +585,14 @@
             <h3>Would you like to save progress for another time?</h3>
         </div>
         <div class="modal-body">
-            <a class="rs-btn rs-btn-primary" id="save-progress" name="save-progress" onclick="show('name-migr')">Yes</a>
-            <a class="rs-btn" ng-click="vm.continue()" href="racker-migr-dash.html">Discard </a>
-            <br>
-            <br>
-            <div id="name-migr" style="display:none">
+            <div>
                 <div class="rs-control-group">
                     <label class="rs-control-label"><b>Create a migration name</b></label>
                     <div class="rs-controls">
                         <input type="text" class="name-input rs-input-xlarge" placeholder="Migration_01" />
                     </div>
-                    <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="racker-migr-dash.html">Save Progress</a>
+                    <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="step5.html">Save Progress</a>
+                    <a class="rs-btn" ng-click="vm.continue()" href="step5.html">Discard </a>
                 </div>
             </div>
         </div>

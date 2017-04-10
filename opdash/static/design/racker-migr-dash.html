@@ -74,7 +74,7 @@
                         <span class="rs-pull-right rs-quiet"><small>(Page refreshes in <span id="time">180</span> sec...)</small>
                         </span>
                         <div class="migr-ddi-name">
-                            UserName (#1024814)
+                            AccountName (#1024814)
                             <!-- will show only if FAWS account detected -->
                             <i class="fa fa-arrow-right fa-fw"></i>
                             <div class="rs-dropdown rs-primary-dropdown">
@@ -177,7 +177,7 @@
                                     </tr>
                                     <!-- end ngRepeat: batch in vm.batches | filter : {progress:'!'+'100'} -->
                                     <tr ng-repeat="batch in vm.batches | filter : {progress: '!'+ '100'}" class="ng-scope">
-                                        <td class="rs-table-status rs-table-status-ok tip"></td>
+                                        <td class="rs-table-status rs-table-status-ok tip rs-table-status-ok-processing rs-table-status-striped"></td>
                                         <td class="rs-table-link"><a ng-link="[ 'BatchMigrationDetails']" class="ng-binding" href="racker-batch-current.html">Migration_02</a></td>
                                         <td class="rs-table-text ng-binding">User</td>
                                         <td class="rs-table-text ng-binding">1/1/2017 1:25 AM</td>
@@ -234,7 +234,7 @@
                                         </td>
                                     </tr>
                                     <tr ng-repeat="batch in vm.batches | filter : {progress: '!'+ '100'}" class="ng-scope">
-                                        <td class="rs-table-status rs-table-status-warning tip"></td>
+                                        <td class="rs-table-status tip rs-table-status-processing rs-table-status-striped"></td>
                                         <td class="rs-table-link"><a ng-link="[ 'BatchMigrationDetails']" class="ng-binding" href="racker-batch-current.html">Migration_05</a></td>
                                         <td class="rs-table-text ng-binding">Racker</td>
                                         <td class="rs-table-text ng-binding">1/1/2017 12:18 AM</td>
