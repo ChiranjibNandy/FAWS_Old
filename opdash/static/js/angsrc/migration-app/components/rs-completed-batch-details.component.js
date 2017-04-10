@@ -56,6 +56,7 @@
                             var details = response.data.filter(function (item) { return item.id == id })[0];
                             vm.itemType = type;
                             vm.itemDetails = details;
+                            $("#resource_info").modal("show");
                         });
                 };
             }

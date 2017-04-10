@@ -1,6 +1,8 @@
 <div class="rs-container migration-mgr">
-    <a ng-link="['MigrationStatus']"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
-    <br>
+    <div style="padding-top: 10px;">
+        <a ng-link="['MigrationStatus']"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
+    </div>
+
     <div class="rs-main ">
         <div class="rs-content rs-panel">
             <div class="rs-inner">
@@ -15,7 +17,7 @@
                                 <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i>
                                 <small><em class="rs-quiet">Refresh</em></small>
                             </button>
-                            <a href="" class="rs-btn" style="padding-left: 45px; padding-right: 45px;">See Log</a>
+                            <!--<a href="" class="rs-btn" style="padding-left: 45px; padding-right: 45px;">See Log</a>-->
                             <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1 ? " mins ": " min ") + "ago"}}</div>
                         </div>
                     </div>
