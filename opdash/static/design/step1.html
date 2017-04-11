@@ -416,13 +416,14 @@
                                             <th class="rs-table-checkbox">
                                                 <input type="checkbox" id="selectAll"/>
                                             </th>
-                                            <th><span class="rs-table-sort-text">Instance name</span></th>
-                                            <th><span class="rs-table-sort-text">Instance region</span></th>
-                                            <th><span class="rs-table-sort-text">Instance IP</span></th>
-                                            <th><span class="rs-table-sort-text">Associated nodes</span></th>
-                                            <th>Algorithm</th>
-                                            <th>Caching enabled?</th>
+                                            <th><span class="rs-table-sort-text">Name</span></th>
+                                            <th><span class="rs-table-sort-text">Region</span></th>
+                                            <th><span class="rs-table-sort-text">IP Address</span></th>
+                                            <th><span class="rs-table-sort-text">Protocal:Port</span></th>
+                                            <th># of Nodes</th>                                            
                                             <th>SSL</th>
+                                            <th>Reverse DNS</th>
+                                            <th>ID</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -431,13 +432,56 @@
                                             <td class="rs-table-checkbox">
                                                 <input type="checkbox"/>
                                             </td>
-                                            <td>test_load_balancer</td>
-                                            <td>DFW</td>
+                                            <td><a href="#lb_info" role="button" data-toggle="modal">test_load_balancer</a></td>
+                                            <td>Dallas (DFW)</td>
                                             <td>172.16.1.10:80</td>
-                                            <td>privateIPv4</td>
-                                            <td>LEAST_CONNECTIONS</td>
+                                            <td>HTTP:80</td>
+                                            <td>0</td>
                                             <td>Enabled</td>
-                                            <td>Json</td>
+                                            <td>0 Records</td>
+                                            <td>304929</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="rs-table-status rs-table-status-warning tip"></td>
+                                            <td class="rs-table-checkbox">
+                                                <input type="checkbox"/>
+                                            </td>
+                                            <td><a href="#lb_info" role="button" data-toggle="modal">test_load_balancer2</a></td>
+                                            <td>Dallas (DFW)</td>
+                                            <td>172.16.1.10:80</td>
+                                            <td>HTTP:80</td>
+                                            <td>4</td>
+                                            <td>Disabled</td>
+                                            <td>1 Record</td>
+                                            <td>104729</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="rs-table-status rs-table-status-ok tip"></td>
+                                            <td class="rs-table-checkbox">
+                                                <input type="checkbox"/>
+                                            </td>
+                                            <td><a href="#lb_info" role="button" data-toggle="modal">test_load_balancer3</a></td>
+                                            <td>Dallas (DFW)</td>
+                                            <td>172.16.1.10:80</td>
+                                            <td>HTTP:80</td>
+                                            <td>0</td>
+                                            <td>Enabled</td>
+                                            <td>0 Records</td>
+                                            <td>304909</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="rs-table-status rs-table-status-error tip"></td>
+                                            <td class="rs-table-checkbox">
+                                                <input type="checkbox"/>
+                                            </td>
+                                            <td><a href="#lb_info" role="button" data-toggle="modal">test_load_balancer4</a></td>
+                                            <td>Dallas (DFW)</td>
+                                            <td>172.16.1.10:80</td>
+                                            <td>HTTP:80</td>
+                                            <td>0</td>
+                                            <td>Disabled</td>
+                                            <td>0 Records</td>
+                                            <td>302929</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -506,6 +550,30 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="accordion-group">
+                                    <div class="accordion-heading">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#lb-details">
+                                            <b class="item-name"> Load Balancers <span class="rs-quiet">(4) <i class="fa fa-chevron-down"></i></span></b>
+                                        </a>
+                                    </div>
+                                    <div id="lb-details" class="accordion-body collapse">
+                                        <div class="accordion-inner">
+                                            <div class="selected-items">
+                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b> Algorithim </b>
+                                            </div>
+                                            <div class="selected-items">
+                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b> Session persistence </b>
+                                            </div>
+                                            <div class="selected-items">
+                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b> caching</b>
+                                            </div>
+                                            <div class="selected-items">
+                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b> HTTPS redirect </b>
+                                            </div>
+                                   
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -549,6 +617,25 @@
         </div>
     </div>
     <!-- Modals -->
+      <div id="lb_info" class="modal hide animated fadeIn details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+            <div class="rs-detail-header">
+                <div class="rs-detail-header-subtitle">Load Balancer name</div>
+                <div class="rs-detail-header-title">test_load_balancer4</div>
+            </div>
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">Load Balancer Details</div>
+                </div>
+                <div class="rs-detail-section-body">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+      </div>
     <div id="resource_info" class="modal hide animated fadeIn details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
