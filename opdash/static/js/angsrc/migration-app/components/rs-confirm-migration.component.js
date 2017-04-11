@@ -52,23 +52,23 @@
                     vm.cost = dataStoreService.getProjectedPricing();
                     vm.migrating = false;
                     vm.errorInMigration = false;
+
                     vm.saveLaterObj = {
                         "saveSuccess": false,
                         "saveInProgress": false,
                         "resultMsg": "",
                         "modalName": '#save_for_later'
                     };
-
+                     vm.acceptTermsAndConditions=false;
                     vm.cancelnSaveObj = {
                         "saveSuccess": false,
                         "saveInProgress": false,
                         "resultMsg": "",
                         "modalName": '#cancel_modal'
                     };
+                     vm.schedule.date = moment().format('MMMM Do YYYY ') + ' at ' + moment().format('h:mma') + ' ' + new Date().toTimeString().slice(8, 42);
                     vm.saveProgress = "";
-                };
-
-                $rootScope.$on("vm.scheduleMigration", function (event, value, selectedDate) {
+                    $rootScope.$on("vm.scheduleMigration", function (event, value, selectedDate) {
                     console.log(value);
                     vm.scheduleMigration = value;
                     vm.schedule.date = value;
@@ -77,6 +77,9 @@
                 $rootScope.$on("scheduleMigrationSelectedDate", function (event, value) {
                     vm.schedule.date = value;
                 });
+                };
+
+                
                 /**
                  * @ngdoc method
                  * @name migrate
@@ -89,18 +92,13 @@
                     vm.migrating = true;
                     $('#confirm-migration-modal').modal('hide');
                     requestObj = ds.prepareRequest();
+                    vm.acceptTermsAndConditions= true;
                     console.log(requestObj);
                     $rootScope.$emit("vm.MigrationName", dataStoreService.selectedTime.migrationName);
                     console.log(dataStoreService.selectedTime.migrationName);
                     $rootScope.$emit("vm.MigrationTime", dataStoreService.selectedTime.time);
                     console.log(dataStoreService.selectedTime.time);
-                    //log user profile
-                    // if(dataStoreService.postSavedInstances(dataStoreService.getUserProfile())){
-                    //     console.log("success");
-                    // }else{
-                    //     console.log("fail");
-                    // }   
-                    HttpWrapper.save("/api/jobs", { "operation": 'POST' }, requestObj)
+                     HttpWrapper.save("/api/jobs", { "operation": 'POST' }, requestObj)
                         .then(function (result) {
                             console.log("Migration Response: ", result);
                             $timeout(function () {
