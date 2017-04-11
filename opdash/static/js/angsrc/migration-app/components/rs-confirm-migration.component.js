@@ -66,7 +66,6 @@
                         "resultMsg": "",
                         "modalName": '#cancel_modal'
                     };
-                     vm.schedule.date = moment().format('MMMM Do YYYY ') + ' at ' + moment().format('h:mma') + ' ' + new Date().toTimeString().slice(8, 42);
                     vm.saveProgress = "";
                     $rootScope.$on("vm.scheduleMigration", function (event, value, selectedDate) {
                     console.log(value);
