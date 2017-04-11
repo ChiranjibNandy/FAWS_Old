@@ -17,22 +17,32 @@
                         </div>
                     </div>
                 </div>
-                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
+                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container" ng-show="vm.job.instances.length > 0">
                     <table class="rs-list-table rs-embedded-list-table no-truncate-td" style="table-layout: fixed; overflow: hidden;">
                         <thead>
                             <th>
-                                <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('server', 'name')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['server']==='name', 'custom-table-sort-desc current-sort-param': vm.sortBy['server']==='-name', 'custom-table-sort-desc': vm.sortBy['server'].indexOf('name') < 0}">
                                     <span class="rs-table-sort-text">Server </span>
                                     <span class="rs-table-sort-indicator"></span>
                                 </a>
                             </th>
-                            <th>Completion Time</th> 
-                            <th>Status</th>
+                            <th>
+                                <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('server', 'end')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['server']==='end', 'custom-table-sort-desc current-sort-param': vm.sortBy['server']==='-end', 'custom-table-sort-desc': vm.sortBy['server'].indexOf('end') < 0}">
+                                    <span class="rs-table-sort-text">Completion Time</span>
+                                    <span class="rs-table-sort-indicator"></span>
+                                </a>
+                            </th>
+                            <th>
+                                <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('server', 'status')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['server']==='status', 'custom-table-sort-desc current-sort-param': vm.sortBy['server']==='-status', 'custom-table-sort-desc': vm.sortBy['server'].indexOf('status') < 0}">
+                                    <span class="rs-table-sort-text">Status</span>
+                                    <span class="rs-table-sort-indicator"></span>
+                                </a>
+                            </th>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="(id, instance) in vm.job.instances">
+                            <tr ng-repeat="instance in vm.job.instances | orderBy: vm.sortBy.server">
                                 <td class="rs-table-link">
-                                    <a href="#" ng-click="vm.equipmentDetails('server', id)" role="button" data-toggle="modal">{{instance.name}}</a>
+                                    <a href="#" ng-click="vm.equipmentDetails('server', instance.id)" role="button" data-toggle="modal">{{instance.name}}</a>
                                 </td>
                                 <td class="rs-table-text">
                                     {{(vm.job.end && vm.job.end * 1000) | date : 'M/dd/yyyy hh:mm a'}}
@@ -56,23 +66,33 @@
                 </div>
                 <br>
 
-                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
+                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container" ng-show="vm.job.networks.length > 0">
                     <table class="rs-list-table rs-embedded-list-table no-truncate-td" style="table-layout: fixed; overflow: hidden;">
                         <thead>
                             <th>
-                                <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('network', 'name')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['network']==='name', 'custom-table-sort-desc current-sort-param': vm.sortBy['network']==='-name', 'custom-table-sort-desc': vm.sortBy['network'].indexOf('name') < 0}">
                                     <span class="rs-table-sort-text">Network</span>
                                     <span class="rs-table-sort-indicator"></span>
                                 </a>
                             </th>
                             <!--<th>Progress</th>-->
-                            <th>Completion Time</th> 
-                            <th>Status</th>
+                            <th>
+                                <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('network', 'end')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['network']==='end', 'custom-table-sort-desc current-sort-param': vm.sortBy['network']==='-end', 'custom-table-sort-desc': vm.sortBy['network'].indexOf('end') < 0}">
+                                    <span class="rs-table-sort-text">Completion Time</span>
+                                    <span class="rs-table-sort-indicator"></span>
+                                </a>
+                            </th>
+                            <th>
+                                <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('network', 'status')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['network']==='status', 'custom-table-sort-desc current-sort-param': vm.sortBy['network']==='-status', 'custom-table-sort-desc': vm.sortBy['network'].indexOf('status') < 0}">
+                                    <span class="rs-table-sort-text">Status</span>
+                                    <span class="rs-table-sort-indicator"></span>
+                                </a>
+                            </th>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="(id, network) in vm.job.networks">
+                            <tr ng-repeat="network in vm.job.networks | orderBy: vm.sortBy.network">
                                 <td class="rs-table-link">
-                                    <a href="#" ng-click="vm.equipmentDetails('network', id)" role="button" data-toggle="modal">{{network.name}}</a>
+                                    <a href="#" ng-click="vm.equipmentDetails('network', network.id)" role="button" data-toggle="modal">{{network.name}}</a>
                                 </td>
                                 <!--<td class="rs-table-text">
                                     <div class="rs-progress rs-progress-medium" style="width: 50%;">

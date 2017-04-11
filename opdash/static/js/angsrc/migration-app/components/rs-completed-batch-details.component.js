@@ -43,6 +43,11 @@
                     var auth = authservice.getAuth();
                     vm.tenant_id = auth.tenant_id;
                     vm.currentUser = auth.account_name;
+
+                    vm.sortBy = {
+                        server: 'name',
+                        network: 'name'
+                    };
                 };
 
                 vm.$routerOnActivate = function(next, previous) {
@@ -58,6 +63,13 @@
                             vm.itemDetails = details;
                             $("#resource_info").modal("show");
                         });
+                };
+
+                vm.setSortBy = function(resourceType, sortBy) {
+                    if(vm.sortBy[resourceType] === sortBy && vm.sortBy[resourceType][0] !== "-")
+                        vm.sortBy[resourceType] = "-" + sortBy;
+                    else
+                        vm.sortBy[resourceType] = sortBy;
                 };
             }
         ]}); // end of component rscompletedbatchdetails

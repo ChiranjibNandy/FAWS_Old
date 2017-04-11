@@ -22,21 +22,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
+                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container" ng-show="vm.job.instances.length>0">
                     <table class="rs-list-table rs-embedded-list-table no-truncate-td" style="overflow: hidden">
                         <thead>
-                            <th ng-class="{'rs-table-sort-asc': vm.sortBy['server']==='name', 'rs-table-sort-desc': vm.sortBy['server']==='-name'}">
-                                <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                            <th>
+                                <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('server', 'name')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['server']==='name', 'custom-table-sort-desc current-sort-param': vm.sortBy['server']==='-name', 'custom-table-sort-desc': vm.sortBy['server'].indexOf('name') < 0}">
                                     <span class="rs-table-sort-text">Server</span>
                                     <span class="rs-table-sort-indicator"></span>
                                 </a>
                             </th>
-                            <th>Status</th>
+                            <th>
+                                <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('server', 'status')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['server']==='status', 'custom-table-sort-desc current-sort-param': vm.sortBy['server']==='-status', 'custom-table-sort-desc': vm.sortBy['server'].indexOf('status') < 0}">
+                                    <span class="rs-table-sort-text">Status</span>
+                                    <span class="rs-table-sort-indicator"></span>
+                                </a>
+                            </th>
+                            <th>
+                                Actions
+                            </th>
                         </thead>
                         <tbody ng-show="!vm.loading && !vm.loadError">
-                            <tr ng-repeat="(id, instance) in vm.job.instances">
-                                <td class="rs-table-link" style="width: 50%;">
-                                    <a href="#" ng-click="vm.equipmentDetails('server', id)" role="button" data-toggle="modal">{{instance.name}}</a>
+                            <tr ng-repeat="instance in vm.job.instances | orderBy: vm.sortBy.server">
+                                <td class="rs-table-link" style="width: 40%;">
+                                    <a href="#" ng-click="vm.equipmentDetails('server', instance.id)" role="button" data-toggle="modal">{{instance.name}}</a>
                                 </td>
                                 <!--<td class="rs-table-text">
                                     <div class="rs-progress rs-progress-medium" style="width: 50%;">
@@ -48,7 +56,7 @@
                                     </div>
                                     <span class="rs-progress-label">{{ instance.status === 'done' ? 100 : ['started', 'in progress', 'paused'].indexOf(instance.status)>=0 ? 50 : 0 }}%</span>
                                 </td>-->
-                                <td class="rs-table-text" style="width: 50%;">
+                                <td class="rs-table-text" style="width: 40%;">
                                     <span class="rs-status-error" ng-show="vm.job.batch_status==='error'">Error</span>
                                     <span class="rs-status-ok" ng-show="vm.job.batch_status==='done'">Completed</span>
                                     <span class="rs-status-ok" ng-show="vm.job.batch_status==='started'">Started</span>
@@ -57,11 +65,14 @@
                                     <span class="rs-status-disabled" ng-show="vm.job.batch_status==='not available'">Not Available</span>
                                     <span class="rs-status-warning" ng-show="vm.job.batch_status==='paused'">Paused</span>
                                 </td>
+                                <td>
+                                    <a class="rs-btn" ng-link="['ResourceTaskList', {resource_id: network.id}]">See Tasks</a>
+                                </td>
                             </tr>
                         </tbody>
                         <tbody ng-show="vm.loading && !vm.manualRefresh">
                             <tr>
-                                <td colspan="2">
+                                <td colspan="3">
                                     <div class="rs-table-overlay rs-table-overlay-loading">
                                         <div class="rs-table-overlay-content">
                                             <div class="rs-table-overlay-message">Loading&hellip;</div>
@@ -72,28 +83,36 @@
                         </tbody>
                         <tbody ng-show="!vm.loading && vm.loadError">
                             <tr>
-                                <td colspan="2" class="collection-error-msg">Error loading data</td>
+                                <td colspan="3" class="collection-error-msg">Error loading data</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <br>
 
-                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
+                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container" ng-show="vm.job.networks.length>0">
                     <table class="rs-list-table rs-embedded-list-table no-truncate-td" style="overflow: hidden">
                         <thead>
-                            <th ng-class="{'rs-table-sort-asc': vm.sortBy['network']==='name', 'rs-table-sort-desc': vm.sortBy['network']==='-name'}">
-                                <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                            <th>
+                                <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('network', 'name')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['network']==='name', 'custom-table-sort-desc current-sort-param': vm.sortBy['network']==='-name', 'custom-table-sort-desc': vm.sortBy['network'].indexOf('name') < 0}">
                                     <span class="rs-table-sort-text">Network</span>
                                     <span class="rs-table-sort-indicator"></span>
                                 </a>
                             </th>
-                            <th colspan="2">Status</th>
+                            <th>
+                                <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('network', 'status')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['network']==='status', 'custom-table-sort-desc current-sort-param': vm.sortBy['network']==='-status', 'custom-table-sort-desc': vm.sortBy['network'].indexOf('status') < 0}">
+                                    <span class="rs-table-sort-text">Status</span>
+                                    <span class="rs-table-sort-indicator"></span>
+                                </a>
+                            </th>
+                            <th>
+                                Actions
+                            </th>
                         </thead>
                         <tbody ng-show="!vm.loading && !vm.loadError">
-                            <tr ng-repeat="(id, network) in vm.job.networks">
-                                <td class="rs-table-link" style="width: 50%;">
-                                    <a href="#" ng-click="vm.equipmentDetails('network', id)" role="button" data-toggle="modal">{{network.name}}</a>
+                            <tr ng-repeat="network in vm.job.networks | orderBy: vm.sortBy.network">
+                                <td class="rs-table-link" style="width: 40%;">
+                                    <a href="#" ng-click="vm.equipmentDetails('network', network.id)" role="button" data-toggle="modal">{{network.name}}</a>
                                 </td>
                                 <!--<td class="rs-table-text">
                                     <div class="rs-progress rs-progress-medium" style="width: 50%;">
@@ -105,7 +124,7 @@
                                     </div>
                                     <span class="rs-progress-label">{{ ['started', 'in progress', 'paused'].indexOf(network.status)>=0 ? 50 : 0 }}%</span>
                                 </td>-->
-                                <td class="rs-table-text" style="width: 50%;">
+                                <td class="rs-table-text" style="width: 40%;">
                                     <span class="rs-status-error" ng-show="vm.job.batch_status==='error'">Error</span>
                                     <span class="rs-status-ok" ng-show="vm.job.batch_status==='done'">Completed</span>
                                     <span class="rs-status-ok" ng-show="vm.job.batch_status==='started'">Started</span>
@@ -114,11 +133,14 @@
                                     <span class="rs-status-disabled" ng-show="vm.job.batch_status==='not available'">Not Available</span>
                                     <span class="rs-status-warning" ng-show="vm.job.batch_status==='paused'">Paused</span>
                                 </td>
+                                <td>
+                                    <a class="rs-btn" ng-link="['ResourceTaskList', {resource_id: network.id}]">See Tasks</a>
+                                </td>
                             </tr>
                         </tbody>
                         <tbody ng-show="vm.loading && !vm.manualRefresh">
                             <tr>
-                                <td colspan="2">
+                                <td colspan="3">
                                     <div class="rs-table-overlay rs-table-overlay-loading">
                                         <div class="rs-table-overlay-content">
                                             <div class="rs-table-overlay-message">Loading&hellip;</div>
@@ -129,7 +151,7 @@
                         </tbody>
                         <tbody ng-show="!vm.loading && vm.loadError">
                             <tr>
-                                <td colspan="2" class="collection-error-msg">Error loading data</td>
+                                <td colspan="3" class="collection-error-msg">Error loading data</td>
                             </tr>
                         </tbody>
                     </table>
@@ -149,7 +171,7 @@
                             <tbody ng-show="!vm.loadingAlerts && vm.alerts.length>0">
                                 <tr ng-repeat="alert in vm.alerts">
                                     <td><span class="rs-status" ng-class="{'rs-status-warning': alert.type==='warning', 'rs-status-error': alert.type==='error'}">{{alert.type}}</span></td>
-                                    <td><a ng-link="['BatchTaskList', {job_id: alert.job_id}]">{{alert.message}}</a></td>
+                                    <td>{{alert.message}}</td>
                                 </tr>
                             </tbody>
                             <tbody ng-show="!vm.loadingAlerts && vm.alerts.length===0">
