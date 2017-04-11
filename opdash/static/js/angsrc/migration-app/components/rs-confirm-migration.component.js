@@ -97,17 +97,17 @@
                     console.log(dataStoreService.selectedTime.migrationName);
                     $rootScope.$emit("vm.MigrationTime", dataStoreService.selectedTime.time);
                     console.log(dataStoreService.selectedTime.time);
-                     HttpWrapper.save("/api/jobs", { "operation": 'POST' }, requestObj)
-                        .then(function (result) {
-                            console.log("Migration Response: ", result);
-                            $timeout(function () {
-                            }, 5000);
-                        }, function (error) {
-                            console.log("Error: Could not trigger migration", error);
-                            vm.migrating = false;
-                            vm.errorInMigration = true;
-                            vm.scheduleMigration = true;
-                        });
+                    //  HttpWrapper.save("/api/jobs", { "operation": 'POST' }, requestObj)
+                    //     .then(function (result) {
+                    //         console.log("Migration Response: ", result);
+                    //         $timeout(function () {
+                    //         }, 5000);
+                    //     }, function (error) {
+                    //         console.log("Error: Could not trigger migration", error);
+                    //         vm.migrating = false;
+                    //         vm.errorInMigration = true;
+                    //         vm.scheduleMigration = true;
+                    //     });
                     $rootRouter.navigate(["MigrationStatus"]);
                 };
 

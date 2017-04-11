@@ -56,10 +56,10 @@
                         "8:00pm", "8:15pm", "8:30pm", "8:45pm", "9:00pm", "9:15pm",
                         "9:30pm", "9:45pm", "10:00pm", "10:15pm", "10:30pm", "10:45pm", "11:00pm", "11:15pm", "11:30pm", "11:45pm"];
                     vm.timeZoneItems = [
-                        "(GMT -08:00) (Pacific Daylight Time)   PST",
-                        "(GMT -07:00) (Mountain Daylight Time)  MST",
-                        "(GMT -06:00) (Central Daylight Time)   CST",
-                        "(GMT -05:00) (Eastern Daylight Time)   EST"];
+                        "GMT-0800 (Pacific Daylight Time)",
+                        "GMT-0700 (Mountain Daylight Time)",
+                        "GMT-0600 (Central Daylight Time)",
+                        "GMT-0500 (Eastern Daylight Time)"];
                     vm.timezone1 = vm.timeZoneItems[0];
                     // ["(GMT -12:00) Eniwetok, Kwajalein",
                     //      "(GMT -11:00) Midway Island, Samoa",
@@ -166,7 +166,9 @@
                     //setting unixTime based on radio button selection.
                     if (radioButton === "fromSave") {
                         var time = vm.getTime();
-                        vm.unixTime = moment($('#field').val() + " " + time).unix();
+                      vm.unixTime = moment(moment($('#field').val()).format("ddd MMM D YYYY") + " " + time + " " + vm.timezone1).unix()
+                        console.log(vm.unixTime);
+                        //console.log($('#field').val() + " " + time + "GMT-0500 (Central Daylight Time)");
                     }
                     else if (radioButton === "migrate now") {
                         zone = vm.getDefaultZone();
@@ -217,7 +219,7 @@
                  * Saves the chosen timezone for migration
                  */
                 vm.timezoneChange = function () {
-                    vm.selectedDate = moment($('#field').val()).format('MMMM Do YYYY') + ' at ' + vm.time + ' ' + vm.timezone1.slice(0,36);
+                    vm.selectedDate = moment($('#field').val()).format('MMMM Do YYYY') + ' at ' + vm.time + ' ' + vm.timezone1;
                     $rootScope.$emit("scheduleMigrationSelectedDate", vm.selectedDate);
                 };
                 /**
@@ -269,7 +271,7 @@
                     vm.migrateLateValue = "migrateLate";
                     vm.showTimeForm = true;
                     vm.showMigrationTime = false;
-                    vm.selectedDate = moment(vm.date).format('MMMM Do YYYY') + ' at ' + vm.time + ' ' + vm.timezone1.slice(0,36);
+                    vm.selectedDate = moment(vm.date).format('MMMM Do YYYY') + ' at ' + vm.time + ' ' + vm.timezone1;
                     $rootScope.$emit("vm.scheduleMigration", vm.migrateLate);
                     $rootScope.$emit("vm.scheduleMigration", vm.selectedDate);
                     $rootScope.$emit("vm.scheduleMigrationValue", vm.migrateLateValue);

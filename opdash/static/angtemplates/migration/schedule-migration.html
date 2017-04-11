@@ -33,7 +33,7 @@
                                             </div>
                                             <div class="rs-row">
                                                  <select name="time" ng-change="vm.onSaveTime()"  ng-options="time for time in vm.timeItems" ng-model="vm.time"  style="width: 113px;" class="ng-pristine ng-untouched ng-valid ng-not-empty span-6" ></select>  
-                                                <select name="timezone" ng-change="vm.onSaveTime()" ng-options="timezone.slice(37,42) for timezone in vm.timeZoneItems" ng-model="vm.timezone1" style="width: 113px;" class="ng-pristine ng-valid ng-not-empty ng-touched span-6"  ></select>
+                                                <select name="timezone" ng-change="vm.onSaveTime()" ng-options="timezone for timezone in vm.timeZoneItems" ng-model="vm.timezone1" style="width: 113px;" class="ng-pristine ng-valid ng-not-empty ng-touched span-6"  ></select>
                                             </div>
                                              <div class="rs-control-group">
                                                 <span style="width: 80px"></span>
