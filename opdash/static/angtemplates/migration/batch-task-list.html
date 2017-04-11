@@ -1,6 +1,8 @@
 <div class="rs-container migration-mgr">
-    <a ng-link="['MigrationStatus']"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
-    <br>
+    <div style="padding-top: 10px;">
+        <a ng-link="['MigrationStatus']"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
+    </div>
+
     <div class="rs-main">
         <div class="rs-content rs-panel">
             <div class="rs-inner">
@@ -10,7 +12,7 @@
                             {{vm.currentUser}} ( #{{vm.tenant_id}} )
                         </div>
                         <div class="migr-name">
-                            {{vm.batchName ? "Tasks" : vm.batchName + "/ Tasks"}}
+                            {{vm.batchName ? "Tasks" : vm.batchName + " /Tasks"}}
                         </div>
                     </div>
                     <div class="span-2">

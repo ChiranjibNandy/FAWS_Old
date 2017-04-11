@@ -194,6 +194,8 @@
                     // populate tenants array
                     var getTenantDetails = vm.getTenants();
 
+                    vm.sortVal = "";
+
                     //Waits till all the promises are resolved , then only loads the pricing details
                     $q.all([getTenantDetails]).then(function(results) {
                         vm.loading = false;
@@ -213,7 +215,6 @@
                     });
                  
                     $(document).on("click", function() {
-                        console.log("Document clicked");
                         $timeout(function() {
                             resetActionFlags();
                         });
@@ -465,6 +466,14 @@
                             batch.showSettings = true;
                         }, 50);
                 };
+
+                vm.setSortBy = function(sortByItem){
+                    if(vm.sortVal === sortByItem){
+                        vm.sortVal  = "-"+vm.sortVal;
+                    }
+                    else 
+                        vm.sortVal = sortByItem;
+                }
 
             }]
         });

@@ -203,6 +203,9 @@
                             vm.items = mapServerStatus(dataList, results[1].job_status_list);
                             //check if all the servers can be migrated else disable checkbox(to select all items) at the header of item selection table.
                             angular.forEach(vm.items, function (item) {
+                                if(item.selected == true){
+                                    item.selected = false;
+                                }
                                 if(item.canMigrate == false || item.status.toLowerCase() != 'active'){ 
                                     vm.disableSelectAll = true;
                                 }

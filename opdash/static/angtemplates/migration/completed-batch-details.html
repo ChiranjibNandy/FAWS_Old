@@ -1,6 +1,8 @@
 <div class="rs-container migration-mgr">
-    <a ng-link="['MigrationStatus']"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
-    <br>
+    <div style="padding-top: 10px;">
+        <a ng-link="['MigrationStatus']"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
+    </div>
+    
     <div class="rs-main ">
         <div class="rs-content rs-panel">
             <div class="rs-inner">
@@ -11,7 +13,7 @@
                     </div>
                     <div class="span-4">
                         <div class="pull-right">
-                            <a href="" class="rs-btn rs-pull-right">See Log</a>
+                            <!--<a href="" class="rs-btn rs-pull-right">See Log</a>-->
                         </div>
                     </div>
                 </div>
@@ -30,7 +32,7 @@
                         <tbody>
                             <tr ng-repeat="(id, instance) in vm.job.instances">
                                 <td class="rs-table-link">
-                                    <a href="#resource_info" ng-click="vm.equipmentDetails('server', id)" role="button" data-toggle="modal">{{instance.name}}</a>
+                                    <a href="#" ng-click="vm.equipmentDetails('server', id)" role="button" data-toggle="modal">{{instance.name}}</a>
                                 </td>
                                 <td class="rs-table-text">
                                     {{(vm.job.end && vm.job.end * 1000) | date : 'M/dd/yyyy hh:mm a'}}
@@ -70,7 +72,7 @@
                         <tbody>
                             <tr ng-repeat="(id, network) in vm.job.networks">
                                 <td class="rs-table-link">
-                                    <a href="#resource_info" ng-click="vm.equipmentDetails('network', id)" role="button" data-toggle="modal">{{network.name}}</a>
+                                    <a href="#" ng-click="vm.equipmentDetails('network', id)" role="button" data-toggle="modal">{{network.name}}</a>
                                 </td>
                                 <!--<td class="rs-table-text">
                                     <div class="rs-progress rs-progress-medium" style="width: 50%;">

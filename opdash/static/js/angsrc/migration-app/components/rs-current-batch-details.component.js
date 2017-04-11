@@ -85,7 +85,6 @@
                             var details = response.data.filter(function (item) { return item.id == id })[0];
                             vm.itemType = type;
                             vm.itemDetails = details;
-                            console.log(vm.itemType, vm.itemDetails);
                             $("#resource_info").modal("show");
                         });
                 };

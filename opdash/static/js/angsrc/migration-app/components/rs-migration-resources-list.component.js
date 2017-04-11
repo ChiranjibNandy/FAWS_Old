@@ -38,6 +38,7 @@
                     //     });
                     // If status is true, popup for migration won't be displayed in first step of Migration.
                     var status = dataStoreService.getDontShowStatus(); //check for flag status created for intorduction Modal.
+                    vm.fawsAcctStatus = status;
                     if(status == false){
                         $('#intro_modal').modal('show');
                     }
