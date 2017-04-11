@@ -499,7 +499,9 @@
                             <a href="step2.html" class="rs-btn" ng-link="[ 'Tenant']">Back</a>
                             <a href="#cancel_modal" class="rs-btn" role="button" data-toggle="modal">Cancel Migration</a>
                             <!-- button is disabled until accept_terms checkbox is checked -->
-                            <a href="step5.html" class="rs-btn rs-btn-primary disabled">Confirm &amp; Schedule</a>
+                            <!-- <a href="step5.html" class="rs-btn rs-btn-primary disabled">Confirm &amp; Schedule</a> -->
+                            <a href="#confirm-migration-modal" class="rs-btn rs-btn-primary disabled" role="button" data-toggle="modal">Confirm &amp; Schedule</a>
+                            
                         </div>
                         <div class="clear"></div>
                     </div>
@@ -578,34 +580,32 @@
         </div>
     </div>
     <!-- confrm migration modal -->
-    <div id="confirm-migration-modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="confirm-migration-modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
-            <div class="rs-row">
-                <div class="span-5">
+            <h3>Confirm your Migration &amp; FAWS account. </h3>
+        </div>
+        <div class="modal-body">
+           <!-- <div class="rs-row">
+                 <div class="span-5">
                     <img src="images/FAWS-logo.jpg" alt="FAWS logo" class="FAWS-logo">
-                </div>
+                </div> 
                 <div class="span-7">
                     <br>
                     <h3>Confirm your Migration &amp; FAWS account. </h3>
-                </div>
-            </div>
-        </div>
-        <div class="modal-body">
-            <h3>AccountName (#1024814)</h3>
-            <form class="rs-form-horizontal rs-form-medium">
-                <div class="rs-control-group success">
-                     <label class="rs-control-label"><b>Yup this is me!</b></label>
-                    <div class="rs-controls">
-                        <input type="radio" name="" value="">                         
-                    </div>                   
-                </div>
-                <div class="rs-control-group success">
-                    <label class="rs-control-label"><b>Create another account</b></label>
-                    <div class="rs-controls">
-                        <input type="radio" name="" value="">                         
-                    </div>                    
-                </div>
-            </form>
+                </div><br>
+            </div>-->
+            <a data-dismiss="modal" aria-hidden="true" class="rs-btn rs-pull-right">Reschedule</a>
+            <big><b>Migration initiated for:</b><br>
+            1/17/2017 at 7:00 PM EST</big>
+            <br>
+            <br>
+            <hr>modal-warning 
+            <big>We have created a new FAWS account for you, <br> what would you like to name it?</big>
+            <br>
+            <br>
+            <input type="text" class="rs-input-xlarge" placeholder="FAWS AccountName" />
+            <br>
+            <small>Please note that we may place a $1 authorization hold to confirm your account.<em>(Our lawyers make us say this)</em> Your use of Rackspace websites is subject to the <a href="http://www.rackspace.com/information/legal/websiteterms?_ga=1.154297915.24213883.1488833556" target="_blank">Website Terms</a>.</small>
         </div>
         <div class="modal-footer">
             <a href="step5.html" class="rs-btn rs-btn-primary">Submit &amp; Continue </a>
