@@ -31,7 +31,7 @@
                         <rsselecteditemspanel showrec="true"></rsselecteditemspanel>
                     </div>
                      <div class="span-3">
-                                <div class="plain-panel">
+                                <div class="plain-panel" style = min-height:240px;> 
                                     <a ng-link="['MigrationRecommendation']" class=" rs-btn-action rs-pull-right">
                                         <i class="rs-edit" title="Modify this"></i>
                                     </a>
@@ -64,11 +64,11 @@
                 
                     <div class="rs-pull-right">
                         <div class="faws-legal-txt">
-                                <input id="accept_terms" name="accept_terms" type="checkbox" ng-model="signup.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required"> <span  class="ng-binding"> I acknowledge that I have read and accept the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a> and the <a href="http://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Terms and Conditions</a>.</span>
+                                <input id="accept_terms" name="accept_terms" type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required"> <span  class="ng-binding"> I acknowledge that I have read and accept the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a> and the <a href="http://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Terms and Conditions</a>.</span>
                             </div>
                         <a class="rs-btn " ng-link="['MigrationRecommendation']">Back</a>
                         <a class="rs-btn" role="button" ng-click="vm.showCancelDialog()">Cancel Migration</a>
-                        <a class="rs-btn rs-btn-primary " role="button"  type="submit" ng-click=" vm.showConfirmMigrateDialog(scheduleMigration)"   ng-disabled="!vm.scheduleMigration">Confirm & Schedule</a>
+                        <button class="rs-btn rs-btn-primary "  type="submit" ng-click=" vm.showConfirmMigrateDialog(scheduleMigration)"   ng-disabled="!vm.scheduleMigration || !vm.acceptTermsAndConditions">Confirm & Schedule</button>
                         <a class="rs-btn rs-btn-primary disabled" ng-show="vm.migrating">Processing...</a>
                     </div>
                     <div class="clear"></div>
@@ -80,8 +80,9 @@
             </div>
         </div>
     
-    <rsinteractivefooter></rsinteractivefooter>
+    
 </div>
+<rsinteractivefooter></rsinteractivefooter>
 
 <!-- modals -->
 <div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForCancel" aria-hidden="true">
