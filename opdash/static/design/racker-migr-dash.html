@@ -71,8 +71,8 @@
             <div class="rs-main rs-panel">
                 <div class="rs-content rs-panel">
                     <div class="rs-inner">
-                        <span class="rs-pull-right rs-quiet"><small>(Page refreshes in <span id="time">180</span> sec...)</small>
-                        </span>
+                        <!-- <span class="rs-pull-right rs-quiet"><small>(Page refreshes in <span id="time">180</span> sec...)</small>
+                        </span> -->
                         <div class="migr-ddi-name">
                             AccountName (#1024814)
                             <!-- will show only if FAWS account detected -->
@@ -432,7 +432,17 @@
     <script src="js/bootstrap.js"></script>
     <script src="js/bootstrap-tooltip.js"></script>
     <script src="js/bootstrap-popover.js"></script>
+
+    <!-- this make your page flatulate - remove for demo! -->
+    <script src="js/fscroll.js"></script>
     <script>
+    $(document).ready(function() {
+        fscroll();
+    });
+    </script>
+
+
+<!--     <script>
     $(window).ready(function() {
         var time = 180
         setInterval(function() {
@@ -443,7 +453,7 @@
             }
         }, 1000);
     });
-    </script>
+    </script> -->
     <script>
     $(document).ready(function() {
         $('[data-toggle="popover"]').popover({
