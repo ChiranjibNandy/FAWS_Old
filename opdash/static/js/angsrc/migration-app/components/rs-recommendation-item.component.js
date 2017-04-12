@@ -51,6 +51,7 @@
                     vm.recSelectedItems = dataStoreService.getRecommendedItems() || [];
                     vm.propertyName = "name";
                     vm.reverse = false;
+                    vm.disable = true;
                     if(vm.type === "server"){
                         var url = '/api/ec2/regions'; 
                         HttpWrapper.send(url,{"operation":'GET'}).then(function(result){
@@ -109,6 +110,11 @@
                         vm.showModify = false;
                     $('#rs-main-panel').css('height','310px');
                 };
+
+
+                vm.disableConfirm = function(){
+                    vm.disable = false;
+                }
 
                 /**
                   * @ngdoc method
@@ -192,6 +198,7 @@
                  * This function helps to populate the pricing details when the modal is clicked first time.
                  */
                 vm.showModifyModal = function(item,id){
+                    vm.disable = true;
                     item.isMenuOpen = !item.isMenuOpen;
                     $(id).modal('show');
                     vm.getPricingDetails(item);
