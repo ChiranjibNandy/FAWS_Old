@@ -34,31 +34,33 @@
                         <thead>
                             <tr>
                                 <th>
-                                    <a href="#list-table" class="rs-table-sort" ng-click="vm.setSortBy('accountName')" ng-class="{'rs-table-sort-asc': vm.sortVal  === 'accountName', 'rs-table-sort-desc': vm.sortVal === '-accountName'}">
+                                    <a href="#list-table" class="rs-table-sort" ng-click="vm.setSortBy('accountName')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortVal  === 'accountName', 'custom-table-sort-desc current-sort-param': vm.sortVal === '-accountName','custom-table-sort-desc': vm.sortVal.indexOf('accountName') < 0}">
                                         <span class="rs-table-sort-text">Account Name</span>
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
                                 <th>
-                                    <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                    <a href="#list-table" class="rs-table-sort" ng-click="vm.setSortBy('serviceLevel')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortVal  === 'serviceLevel', 'custom-table-sort-desc current-sort-param': vm.sortVal === '-serviceLevel','custom-table-sort-desc': vm.sortVal.indexOf('serviceLevel') < 0}">
                                         <span class="rs-table-sort-text">Service Level</span>
-                                        
+                                        <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
                                 <th>
-                                    <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                    <a href="#list-table" class="rs-table-sort" ng-click="vm.setSortBy('accountLevel')" ng-class="{'custom-table-sort-asc current-sort-param current-sort-param': vm.sortVal  === 'accountLevel', 'custom-table-sort-desc current-sort-param current-sort-param': vm.sortVal === '-accountLevel','custom-table-sort-desc': vm.sortVal.indexOf('accountLevel') < 0}">
                                         <span class="rs-table-sort-text">FAWS Acct. Level</span>
-                                        
+                                        <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
                                 <th>
-                                    <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                    <a href="#list-table" class="rs-table-sort" ng-click="vm.setSortBy('inProgressBatches')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortVal  === 'inProgressBatches', 'custom-table-sort-desc current-sort-param': vm.sortVal === '-inProgressBatches','custom-table-sort-desc': vm.sortVal.indexOf('inProgressBatches') < 0}">
                                         <span class="rs-table-sort-text">Batches in Progress</span>
+                                        <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
                                 <th>
-                                    <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
+                                    <a href="#list-table" class="rs-table-sort" ng-click="vm.setSortBy('completedBatches')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortVal  === 'completedBatches', 'custom-table-sort-desc current-sort-param': vm.sortVal === '-completedBatches','custom-table-sort-desc': vm.sortVal.indexOf('completedBatches') < 0}">
                                         <span class="rs-table-sort-text">Completed</span>
+                                        <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
                         
