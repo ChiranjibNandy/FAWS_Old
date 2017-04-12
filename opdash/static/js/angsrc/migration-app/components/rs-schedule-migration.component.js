@@ -55,12 +55,19 @@
                         "6:30pm", "6:45pm", "7:00pm", "7:15pm", "7:30pm", "7:45pm",
                         "8:00pm", "8:15pm", "8:30pm", "8:45pm", "9:00pm", "9:15pm",
                         "9:30pm", "9:45pm", "10:00pm", "10:15pm", "10:30pm", "10:45pm", "11:00pm", "11:15pm", "11:30pm", "11:45pm"];
-                    vm.timeZoneItems = [
-                        "GMT-0800 (Pacific Daylight Time)",
-                        "GMT-0700 (Mountain Daylight Time)",
-                        "GMT-0600 (Central Daylight Time)",
-                        "GMT-0500 (Eastern Daylight Time)"];
-                    vm.timezone1 = vm.timeZoneItems[0];
+                    
+     vm.timeZoneItems = [
+        {timeZoneName : "PST", timeZone : "GMT-0800 (Pacific Daylight Time)"},
+        {timeZoneName : "MST", timeZone : "GMT-0700 (Mountain Daylight Time)"},
+        {timeZoneName : "CST", timeZone : "GMT-0600 (Central Daylight Time)"},
+        {timeZoneName : "EST", timeZone : "GMT-0500 (Eastern Daylight Time)"},
+    ];
+    // vm.timeZoneItems = [
+    //                     "GMT-0800 (Pacific Daylight Time)",
+    //                     "GMT-0700 (Mountain Daylight Time)",
+    //                     "GMT-0600 (Central Daylight Time)",
+    //                     "GMT-0500 (Eastern Daylight Time)"];
+                    vm.timezone1 = vm.timeZoneItems[0].timeZone;
                     // ["(GMT -12:00) Eniwetok, Kwajalein",
                     //      "(GMT -11:00) Midway Island, Samoa",
                     //     "(GMT -10:00) Hawaii",
@@ -193,8 +200,8 @@
                     var timeZone = date.indexOf("+") === -1 ? date.substr(date.indexOf("-") + 1, 5) : date.substr(date.indexOf("+") + 1, 5);
                     var exactZone = [timeZone.slice(0, 2), ':', timeZone.slice(2)].join('');
                     return vm.timeZoneItems.filter(function (item) {
-                        if (item.includes(exactZone.trim())) {
-                            return item;
+                        if (item.timeZone.includes(exactZone.trim())) {
+                            return item.timeZone;
                         }
                     })[0];
                 }
@@ -313,6 +320,23 @@
                     }, 0);
                 }
 
+                // $scope.$watch('vm.date', function () {
+                //     $timeout(function () {
+                //         var time = vm.getTime();
+                //         if (moment().diff(moment($('#field').val() + " " + time), 'minutes') > 1) {
+                //             vm.error = true;
+                //         } else {
+                //             vm.error = false;
+                //             vm.storeSelectedTime('fromSave');
+                //             vm.timezoneChange();
+                //             vm.isDisableDate = true;
+                //             vm.isModeSave = false;
+                //         }
+                //     }, 0);
+                //  });
+                
+
+               
                 vm.onEditTime = function () {
                     vm.isModeSave = true;
                     vm.isDisableDate = false;
