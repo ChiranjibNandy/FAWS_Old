@@ -100,7 +100,7 @@
                     <hr>
                     <div class="rs-inner">
                         <div class="migr-ddi-name">
-                            UserName (#1024814)
+                            AccountName (#1024814)
                             <!-- will show only if FAWS account detected -->
                             <i class="fa fa-arrow-right fa-fw"></i>
                             <div class="rs-dropdown rs-primary-dropdown">
@@ -298,7 +298,7 @@
                                     <!-- Shows present time by default -->
                                     <div class="rs-control-group">
                                        
-                                        <a id="now" name="now" onclick="show('schedule'), hide('scheduleform')"><i class="fa fa-clock-o fa-fw"> </i> Initiate Migration Now <i class="fa fa-angle-double-right"></i></a>
+                                        <a id="now" name="now" onclick="show('schedule'), hide('scheduleform')"><i class="fa fa-clock-o fa-fw"> </i> Migrate Now <i class="fa fa-angle-double-right"></i></a>
                                         <a id="later" name="later" onclick="show('scheduleform'), hide('schedule')"><i class="fa fa-calendar fa-fw"></i> Schedule for Later <i class="fa fa-angle-double-right"></i></a>  
                                     </div>
                                     
@@ -382,27 +382,22 @@
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
     </div>
-<!-- cancel migration modal -->
+    <!-- cancel migration modal -->
     <div id="cancel_modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
             <h3>Would you like to save progress for another time?</h3>
         </div>
         <div class="modal-body">
-            <a class="rs-btn rs-btn-primary" id="save-progress" name="save-progress" onclick="show('name-migr')">Yes</a>
-            <a class="rs-btn" ng-click="vm.continue()" href="racker-migr-dash.html">Discard </a>
-            <br>
-            <br>
-            <div id="name-migr" style="display:none">
+            <div>
                 <div class="rs-control-group">
                     <label class="rs-control-label"><b>Create a migration name</b></label>
                     <div class="rs-controls">
                         <input type="text" class="name-input rs-input-xlarge" placeholder="Migration_01" />
-
                     </div>
-                    <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="racker-migr-dash.html">Save Progress</a>
+                    <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="step5.html">Save Progress</a>
+                    <a class="rs-btn" ng-click="vm.continue()" href="step5.html">Discard </a>
                 </div>
-                
             </div>
         </div>
         <div class="modal-footer">
@@ -443,10 +438,10 @@
     <script src="libs/knockout-3.2.0.js"></script>
     <script src="material-datepicker/js/material.datepicker.js"></script>
     <script>
-    var options = {};
-    $('#field').datepicker(options);
+        var options = {};
+        $('#field').datepicker(options);
     </script>
-    <!-- name edit script -->
+    <!-- migr name edit script -->
     <script type="text/javascript">
     $(document).ready(function() {
         $('.edit').click(function() {
@@ -479,18 +474,16 @@
         });
     });
     </script>
-    <!-- accordion icon behavior -->
-<!--     <script type="text/javascript">
-    $(document).ready(function() {
-        $(".accordion-heading + .collapse:not(.in)").prev().append("<i class='fa fa-chevron-down'></i>");
-        $(".accordion-heading + .collapse.in").prev().append("<i class='fa fa-chevron-up'></i>");
-        $('.accordion-heading a').click(function() {
-            $('.plain-panel').find('.collapse.in').prev().find("i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
-            $(this).parents('.accordion-heading').find("i.fa-chevron-down").removeClass("fa-chevron-down").addClass("fa-chevron-up");
-            $(this).parents('.plain-panel').find('.collapse.in').prev().find("i.fa-chevron-up").removeClass("fa-chevron-up").addClass("fa-chevron-down");
-        });
+    <!-- remove disabled class from continue btn -->
+    <script>
+    $('#accept_terms').change(function() {
+        if ($(this).is(":checked")) {
+            $('.rs-btn.rs-btn-primary').removeClass("disabled");
+        } else {
+            $('.rs-btn.rs-btn-primary').addClass("disabled");
+        }
     });
-    </script> -->
+    </script>
 </body>
 
 </html>

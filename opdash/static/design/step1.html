@@ -16,6 +16,8 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/migration-mgr.css" rel="stylesheet">
+
+    <script type="application/javascript" src="http://rackerlabs.github.io/canon/js/tabs.js"></script>
 </head>
 
 <body>
@@ -248,14 +250,14 @@
                     <!-- End Stepper -->
                     <hr>
                     <div class="rs-inner">
-                        <!--      <div class="alert alert-success animated fadeIn" >
-                            <h4>We notice you don't have a Fanatical AWS account so we created a new FAWS account for you... see below <i class="fa fa-arrow-down"></i></h4>            
-                       
-                        </div>   -->
+                        <div class="alert alert-success small-alert animated fadeIn">
+                            <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
+                            <b>We notice you don't have a Fanatical AWS account.</b> One will be created on step 3 on confirmed migration.
+                        </div>
                         <div class="migr-ddi-name">
-                            UserName (#1024814)
+                            AccountName (#1024814)
                             <!-- will show only if FAWS account detected -->
-                            <i class="fa fa-arrow-right fa-fw"></i>
+                            <!-- <i class="fa fa-arrow-right fa-fw"></i>
                             <div class="rs-dropdown rs-primary-dropdown">
                                 <a class="rs-dropdown-toggle" href="javascript:void(0);"> FAWS AccountName (#1234567) <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="blah blah">New</a></span> <i class="rs-caret"></i></a>
                                 <ul class="rs-dropdown-menu hidden">
@@ -271,7 +273,7 @@
                                     </li>
                                     <li class="rs-dropdown-item"><a class="rs-dropdown-link" href="">Create a new FAWS account</a></li>
                                 </ul>
-                            </div>
+                            </div> -->
                             <!-- FAWS account end -->
                         </div>
                         <div class="rs-row">
@@ -287,12 +289,12 @@
                         </div>
                         <ul class="rs-tabs">
                             <li class="active"><a href="#Servers">Servers <span class="rs-quiet">(8)</span></a></li>
-                            <li class="hover"><a href="#Load">Files <span class="rs-quiet">(4)</span></a></li>
-                            <li class="hover"><a href="#Load">Blocks <span class="rs-quiet">(5)</span></a></li>
-                            <li class="hover"><a href="#Load">Load Balancers <span class="rs-quiet">(2)</span></a></li>
-                            <li class="hover"><a href="#Load">CDN <span class="rs-quiet">(3)</span></a></li>
+                            <li class="hover"><a href="#Files">Files <span class="rs-quiet">(0)</span></a></li>
+                            <li class="hover"><a href="#Blocks">Blocks <span class="rs-quiet">(0)</span></a></li>
+                            <li class="hover"><a href="#LB">Load Balancers <span class="rs-quiet">(1)</span></a></li>
+                            <li class="hover"><a href="#CDN">CDN <span class="rs-quiet">(0)</span></a></li>
                             <!-- <li class="hover"><a href="#Load">DNS <span class="rs-quiet">(0)</span></a></li> -->
-                            <li class="hover"><a href="#Load">Databases <span class="rs-quiet">(4)</span></a></li>
+                            <li class="hover"><a href="#DB">Databases <span class="rs-quiet">(0)</span></a></li>
                         </ul>
                         <div class="rs-tab-content">
                             <div class="rs-tab-pane active" id="Servers">
@@ -388,8 +390,117 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="rs-tab-pane" id="Load">
-                                <p>Tab content...</p>
+                            <div class="rs-tab-pane" id="Files">
+             
+                                  <div class="rs-table-overlay">
+                                    <div class="rs-table-overlay-content">
+                                      <div class="rs-table-overlay-subtitle">You don&#39;t have any Files yet.</div>
+                                      <!-- <div class="rs-table-overlay-message">Setting up this product helps you do X, Y, and Z.</div> -->
+                                    </div>
+                                  </div>
+
+                            </div>
+                            <div class="rs-tab-pane" id="Blocks">
+                                <div class="rs-table-overlay">
+                                    <div class="rs-table-overlay-content">
+                                      <div class="rs-table-overlay-subtitle">You don&#39;t have any Blocks yet.</div>
+                                      <!-- <div class="rs-table-overlay-message">Setting up this product helps you do X, Y, and Z.</div> -->
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="rs-tab-pane" id="LB">
+                                <table class="rs-list-table keywords">
+                                    <thead>
+                                        <tr>
+                                            <th class="rs-table-status"></th>
+                                            <th class="rs-table-checkbox">
+                                                <input type="checkbox" id="selectAll"/>
+                                            </th>
+                                            <th><span class="rs-table-sort-text">Name</span></th>
+                                            <th><span class="rs-table-sort-text">Region</span></th>
+                                            <th><span class="rs-table-sort-text">IP Address</span></th>
+                                            <th><span class="rs-table-sort-text">Protocal:Port</span></th>
+                                            <th># of Nodes</th>                                            
+                                            <th>SSL</th>
+                                            <th>Reverse DNS</th>
+                                            <th>ID</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="rs-table-status rs-table-status-ok tip"></td>
+                                            <td class="rs-table-checkbox">
+                                                <input type="checkbox"/>
+                                            </td>
+                                            <td><a href="#lb_info" role="button" data-toggle="modal">test_load_balancer</a></td>
+                                            <td>Dallas (DFW)</td>
+                                            <td>172.16.1.10:80</td>
+                                            <td>HTTP:80</td>
+                                            <td>0</td>
+                                            <td>Enabled</td>
+                                            <td>0 Records</td>
+                                            <td>304929</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="rs-table-status rs-table-status-warning tip"></td>
+                                            <td class="rs-table-checkbox">
+                                                <input type="checkbox"/>
+                                            </td>
+                                            <td><a href="#lb_info" role="button" data-toggle="modal">test_load_balancer2</a></td>
+                                            <td>Dallas (DFW)</td>
+                                            <td>172.16.1.10:80</td>
+                                            <td>HTTP:80</td>
+                                            <td>4</td>
+                                            <td>Disabled</td>
+                                            <td>1 Record</td>
+                                            <td>104729</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="rs-table-status rs-table-status-ok tip"></td>
+                                            <td class="rs-table-checkbox">
+                                                <input type="checkbox"/>
+                                            </td>
+                                            <td><a href="#lb_info" role="button" data-toggle="modal">test_load_balancer3</a></td>
+                                            <td>Dallas (DFW)</td>
+                                            <td>172.16.1.10:80</td>
+                                            <td>HTTP:80</td>
+                                            <td>0</td>
+                                            <td>Enabled</td>
+                                            <td>0 Records</td>
+                                            <td>304909</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="rs-table-status rs-table-status-error tip"></td>
+                                            <td class="rs-table-checkbox">
+                                                <input type="checkbox"/>
+                                            </td>
+                                            <td><a href="#lb_info" role="button" data-toggle="modal">test_load_balancer4</a></td>
+                                            <td>Dallas (DFW)</td>
+                                            <td>172.16.1.10:80</td>
+                                            <td>HTTP:80</td>
+                                            <td>0</td>
+                                            <td>Disabled</td>
+                                            <td>0 Records</td>
+                                            <td>302929</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="rs-tab-pane" id="CDN">
+                                <div class="rs-table-overlay">
+                                    <div class="rs-table-overlay-content">
+                                      <div class="rs-table-overlay-subtitle">You don&#39;t have any CDNs yet.</div>
+                                      <!-- <div class="rs-table-overlay-message">Setting up this product helps you do X, Y, and Z.</div> -->
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="rs-tab-pane" id="DB">
+                                <div class="rs-table-overlay">
+                                    <div class="rs-table-overlay-content">
+                                      <div class="rs-table-overlay-subtitle">You don&#39;t have any Databases yet.</div>
+                                      <!-- <div class="rs-table-overlay-message">Setting up this product helps you do X, Y, and Z.</div> -->
+                                    </div>
+                                  </div>
                             </div>
                         </div>
                         <br>
@@ -397,7 +508,7 @@
                             <a class="rs-btn" href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>
                             <a class="rs-btn rs-btn-primary" href="step2.html">Continue</a>
                         </div>
-                        <div class="pagination pagination-mini">
+                        <div class="pagination pagination-mini">    
                             <ul>
                                 <li><span>Showing 6 of 10</span></li>
                                 <li><a href="#">Prev</a></li>
@@ -436,6 +547,30 @@
                                             <div class="selected-items">
                                                 <a href="#"><i class="fa fa-times-circle"></i></a> <b title="(2) Networks: PublicNet (Internet), ServiceNet (Rackspace ORD))"> cloud-endure-demo-B_wordpress_2 </b>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-group">
+                                    <div class="accordion-heading">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#lb-details">
+                                            <b class="item-name"> Load Balancers <span class="rs-quiet">(4) <i class="fa fa-chevron-down"></i></span></b>
+                                        </a>
+                                    </div>
+                                    <div id="lb-details" class="accordion-body collapse">
+                                        <div class="accordion-inner">
+                                            <div class="selected-items">
+                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b> Algorithim </b>
+                                            </div>
+                                            <div class="selected-items">
+                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b> Session persistence </b>
+                                            </div>
+                                            <div class="selected-items">
+                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b> caching</b>
+                                            </div>
+                                            <div class="selected-items">
+                                                <a href="#"><i class="fa fa-times-circle"></i></a> <b> HTTPS redirect </b>
+                                            </div>
+                                   
                                         </div>
                                     </div>
                                 </div>
@@ -482,6 +617,25 @@
         </div>
     </div>
     <!-- Modals -->
+      <div id="lb_info" class="modal hide animated fadeIn details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+            <div class="rs-detail-header">
+                <div class="rs-detail-header-subtitle">Load Balancer name</div>
+                <div class="rs-detail-header-title">test_load_balancer4</div>
+            </div>
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">Load Balancer Details</div>
+                </div>
+                <div class="rs-detail-section-body">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+      </div>
     <div id="resource_info" class="modal hide animated fadeIn details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
@@ -566,17 +720,14 @@
             <h3>Would you like to save progress for another time?</h3>
         </div>
         <div class="modal-body">
-            <a class="rs-btn rs-btn-primary" id="save-progress" name="save-progress" onclick="show('name-migr')">Yes</a>
-            <a class="rs-btn" ng-click="vm.continue()" href="step5.html">Discard </a>
-            <br>
-            <br>
-            <div id="name-migr" style="display:none">
+            <div>
                 <div class="rs-control-group">
                     <label class="rs-control-label"><b>Create a migration name</b></label>
                     <div class="rs-controls">
                         <input type="text" class="name-input rs-input-xlarge" placeholder="Migration_01" />
                     </div>
                     <a class="rs-btn rs-btn-primary" ng-click="vm.continue()" href="step5.html">Save Progress</a>
+                    <a class="rs-btn" ng-click="vm.continue()" href="step5.html">Discard </a>
                 </div>
             </div>
         </div>
@@ -757,11 +908,26 @@
         });
     });
     </script>
+
     <!-- table sorter -->
     <script type="text/javascript">
     $(function() {
         $('.keywords').tablesorter();
     });
+    </script>
+
+    <!-- canon tabs -->
+    <script>
+        $(document).ready(function() {    
+        $(".rs-tabs a").click(function(){
+                this.blur();
+                var content = $($(this).attr("href"));
+                content.addClass("active").siblings(".active").removeClass("active");
+                $(this).parent().addClass("active").siblings(".active").removeClass("active");
+                return false;
+            });
+            
+        });
     </script>
 </body>
 

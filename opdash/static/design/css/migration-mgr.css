@@ -1,5 +1,8 @@
 /* custom styles */
-
+@font-face {
+    font-family: FontAwesome;
+    src: url('../font-awesome/fonts/FontAwesome.otf');
+}
 .white-panel {
     background: #fff;
     padding: 1em;
