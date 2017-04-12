@@ -67,7 +67,9 @@
                         "modalName": '#cancel_modal'
                     };
                     vm.saveProgress = "";
-                    $rootScope.$on("vm.scheduleMigration", function (event, value, selectedDate) {
+                    
+                };
+$rootScope.$on("vm.scheduleMigration", function (event, value, selectedDate) {
                     console.log(value);
                     vm.scheduleMigration = value;
                     vm.schedule.date = value;
@@ -76,8 +78,6 @@
                 $rootScope.$on("scheduleMigrationSelectedDate", function (event, value) {
                     vm.schedule.date = value;
                 });
-                };
-
                 
                 /**
                  * @ngdoc method
