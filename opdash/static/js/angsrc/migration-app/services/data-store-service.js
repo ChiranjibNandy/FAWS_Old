@@ -8,8 +8,8 @@
      * This service is used to store data. This helps in accessing user data across pages.
      */
     angular.module("migrationApp")
-        .service("datastoreservice", ["httpwrapper","authservice", function (HttpWrapper, authservice) {
-            var self = this;
+        .service("datastoreservice", ["httpwrapper","authservice","$q", function (HttpWrapper, authservice,$q) {
+            var loaded, fawsAccounts, self = this, currentTenant = null;
              /**
               * @ngdoc property
               * @name resourceItems
@@ -527,7 +527,34 @@
                                   },function(error) {
                                       return false;
                                   });
-            }
+            };
+
+            /**
+             * @ngdoc method
+             * @name getFawsAccounts
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Gets FAWS Accounts associated with a tenant.
+            */
+            this.getFawsAccounts = function() {
+                var getSavedInstancesUrl = "/api/tenants/get_faws_accounts";
+                var tenant_id = authservice.getAuth().tenant_id;
+
+                if (!loaded || (currentTenant !== tenant_id)){
+                    return HttpWrapper.send(getSavedInstancesUrl, {"operation":'GET'})
+                                        .then(function(result){
+                                            loaded = true;
+                                            currentTenant = tenant_id;
+                                            fawsAccounts = result;
+                                            return fawsAccounts;
+                                        },function(error) {
+                                            return error;
+                                        });
+                }
+                else {
+                    return $q.when(fawsAccounts);
+                }
+            };
                 return self;
         }]); // end of service definition
 })();
