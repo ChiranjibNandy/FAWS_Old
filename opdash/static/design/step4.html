@@ -257,7 +257,7 @@
                     <hr>
                     <div class="rs-inner">
                         <div class="migr-ddi-name">
-                            AccountName (#1024814)
+                            <span data-trigger="hover" data-placement="top" data-toggle="popover" data-content="DDI#:1024814"> AccountName</span>
                             <!-- will show only if FAWS account detected -->
                             <!-- <i class="fa fa-arrow-right fa-fw"></i>
                             <div class="rs-dropdown rs-primary-dropdown">
@@ -594,13 +594,19 @@
                     <h3>Confirm your Migration &amp; FAWS account. </h3>
                 </div><br>
             </div>-->
-            <a data-dismiss="modal" aria-hidden="true" class="rs-btn rs-pull-right">Reschedule</a>
-            <big><b>Migration initiated for:</b><br>
-            1/17/2017 at 7:00 PM EST</big>
-            <br>
+            <div class="rs-row">
+                <div class="span-2">
+                    <i class="fa fa-calendar fa-4x fa-fw"></i>
+                </div>
+                <div class="span-10">
+                    <big><b>Migration initiated for:</b><br>
+                    1/17/2017 at 7:00 PM EST</big>
+                </div>
+            </div>
+
             <br>
             <hr>
-            <big>We have created a new FAWS account for you, <br> what would you like to name it?</big>
+            <big>We are creating a new FAWS account for you, <br> what would you like to name it?</big>
             <br>
             <br>
             <input type="text" class="rs-input-xlarge" placeholder="FAWS AccountName" />
