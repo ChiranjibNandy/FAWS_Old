@@ -14,15 +14,12 @@
                   <div class="rs-table-overlay-message"></div>
               </div>
           </div>
-          <table class="rs-list-table" ng-show="!vm.noData" ng-class="{'recommendServer':  vm.type=='server'}">
+          <table class="rs-list-table keywords" ng-show="!vm.noData" ng-class="{'recommendServer':  vm.type=='server'}">
               <thead>
                   <tr>
                       <th class="rs-table-status"></th>
                       <th ng-repeat="item in vm.labels">
-                        <a href="#list-table" class="rs-table-sort" ng-class=" {'rs-table-sort-asc': vm.reverse, 'rs-table-sort-desc': !vm.reverse}" ng-click="vm.sortBy(item.field)">
-                            <span class="rs-table-sort-text">{{item.text}} </span>
-                            <span class="rs-table-sort-indicator" ng-show="vm.propertyName == item.field"></span>
-                        </a>
+                          <span class="rs-table-sort-text" ng-click="vm.sortBy(item.field)">{{item.text}}</span>
                       </th>
                       <th ng-show="vm.type === 'server'"></th>
                   </tr>
@@ -120,7 +117,7 @@
                     <tbody>
                         <tr ng-repeat="server in item.pricingOptions track by $index" class="">
                             <td class="rs-table-checkbox">    
-                                <input type="radio" name="{{'selection'+item.name }}" ng-model="vm.selectedConfiguration" ng-value="$index"/>
+                                <input type="radio" name="{{'selection'+item.name }}" ng-model="vm.selectedConfiguration" ng-value="$index" ng-click="vm.disableConfirm()"/>
                             </td>
                             <td class="rs-table-text">{{server.instance_type}}</td>
                             <td class="rs-table-text">{{server.vcpu || 2}}</td>
@@ -134,7 +131,7 @@
         </div>
         <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <button class="rs-btn rs-btn-primary" ng-click="vm.saveUpdatedObject(item.id)">Save Changes</button>
+            <button class="rs-btn rs-btn-primary" ng-click="vm.saveUpdatedObject(item.id)" ng-disabled="vm.disable">Save Changes</button>
         </div>
     </div>
     

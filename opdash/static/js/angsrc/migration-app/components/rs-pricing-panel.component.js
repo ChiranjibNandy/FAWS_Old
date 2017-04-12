@@ -26,7 +26,7 @@
              * @name migrationApp.controller:rspricingCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rspricingpanel rspricingpanel} component
              */
-            controller:["datastoreservice","$rootRouter","httpwrapper","$filter","$timeout","$q","$rootScope",function(dataStoreService,$rootRouter,HttpWrapper,$filter,$timeout,$q,$rootScope){
+            controller:["datastoreservice","$rootRouter","httpwrapper","$filter","$timeout","$q","$rootScope","httpwrapper","migrationitemdataservice",function(dataStoreService,$rootRouter,HttpWrapper,$filter,$timeout,$q,$rootScope,httpwrapper,ds){
                 var vm = this;
                 vm.invoiceCoverageStartDate = '';
                 vm.invoiceCoverageEndDate = '';
@@ -94,8 +94,22 @@
                         } 
                     } 
                     else if(vm.page==="recommendation"){ 
-                        // $('#precheck_modal').modal('show');
+                        //$('#precheck_modal').modal('show');
                         //$rootRouter.navigate(["ScheduleMigration"]);
+                        var requestObj = ds.prepareRequest();
+                        console.log(requestObj);
+                        HttpWrapper.save("/api/precheck", { "operation": 'POST' }, requestObj)
+                        .then(function (result) {
+                            console.log("result")
+                            console.log(result);
+                        }, function (error) {
+                            console.log("error");
+                            console.log(error);
+                            // console.log("Error: Could not trigger migration", error);
+                            // vm.migrating = false;
+                            // vm.errorInMigration = true;
+                            // vm.scheduleMigration = true;
+                        });
                         $rootRouter.navigate(["ConfirmMigration"]);
                     }
                     else if(vm.page==="scheduleMigration"){
