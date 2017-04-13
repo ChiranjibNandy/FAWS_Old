@@ -1,64 +1,84 @@
 <!--<div class="rs-wrapper">-->
-    <div class="rs-container migration-mgr">
-        <div style="padding-top: 10px"><a href="#" ng-click="vm.cancelMigration()"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a></div>
-        <div class="rs-main ">
-            <div class="rs-content rs-panel">
-                <!-- Start Stepper -->
-                <rsnavigationpanel pagenum="0"></rsnavigationpanel>
-                <!-- End Stepper -->
-                <hr>
-                <div class="rs-inner">
-                    <div class="alert alert-success small-alert animated fadeIn" ng-show="!vm.fawsAcctStatus">
-                        <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
-                        <b>We notice you don't have a Fanatical AWS account.</b> One will be created on step 3 on confirmed migration.
+<div class="rs-container migration-mgr">
+    <div style="padding-top: 10px"><a href="#" ng-click="vm.cancelMigration()"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a></div>
+    <div class="rs-main ">
+        <div class="rs-content rs-panel">
+            <!-- Start Stepper -->
+            <rsnavigationpanel pagenum="0"></rsnavigationpanel>
+            <!-- End Stepper -->
+            <hr>
+            <div class="rs-inner">
+                <div class="alert alert-success small-alert animated fadeIn" ng-hide="vm.fawsAcctStatus">
+                    <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
+                    <b>We notice you don't have a Fanatical AWS account.</b> One will be created on step 3 on confirmed migration.
+                </div>
+
+                <div class="rs-row">
+                    <div class="migr-ddi-name">{{vm.tenant_account_name}} #{{vm.tenant_id}}
+                        <span class="migr-ddi-name" ng-hide="!vm.fawsAcctStatus">
+                        <i class="fa fa-arrow-right fa-fw"></i>
+                        <div class="rs-dropdown rs-primary-dropdown">
+                            <a class="rs-dropdown-toggle" href="javascript:void(0);"> {{vm.selectedFaws}} <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span>
+                        <i class="rs-caret"></i></a>
+                        <ul class="rs-dropdown-menu hidden">
+                            <li class="rs-dropdown-item">
+                                <span class="rs-dropdown-category">Choose which account to link:</span>
+                            </li>
+                            <li class="rs-dropdown-item">
+                                <select ng-model="vm.selectedFaws">
+                                    <option ng-repeat="account in vm.awsAccountsDetails">{{account.name}} (#{{account.awsAccountNumber}})</option>
+                                </select>
+                            </li>
+                            <!--<li class="rs-dropdown-item"><a class="rs-dropdown-link" href="">Create a new FAWS account</a></li>-->
+                        </ul>
                     </div>
-                    <div class="rs-row">
-                        <div class="span-6">
-                            <div class="migr-ddi-name">{{vm.tenant_account_name}} #{{vm.tenant_id}}</div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="rs-row">
-                        <div class="span-6">
-                            <h3>Select Resources <a href="#" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="As you select your resources, keep in mind that all dependencies associated will also be selected and displayed below in <b>'Items Selected'</b>. Any resources that do not pass a pre-check will have a <span class='rs-status-error'>red</span> indicator. Similarly any potentially problematic resources will have a <span class='rs-status-warning'>yellow</span> indicator."><i class="fa fa-info-circle fa-fw rs-quiet"></i></a></h3>
-                            <!--<h3>Select Resources you want to migrate <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h3>-->
-                        </div>
-                        <div class="span-6">
-                            <input type="text" class="rs-input-large searchbox rs-pull-right" ng-model="vm.filterSearch" placeholder="filter by keyword or tag...">
-                        </div>
-                    </div>
-                    <br>
-                    <rs-tabs alignment="horizontal">
-                        <rs-tab tabtitle="Servers" showtab="true">
-                            <rsmigrationitem type="server" filtervalue="vm.filterSearch"></rsmigrationitem>
-                        </rs-tab>
-                        <!--<rs-tab title="Networks">
-                                <rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>
-                            </rs-tab>-->
-                        <rs-tab tabtitle="Load Balancers" ng-if="vm.isRacker" showtab="true">
-                            <!--Load Balancers-->
-                            <rsmigrationitem type="LoadBalancers" filtervalue="vm.filterSearch"></rsmigrationitem>
-                        </rs-tab>
-                        <rs-tab tabtitle="Files" ng-if="vm.isRacker" class="disabled" showtab="true">
-                            <!--Files-->
-                            <rsmigrationitem type="Files" filtervalue="vm.filterSearch"></rsmigrationitem>
-                        </rs-tab>
-                        <div class="rs-pull-right" style="margin-top: -49px; margin-left:790px">
-                            <a class="rs-btn" ng-click="vm.cancelMigration()">Cancel Migration</a>
-                            <!--<a class="rs-btn" ng-click="vm.saveForLater()" ng-hide="vm.saveLaterObj.saveInProgress">Save For Later</a>
-                            <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
-                            <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>-->
-                            <a class="rs-btn rs-btn-primary " ng-click="vm.savencontinue()">Continue</a>
-                        </div>
-                    </rs-tabs>
-                    <div class="rs-pull-right" ng-show="vm.saveLaterObj.resultMsg" ng-style="vm.saveLaterObj.saveSuccess == true ? {color:'green'} : {color:'red'}">{{vm.saveLaterObj.resultMsg}}</div>
-                    <br>
-                    <rsselecteditemspanel showrec="false"></rsselecteditemspanel>
+                    </span>
                 </div>
             </div>
+            <br>
+            <div class="rs-row">
+                <div class="span-6">
+                    <h3>Select Resources
+                        <a href="#" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="As you select your resources, keep in mind that all dependencies associated will also be selected and displayed below in <b>'Items Selected'</b>. Any resources that do not pass a pre-check will have a <span class='rs-status-error'>red</span> indicator. Similarly any potentially problematic resources will have a <span class='rs-status-warning'>yellow</span> indicator."><i class="fa fa-info-circle fa-fw rs-quiet"></i></a>
+                    </h3>
+                    <!--<h3>Select Resources you want to migrate <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h3>-->
+                </div>
+                <div class="span-6">
+                    <input type="text" class="rs-input-large searchbox rs-pull-right" ng-model="vm.filterSearch" placeholder="filter by keyword or tag...">
+                </div>
+            </div>
+            <br>
+            <rs-tabs alignment="horizontal">
+                <rs-tab tabtitle="Servers" showtab="true">
+                    <rsmigrationitem type="server" filtervalue="vm.filterSearch"></rsmigrationitem>
+                </rs-tab>
+                <!--<rs-tab title="Networks">
+                                <rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>
+                            </rs-tab>-->
+                <rs-tab tabtitle="Load Balancers" ng-if="vm.isRacker" showtab="true">
+                    <!--Load Balancers-->
+                    <rsmigrationitem type="LoadBalancers" filtervalue="vm.filterSearch"></rsmigrationitem>
+                </rs-tab>
+                <rs-tab tabtitle="Files" ng-if="vm.isRacker" class="disabled" showtab="true">
+                    <!--Files-->
+                    <rsmigrationitem type="Files" filtervalue="vm.filterSearch"></rsmigrationitem>
+                </rs-tab>
+                <div class="rs-pull-right" style="margin-top: -49px; margin-left:790px">
+                    <a class="rs-btn" ng-click="vm.cancelMigration()">Cancel Migration</a>
+                    <!--<a class="rs-btn" ng-click="vm.saveForLater()" ng-hide="vm.saveLaterObj.saveInProgress">Save For Later</a>
+                            <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
+                            <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>-->
+                    <a class="rs-btn rs-btn-primary " ng-click="vm.savencontinue()">Continue</a>
+                </div>
+            </rs-tabs>
+            <div class="rs-pull-right" ng-show="vm.saveLaterObj.resultMsg" ng-style="vm.saveLaterObj.saveSuccess == true ? {color:'green'} : {color:'red'}">{{vm.saveLaterObj.resultMsg}}</div>
+            <br>
+            <rsselecteditemspanel showrec="false"></rsselecteditemspanel>
         </div>
-        <rsinteractivefooter></rsinteractivefooter>
     </div>
+</div>
+<rsinteractivefooter></rsinteractivefooter>
+</div>
 <!--</div>-->
 <div id="name_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForSelect" aria-hidden="true">
     <div class="modal-header">
@@ -81,8 +101,8 @@
                 </label>
         </div>
         <a class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.migrationName == ''}" ng-click="vm.savencontinue()">Save &amp; Continue</a>
-        <a ng-link="['MigrationStatus']" data-dismiss="modal" aria-hidden="true" class="rs-btn" role="button" data-trigger="hover" data-placement="left" data-toggle="popover"
-            data-content="Warning: This will take you out of the Migration Manager"><i class="fa fa-info-circle fa-fw rs-quiet"></i>Cancel</a>
+        <a ng-link="['MigrationStatus']" data-dismiss="modal" aria-hidden="true" class="rs-btn" role="button" data-trigger="hover"
+            data-placement="left" data-toggle="popover" data-content="Warning: This will take you out of the Migration Manager"><i class="fa fa-info-circle fa-fw rs-quiet"></i>Cancel</a>
     </div>
 </div>
 
@@ -107,7 +127,8 @@
                 </div>
             </div>
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.saveClicked == true}">Cancel</button>
-            <a class="rs-btn rs-btn-primary" ng-class="{disabled:(vm.migrationName == '' || vm.saveClicked == true)}" ng-click="vm.saveItems(vm.saveLaterObj); vm.saveClicked = true;" ng-hide="vm.saveLaterObj.saveInProgress">Save</a>
+            <a class="rs-btn rs-btn-primary" ng-class="{disabled:(vm.migrationName == '' || vm.saveClicked == true)}" ng-click="vm.saveItems(vm.saveLaterObj); vm.saveClicked = true;"
+                ng-hide="vm.saveLaterObj.saveInProgress">Save</a>
             <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
             <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>
             <br>
@@ -140,8 +161,8 @@
                 </div>
             </div>
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.saveClicked == true}">Close</button>
-            <button class="rs-btn rs-btn-primary " ng-class="{disabled:vm.saveProgress == '' || !vm.migrationName || vm.saveClicked == true}" ng-click="vm.submitCancel()"
-                ng-hide="vm.cancelnSaveObj.saveInProgress">Submit</button>
+            <button class="rs-btn rs-btn-primary " ng-class="{disabled:vm.saveProgress == '' || !vm.migrationName || vm.saveClicked == true}"
+                ng-click="vm.submitCancel()" ng-hide="vm.cancelnSaveObj.saveInProgress">Submit</button>
             <a class="rs-btn disabled" disabled="disabled" ng-show="vm.cancelnSaveObj.saveInProgress">Submitting...</a>
             <i class="rs-processing-indicator" ng-show="vm.cancelnSaveObj.saveInProgress"></i>
             <br>
@@ -276,9 +297,15 @@
         if (document.getElementById("racker-migration-mgr"))
             document.getElementById("racker-migration-mgr").style.visibility = "visible";
     });
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('[data-toggle="popover"]').popover({
             html: true
+        });
+    });
+    $(document).ready(function () {
+        $('.rs-dropdown').each(function (i, element) {
+            var menu = new canon.Menu();
+            menu.attach(element);
         });
     });
 </script>

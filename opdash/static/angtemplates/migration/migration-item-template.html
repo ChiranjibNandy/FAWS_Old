@@ -13,10 +13,10 @@
                 <th class="rs-table-checkbox" style="background-color: white">
                     <input type="checkbox" style="font-size: 10px" ng-class="{'disabled':vm.disableSelectAll == true}" ng-model="vm.isAllSelected" ng-change="vm.changeItemSelection()" />
                 </th>
-                <th ng-repeat="label in vm.labels" ng-click="vm.sort(label.field); vm.reverse = !vm.reverse" style="background-color: white">
-                    <a href="javascript:void(0)" class="rs-table-sort" ng-class=" {'rs-table-sort-asc': vm.reverse, 'rs-table-sort-desc': !vm.reverse}">
+                <th ng-repeat="label in vm.labels" ng-init="label.reverse = false" ng-click="vm.sort(label.field); label.reverse = !label.reverse" style="background-color: white">
+                    <a href="javascript:void(0)" class="rs-table-sort" ng-class=" {'custom-table-sort-asc current-sort-param': (label.reverse && vm.propertyName == label.field), 'custom-table-sort-desc current-sort-param': (!label.reverse && vm.propertyName == label.field), 'custom-table-sort-desc': vm.propertyName != label.field}">
                         <span class="rs-table-sort-text">{{label.text}}</span>
-                        <span class="rs-table-sort-indicator" ng-show="vm.propertyName == label.field"></span>
+                        <span class="rs-table-sort-indicator"></span>
                     </a>
                 </th>
             </tr>
@@ -46,3 +46,8 @@
     </ul>
 </div>
 <!--<div static-include="'/static/angtemplates/migration/equipment-details.html'"></div>-->
+<script type="text/javascript">
+    $(function() {
+        $('.keywords').tablesorter();
+    });
+</script>
