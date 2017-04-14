@@ -79,34 +79,23 @@
                         <h3>Accounts <span class="rs-quiet">(5)</span></h3>
                         <br>
                         <div class="migration-status-list-container">
-                            <table class="rs-list-table no-truncate-td">
+                            <table class="rs-list-table no-truncate-td keywords">
                                 <thead>
                                     <tr>
                                         <th>
-                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                <span class="rs-table-sort-text">Account Name</span>
-                                                <span class="rs-table-sort-indicator"></span>
-                                            </a>
+                                            <span class="rs-table-sort-text">Account Name</span>
                                         </th>
                                         <th>
-                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                <span class="rs-table-sort-text">Service Level</span>
-                                            </a>
+                                            <span class="rs-table-sort-text">Service Level</span>
                                         </th>
                                         <th>
-                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                <span class="rs-table-sort-text">FAWS Acct. Level</span>
-                                            </a>
+                                            <span class="rs-table-sort-text">FAWS Acct. Level</span>
                                         </th>
                                         <th>
-                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                <span class="rs-table-sort-text">Batches in Progress</span>
-                                            </a>
+                                            <span class="rs-table-sort-text">Batches in Progress</span>
                                         </th>
                                         <th>
-                                            <a href="#list-table" class="rs-table-sort rs-table-sort-desc">
-                                                <span class="rs-table-sort-text">Completed</span>
-                                            </a>
+                                            <span class="rs-table-sort-text">Completed</span>
                                         </th>
                                         <th>Actions</th>
                                     </tr>
@@ -267,8 +256,8 @@
         <div class="modal-body">
             <div class="search">
                 <span class="fa fa-search"></span>
-                <input class="rs-input-large" name="search" placeholder="Search for DDI Account" id="find_ddi_account" autocomplete="false">
-                <a class="rs-btn rs-btn-primary" href=""><i class="fa fa-plus-square fa-fw"></i> Add</a>
+                <input class="rs-input-large"  placeholder="Type DDI Account" id="type_ddi_account" autocomplete="true">
+                <a class="rs-btn rs-btn-primary" href="#"><i class="fa fa-plus-square fa-fw"></i> Add</a>
             </div>
             <br>
             <div class="selected-items">
@@ -288,6 +277,7 @@
     <script src="js/bootstrap.js"></script>
     <script src="js/bootstrap-tooltip.js"></script>
     <script src="js/bootstrap-popover.js"></script>
+    <script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
     <script>
     $(document).ready(function() {
         $('[data-toggle="popover"]').popover({
@@ -302,6 +292,12 @@
             var menu = new canon.Menu();
             menu.attach(element);
         });
+    });
+    </script>
+        <!-- table sorter -->
+    <script type="text/javascript">
+    $(function() {
+        $('.keywords').tablesorter();
     });
     </script>
 </body>
