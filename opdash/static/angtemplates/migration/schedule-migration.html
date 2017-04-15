@@ -18,17 +18,19 @@
 <i class="fa fa-calendar fa-fw"></i> Schedule for Later <i class="fa fa-angle-double-right"></i></a>
 </div>
 
-<div class="animated fadeIn" id="schedule" ng-show="vm.showMigrationTime">
+<div class="animated fadeIn" id="schedule" ng-if="vm.showMigrationTime">
     <div class="alert alert-warning">
         <p>Migration initiated for: <br>
             <b>{{ vm.selectedDate}}</b></p>
     </div>
 </div>
 
-<div class="animated fadeIn" id="scheduleform" ng-show="vm.showTimeForm">
+<div class="animated fadeIn" id="scheduleform" ng-if="vm.showTimeForm">
     <form>
         <div class="rs-row">
-            <input id="field" placeholder="Choose Date" class="span-12" ng-model="vm.date">
+              <md-datepicker  id="field" ng-model="vm.date" md-placeholder="Choose Date" ng-change="vm.onSaveTime()" class="span-12" >
+        </md-datepicker>
+            <!--<input id="field" placeholder="Choose Date" class="span-12" ng-model="vm.date">-->
         </div>
         <div class="rs-row">
 
