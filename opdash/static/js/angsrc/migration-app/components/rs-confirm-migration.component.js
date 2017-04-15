@@ -67,6 +67,7 @@
                         "modalName": '#cancel_modal'
                     };
                     vm.saveProgress = "";
+                    vm.error = false;
                     
                 };
 $rootScope.$on("vm.scheduleMigration", function (event, value, selectedDate) {
@@ -77,6 +78,10 @@ $rootScope.$on("vm.scheduleMigration", function (event, value, selectedDate) {
                 });
                 $rootScope.$on("scheduleMigrationSelectedDate", function (event, value) {
                     vm.schedule.date = value;
+                });
+                 $rootScope.$on("vm.errorValue", function (event, value) {
+                   vm.error = value;
+                   console.log(vm.error)
                 });
                 
                 /**
@@ -205,7 +210,12 @@ $rootScope.$on("vm.scheduleMigration", function (event, value, selectedDate) {
                 };
 
                 vm.showConfirmMigrateDialog = function (scheduleMigration) {
-                    $('#confirm-migration-modal').modal('show');
+                    if(dataStoreService.fetchFawsDetails().totalAccounts === 0){
+                    $('#confirm-migration-modalFAWS').modal('show');
+                     }
+                    else {
+                   $('#confirm-migration-modal').modal('show');
+                    }
                 };
                 vm.showProjectedCostCalculation = function (projectedCalculation) {
                     $('#calculator_modal').modal('show');
