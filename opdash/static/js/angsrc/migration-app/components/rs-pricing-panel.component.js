@@ -131,7 +131,6 @@
                             // vm.errorInMigration = true;
                             // vm.scheduleMigration = true;
                         });
-                        
                     }
                     else if(vm.page==="scheduleMigration"){
                         dataStoreService.setScheduleMigration(vm.selectedTime);  
