@@ -165,6 +165,88 @@
                 return reqObj;
             }
 
+            //this function has to be removed once removed , there are lot of hardcoded values in here
+            this.prepareTemporaryRequest = function (batchName) {
+                var equipments = {
+                        instances: dataStoreService.getItems("server"),
+                        networks: dataStoreService.getDistinctNetworks()
+                    },
+                    auth = authservice.getAuth(),
+                    names = prepareNames(),
+                    instancesReqList = [],
+                    networksReqList = [],
+                    reqObj = {
+                        //batch_name: dataStoreService.getScheduleMigration().migrationName,
+                        //names: names,
+                        source: {
+                            auth: {
+                                apikey: "f42046566954470dbaa31d6378916bb1",
+                                method: "key",
+                                type: "customer",
+                                username: "RSMTDev1"
+                            },
+                            cloud: "rackspace",
+                            tenantid: "1024814"
+                        },
+                        resources: {},
+                        version: "v1"
+                    };
+                reqObj.destination = {
+                        account :"rax-9391b0f6b8264c6f8efbe2794a541548",
+                        auth : {
+                            accesskey : "AKIAIUHV3Q5R7JDRDRBQ",
+                            method : "keys",
+                            secretkey :  "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"
+                        },
+                        cloud : "aws"
+                    };
+                // prepare servers/instances request object
+                equipments.instances.map(function (instance) {
+                    instancesReqList.push({
+                        source: {
+                            id: instance.id,
+                            region: instance.region.toUpperCase(),
+                        },
+                        destination: {
+                            region: instance.selectedMapping.region, //.toUpperCase(),
+                            zone: "us-east-1a",
+                            // zone:instance.selectedMapping.zone,
+                            type: instance.selectedMapping.instance_type
+                        }
+                    });
+                });
+
+                // prepare networks request object
+                equipments.networks.map(function (network) {
+                    networksReqList.push({
+                        source: {
+                            region: network.region.toUpperCase()
+                        },
+                        destination: {
+                            region: network.destRegion, //.toUpperCase(),
+                            default_zone: "us-east-1a"
+                        },
+                        subnets: "All",
+                        instances: "All",
+                        security_groups: "All"
+                    });
+                });
+
+                if (dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < moment().unix()) {
+                    //reqObj.start = moment().unix();
+                    dataStoreService.selectedTime.time = reqObj.start;
+                } else {
+                    //reqObj.start = dataStoreService.selectedTime.time;
+                }
+
+                reqObj.resources.instances = instancesReqList; //add servers to the resources list
+                if (networksReqList[0] != null) { //add networks to the resources list iff there are any networks
+                    reqObj.resources.networks = networksReqList;
+                }
+                return reqObj;
+            }
+
+
             this.getServerMigrationStatus = function (tenant_id) {
                 var url = "/api/server_status/" + tenant_id;
                 return HttpWrapper.send(url, {

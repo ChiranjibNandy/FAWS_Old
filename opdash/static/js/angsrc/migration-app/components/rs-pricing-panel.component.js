@@ -82,6 +82,8 @@
                  */
                 vm.continue = function() {     
                     vm.selectedTime = dataStoreService.getScheduleMigration();
+                    vm.warnings = [];
+                    vm.errors = [];
                     dataStoreService.getItems(vm.selecteditem);
                     //conditions to checkeck on what page the user is and navigate to the following next page.
                     if(vm.page==="resources"){
@@ -94,14 +96,33 @@
                         } 
                     } 
                     else if(vm.page==="recommendation"){ 
-                        //$('#precheck_modal').modal('show');
-                        //$rootRouter.navigate(["ScheduleMigration"]);
-                        var requestObj = ds.prepareRequest();
-                        console.log(requestObj);
+                        var requestObj = ds.prepareTemporaryRequest();
                         HttpWrapper.save("/api/precheck", { "operation": 'POST' }, requestObj)
                         .then(function (result) {
-                            console.log("result")
-                            console.log(result);
+                            if(result.results.length != 0){
+                                var servers = dataStoreService.getItems("server");
+                                angular.forEach(servers, function (server) {
+                                    var serverObjects = result.results.instances[server.id];
+                                    angular.forEach(serverObjects, function (subObj) {
+                                        if(subObj.type=="error"){
+                                            vm.errors.push({
+                                                name:server.name,
+                                                description:server.description
+                                            })
+                                        }else if(subObj.type=="warning"){
+                                            vm.warnings.push({
+                                                name:server.name,
+                                                description:server.description
+                                            })
+                                        }
+                                    });
+                                });
+                            }
+                            if(result.results.length === 0 || (vm.errors.length === 0 && vm.warnings.length === 0)){
+                                $rootRouter.navigate(["ConfirmMigration"]);
+                            }else{
+                                $("#precheck_modal").modal('show');
+                            }
                         }, function (error) {
                             console.log("error");
                             console.log(error);
@@ -110,7 +131,7 @@
                             // vm.errorInMigration = true;
                             // vm.scheduleMigration = true;
                         });
-                        $rootRouter.navigate(["ConfirmMigration"]);
+                        
                     }
                     else if(vm.page==="scheduleMigration"){
                         dataStoreService.setScheduleMigration(vm.selectedTime);  
@@ -161,8 +182,8 @@
                  * page.
                  */
                 vm.continueToSchedule = function(){
+                    $('#precheck_modal').modal('hide');
                     $rootRouter.navigate(["ConfirmMigration"]);
-                    // $rootRouter.navigate(["ScheduleMigration"]);
                 }
 
                 /**

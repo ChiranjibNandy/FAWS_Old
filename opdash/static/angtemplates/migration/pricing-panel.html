@@ -93,21 +93,20 @@
 </div>
 <!--</div>  -->
 <!-- PRECHECK MODAL -->
-<!--<div id="precheck_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="precheck_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-        <h3 class="rs-page-title"><i class="fa fa-warning fa-fw"></i> Uh oh! There are issues...</h3>
+        <h3 class="rs-page-title"><i class="fa fa-warning fa-fw"></i> Uh oh! There are issues and errors...</h3>
         <br>
         <ul>
-            <li>Issue 1: There are incompatible configurations.</li>
-            <li>Issue 2: Dependant files are missing.</li>
-            <li>Issue 3: Everything has gone haywire!</li>
+            <li ng-repeat="error in vm.errors">{{error.description}} with {{error.name}}</li>
+            <li ng-repeat="warning in vm.warnings">{{warning.description}} with {{warning.name}}</li>
         </ul>
         <p><strong>I really would fix this if I were you!</strong></p>        
     </div>
     <div class="modal-footer">
         <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Go Back</button>
-        <a class="rs-btn rs-btn-primary" ng-click="vm.continueToSchedule()" >Continue</a>
+        <a ng-show="vm.errors.length === 0" class="rs-btn rs-btn-primary" ng-click="vm.continueToSchedule()" >Continue</a>
     </div>
-</div>-->
+</div>
 <!--modals End -->
