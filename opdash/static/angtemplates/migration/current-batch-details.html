@@ -66,7 +66,7 @@
                                     <span class="rs-status-warning" ng-show="vm.job.batch_status==='paused'">Paused</span>
                                 </td>
                                 <td>
-                                    <a class="rs-btn" ng-link="['ResourceTaskList', {resource_id: network.id}]">See Tasks</a>
+                                    <a class="rs-btn" ng-link="['ResourceTaskList', {job_id: vm.job.job_id, resource_type: 'instance', resource_id: instance.id}]">See Tasks</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -134,7 +134,7 @@
                                     <span class="rs-status-warning" ng-show="vm.job.batch_status==='paused'">Paused</span>
                                 </td>
                                 <td>
-                                    <a class="rs-btn" ng-link="['ResourceTaskList', {resource_id: network.id}]">See Tasks</a>
+                                    <a class="rs-btn" ng-link="['ResourceTaskList', {job_id: vm.job.job_id, resource_type: 'network', resource_id: network.id}]">See Tasks</a>
                                 </td>
                             </tr>
                         </tbody>

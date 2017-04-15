@@ -22,9 +22,10 @@
                  * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationstatus rsmigrationstatus} component
                  */
                 controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "migrationitemdataservice", "alertsservice", "$filter", "$interval", "$timeout", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, ds, alertsService, $filter, $interval, $timeout) {
-                    var vm = this;
-                    var jobList = [];
-                    var lastRefreshIntervalPromise;
+                    var vm = this, 
+                        jobList = [],
+                        lastRefreshIntervalPromise,
+                        totalCurrentBatches = null;
 
                 var isValidBatch = function (batch) {
                     var valid = true;
@@ -78,15 +79,23 @@
                 };
 
                 vm.$routerOnActivate = function(next, previous) {
-                    if(previous && previous.urlPath.indexOf("confirm") > -1){
+                    if(previous && previous.urlPath.indexOf("confirm") > -1 && dataStoreService.selectedTime.migrationName){
                         vm.refreshFlag=true;
                         vm.afterNewMigration = true;
                         vm.resourceCount = dataStoreService.getMigrationResourceCount();
+
+                        console.log(dataStoreService.selectedTime);
+                        vm.initiatedMigration = {
+                            name: dataStoreService.selectedTime.migrationName,
+                            timestamp: dataStoreService.selectedTime.time
+                        };
+                        vm.showInitiatedMigration = true;
                     } else{
                         vm.afterNewMigration = false;
                     }
                     vm.getBatches(true);
                     vm.getAllAlerts();
+                    vm.getAllTickets();
                 };
 
                 /**
@@ -211,6 +220,13 @@
                                 vm.completedBatches.noOfPages = Math.ceil(completedBatches.length / vm.completedBatches.pageSize);
                                 vm.completedBatches.pages = new Array(vm.completedBatches.noOfPages);
 
+                                // adjustment to show and queued migrations
+                                if(totalCurrentBatches===null){
+                                    totalCurrentBatches = vm.currentBatches.items.length;
+                                } else if (totalCurrentBatches!==null && totalCurrentBatches < vm.currentBatches.items.length){
+                                    vm.showInitiatedMigration = false;
+                                }
+
                                 // temporary fix to show completed batch date time
                                 angular.forEach(vm.completedBatches.items, function (item) {
                                     dataStoreService.endTime = dataStoreService.endTime ? dataStoreService.endTime : moment().unix();
@@ -237,6 +253,15 @@
                                     .then(function(result) {
                                         vm.alerts = result;
                                         vm.loadingAlerts = false;
+                                    });
+                };
+
+                vm.getAllTickets = function(refresh) {
+                    vm.loadingTickets = true;
+                    alertsService.getAllTickets(refresh)
+                                    .then(function(result) {
+                                        vm.tickets = result;
+                                        vm.loadingTickets = false;
                                     });
                 };
 

@@ -1,5 +1,8 @@
 /* custom styles */
-
+@font-face {
+    font-family: FontAwesome;
+    src: url('../font-awesome/fonts/FontAwesome.otf');
+}
 .white-panel {
     background: #fff;
     padding: 1em;
@@ -98,6 +101,14 @@ hr.dash {
     font-size: 16px;
     font-weight: 500;
     margin-bottom: 10px;
+    display: inline-block;
+    max-width: 30ch;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.migr-ddi-name:hover {
+    max-width: none;
 }
 
 .migr-ddi-name .rs-dropdown-toggle {
