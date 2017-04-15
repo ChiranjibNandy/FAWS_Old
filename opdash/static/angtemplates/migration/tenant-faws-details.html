@@ -1,0 +1,40 @@
+<div class="alert alert-success small-alert animated fadeIn" ng-hide="vm.fawsAcctStatus">
+    <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
+    <b>We notice you don't have a Fanatical AWS account.</b> One will be created on step 3 on confirmed migration.
+</div>
+
+<div class="rs-row">
+    <div class="migr-ddi-name">{{vm.tenant_account_name}} #{{vm.tenant_id}}
+        <span class="migr-ddi-name" ng-hide="!vm.fawsAcctStatus"><i class="fa fa-arrow-right fa-fw"></i>
+            <div class="rs-dropdown rs-primary-dropdown">
+                <a class="rs-dropdown-toggle" href="javascript:void(0);"> {{vm.selectedFaws}} <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span>
+        <i class="rs-caret"></i></a>
+        <ul class="rs-dropdown-menu hidden">
+            <li class="rs-dropdown-item">
+                <span class="rs-dropdown-category">Choose which account to link:</span>
+            </li>
+            <li class="rs-dropdown-item">
+                <select ng-model="vm.selectedFaws">
+                            <option ng-repeat="account in vm.awsAccountsDetails">{{account.name}} (#{{account.awsAccountNumber}})</option>
+                        </select>
+            </li>
+            <!--<li class="rs-dropdown-item"><a class="rs-dropdown-link" href="">Create a new FAWS account</a></li>-->
+        </ul>
+    </div>
+    </span>
+</div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover({
+            html: true
+        });
+    });
+    $(document).ready(function () {
+        $('.rs-dropdown').each(function (i, element) {
+            var menu = new canon.Menu();
+            menu.attach(element);
+        });
+    });
+</script>
