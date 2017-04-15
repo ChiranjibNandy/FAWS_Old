@@ -79,6 +79,18 @@
                 selectedItems:{},
                 schedulingDetails:{}
             };
+
+            /**
+              * @ngdoc property
+              * @name fawsAccounts
+              * @propertyOf migrationApp.service:datastoreservice
+              * @type {Array}
+              * @description Set of FAWS Accounts associated with a tenant.
+             */
+            self.fawsAccounts = {
+                awsAccounts:[],
+                totalAccounts: 0
+            };
             /**
              * @ngdoc method
              * @name setItems
@@ -243,6 +255,30 @@
                return self.dontShowNameModal;
             }
 
+            /**
+             * @ngdoc method
+             * @name saveFawsDetails
+             * @methodOf migrationApp.service:datastoreservice
+             * @param {Array} items The list of FAWS accounts associated with a tenant
+             * @description 
+             * Saves list of FAWS accounts for a Tenant ID.
+             */
+            this.saveFawsDetails = function(items){
+                self.fawsAccounts = items;
+            }
+
+            /**
+             * @ngdoc method
+             * @name saveFawsDetails
+             * @methodOf migrationApp.service:datastoreservice
+             * @param {Array} items The list of FAWS accounts associated with a tenant
+             * @description 
+             * Saves list of FAWS accounts for a Tenant ID.
+             */
+            this.fetchFawsDetails = function(){
+               return self.fawsAccounts;
+            }
+
             self.resetAll = function(){
                 self.resourceItems = {
                     server:[],
@@ -267,6 +303,10 @@
                 self.selectedRecommendedItems = [];
                 self.RecommendedTotalCost = null;
                 self.CurrentPricing = null;
+                self.fawsAccounts = {
+                    awsAccounts:[],
+                    totalAccounts: 0
+                };
             };
 
             /**
