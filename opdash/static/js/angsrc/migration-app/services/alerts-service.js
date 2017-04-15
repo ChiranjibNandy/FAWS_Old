@@ -16,7 +16,9 @@
                 currentJobID = null,
                 alerts = [],
                 batchName,
-                taskList = [];
+                taskList = [],
+                tickets,
+                ticketsLoaded = false;
 
             /**
              * @ngdoc method
@@ -61,30 +63,50 @@
                 }
             };
 
-            self.getJobTasks = function(job_id, refresh) {
-                var url = "/api/tasks/" + job_id;
+            self.getResourceTasks = function(params, refresh) {
+                var url = "/api/tasks/" + params.job_id + "/" + params.resource_type + "/" + params.resource_id;
 
-                if (refresh || !taskListLoaded || (currentJobID !== job_id)) {
+                if (refresh || !taskListLoaded || (currentJobID !== params.job_id)) {
                     return HttpWrapper.send(url, { "operation": 'GET' })
                                       .then(function(result) {
                                             taskListLoaded = true;
-                                            currentJobID = job_id;
-                                            var tempTaskList = [];
-                                            var resources = result.resources;
+                                            currentJobID = params.job_id;
+                                            //var tempTaskList = [];
+                                            //var resources = result.resources;
 
-                                            for(var j=0; j<resources.length; j++){
-                                                var tasks = angular.copy(resources[j].tasks);
-                                                tempTaskList = tempTaskList.concat(tasks);
-                                            }
-                                            taskList = tempTaskList;
-                                            batchName = result["batch-name"];
-                                            //console.log("Task List: ", taskList);
-                                            return { batchName: batchName, taskList: taskList };
+                                            // for(var j=0; j<resources.length; j++){
+                                            //     var tasks = angular.copy(resources[j].tasks);
+                                            //     tempTaskList = tempTaskList.concat(tasks);
+                                            // }
+                                            //taskList = tempTaskList;
+                                            //batchName = result["batch-name"];
+                                            taskList = result;
+                                            batchName = "Some name";
+                                            console.log("Task List: ", result);
+                                            return { batchName: batchName, taskList: result };
                                         }, function(errorResponse) {
                                             return errorResponse;
                                         });
                 } else {
                     return $q.when({ batchName: batchName, taskList: taskList });
+                }
+            }
+
+            self.getAllTickets = function(params, refresh) {
+                var url = "/api/tickets/get_all";
+
+                if (refresh || !ticketsLoaded) {
+                    return HttpWrapper.send(url, { "operation": 'GET' })
+                                      .then(function(result) {
+                                            ticketsLoaded = true;
+                                            console.log("Tickets: ", result);
+                                            tickets = result.tickets;
+                                            return result.tickets;
+                                        }, function(errorResponse) {
+                                            return errorResponse;
+                                        });
+                } else {
+                    return $q.when(tickets);
                 }
             }
 

@@ -61,8 +61,23 @@
                             </tr>
                         </thead>
                         <tbody ng-show="!vm.loading && !vm.currentBatches.loadError && vm.currentBatches.items.length!==0">
+                            <tr ng-show="vm.showInitiatedMigration">
+                                <td class="rs-table-status tip rs-table-status-ok"></td>
+                                <td class="rs-table-link">
+                                    {{vm.initiatedMigration.name}}
+                                </td>
+                                <td>{{vm.batchInitiatedBy}}</td>
+                                <td class="rs-table-text ng-binding">
+                                    <span ng-show="!batch.timestamp">{{(vm.initiatedMigration.timestamp && vm.initiatedMigration.timestamp * 1000) | date : 'M/dd/yyyy hh:mm a'}}</span>
+                                </td>
+                                <td class="rs-table-text">
+                                    <span class="rs-status-ok">Queued</span>                                    
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            
                             <tr ng-repeat="batch in vm.currentBatches.items | orderBy: vm.sortBy.current_batch | limitTo : vm.currentBatches.pageSize : (vm.currentBatches.currentPage-1)*vm.currentBatches.pageSize" class="ng-scope">
-                                <td class="rs-table-status tip" ng-class="{'rs-table-status-pending': (batch.batch_status==='not available' || batch.timestamp ||  batch.batch_status==='scheduled'), 'rs-table-status-ok': batch.batch_status==='in progress', 'rs-table-status-error': batch.batch_status==='error'}"></td>
+                                <td class="rs-table-status tip" ng-class="{'rs-table-status-pending': (batch.batch_status==='not available' || batch.timestamp ||  batch.batch_status==='scheduled'), 'rs-table-status-ok rs-table-status-ok-processing rs-table-status-striped': batch.batch_status==='in progress', 'rs-table-status-error': batch.batch_status==='error'}"></td>
                                 <td class="rs-table-link">
                                     <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]">{{batch.batch_name}}</a>
                                     <a ng-show="batch.timestamp" href="javascript:void(0)" ng-click="vm.continueScheduling(batch);">{{batch.batch_name}}</a>
@@ -228,7 +243,7 @@
                                             </tr>
                                         </thead>
                                         <tbody ng-show="!vm.loadingAlerts && vm.alerts.length>0">
-                                            <tr ng-repeat="alert in vm.alerts">
+                                            <tr ng-repeat="alert in vm.alerts | orderBy: 'timestamp'">
                                                 <td><span class="rs-status" ng-class="{'rs-status-warning': alert.type==='warning', 'rs-status-error': alert.type==='error'}">{{alert.type}}</span></td>
                                                 <td class="rs-table-text ng-binding">{{alert.timestamp | date : 'M/dd/yyyy'}}</td>
                                                 <!--<td><a ng-link="['BatchTaskList', {job_id: alert.job_id}]">{{alert.message}}</a></td>-->
@@ -248,8 +263,8 @@
                     <div class="span-6">
                         <div class="rs-facet-section">
                             <div class="rs-facet-section-body">
-                                <a href="" class="rs-btn rs-btn-link rs-pull-right">See All <i class="fa fa-angle-right"></i></a>
-                                <h3>Tickets <span class="rs-quiet">(3)</span></h3>
+                                <a href="https://mycloud.rackspace.com/cloud/453265/tickets" class="rs-btn rs-btn-link rs-pull-right" target="_blank" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Got to tickets in Rackspace Reach">See All <i class="fa fa-angle-double-right"></i></a>
+                                <h3>Tickets <span class="rs-quiet">({{vm.tickets.length}})</span></h3>
                                 <div class="">
                                     <table class="rs-list-table rs-embedded-list-table-wrapper">
                                         <thead>
@@ -259,21 +274,19 @@
                                                 <th>Message</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><a href="">578390-23345</a></td>
-                                                <td class="rs-table-text ng-binding">12/1/2016 1:00 PM</td>
-                                                <td>Taking a long time to migrate</td>
+                                        <tbody ng-show="!vm.loadingTickets && vm.tickets.length>0">
+                                            <tr ng-repeat="ticket in vm.tickets | orderBy: '-created'">
+                                                <td><a href="https://mycloud.rackspace.com/cloud/453265/tickets">{{ticket.ticket_id}}</a></td>
+                                                <td class="rs-table-text ng-binding">{{ticket.created | date : 'M/dd/yyyy hh:mm a'}}</td>
+                                                <td>
+                                                    {{ticket.description | limitTo: 30}}
+                                                    <span ng-show="ticket.description.length > 30">...</span>
+                                                </td>
                                             </tr>
+                                        </tbody>
+                                        <tbody ng-show="!vm.loadingTickets && vm.tickets.length===0">
                                             <tr>
-                                                <td><a href="">102998-24432</a></td>
-                                                <td class="rs-table-text ng-binding">3/5/2017 3:00 PM</td>
-                                                <td>Problem while starting this batch. Will be retried.</td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="">876309-44432</a></td>
-                                                <td class="rs-table-text ng-binding">1/19/2017 8:00 PM</td>
-                                                <td>Problem while starting this batch. Will be retried.</td>
+                                                <td colspan="3" class="empty-collection-info">You don't have any tickets</td>
                                             </tr>
                                         </tbody>
                                     </table>

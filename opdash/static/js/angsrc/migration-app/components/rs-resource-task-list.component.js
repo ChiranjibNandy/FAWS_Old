@@ -3,34 +3,40 @@
     
     /**
      * @ngdoc object
-     * @name migrationApp.object:rsbatchtasklist
+     * @name migrationApp.object:rsresourcetasklist
      * @description
-     * Component to display the details of a batch migration. This component is loaded directly on route change.  
+     * Component to display the list of tasks associated with migrating a resource. This component is loaded directly on route change.  
      *   
-     * This component uses the template: **angtemplates/migration/batch-task-list.html**. It uses the controller {@link migrationApp.controller:rsbatchtasklistCtrl rsbatchtasklistCtrl}.  
+     * This component uses the template: **angtemplates/migration/resource-task-list.html**. It uses the controller {@link migrationApp.controller:rsresourcetasklistCtrl rsresourcetasklistCtrl}.  
      */
     angular.module("migrationApp")
-        .component("rsbatchtasklist", {
+        .component("rsresourcetasklist", {
             transclude: true,
-            templateUrl: "/static/angtemplates/migration/batch-task-list.html",
+            templateUrl: "/static/angtemplates/migration/resource-task-list.html",
             controllerAs: "vm",
             /**
              * @ngdoc controller
-             * @name migrationApp.controller:rsbatchtasklistCtrl
-             * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsbatchtasklist rsbatchtasklist} component
+             * @name migrationApp.controller:rsresourcetasklistCtrl
+             * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsresourcetasklist rsresourcetasklist} component
              */
             controller: ["alertsservice", "authservice", "$interval", function(alertsService, authService, $interval){
                 var vm = this;
                 var lastRefreshIntervalPromise;
 
-                vm.getJobTasks = function(refresh) {
+                vm.getResourceTasks = function(refresh) {
                     if(refresh){
                         vm.manualRefresh = true;
                         vm.timeSinceLastRefresh = 0;
                         $interval.cancel(lastRefreshIntervalPromise);
                     }
 
-                    alertsService.getJobTasks(vm.job_id, refresh)
+                    var params = {
+                        job_id: vm.job_id,
+                        resource_type: vm.resource_type,
+                        resource_id: vm.resource_id
+                    };
+
+                    alertsService.getResourceTasks(params, refresh)
                         .then(function(response) {
                             vm.tasks = response.tasks;
                             vm.batchName = response.batchName;
@@ -63,7 +69,9 @@
 
                 vm.$routerOnActivate = function(next, previous){
                     vm.job_id = next.params.job_id;
-                    vm.getJobTasks();
+                    vm.resource_type = next.params.resource_type;
+                    vm.resource_id = next.params.resource_id;
+                    vm.getResourceTasks();
                 };
             }
             ]}); // end of component rsbatchtasklist
