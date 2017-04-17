@@ -1,0 +1,2 @@
+- file: envs/dev/aws_creds.yml
+- file: envs/dev/conf.yml

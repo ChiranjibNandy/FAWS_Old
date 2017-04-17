@@ -24,6 +24,7 @@ var/
 .installed.cfg
 *.egg
 .venv
+.ops_venv
 .DS_Store
 opdash/.DS_Store
 session/
@@ -81,3 +82,6 @@ target/
 flask_session/
 */.DS_Store
 opdash/.DS_Store
+
+# Sensitive files
+aws_creds.yml
