@@ -42,6 +42,7 @@
                 vm.$onInit = function() {                
                     vm.loading = true;
                     vm.loadError = false;
+                    vm.precheck = false;
                     dataStoreService.setRecommendedTotalCost();
                     dataStoreService.setCurrentPricing ();
                     vm.totalCost = dataStoreService.getRecommendedTotalCost();
@@ -96,6 +97,8 @@
                         } 
                     } 
                     else if(vm.page==="recommendation"){ 
+                        vm.precheck = false;
+                        $("#precheck_modal").modal('show');
                         var requestObj = ds.prepareTemporaryRequest();
                         HttpWrapper.save("/api/precheck", { "operation": 'POST' }, requestObj)
                         .then(function (result) {
@@ -119,9 +122,10 @@
                                 });
                             }
                             if(result.results.length === 0 || (vm.errors.length === 0 && vm.warnings.length === 0)){
+                                $("#precheck_modal").modal('hide');
                                 $rootRouter.navigate(["ConfirmMigration"]);
                             }else{
-                                $("#precheck_modal").modal('show');
+                                vm.precheck = true;
                             }
                         }, function (error) {
                             console.log("error");

@@ -8168,7 +8168,8 @@ function iosScrollFix(node) {
       calendarPane.classList.add('md-datepicker-pos-adjusted');
     }
 
-    calendarPane.style.left = paneLeft + 'px';
+    calendarPane.style.left = '650px';
+    calendarPane.style.right = '283px';
     calendarPane.style.top = paneTop + 'px';
     document.body.appendChild(calendarPane);
 
