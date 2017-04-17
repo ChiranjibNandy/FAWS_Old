@@ -105,7 +105,7 @@
                     var roundUp = m.minute() || m.second() || m.millisecond() ? m.add(1, 'hour').startOf('hour') : m.startOf('hour');
                     vm.time = roundUp.format('h:mma');
                     vm.initTime = new Date().toLocaleTimeString();
-                    vm.date = moment().format("YYYY-MM-DD");
+                    vm.date = new Date(moment().format("YYYY-MM-DD"));
                     vm.selectedDateHeader = new Date().toLocaleString();
                     vm.selectedDate = moment().format('MMMM Do YYYY ') + ' at ' + moment().format('h:mma') + ' ' + new Date().toTimeString().slice(8, 42);
                     dataStoreService.storeDate('time', vm.time);

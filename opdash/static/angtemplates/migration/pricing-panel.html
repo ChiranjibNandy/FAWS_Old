@@ -94,7 +94,7 @@
 <!--</div>  -->
 <!-- PRECHECK MODAL -->
 <div id="precheck_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
+    <div class="modal-header" ng-show="vm.precheck">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
         <h3 class="rs-page-title"><i class="fa fa-warning fa-fw"></i> Uh oh! There are concerns about this selection...</h3>
         <br>
@@ -102,11 +102,14 @@
             <li ng-repeat="error in vm.errors">{{error.description}} with {{error.name}}</li>
             <li ng-repeat="warning in vm.warnings">{{warning.description}} with {{warning.name}}</li>
         </ul>
-        <p><strong>Resources with errors cannot be migrated.</strong></p>        
+        <p ng-show="vm.errors.length != 0"><strong>Resources with errors cannot be migrated.</strong></p>        
+    </div>
+    <div class="modal-header" ng-show="!vm.precheck">
+        <p><strong>Please wait while we are checking these resources can be migrated or not...</strong></p>        
     </div>
     <div class="modal-footer">
-        <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Go Back</button>
-        <a ng-show="vm.errors.length === 0" class="rs-btn rs-btn-primary" ng-click="vm.continueToSchedule()" >Continue</a>
+        <button class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-show="vm.precheck">Go Back</button>
+        <a ng-show="vm.errors.length === 0 && vm.precheck" class="rs-btn rs-btn-primary" ng-click="vm.continueToSchedule()" >Continue</a>
     </div>
 </div>
 <!--modals End -->
