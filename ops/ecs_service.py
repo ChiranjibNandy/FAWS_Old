@@ -104,7 +104,7 @@ class EcsService(object):
             ]
             ecs_role = self._get_iam_role()
 
-            response = self.ecs.create_service(
+            self.ecs.create_service(
                 cluster=self.cluster,
                 serviceName=self.service_name,
                 taskDefinition=self.task,
@@ -116,7 +116,7 @@ class EcsService(object):
                     'minimumHealthyPercent': 100
                 })
         else:
-            response = self.ecs.create_service(
+            self.ecs.create_service(
                 cluster=self.cluster,
                 serviceName=self.service_name,
                 taskDefinition=self.task,
@@ -130,14 +130,14 @@ class EcsService(object):
               (self.service_name, self.task))
 
     def _update_service(self):
-        response = self.ecs.update_service(
+        self.ecs.update_service(
             cluster=self.cluster,
             service=self.service_name,
             taskDefinition=self.task,
             desiredCount=self.desired_count)
 
         print('Updated Service %s with Task Definition %s' %
-            (self.service_name, self.task))
+              (self.service_name, self.task))
 
     def __call__(self):
         service = self._find_service()
