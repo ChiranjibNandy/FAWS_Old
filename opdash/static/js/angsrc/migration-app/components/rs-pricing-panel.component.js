@@ -334,8 +334,47 @@
                     }
                 }
 
-                return vm;
-              
+                vm.openUsageCostsModal = function(){
+                    vm.costCalculationItems =[];
+                    vm.projectedCostCalculationItems = [];
+
+                    var selectedPricingMappingObj = dataStoreService.getItems('server');
+                    selectedPricingMappingObj.forEach(function(server){
+                        var selectedFlavor = server.selectedMapping.instance_type;
+                        if(server.details.hasOwnProperty('rax_bandwidth')){
+                            vm.costCalculationItems.push({
+                                "resourceName" : server.details.name,
+                                "rax_uptime_cost":server.details.rax_uptime_cost.toFixed(2),
+                                "rax_bandwidth_cost":parseFloat(server.details.rax_bandwidth.toFixed(2) * 0.12),
+                                "rax_bandwidth":server.details.rax_bandwidth.toFixed(2),
+                                "rax_uptime":server.details.rax_uptime.toFixed(2),
+                                "rax_total_cost":parseFloat(parseFloat(server.details.rax_uptime_cost.toFixed(2)) + parseFloat(server.details.rax_bandwidth_cost.toFixed(2) * 0.12)).toFixed(2)
+                            });
+                        }
+
+                        if(server.details.hasOwnProperty('aws_bandwidth_cost')){
+                            var cost = 0;
+                            for(var i =0; i< server.mappings.length; i++){
+                                if(server.mappings[i].instance_type == selectedFlavor){
+                                    cost = server.mappings[i].cost;
+                                }
+                            }
+                            vm.projectedCostCalculationItems.push({
+                                "resourceName" : server.details.name,
+                                "aws_uptime_cost":parseFloat(parseFloat(cost).toFixed(2) * parseFloat(server.details.rax_uptime.toFixed(2))).toFixed(2),
+                                "aws_bandwidth_cost":server.details.aws_bandwidth_cost.toFixed(2),
+                                "aws_bandwidth":server.details.rax_bandwidth.toFixed(2),
+                                "aws_uptime":server.details.rax_uptime.toFixed(2),
+                                "aws_total_cost":parseFloat(parseFloat(parseFloat(cost).toFixed(2) * parseFloat(server.details.rax_uptime.toFixed(2))).toFixed(2) + parseFloat(server.details.aws_bandwidth_cost)).toFixed(2),
+                                "rax_bandwidth":server.details.rax_bandwidth.toFixed(2),
+                                "rax_uptime":server.details.rax_uptime.toFixed(2),                              
+                            });
+                        }
+                    });
+                    $('#calculator_modal').modal('show');
+                }
+
+                return vm;             
             }]
         });
 })();
