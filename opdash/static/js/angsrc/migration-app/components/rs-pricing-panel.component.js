@@ -332,6 +332,7 @@
                         vm.saveItems(vm.cancelnSaveObj);
                     }
                     else{
+                        dataStoreService.resetAll();
                         $rootRouter.navigate(["MigrationStatus"]);
                         $('#cancel_modal').modal('hide');
                     }
