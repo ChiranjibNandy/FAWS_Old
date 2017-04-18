@@ -200,6 +200,7 @@ $rootScope.$on("vm.scheduleMigration", function (event, value, selectedDate) {
                         vm.saveItems(vm.cancelnSaveObj);
                     }
                     else {
+                        dataStoreService.resetAll();
                         $rootRouter.navigate(["MigrationStatus"]);
                         $('#cancel_modal').modal('hide');
                     }

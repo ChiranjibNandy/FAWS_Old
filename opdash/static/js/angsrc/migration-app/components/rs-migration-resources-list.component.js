@@ -350,6 +350,7 @@
                         };
                     }
                     else{
+                        dataStoreService.resetAll();
                         $('#save_for_later').modal('hide');
                         $('#name_modal').modal('hide');
                         $('#cancel_modal').modal('hide');
