@@ -120,6 +120,24 @@
                                         }
                                     });
                                 });
+                                var networks = result.results.account;
+                                for(var key in networks){
+                                    if (networks.hasOwnProperty(key)) {
+                                        angular.forEach(networks[key],function(networkBlock){
+                                            if(networkBlock.type=="warning"){
+                                                vm.warnings.push({
+                                                    name:networkBlock.name,
+                                                    description:networkBlock.description
+                                                })
+                                            }else if(networkBlock.type=="error"){
+                                                vm.errors.push({
+                                                    name:networkBlock.name,
+                                                    description:networkBlock.description
+                                                })
+                                            }
+                                        })
+                                    }
+                                }
                             }
                             if(result.results.length === 0 || (vm.errors.length === 0 && vm.warnings.length === 0)){
                                 $("#precheck_modal").modal('hide');
