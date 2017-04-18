@@ -93,19 +93,47 @@
 </div>
 <!--</div>  -->
 <!-- PRECHECK MODAL -->
-<div id="precheck_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="precheck_modal" class="modal hide animated fadeIn details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header" ng-show="vm.precheck">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-        <h3 class="rs-page-title"><i class="fa fa-warning fa-fw"></i> Uh oh! There are concerns about this selection...</h3>
         <br>
-        <ul>
-            <li ng-repeat="error in vm.errors">{{error.description}} with {{error.name}}</li>
-            <li ng-repeat="warning in vm.warnings">{{warning.description}} with {{warning.name}}</li>
-        </ul>
-        <p ng-show="vm.errors.length != 0"><strong>Resources with errors cannot be migrated.</strong></p>        
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <h3 class="rs-page-title">Precheck Results</h3>
     </div>
     <div class="modal-header" ng-show="!vm.precheck">
-        <p><strong>Please wait while we run some pre-chekcs to see whether these resources can be migrated or not...</strong></p>        
+        <p><strong>Please wait while we run some pre-checks to see whether these resources can be migrated or not...</strong></p>        
+        <div class="rs-table-overlay rs-table-overlay-loading">
+            <div class="rs-table-overlay-content">
+                <div class="rs-table-overlay-message">Loading&hellip;</div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body" ng-show="vm.precheck">
+        <table class="rs-list-table">
+            <thead>
+                <tr>
+                    <th style="width:136px">Resource</th>
+                    <th>Precheck - Concern</th>
+                    <th>Summary</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat = "error in vm.errors" class="">
+                    <td style="width:136px">{{error.name}}</td>
+                    <td class="rs-status-error">Error</td>
+                    <td>{{error.description}}</td>
+                </tr>
+                <tr ng-repeat = "warning in vm.warnings" class="">
+                    <td style="width:136px">{{warning.name}}</td>
+                    <td class="rs-status-warning">Warning</td>
+                    <td>{{warning.description}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <p><strong><span class="rs-status-warning">Warning</span> - Resources with warnings can still br migrated, Click continue if you would like to do so. <br>
+        <span class="rs-status-error">Errors</span> - Resources with errors cannot be migrated at this time.
+        </strong></p>        
     </div>
     <div class="modal-footer">
         <button class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-show="vm.precheck">Go Back</button>

@@ -58,6 +58,7 @@
                             vm.regions = result;
                             vm.awsRegion = 'us-east-1';
                             vm.getZones();
+                            $('#rs-main-panel').css('height','310px');
                         },function(error){
                             console.log('error :', error);
                         });
@@ -108,7 +109,6 @@
                         vm.showModify = true;                                
                     else
                         vm.showModify = false;
-                    $('#rs-main-panel').css('height','310px');
                 };
 
 

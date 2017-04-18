@@ -126,12 +126,12 @@
                                         angular.forEach(networks[key],function(networkBlock){
                                             if(networkBlock.type=="warning"){
                                                 vm.warnings.push({
-                                                    name:networkBlock.name,
+                                                    name:servers[0].details.networks[0].name,
                                                     description:networkBlock.description
                                                 })
                                             }else if(networkBlock.type=="error"){
                                                 vm.errors.push({
-                                                    name:networkBlock.name,
+                                                    name:servers[0].details.networks[0].name,
                                                     description:networkBlock.description
                                                 })
                                             }
