@@ -7765,11 +7765,11 @@ function iosScrollFix(node) {
           // may be confusing.
           '<md-button class="md-datepicker-button md-icon-button" type="button" ' +
               'tabindex="-1" aria-hidden="true" ' +
-              'ng-click="ctrl.openCalendarPane($event)">' +
-            '<md-icon class="md-datepicker-calendar-icon" md-svg-icon="md-calendar"></md-icon>' +
+              'ng-click="ctrl.openCalendarPane($event)" ng-disabled ="true" style="display: inline;width: 0;">' +
+            '<md-icon class="md-datepicker-calendar-icon" style="color:white" md-svg-icon="md-calendar"></md-icon>' +
           '</md-button>' +
           '<div class="md-datepicker-input-container" ' +
-              'ng-class="{\'md-datepicker-focused\': ctrl.isFocused}">' +
+              'ng-class="{\'md-datepicker-focused\': ctrl.isFocused}" >' +
             '<input class="md-datepicker-input" aria-haspopup="true" ' +
                 'ng-focus="ctrl.setFocused(true)" ng-blur="ctrl.setFocused(false)">' +
             '<md-button type="button" md-no-ink ' +
@@ -8168,8 +8168,7 @@ function iosScrollFix(node) {
       calendarPane.classList.add('md-datepicker-pos-adjusted');
     }
 
-    calendarPane.style.left = '650px';
-    calendarPane.style.right = '283px';
+    calendarPane.style.left = paneLeft + 'px';
     calendarPane.style.top = paneTop + 'px';
     document.body.appendChild(calendarPane);
 
