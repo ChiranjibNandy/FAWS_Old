@@ -12,19 +12,23 @@
                             {{vm.currentUser}} ( #{{vm.tenant_id}} )
                         </div>
                         <div class="migr-name">
-                            {{vm.batchName ? "Tasks" : vm.batchName + " /Tasks"}}
+                            {{vm.resourceName}} Tasks
                         </div>
                     </div>
                     <div class="span-2">
-                        <button class="rs-btn" ng-click="vm.getJobTasks(true)">
+                        <button class="rs-btn" ng-click="vm.getResourceTasks(true)">
                             <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i> 
                             <small><em class="rs-quiet">Refresh</em></small>
-                        </button>
+                        </button> &nbsp;
+                        <a class="rs-btn" ng-click="vm.back()" style="width: 60px">Back</a>
                         <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1 ? " mins ": " min ") + "ago"}}</div>
                     </div>
                 </div>
                 <div class="migration-status-list-container">
-                    <table class="rs-list-table no-truncate-td cell-center">
+                    <div ng-show="!vm.loading && vm.tasks.length === 0">
+                        No individual tasks found for this resource
+                    </div>
+                    <table class="rs-list-table no-truncate-td cell-center" ng-show="!vm.loading && vm.tasks.length > 0">
                         <thead>
                             <th>Task</th>
                             <th>Status</th>

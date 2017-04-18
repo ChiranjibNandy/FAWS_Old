@@ -7,19 +7,17 @@
         <div class="rs-content rs-panel">
             <div class="rs-inner">
                 <div class="rs-row">
-                    <div class="span-8">
+                    <div class="span-10">
                         <div class="migr-ddi-name">{{vm.currentUser}} ( #{{vm.tenant_id}} )</div>
                         <div class="migr-name">{{vm.job.batch_name}} / Active Migrations</div>
                     </div>
-                    <div class="span-4">
-                        <div class="pull-right">
-                            <button class="rs-btn" ng-click="vm.getBatchDetails(true)">
-                                <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i>
-                                <small><em class="rs-quiet">Refresh</em></small>
-                            </button>
-                            <!--<a href="" class="rs-btn" style="padding-left: 45px; padding-right: 45px;">See Log</a>-->
-                            <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1 ? " mins ": " min ") + "ago"}}</div>
-                        </div>
+                    <div class="span-2">
+                        <button class="rs-btn" ng-click="vm.getBatchDetails(true)">
+                            <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i>
+                            <small><em class="rs-quiet">Refresh</em></small>
+                        </button>
+                        <!--<a href="" class="rs-btn" style="padding-left: 45px; padding-right: 45px;">See Log</a>-->
+                        <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1 ? " mins ": " min ") + "ago"}}</div>
                     </div>
                 </div>
                 <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container" ng-show="vm.job.instances.length>0">
@@ -61,7 +59,7 @@
                                     <span class="rs-status-ok" ng-show="vm.job.batch_status==='done'">Completed</span>
                                     <span class="rs-status-ok" ng-show="vm.job.batch_status==='started'">Started</span>
                                     <span class="rs-status-ok" ng-show="vm.job.batch_status==='in progress'">In Progress</span>
-                                    <span class="rs-status-disabled" ng-show="vm.job.batch_status==='scheduled'">Scheduled</span>
+                                    <span class="rs-status-warning" ng-show="vm.job.batch_status==='scheduled'">Scheduled</span>
                                     <span class="rs-status-disabled" ng-show="vm.job.batch_status==='not available'">Not Available</span>
                                     <span class="rs-status-warning" ng-show="vm.job.batch_status==='paused'">Paused</span>
                                 </td>
@@ -129,7 +127,7 @@
                                     <span class="rs-status-ok" ng-show="vm.job.batch_status==='done'">Completed</span>
                                     <span class="rs-status-ok" ng-show="vm.job.batch_status==='started'">Started</span>
                                     <span class="rs-status-ok" ng-show="vm.job.batch_status==='in progress'">In Progress</span>
-                                    <span class="rs-status-disabled" ng-show="vm.job.batch_status==='scheduled'">Scheduled</span>
+                                    <span class="rs-status-warning" ng-show="vm.job.batch_status==='scheduled'">Scheduled</span>
                                     <span class="rs-status-disabled" ng-show="vm.job.batch_status==='not available'">Not Available</span>
                                     <span class="rs-status-warning" ng-show="vm.job.batch_status==='paused'">Paused</span>
                                 </td>
