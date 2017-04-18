@@ -345,10 +345,10 @@
                             vm.costCalculationItems.push({
                                 "resourceName" : server.details.name,
                                 "rax_uptime_cost":server.details.rax_uptime_cost.toFixed(2),
-                                "rax_bandwidth_cost":parseFloat(server.details.rax_bandwidth.toFixed(2) * 0.12),
+                                "rax_bandwidth_cost":parseFloat(server.details.rax_bandwidth_cost).toFixed(2),
                                 "rax_bandwidth":server.details.rax_bandwidth.toFixed(2),
                                 "rax_uptime":server.details.rax_uptime.toFixed(2),
-                                "rax_total_cost":parseFloat(parseFloat(server.details.rax_uptime_cost.toFixed(2)) + parseFloat(server.details.rax_bandwidth_cost.toFixed(2) * 0.12)).toFixed(2)
+                                "rax_total_cost":parseFloat(parseFloat(server.details.rax_uptime_cost) + parseFloat(server.details.rax_bandwidth_cost)).toFixed(2)
                             });
                         }
 
@@ -361,11 +361,11 @@
                             }
                             vm.projectedCostCalculationItems.push({
                                 "resourceName" : server.details.name,
-                                "aws_uptime_cost":parseFloat(parseFloat(cost).toFixed(2) * parseFloat(server.details.rax_uptime.toFixed(2))).toFixed(2),
+                                "aws_uptime_cost":parseFloat(parseFloat(cost) * parseFloat(server.details.rax_uptime)).toFixed(2),
                                 "aws_bandwidth_cost":server.details.aws_bandwidth_cost.toFixed(2),
                                 "aws_bandwidth":server.details.rax_bandwidth.toFixed(2),
                                 "aws_uptime":server.details.rax_uptime.toFixed(2),
-                                "aws_total_cost":parseFloat(parseFloat(parseFloat(cost).toFixed(2) * parseFloat(server.details.rax_uptime.toFixed(2))).toFixed(2) + parseFloat(server.details.aws_bandwidth_cost)).toFixed(2),
+                                "aws_total_cost":parseFloat(parseFloat(parseFloat(cost) * parseFloat(server.details.rax_uptime)) + parseFloat(server.details.aws_bandwidth_cost)).toFixed(2),
                                 "rax_bandwidth":server.details.rax_bandwidth.toFixed(2),
                                 "rax_uptime":server.details.rax_uptime.toFixed(2),                              
                             });
