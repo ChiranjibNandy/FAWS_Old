@@ -44,7 +44,7 @@
                                     <p>
                                         <big><b>{{vm.cost | currency: '$'}}</b>/month </big>
                                         <br>
-                                        <a href="#calculator_modal" role="button" data-toggle="modal"><i class="fa fa-calculator fa-fw" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Click here to estimate the cost of your predicted usage."></i></a> <small>Calculate Usage Costs</small>
+                                        <a href role="button" ng-click="vm.openUsageCostsModal()" data-toggle="modal"><i class="fa fa-calculator fa-fw" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Click here to estimate the cost of your predicted usage."></i></a> <small>Calculate Usage Costs</small>
                                     </p>
                                     <hr class="dash">
                                     <big><b>Support Level</b> </big>
@@ -176,18 +176,61 @@
     <!-- end modals -->
      <!-- modals -->
     <!-- calculator_modal -->
-    <div id="calculator_modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="calculator_modal" class="modal hide animated fadeIn details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-            <h3>Calculate Usage Costs</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>Pricing Calculations </h3>
         </div>
         <div class="modal-body">
-            Calculator goes here...
-        </div>
-        <div class="modal-footer">
-            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <big><b>Current Costs - Rackspace</b></big>
+            <br>
+            <br>
+            <table class="rs-list-table">
+                <thead>
+                    <tr>
+                        <th>Resource</th>
+                        <th>Uptime Cost (for uptime hrs.)</th>
+                        <th>Bandwidth Out Cost (for used bandwidth)</th>
+                        <th>Total Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="" ng-repeat="item in vm.costCalculationItems">
+                        <td class="rs-table-text">{{item.resourceName}}</td>
+                        <td class="rs-table-text">${{item.rax_uptime_cost + " (" + item.rax_uptime + ")"}}</td>
+                        <td class="rs-table-text">${{item.rax_bandwidth_cost + " (" + item.rax_bandwidth + " GB)"}}</td>
+                        <td class="rs-table-text">${{item.rax_total_cost}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <big><b>Projected Costs - AWS (excludes FAWS support)</b></big>
+            <br>
+            <br>
+            <table class="rs-list-table">
+                <thead>
+                    <tr>
+                        <th>Resource</th>
+                        <th>Uptime Cost (for uptime hrs.)</th>
+                        <th>Bandwidth Out Cost (for used bandwidth)</th>
+                        <th>Total Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="" ng-repeat="item in vm.projectedCostCalculationItems">
+                        <td class="rs-table-text">{{item.resourceName}}</td>
+                        <td class="rs-table-text">${{item.aws_uptime_cost + " (" + item.rax_uptime + ")"}}</td>
+                        <td class="rs-table-text">${{item.aws_bandwidth_cost + " (" + item.rax_bandwidth + " GB)"}}</td>
+                        <td class="rs-table-text">${{item.aws_total_cost}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
         </div>
     </div>
+
 <!-- end modals -->
  <script>
     $(document).ready(function() {
