@@ -64,7 +64,7 @@
             };
 
             self.getResourceTasks = function(params, refresh) {
-                var url = "/api/tasks/" + params.job_id + "/" + params.resource_type + "/" + params.resource_id;
+                var url = "/api/tasks/" + params.job_id + "/" + params.resource_type + "s/" + params.resource_id;
 
                 if (refresh || !taskListLoaded || (currentJobID !== params.job_id)) {
                     return HttpWrapper.send(url, { "operation": 'GET' })
@@ -80,15 +80,15 @@
                                             // }
                                             //taskList = tempTaskList;
                                             //batchName = result["batch-name"];
-                                            taskList = result;
-                                            batchName = "Some name";
-                                            console.log("Task List: ", result);
-                                            return { batchName: batchName, taskList: result };
+                                            taskList = result.resources[0].tasks;
+                                            batchName = result["batch-name"];
+                                            //console.log("Task List: ", result);
+                                            return { batchName: batchName, tasks: taskList };
                                         }, function(errorResponse) {
                                             return errorResponse;
                                         });
                 } else {
-                    return $q.when({ batchName: batchName, taskList: taskList });
+                    return $q.when({ batchName: batchName, tasks: taskList });
                 }
             }
 

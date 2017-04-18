@@ -19,9 +19,11 @@
              * @name migrationApp.controller:rsresourcetasklistCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsresourcetasklist rsresourcetasklist} component
              */
-            controller: ["alertsservice", "authservice", "$interval", function(alertsService, authService, $interval){
+            controller: ["alertsservice", "authservice", "$interval", "$rootRouter", "migrationitemdataservice", function(alertsService, authService, $interval, $rootRouter, ds){
                 var vm = this;
                 var lastRefreshIntervalPromise;
+                var backRoute = null;
+                var backRouteParams = {};
 
                 vm.getResourceTasks = function(refresh) {
                     if(refresh){
@@ -38,8 +40,17 @@
 
                     alertsService.getResourceTasks(params, refresh)
                         .then(function(response) {
-                            vm.tasks = response.tasks;
-                            vm.batchName = response.batchName;
+                            if(response.error)
+                                vm.tasks = [];
+                            else
+                                vm.tasks = response.tasks;
+
+                            console.log("Tasks", response);
+                            ds.getTrimmedAllItems(params.resource_type==="instance" ? "server" : params.resource_type)
+                                .then(function (response) {
+                                    var details = response.data.filter(function (item) { return item.id == params.resource_id })[0];
+                                    vm.resourceName = details.name;
+                                });
 
                             vm.loading = false;
                             vm.manualRefresh = false;
@@ -60,6 +71,7 @@
                     var auth = authService.getAuth();
                     vm.tenant_id = auth.tenant_id;
                     vm.currentUser = auth.account_name;
+                    vm.tasks = [];
 
                     vm.loading = true;
                     vm.loadError = false;
@@ -68,10 +80,26 @@
                 };
 
                 vm.$routerOnActivate = function(next, previous){
+                    if(previous && previous.componentType.indexOf("current")>=0){
+                        backRoute = "CurrentBatchDetails";
+                        backRouteParams.job_id = previous.params.job_id;
+                    }
+                    else if(previous && previous.componentType.indexOf("completed")>=0){
+                        backRoute = "CompletedBatchDetails";
+                        backRouteParams.job_id = previous.params.job_id;
+                    }
+
                     vm.job_id = next.params.job_id;
                     vm.resource_type = next.params.resource_type;
                     vm.resource_id = next.params.resource_id;
                     vm.getResourceTasks();
+                };
+
+                vm.back = function() {
+                    if(backRoute !== null)
+                        $rootRouter.navigate([backRoute, {job_id: backRouteParams.job_id}]);
+                    else
+                        $rootRouter.navigate(['MigrationStatus']);
                 };
             }
             ]}); // end of component rsbatchtasklist

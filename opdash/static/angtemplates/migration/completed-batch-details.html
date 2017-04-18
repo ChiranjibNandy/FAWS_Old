@@ -38,6 +38,9 @@
                                     <span class="rs-table-sort-indicator"></span>
                                 </a>
                             </th>
+                            <th>
+                                Actions
+                            </th>
                         </thead>
                         <tbody>
                             <tr ng-repeat="instance in vm.job.instances | orderBy: vm.sortBy.server">
@@ -59,6 +62,9 @@
                                 </td>-->
                                 <td class="rs-table-text">
                                     <span class="rs-status-ok">Completed</span>
+                                </td>
+                                <td>
+                                    <a class="rs-btn" ng-link="['ResourceTaskList', {job_id: vm.job.job_id, resource_type: 'instance', resource_id: instance.id}]">See Tasks</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -88,6 +94,9 @@
                                     <span class="rs-table-sort-indicator"></span>
                                 </a>
                             </th>
+                            <th>
+                                Actions
+                            </th>
                         </thead>
                         <tbody>
                             <tr ng-repeat="network in vm.job.networks | orderBy: vm.sortBy.network">
@@ -109,6 +118,9 @@
                                 </td>
                                 <td class="rs-table-text">
                                     <span class="rs-status-ok">Completed</span>
+                                </td>
+                                <td>
+                                    <a class="rs-btn" ng-link="['ResourceTaskList', {job_id: vm.job.job_id, resource_type: 'instance', resource_id: instance.id}]">See Tasks</a>
                                 </td>
                             </tr>
                         </tbody>

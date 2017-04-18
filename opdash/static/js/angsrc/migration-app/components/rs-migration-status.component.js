@@ -57,6 +57,7 @@
                     $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
                     vm.count = 0;
                     vm.is_racker = authservice.getAuth().is_racker;
+                    vm.afterNewMigration = false;
                     if(authservice.getAuth().is_racker == false){   //get Account Name
                         var actname = dataStoreService.getAccountName(vm.tenant_id); //this service method is setting the accountname through api
                         actname.then(function() {
@@ -228,9 +229,15 @@
                                 }
 
                                 // temporary fix to show completed batch date time
+                                var estCompletionTime = 20 * 60 * 1000; // i.e., 20 mins in milliseconds
+                                var currTime = moment().unix();
+                                var tempEndTime = currTime; // i.e. 5 secs before current time
                                 angular.forEach(vm.completedBatches.items, function (item) {
-                                    dataStoreService.endTime = dataStoreService.endTime ? dataStoreService.endTime : moment().unix();
-                                    item.end = dataStoreService.endTime;
+                                    if(item.start + estCompletionTime >= currTime) {
+                                        item.end = tempEndTime;
+                                    } else {
+                                        item.end = item.start + estCompletionTime;
+                                    }
                                 });
 
                                 vm.loading = false;
