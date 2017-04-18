@@ -9,7 +9,7 @@
     <td class="rs-table-text"><i class="fa fa-arrow-right rs-status-ok pullLeft"></i>{{item.selectedMapping.region }}</td>
     <td class="rs-table-text">{{item.selectedMapping.zone || 'US-East-1a'  }}</td>
     <td class="rs-table-text">{{item.selectedMapping.instance_type}}</td>
-    <td class="rs-table-text">{{item.selectedMapping.cost * item.details.rax_uptime | currency}}</td>
+    <td class="rs-table-text">{{item.selectedMapping.cost * item.details.rax_uptime + item.details.aws_bandwidth_cost | currency}}</td>
     <td class="rs-table-cog">
         <a href="#" ng-click="vm.showModifyModal(item,'#modify_modal'+ item.id)" data-toggle="modal" class="rs-btn-action">
             <i class="rs-edit" title="Modify this"></i>
