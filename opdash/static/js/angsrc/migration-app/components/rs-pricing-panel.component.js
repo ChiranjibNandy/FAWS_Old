@@ -43,6 +43,7 @@
                     vm.loading = true;
                     vm.loadError = false;
                     vm.precheck = false;
+                    vm.precheckError = false;
                     dataStoreService.setRecommendedTotalCost();
                     dataStoreService.setCurrentPricing ();
                     vm.totalCost = dataStoreService.getRecommendedTotalCost();
@@ -146,6 +147,8 @@
                                 vm.precheck = true;
                             }
                         }, function (error) {
+                            vm.precheck = false;
+                            vm.precheckError = true;
                             console.log("error");
                             console.log(error);
                             // console.log("Error: Could not trigger migration", error);

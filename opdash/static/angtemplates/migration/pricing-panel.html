@@ -99,7 +99,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
         <h3 class="rs-page-title">Precheck Results</h3>
     </div>
-    <div class="modal-header" ng-show="!vm.precheck">
+    <div class="modal-header" ng-show="!vm.precheck && !vm.precheckError">
         <p><strong>Please wait while we run some pre-checks to see whether these resources can be migrated or not...</strong></p>        
         <div class="rs-table-overlay rs-table-overlay-loading">
             <div class="rs-table-overlay-content">
@@ -107,7 +107,14 @@
             </div>
         </div>
     </div>
-    <div class="modal-body" ng-show="vm.precheck">
+    <div class="modal-body" ng-show="!vm.precheck && vm.precheckError">
+        <p>
+            <strong>
+                Please come back again as we are facing some issues....
+            </strong>
+        </p>
+    </div>
+    <div class="modal-body" ng-show="vm.precheck && !vm.precheckError">
         <table class="rs-list-table">
             <thead>
                 <tr>
