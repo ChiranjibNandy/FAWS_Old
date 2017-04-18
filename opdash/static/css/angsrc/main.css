@@ -525,3 +525,7 @@ thead{
 .custom-table-sort-asc.current-sort-param  .rs-table-sort-indicator{
     border-bottom: 5px solid #00a96d;
 }
+
+.rs-wrapper{
+    background-color:#eee;
+}
