@@ -43,6 +43,7 @@
                     vm.loading = true;
                     vm.loadError = false;
                     vm.precheck = false;
+                    vm.precheckError = false;
                     dataStoreService.setRecommendedTotalCost();
                     dataStoreService.setCurrentPricing ();
                     vm.totalCost = dataStoreService.getRecommendedTotalCost();
@@ -126,12 +127,12 @@
                                         angular.forEach(networks[key],function(networkBlock){
                                             if(networkBlock.type=="warning"){
                                                 vm.warnings.push({
-                                                    name:networkBlock.name,
+                                                    name:servers[0].details.networks[0].name,
                                                     description:networkBlock.description
                                                 })
                                             }else if(networkBlock.type=="error"){
                                                 vm.errors.push({
-                                                    name:networkBlock.name,
+                                                    name:servers[0].details.networks[0].name,
                                                     description:networkBlock.description
                                                 })
                                             }
@@ -146,6 +147,8 @@
                                 vm.precheck = true;
                             }
                         }, function (error) {
+                            vm.precheck = false;
+                            vm.precheckError = true;
                             console.log("error");
                             console.log(error);
                             // console.log("Error: Could not trigger migration", error);

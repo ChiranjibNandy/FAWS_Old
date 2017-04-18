@@ -36,11 +36,6 @@ body .modal.details {
     margin-left: 5px;
 }
 
-.modal th:last-child,
-.modal td:last-child {
-    text-align: right;
-}
-
 .migr-name input[type=text] {
     display: none;
     margin-top: 5px;
