@@ -69,7 +69,7 @@
 
                 vm.$onInit = function() {
                     var auth = authService.getAuth();
-                    vm.isRacker = authservice.is_racker;
+                    vm.isRacker = auth.is_racker;
                     vm.tenant_id = auth.tenant_id;
                     vm.currentUser = auth.account_name;
                     vm.tasks = [];
