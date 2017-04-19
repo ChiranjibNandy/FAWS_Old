@@ -1,28 +1,14 @@
-<div class="rs-container migration-mgr">
-    <a href="#" ng-click="vm.showCancelDialog()" role="button" data-toggle="modal"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
+<div class="migration-mgr rs-container" ng-style="vm.isRacker == true ? {'margin-top':'30px'} : {'margin-top':'0px'}">
+    <a href="#" ng-click="vm.showCancelDialog()"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
     <br><br>
     <div class="rs-main rs-panel">
         <div class="rs-content rs-panel">
             <rsnavigationpanel pagenum="2"></rsnavigationpanel>
             <hr>
             <div class="rs-inner">
-                <!--<div class="rs-row">
-                    <div class="span-8">
-                        <div class="migr-ddi-name">
-                            {{vm.tenant_account_name}} ( #{{vm.tenant_id}} )
-                          </div>
-                            <div class="migr-name">
-                                  <rseditbatchname></rseditbatchname>         
-                        
-                        </div>
-                    </div>
-                </div>-->
-                <rstenantfawsdetails></rstenantfawsdetails>
-                <div class="migr-name">
-                    <rseditbatchname></rseditbatchname>
-                </div>
+                <rstenantfawsdetails editmigration="true"></rstenantfawsdetails>
                 
-            <div class="rs-row">
+                <div class="rs-row">
                     <div class="span-12">
                         <h3>Review configurations and schedule your migration</h3>
                     </div>

@@ -42,6 +42,7 @@
                 vm.$onInit = function(){
                     var auth = authservice.getAuth();
                     vm.tenant_id = auth.tenant_id;
+                    vm.isRacker = authservice.is_racker;
                     vm.currentUser = auth.account_name;
 
                     vm.sortBy = {

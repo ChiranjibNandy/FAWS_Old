@@ -69,6 +69,7 @@
 
                 vm.$onInit = function() {
                     var auth = authService.getAuth();
+                    vm.isRacker = authservice.is_racker;
                     vm.tenant_id = auth.tenant_id;
                     vm.currentUser = auth.account_name;
                     vm.tasks = [];
@@ -92,7 +93,7 @@
                     vm.job_id = next.params.job_id;
                     vm.resource_type = next.params.resource_type;
                     vm.resource_id = next.params.resource_id;
-                    vm.getResourceTasks();
+                    vm.getResourceTasks(true);
                 };
 
                 vm.back = function() {

@@ -5,8 +5,8 @@
         });
     });
 </script>
-<div class="migration-mgr rs-container ">
-   <a href="#" ng-click="vm.goToDashboard()" role="button" data-toggle="modal"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
+<div class="migration-mgr rs-container" ng-style="vm.isRacker == true ? {'margin-top':'30px'} : {'margin-top':'0px'}">
+    <a href="#" ng-click="vm.goToDashboard()"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
     <br><br>
     <div class="rs-main rs-panel">
         <div class="rs-sidebar rs-pull-right">
@@ -16,23 +16,7 @@
             <rsnavigationpanel pagenum="1"></rsnavigationpanel>
             <hr>
             <div class="rs-inner recommend">
-                <!--<div class="rs-row">
-                    <div class="span-8">
-                        <div class="migr-ddi-name">
-                            {{vm.tenant_account_name}} ( #{{vm.tenant_id}} )<br><br>    
-                            <span class="migr-name">
-                                <rseditbatchname></rseditbatchname>
-                            </span>
-                        </div>
-                    </div>-->
-                    <!--<div class="span-4">                                             
-                        <rscontact></rscontact>
-                    </div>-->
-                <!--</div>-->
-                <rstenantfawsdetails></rstenantfawsdetails>
-                <div class="migr-name">
-                    <rseditbatchname></rseditbatchname>
-                </div>
+                <rstenantfawsdetails editmigration="true"></rstenantfawsdetails>
                 <div class="rs-row">
                     <div class="span-8">
                         <h3>Based on your selections, here are our recommendations: <a href="#" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" title="" data-content="You can modify these configurations to your specifications by choosing the edit icon in the last column."><i class="fa fa-info-circle rs-quiet"></i></a></h3>

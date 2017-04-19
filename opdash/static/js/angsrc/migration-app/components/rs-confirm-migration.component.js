@@ -35,6 +35,7 @@
                     vm.tenant_account_name = authservice.getAuth().account_name;
                     $('title')[0].innerHTML = "Confirm Migration - Rackspace Cloud Migration";
                     var auth = authservice.getAuth();
+                    vm.isRacker = authservice.is_racker;
                     vm.tenant_id = auth.tenant_id;
                     vm.tenant_name = auth.rackUsername;
                     vm.userOrTenant = auth.is_racker ? "Tenant" : "User";
