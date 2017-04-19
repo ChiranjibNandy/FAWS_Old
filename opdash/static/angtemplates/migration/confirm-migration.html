@@ -70,7 +70,7 @@
                             </div>
                         <a class="rs-btn " ng-link="['MigrationRecommendation']">Back</a>
                         <a class="rs-btn" role="button" ng-click="vm.showCancelDialog()">Cancel Migration</a>
-                        <button class="rs-btn rs-btn-primary "  type="submit" ng-click=" vm.showConfirmMigrateDialog(scheduleMigration)"   ng-disabled="(!vm.scheduleMigration || !vm.acceptTermsAndConditions || vm.error)  ">Confirm & Schedule</button>
+                        <button class="rs-btn rs-btn-primary "  type="submit" ng-click="vm.migrate()"   ng-disabled="(!vm.scheduleMigration || !vm.acceptTermsAndConditions || vm.error)  ">Confirm & Schedule</button>
                         <a class="rs-btn rs-btn-primary disabled" ng-show="vm.migrating">Processing...</a>
                     </div>
                     <div class="clear"></div>
