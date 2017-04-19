@@ -41,7 +41,7 @@
         <h3>Projected Cost<a href="#" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="The projected pricing consist of infrastructure costs only, and support costs are not included in the provided price."><i class="fa fa-info-circle rs-quiet"></i></a></h3>
         <p>
             <big><b>${{vm.totalProjectedPricingSum}}</b>/month</big><br>
-            <a href role="button" data-toggle="modal" ng-click="vm.openUsageCostsModal()"><i class="fa fa-calculator fa-fw" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Click here to estimate the cost of your predicted usage."></i></a> <small>See Details</small>
+            <a href role="button" data-toggle="modal" ng-click="vm.openUsageCostsModal()"><small>See Details</small></a> 
         </p>
         <hr class="dash">
         <big><b>Support Level</b> </big>
@@ -97,13 +97,13 @@
 <!--</div>  -->
 <!-- PRECHECK MODAL -->
 <div id="precheck_modal" class="modal hide animated fadeIn details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header" ng-show="vm.precheck">
+    <div class="modal-header">
         <br>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
         <h3 class="rs-page-title">Precheck Results</h3>
     </div>
-    <div class="modal-header" ng-show="!vm.precheck && !vm.precheckError">
-        <p><strong>Please wait while we run some pre-checks to see whether these resources can be migrated or not...</strong></p>        
+    <div class="modal-body" ng-show="!vm.precheck && !vm.precheckError">
+        <p><strong>Validating items in your migration...</strong></p>        
         <div class="rs-table-overlay rs-table-overlay-loading">
             <div class="rs-table-overlay-content">
                 <div class="rs-table-overlay-message">Loading&hellip;</div>
