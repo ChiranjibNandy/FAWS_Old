@@ -72,11 +72,12 @@
                         completed_batch: 'start'
                     };
 
-                    $(document).on("click", function() {
+                    document.addEventListener("click", function() {
+                        vm.showQueuedBatchMenu = false;
                         $timeout(function() {
                             resetActionFlags();
                         });
-                    });
+                    }, true);
                 };
 
                 vm.$routerOnActivate = function(next, previous) {
@@ -84,8 +85,6 @@
                         vm.refreshFlag=true;
                         vm.afterNewMigration = true;
                         vm.resourceCount = dataStoreService.getMigrationResourceCount();
-
-                        console.log(dataStoreService.selectedTime);
                         vm.initiatedMigration = {
                             name: dataStoreService.selectedTime.migrationName,
                             timestamp: dataStoreService.selectedTime.time
@@ -229,7 +228,7 @@
                                 }
 
                                 // temporary fix to show completed batch date time
-                                var estCompletionTime = 20 * 60 * 1000; // i.e., 20 mins in milliseconds
+                                var estCompletionTime = 20 * 60; // i.e., 20 mins in milliseconds
                                 var currTime = moment().unix();
                                 var tempEndTime = currTime; // i.e. 5 secs before current time
                                 angular.forEach(vm.completedBatches.items, function (item) {
