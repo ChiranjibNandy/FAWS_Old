@@ -246,7 +246,7 @@
                         var selectedPricingMappingObj = dataStoreService.getItems('server');
                         vm.totalProjectedPricingSum = 0;
                         selectedPricingMappingObj.forEach(function(item){
-                            vm.totalProjectedPricingSum += parseFloat(item.selectedMapping.cost * item.details.rax_uptime);
+                            vm.totalProjectedPricingSum += parseFloat(item.selectedMapping.cost * item.details.rax_uptime + item.details.aws_bandwidth_cost);
                         });
                         vm.totalProjectedPricingSum = vm.totalProjectedPricingSum.toFixed(2);
                     },1000);                                 

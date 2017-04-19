@@ -526,6 +526,8 @@ thead{
     border-bottom: 5px solid #00a96d;
 }
 
+/*
 .rs-wrapper{
-    background-color:#eee;
-}
+    /*background-color:#eee;
+    background-color:inherit;
+}*/
