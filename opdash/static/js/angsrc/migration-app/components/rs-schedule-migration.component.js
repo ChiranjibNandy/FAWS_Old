@@ -105,7 +105,7 @@
                     var roundUp = m.minute() || m.second() || m.millisecond() ? m.add(1, 'hour').startOf('hour') : m.startOf('hour');
                     vm.time = roundUp.format('h:mma');
                     vm.initTime = new Date().toLocaleTimeString();
-                    vm.date = new Date(moment().format("YYYY-MM-DD"));
+                    vm.date = moment().format("YYYY-MM-DD");
                     vm.selectedDateHeader = new Date().toLocaleString();
                     vm.selectedDate = moment().format('MMMM Do YYYY ') + ' at ' + moment().format('h:mma') + ' ' + new Date().toTimeString().slice(8, 42);
                     dataStoreService.storeDate('time', vm.time);
@@ -173,7 +173,7 @@
                     //setting unixTime based on radio button selection.
                     if (radioButton === "fromSave") {
                         var time = vm.getTime();
-                      vm.unixTime = moment(moment(vm.date).format("ddd MMM D YYYY") + " " + time + " " + vm.timezone1).unix()
+                      vm.unixTime = moment(moment($('#field').val()).format("ddd MMM D YYYY") + " " + time + " " + vm.timezone1).unix()
                         console.log(vm.unixTime);
                         //console.log($('#field').val() + " " + time + "GMT-0500 (Central Daylight Time)");
                     }
@@ -226,7 +226,7 @@
                  * Saves the chosen timezone for migration
                  */
                 vm.timezoneChange = function () {
-                    vm.selectedDate = moment(vm.date).format('MMMM Do YYYY') + ' at ' + vm.time + ' ' + vm.timezone1;
+                    vm.selectedDate = moment($('#field').val()).format('MMMM Do YYYY') + ' at ' + vm.time + ' ' + vm.timezone1;
                     $rootScope.$emit("scheduleMigrationSelectedDate", vm.selectedDate);
                 };
                 /**
@@ -308,7 +308,7 @@
                 vm.onSaveTime = function () {
                     $timeout(function () {
                         var time = vm.getTime();
-                        if (moment().diff(moment(vm.date.toDateString() + " " + time + " " + vm.timezone1 ), 'minutes') > 1) {
+                        if (moment().diff(moment($('#field').val() + " " + time+ " " + vm.timezone1), 'minutes') > 1) {
                             vm.error = true;
                              $rootScope.$emit("vm.errorValue", vm.error);
                         } else {

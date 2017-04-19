@@ -21,6 +21,9 @@
         <h3 id="basePrice">Current Cost</h3>
         <p>
             <big><b>${{vm.invoiceTotal}}</b>/month</big>
+            <small>
+                <a href role="button" data-toggle="modal" ng-click="vm.openUsageCostsModal()">See details</a>
+            </small>
             <br>
             <small>* For selected resources from <b>step 1</b></small>
         </p>
@@ -38,7 +41,7 @@
         <h3>Projected Cost<a href="#" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="The projected pricing consist of infrastructure costs only, and support costs are not included in the provided price."><i class="fa fa-info-circle rs-quiet"></i></a></h3>
         <p>
             <big><b>${{vm.totalProjectedPricingSum}}</b>/month</big><br>
-            <a href role="button" data-toggle="modal" ng-click="vm.openUsageCostsModal()"><i class="fa fa-calculator fa-fw" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Click here to estimate the cost of your predicted usage."></i></a> <small>Calculate Usage Costs</small>
+            <a href role="button" data-toggle="modal" ng-click="vm.openUsageCostsModal()"><i class="fa fa-calculator fa-fw" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Click here to estimate the cost of your predicted usage."></i></a> <small>See Details</small>
         </p>
         <hr class="dash">
         <big><b>Support Level</b> </big>
