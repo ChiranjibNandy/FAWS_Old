@@ -14,6 +14,7 @@
                 taskListLoaded = false,
                 currentTenant = null,
                 currentJobID = null,
+                currentResourceID = null,
                 alerts = [],
                 batchName,
                 taskList = [],
@@ -66,20 +67,12 @@
             self.getResourceTasks = function(params, refresh) {
                 var url = "/api/tasks/" + params.job_id + "/" + params.resource_type + "s/" + params.resource_id;
 
-                if (refresh || !taskListLoaded || (currentJobID !== params.job_id)) {
+                if (refresh || !taskListLoaded || (currentJobID !== params.job_id || currentResourceID !== params.resource_id)) {
                     return HttpWrapper.send(url, { "operation": 'GET' })
                                       .then(function(result) {
                                             taskListLoaded = true;
                                             currentJobID = params.job_id;
-                                            //var tempTaskList = [];
-                                            //var resources = result.resources;
-
-                                            // for(var j=0; j<resources.length; j++){
-                                            //     var tasks = angular.copy(resources[j].tasks);
-                                            //     tempTaskList = tempTaskList.concat(tasks);
-                                            // }
-                                            //taskList = tempTaskList;
-                                            //batchName = result["batch-name"];
+                                            currentResourceID = params.resource_id;
                                             taskList = result.resources[0].tasks;
                                             batchName = result["batch-name"];
                                             //console.log("Task List: ", result);

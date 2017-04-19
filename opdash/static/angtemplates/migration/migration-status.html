@@ -1,6 +1,6 @@
 <br>
 <div class="rs-container migration-mgr">
-    <div class="alert alert-success animated fadeIn" ng-show="vm.afterNewMigration" style="display: none;">
+    <div class="alert alert-success animated fadeIn" ng-if="vm.afterNewMigration">
         <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
         <h3>Success! Migration for {{vm.resourceCount}} resources confirmed at {{vm.schedule.date}} at {{vm.schedule.time}}</h3>
     </div>
@@ -73,7 +73,17 @@
                                 <td class="rs-table-text">
                                     <span class="rs-status-ok">Queued</span>                                    
                                 </td>
-                                <td>&nbsp;</td>
+                                <td class="rs-table-input rs-center">
+                                    <div class="rs-btn-group">
+                                        <div class="rs-dropdown">
+                                            <div class="rs-cog rs-dropdown-toggle" ng-click="vm.showQueuedBatchMenu = true;"></div>
+                                            <ul class="rs-dropdown-menu visible" ng-show="vm.showQueuedBatchMenu" style="right: 0 !important">
+                                                <li class="disabled"><a href="#">Modify Migration (NA)</a></li>
+                                                <li class="disabled"><a href="#">Cancel Migration (NA)</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                             
                             <tr ng-repeat="batch in vm.currentBatches.items | orderBy: vm.sortBy.current_batch | limitTo : vm.currentBatches.pageSize : (vm.currentBatches.currentPage-1)*vm.currentBatches.pageSize" class="ng-scope">
