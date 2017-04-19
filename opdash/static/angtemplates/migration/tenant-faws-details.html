@@ -11,22 +11,39 @@
                 <i class="rs-caret"></i></a>
                 <ul class="rs-dropdown-menu hidden">
                     <li class="rs-dropdown-item">
-                        <span class="rs-dropdown-category">Choose which account to link:</span>
+                        <span class="rs-dropdown-category">Choose which account to link:<a ng-click="vm.displayFawsAccounModal()" role="button" data-toggle="modal" class="rs-btn" ng-show="vm.editmigration === 'false'">Create FAWS Account</a></span>
                     </li>
                     <li class="rs-dropdown-item">
                         <select ng-model="vm.selectedFaws">
                                     <option ng-repeat="account in vm.awsAccountsDetails">{{account.name}} (#{{account.awsAccountNumber}})</option>
                                 </select>
                     </li>
-                    <!--<li class="rs-dropdown-item"><a class="rs-dropdown-link" href="">Create a new FAWS account</a></li>-->
                 </ul>
             </div>
         </span>
-        &nbsp;<a class="rs-btn" ng-show="vm.editmigration === 'false'">Create FAWS Account</a>
     </div>
 </div>
 <div class="migr-name" ng-show="vm.editmigration === 'true'">
     <rseditbatchname></rseditbatchname>
+</div>
+
+<div id="create-faws-account-modal" class="modal modal-success hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-body">
+        <big>We are creating a new FAWS account for you, <br> what would you like to name it?</big>
+        <br>
+        <br>
+        <input type="text" ng-model="vm.fawsAcctName" class="rs-input-xlarge" placeholder="FAWS AccountName" />
+        <br>
+        <b>Please note that we may place a $1 authorization hold to confirm your account.</b> <br>
+        <small>(Our lawyers make us say this)
+        <br> Your use of Rackspace websites is subject to the <a href='http://www.rackspace.com/information/legal/websiteterms?_ga=1.254955403.24213883.1488833556' target='_blank'>Website Terms</a>.</small>
+    </div>
+    <div class="modal-footer">
+        <span ng-show="vm.fawsResponse" ng-style="vm.FawsCreated == true ? {color:'green'} : {color:'red'}">{{vm.FawsCreated ? 'Created FAWS account Successfully' : 'Error while creating FAWS account for you. Pleasr try again after sometime...'}}"</span>
+        <a class="rs-btn rs-btn-primary" ng-disabled="!vm.fawsAcctName" ng-click="vm.createFawsAccount()" ng-hide="vm.fawsCreationProgress">Submit &amp; Continue </a>
+        <a class="rs-btn disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
+        <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</a>
+    </div>
 </div>
 
 
