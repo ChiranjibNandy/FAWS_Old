@@ -595,6 +595,23 @@
                     return $q.when(fawsAccounts);
                 }
             };
+
+            /**
+                 * @ngdoc method
+                 * @name createFawsAccount
+                 * @methodOf migrationApp.service:datastoreservice
+                 * @description 
+                 * Invokes "/api/tenants/create_faws_account" API call for posting saved instance.
+            */
+            this.createFawsAccount = function(requestObj) {
+                var self = this;
+                return HttpWrapper.save("/api/tenants/create_faws_account", {"operation":'POST'}, requestObj)
+                    .then(function(result){
+                        return true;
+                    },function(error) {
+                        return false;
+                    });
+            };
                 return self;
         }]); // end of service definition
 })();

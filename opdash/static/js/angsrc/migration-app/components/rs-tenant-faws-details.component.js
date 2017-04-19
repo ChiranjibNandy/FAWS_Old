@@ -27,11 +27,15 @@
              * @name migrationApp.controller:tenantfawsdetailsCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rstenantfawsdetails rstenantfawsdetails} component
              */
-            controller: ["datastoreservice", "authservice", function (dataStoreService, authservice) {
+            controller: ["datastoreservice", "authservice", "$timeout", function (dataStoreService, authservice, $timeout) {
                 var vm = this;
                 vm.fawsAcctStatus = true;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
+                vm.fawsAcctName = '';
+                vm.FawsCreated = false;
+                vm.fawsCreationProgress = false;
+                vm.fawsResponse = false;
 
                 vm.tenant_id = authservice.getAuth().tenant_id; //get Tenant ID
                    
@@ -47,7 +51,8 @@
 
                 vm.auth = authservice.getAuth();
 
-                dataStoreService.getFawsAccounts()
+                vm.fetchFawsAccounts = function() {
+                    dataStoreService.getFawsAccounts()
                         .then(function (result) {
                             vm.awsAccountsDetails = result.awsAccounts;
                             if((vm.awsAccountsDetails == undefined || vm.awsAccountsDetails.length == 0)){
@@ -62,7 +67,41 @@
                                 dataStoreService.saveFawsDetails(fawsAccountDetails);
                                 vm.selectedFaws = vm.awsAccountsDetails[0].name + " " + "(#" + vm.awsAccountsDetails[0].awsAccountNumber + ")";
                             }
-                });
+                    });
+                };
+
+                vm.fetchFawsAccounts();
+
+                vm.displayFawsAccounModal = function() {
+                    vm.fawsResponse = false;
+                    $('#create-faws-account-modal').modal('show');
+                };
+
+                vm.createFawsAccount = function() {
+                    vm.fawsCreationProgress = true;
+                    var requestObj = {"project_nam": vm.fawsAcctName};
+                    if(dataStoreService.createFawsAccount(requestObj)){
+                        vm.fawsResponse = true;
+                        vm.FawsCreated = true;
+                        vm.fawsCreationProgress = false;
+                        vm.fetchFawsAccounts();
+                        // $timeout(function () {
+                            // $("#create-faws-account-modal").modal('hide');
+                            vm.fawsAcctName = '';
+                            // vm.fawsResponse = false;
+                        // }, 2000);
+                    }
+                    else{
+                        vm.fawsResponse = true;
+                        vm.fawsCreationProgress = false;
+                        vm.FawsCreated = false;
+                        // $timeout(function () {
+                            // $("#create-faws-account-modal").modal('hide');
+                            vm.fawsAcctName = '';
+                            // vm.fawsResponse = false;
+                        // }, 2000);
+                    }
+                };
 
                 return vm;
             }]
