@@ -49,3 +49,7 @@ body .modal.details {
     cursor: pointer;
     margin-left: 10px;
 }
+
+.rs-main {
+    margin: 10px 0px !important;
+}
