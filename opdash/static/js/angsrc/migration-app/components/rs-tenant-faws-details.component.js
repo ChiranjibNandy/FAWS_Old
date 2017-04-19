@@ -18,6 +18,9 @@
     angular.module("migrationApp")
         .component("rstenantfawsdetails", {
             templateUrl: "/static/angtemplates/migration/tenant-faws-details.html",
+            bindings: {
+                editmigration: "@"
+            },
             controllerAs: "vm",
             /**
              * @ngdoc controller

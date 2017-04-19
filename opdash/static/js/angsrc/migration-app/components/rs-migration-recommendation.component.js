@@ -28,6 +28,7 @@
                 vm.$onInit = function() {
                     vm.tenant_id = authservice.getAuth().tenant_id;
                     vm.tenant_account_name = authservice.getAuth().account_name;
+                    vm.isRacker = authservice.is_racker;
                     $('title')[0].innerHTML =  "Recommendations - Rackspace Cloud Migration";
                     vm.migrationName = datastoreservice.getScheduleMigration().migrationName;
                     var servers = datastoreservice.getItems('server');
