@@ -263,7 +263,7 @@
                     <div class="span-6">
                         <div class="rs-facet-section">
                             <div class="rs-facet-section-body">
-                                <a href="https://mycloud.rackspace.com/cloud/453265/tickets" class="rs-btn rs-btn-link rs-pull-right" target="_blank" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Got to tickets in Rackspace Reach">See All <i class="fa fa-angle-double-right"></i></a>
+                                <a href="https://mycloud.rackspace.com/cloud/{{vm.tenant_id}}/tickets" class="rs-btn rs-btn-link rs-pull-right" target="_blank" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Got to tickets in Rackspace Reach">See All <i class="fa fa-angle-double-right"></i></a>
                                 <h3>Tickets <span class="rs-quiet">({{vm.tickets.length}})</span></h3>
                                 <div class="">
                                     <table class="rs-list-table rs-embedded-list-table-wrapper">
@@ -276,7 +276,7 @@
                                         </thead>
                                         <tbody ng-show="!vm.loadingTickets && vm.tickets.length>0">
                                             <tr ng-repeat="ticket in vm.tickets | orderBy: '-created'">
-                                                <td><a href="https://mycloud.rackspace.com/cloud/453265/tickets#{{ticket.ticket_id}}">{{ticket.ticket_id}}</a></td>
+                                                <td><a href="https://mycloud.rackspace.com/cloud/{{vm.tenant_id}}/tickets#{{ticket.ticket_id}}">{{ticket.ticket_id}}</a></td>
                                                 <td class="rs-table-text ng-binding">{{ticket.created | date : 'M/dd/yyyy hh:mm a'}}</td>
                                                 <td>
                                                     {{ticket.description | limitTo: 30}}
