@@ -49,9 +49,8 @@
         <span ng-show="vm.fawsError" style="color: #c40022">'Error while creating new FAWS account for you. Please try again after sometime...'</span>
         
         <div ng-hide= "vm.fawsCreated || vm.fawsError">
-            <big>We are creating a new FAWS account for you, <br> what would you like to name it?</big>
-            <br>
-            <br>
+            <big>What would you like to name your new FAWS account?</big>
+            <br><br>
             <input type="text" ng-model="vm.fawsAcctName" class="rs-input-xlarge" placeholder="FAWS AccountName" />
             <br>
             <b>Please note that we may place a $1 authorization hold to confirm your account.</b> <br>
@@ -61,7 +60,7 @@
     </div>
     <div class="modal-footer">
        
-        <a class="rs-btn rs-btn-primary" ng-disabled="!vm.fawsAcctName" ng-click="vm.createFawsAccount()" ng-hide="vm.fawsError || vm.fawsCreationProgress">Submit &amp; Continue </a>
+        <a class="rs-btn rs-btn-primary" ng-disabled="!vm.fawsAcctName" ng-click="vm.createFawsAccount()" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit &amp; Continue </a>
         <a class="rs-btn disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
         <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</a>
     </div>
