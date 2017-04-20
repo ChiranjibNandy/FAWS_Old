@@ -73,6 +73,9 @@
                 //performs controller initialization steps
                 vm.$onInit = function() { 
                     datastoreservice.resetAll();
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+                    vm.isRacker = authservice.is_racker;
                     $rootScope.$on("vm.MigrationName",function(event,value){
                         console.log(value);
                      vm.migrationName = value;

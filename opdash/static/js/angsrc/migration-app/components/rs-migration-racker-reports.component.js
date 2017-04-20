@@ -13,6 +13,10 @@
     angular.module("migrationApp")
         .component("rsmigrationrackerreports", {
             templateUrl: "/static/angtemplates/migration/racker-reports.html",
-
+            controllerAs: "vm",
+            controller:["authservice",function(authservice){
+                var vm = this;
+                vm.isRacker = authservice.is_racker;
+            }]
         }); // end of component rsmigrationrackerreports
 })();

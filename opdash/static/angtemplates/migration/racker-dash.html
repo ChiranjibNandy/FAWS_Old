@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<div class="rs-container migration-mgr" ng-show="!vm.loading && !vm.loadError">
+<div class="rs-container migration-mgr" ng-style="vm.isRacker == true ? {'margin-top':'30px'} : {'margin-top':'0px'}" ng-show="!vm.loading && !vm.loadError">
     <div class="rs-main ">
         <div class="rs-content rs-panel">
             <div class="rs-inner">
