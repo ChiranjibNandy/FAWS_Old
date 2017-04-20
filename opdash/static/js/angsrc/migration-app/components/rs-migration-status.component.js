@@ -54,6 +54,9 @@
                 };
 
                 vm.$onInit = function() {
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+                    vm.isRacker = authservice.is_racker;
                     $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
                     vm.count = 0;
                     vm.is_racker = authservice.getAuth().is_racker;
