@@ -89,6 +89,7 @@
              */
             self.fawsAccounts = {
                 awsAccounts:[],
+                selectedFawsAccount:'',
                 totalAccounts: 0
             };
             /**
@@ -305,6 +306,7 @@
                 self.CurrentPricing = null;
                 self.fawsAccounts = {
                     awsAccounts:[],
+                    selectedFawsAccount:'',
                     totalAccounts: 0
                 };
             };
