@@ -1,27 +1,28 @@
-<div ng-if="!vm.fawsAcctStatus" class="alert alert-success small-alert animated fadeIn">
+<!--<div ng-if="!vm.fawsAcctStatus" class="alert alert-success small-alert animated fadeIn">
     <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
     <b>We notice you don't have a Fanatical AWS account.</b> One will be created on step 3 on confirmed migration.
-</div>
+</div>-->
 
 <div class="rs-row">
     <div class="migr-ddi-name">{{vm.tenant_account_name}} #{{vm.tenant_id}}
-        <span class="migr-ddi-name" ng-show="vm.fawsAcctStatus"><i class="fa fa-arrow-right fa-fw"></i>
+        <span class="migr-ddi-name"><i class="fa fa-arrow-right fa-fw"></i>
             <div class="rs-dropdown rs-primary-dropdown">
-                <a class="rs-dropdown-toggle" href="javascript:void(0);"> {{vm.selectedFaws}} <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span>
-                <i class="rs-caret"></i></a>
+                <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.fawsAcctStatus"> {{vm.selectedFaws}} <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span></a>
+                <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="!vm.fawsAcctStatus"> No FAWS Accounts Found <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span></a>
+                <i class="rs-caret"></i>
                 <ul class="rs-dropdown-menu hidden">
                     <li class="rs-dropdown-item">
                         <span class="rs-dropdown-category">You may create a new Account for this migration:
                             <a href="" role="button" ng-click="vm.displayFawsAccounModal()" data-toggle="modal" ng-show="vm.editmigration === 'false'" aria-hidden="false">Create new FAWS Account</a>
                         </span>
                     </li>
-                    <li class="rs-dropdown-item">
+                    <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus">
                         <span class="rs-dropdown-category">Or Select an Existing account:</span>
                     </li>
-                    <li class="rs-dropdown-item">
-                        <select ng-model="vm.selectedFaws" class="ng-pristine ng-valid ng-not-empty ng-touched" aria-invalid="false" style="">
+                    <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus">
+                        <select ng-model="vm.selectedFaws" class="ng-pristine ng-valid ng-not-empty ng-touched" aria-invalid="false" ng-change="vm.fawsAccountchanged()">
                             <!-- ngRepeat: account in vm.awsAccountsDetails -->
-                            <option ng-repeat="account in vm.awsAccountsDetails" class="ng-binding ng-scope" value="FAWS Migration Development (#057896020918)">FAWS Migration Development (#057896020918)</option>
+                            <option ng-repeat="account in vm.awsAccountsDetails" class="ng-binding ng-scope" value="{{account.name}} (#{{account.awsAccountNumber}})">{{account.name}} (#{{account.awsAccountNumber}})</option>
                             <!-- end ngRepeat: account in vm.awsAccountsDetails -->
                         </select>
                     </li>
@@ -38,12 +39,12 @@
     <div class="modal-body">
 
         <div ng-show="vm.fawsCreated">
-            <big>Successfully created a new FAWS account !</big><br>
+            <big>Successfully created a new FAWS account</big><br>
             <br>
             <b>Account Name : </b> {{vm.newAccountDetails.name}}<br> 
             <b>Accout Number :</b> {{vm.newAccountDetails.awsAccountNumber}}<br>
             <b>Service Level :</b> {{vm.newAccountDetails.serviceLevelName}}<br><br>
-            Click&nbsp;<a target="_blank" ng-href="https://manage.rackspace.com/aws/accounts">here</a>&nbsp;for more details</span>
+            Click&nbsp;<a target="_blank" ng-href="https://manage.rackspace.com/aws/accounts">here</a>&nbsp;for more details.</span>
         </div>   
         
         <span ng-show="vm.fawsError" style="color: #c40022">'Error while creating new FAWS account for you. Please try again after sometime...'</span>

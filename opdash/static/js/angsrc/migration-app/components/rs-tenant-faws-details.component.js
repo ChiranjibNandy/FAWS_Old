@@ -56,23 +56,36 @@
                 vm.fetchFawsAccounts = function() {
                     dataStoreService.getFawsAccounts()
                         .then(function (result) {
-                            vm.awsAccountsDetails = result.awsAccounts;
-                            if((vm.awsAccountsDetails == undefined || vm.awsAccountsDetails.length == 0)){
+                            //vm.awsAccountsDetails = (result.awsAccounts || '[]');
+                            if((result == null || result.awsAccounts.length == 0)){
+                                vm.awsAccountsDetails = [];
                                 vm.fawsAcctStatus = false;
                             }
                             else{
+                                vm.awsAccountsDetails = result.awsAccounts;
                                 vm.fawsAcctStatus = true;
-                                var fawsAccountDetails = {
+                                if(dataStoreService.fetchFawsDetails().selectedFawsAccount == undefined || dataStoreService.fetchFawsDetails().selectedFawsAccount == ''){
+                                    vm.selectedFaws = vm.awsAccountsDetails[0].name + " " + "(#" + vm.awsAccountsDetails[0].awsAccountNumber + ")";
+                                }
+                                else{
+                                    vm.selectedFaws = dataStoreService.fetchFawsDetails().selectedFawsAccount;
+                                }
+                                vm.fawsAccountDetails = {
                                         awsAccounts:vm.awsAccountsDetails,
+                                        selectedFawsAccount: vm.selectedFaws,
                                         totalAccounts: result.awsAccountLimit - result.remainingAccounts
                                     };
-                                dataStoreService.saveFawsDetails(fawsAccountDetails);
-                                vm.selectedFaws = vm.awsAccountsDetails[0].name + " " + "(#" + vm.awsAccountsDetails[0].awsAccountNumber + ")";
+                                dataStoreService.saveFawsDetails(vm.fawsAccountDetails);
+                                console.log("faws selected: "+vm.selectedFaws);
                             }
                     });
                 };
 
                 vm.fetchFawsAccounts();
+
+                vm.fawsAccountchanged = function(){
+                    dataStoreService.fawsAccounts.selectedFawsAccount = vm.selectedFaws;
+                };
 
                 vm.displayFawsAccounModal = function() {
                     vm.fawsResponse = false;
@@ -84,8 +97,8 @@
                 vm.createFawsAccount = function() {
                     vm.fawsCreationProgress = true;
                                         
-                    var requestObj = {"test": vm.fawsAcctName}; //for testing FAWS account creation API 
-                    // var requestObj = {"project_name": vm.fawsAcctName}; //for actual creation of a new FAWS account - use only in prod
+                    //var requestObj = {"test": vm.fawsAcctName}; //for testing FAWS account creation API 
+                    var requestObj = {"project_name": vm.fawsAcctName}; //for actual creation of a new FAWS account - use only in prod
                     
                     dataStoreService.createFawsAccount(requestObj)
                         .then(function (result) {

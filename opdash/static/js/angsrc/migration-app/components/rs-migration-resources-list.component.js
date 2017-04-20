@@ -29,7 +29,6 @@
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
                 vm.saveClicked = false;
-                vm.fawsAcctStatus = true;
 
                 vm.$onInit = function() {
                     //testing
@@ -42,18 +41,6 @@
                     if(status == false){
                         $('#intro_modal').modal('show');
                     }
-
-                    dataStoreService.getFawsAccounts()
-                        .then(function (result) {
-                            vm.awsAccountsDetails = result.awsAccounts;
-                            if((vm.awsAccountsDetails == undefined || vm.awsAccountsDetails.length == 0)){
-                                vm.fawsAcctStatus = false;
-                            }
-                            else{
-                                vm.fawsAcctStatus = true;
-                                vm.selectedFaws = vm.awsAccountsDetails[0].name + " " + "(#" + vm.awsAccountsDetails[0].awsAccountNumber + ")";
-                            }
-                    });
 
                     dataStoreService.setDontShowStatus(true);//set introduction modal flag to true after first time display.
                     $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Migration";
