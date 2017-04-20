@@ -378,7 +378,7 @@
                             vm.totalOfProjectedCostCalculationItems += (parseFloat(parseFloat(parseFloat(cost) * parseFloat(server.details.rax_uptime)) + parseFloat(server.details.aws_bandwidth_cost)));
                         }
                     });
-                    $('#calculator_modal').modal('show');
+                    $('#calculator_modal').modal('show');//Jenkins test this
                 }
 
                 return vm;             
