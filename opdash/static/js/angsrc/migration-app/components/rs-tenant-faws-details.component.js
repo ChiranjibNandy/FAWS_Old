@@ -33,9 +33,11 @@
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
                 vm.fawsAcctName = '';
-                vm.FawsCreated = false;
+                vm.fawsCreated = false;
                 vm.fawsCreationProgress = false;
                 vm.fawsResponse = false;
+                vm.fawsError = false;
+                vm.newAccountDetails = {};
 
                 vm.tenant_id = authservice.getAuth().tenant_id; //get Tenant ID
                    
@@ -74,34 +76,46 @@
 
                 vm.displayFawsAccounModal = function() {
                     vm.fawsResponse = false;
+                    vm.fawsError = false;
+                    vm.fawsCreated = false;
                     $('#create-faws-account-modal').modal('show');
                 };
 
                 vm.createFawsAccount = function() {
                     vm.fawsCreationProgress = true;
-                    var requestObj = {"project_nam": vm.fawsAcctName};
-                    if(dataStoreService.createFawsAccount(requestObj)){
-                        vm.fawsResponse = true;
-                        vm.FawsCreated = true;
-                        vm.fawsCreationProgress = false;
-                        vm.fetchFawsAccounts();
-                        // $timeout(function () {
-                            // $("#create-faws-account-modal").modal('hide');
-                            vm.fawsAcctName = '';
-                            // vm.fawsResponse = false;
-                        // }, 2000);
-                    }
-                    else{
-                        vm.fawsResponse = true;
-                        vm.fawsCreationProgress = false;
-                        vm.FawsCreated = false;
-                        // $timeout(function () {
-                            // $("#create-faws-account-modal").modal('hide');
-                            vm.fawsAcctName = '';
-                            // vm.fawsResponse = false;
-                        // }, 2000);
-                    }
-                };
+                                        
+                    var requestObj = {"test": vm.fawsAcctName}; //for testing FAWS account creation API 
+                    // var requestObj = {"project_name": vm.fawsAcctName}; //for actual creation of a new FAWS account - use only in prod
+                    
+                    dataStoreService.createFawsAccount(requestObj)
+                        .then(function (result) {
+                            vm.newAccountDetails = result;
+                            if (vm.newAccountDetails.error != 400){
+                                    console.log(vm.newAccountsDetails);
+                                    vm.fawsResponse = true;
+                                    vm.fawsError = false;
+                                    vm.fawsCreated = true;
+                                    vm.fawsCreationProgress = false;
+                                    vm.fetchFawsAccounts();
+                                    // $timeout(function () {
+                                    // $("#create-faws-account-modal").modal('hide');
+                                    vm.fawsAcctName = '';
+                                    // vm.fawsResponse = false;
+                                    // }, 2000);
+                            } 
+                            else {
+                                    vm.fawsError = true;
+                                    vm.fawsResponse = false;
+                                    vm.fawsCreated = false;
+                                    vm.fawsCreationProgress = false;
+                                    // $timeout(function () {
+                                    // $("#create-faws-account-modal").modal('hide');
+                                    vm.fawsAcctName = '';
+                                    // vm.fawsResponse = false;
+                                    // }, 2000);
+                            }
+                        });
+                    };
 
                 return vm;
             }]

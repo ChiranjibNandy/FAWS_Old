@@ -607,9 +607,9 @@
                 var self = this;
                 return HttpWrapper.save("/api/tenants/create_faws_account", {"operation":'POST'}, requestObj)
                     .then(function(result){
-                        return true;
+                       return result;
                     },function(error) {
-                        return false;
+                       return error;
                     });
             };
                 return self;
