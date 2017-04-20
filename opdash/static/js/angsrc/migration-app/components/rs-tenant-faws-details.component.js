@@ -91,7 +91,7 @@
                         .then(function (result) {
                             vm.newAccountDetails = result;
                             if (vm.newAccountDetails.error != 400){
-                                    console.log(vm.newAccountsDetails);
+                                    console.log(vm.newAccountDetails);
                                     vm.fawsResponse = true;
                                     vm.fawsError = false;
                                     vm.fawsCreated = true;
