@@ -226,6 +226,8 @@ $rootScope.$on("vm.scheduleMigration", function (event, value, selectedDate) {
                 vm.openUsageCostsModal = function(){
                     vm.costCalculationItems =[];
                     vm.projectedCostCalculationItems = [];
+                    vm.totalOfCostCalculationItems = 0;
+                    vm.totalOfProjectedCostCalculationItems = 0;
 
                     var selectedPricingMappingObj = dataStoreService.getItems('server');
                     selectedPricingMappingObj.forEach(function(server){
@@ -239,6 +241,7 @@ $rootScope.$on("vm.scheduleMigration", function (event, value, selectedDate) {
                                 "rax_uptime":server.details.rax_uptime.toFixed(2),
                                 "rax_total_cost":parseFloat(parseFloat(server.details.rax_uptime_cost) + parseFloat(server.details.rax_bandwidth_cost)).toFixed(2)
                             });
+                            vm.totalOfCostCalculationItems += (parseFloat(parseFloat(server.details.rax_uptime_cost) + parseFloat(server.details.rax_bandwidth_cost)));
                         }
 
                         if(server.details.hasOwnProperty('aws_bandwidth_cost')){
@@ -258,6 +261,7 @@ $rootScope.$on("vm.scheduleMigration", function (event, value, selectedDate) {
                                 "rax_bandwidth":server.details.rax_bandwidth.toFixed(2),
                                 "rax_uptime":server.details.rax_uptime.toFixed(2),                              
                             });
+                            vm.totalOfProjectedCostCalculationItems += (parseFloat(parseFloat(parseFloat(cost) * parseFloat(server.details.rax_uptime)) + parseFloat(server.details.aws_bandwidth_cost)));
                         }
                     });
                     $('#calculator_modal').modal('show');
