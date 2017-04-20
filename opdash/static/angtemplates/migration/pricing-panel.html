@@ -181,6 +181,12 @@
                     <td class="rs-table-text">${{item.rax_bandwidth_cost + " (" + item.rax_bandwidth + " GB)"}}</td>
                     <td class="rs-table-text">${{item.rax_total_cost}}</td>
                 </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>${{vm.totalOfCostCalculationItems.toFixed(2)}}</td>
+                </tr>
             </tbody>
         </table>
         <br>
@@ -202,6 +208,12 @@
                     <td class="rs-table-text">${{item.aws_uptime_cost + " (" + item.rax_uptime + ")"}}</td>
                     <td class="rs-table-text">${{item.aws_bandwidth_cost + " (" + item.rax_bandwidth + " GB)"}}</td>
                     <td class="rs-table-text">${{item.aws_total_cost}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>${{vm.totalOfProjectedCostCalculationItems.toFixed(2)}}</td>
                 </tr>
             </tbody>
         </table>
