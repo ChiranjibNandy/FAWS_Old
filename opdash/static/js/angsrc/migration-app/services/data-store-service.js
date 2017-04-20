@@ -256,6 +256,14 @@
                return self.dontShowNameModal;
             }
 
+            this.setPageName = function(status){
+               self.pageFlag = status;
+            }
+
+            this.getPageName = function(){
+               return self.pageFlag;
+            }
+
             /**
              * @ngdoc method
              * @name saveFawsDetails
@@ -581,7 +589,7 @@
             this.getFawsAccounts = function() {
                 var getSavedInstancesUrl = "/api/tenants/get_faws_accounts";
                 var tenant_id = authservice.getAuth().tenant_id;
-
+                
                 if (!loaded || (currentTenant !== tenant_id)){
                     return HttpWrapper.send(getSavedInstancesUrl, {"operation":'GET'})
                                         .then(function(result){

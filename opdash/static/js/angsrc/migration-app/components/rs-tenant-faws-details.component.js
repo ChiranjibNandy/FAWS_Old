@@ -35,6 +35,7 @@
                 vm.fawsAcctName = '';
                 vm.fawsCreated = false;
                 vm.fawsCreationProgress = false;
+                vm.showCreateAccount = false;
                 vm.fawsResponse = false;
                 vm.fawsError = false;
                 vm.newAccountDetails = {};
@@ -53,6 +54,12 @@
 
                 vm.auth = authservice.getAuth();
 
+                vm.currentPage = dataStoreService.getPageName();
+                if (vm.currentPage == "select-resources")
+                    vm.showCreateAccount = true;
+                else 
+                    vm.showCreateAccount = false;
+                    
                 vm.fetchFawsAccounts = function() {
                     dataStoreService.getFawsAccounts()
                         .then(function (result) {

@@ -9,15 +9,18 @@
             <div class="rs-dropdown rs-primary-dropdown">
                 <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.fawsAcctStatus"> {{vm.selectedFaws}} <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span></a>
                 <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="!vm.fawsAcctStatus"> No FAWS Accounts Found <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span></a>
-                <i class="rs-caret"></i>
+                <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.fawsAcctStatus"><i class="rs-caret"></i></a>
                 <ul class="rs-dropdown-menu hidden">
-                    <li class="rs-dropdown-item">
+                    <li class="rs-dropdown-item" ng-show="vm.showCreateAccount">
                         <span class="rs-dropdown-category">You may create a new Account for this migration:
                             <a href="" role="button" ng-click="vm.displayFawsAccounModal()" data-toggle="modal" ng-show="vm.editmigration === 'false'" aria-hidden="false">Create new FAWS Account</a>
                         </span>
                     </li>
-                    <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus">
-                        <span class="rs-dropdown-category">Or Select an Existing account:</span>
+                    <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && vm.showCreateAccount">
+                        <span class="rs-dropdown-category">or Select an Existing account:</span>
+                    </li>
+                    <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && !vm.showCreateAccount">
+                        <span class="rs-dropdown-category">Select another FAWS account:</span>
                     </li>
                     <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus">
                         <select ng-model="vm.selectedFaws" class="ng-pristine ng-valid ng-not-empty ng-touched" aria-invalid="false" ng-change="vm.fawsAccountchanged()">
@@ -39,7 +42,7 @@
     <div class="modal-body">
 
         <div ng-show="vm.fawsCreated">
-            <big>Successfully created a new FAWS account</big><br>
+            <big>Successfully created a new FAWS account!</big><br>
             <br>
             <b>Account Name : </b> {{vm.newAccountDetails.name}}<br> 
             <b>Accout Number :</b> {{vm.newAccountDetails.awsAccountNumber}}<br>
@@ -47,7 +50,7 @@
             Click&nbsp;<a target="_blank" ng-href="https://manage.rackspace.com/aws/accounts">here</a>&nbsp;for more details.</span>
         </div>   
         
-        <span ng-show="vm.fawsError" style="color: #c40022">'Error while creating new FAWS account for you. Please try again after sometime...'</span>
+        <span ng-show="vm.fawsError" style="color: #c40022">Uh oh! Something went wrong while creating new FAWS account for you. Please try again after sometime...</span>
         
         <div ng-hide= "vm.fawsCreated || vm.fawsError">
             <big>What would you like to name your new FAWS account?</big>
@@ -61,7 +64,7 @@
     </div>
     <div class="modal-footer">
        
-        <a class="rs-btn rs-btn-primary" ng-disabled="!vm.fawsAcctName" ng-click="vm.createFawsAccount()" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit &amp; Continue </a>
+        <a class="rs-btn rs-btn-primary" ng-disabled="!vm.fawsAcctName" ng-click="vm.createFawsAccount()" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
         <a class="rs-btn disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
         <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</a>
     </div>

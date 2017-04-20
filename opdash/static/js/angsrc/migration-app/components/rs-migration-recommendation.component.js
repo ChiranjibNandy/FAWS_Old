@@ -44,6 +44,8 @@
                     vm.dataNetwork = networkNames.length;
                     vm.dataLoadBalancers = datastoreservice.getItems('LoadBalancers').length;
                     vm.editName = false;
+
+                    datastoreservice.setPageName("recommendations");
                 }
 
                 /**

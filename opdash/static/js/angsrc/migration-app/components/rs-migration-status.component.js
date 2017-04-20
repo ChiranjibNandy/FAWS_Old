@@ -61,6 +61,9 @@
                     vm.count = 0;
                     vm.is_racker = authservice.getAuth().is_racker;
                     vm.afterNewMigration = false;
+                    
+                    dataStoreService.setPageName("migration-status");
+
                     if(authservice.getAuth().is_racker == false){   //get Account Name
                         var actname = dataStoreService.getAccountName(vm.tenant_id); //this service method is setting the accountname through api
                         actname.then(function() {

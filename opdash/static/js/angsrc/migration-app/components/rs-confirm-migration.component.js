@@ -44,6 +44,8 @@
                     vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
                     vm.changedMigrationName = vm.migrationName;
 
+                    dataStoreService.setPageName("confirm-migrate");
+
                     vm.schedule = {
                         date: dataStoreService.getMigrationDate() || new Date().toDateString(),
                         time: dataStoreService.getMigrationTime() || new Date().toTimeString(),
