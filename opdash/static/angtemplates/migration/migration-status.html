@@ -242,7 +242,7 @@
                     <div class="span-6">
                         <div class="rs-facet-section">
                             <div class="rs-facet-section-body">
-                                <h3>Alerts <span class="rs-quiet">({{vm.alerts.length}})</span></h3>
+                                <h3>Errors/Warnings <span class="rs-quiet">({{vm.alerts.length}})</span></h3>
                                 <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container" style="margin-top: 0;">
                                     <table class="rs-list-table rs-embedded-list-table">
                                         <thead>
@@ -262,7 +262,7 @@
                                         </tbody>
                                         <tbody ng-show="!vm.loadingAlerts && vm.alerts.length===0">
                                             <tr>
-                                                <td colspan="3" class="empty-collection-info">You don't have any alerts</td>
+                                                <td colspan="3" class="empty-collection-info">You don't have any errors/warnings.</td>
                                             </tr>
                                         </tbody>
                                     </table>
