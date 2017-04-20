@@ -42,6 +42,8 @@
                         $('#intro_modal').modal('show');
                     }
 
+                    dataStoreService.setPageName("select-resources");
+
                     dataStoreService.setDontShowStatus(true);//set introduction modal flag to true after first time display.
                     $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Migration";
 
