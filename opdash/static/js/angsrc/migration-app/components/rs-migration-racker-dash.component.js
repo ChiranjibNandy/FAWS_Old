@@ -388,7 +388,6 @@
                  */
                 vm.setTenantId = function(item){
                     var doSavedForLaterMigrationsExist = false;
-                    var doResourceMigrationsExist = false;
                     var tenant_id_text = item.accountName;
                     var tenant_id = tenant_id_text.substring(tenant_id_text.lastIndexOf("#")+1,tenant_id_text.lastIndexOf(")"));
                     authservice.getAuth().tenant_id = tenant_id;
@@ -404,18 +403,8 @@
                         doSavedForLaterMigrationsExist = false;
                     });
 
-                    var url = "/api/jobs/all";
-                    var resourceMigrationPromise = HttpWrapper.send(url,{"operation":'GET'})
-                    .then(function(response){
-                        if(response !== null && response.job_status_list.length !== 0){
-                            doResourceMigrationsExist = true;
-                        }
-                    },function(error) {
-                        doResourceMigrationsExist = false;
-                    });
-
-                    $q.all([savedMigrationPromise,resourceMigrationPromise]).then(function(result){
-                        if(doSavedForLaterMigrationsExist === false && doResourceMigrationsExist === false){
+                    $q.all([savedMigrationPromise]).then(function(result){
+                        if(doSavedForLaterMigrationsExist === false && (item.inProgressBatches + item.completedBatches) === 0){
                             $rootRouter.navigate(["MigrationResourceList"]);                          
                         }
                         else{
