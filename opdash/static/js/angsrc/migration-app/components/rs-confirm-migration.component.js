@@ -174,6 +174,7 @@ $rootScope.$on("vm.scheduleMigration", function (event, value, selectedDate) {
                                 buttonDetails.resultMsg = "";
                                 if (buttonDetails.modalName == '#cancel_modal') {
                                     $('#cancel_modal').modal('hide');
+                                    dataStoreService.resetAll();
                                     $rootRouter.navigate(["MigrationStatus"]);
                                 }
                             }, 3000);

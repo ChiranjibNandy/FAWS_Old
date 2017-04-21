@@ -60,8 +60,8 @@
                                 <th class="rs-table-cog rs-center">Actions</th>
                             </tr>
                         </thead>
-                        <tbody ng-show="!vm.loading && !vm.currentBatches.loadError && vm.currentBatches.items.length!==0">
-                            <tr ng-show="vm.showInitiatedMigration">
+                        <tbody ng-show="!vm.loading && !vm.currentBatches.loadError && vm.showInitiatedMigration">
+                            <tr>
                                 <td class="rs-table-status tip rs-table-status-ok"></td>
                                 <td class="rs-table-link">
                                     {{vm.initiatedMigration.name}}
@@ -85,7 +85,8 @@
                                     </div>
                                 </td>
                             </tr>
-                            
+                        </tbody>
+                        <tbody ng-show="!vm.loading && !vm.currentBatches.loadError && vm.currentBatches.items.length!==0">
                             <tr ng-repeat="batch in vm.currentBatches.items | orderBy: vm.sortBy.current_batch | limitTo : vm.currentBatches.pageSize : (vm.currentBatches.currentPage-1)*vm.currentBatches.pageSize" class="ng-scope">
                                 <td class="rs-table-status tip" ng-class="{'rs-table-status-pending': (batch.batch_status==='not available' || batch.timestamp), 'rs-table-status-warning': batch.batch_status==='scheduled', 'rs-table-status-ok rs-table-status-ok-processing rs-table-status-striped': batch.batch_status==='in progress', 'rs-table-status-error': batch.batch_status==='error'}"></td>
                                 <td class="rs-table-link">
@@ -149,7 +150,7 @@
                                 </td>
                             </tr>
                         </tbody>
-                        <tbody ng-show="!vm.loading && !vm.currentBatches.loadError && vm.currentBatches.items.length===0">
+                        <tbody ng-show="!vm.loading && !vm.currentBatches.loadError && vm.currentBatches.items.length===0 && !vm.showInitiatedMigration">
                             <tr>
                                 <td colspan="6" class="empty-collection-info">You don't have any migrations running at the moment.</td>
                             </tr>
