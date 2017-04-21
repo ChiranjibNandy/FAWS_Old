@@ -8,19 +8,19 @@
         <span class="migr-ddi-name"><i class="fa fa-arrow-right fa-fw"></i>
             <div class="rs-dropdown rs-primary-dropdown">
                 <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.fawsAcctStatus"> {{vm.selectedFaws}} <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span></a>
-                <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="!vm.fawsAcctStatus"> No FAWS Accounts Found <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span></a>
-                <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.fawsAcctStatus"><i class="rs-caret"></i></a>
+                <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="!vm.fawsAcctStatus"> No AWS Accounts Found <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span></a>
+                <a class="rs-dropdown-toggle" href="javascript:void(0);"><i class="rs-caret"></i></a>
                 <ul class="rs-dropdown-menu hidden">
                     <li class="rs-dropdown-item" ng-show="vm.showCreateAccount">
                         <span class="rs-dropdown-category">You may create a new Account for this migration:
-                            <a href="" role="button" ng-click="vm.displayFawsAccounModal()" data-toggle="modal" ng-show="vm.editmigration === 'false'" aria-hidden="false">Create new FAWS Account</a>
+                            <a href="" role="button" ng-click="vm.displayFawsAccounModal()" data-toggle="modal" ng-show="vm.editmigration === 'false'" aria-hidden="false">Create new AWS Account</a>
                         </span>
                     </li>
                     <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && vm.showCreateAccount">
                         <span class="rs-dropdown-category">or Select an Existing account:</span>
                     </li>
                     <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && !vm.showCreateAccount">
-                        <span class="rs-dropdown-category">Select another FAWS account:</span>
+                        <span class="rs-dropdown-category">Select another AWS account:</span>
                     </li>
                     <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus">
                         <select ng-model="vm.selectedFaws" class="ng-pristine ng-valid ng-not-empty ng-touched" aria-invalid="false" ng-change="vm.fawsAccountchanged()">
@@ -42,7 +42,7 @@
     <div class="modal-body">
 
         <div ng-show="vm.fawsCreated">
-            <big>Successfully created a new FAWS account!</big><br>
+            <big>Successfully created a new AWS account!</big><br>
             <br>
             <b>Account Name : </b> {{vm.newAccountDetails.name}}<br> 
             <b>Accout Number :</b> {{vm.newAccountDetails.awsAccountNumber}}<br>
@@ -50,12 +50,12 @@
             Click&nbsp;<a target="_blank" ng-href="https://manage.rackspace.com/aws/accounts">here</a>&nbsp;for more details.</span>
         </div>   
         
-        <span ng-show="vm.fawsError" style="color: #c40022">Uh oh! Something went wrong while creating new FAWS account for you. Please try again after sometime...</span>
+        <span ng-show="vm.fawsError" style="color: #c40022">Uh oh! Something went wrong while creating new AWS account for you. Please try again after sometime...</span>
         
         <div ng-hide= "vm.fawsCreated || vm.fawsError">
-            <big>What would you like to name your new FAWS account?</big>
+            <big>What would you like to name your new AWS account?</big>
             <br><br>
-            <input type="text" ng-model="vm.fawsAcctName" class="rs-input-xlarge" placeholder="FAWS AccountName" />
+            <input type="text" ng-model="vm.fawsAcctName" class="rs-input-xlarge" placeholder="AWS AccountName" />
             <br>
             <b>Please note that we may place a $1 authorization hold to confirm your account.</b> <br>
             <small>(Our lawyers make us say this)

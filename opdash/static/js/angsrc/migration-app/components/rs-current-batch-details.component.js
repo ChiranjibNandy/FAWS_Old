@@ -72,6 +72,9 @@
                     };
                     vm.alerts = [];
                     vm.loadingAlerts = true;
+
+                    vm.getBatchDetails();
+                    vm.getAllAlerts();
                 };
 
                 vm.$routerOnActivate = function(next, previous) {
