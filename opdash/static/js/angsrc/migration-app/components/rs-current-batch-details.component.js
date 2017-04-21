@@ -76,7 +76,7 @@
 
                 vm.$routerOnActivate = function(next, previous) {
                     job_id = next.params.job_id;
-                    vm.getBatchDetails();
+                    vm.getBatchDetails(true);
                     vm.getAllAlerts();
                 };
 

@@ -296,6 +296,7 @@
                             $timeout(function () {
                                 buttonDetails.resultMsg = "";
                                 if(buttonDetails.modalName == '#cancel_modal'){
+                                    dataStoreService.resetAll();
                                     $('#cancel_modal').modal('hide');
                                     $rootRouter.navigate(["MigrationStatus"]);
                                 }

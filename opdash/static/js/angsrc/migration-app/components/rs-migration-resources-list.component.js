@@ -210,6 +210,7 @@
                                 buttonDetails.resultMsg = "";
                                 if(buttonDetails.modalName == '#cancel_modal'){
                                     $('#cancel_modal').modal('hide');
+                                    dataStoreService.resetAll();
                                     $rootRouter.navigate(["MigrationStatus"]);
                                 }
                                 else
@@ -368,6 +369,7 @@
                         //};
                     }
                     else{
+                        dataStoreService.resetAll();
                         $rootRouter.navigate(["MigrationStatus"]);
                         $('#cancel_modal').modal('hide');
                     }
