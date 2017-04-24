@@ -28,11 +28,10 @@
              */
             controller:["datastoreservice","$rootRouter","httpwrapper","$filter","$timeout","$q","$rootScope","httpwrapper","migrationitemdataservice",function(dataStoreService,$rootRouter,HttpWrapper,$filter,$timeout,$q,$rootScope,httpwrapper,ds){
                 var vm = this;
-                vm.invoiceCoverageStartDate = '';
-                vm.invoiceCoverageEndDate = '';
                 vm.invoiceTotal = '';
                 vm.totalProjectedPricingSum = 0;
-/**
+                
+                /**
                  * @ngdoc method
                  * @name $onInit
                  * @methodOf migrationApp.controller:rsschedulemigrationCtrl
@@ -44,11 +43,6 @@
                     vm.loadError = false;
                     vm.precheck = false;
                     vm.precheckError = false;
-                    dataStoreService.setRecommendedTotalCost();
-                    dataStoreService.setCurrentPricing ();
-                    vm.totalCost = dataStoreService.getRecommendedTotalCost();
-                    vm.currentPricing = dataStoreService.getCurrentPricing ();
-                    vm.savings = (vm.currentPricing - vm.totalCost);           
                     var currentPricingDetails = vm.getCurrentPricingDetails();
                     var projectedPricingDetails = vm.getProjectedPricing();
 
@@ -59,12 +53,6 @@
                         vm.loading = false;
                         vm.loadError = true;
                     });
-                    vm.saveLaterObj = {
-                        "saveSuccess" : false,
-                        "saveInProgress" : false,
-                        "resultMsg" : "",
-                        "modalName": '#save_for_later'
-                    };
 
                     vm.cancelnSaveObj = {
                         "saveSuccess" : false,
@@ -151,17 +139,10 @@
                             vm.precheckError = true;
                             console.log("error");
                             console.log(error);
-                            // console.log("Error: Could not trigger migration", error);
-                            // vm.migrating = false;
-                            // vm.errorInMigration = true;
-                            // vm.scheduleMigration = true;
                         });
                     }
-                    else if(vm.page==="scheduleMigration"){
-                        dataStoreService.setScheduleMigration(vm.selectedTime);  
-                        $rootRouter.navigate(["ConfirmMigration"]);
-                    }
                 };
+                
                 /**
                  * @ngdoc method
                  * @name back
@@ -170,29 +151,24 @@
                  * function to go back to previous page. 
                  */
                 vm.back = function() {
-                    //conditions to checkeck on what page the user is and navigate back to the previous page.
-                    if(vm.page==="recommendation"){
-                        $rootRouter.navigate(["MigrationResourceList"]);
-                    }
-                    else if(vm.page==="scheduleMigration"){
-                        $rootRouter.navigate(["MigrationRecommendation"]);
-                    }
+                    //we dont need any conditions here as we are only using in pricing panel
+                    $rootRouter.navigate(["MigrationResourceList"]);
                 }
 
-/**
+                /**
                  * @ngdoc method
                  * @name showCancelDialog
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
                  * @description 
                  * function to cancel the migration. 
                  */
-
-                   vm.showCancelDialog = function() {
+                vm.showCancelDialog = function() {
                     $('#cancel_modal').modal('show');
                 };
 
+                //Listener to close and show modal
                 $rootScope.$on("showCancelModal", function(event){
-                    $('#cancel_modal').modal('show');
+                    vm.showCancelDialog();
                 });
 
                 /**
@@ -225,10 +201,9 @@
                         invoiceTotal += item.details.rax_price;
                     });
                     vm.invoiceTotal = invoiceTotal.toFixed(2);
-                    vm.invoiceCoverageStartDate = parseInt(date.getMonth())+"/01/"+date.getFullYear();
-                    vm.invoiceCoverageEndDate =  parseInt(date.getMonth())+1+"/01/"+date.getFullYear();
                 }
 
+                //Listener to listen to price change in the recommendations page.
                 $rootScope.$on("pricingChanged",function(){
                     vm.getProjectedPricing();
                     vm.getCurrentPricingDetails();
@@ -270,12 +245,6 @@
                         scheduleItem = {};
                         time = '';
                         timezone = '';
-                    }
-                    else if(vm.page==="scheduleMigration"){
-                        stepName = "ScheduleMigration";
-                        scheduleItem = dataStoreService.getScheduleMigration();
-                        time = dataStoreService.getScheduleMigration().time;
-                        timezone = dataStoreService.getScheduleMigration().timezone;
                     }
                     var saveInstance = {
                         recommendations : dataStoreService.getItems(),
@@ -321,7 +290,7 @@
                     });
                 };
 
- /**
+                /**
                  * @ngdoc method
                  * @name submitCancel
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
@@ -338,7 +307,7 @@
                         $('#cancel_modal').modal('hide');
                     }
                 }
-
+                
                 vm.openUsageCostsModal = function(){
                     vm.costCalculationItems =[];
                     vm.projectedCostCalculationItems = [];
