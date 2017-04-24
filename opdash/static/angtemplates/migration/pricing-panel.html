@@ -27,15 +27,6 @@
             <br>
             <small>* For selected resources from <b>step 1</b></small>
         </p>
-        <!--<p>
-            Billing Period:
-            <br>
-            <em>{{vm.invoiceCoverageStartDate}} to {{vm.invoiceCoverageEndDate}}</em>
-            <br>
-            <big><b>${{vm.invoiceTotal}}</b>/month</big>
-            <br>
-            <a href=""><small>(See Details)</small></a>
-        </p>-->
     </div>
     <div class="white-panel">
         <h3>Projected Cost<a href="#" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="The projected pricing consist of infrastructure costs only, and support costs are not included in the provided price."><i class="fa fa-info-circle rs-quiet"></i></a></h3>
@@ -54,11 +45,7 @@
     <br>
 
     <div class="rs-row pricing-buttons">
-        <!--<a class="rs-btn span-12" ng-click="vm.saveItems(vm.saveLaterObj)" ng-hide="vm.saveLaterObj.saveInProgress">Save For Later</a>
-            <a class="rs-btn span-10 disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
-            <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>-->
         <a class="rs-btn span-12" role="button" ng-click="vm.showCancelDialog()">Cancel Migration</a>
-        <!--<a class="rs-btn span-12" href="#cancel_modal" role="button" data-toggle="modal">Cancel Migration</a>-->
     </div>
     <div class="rs-row">
         <a class="rs-btn span-6" ng-click="vm.back()">Back</a>
@@ -141,7 +128,7 @@
         </table>
         <br>
         <br>
-        <p><strong><span class="rs-status-warning">Warning</span> - Resources with warnings can still br migrated, Click continue if you would like to do so. <br>
+        <p><strong><span class="rs-status-warning">Warning</span> - Resources with warnings can still be migrated, Click continue if you would like to do so. <br>
         <span class="rs-status-error">Errors</span> - Resources with errors cannot be migrated at this time.
         </strong></p>        
     </div>

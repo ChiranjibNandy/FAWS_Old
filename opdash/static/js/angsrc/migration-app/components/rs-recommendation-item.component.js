@@ -48,7 +48,7 @@
                 var vm = this;
 
                 vm.$onInit = function() {
-                    vm.recSelectedItems = dataStoreService.getRecommendedItems() || [];
+                    // vm.recSelectedItems = dataStoreService.getRecommendedItems() || [];
                     vm.propertyName = "name";
                     vm.reverse = false;
                     vm.disable = true;
@@ -66,7 +66,6 @@
                         vm.data.map(function(item){
                             if(!item.selectedMapping){
                                 item.selectedMapping = item.mappings[0];
-                                item.isMenuOpen = false;
                             }
                         });
                         dataStoreService.setItems({server:vm.data,network:[],LoadBalancers:dataStoreService.getItems('LoadBalancers')});
@@ -111,7 +110,14 @@
                         vm.showModify = false;
                 };
 
-
+                /**
+                  * @ngdoc method
+                  * @name disableConfirm
+                  * @methodOf migrationApp.controller:rsrecommendationitemCtrl
+                  * @description 
+                  * This method will diable confirm button in the recommendations modal. Based on the 
+                  * selection again confirm button will be enabled.
+                  */
                 vm.disableConfirm = function(){
                     vm.disable = false;
                 }
@@ -142,7 +148,14 @@
                         });
                     });
                 }
-
+                
+                /**
+                  * @ngdoc method
+                  * @name fetchNetworks
+                  * @methodOf migrationApp.controller:rsrecommendationitemCtrl
+                  * @description 
+                  * This function assists us with the sorting of columns in all the tabs.
+                  */
                 vm.sortBy = function(propertyName) {
                     vm.reverse = (vm.propertyName === propertyName) ? !vm.reverse : false;
                     vm.propertyName = propertyName;
@@ -199,7 +212,6 @@
                  */
                 vm.showModifyModal = function(item,id){
                     vm.disable = true;
-                    item.isMenuOpen = !item.isMenuOpen;
                     $(id).modal('show');
                     vm.getPricingDetails(item);
                 };
@@ -225,32 +237,42 @@
                     $('#modify_modal'+id).modal('hide');
                 };
 
+                // Currently we are not using this method, which helps to remove the server from selected items.
+                // We may use it in the future, so keeping it commented as of now.
+                // /**
+                //  * @ngdoc method
+                //  * @name removeServer
+                //  * @methodOf migrationApp.controller:rsrecommendationitemCtrl
+                //  * @description 
+                //  * This function helps to remove the selected servers and also modify the original object 
+                //  * of the particular server.
+                //  */
+                // vm.removeServer = function(id){
+                //     var allData = dataStoreService.retrieveallItems('server');     
+                //     var selectedServer = allData.filter(function(item){
+                //                             if(item.id === id){
+                //                                 item.selected = !item.selected;
+                //                                 return item;
+                //                             };
+                //                          });    
+                //     //it helps to store the updated object back
+                //     dataStoreService.storeallItems(allData,'server');     
+                //     vm.data.splice(vm.data.indexOf(selectedServer[0]), 1);
+                //     //updating networks tab and pricing panel that an server is removed
+                //     $rootScope.$emit("pricingChanged");
+                //     $('.rs-tabs').children()[0].children[0].innerHTML = "Servers ("+vm.data.length+")";
+                //     if(vm.data.length === 0)  $('.rs-tabs').children()[1].children[0].innerHTML = "Networks (0)";
+                //     dataStoreService.setItems({server:vm.data,network:[],LoadBalancers:dataStoreService.getItems('LoadBalancers')});
+                // }
+
                 /**
                  * @ngdoc method
-                 * @name removeServer
+                 * @name equipmentDetails
                  * @methodOf migrationApp.controller:rsrecommendationitemCtrl
                  * @description 
-                 * This function helps to remove the selected servers and also modify the original object 
-                 * of the particular server.
+                 * This function helps us to trigger a function in its parent, which in turn helps 
+                 * to show the modal of equipment details.
                  */
-                vm.removeServer = function(id){
-                    var allData = dataStoreService.retrieveallItems('server');     
-                    var selectedServer = allData.filter(function(item){
-                                            if(item.id === id){
-                                                item.selected = !item.selected;
-                                                return item;
-                                            };
-                                         });    
-                    //it helps to store the updated object back
-                    dataStoreService.storeallItems(allData,'server');     
-                    vm.data.splice(vm.data.indexOf(selectedServer[0]), 1);
-                    //updating networks tab and pricing panel that an server is removed
-                    $rootScope.$emit("pricingChanged");
-                    $('.rs-tabs').children()[0].children[0].innerHTML = "Servers ("+vm.data.length+")";
-                    if(vm.data.length === 0)  $('.rs-tabs').children()[1].children[0].innerHTML = "Networks (0)";
-                    dataStoreService.setItems({server:vm.data,network:[],LoadBalancers:dataStoreService.getItems('LoadBalancers')});
-                }
-
                 vm.equipmentDetails = function(type, itemdetails) {
                     if (type === "loadbalancers") type = "LoadBalancers";
                     vm.parent.equipmentDetails(type, itemdetails);
