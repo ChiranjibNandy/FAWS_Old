@@ -7,7 +7,12 @@
      * @description
      * Component to display the details of a batch migration which has completed. This component is loaded directly on route change.  
      *   
-     * This component uses the template: **angtemplates/migration/batch-migration-details.html**. It uses the controller {@link migrationApp.controller:rscompletedbatchdetailsCtrl rscompletedbatchdetailsCtrl}.  
+     * This component uses the template: **angtemplates/migration/batch-migration-details.html**. 
+     * Its controller {@link migrationApp.controller:rscompletedbatchdetailsCtrl rscompletedbatchdetailsCtrl} uses the below services:
+     * $rootRouter
+     * {@link migrationApp.service:migrationitemdataservice migrationitemdataservice}
+     * {@link migrationApp.service:dashboardservice dashboardservice}
+     * {@link migrationApp.service:authservice authservice}
      */
     angular.module("migrationApp")
         .component("rscompletedbatchdetails", {
@@ -56,6 +61,15 @@
                     getBatchDetails(job_id);
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name equipmentDetails
+                 * @methodOf migrationApp.controller:rscompletedbatchdetailsCtrl
+                 * @param {String} type Resource type
+                 * @param {String} id Resource id
+                 * @description 
+                 * Fetches resource details for a given resource type and id
+                 */
                 vm.equipmentDetails = function(type, id) {
                     ds.getTrimmedAllItems(type)
                         .then(function (response) {
@@ -66,6 +80,15 @@
                         });
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name setSortBy
+                 * @methodOf migrationApp.controller:rscompletedbatchdetailsCtrl
+                 * @param {String} batch Any of the resource types available
+                 * @param {String} sortBy Any of the available fields of a resource by which we need to sort
+                 * @description 
+                 * Sets the sort parameter for a given resource type
+                 */
                 vm.setSortBy = function(resourceType, sortBy) {
                     if(vm.sortBy[resourceType] === sortBy && vm.sortBy[resourceType][0] !== "-")
                         vm.sortBy[resourceType] = "-" + sortBy;

@@ -7,7 +7,14 @@
      * @description
      * Component to display the details of a batch migration which is in progress. This component is loaded directly on route change.  
      *   
-     * This component uses the template: **angtemplates/migration/batch-current.html**. It uses the controller {@link migrationApp.controller:rscurrentbatchdetailsCtrl rscurrentbatchdetailsCtrl}.  
+     * This component uses the template: **angtemplates/migration/batch-current.html**. 
+     * 
+     * Its controller {@link migrationApp.controller:rscurrentbatchdetailsCtrl rscurrentbatchdetailsCtrl} uses the below services:
+     * $rootRouter
+     * {@link migrationApp.service:migrationitemdataservice migrationitemdataservice}
+     * {@link migrationApp.service:dashboardservice dashboardservice}
+     * {@link migrationApp.service:authservice authservice}
+     * {@link migrationApp.service:alertsservice alertsservice}
      */
     angular.module("migrationApp")
         .component("rscurrentbatchdetails", {
@@ -80,6 +87,15 @@
                     vm.getAllAlerts();
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name equipmentDetails
+                 * @methodOf migrationApp.controller:rscurrentbatchdetailsCtrl
+                 * @param {String} type Resource type
+                 * @param {String} id Resource id
+                 * @description 
+                 * Fetches resource details for a given resource type and id
+                 */
                 vm.equipmentDetails = function(type, id) {
                     ds.getTrimmedAllItems(type)
                         .then(function (response) {
@@ -90,6 +106,15 @@
                         });
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name setSortBy
+                 * @methodOf migrationApp.controller:rscurrentbatchdetailsCtrl
+                 * @param {String} batch Any of the resource types available
+                 * @param {String} sortBy Any of the available fields of a resource by which we need to sort
+                 * @description 
+                 * Sets the sort parameter for a given resource type
+                 */
                 vm.setSortBy = function(resourceType, sortBy) {
                     if(vm.sortBy[resourceType] === sortBy && vm.sortBy[resourceType][0] !== "-")
                         vm.sortBy[resourceType] = "-" + sortBy;
@@ -97,6 +122,14 @@
                         vm.sortBy[resourceType] = sortBy;
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name getAllAlerts
+                 * @methodOf migrationApp.controller:rscurrentbatchdetailsCtrl
+                 * @param {Boolean} refresh True if the alerts list needs to be refreshed
+                 * @description 
+                 * Gets the list of all alerts for all the migrations, if any
+                 */
                 vm.getAllAlerts = function(refresh) {
                     vm.loadingAlerts = true;
                     var tempAlerts = [];

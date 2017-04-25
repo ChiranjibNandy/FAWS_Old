@@ -11,6 +11,15 @@
      *   
      * Its controller {@link migrationApp.controller:rsmigrationstatusCtrl rsmigrationstatusCtrl} uses the below services:
      *  * {@link migrationApp.service:httpwrapper httpwrapper}
+     *  * {@link migrationApp.service:datastoreservice datastoreservice}
+     *  * $rootRouter
+     *  * {@link migrationApp.service:authservice authservice}
+     *  * {@link migrationApp.service:dashboardservice dashboardservice}
+     *  * {@link migrationApp.service:migrationitemdataservice migrationitemdataservice}
+     *  * {@link migrationApp.service:alertsservice alertsservice}
+     *  * $filter
+     *  * $interval
+     *  * $timeout
      */
     angular.module("migrationApp")
             .component("rsmigrationstatus", {
@@ -259,6 +268,14 @@
                     }, 3000);
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name getAllAlerts
+                 * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                 * @param {Boolean} refresh True if the alerts list needs to be refreshed
+                 * @description 
+                 * Gets the list of all alerts for all the migrations, if any
+                 */
                 vm.getAllAlerts = function(refresh) {
                     vm.loadingAlerts = true;
                     alertsService.getAllAlerts(refresh)
@@ -268,6 +285,14 @@
                                     });
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name getAllTickets
+                 * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                 * @param {Boolean} refresh True if the tickets list needs to be refreshed
+                 * @description 
+                 * Gets the list of all tickets, if any
+                 */
                 vm.getAllTickets = function(refresh) {
                     vm.loadingTickets = true;
                     alertsService.getAllTickets(refresh)
@@ -306,29 +331,9 @@
                         return;
                     }
 
-                    //var allData = dataStoreService.retrieveallItems();
-                    // angular.forEach(allData, function (items_type) {
-                    //     if(items_type.length != 0){
-                    //         angular.forEach(items_type, function (item) {
-                    //             item.selected = false;
-                    //             angular.forEach(batch.selected_resources, function (batch_item_type) {
-                    //                 if(batch_item_type.length != 0){
-                    //                     angular.forEach(batch_item_type, function (selected) {
-                    //                         if (selected['id'] == item.id) {
-                    //                             item.selected = true;
-                    //                         }
-                    //                     });
-                    //                 };
-                    //             });
-                    //         });
-                    //     }
-                    // });
-
-                    //dataStoreService.storeallItems(allData.server, 'server');
-                    //dataStoreService.storeallItems(allData.LoadBalancers, 'LoadBalancers');
                     dataStoreService.setDontShowStatus(true);
                     dataStoreService.selectedTime.migrationName = batch.batch_name;
-                    //console.log("batch details: "+JSON.stringify(batch.selected_resources));
+                    
                     if (batch.step_name === "MigrationResourceList") {
                         dataStoreService.setItems(batch.selected_resources);
                     } else if (batch.step_name === "MigrationRecommendation") {
@@ -389,6 +394,15 @@
                         });
                     };
 
+                    /**
+                     * @ngdoc method
+                     * @name setSortBy
+                     * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                     * @param {String} batch Possible parameters: 'current' or 'completed'
+                     * @param {String} sortBy Any of the available fields inside a batch by which we need to sort
+                     * @description 
+                     * Sets the sort parameter for current and completed batch list
+                     */
                     vm.setSortBy = function(batch, sortBy) {
                         if(vm.sortBy[batch] === sortBy && vm.sortBy[batch][0] !== "-")
                             vm.sortBy[batch] = "-" + sortBy;
@@ -396,6 +410,14 @@
                             vm.sortBy[batch] = sortBy;
                     };
 
+                    /**
+                     * @ngdoc method
+                     * @name showActionList
+                     * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                     * @param {Object} batch The batch object for which the menu is to be displayed
+                     * @description 
+                     * Resets menu for all current batches and sets it for an individual one
+                     */
                     vm.showActionList = function(batch) {
                         resetActionFlags();
                         $timeout(function(){
