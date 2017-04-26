@@ -61,12 +61,12 @@
                     vm.showCreateAccount = false;
 
                 /**
-                 * @ngdoc method
-                 * @name fetchFawsAccounts
-                 * @methodOf migrationApp.controller:tenantfawsdetailsCtrl
-                 * @description 
-                 * Fetches FAWS accounts associated with tenant/customer ID.
-                 */  
+                  * @ngdoc method
+                  * @name fetchFawsAccounts
+                  * @methodOf migrationApp.controller:tenantfawsdetailsCtrl
+                  * @description 
+                  * Fetches FAWS accounts associated with tenant/customer ID.
+                */
                 vm.fetchFawsAccounts = function() {
                     dataStoreService.getFawsAccounts()
                         .then(function (result) {
@@ -96,23 +96,23 @@
                 vm.fetchFawsAccounts();
 
                 /**
-                 * @ngdoc method
-                 * @name fawsAccountchanged
-                 * @methodOf migrationApp.controller:tenantfawsdetailsCtrl
-                 * @description 
-                 * To Detect if there is any change in selection of FAWS Account.
+                  * @ngdoc method
+                  * @name fawsAccountchanged
+                  * @methodOf migrationApp.controller:tenantfawsdetailsCtrl
+                  * @description 
+                  * To Detect if there is any change in selection of FAWS Account.
                  */
                 vm.fawsAccountchanged = function(){
                     dataStoreService.fawsAccounts.selectedFawsAccount = vm.selectedFaws;
                 };
 
                 /**
-                 * @ngdoc method
-                 * @name displayFawsAccounModal
-                 * @methodOf migrationApp.controller:tenantfawsdetailsCtrl
-                 * @description 
-                 * To Display modal to create new FAWS Account.
-                 */
+                  * @ngdoc method
+                  * @name displayFawsAccounModal
+                  * @methodOf migrationApp.controller:tenantfawsdetailsCtrl
+                  * @description 
+                  * To Display modal to create new FAWS Account.
+                */
                 vm.displayFawsAccounModal = function() {
                     vm.fawsResponse = false;
                     vm.fawsError = false;
@@ -121,12 +121,12 @@
                 };
 
                 /**
-                 * @ngdoc method
-                 * @name createFawsAccount
-                 * @methodOf migrationApp.controller:tenantfawsdetailsCtrl
-                 * @description 
-                 * Makes a call to api/tenants/create_faws_account API to create new FAWS account for a tenant ID.
-                 */
+                  * @ngdoc method
+                  * @name createFawsAccount
+                  * @methodOf migrationApp.controller:tenantfawsdetailsCtrl
+                  * @description 
+                  * Makes a call to api/tenants/create_faws_account API to create new FAWS account for a tenant ID.
+                */
                 vm.createFawsAccount = function() {
                     vm.fawsCreationProgress = true;
                                         

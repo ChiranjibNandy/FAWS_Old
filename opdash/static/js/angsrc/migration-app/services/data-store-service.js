@@ -611,7 +611,7 @@
                  * @name createFawsAccount
                  * @methodOf migrationApp.service:datastoreservice
                  * @description 
-                 * Invokes "/api/tenants/create_faws_account" API call for posting saved instance.
+                 * Invokes "/api/tenants/create_faws_account" API call for creating FAWS account.
             */
             this.createFawsAccount = function(requestObj) {
                 var self = this;
