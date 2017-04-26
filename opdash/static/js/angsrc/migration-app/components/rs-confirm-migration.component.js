@@ -71,14 +71,11 @@
                     };
                     vm.saveProgress = "";
                     vm.error = false;
-                    
                 };
                 
-                $rootScope.$on("vm.scheduleMigration", function (event, value, selectedDate) {
-                    console.log(value);
-                    console.log(selectedDate);
-                    vm.scheduleMigration = value;
-                    vm.schedule.date = value;
+                $rootScope.$on("vm.scheduleMigration", function (event, value) {
+                    vm.scheduleMigration = value.migrationValue;
+                    vm.schedule.date = value.date;
                     dataStoreService.selectedTime.time = moment().unix();
                 });
 

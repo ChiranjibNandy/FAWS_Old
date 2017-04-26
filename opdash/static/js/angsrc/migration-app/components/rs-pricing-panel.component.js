@@ -89,42 +89,46 @@
                         vm.precheck = false;
                         $("#precheck_modal").modal('show');
                         var requestObj = ds.prepareTemporaryRequest();
+                        var servers = dataStoreService.getItems("server");
                         HttpWrapper.save("/api/precheck", { "operation": 'POST' }, requestObj)
                         .then(function (result) {
                             if(result.results.length != 0){
-                                var servers = dataStoreService.getItems("server");
-                                angular.forEach(servers, function (server) {
-                                    var serverObjects = result.results.instances[server.id];
-                                    angular.forEach(serverObjects, function (subObj) {
-                                        if(subObj.type=="error"){
-                                            vm.errors.push({
-                                                name:server.name,
-                                                description:server.description
-                                            })
-                                        }else if(subObj.type=="warning"){
-                                            vm.warnings.push({
-                                                name:server.name,
-                                                description:server.description
-                                            })
-                                        }
-                                    });
-                                });
-                                var networks = result.results.account;
-                                for(var key in networks){
-                                    if (networks.hasOwnProperty(key)) {
-                                        angular.forEach(networks[key],function(networkBlock){
-                                            if(networkBlock.type=="warning"){
-                                                vm.warnings.push({
-                                                    name:servers[0].details.networks[0].name,
-                                                    description:networkBlock.description
-                                                })
-                                            }else if(networkBlock.type=="error"){
+                                if(result.results.instances){
+                                    angular.forEach(servers, function (server) {
+                                        var serverObjects = result.results.instances[server.id];
+                                        angular.forEach(serverObjects, function (subObj) {
+                                            if(subObj.type=="error"){
                                                 vm.errors.push({
-                                                    name:servers[0].details.networks[0].name,
-                                                    description:networkBlock.description
+                                                    name:server.name,
+                                                    description:server.description
+                                                })
+                                            }else if(subObj.type=="warning"){
+                                                vm.warnings.push({
+                                                    name:server.name,
+                                                    description:server.description
                                                 })
                                             }
-                                        })
+                                        });
+                                    });
+                                }
+                                var networks = result.results.account;
+                                if(networks){
+                                    for(var key in networks){
+                                        if (networks.hasOwnProperty(key)) {
+                                            angular.forEach(networks[key],function(networkBlock){
+                                                if(networkBlock.type=="warning"){
+                                                    vm.warnings.push({
+                                                        name:servers[0].details.networks[0].name,
+                                                        description:networkBlock.description
+                                                    })
+                                                }else if(networkBlock.type=="error"){
+                                                    vm.errors.push({
+                                                        name:servers[0].details.networks[0].name,
+                                                        description:networkBlock.description
+                                                    })
+                                                }
+                                            })
+                                        }
                                     }
                                 }
                             }
