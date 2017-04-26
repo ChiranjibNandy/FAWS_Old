@@ -64,6 +64,16 @@
                 }
             };
 
+            /**
+             * @ngdoc method
+             * @name getResourceTasks
+             * @methodOf migrationApp.service:alertsservice
+             * @param {Object} params Object with details of the job and resource for which the associated tasks are to be retreived
+             * @param {Boolean} refresh True if the task list needs to be refreshed
+             * @returns {Promise} A promise to fetch tasks involved in migrating a resource
+             * @description 
+             * This service method returns a promise to fetch an array containing the list of tasks involved in migrating a resource
+             */
             self.getResourceTasks = function(params, refresh) {
                 var url = "/api/tasks/" + params.job_id + "/" + params.resource_type + "s/" + params.resource_id;
 
@@ -85,7 +95,16 @@
                 }
             }
 
-            self.getAllTickets = function(params, refresh) {
+            /**
+             * @ngdoc method
+             * @name getAllTickets
+             * @methodOf migrationApp.service:alertsservice
+             * @param {Boolean} refresh True if the tickets list needs to be refreshed
+             * @returns {Promise} A promise to fetch the list of tickets
+             * @description 
+             * This service method returns a promise to fetch an array containing the list of tickets raised for a tenant
+             */
+            self.getAllTickets = function(refresh) {
                 var url = "/api/tickets/get_all";
 
                 if (refresh || !ticketsLoaded) {

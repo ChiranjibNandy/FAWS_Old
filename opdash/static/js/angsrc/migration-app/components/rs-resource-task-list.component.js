@@ -7,7 +7,13 @@
      * @description
      * Component to display the list of tasks associated with migrating a resource. This component is loaded directly on route change.  
      *   
-     * This component uses the template: **angtemplates/migration/resource-task-list.html**. It uses the controller {@link migrationApp.controller:rsresourcetasklistCtrl rsresourcetasklistCtrl}.  
+     * This component uses the template: **angtemplates/migration/resource-task-list.html**. 
+     * Its controller {@link migrationApp.controller:rsresourcetasklistCtrl rsresourcetasklistCtrl} uses the below services:
+     * {@link migrationApp.service:alertsservice alertsservice}
+     * {@link migrationApp.service:authservice authservice}
+     * $interval
+     * $rootRouter
+     * {@link migrationApp.service:migrationitemdataservice migrationitemdataservice}
      */
     angular.module("migrationApp")
         .component("rsresourcetasklist", {
@@ -25,6 +31,14 @@
                 var backRoute = null;
                 var backRouteParams = {};
 
+                /**
+                 * @ngdoc method
+                 * @name getResourceTasks
+                 * @methodOf migrationApp.controller:rsresourcetasklistCtrl
+                 * @param {Boolean} refresh True if the tasks list needs to be refreshed
+                 * @description 
+                 * Fetches the list of tasks for a migrating resource
+                 */
                 vm.getResourceTasks = function(refresh) {
                     if(refresh){
                         vm.manualRefresh = true;
@@ -96,6 +110,15 @@
                     vm.getResourceTasks(true);
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name back
+                 * @methodOf migrationApp.controller:rsresourcetasklistCtrl
+                 * @param {Boolean} refresh True if the tasks list needs to be refreshed
+                 * @description 
+                 * Navigates back to its previous page (current or completed batch details page). 
+                 * Falls back to status dashboard page in case of invalid parameters
+                 */
                 vm.back = function() {
                     if(backRoute !== null)
                         $rootRouter.navigate([backRoute, {job_id: backRouteParams.job_id}]);
