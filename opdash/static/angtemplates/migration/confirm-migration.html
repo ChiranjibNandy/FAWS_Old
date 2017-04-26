@@ -183,9 +183,12 @@
                 <tbody>
                     <tr class="" ng-repeat="item in vm.costCalculationItems">
                         <td class="rs-table-text">{{item.resourceName}}</td>
-                        <td class="rs-table-text">${{item.rax_uptime_cost + " (" + item.rax_uptime + ")"}}</td>
-                        <td class="rs-table-text">${{item.rax_bandwidth_cost + " (" + item.rax_bandwidth + " GB)"}}</td>
-                        <td class="rs-table-text">${{item.rax_total_cost}}</td>
+                        <td class="rs-table-text" ng-if="item.rax_uptime_cost !== 'NA'">${{item.rax_uptime_cost + " (" + item.rax_uptime + ")"}}</td>
+                        <td class="rs-table-text" ng-if="item.rax_uptime_cost === 'NA'">{{item.rax_uptime_cost}}</td>
+                        <td class="rs-table-text" ng-if="item.rax_bandwidth_cost !== 'NA'">${{item.rax_bandwidth_cost + " (" + item.rax_bandwidth + " GB)"}}</td>
+                        <td class="rs-table-text" ng-if="item.rax_bandwidth_cost === 'NA'">{{item.rax_bandwidth_cost}}</td>
+                        <td class="rs-table-text" ng-if="item.rax_total_cost !== 'NA'">${{item.rax_total_cost}}</td>
+                        <td class="rs-table-text" ng-if="item.rax_total_cost === 'NA'">{{item.rax_total_cost}}</td>
                     </tr>
                     <tr>
                         <td></td>
@@ -211,9 +214,12 @@
                 <tbody>
                     <tr class="" ng-repeat="item in vm.projectedCostCalculationItems">
                         <td class="rs-table-text">{{item.resourceName}}</td>
-                        <td class="rs-table-text">${{item.aws_uptime_cost + " (" + item.rax_uptime + ")"}}</td>
-                        <td class="rs-table-text">${{item.aws_bandwidth_cost + " (" + item.rax_bandwidth + " GB)"}}</td>
-                        <td class="rs-table-text">${{item.aws_total_cost}}</td>
+                        <td class="rs-table-text" ng-if="item.aws_uptime_cost !== 'NA'">${{item.aws_uptime_cost + " (" + item.rax_uptime + ")"}}</td>
+                        <td class="rs-table-text" ng-if="item.aws_uptime_cost === 'NA'">{{item.aws_uptime_cost}}</td>
+                        <td class="rs-table-text" ng-if="item.aws_bandwidth_cost !== 'NA'">${{item.aws_bandwidth_cost + " (" + item.rax_bandwidth + " GB)"}}</td>
+                        <td class="rs-table-text" ng-if="item.aws_bandwidth_cost === 'NA'">{{item.aws_bandwidth_cost}}
+                        <td class="rs-table-text" ng-if="item.aws_total_cost !== 'NA'">${{item.aws_total_cost}}</td>
+                        <td class="rs-table-text" ng-if="item.aws_total_cost === 'NA'">{{item.aws_total_cost}}</td>
                     </tr>
                     <tr>
                         <td></td>

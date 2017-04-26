@@ -150,7 +150,7 @@
                 /**
                  * @ngdoc method
                  * @name saveItems
-                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @methodOf migrationApp.controller:rsconfirmmigrationCtrl
                  * @description 
                  * Invokes "/api/users/uidata/" API call for fetching existing saved instances. 
                  */
@@ -227,6 +227,13 @@
                     $('#calculator_modal').modal('show');
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name openUsageCostsModal
+                 * @methodOf migrationApp.controller:rsconfirmmigrationCtrl
+                 * @description 
+                 * function to open the modal that displays the current and projected pricing calculations for the selected servers.
+                 */ 
                 vm.openUsageCostsModal = function(){
                     vm.costCalculationItems =[];
                     vm.projectedCostCalculationItems = [];
@@ -248,6 +255,18 @@
                             vm.totalOfCostCalculationItems += (parseFloat(parseFloat(server.details.rax_uptime_cost) + parseFloat(server.details.rax_bandwidth_cost)));
                         }
 
+                        if(!server.details.hasOwnProperty('rax_bandwidth')){
+                            vm.costCalculationItems.push({
+                                "resourceName" : server.details.name,
+                                "rax_uptime_cost":"NA",
+                                "rax_bandwidth_cost":"NA",
+                                "rax_bandwidth":"NA",
+                                "rax_uptime":"NA",
+                                "rax_total_cost":"NA"
+                            });
+                            vm.totalOfCostCalculationItems += 0;
+                        }
+
                         if(server.details.hasOwnProperty('aws_bandwidth_cost')){
                             var cost = 0;
                             for(var i =0; i< server.mappings.length; i++){
@@ -266,6 +285,21 @@
                                 "rax_uptime":server.details.rax_uptime.toFixed(2),                              
                             });
                             vm.totalOfProjectedCostCalculationItems += (parseFloat(parseFloat(parseFloat(cost) * parseFloat(server.details.rax_uptime)) + parseFloat(server.details.aws_bandwidth_cost)));
+                        }
+
+                        if(!server.details.hasOwnProperty('aws_bandwidth_cost')){
+                            vm.projectedCostCalculationItems.push({
+                                "resourceName" : server.details.name,
+                                "aws_uptime_cost":"NA",
+                                "aws_bandwidth_cost":"NA",
+                                "aws_bandwidth":"NA",
+                                "aws_uptime":"NA",
+                                "aws_total_cost":"NA",
+                                "rax_bandwidth":"NA",
+                                "rax_uptime":"NA",                              
+                            });
+                            vm.totalOfProjectedCostCalculationItems += 0;
+                            
                         }
                     });
                     $('#calculator_modal').modal('show');

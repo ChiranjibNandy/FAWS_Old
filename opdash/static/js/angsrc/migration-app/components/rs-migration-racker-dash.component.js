@@ -78,12 +78,12 @@
                     vm.isRacker = authservice.is_racker;
                     $rootScope.$on("vm.MigrationName",function(event,value){
                         console.log(value);
-                     vm.migrationName = value;
-                        });
-                         $rootScope.$on("vm.MigrationTime",function(event,value){
+                        vm.migrationName = value;
+                    });
+                    $rootScope.$on("vm.MigrationTime",function(event,value){
                         console.log(value);
-                     vm.migrationTime = value;
-                        });
+                        vm.migrationTime = value;
+                    });
 
                     /**
                      * @ngdoc property
@@ -444,15 +444,14 @@
                     $window.open(encoreUrl, '_blank');
                 } 
 
+
                 var resetActionFlags = function() {
-                    console.log("In function()");
                     for(var i=0; i<vm.items.length; i++){
                         vm.items[i].showSettings = false;
                     }
                 };
 
                 vm.showActionList = function(batch) {
-                        console.log("In show action list");
                         resetActionFlags();
                         $timeout(function(){
                             batch.showSettings = true;

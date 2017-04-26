@@ -526,7 +526,10 @@
                 var instances = self.getItems('server');
                 var totalProjectedPricing = 0;
                 instances.forEach(function(item){
-                    totalProjectedPricing += parseFloat(item.selectedMapping.cost * item.details.rax_uptime);
+                    if(item.details.hasOwnProperty('rax_uptime'))
+                        totalProjectedPricing += parseFloat(item.selectedMapping.cost * item.details.rax_uptime);
+                    else
+                        totalProjectedPricing += 0;
                 });
 
                 return totalProjectedPricing;
