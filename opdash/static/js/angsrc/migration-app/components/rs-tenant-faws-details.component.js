@@ -59,11 +59,17 @@
                     vm.showCreateAccount = true;
                 else 
                     vm.showCreateAccount = false;
-                    
+
+                /**
+                  * @ngdoc method
+                  * @name fetchFawsAccounts
+                  * @methodOf migrationApp.controller:tenantfawsdetailsCtrl
+                  * @description 
+                  * Fetches FAWS accounts associated with tenant/customer ID.
+                */
                 vm.fetchFawsAccounts = function() {
                     dataStoreService.getFawsAccounts()
                         .then(function (result) {
-                            //vm.awsAccountsDetails = (result.awsAccounts || '[]');
                             if((result == null || result.awsAccounts.length == 0)){
                                 vm.awsAccountsDetails = [];
                                 vm.fawsAcctStatus = false;
@@ -83,17 +89,30 @@
                                         totalAccounts: result.awsAccountLimit - result.remainingAccounts
                                     };
                                 dataStoreService.saveFawsDetails(vm.fawsAccountDetails);
-                                console.log("faws selected: "+vm.selectedFaws);
                             }
                     });
                 };
 
                 vm.fetchFawsAccounts();
 
+                /**
+                  * @ngdoc method
+                  * @name fawsAccountchanged
+                  * @methodOf migrationApp.controller:tenantfawsdetailsCtrl
+                  * @description 
+                  * To Detect if there is any change in selection of FAWS Account.
+                 */
                 vm.fawsAccountchanged = function(){
                     dataStoreService.fawsAccounts.selectedFawsAccount = vm.selectedFaws;
                 };
 
+                /**
+                  * @ngdoc method
+                  * @name displayFawsAccounModal
+                  * @methodOf migrationApp.controller:tenantfawsdetailsCtrl
+                  * @description 
+                  * To Display modal to create new FAWS Account.
+                */
                 vm.displayFawsAccounModal = function() {
                     vm.fawsResponse = false;
                     vm.fawsError = false;
@@ -101,6 +120,13 @@
                     $('#create-faws-account-modal').modal('show');
                 };
 
+                /**
+                  * @ngdoc method
+                  * @name createFawsAccount
+                  * @methodOf migrationApp.controller:tenantfawsdetailsCtrl
+                  * @description 
+                  * Makes a call to api/tenants/create_faws_account API to create new FAWS account for a tenant ID.
+                */
                 vm.createFawsAccount = function() {
                     vm.fawsCreationProgress = true;
                                         
@@ -111,28 +137,19 @@
                         .then(function (result) {
                             vm.newAccountDetails = result;
                             if (vm.newAccountDetails.error != 400){
-                                    console.log(vm.newAccountDetails);
                                     vm.fawsResponse = true;
                                     vm.fawsError = false;
                                     vm.fawsCreated = true;
                                     vm.fawsCreationProgress = false;
                                     vm.fetchFawsAccounts();
-                                    // $timeout(function () {
-                                    // $("#create-faws-account-modal").modal('hide');
                                     vm.fawsAcctName = '';
-                                    // vm.fawsResponse = false;
-                                    // }, 2000);
                             } 
                             else {
                                     vm.fawsError = true;
                                     vm.fawsResponse = false;
                                     vm.fawsCreated = false;
                                     vm.fawsCreationProgress = false;
-                                    // $timeout(function () {
-                                    // $("#create-faws-account-modal").modal('hide');
                                     vm.fawsAcctName = '';
-                                    // vm.fawsResponse = false;
-                                    // }, 2000);
                             }
                         });
                     };

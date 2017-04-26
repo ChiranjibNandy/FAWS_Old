@@ -47,19 +47,6 @@
                     dataStoreService.setDontShowStatus(true);//set introduction modal flag to true after first time display.
                     $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Migration";
 
-                    vm.tenant_id = authservice.getAuth().tenant_id; //get Tenant ID
-                   
-                    if(authservice.getAuth().is_racker == false){   //get Account Name
-                        var actname = dataStoreService.getAccountName(vm.tenant_id); //this service method is setting the accountname through api
-                        actname.then(function() {
-                            vm.tenant_account_name = authservice.getAuth().account_name;
-                        }); //waiting api promise to resolve
-                    }
-                    else{  //if logged in as a racker then it was sent by racker-dashboard page
-                         vm.tenant_account_name = authservice.getAuth().account_name;
-                    } //end of if condition
-
-                    vm.auth = authservice.getAuth();
                     /**
                      * @ngdoc property
                      * @name isRacker
@@ -84,12 +71,6 @@
                     vm.saveProgress = "";
                     var d = new Date();
                     //Objects created to fetch results of Save Later API call.
-                    vm.saveLaterObj = {
-                        "saveSuccess" : false,
-                        "saveInProgress" : false,
-                        "resultMsg" : "",
-                        "modalName": '#save_for_later'
-                    };
                     vm.cancelnSaveObj = {
                         "saveSuccess" : false,
                         "saveInProgress" : false,
@@ -156,28 +137,6 @@
                 $scope.$on("ItemRemoved", function(event, item){
                   $scope.$broadcast("ItemRemovedForChild", item); // broadcast event to all child components
                 });
-
-                /**
-                 * @ngdoc method
-                 * @name saveForLater
-                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
-                 * @description
-                 * Save instance of Migration for further processing
-                 */
-                vm.saveForLater = function() {
-                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0) {
-                        var migration_name = dataStoreService.getScheduleMigration().migrationName;
-                        if(migration_name){
-                            vm.saveItems(vm.saveLaterObj);
-                        }
-                        else{
-                            $('#save_for_later').modal('show');
-                        }
-                    }
-                    else{
-                        $("#no_selection").modal('show');
-                    }
-                }
 
                 /**
                  * @ngdoc method

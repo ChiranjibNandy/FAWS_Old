@@ -1,9 +1,7 @@
 <div class="plain-panel" ng-style="{'min-height': vm.showrec === 'true' ? '240px' : 'initial'}">
      <a ng-link="['MigrationResourceList']" ng-show="vm.showrec === 'true'" class="rs-btn-action rs-pull-right"><i class="rs-edit" title="Modify this"></i> </a>
-    <!--<div class="span-8">-->
     <h4 ng-show="vm.showrec === 'false'">Items Selected</h4>
-    <h3 ng-show="vm.showrec === 'true'">Resources Selected 
-    </h3>
+    <h3 ng-show="vm.showrec === 'true'">Resources Selected</h3>
     <hr style="margin-bottom: 10px !important;">
     <div class="accordion" id="accordion2">
         <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}" ng-hide="vm.selectedItems.server.length == 0">
@@ -25,7 +23,7 @@
         <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}" ng-hide="vm.selectedItems.server.length == 0">
             <div class="accordion-heading ">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#file-name">
-                    <b class="">  Networks ({{vm.networkCount}})</b>
+                    <b>  Networks ({{vm.networkCount}})</b>
                     <i class='fa fa-chevron-down'></i>
                 </a>
             </div>
@@ -70,17 +68,3 @@
     </div>
     <div ng-show="vm.selectedItems.server.length == 0 && vm.selectedItems.LoadBalancers.length == 0" style="color:red; text-align: center">No items selected</div>
 </div>
-<!--<script type="text/javascript">
-    $(document).ready(function () {
-        $(".accordion-heading + .collapse:not(.in)").prev().append("<i class='fa fa-chevron-down'></i>");
-        $(".accordion-heading + .collapse.in").prev().append("<i class='fa fa-chevron-up'></i>");
-        $('.accordion-heading a').click(function () {
-            $('.plain-panel').find('.collapse.in').prev().find("i").removeClass("fa-chevron-up").addClass(
-                "fa-chevron-down");
-            $(this).parents('.accordion-heading').find("i.fa-chevron-down").removeClass(
-                "fa-chevron-down").addClass("fa-chevron-up");
-            $(this).parents('.plain-panel').find('.collapse.in').prev().find("i.fa-chevron-up").removeClass(
-                "fa-chevron-up").addClass("fa-chevron-down");
-        });
-    });
-</script>-->

@@ -9,11 +9,11 @@
     <table class="rs-list-table rs-embedded-list-table" ng-show="!vm.loading && !vm.loadError && !vm.noData">
         <thead>
             <tr>
-                <th class="rs-table-status" style="background-color: white"></th>
-                <th class="rs-table-checkbox" style="background-color: white">
+                <th class="rs-table-status"></th>
+                <th class="rs-table-checkbox">
                     <input type="checkbox" style="font-size: 10px" ng-class="{'disabled':vm.disableSelectAll == true}" ng-model="vm.isAllSelected" ng-change="vm.changeItemSelection()" />
                 </th>
-                <th ng-repeat="label in vm.labels" ng-init="label.reverse = false" ng-click="vm.sort(label.field); label.reverse = !label.reverse" style="background-color: white">
+                <th ng-repeat="label in vm.labels" ng-init="label.reverse = false" ng-click="vm.sort(label.field); label.reverse = !label.reverse">
                     <a href="javascript:void(0)" class="rs-table-sort" ng-class=" {'custom-table-sort-asc current-sort-param': (label.reverse && vm.propertyName == label.field), 'custom-table-sort-desc current-sort-param': (!label.reverse && vm.propertyName == label.field), 'custom-table-sort-desc': vm.propertyName != label.field}">
                         <span class="rs-table-sort-text">{{label.text}}</span>
                         <span class="rs-table-sort-indicator"></span>

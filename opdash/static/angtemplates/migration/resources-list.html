@@ -15,7 +15,6 @@
                         <h3>Select Resources
                             <a href="#" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="As you select your resources, keep in mind that all dependencies associated will also be selected and displayed below in <b>'Items Selected'</b>. Any resources that do not pass a pre-check will have a <span class='rs-status-error'>red</span> indicator. Similarly any potentially problematic resources will have a <span class='rs-status-warning'>yellow</span> indicator."><i class="fa fa-info-circle fa-fw rs-quiet"></i></a>
                         </h3>
-                        <!--<h3>Select Resources you want to migrate <a href=""><i class="fa fa-info-circle fa-fw"></i></a></h3>-->
                     </div>
                     <div class="span-6">
                         <input type="text" class="rs-input-large searchbox rs-pull-right" ng-model="vm.filterSearch" placeholder="filter by keyword or tag...">
@@ -39,9 +38,6 @@
                     </rs-tab>
                     <div class="rs-pull-right" style="margin-top: -49px; margin-left:790px">
                         <a class="rs-btn" ng-click="vm.cancelMigration()">Cancel Migration</a>
-                        <!--<a class="rs-btn" ng-click="vm.saveForLater()" ng-hide="vm.saveLaterObj.saveInProgress">Save For Later</a>
-                                <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
-                                <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>-->
                         <a class="rs-btn rs-btn-primary " ng-click="vm.savencontinue()">Continue</a>
                     </div>
                 </rs-tabs>
@@ -54,7 +50,7 @@
     <rsinteractivefooter></rsinteractivefooter>
 </div>
 <!--</div>-->
-<div id="name_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForSelect" aria-hidden="true">
+<div id="name_modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="ModalForSelect" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
         <h3>What would you like to name your migration?</h3>
@@ -80,24 +76,28 @@
     </div>
 </div>
 
-<div id="no_selection" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSelect" aria-hidden="true">
-    <div class="modal-body" style="height: 150px">
-        <h3 style="line-height: 136px; text-align: center">Please select some items to migrate</h3>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    </div>
+<div id="no_selection" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSelect" aria-hidden="true">
+     <div class="modal-header">
+         <h3><i class="fa fa-warning"></i> No selection made</h3>
+     </div>
+     <div class="modal-body">
+        <p><big>Please select some items to migrate</big></p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="rs-btn" data-dismiss="modal">Go Back</button>
+      </div>
 </div>
 
-<div id="save_for_later" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSave" aria-hidden="true">
+<div id="save_for_later" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSave" aria-hidden="true">
+    <div class="modal-header">
+          <h3>Please name your Migration in order to save this instance</h3>
+    </div>
     <div class="modal-body">
-        <h3>Please name your Migration in order to save this instance</h3>
         <form class=" ">
             <div class="rs-control-group">
                 <label class="rs-control-label">Name your migration and click '<b>Save </b>' to save this instance</label>
                 <div class="rs-controls">
                     <input type="text" ng-model="vm.migrationName" placeholder="{{vm.migrationName}}">
-                    <!--<span ng-show="vm.noName" style="color:red">Please name this instance!</span>-->
                 </div>
             </div>
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.saveClicked == true}">Cancel</button>
@@ -111,9 +111,12 @@
     </div>
 </div>
 
-<div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForCancel" aria-hidden="true">
-    <div class="modal-body">
+<div id="cancel_modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="ModalForCancel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
         <h3>Would you like to save the selections you've made so far for another time?</h3>
+    </div>
+    <div class="modal-body">
         <form class=" ">
             <div class="rs-control-group">
 
@@ -145,10 +148,10 @@
     </div>
 </div>
 
-<div id="intro_modal" class="modal hide animated fadeIn details">
+<div id="intro_modal" class="modal hide animated fadeIn details" role="dialog">
     <br>
     <div class="modal-body">
-        <h2 class="rs-page-title">Welcome to the Rackspace Migration Manager!</h2>
+        <h1 class="rs-page-title">Welcome to the Rackspace Migration Manager!</h1>
         <!-- <h3>On average, our customers save more than 20% by migrating from Rackspace Public Cloud to Managed AWS. All while keeping the fanatical support they love.</h3> -->
         <br>
         <div class="rs-row">
@@ -156,14 +159,14 @@
                 <h2>Migrate in just 3 easy steps:</h2>
                 <big>
                     <ol class="rs-custom-counter">
-                        <li><b>Choose resources to migrate</b></li>
+                        <li><b>Select resources to migrate</b></li>
                         <li><b>Get our recommendation and make modifications</b></li>
                         <li><b>Schedule and confirm migration</b></li>
                     </ol>
                 </big>
                 <br>
                 <br>
-                <h3>Need more information?</h3>
+                <h3><em>Need more information?</em></h3>
 
                 <a href="https://www.rackspace.com/en-us/managed-aws" target="_blank">Rackspace Managed AWS</a>
                 <br>
@@ -189,75 +192,6 @@
     </div>
 </div>
 
-<!-- setup FAWS account modal -->
-<div id="faws-account-modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
-    <div class="modal-header">
-        <div class="rs-row">
-            <div class="span-5">
-                <img src="/static/img/FAWS-logo.jpg" alt="FAWS logo" class="FAWS-logo">
-            </div>
-            <div class="span-7">
-                <br>
-                <h3>Create a FAWS account &amp; confirm your migration.</h3>
-            </div>
-        </div>
-    </div>
-    <div class="modal-body">
-        <form class="rs-form-horizontal rs-form-medium">
-            <div class="rs-control-group success">
-                <label class="rs-control-label">Email address</label>
-                <div class="rs-controls">
-                    <input type="text" class="rs-input-xlarge">
-                    <span class="rs-help-block">* Use a valid email address.</span>
-                </div>
-            </div>
-            <div class="rs-control-group">
-                <label class="rs-control-label">Create a username</label>
-                <div class="rs-controls">
-                    <input type="text" class="rs-input-xlarge">
-                    <span class="rs-help-block">* Use 6-16 alphanumeric characters.</span>
-                </div>
-            </div>
-            <div class="rs-control-group">
-                <label class="rs-control-label"><a href="#" role="button" data-trigger="hover" data-placement="right" data-toggle="popover" data-content="Length must be between 8 and 100 characters.
-                Password must contain at least one uppercase, lowercase, and numeric characters. 
-                Can start with or include any of the following special characters: 
-                ~ ! @ # $ % ^ & * _ - + = ` | \ ( ) { } [ ] : ;  <> , . ? / £
-                Password cannot begin with a space, but it can contain a space."><i class="fa fa-info-circle rs-quiet"></i></a> Create your Password </label>
-                <div class="rs-controls">
-                    <input type="text" class="rs-input-xlarge">
-                </div>
-            </div>
-            <div class="rs-control-group">
-                <label class="rs-control-label">Select a security question</label>
-                <div class="rs-controls">
-                    <select id="security_question" name="security_question" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched"
-                        security-field="" questions="[&quot;What is the location of a dream vacation?&quot;,&quot;Where is the best place to live?&quot;,&quot;What is your favorite book?&quot;,&quot;What is your favorite color?&quot;,&quot;Who let the dogs out?&quot;,&quot;What is your pass phrase?&quot;]"
-                        required="" ng-model="signup.contacts.contact[0].user.secretQA.question" ng-options="q.value as q.label for q in securityQuestions">
-                            <option value="string:" label="- Select your security question -" selected="selected">- Select your security question -</option>
-                            <option value="string:What is the location of a dream vacation?" label="What is the location of a dream vacation?">What is the location of a dream vacation?</option>
-                            <option value="string:Where is the best place to live?" label="Where is the best place to live?">Where is the best place to live?</option>
-                            <option value="string:What is your favorite book?" label="What is your favorite book?">What is your favorite book?</option>
-                            <option value="string:What is your favorite color?" label="What is your favorite color?">What is your favorite color?</option>
-                            <option value="string:Who let the dogs out?" label="Who let the dogs out?">Who let the dogs out?</option>
-                            <option value="string:What is your pass phrase?" label="What is your pass phrase?">What is your pass phrase?</option>
-                        </select>
-                </div>
-            </div>
-            <div class="rs-control-group">
-                <label class="rs-control-label">Enter your answer</label>
-                <div class="rs-controls">
-                    <input type="text" class="rs-input-xlarge">
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <a class="rs-btn rs-btn-primary" href="#name_modal" role="button" data-toggle="modal" data-dismiss="modal" aria-hidden="true">Submit &amp; Continue </a>
-        <a href="#" class="rs-btn" role="button" role="button" data-toggle="modal" data-dismiss="modal" aria-hidden="true">Cancel</a>
-    </div>
-</div>
 <div ng-include="'/static/angtemplates/migration/equipment-details.html'"></div>
 <script type="text/javascript">
     $(document).ready(function () {
