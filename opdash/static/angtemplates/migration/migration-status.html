@@ -275,7 +275,7 @@
                         <div class="rs-facet-section">
                             <div class="rs-facet-section-body">
                                 <a href="https://mycloud.rackspace.com/cloud/{{vm.tenant_id}}/tickets" class="rs-btn rs-btn-link rs-pull-right" target="_blank" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Got to tickets in Rackspace Reach">See All <i class="fa fa-angle-double-right"></i></a>
-                                <h3>Tickets <span class="rs-quiet">({{vm.tickets.length}})</span></h3>
+                                <h3>Tickets <span class="rs-quiet">({{vm.tickets.items.length}})</span></h3>
                                 <div class="">
                                     <table class="rs-list-table rs-embedded-list-table-wrapper">
                                         <thead>
@@ -285,8 +285,8 @@
                                                 <th>Message</th>
                                             </tr>
                                         </thead>
-                                        <tbody ng-show="!vm.loadingTickets && vm.tickets.length>0">
-                                            <tr ng-repeat="ticket in vm.tickets | orderBy: '-created'">
+                                        <tbody ng-show="!vm.loadingTickets && vm.tickets.items.length>0">
+                                            <tr ng-repeat="ticket in vm.tickets.items | orderBy: '-created' | limitTo : vm.tickets.pageSize : (vm.tickets.currentPage-1)*vm.tickets.pageSize">
                                                 <td><a href="https://mycloud.rackspace.com/cloud/{{vm.tenant_id}}/tickets#{{ticket.ticket_id}}">{{ticket.ticket_id}}</a></td>
                                                 <td class="rs-table-text ng-binding">{{ticket.created | date : 'M/dd/yyyy hh:mm a'}}</td>
                                                 <td>
@@ -302,27 +302,16 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                
-                                <!--<div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
-                                    <table class="rs-list-table rs-embedded-list-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Ticket Number</th>
-                                                <th>Message</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><a href="">160830-10128</a></td>
-                                                <td>Taking a long time to migrate</td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="">160830-10129</a></td>
-                                                <td>Problem while starting this batch. Will be retried.</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>-->
+
+                                <br>
+                                <div class="pagination pagination-mini" ng-show="!vm.loadingTickets && vm.tickets.items.length!==0">
+                                    <ul>
+                                        <li><span>Showing {{(vm.tickets.currentPage == 1 ? vm.tickets.currentPage : ((vm.tickets.currentPage-1)*vm.tickets.pageSize)+1)}}-{{(vm.tickets.currentPage == vm.tickets.noOfPages ? vm.tickets.items.length : vm.tickets.currentPage*vm.tickets.pageSize)}} of {{vm.tickets.items.length}}</span></li>
+                                        <li ng-class="{disabled: vm.tickets.currentPage == 1}" ng-click="vm.tickets.currentPage=vm.tickets.currentPage-1"><a href="">Prev</a></li>
+                                        <li ng-repeat="n in vm.tickets.pages track by $index" ng-click="vm.tickets.currentPage = $index+1"><a href="">{{$index+1}}</a></li>
+                                        <li ng-class="{disabled: vm.tickets.currentPage == vm.tickets.noOfPages}" ng-click="vm.tickets.currentPage=vm.tickets.currentPage+1"><a href="">Next</a></li>
+                                    </ul>
+                                </div>
 
                             </div>
                         </div>
