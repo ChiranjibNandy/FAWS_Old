@@ -3,10 +3,12 @@ from flask import Flask
 from opdash.controllers.errors import register_error_handlers
 from opdash.controllers.proxy import register_api_proxy
 
-from opdash.controllers import unsecure, customer, racker
+from opdash.controllers import unsecure, customer, racker, saml, login
 from flask_caching import Cache
-import opdash.config_loader as cl
+from opdash.config_loader import import_config_to_env_var_defaults
+from opdash.rax.remote_config import RemoteConfig
 import waitress
+import json
 
 
 class FlaskOpdash(Flask):
@@ -28,18 +30,42 @@ def build_app():
     """Build the flask application"""
     app = FlaskOpdash(__name__)
 
-    # Load our default/base config
-    # Note: conf_file is a 'hack' to get this to work in both docker and
-    # on a developers local if being run directly. We also need to replace pyc
-    # to py here in case the user is running py27.
-    conf_file = os.path.abspath(__file__).replace(
-        'server.pyc', 'server.py').replace('server.py', 'config.yml')
-    cl.import_config_to_env_var_defaults(conf_file, alt_config=app.config)
+    # Load Local Base Config Defaults from File
+    app.config.update(
+        import_config_to_env_var_defaults(
+            RemoteConfig().load(app.root_path + "/config.yml")))
 
-    # If we can, load any overrides specified for our config
-    cl.import_config_to_env_var_defaults(
-        os.environ.get(cl.config['CONFIG_OVERRIDE_ENV_VAR'], None),
-        silent=True)
+    # Prepare to load override configs (can be remote or local)
+    rc = RemoteConfig(
+        app.config.get("AWS_ACCESS_KEY_ID", None),
+        app.config.get("AWS_SECRET_ACCESS_KEY", None))
+
+    # Get Environment Specific Override Config Settings
+    override_config_location = os.environ.get(
+        app.config.get('CONFIG_OVERRIDE_ENV_VAR', None), None)
+
+    print "*********************************"
+    print "OVERRIDE CONFIG ENV VAR IS:{0}".format(override_config_location)
+    print "*********************************"
+
+    # If you have encrypted your local override config
+    # (this is highly unlikely unless your name is Matt)
+    local_config_encryption_key = os.environ.get(
+        os.environ.get('ENCRYPTION_CONFIG_LOCAL_KEY', None),
+        None)
+
+    # Load environment specific override configs, if they exist
+    if override_config_location:
+        override_config = rc.load(override_config_location)
+        app.config.update(
+            import_config_to_env_var_defaults(
+                override_config,
+                encryption_key=local_config_encryption_key))
+
+    #  Load SAML Settings
+    app.config["saml_settings"] = json.loads(
+        rc.load(app.config["SAML_CONFIG_PATH"])
+    )
 
     # Set up application cache
     app.cache = Cache(config=app.config)
@@ -60,6 +86,8 @@ def build_app():
     app.register_blueprint(unsecure.mod)
     app.register_blueprint(racker.mod)
     app.register_blueprint(customer.mod)
+    app.register_blueprint(saml.mod)
+    app.register_blueprint(login.mod)
 
     return app, context
 

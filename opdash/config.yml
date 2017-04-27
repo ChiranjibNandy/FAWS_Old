@@ -1,119 +1,66 @@
 ---
-  # Quick place to check for what environment the currently executing code is in. Vision here is to assist with logging or similar activities.
-- ENVIRONMENT: local
+  # Quick place to check current environment
+-  ENVIRONMENT: local
 
-  # Environment variable key to use when looking for an additional configuration to load. EX: use export OPDASH_API_CONFIG="/some/path/to/file.yml"
-  #
-  # NOTE: To encrypt your config file run python with the current app in path then run opdash_api.encryption_helper.encrypt_file({key}, {file}[, {out_file}])
-  # where "key" is the encryption file and "file" is the input file. Optionally an output file can be specified. To decrypt a file use
-  # opdash_api.encryption_helper.decrypt_file({key}, {file}[, {out_file}]). Please see ENVIRONMENT -> CONFIG_LOCAL_KEY also.
+  # Env variable to use when looking for an additional configuration
+  # EX: use export OPDASH_CP_CONFIG="/some/path/to/file.yml"
 - CONFIG_OVERRIDE_ENV_VAR: OPDASH_CP_CONFIG
 
-- API:
-    # Location where the migrator service is running
-    BASE_URL: http://opdash-api-dev.us-east-1.elasticbeanstalk.com
+  # Location where the migrator service is running
+- API_BASE_URL: http://opdash-api-dev.us-east-1.elasticbeanstalk.com
 
-    # Timeout value in seconds for calls made to the API_BASE_URL
-    PROXY_TIMEOUT: 15
+- IDENTITY_URL: https://identity-internal.api.rackspacecloud.com/v2.0
 
-- ENCRYPTION:
-    # Environment variable key used when looking for the decryption key to decrypt an encrypted configuration during local development.
-    CONFIG_LOCAL_KEY: DECRYPT_KEY
+- SAML:
+    CONFIG_PATH: ./opdash/saml_config.json
 
 - PILOT:
-    # The URL to the pilot API for this environment (prod / staging)
     URL: https://prod.pilot.api.rackspacecloud.com/v1/
-
-    # The product name for this application in PILOT
     PRODUCT: ''  # we don't have a product in the menu yet
-
     MYCLOUD_URL: https://mycloud.rackspace.com
-
-    # The path Pilot sends the user to for log out in this application
     LOGOUT_URL: /logout
 
-- RAX:
-
-    USERNAME: crap
-
-    PASSWORD: crap
-
-    # RAX service SSO account username used for calls to the RAX internal api. Requires lnx-Cloudserver-Engineers and lbaas_ops LDAP groups
-    API_SERVICE_ACCOUNT_NAME: crap
-
-    # RAX service SSO account password used for calls to the RAX internal api. Requires lnx-Cloudserver-Engineers and lbaas_ops LDAP groups
-    API_SERVICE_ACCOUNT_PASSWORD: crap
-
-    # Rackspace internal user, used with internal identity to support impersonating customers
-    SYSTEM_USERNAME: crap
-
-    # Rackspace internal user Password, used with internal identity to support impersonating customers
-    SYSTEM_PASSWORD: crap
-
-    # Identity URL used for authentication verification.
-    IDENTITY_URL: https://identity-internal.api.rackspacecloud.com/v2.0
-
-    # Internal Encore URL used to retrieve customer user information needed for impersonation.
-    ENCORE_URL: https://encore.rackspace.com/api/encore
-
 - AWS:
-    # AWS Key ID with with to connect to resources
-    ACCESS_KEY_ID:
-
-    # AWS Secret Access Key with with to connect to resources
-    SECRET_ACCESS_KEY:
-
-    # AWS Redis URL
-    REDIS_URL: opdash-redis.d0x7cq.ng.0001.use1.cache.amazonaws.com
-
-- OPDASH_API:
-
-    # DynamoDB instance with which to store runtime information
-    DYNAMO_ENDPOINT: http://localhost:8000
-
-    # Seconds that token is cached 
-    TOKEN_CACHE_EXPIRATION_SECONDS: 780
+    # AWS Credentials
+    # ACCESS_KEY_ID:
+    # SECRET_ACCESS_KEY:
 
 - CACHE:
-    # Type of cache to use. Available: filesystem, redis
+    # Cache types available: filesystem, redis
     TYPE: filesystem
 
-    # Directory to store filesystem cache. Ignored when type is "redis"
+    # If using filesystem:
     DIR: ./session
 
-    # Host where redis server is listening. Ignored when type is "filesystem"
-    REDIS_HOST: 0.0.0.0
+    # If using Redis:
+    # REDIS_HOST: 0.0.0.0
+    # KEY_PREFIX: opdash-session
 
-    # Prefix for values stored in redis. Ignored when type is "filesystem"
-    KEY_PREFIX: opdash-session
-
-# Collection of flask specific configuration items. For more information see:
+# Flask specific configuration items.
+# For more information see:
 # http://flask.pocoo.org/docs/0.12/config/#builtin-configuration-values
 - FLASK:
-
-    # What address to listen to for incoming traffic
     HOST: 0.0.0.0
-
-    # The port to listen to for incoming traffic
     PORT: 8000
+    DEBUG: True
+    USE_RELOADER: True
+    # THREADS_PER_PAGE: 2
+    # SSL_CRT: None
+    # SSL_KEY: None
+    # CSRF_ENABLED: True
+    # CSRF_SESSION_KEY: Crazy Key Goes Here
+    # SECRET_KEY: Awesome Secret Key
+    # SESSION_COOKIE_NAME: migrate session
 
-    # Run the server in debug mode or not
-    # False - Runs the application using a production level waitress WSGI server.
-    # True - Runs the application using a non-production level werkzeug server which supports auto-reloading.
-    DEBUG: False
+# If you want to encrypt your config file:
+# run python with the current app in path then run:
+# opdash_cp.encryption_helper.encrypt_file({key}, {file}[, {out_file}])
+# where "key" is the encryption file and "file" is
+# the input file. Optionally an output file can be specified.
 
-    # When DEBUG is true, should werkzeug detect py file changes and reload them.
-    USE_RELOADER: False
-
-    # Flask SSL certificate items which we ignore. Document if we end up using.
-    SSL_CRT: none
-    SSL_KEY: none
-
-    THREADS_PER_PAGE: 2
-
-    CSRF_ENABLED: True
-    CSRF_SESSOIN_KEY: Crazy Key Goes Here
-
-    SECRET_KEY: Awesome Secret Key
-
-    SESSION_COOKIE_NAME: migrate session
+# To decrypt a file use:
+# opdash_api.encryption_helper.decrypt_file({key}, {file}[, {out_file}]).
+- ENCRYPTION:
+    # Environment variable key used when looking for the decryption key
+    # to decrypt an encrypted configuration during local development.
+    CONFIG_LOCAL_KEY: DECRYPT_KEY
