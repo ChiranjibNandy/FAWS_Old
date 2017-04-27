@@ -46,8 +46,10 @@ class Operator(object):
 
         env_vars = {}
         env_vars['ENVIRONMENT'] = self.env
-        env_vars['OPDASH_CP_CONFIG'] = os.environ.get('OPDASH_CP_CONFIG', None)
-
+        env_vars['OPDASH_CP_CONFIG'] = os.environ.get(
+            'OPDASH_API_CONFIG',
+            'https://s3.amazonaws.com/rackspace_faws_mt_%s_configs/'
+            'opdash-cp.config.yml' % self.env)
         cp_task = EcsTask('opdash-cp', tag, env_vars)
         cp_arn = cp_task()
         cp_svc = EcsService(self.env, 'opdash-cp', cp_arn, port=5000)
