@@ -34,7 +34,7 @@
                 /**
                  * @ngdoc method
                  * @name $onInit
-                 * @methodOf migrationApp.controller:rsschedulemigrationCtrl
+                 * @methodOf migrationApp.controller:rspricingCtrl
                  * @description 
                  *function called on init of the rspricingCtrl.
                  */
@@ -66,7 +66,7 @@
                 /**
                  * @ngdoc method
                  * @name continue
-                 * @methodOf migrationApp.controller:rsmigrationrecommendationCtrl
+                 * @methodOf migrationApp.controller:rspricingCtrl
                  * @description 
                  * Continue to next step: **Schedule Migration**
                  */
@@ -150,7 +150,7 @@
                 /**
                  * @ngdoc method
                  * @name back
-                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @methodOf migrationApp.controller:rspricingCtrl
                  * @description 
                  * function to go back to previous page. 
                  */
@@ -162,7 +162,7 @@
                 /**
                  * @ngdoc method
                  * @name showCancelDialog
-                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @methodOf migrationApp.controller:rspricingCtrl
                  * @description 
                  * function to cancel the migration. 
                  */
@@ -178,7 +178,7 @@
                 /**
                  * @ngdoc method
                  * @name continueToSchedule
-                 * @methodOf migrationApp.controller:rsmigrationrecommendationCtrl
+                 * @methodOf migrationApp.controller:rspricingCtrl
                  * @description 
                  * When we click on the continue button in recommendations page, a popup willbe shown up 
                  * saying about the configurations that are made on inventory. If we press continue button
@@ -193,7 +193,7 @@
                 /**
                  * @ngdoc method
                  * @name getCurrentPricingDetails
-                 * @methodOf migrationApp.controller:rsmigrationrecommendationCtrl
+                 * @methodOf migrationApp.controller:rspricingCtrl
                  * @description 
                  * Gets current pricing amount and the billing period
                  */
@@ -216,7 +216,7 @@
                 /**
                  * @ngdoc method
                  * @name getProjectedPricing
-                 * @methodOf migrationApp.controller:rsmigrationrecommendationCtrl
+                 * @methodOf migrationApp.controller:rspricingCtrl
                  * @description 
                  * Gets a cumulative projected pricing amount
                  */
@@ -225,7 +225,10 @@
                         var selectedPricingMappingObj = dataStoreService.getItems('server');
                         vm.totalProjectedPricingSum = 0;
                         selectedPricingMappingObj.forEach(function(item){
-                            vm.totalProjectedPricingSum += parseFloat(item.selectedMapping.cost * item.details.rax_uptime + item.details.aws_bandwidth_cost);
+                            if(item.details.hasOwnProperty('rax_uptime') && item.details.hasOwnProperty('aws_bandwidth_cost'))
+                                vm.totalProjectedPricingSum += parseFloat(item.selectedMapping.cost * item.details.rax_uptime + item.details.aws_bandwidth_cost);
+                            else
+                                vm.totalProjectedPricingSum += parseFloat(item.selectedMapping.cost * (24*30) + parseFloat("0.10"));
                         });
                         vm.totalProjectedPricingSum = vm.totalProjectedPricingSum.toFixed(2);
                     },1000);                                 
@@ -234,7 +237,7 @@
                 /**
                  * @ngdoc method
                  * @name saveItems
-                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @methodOf migrationApp.controller:rspricingCtrl
                  * @description 
                  * Invokes "/api/users/uidata/" API call for fetching existing saved instances. 
                  */
@@ -297,7 +300,7 @@
                 /**
                  * @ngdoc method
                  * @name submitCancel
-                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                 * @methodOf migrationApp.controller:rspricingCtrl
                  * @description 
                  * function to cancel the migration. 
                  */
@@ -311,12 +314,21 @@
                         $('#cancel_modal').modal('hide');
                     }
                 }
-                
+
+                /**
+                 * @ngdoc method
+                 * @name openUsageCostsModal
+                 * @methodOf migrationApp.controller:rspricingCtrl
+                 * @description 
+                 * function to open the modal that displays the current and projected pricing calculations for the selected servers.
+                 */                               
                 vm.openUsageCostsModal = function(){
                     vm.costCalculationItems =[];
                     vm.projectedCostCalculationItems = [];
                     vm.totalOfCostCalculationItems = 0;
                     vm.totalOfProjectedCostCalculationItems = 0;
+                    vm.showCalculatedCostDialog = false;
+
                     var selectedPricingMappingObj = dataStoreService.getItems('server');
                     selectedPricingMappingObj.forEach(function(server){
                         var selectedFlavor = server.selectedMapping.instance_type;
@@ -330,6 +342,18 @@
                                 "rax_total_cost":parseFloat(parseFloat(server.details.rax_uptime_cost) + parseFloat(server.details.rax_bandwidth_cost)).toFixed(2)
                             });
                             vm.totalOfCostCalculationItems += (parseFloat(parseFloat(server.details.rax_uptime_cost) + parseFloat(server.details.rax_bandwidth_cost)));
+                        }
+
+                        if(!server.details.hasOwnProperty('rax_bandwidth')){
+                            vm.costCalculationItems.push({
+                                "resourceName" : server.details.name,
+                                "rax_uptime_cost":"NA",
+                                "rax_bandwidth_cost":"NA",
+                                "rax_bandwidth":"NA",
+                                "rax_uptime":"NA",
+                                "rax_total_cost":"NA"
+                            });
+                            vm.totalOfCostCalculationItems += server.details.rax_price;
                         }
 
                         if(server.details.hasOwnProperty('aws_bandwidth_cost')){
@@ -351,10 +375,32 @@
                             });
                             vm.totalOfProjectedCostCalculationItems += (parseFloat(parseFloat(parseFloat(cost) * parseFloat(server.details.rax_uptime)) + parseFloat(server.details.aws_bandwidth_cost)));
                         }
-                    });
-                    $('#calculator_modal').modal('show');//Jenkins test this
-                }
 
+                        if(!server.details.hasOwnProperty('aws_bandwidth_cost')){
+                            var cost = 0;
+                            //Checks whether the showCalculatedCostDialog flag was set in the loop before
+                            if(vm.showCalculatedCostDialog === false)
+                                vm.showCalculatedCostDialog = true;
+
+                            for(var i =0; i< server.mappings.length; i++){
+                                if(server.mappings[i].instance_type == selectedFlavor){
+                                    cost = server.mappings[i].cost;
+                                }
+                            }
+                            vm.projectedCostCalculationItems.push({
+                                "calculated_cost_resourcename" : server.details.name,
+                                "aws_uptime_cost":parseFloat(cost),
+                                "aws_bandwidth":"NA",
+                                "aws_uptime":"NA",
+                                "aws_total_cost":parseFloat(parseFloat(parseFloat(cost) * parseFloat(24*30)) + parseFloat("0.10")).toFixed(2),
+                                "rax_bandwidth":"NA",
+                                "rax_uptime":"NA",
+                            });
+                        vm.totalOfProjectedCostCalculationItems += (parseFloat(parseFloat(parseFloat(cost) * parseFloat(24*30)) + parseFloat("0.10")));
+                    }
+                });
+                $('#calculator_modal').modal('show');
+                }
                 return vm;             
             }]
         });
