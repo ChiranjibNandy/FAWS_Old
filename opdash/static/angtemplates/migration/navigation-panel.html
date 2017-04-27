@@ -1,7 +1,7 @@
 <div class="mdl-card mdl-shadow--2dp" id="subNav">
     <div class="mdl-card__supporting-text">
         <div class="mdl-stepper-horizontal-alternative">
-            <div class="mdl-stepper-step active-step ">
+            <div class="mdl-stepper-step active-step " ng-class="{'active-step': vm.pagenum>=0, 'step-done': vm.pagenum > 0}">
                 <a class="rs-nav-link" href="#/migration/resources">
                     <div class="mdl-stepper-circle"><span>1</span></div>
                     <div class="mdl-stepper-title">Select Resources</div>
@@ -9,7 +9,7 @@
                 <div class="mdl-stepper-bar-left"></div>
                 <div class="mdl-stepper-bar-right"></div>
             </div>
-            <div class="mdl-stepper-step ">
+            <div class="mdl-stepper-step " ng-class="{'active-step': vm.pagenum>=1, 'step-done': vm.pagenum > 1, 'disabled': vm.pagenum <= 0}">
                 <a class="rs-nav-link" href="#/migration/recommendation">
                     <div class="mdl-stepper-circle"><span>2</span></div>
                     <div class="mdl-stepper-title">Recommendation</div>
@@ -17,15 +17,7 @@
                 <div class="mdl-stepper-bar-left"></div>
                 <div class="mdl-stepper-bar-right"></div>
             </div>
-            <!--<div class="mdl-stepper-step ">
-                <a class="rs-nav-link" href="#/migration/schedule">
-                    <div class="mdl-stepper-circle"><span>3</span></div>
-                    <div class="mdl-stepper-title">Schedule Migration</div>
-                </a>
-                <div class="mdl-stepper-bar-left"></div>
-                <div class="mdl-stepper-bar-right"></div>
-            </div>-->
-            <div class="mdl-stepper-step">
+            <div class="mdl-stepper-step" ng-class="{'active-step': vm.pagenum>=2, 'disabled': vm.pagenum <= 1}">
                 <a class="rs-nav-link" href="#/migration/confirm">
                     <div class="mdl-stepper-circle"><span>3</span></div>
                     <div class="mdl-stepper-title">Schedule and Confirm Migration</div>

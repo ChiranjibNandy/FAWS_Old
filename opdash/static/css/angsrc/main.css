@@ -360,9 +360,6 @@ rscalendaritem > div.week.names > span {
 .panelCommonHeight{
     height: 412px;
 }
-#subNav{
-   display: none;
-}
 
 .rs-main.verticalMain {
     margin-bottom: 16px;
