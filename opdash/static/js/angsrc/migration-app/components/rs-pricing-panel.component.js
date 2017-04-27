@@ -144,7 +144,7 @@
                                     }
                                 }
                             }
-                            if(result.results.length === 0 || (vm.errors.length === 0 && vm.warnings.length === 0)){
+                            if(result.results.length === 0 || (vm.errors.length === 0 && vm.warnings.length === 0 && vm.failures.length === 0)){
                                 $("#precheck_modal").modal('hide');
                                 $rootRouter.navigate(["ConfirmMigration"]);
                             }else{
