@@ -168,7 +168,7 @@
                 vm.tickets = {};
                 vm.tickets.items = [];
                 vm.tickets.currentPage = 1;
-                vm.tickets.pageSize = 5;
+                vm.tickets.pageSize = 3;
 
                 var auth = authservice.getAuth();
                 vm.userOrTenant = auth.is_racker ? "Tenant" : "User";
