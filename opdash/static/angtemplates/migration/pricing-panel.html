@@ -97,7 +97,7 @@
             </div>
         </div>
     </div>
-    <div class="modal-body" ng-show="!vm.precheck && vm.precheckError">
+    <div class="modal-body" ng-show="!vm.precheck && vm.precheckError ">
         <p>
             <strong>
                 Please come back again as we are facing some issues....
@@ -124,17 +124,23 @@
                     <td class="rs-status-warning">Warning</td>
                     <td>{{warning.description}}</td>
                 </tr>
+                <tr ng-repeat = "failure in vm.failures" class="">
+                    <td style="width:136px">{{failure.name}}</td>
+                    <td class="rs-status-error">Failure</td>
+                    <td>{{failure.description}}</td>
+                </tr>
             </tbody>
         </table>
         <br>
         <br>
         <p><strong><span class="rs-status-warning">Warning</span> - Resources with warnings can still be migrated, Click continue if you would like to do so. <br>
-        <span class="rs-status-error">Errors</span> - Resources with errors cannot be migrated at this time.
+        <span class="rs-status-error">Errors</span> - Resources with errors cannot be migrated at this time.  <br>
+        <span class="rs-status-error">Failures</span> - Resources with failure severity cannot be migrated at this time.
         </strong></p>        
     </div>
     <div class="modal-footer">
         <button class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-show="vm.precheck">Go Back</button>
-        <a ng-show="vm.errors.length === 0 && vm.precheck" class="rs-btn rs-btn-primary" ng-click="vm.continueToSchedule()" >Continue</a>
+        <a ng-show="vm.errors.length === 0 && vm.failures.length === 0 && vm.precheckError" class="rs-btn rs-btn-primary" ng-click="vm.continueToSchedule()" >Continue</a>
     </div>
 </div>
 <!--modals End -->
