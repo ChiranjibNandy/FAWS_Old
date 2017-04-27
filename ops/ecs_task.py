@@ -56,7 +56,7 @@ class EcsTask(object):
         jinja_env = Environment(loader=FileSystemLoader(self.tpl_dir))
         template = jinja_env.get_template('%s.json.j2' % self.task_name)
         rendered = template.render(env_vars=self.env_vars, repo=self.repo,
-                                   tag=self.tag,
+                                   tag=self.tag, env=self.env,
                                    aws_region=os.environ['AWS_DEFAULT_REGION'])
         container_def = json.loads(rendered)
         response = self.ecs.register_task_definition(
