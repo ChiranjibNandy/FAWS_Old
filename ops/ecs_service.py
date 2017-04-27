@@ -16,7 +16,7 @@ class EcsService(object):
     defined in the migrator-infrastructure Terraform configs.
     """
 
-    def __init__(self, cluster, svc_name, task, desired_count=2, port=None):
+    def __init__(self, cluster, svc_name, task, desired_count=3, port=None):
         self.ecs = boto3.client('ecs')
         self.alb = boto3.client('elbv2')
         self.iam = boto3.resource('iam')
