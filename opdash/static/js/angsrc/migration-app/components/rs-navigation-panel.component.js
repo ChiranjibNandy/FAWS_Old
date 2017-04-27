@@ -29,21 +29,7 @@
              */
             controller: ["datastoreservice", function (dataStoreService) {
                 var vm = this;
-                document.getElementById("subNav").style.display = "block";
-                var subMenus = $("#subNav .mdl-stepper-step");
-                $(subMenus).removeClass("active-step step-done");
-                $(subMenus).each(function (index) { 
-                    if(index > parseInt(vm.pagenum)){
-                    $(subMenus[index]).addClass("disabled");
-                    }
-                    else if(index < parseInt(vm.pagenum)){
-                        $(subMenus[index]).addClass("active-step step-done");
-                        $(subMenus[index]).removeClass("disabled");
-                    }
-
-                });
-                $(subMenus[parseInt(vm.pagenum)]).addClass("active-step");
                         return vm;
-                    }]
+            }]
         }); // end of component definition
 })();

@@ -351,11 +351,17 @@
              */
             self.getMigrationResourceCount = function() {
                 // initialize with server count
-                var migrationResourceCount = self.selectedItems.server.length;
-
-                // evaluate network count and add to the total count
-                angular.forEach(self.selectedItems.server, function(item) {
-                    migrationResourceCount += item.details.networks.length;
+                var migrationResourceCount = self.selectedItems.server.length + self.selectedItems.LoadBalancers.length;
+                var resourcesCountArray = [];
+                //loop through all the servers selected and networks associated with the servers.
+                angular.forEach(self.selectedItems.server, function (item) {
+                    angular.forEach(item.details.networks, function (network) {
+                        //making separate list of networks associated with servers.
+                        if(resourcesCountArray.indexOf(network.name) == -1) {
+                            migrationResourceCount += 1;
+                            resourcesCountArray.push(network.name);
+                        };
+                    });
                 });
                 return migrationResourceCount;
             };
