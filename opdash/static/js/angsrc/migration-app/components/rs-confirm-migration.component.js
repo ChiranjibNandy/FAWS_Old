@@ -239,6 +239,7 @@
                     vm.projectedCostCalculationItems = [];
                     vm.totalOfCostCalculationItems = 0;
                     vm.totalOfProjectedCostCalculationItems = 0;
+                    vm.showCalculatedCostDialog = false;
 
                     var selectedPricingMappingObj = dataStoreService.getItems('server');
                     selectedPricingMappingObj.forEach(function(server){
@@ -264,7 +265,7 @@
                                 "rax_uptime":"NA",
                                 "rax_total_cost":"NA"
                             });
-                            vm.totalOfCostCalculationItems += 0;
+                            vm.totalOfCostCalculationItems += server.details.rax_price;;
                         }
 
                         if(server.details.hasOwnProperty('aws_bandwidth_cost')){
@@ -288,19 +289,27 @@
                         }
 
                         if(!server.details.hasOwnProperty('aws_bandwidth_cost')){
+                            var cost = 0;
+                            //Checks whether the showCalculatedCostDialog flag was set in the loop before
+                            if(vm.showCalculatedCostDialog === false)
+                                vm.showCalculatedCostDialog = true;
+
+                            for(var i =0; i< server.mappings.length; i++){
+                                if(server.mappings[i].instance_type == selectedFlavor){
+                                    cost = server.mappings[i].cost;
+                                }
+                            }
                             vm.projectedCostCalculationItems.push({
-                                "resourceName" : server.details.name,
-                                "aws_uptime_cost":"NA",
-                                "aws_bandwidth_cost":"NA",
+                                "calculated_cost_resourcename" : server.details.name,
+                                "aws_uptime_cost":parseFloat(cost),
                                 "aws_bandwidth":"NA",
                                 "aws_uptime":"NA",
-                                "aws_total_cost":"NA",
+                                "aws_total_cost":parseFloat(parseFloat(parseFloat(cost) * parseFloat(24*30)) + parseFloat("0.10")).toFixed(2),
                                 "rax_bandwidth":"NA",
-                                "rax_uptime":"NA",                              
+                                "rax_uptime":"NA",
                             });
-                            vm.totalOfProjectedCostCalculationItems += 0;
-                            
-                        }
+                        vm.totalOfProjectedCostCalculationItems += (parseFloat(parseFloat(parseFloat(cost) * parseFloat(24*30)) + parseFloat("0.10")));
+                    }
                     });
                     $('#calculator_modal').modal('show');
                 }

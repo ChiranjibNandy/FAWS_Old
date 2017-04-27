@@ -193,14 +193,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="" ng-repeat="item in vm.projectedCostCalculationItems">
-                    <td class="rs-table-text">{{item.resourceName}}</td>
-                    <td class="rs-table-text" ng-if="item.aws_uptime_cost !== 'NA'">${{item.aws_uptime_cost + " (" + item.rax_uptime + ")"}}</td>
-                    <td class="rs-table-text" ng-if="item.aws_uptime_cost === 'NA'">{{item.aws_uptime_cost}}</td>
-                    <td class="rs-table-text" ng-if="item.aws_bandwidth_cost !== 'NA'">${{item.aws_bandwidth_cost + " (" + item.rax_bandwidth + " GB)"}}</td>
-                    <td class="rs-table-text" ng-if="item.aws_bandwidth_cost === 'NA'">{{item.aws_bandwidth_cost}}
-                    <td class="rs-table-text" ng-if="item.aws_total_cost !== 'NA'">${{item.aws_total_cost}}</td>
-                    <td class="rs-table-text" ng-if="item.aws_total_cost === 'NA'">{{item.aws_total_cost}}</td>
+                <tr class="pricing" ng-repeat="item in vm.projectedCostCalculationItems">
+                    <td class="rs-table-text" ng-if="item.aws_bandwidth !== 'NA'">{{item.resourceName}}</td>
+                    <td class="rs-table-text" ng-if="item.aws_bandwidth === 'NA'"><span style="color: red;">* </span>{{item.calculated_cost_resourcename}}</td>
+                    <td class="rs-table-text" ng-if="item.aws_bandwidth !== 'NA'">${{item.aws_uptime_cost + " (" + item.rax_uptime + ")"}}</td>
+                    <td class="rs-table-text" ng-if="item.aws_bandwidth === 'NA'">${{item.aws_uptime_cost}} * (24 * 30)</td>
+                    <td class="rs-table-text" ng-if="item.aws_bandwidth !== 'NA'">${{item.aws_bandwidth_cost + " (" + item.rax_bandwidth + " GB)"}}</td>
+                    <td class="rs-table-text" ng-if="item.aws_bandwidth === 'NA'">$0.10
+                    <td class="rs-table-text" ng-if="item.aws_bandwidth !== 'NA'">${{item.aws_total_cost}}</td>
+                    <td class="rs-table-text" ng-if="item.aws_bandwidth === 'NA'">${{item.aws_total_cost}}</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -210,6 +211,6 @@
                 </tr>
             </tbody>
         </table>
-        <br>
+        <p ng-if="vm.showCalculatedCostDialog === true" style="text-align: left;"><span style="color: red;">* </span><b>This is a calculated cost assuming an uptime of 24hrs and 30days</b></p>
     </div>
 </div>
