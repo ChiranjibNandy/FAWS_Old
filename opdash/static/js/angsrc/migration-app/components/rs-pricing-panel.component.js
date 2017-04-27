@@ -74,6 +74,7 @@
                     vm.selectedTime = dataStoreService.getScheduleMigration();
                     vm.warnings = [];
                     vm.errors = [];
+                    vm.failures = [];
                     dataStoreService.getItems(vm.selecteditem);
                     //conditions to checkeck on what page the user is and navigate to the following next page.
                     if(vm.page==="resources"){
@@ -87,6 +88,7 @@
                     } 
                     else if(vm.page==="recommendation"){ 
                         vm.precheck = false;
+                        vm.precheckError = false;
                         $("#precheck_modal").modal('show');
                         var requestObj = ds.prepareTemporaryRequest();
                         var servers = dataStoreService.getItems("server");
@@ -104,6 +106,11 @@
                                                 })
                                             }else if(subObj.type=="warning"){
                                                 vm.warnings.push({
+                                                    name:server.name,
+                                                    description:server.description
+                                                })
+                                            }else if(networkBlock.type=="failure"){
+                                                vm.failures.push({
                                                     name:server.name,
                                                     description:server.description
                                                 })
@@ -126,13 +133,18 @@
                                                         name:servers[0].details.networks[0].name,
                                                         description:networkBlock.description
                                                     })
+                                                }else if(networkBlock.type=="failure"){
+                                                    vm.failures.push({
+                                                        name:servers[0].details.networks[0].name,
+                                                        description:networkBlock.description
+                                                    })
                                                 }
                                             })
                                         }
                                     }
                                 }
                             }
-                            if(result.results.length === 0 || (vm.errors.length === 0 && vm.warnings.length === 0)){
+                            if(result.results.length === 0 || (vm.errors.length === 0 && vm.warnings.length === 0 && vm.failures.length === 0)){
                                 $("#precheck_modal").modal('hide');
                                 $rootRouter.navigate(["ConfirmMigration"]);
                             }else{
