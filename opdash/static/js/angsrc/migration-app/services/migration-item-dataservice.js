@@ -166,7 +166,7 @@
                 return reqObj;
             }
 
-            //this function has to be removed once removed , there are lot of hardcoded values in here
+            //this function is used to create a temporary job-spec object for pre-checks API, to determine if the selected resources can be migrated or not.
             this.prepareTemporaryRequest = function (batchName) {
                 var equipments = {
                         instances: dataStoreService.getItems("server"),
@@ -177,30 +177,13 @@
                     instancesReqList = [],
                     networksReqList = [],
                     reqObj = {
-                        //batch_name: dataStoreService.getScheduleMigration().migrationName,
-                        //names: names,
                         source: {
-                            auth: {
-                                apikey: "f42046566954470dbaa31d6378916bb1",
-                                method: "key",
-                                type: "customer",
-                                username: "RSMTDev1"
-                            },
-                            cloud: "rackspace",
-                            tenantid: "1024814"
+                            tenantid: auth.tenant_id
                         },
                         resources: {},
                         version: "v1"
                     };
-                reqObj.destination = {
-                        account :"rax-9391b0f6b8264c6f8efbe2794a541548",
-                        auth : {
-                            accesskey : "AKIAIUHV3Q5R7JDRDRBQ",
-                            method : "keys",
-                            secretkey :  "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"
-                        },
-                        cloud : "aws"
-                    };
+                
                 // prepare servers/instances request object
                 equipments.instances.map(function (instance) {
                     instancesReqList.push({
