@@ -22,6 +22,7 @@
                     angular.forEach(t[key].servers, function(server) {
                         serversList.push({
                             id: server.id,
+                            rrn: server.rrn,
                             name: server.name,
                             tenant_id: server.tenant_id,
                             ip_address: server.accessIPv4,
@@ -54,6 +55,7 @@
                     angular.forEach(t[key].servers, function(server) {
                         serversList.push({
                             id: server.id,
+                            rrn: server.rrn,
                             name: server.name,
                             tenant_id: server.tenant_id,
                             ip_address: server.accessIPv4,
@@ -224,47 +226,47 @@
          * Prepares request object to be submitted for server migration
          */
         self.prepareRequest = function(info){
-           var region = getRegionById(info.id);
-           var auth = authservice.getAuth();
+            var region = getRegionById(info.id);
+            var auth = authservice.getAuth();
            
-           return {
-               source: {
-                   cloud: "rackspace",
-                   tenantid: auth.tenant_id,
-                   auth: {
-                       method: "key",
-                       type: "customer",
-                       username: auth.rackUsername,
-                       apikey: auth.rackAPIKey
-                   }
-               },
-               destination: {
-                   cloud: "aws",
-                   account: auth.awsAccount,
-                   auth: {
-                       method: "keys",
-                       accesskey: auth.accessKey,
-                       secretkey: auth.secretKey
-                   }
-               },
-               resources: {
-                   instances: [
-                       {
-                           source: {
-                               id: info.id,
-                               region: region,
-                           },
-                           destination: {
-                               region: "us-east-1",
-                               zone: "us-east-1a",
-                               type: info.type
-                           }
-                       }
-                   ]
-               },
-               version: "v1"
-           };
-        }
+            return {
+                source: {
+                    cloud: "rackspace",
+                    tenantid: auth.tenant_id,
+                    auth: {
+                        method: "key",
+                        type: "customer",
+                        username: auth.rackUsername,
+                        apikey: auth.rackAPIKey
+                    }
+                },
+                destination: {
+                    cloud: "aws",
+                    account: auth.awsAccount,
+                    auth: {
+                        method: "keys",
+                        accesskey: auth.accessKey,
+                        secretkey: auth.secretKey
+                    }
+                },
+                resources: {
+                    instances: [
+                        {
+                            source: {
+                                id: info.id,
+                                region: region,
+                            },
+                            destination: {
+                                region: "us-east-1",
+                                zone: "us-east-1a",
+                                type: info.type
+                            }
+                        }
+                    ]
+                },
+                version: "v1"
+            };
+        };
 
         return self;
     }]);

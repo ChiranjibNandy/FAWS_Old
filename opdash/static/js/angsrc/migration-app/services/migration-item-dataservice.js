@@ -123,7 +123,7 @@
                 equipments.instances.map(function (instance) {
                     instancesReqList.push({
                         source: {
-                            id: instance.id,
+                            id: instance.rrn,
                             region: instance.region.toUpperCase(),
                         },
                         destination: {
@@ -136,6 +136,7 @@
                 });
 
                 // prepare networks request object
+                // TODO(Team): After rrn changes in migrator, update id prop.
                 equipments.networks.map(function (network) {
                     networksReqList.push({
                         source: {
