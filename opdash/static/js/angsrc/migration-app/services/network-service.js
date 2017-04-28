@@ -24,6 +24,7 @@
                         angular.forEach(t[key].networks, function(network) { 
                             networksList.push({
                                 id: network.id,
+                                rrn: network.rrn,
                                 name: network.name,
                                 shared: network.shared ? "Yes" : "No",
                                 status: network.status,
@@ -53,6 +54,7 @@
                         angular.forEach(t[key].networks, function(network) { 
                             networksList.push({
                                 id: network.id,
+                                rrn: network.rrn,
                                 name: network.name,
                                 admin_state_up: network.admin_state_up ? "Yes" : "No",
                                 shared: network.shared ? "Yes" : "No",
