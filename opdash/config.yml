@@ -1,6 +1,6 @@
 ---
   # Quick place to check current environment
--  ENVIRONMENT: local
+- ENVIRONMENT: local
 
   # Env variable to use when looking for an additional configuration
   # EX: use export OPDASH_CP_CONFIG="/some/path/to/file.yml"
