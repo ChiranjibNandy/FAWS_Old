@@ -263,6 +263,7 @@
                                 "rax_bandwidth_cost":"NA",
                                 "rax_bandwidth":"NA",
                                 "rax_uptime":"NA",
+                                "rax_computed_total_cost":server.details.rax_price,
                                 "rax_total_cost":"NA"
                             });
                             vm.totalOfCostCalculationItems += server.details.rax_price;;
@@ -305,6 +306,7 @@
                                 "aws_bandwidth":"NA",
                                 "aws_uptime":"NA",
                                 "aws_total_cost":parseFloat(parseFloat(parseFloat(cost) * parseFloat(24*30)) + parseFloat("0.10")).toFixed(2),
+                                "aws_computed_uptime_cost":parseFloat(parseFloat(cost) * parseFloat(24*30)).toFixed(2),
                                 "rax_bandwidth":"NA",
                                 "rax_uptime":"NA",
                             });
