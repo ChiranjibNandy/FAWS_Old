@@ -263,8 +263,7 @@
                                 "rax_bandwidth_cost":"NA",
                                 "rax_bandwidth":"NA",
                                 "rax_uptime":"NA",
-                                "rax_computed_total_cost":server.details.rax_price,
-                                "rax_total_cost":"NA"
+                                "rax_total_cost":server.details.rax_price,
                             });
                             vm.totalOfCostCalculationItems += server.details.rax_price;;
                         }
@@ -302,15 +301,14 @@
                             }
                             vm.projectedCostCalculationItems.push({
                                 "calculated_cost_resourcename" : server.details.name,
-                                "aws_uptime_cost":parseFloat(cost),
+                                "aws_uptime_cost":parseFloat(parseFloat(cost) * parseFloat(24 * 30)).toFixed(2),
                                 "aws_bandwidth":"NA",
                                 "aws_uptime":"NA",
-                                "aws_total_cost":parseFloat(parseFloat(parseFloat(cost) * parseFloat(24*30)) + parseFloat("0.10")).toFixed(2),
-                                "aws_computed_uptime_cost":parseFloat(parseFloat(cost) * parseFloat(24*30)).toFixed(2),
+                                "aws_total_cost":parseFloat(parseFloat(cost) * parseFloat(24*30)).toFixed(2),
                                 "rax_bandwidth":"NA",
-                                "rax_uptime":"NA",
+                                "rax_uptime":"720",
                             });
-                        vm.totalOfProjectedCostCalculationItems += (parseFloat(parseFloat(parseFloat(cost) * parseFloat(24*30)) + parseFloat("0.10")));
+                        vm.totalOfProjectedCostCalculationItems += (parseFloat(parseFloat(cost) * parseFloat(24*30)));
                     }
                     });
                     $('#calculator_modal').modal('show');
