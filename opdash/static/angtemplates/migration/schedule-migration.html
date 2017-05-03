@@ -20,8 +20,11 @@
         </div>
         <div class="animated fadeIn" id="schedule" >
             <form ng-show="vm.showTimeForm">
-                <div class="rs-row">
-                    <input id="field" placeholder="Choose Date" class="span-12" ng-model="vm.date">
+                <div class='rs-row input-group actionDt1' datetimepicker ng-model="vm.date">
+                    <input class="input-group-addon" type='text' placeholder="Select Date" class='form-control' id='datetimepickerAdd'/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
                 </div>
                 <div class="rs-row">
                     <select name="time" ng-change="vm.onSaveTime()" ng-options="time for time in vm.timeItems" ng-model="vm.time" style="width: 113px;" class="ng-pristine ng-untouched ng-valid ng-not-empty span-6" ></select>
@@ -43,8 +46,11 @@
 <!-- datepicker dependencies -->
 <!-- custom datepicker -->
 <script>
-    var options = {
-        format: "YYYY-MM-DD"
-    };
-    $('#field').datepicker(options);
+   var nextDate = new Date();
+   $('.actionDt1').datetimepicker({
+       defaultDate:nextDate,
+       format:'YYYY-MM-DD',
+       minDate: new Date(nextDate.getFullYear(), nextDate.getMonth(), nextDate.getDate()),
+       widgetPositioning:{horizontal: 'auto', vertical:'auto'}
+   });
 </script>
