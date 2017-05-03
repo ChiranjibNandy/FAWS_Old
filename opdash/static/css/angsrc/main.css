@@ -522,6 +522,69 @@ thead{
     border-bottom: 5px solid #00a96d;
 }
 
+/*datepicker related styles*/
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175)
+}
+
+#schedule ul li {
+    list-style: none;
+} 
+
+.input-group {
+    position: relative;
+    display: table;
+    border-collapse: separate;
+}
+
+.migration-mgr #schedule tr:nth-child(even) {
+    background: #ffffff;
+}
+
+.migration-mgr #schedule td{
+    border: none;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.migration-mgr #schedule th {
+    border: none;
+    border-radius:0px;
+}
+
+span.fa-angle-left, span.fa-angle-right{
+    font-family: FontAwesome;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.picker-switch{
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.prev:hover, .picker-switch:hover, .next:hover{
+    height:42px;
+    background-color:#333;
+}
 /*
 .rs-wrapper{
     /*background-color:#eee;

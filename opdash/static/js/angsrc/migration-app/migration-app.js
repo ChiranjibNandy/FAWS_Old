@@ -81,6 +81,46 @@
     });
 
     /**
+    * @ngdoc directive
+    * @name migrationApp.directive:datetimepicker
+    * @restrict A
+    * @param {String} datetimepicker Bind date picked in bootstrap3 date picker in to angular model
+    * @description
+    * Directive to bind Date element picked from date picker in to angular model
+    * @example
+    * <example module="migrationApp">
+    *   <file name="index.html">
+    *      <div datetimepicker></div>
+    *   </file>
+    * </example>
+    */
+    migrationApp.directive('datetimepicker', function(){
+        return {
+            require: '?ngModel',
+            restrict: 'A',
+            link: function(scope, element, attrs, ngModel){
+
+                if(!ngModel) return; // do nothing if no ng-model
+
+                ngModel.$render = function(){
+                    element.find('input').val( ngModel.$viewValue || '' );
+                }
+
+                element.on('dp.change', function(){
+                    scope.$apply(read);
+                });
+
+                read();
+
+                function read() {
+                    var value = element.find('input').val();
+                    ngModel.$setViewValue(value);
+                }
+            }
+        }
+    });
+
+    /**
      * @ngdoc object
      * @name migrationApp.object:rsmigrationroot
      * @description

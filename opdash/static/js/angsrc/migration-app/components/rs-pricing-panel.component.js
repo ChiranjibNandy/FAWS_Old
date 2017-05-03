@@ -109,7 +109,7 @@
                                                     name:server.name,
                                                     description:server.description
                                                 })
-                                            }else if(networkBlock.type=="failure"){
+                                            }else if(subObj.type=="failure"){
                                                 vm.failures.push({
                                                     name:server.name,
                                                     description:server.description
