@@ -406,7 +406,7 @@
                                 "aws_uptime":"NA",
                                 "aws_total_cost":parseFloat(parseFloat(cost) * parseFloat(24*30)).toFixed(2),
                                 "rax_bandwidth":"NA",
-                                "rax_uptime":"720",
+                                "rax_uptime":"720.00",
                             });
                         vm.totalOfProjectedCostCalculationItems += (parseFloat(parseFloat(cost) * parseFloat(24*30)));
                     }
