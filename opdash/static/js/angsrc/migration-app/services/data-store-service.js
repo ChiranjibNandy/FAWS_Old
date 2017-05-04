@@ -507,12 +507,18 @@
             */
             self.getDistinctNetworks = function() {
                 var networksList = [];
+                var networkIdList = [];
+
                 angular.forEach(self.getItems('server'), function (server) {
                     var region = server.region;
+                    var instanceRrn = server.rrn;
+                    
                     angular.forEach(server.details.networks, function (network) {
-                        if(networksList.indexOf(network.id) == -1) {
+                        if(networkIdList.indexOf(network.rrn) === -1) {
+                            networkIdList.push(network.rrn);
                             network.region = region;
                             network.destRegion = server.selectedMapping.region;
+                            network.instanceRrn = instanceRrn;
                             networksList.push(network);
                         };
                     });
