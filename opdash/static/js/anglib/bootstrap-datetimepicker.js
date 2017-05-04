@@ -2482,7 +2482,7 @@
                 this.clear();
             }
         },
-        debug: true,
+        debug: false,
         allowInputToggle: false,
         disabledTimeIntervals: false,
         disabledHours: false,
