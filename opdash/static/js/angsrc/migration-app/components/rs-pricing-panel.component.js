@@ -118,11 +118,36 @@
                                         });
                                     });
                                 }
-                                var networks = result.results.account;
+                                var networks = result.results.network;
                                 if(networks){
                                     for(var key in networks){
                                         if (networks.hasOwnProperty(key)) {
                                             angular.forEach(networks[key],function(networkBlock){
+                                                if(networkBlock.type=="warning"){
+                                                    vm.warnings.push({
+                                                        name:servers[0].details.networks[0].name,
+                                                        description:networkBlock.description
+                                                    })
+                                                }else if(networkBlock.type=="error"){
+                                                    vm.errors.push({
+                                                        name:servers[0].details.networks[0].name,
+                                                        description:networkBlock.description
+                                                    })
+                                                }else if(networkBlock.type=="failure"){
+                                                    vm.failures.push({
+                                                        name:servers[0].details.networks[0].name,
+                                                        description:networkBlock.description
+                                                    })
+                                                }
+                                            })
+                                        }
+                                    }
+                                }
+                                var account = result.results.account;
+                                if(account){
+                                    for(var key in account){
+                                        if (account.hasOwnProperty(key)) {
+                                            angular.forEach(account[key],function(networkBlock){
                                                 if(networkBlock.type=="warning"){
                                                     vm.warnings.push({
                                                         name:servers[0].details.networks[0].name,
@@ -159,6 +184,8 @@
                     }
                 };
                 
+
+                        
                 /**
                  * @ngdoc method
                  * @name back

@@ -62,6 +62,7 @@
                     vm.time = roundUp.format('h:mma');
                     vm.initTime = new Date().toLocaleTimeString();
                     vm.date = m.format("YYYY-MM-DD");
+                    $('#datetimepickerAdd').val(vm.date);
                     vm.selectedDate = moment().format('MMMM Do YYYY ') + ' at ' + moment().format('h:mma') + ' ' + new Date().toTimeString().slice(8, 42);
                     dataStoreService.storeDate('time', vm.time);
                     dataStoreService.storeDate('timezone', vm.timezone);
