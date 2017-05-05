@@ -118,30 +118,13 @@
                                         });
                                     });
                                 }
-                                var networks = result.results.account;
+                                var networks = result.results.network;
                                 if(networks){
-                                    for(var key in networks){
-                                        if (networks.hasOwnProperty(key)) {
-                                            angular.forEach(networks[key],function(networkBlock){
-                                                if(networkBlock.type=="warning"){
-                                                    vm.warnings.push({
-                                                        name:servers[0].details.networks[0].name,
-                                                        description:networkBlock.description
-                                                    })
-                                                }else if(networkBlock.type=="error"){
-                                                    vm.errors.push({
-                                                        name:servers[0].details.networks[0].name,
-                                                        description:networkBlock.description
-                                                    })
-                                                }else if(networkBlock.type=="failure"){
-                                                    vm.failures.push({
-                                                        name:servers[0].details.networks[0].name,
-                                                        description:networkBlock.description
-                                                    })
-                                                }
-                                            })
-                                        }
-                                    }
+                                    vm.warningMappingsOfEquipments(servers[0].details.networks[0],networks);
+                                }
+                                var account = result.results.account;
+                                if(account){
+                                    vm.warningMappingsOfEquipments(servers[0].details.networks[0],account);
                                 }
                             }
                             if(result.results.length === 0 || (vm.errors.length === 0 && vm.warnings.length === 0 && vm.failures.length === 0)){
@@ -158,7 +141,32 @@
                         });
                     }
                 };
-                
+
+                vm.warningMappingsOfEquipments = function(nameBlock,descriptionBlock){
+                    for(var key in descriptionBlock){
+                        if (descriptionBlock.hasOwnProperty(key)) {
+                            angular.forEach(descriptionBlock[key],function(networkBlock){
+                                if(networkBlock.type=="warning"){
+                                    vm.warnings.push({
+                                        name:nameBlock.name,
+                                        description:networkBlock.description
+                                    })
+                                }else if(networkBlock.type=="error"){
+                                    vm.errors.push({
+                                        name:nameBlock.name,
+                                        description:networkBlock.description
+                                    })
+                                }else if(networkBlock.type=="failure"){
+                                    vm.failures.push({
+                                        name:nameBlock.name,
+                                        description:networkBlock.description
+                                    })
+                                }
+                            })
+                        }
+                    }
+                }
+                        
                 /**
                  * @ngdoc method
                  * @name back
