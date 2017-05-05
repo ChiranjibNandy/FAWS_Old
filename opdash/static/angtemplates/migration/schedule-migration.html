@@ -27,8 +27,8 @@
                     </span>
                 </div>
                 <div class="rs-row">
-                    <select name="time" ng-change="vm.onSaveTime()" ng-options="time for time in vm.timeItems" ng-model="vm.time" style="width: 113px;" class="ng-pristine ng-untouched ng-valid ng-not-empty span-6" ></select>
-                    <select ng-model="vm.timezone1" ng-change="vm.onSaveTime()" style="width: 113px;" class="ng-pristine ng-valid ng-not-empty ng-touched span-6" >
+                    <select name="time" ng-options="time for time in vm.timeIntervals" ng-model="vm.time" style="width: 113px;" class="ng-pristine ng-untouched ng-valid ng-not-empty span-6" ></select>
+                    <select ng-model="vm.timezone1" style="width: 113px;" class="ng-pristine ng-valid ng-not-empty ng-touched span-6" >
                         <option ng-repeat="x in vm.timeZoneItems" value="{{x.timeZone}}">{{x.timeZoneName}}</option>
                     </select>
                 </div>
@@ -44,13 +44,12 @@
     </div>
 </div>
 <!-- datepicker dependencies -->
-<!-- custom datepicker -->
 <script>
-   var nextDate = new Date();
-   $('.actionDt1').datetimepicker({
-       defaultDate:nextDate,
-       format:'YYYY-MM-DD',
-       minDate: new Date(nextDate.getFullYear(), nextDate.getMonth(), nextDate.getDate()),
-       widgetPositioning:{horizontal: 'auto', vertical:'auto'}
-   });
+    var nextDate = new Date();
+    $('.actionDt1').datetimepicker({
+        defaultDate:nextDate,
+        format:'YYYY-MM-DD',
+        minDate: new Date(nextDate.getFullYear(), nextDate.getMonth(), nextDate.getDate()),
+        widgetPositioning:{horizontal: 'auto', vertical:'auto'}
+    });
 </script>

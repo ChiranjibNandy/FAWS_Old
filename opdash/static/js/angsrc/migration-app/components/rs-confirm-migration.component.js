@@ -45,13 +45,7 @@
                     vm.changedMigrationName = vm.migrationName;
 
                     dataStoreService.setPageName("confirm-migrate");
-
-                    vm.schedule = {
-                        date: dataStoreService.getMigrationDate() || new Date().toDateString(),
-                        time: dataStoreService.getMigrationTime() || new Date().toTimeString(),
-                        timezone: dataStoreService.selectedTime.timezone
-                    };
-
+                    vm.scheduleMigration = false;
                     vm.cost = dataStoreService.getProjectedPricing();
                     vm.migrating = false;
                     vm.errorInMigration = false;
@@ -70,24 +64,13 @@
                         "modalName": '#cancel_modal'
                     };
                     vm.saveProgress = "";
-                    vm.error = false;
+                    // vm.error = false;
                 };
                 
                 $rootScope.$on("vm.scheduleMigration", function (event, value) {
-                    vm.scheduleMigration = value.migrationValue;
-                    vm.schedule.date = value.date;
-                    dataStoreService.selectedTime.time = moment().unix();
+                    vm.scheduleMigration = value;
                 });
 
-                $rootScope.$on("scheduleMigrationSelectedDate", function (event, value) {
-                    vm.schedule.date = value;
-                });
-
-                $rootScope.$on("vm.errorValue", function (event, value) {
-                   vm.error = value;
-                   console.log(vm.error)
-                });
-                
                 /**
                  * @ngdoc method
                  * @name migrate
