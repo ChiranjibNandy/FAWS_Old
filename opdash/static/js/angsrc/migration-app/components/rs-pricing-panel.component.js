@@ -141,7 +141,7 @@
                         });
                     }
                 };
-                
+
                 vm.warningMappingsOfEquipments = function(nameBlock,descriptionBlock){
                     for(var key in descriptionBlock){
                         if (descriptionBlock.hasOwnProperty(key)) {
