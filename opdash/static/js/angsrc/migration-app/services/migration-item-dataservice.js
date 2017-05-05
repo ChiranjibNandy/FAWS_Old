@@ -105,6 +105,7 @@
                         instances: dataStoreService.getItems("server"),
                         networks: dataStoreService.getDistinctNetworks()
                     },
+
                     auth = authservice.getAuth(),
                     names = prepareNames(),
                     instancesReqList = [],
@@ -146,8 +147,16 @@
                             region: network.destRegion, //.toUpperCase(),
                             default_zone: "us-east-1a"
                         },
-                        subnets: "All",
-                        instances: "All",
+                        subnets: [
+                            {
+                                id : network.rrn
+                            }
+                        ],
+                        instances: [
+                            {
+                                id : network.instanceRrn
+                            }
+                        ],
                         security_groups: "All"
                     });
                 });
@@ -163,6 +172,7 @@
                 if (networksReqList[0] != null) { //add networks to the resources list iff there are any networks
                     reqObj.resources.networks = networksReqList;
                 }
+
                 return reqObj;
             }
 
