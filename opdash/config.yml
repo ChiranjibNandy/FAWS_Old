@@ -7,9 +7,13 @@
 - CONFIG_OVERRIDE_ENV_VAR: OPDASH_CP_CONFIG
 
   # Location where the migrator service is running
-- API_BASE_URL: http://opdash-api-dev.us-east-1.elasticbeanstalk.com
+- API:
+    BASE_URL: http://opdash-api-dev.us-east-1.elasticbeanstalk.com
+    # Timeout length for calls to the API (in seconds)
+    PROXY_TIMEOUT: 15
 
-- IDENTITY_URL: https://identity-internal.api.rackspacecloud.com/v2.0
+#- IDENTITY_URL: https://identity-internal.api.rackspacecloud.com/v2.0
+- IDENTITY_URL: https://identity.api.rackspacecloud.com/v2.0
 
 - SAML:
     CONFIG_PATH: ./opdash/saml_config.json
@@ -32,7 +36,7 @@
     # If using filesystem:
     DIR: ./session
 
-    # If using Redis:
+    # If using Redis for Caching:
     # REDIS_HOST: 0.0.0.0
     # KEY_PREFIX: opdash-session
 
@@ -44,13 +48,6 @@
     PORT: 8000
     DEBUG: True
     USE_RELOADER: True
-    # THREADS_PER_PAGE: 2
-    # SSL_CRT: None
-    # SSL_KEY: None
-    # CSRF_ENABLED: True
-    # CSRF_SESSION_KEY: Crazy Key Goes Here
-    # SECRET_KEY: Awesome Secret Key
-    # SESSION_COOKIE_NAME: migrate session
 
 # If you want to encrypt your config file:
 # run python with the current app in path then run:
