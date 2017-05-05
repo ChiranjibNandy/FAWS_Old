@@ -7,7 +7,7 @@
      * @description
      * Component to display the compare-options page for selected servers and networks.  
      *   
-     * This component uses the template: **angtemplates/migration/compare-options.html**. It uses the controller {@link migrationApp.controller:datastoreserviceCtrl datastoreserviceCtrl}.  
+     * This component uses the template: **angtemplates/migration/compare-options.html**. It uses the controller {@link migrationApp.service:datastoreservice datastoreservice}.  
      * @example
      * <example module="migrationApp">
      *   <file name="index.html">

@@ -3,7 +3,7 @@
 
     /**
      * @ngdoc object
-     * @name migrationApp.object:rspricingpanelcomponent
+     * @name migrationApp.object:rspricingpanel
      * @description
      * Component to display the list of tenants whose resource migration has to be done. This component is loaded directly on route change.  
      *   
