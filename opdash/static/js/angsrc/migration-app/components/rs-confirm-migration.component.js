@@ -25,7 +25,7 @@
              * @name migrationApp.controller:rsconfirmmigrationCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsconfirmmigration rsconfirmmigration} component
              */
-            controller: ["$rootRouter", "datastoreservice", "migrationitemdataservice", "$q", "httpwrapper", "authservice", "$timeout", "$rootScope", function ($rootRouter, dataStoreService, ds, $q, HttpWrapper, authservice, $timeout, $rootScope) {
+            controller: ["$rootRouter", "datastoreservice", "migrationitemdataservice", "$q", "httpwrapper", "authservice", "$timeout", "$rootScope","$scope", function ($rootRouter, dataStoreService, ds, $q, HttpWrapper, authservice, $timeout, $rootScope,$scope) {
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
@@ -64,6 +64,10 @@
                 $rootScope.$on("vm.scheduleMigration", function (event, value) {
                     vm.scheduleMigration = value;
                 });
+                
+                $scope.$on("ItemRemoved",function(event,item){
+                    vm.cost = dataStoreService.getProjectedPricing();
+                });
 
                 /**
                  * @ngdoc method
@@ -73,28 +77,45 @@
                  * Starts a batch to migrate all resources selected by user
                  */
                 vm.migrate = function () {
-                    var requestObj;
-                    vm.migrating = true;
-                    $('#confirm-migration-modal').modal('hide');
-                    requestObj = ds.prepareRequest();
-                    vm.acceptTermsAndConditions= true;
-                    console.log(requestObj);
-                    $rootScope.$emit("vm.MigrationName", dataStoreService.selectedTime.migrationName);
-                    console.log(dataStoreService.selectedTime.migrationName);
-                    $rootScope.$emit("vm.MigrationTime", dataStoreService.selectedTime.time);
-                    console.log(dataStoreService.selectedTime.time);
-                     HttpWrapper.save("/api/jobs", { "operation": 'POST' }, requestObj)
-                        .then(function (result) {
-                            console.log("Migration Response: ", result);
-                            $timeout(function () {
-                            }, 5000);
-                        }, function (error) {
-                            console.log("Error: Could not trigger migration", error);
-                            vm.migrating = false;
-                            vm.errorInMigration = true;
-                            vm.scheduleMigration = true;
-                        });
-                    $rootRouter.navigate(["MigrationStatus"]);
+                    var selectedItems = dataStoreService.getItems();
+                    if(selectedItems.server.length > 0 || selectedItems.network.length > 0 || selectedItems.LoadBalancers.length > 0){
+                        var requestObj;
+                        vm.migrating = true;
+                        $('#confirm-migration-modal').modal('hide');
+                        requestObj = ds.prepareRequest();
+                        vm.acceptTermsAndConditions= true;
+                        console.log(requestObj);
+                        $rootScope.$emit("vm.MigrationName", dataStoreService.selectedTime.migrationName);
+                        console.log(dataStoreService.selectedTime.migrationName);
+                        $rootScope.$emit("vm.MigrationTime", dataStoreService.selectedTime.time);
+                        console.log(dataStoreService.selectedTime.time);
+                        HttpWrapper.save("/api/jobs", { "operation": 'POST' }, requestObj)
+                            .then(function (result) {
+                                console.log("Migration Response: ", result);
+                                $timeout(function () {
+                                }, 5000);
+                            }, function (error) {
+                                console.log("Error: Could not trigger migration", error);
+                                vm.migrating = false;
+                                vm.errorInMigration = true;
+                                vm.scheduleMigration = true;
+                            });
+                        $rootRouter.navigate(["MigrationStatus"]);
+                    }else{
+                        $("#no-equipments-modal").modal('show');
+                    }
+                };
+
+                /**
+                 * @ngdoc method
+                 * @name selectServers
+                 * @methodOf migrationApp.controller:rsconfirmmigrationCtrl
+                 * @description 
+                 * Navigates to resources page
+                 */
+                vm.selectServers = function(){
+                    $("#no-equipments-modal").modal('hide');
+                    $rootRouter.navigate(["MigrationResourceList"]);
                 };
 
                 /**
@@ -126,7 +147,7 @@
 
                 vm.showConfirmMigrateDialog = function (scheduleMigration) {
                     if(dataStoreService.fetchFawsDetails().totalAccounts === 0){
-                    $('#confirm-migration-modalFAWS').modal('show');
+                        $('#confirm-migration-modalFAWS').modal('show');
                      }
                     else {
                    $('#confirm-migration-modal').modal('show');

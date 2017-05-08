@@ -7,7 +7,6 @@
             <hr>
             <div class="rs-inner">
                 <rstenantfawsdetails editmigration="true"></rstenantfawsdetails>
-                
                 <div class="rs-row">
                     <div class="span-12">
                         <h3>Review configurations and schedule your migration</h3>
@@ -18,84 +17,99 @@
                     <div class="span-6">
                         <rsselecteditemspanel showrec="true"></rsselecteditemspanel>
                     </div>
-                     <div class="span-3">
-                                <div class="plain-panel" style = min-height:240px;> 
-                                    <a ng-link="['MigrationRecommendation']" class=" rs-btn-action rs-pull-right">
-                                        <i class="rs-edit" title="Modify this"></i>
-                                    </a>
-                                    <h3>Projected Cost <a href="#" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="The projected pricing consist of infrastructure costs only, and support costs are not included in the provided price."><i class="fa fa-info-circle rs-quiet"></i></a></h3>
-                                    <hr>
-                                    <p>
-                                        <big><b>{{vm.cost | currency: '$'}}</b>/month </big>
-                                        <br>
-                                        <a href role="button" data-toggle="modal" ng-click="vm.openUsageCostsModal()"><small>See Details</small></a> 
-                                    </p>
-                                    <hr class="dash">
-                                    <big><b>Support Level</b> </big>
-                                    <p>
-                                        Navigator <sup>&#174;</sup> <i class="fa fa-info-circle rs-quiet" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="<b>Navigator Monthly Service Fee starts at $400</b>. We can act as a business associate to support customers with HIPAA workloads on AWS. Personal contact to assist with onboarding. A combined set of AWS and Rackspace recommendations from certified AWS architects"></i>
-                                        <br>
-                                        <small>* Navigator cost not reflected here.</small>
-                                        <br>
-                                        <!--<small>Legal <a data-html="true"  data-placement="top" data-toggle="popover" data-content="<b>Please note that we may place a $1 authorization hold to confirm your account.</b> <br>
-                                        <small>(Our lawyers make us say this)</small>
-                                        <br> Your use of Rackspace websites is subject to the <a href='http://www.rackspace.com/information/legal/websiteterms?_ga=1.254955403.24213883.1488833556' target='_blank'>Website Terms</a>." ><i class="fa fa-info-circle rs-quiet"></i></a>
-                                        </small>-->
-                                    </p>
-                                </div>
-                            </div>
-                      <rsschedulemigration></rsschedulemigration>
-                </div>
-              
-                <br>
-                
-                
-                    <div class="rs-pull-right">
-                        <div class="faws-legal-txt">
-                                <input id="accept_terms" name="accept_terms" type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required"> <span  class="ng-binding"> I acknowledge that I have read and accept the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a> and the <a href="http://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Terms and Conditions</a>.</span>
-                            </div>
-                        <a class="rs-btn " ng-link="['MigrationRecommendation']">Back</a>
-                        <a class="rs-btn" role="button" ng-click="vm.showCancelDialog()">Cancel Migration</a>
-                        <button class="rs-btn rs-btn-primary "  type="submit" ng-click="vm.migrate()"   ng-disabled="(!vm.scheduleMigration || !vm.acceptTermsAndConditions)  ">Confirm & Schedule</button>
-                        <a class="rs-btn rs-btn-primary disabled" ng-show="vm.migrating">Processing...</a>
+                    <div class="span-3">
+                        <div class="plain-panel" style="min-height:240px;">
+                            <a ng-link="['MigrationRecommendation']" class=" rs-btn-action rs-pull-right">
+                                <i class="rs-edit" title="Modify this"></i>
+                            </a>
+                            <h3>Projected Cost <a href="#" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"
+                                    data-content="The projected pricing consist of infrastructure costs only, and support costs are not included in the provided price."><i class="fa fa-info-circle rs-quiet"></i></a></h3>
+                            <hr>
+                            <p>
+                                <big><b>{{vm.cost | currency: '$'}}</b>/month </big>
+                                <br>
+                                <a href role="button" data-toggle="modal" ng-click="vm.openUsageCostsModal()"><small>See Details</small></a>
+                            </p>
+                            <hr class="dash">
+                            <big><b>Support Level</b> </big>
+                            <p>
+                                Navigator <sup>&#174;</sup> <i class="fa fa-info-circle rs-quiet" role="button" data-trigger="hover"
+                                    data-placement="top" data-toggle="popover" data-content="<b>Navigator Monthly Service Fee starts at $400</b>. We can act as a business associate to support customers with HIPAA workloads on AWS. Personal contact to assist with onboarding. A combined set of AWS and Rackspace recommendations from certified AWS architects"></i>
+                                <br>
+                                <small>* Navigator cost not reflected here.</small>
+                                <br>
+                                <!--<small>Legal <a data-html="true"  data-placement="top" data-toggle="popover" data-content="<b>Please note that we may place a $1 authorization hold to confirm your account.</b> <br>
+                                <small>(Our lawyers make us say this)</small>
+                                <br> Your use of Rackspace websites is subject to the <a href='http://www.rackspace.com/information/legal/websiteterms?_ga=1.254955403.24213883.1488833556' target='_blank'>Website Terms</a>." ><i class="fa fa-info-circle rs-quiet"></i></a>
+                                </small>-->
+                            </p>
+                        </div>
                     </div>
-                    <div class="clear"></div>
-               
+                    <rsschedulemigration></rsschedulemigration>
+                </div>
+                <br>
+                <div class="rs-pull-right">
+                    <div class="faws-legal-txt">
+                        <input id="accept_terms" name="accept_terms" type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required">                        <span class="ng-binding"> I acknowledge that I have read and accept the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a> and the <a href="http://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Terms and Conditions</a>.</span>
+                    </div>
+                    <a class="rs-btn " ng-link="['MigrationRecommendation']">Back</a>
+                    <a class="rs-btn" role="button" ng-click="vm.showCancelDialog()">Cancel Migration</a>
+                    <button class="rs-btn rs-btn-primary " type="submit" ng-click="vm.migrate()" ng-disabled="(!vm.scheduleMigration || !vm.acceptTermsAndConditions)  ">Confirm & Schedule</button>
+                    <a class="rs-btn rs-btn-primary disabled" ng-show="vm.migrating">Processing...</a>
+                </div>
+                <div class="clear"></div>
+
                 <!--<div style="margin-top: 10px; text-align: right;" ng-show="vm.migrating" >Preparing and sending migration request...<i class="fa fa-refresh fa-spin" style="font-size:16px"></i></div>-->
-                <div style="color: red; text-align: right;" ng-show="vm.errorInMigration" >Error while trying to migrate</div>
+                <div style="color: red; text-align: right;" ng-show="vm.errorInMigration">Error while trying to migrate</div>
                 <div class="rs-row" style="text-align: right;" ng-show="vm.saveLaterObj.resultMsg" ng-style="vm.saveLaterObj.saveSuccess == true ? {color:'green'} : {color:'red'}">{{vm.saveLaterObj.resultMsg}}</div>
                 <br>
             </div>
         </div>
-    
-    
-</div>
-<rsinteractivefooter></rsinteractivefooter>
+    </div>
+    <rsinteractivefooter></rsinteractivefooter>
 
-<!-- modals -->
-  <!-- confrm migration modal -->
-    <div id="confirm-migration-modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- modals -->
+    <!-- no equipments modal -->
+    <div id="no-equipments-modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-header">
+            <h3>Cannot do migration!!!!!.</h3>
+        </div>
+        <div class="modal-body">
+            <p>Currently you have no servers or networks to migrate. To select few, please press on continue...</p>
+        </div>
+        <div class="modal-footer">
+            <a ng-click="vm.selectServers()" class="rs-btn rs-btn-primary">Continue </a>
+            <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
+        </div>
+    </div>
+    <!-- no equipments modal -->
+
+    <!-- confrm migration modal -->
+    <div id="confirm-migration-modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
         <div class="modal-header">
             <h3>You have chosen this time for your migration.</h3>
         </div>
         <div class="modal-body">
-            <h3>{{vm.schedule.date}} </h3> 
+            <h3>{{vm.schedule.date}} </h3>
             <p>Is this correct?</p>
             <div class="rs-control-group">
-               <a ng-click="vm.migrate()" ng-show="!vm.migrating"  class="rs-btn rs-btn-primary">Yes, Continue</a>  
-               <a class="rs-btn" data-dismiss="modal" aria-hidden="true">No, Go back</a>
-            </div> 
+                <a ng-click="vm.migrate()" ng-show="!vm.migrating" class="rs-btn rs-btn-primary">Yes, Continue</a>
+                <a class="rs-btn" data-dismiss="modal" aria-hidden="true">No, Go back</a>
+            </div>
         </div>
-        <div class="modal-footer">   
+        <div class="modal-footer">
         </div>
     </div>
-       <!-- confrm migration modal -->
-    <div id="confirm-migration-modalFAWS" class="modal modal-success hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- confrm migration modal faws modal-->
+    <div id="confirm-migration-modalFAWS" class="modal modal-success hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
         <div class="modal-header">
             <h3>Confirm your Migration &amp; FAWS account. </h3>
         </div>
         <div class="modal-body">
-           <!-- <div class="rs-row">
+            <!-- <div class="rs-row">
                  <div class="span-5">
                     <img src="images/FAWS-logo.jpg" alt="FAWS logo" class="FAWS-logo">
                 </div> 
@@ -123,22 +137,24 @@
             <br>
             <b>Please note that we may place a $1 authorization hold to confirm your account.</b> <br>
             <small>(Our lawyers make us say this)</small>
-            <br> Your use of Rackspace websites is subject to the <a href='http://www.rackspace.com/information/legal/websiteterms?_ga=1.254955403.24213883.1488833556' target='_blank'>Website Terms</a>.</small>
+            <br> Your use of Rackspace websites is subject to the <a href='http://www.rackspace.com/information/legal/websiteterms?_ga=1.254955403.24213883.1488833556'
+                target='_blank'>Website Terms</a>.</small>
         </div>
         <div class="modal-footer">
-             <a ng-click="vm.migrate()" ng-show="!vm.migrating"  class="rs-btn rs-btn-primary">Submit &amp; Continue </a>
+            <a ng-click="vm.migrate()" ng-show="!vm.migrating" class="rs-btn rs-btn-primary">Submit &amp; Continue </a>
             <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
         </div>
     </div>
     <!-- end modals -->
-     <!-- modals -->
+    <!-- modals -->
     <!-- calculator_modal -->
-    <div id="calculator_modal" class="modal hide animated fadeIn details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="calculator_modal" class="modal hide animated fadeIn details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
         <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     <i class="fa fa-times"></i>
                 </button>
-                <h3>Pricing Calculations </h3>
+            <h3>Pricing Calculations </h3>
         </div>
         <div class="modal-body">
             <big><b>Current Costs - Rackspace</b></big>
@@ -190,7 +206,7 @@
                         <td class="rs-table-text">${{item.aws_uptime_cost + " (" + item.rax_uptime + ")"}}</td>
                         <td class="rs-table-text" ng-if="item.aws_bandwidth !== 'NA'">${{item.aws_bandwidth_cost + " (" + item.rax_bandwidth + " GB)"}}</td>
                         <td class="rs-table-text" ng-if="item.aws_bandwidth === 'NA'">N/A</td>
-                        <td class="rs-table-text">${{item.aws_total_cost}}</td>                    
+                        <td class="rs-table-text">${{item.aws_total_cost}}</td>
                     </tr>
                     <tr>
                         <td></td>
@@ -204,25 +220,25 @@
         </div>
     </div>
 
-<!-- end modals -->
- <script>
-    $(document).ready(function() {
-        $('[data-toggle="popover"]').popover({
-            html: true
+    <!-- end modals -->
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover({
+                html: true
+            });
         });
-    });
     </script>
-  </script>
-  
+    </script>
+
     <!-- accordion icon behavior -->
     <script type="text/javascript">
-    $(document).ready(function() {
-        $(".accordion-heading + .collapse:not(.in)").prev().append("<i class='fa fa-chevron-down'></i>");
-        $(".accordion-heading + .collapse.in").prev().append("<i class='fa fa-chevron-up'></i>");
-        $('.accordion-heading a').click(function() {
-            $('.plain-panel').find('.collapse.in').prev().find("i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
-            $(this).parents('.accordion-heading').find("i.fa-chevron-down").removeClass("fa-chevron-down").addClass("fa-chevron-up");
-            $(this).parents('.plain-panel').find('.collapse.in').prev().find("i.fa-chevron-up").removeClass("fa-chevron-up").addClass("fa-chevron-down");
+        $(document).ready(function () {
+            $(".accordion-heading + .collapse:not(.in)").prev().append("<i class='fa fa-chevron-down'></i>");
+            $(".accordion-heading + .collapse.in").prev().append("<i class='fa fa-chevron-up'></i>");
+            $('.accordion-heading a').click(function () {
+                $('.plain-panel').find('.collapse.in').prev().find("i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
+                $(this).parents('.accordion-heading').find("i.fa-chevron-down").removeClass("fa-chevron-down").addClass("fa-chevron-up");
+                $(this).parents('.plain-panel').find('.collapse.in').prev().find("i.fa-chevron-up").removeClass("fa-chevron-up").addClass("fa-chevron-down");
+            });
         });
-    });
     </script>
