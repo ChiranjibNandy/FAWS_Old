@@ -1,5 +1,5 @@
 <div class="migration-mgr rs-container" ng-style="vm.isRacker == true ? {'margin-top':'30px'} : {'margin-top':'0px'}">
-    <a href="#" ng-click="vm.showCancelDialog()"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
+    <rssaveprogress stepname="ConfirmMigration"></rssaveprogress>
     <br><br>
     <div class="rs-main rs-panel">
         <div class="rs-content rs-panel">
@@ -73,33 +73,6 @@
 <rsinteractivefooter></rsinteractivefooter>
 
 <!-- modals -->
-<div id="cancel_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForCancel" aria-hidden="true">
-    <div class="modal-body">
-        <h3>You have chosen this time for your migration.</h3>
-        <form class=" ">
-            <div class="rs-control-group">
-                <div class="rs-controls">
-                    <label class="rs-radio">
-                        <input type="radio" ng-model="vm.saveProgress" value="yes">
-                        <strong>Yes</strong><br>
-                        <span class="rs-help-block">Save progress for later</span>
-                      </label>
-                    <label class="rs-radio">
-                        <input type="radio" ng-model="vm.saveProgress" value="no">
-                        <strong>No</strong>
-                        <span class="rs-help-block">Cancel and move on</span>
-                      </label>
-                </div>
-            </div>
-            <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <button class="rs-btn rs-btn-primary " ng-class="{disabled:vm.saveProgress == ''}" ng-click="vm.submitCancel()" ng-hide="vm.cancelnSaveObj.saveInProgress">Submit</button>
-            <a class="rs-btn disabled" disabled="disabled" ng-show="vm.cancelnSaveObj.saveInProgress">Submitting...</a>
-            <i class="rs-processing-indicator" ng-show="vm.cancelnSaveObj.saveInProgress"></i>
-            <br>
-            <div ng-show="vm.cancelnSaveObj.resultMsg" ng-style="vm.cancelnSaveObj.saveSuccess == true ? {color:'green'} : {color:'red'}">{{vm.cancelnSaveObj.resultMsg}}</div>
-        </form>
-    </div>
-</div>
   <!-- confrm migration modal -->
     <div id="confirm-migration-modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">

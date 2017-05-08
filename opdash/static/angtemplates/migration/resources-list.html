@@ -1,6 +1,6 @@
 <!--<div class="rs-wrapper">-->
 <div class="migration-mgr rs-container" ng-style="vm.isRacker == true ? {'margin-top':'30px'} : {'margin-top':'0px'}">
-    <a href="#" ng-click="vm.cancelMigration()"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
+    <rssaveprogress stepname="MigrationResourceList"></rssaveprogress>
     <div class="rs-main ">
         <div class="rs-content rs-panel">
             <!-- Start Stepper -->
@@ -119,15 +119,13 @@
     <div class="modal-body">
         <form class=" ">
             <div class="rs-control-group">
-
                 <div class="rs-controls">
                     <label class="rs-radio">
                         <input type="radio" ng-model="vm.saveProgress" value="yes">
                         <strong>Yes</strong><br>
-                        <span class="rs-help-block">Save progress for later</span>
-                      </label>
-                    <label ng-show="vm.displayMigName && vm.saveProgress == 'yes'" class="rs-control-label">Name your migration and click '<b>Submit </b>' to save this instance</label>
-                    <div ng-show="vm.displayMigName && vm.saveProgress == 'yes'" class="rs-controls">
+                        <span class="rs-help-block">Name this migration and click <b>'Submit'</b> to save this migration for later</span>
+                    </label>
+                    <div class="rs-controls">
                         <input type="text" ng-model="vm.migrationName" placeholder="{{vm.migrationName}}">
                     </div>
                     <label class="rs-radio">

@@ -24,7 +24,7 @@
              * @name migrationApp.controller:rsinteractivefooterCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsinteractivefooter rsinteractivefooter} component
              */
-            controller: ["datastoreservice", function (dataStoreService) {
+            controller: [function () {
                 var vm = this;
 
                 return vm;

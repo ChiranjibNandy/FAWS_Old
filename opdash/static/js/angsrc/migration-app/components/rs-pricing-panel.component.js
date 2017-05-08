@@ -181,22 +181,6 @@
 
                 /**
                  * @ngdoc method
-                 * @name showCancelDialog
-                 * @methodOf migrationApp.controller:rspricingCtrl
-                 * @description 
-                 * function to cancel the migration. 
-                 */
-                vm.showCancelDialog = function() {
-                    $('#cancel_modal').modal('show');
-                };
-
-                //Listener to close and show modal
-                $rootScope.$on("showCancelModal", function(event){
-                    vm.showCancelDialog();
-                });
-
-                /**
-                 * @ngdoc method
                  * @name continueToSchedule
                  * @methodOf migrationApp.controller:rspricingCtrl
                  * @description 
@@ -252,87 +236,6 @@
                         });
                         vm.totalProjectedPricingSum = vm.totalProjectedPricingSum.toFixed(2);
                     },1000);                                 
-                }
-
-                /**
-                 * @ngdoc method
-                 * @name saveItems
-                 * @methodOf migrationApp.controller:rspricingCtrl
-                 * @description 
-                 * Invokes "/api/users/uidata/" API call for fetching existing saved instances. 
-                 */
-                vm.saveItems = function(buttonDetails) {
-                    var stepName = "";
-                    var scheduleItem = {};
-                    var time = '';
-                    var timezone = '';
-                   //conditions to checkeck on what page the user is and save the data and pass on to the next following pages.  
-                    if(vm.page==="recommendation"){ 
-                        stepName = "MigrationRecommendation";
-                        scheduleItem = {};
-                        time = '';
-                        timezone = '';
-                    }
-                    var saveInstance = {
-                        recommendations : dataStoreService.getItems(),
-                        scheduling_details : scheduleItem,
-                        step_name: stepName,
-                        migration_schedule: {
-                            migrationName:dataStoreService.getScheduleMigration().migrationName,
-                            time:time,
-                            timezone:timezone
-                        }
-                    };
-                    buttonDetails.saveInProgress = true;
-                    dataStoreService.saveItems(saveInstance).then(function(success){
-                        if(success){
-                            buttonDetails.saveInProgress = false;
-                            buttonDetails.saveSuccess = true;
-                            buttonDetails.resultMsg = "Saved your instance successfully with name: "+dataStoreService.getScheduleMigration().migrationName;
-                            $timeout(function () {
-                                buttonDetails.resultMsg = "";
-                                if(buttonDetails.modalName == '#cancel_modal'){
-                                    dataStoreService.resetAll();
-                                    $('#cancel_modal').modal('hide');
-                                    $rootRouter.navigate(["MigrationStatus"]);
-                                }
-                            }, 3000);
-                        }else{
-                            buttonDetails.saveInProgress = false;
-                            buttonDetails.saveSuccess = false;
-                            buttonDetails.resultMsg = "Error while saving. Please try again after sometime!!";
-                            $timeout(function () {
-                                buttonDetails.resultMsg = "";
-                                $(buttonDetails.modalName).modal('hide');
-                            }, 3000);
-                        }
-                    },function(error){
-                        buttonDetails.saveInProgress = false;
-                        buttonDetails.saveSuccess = false;
-                        buttonDetails.resultMsg = "Error while saving. Please try again after sometime!!";
-                        $timeout(function () {
-                            buttonDetails.resultMsg = "";
-                            $(buttonDetails.modalName).modal('hide');
-                        }, 3000);
-                    });
-                };
-
-                /**
-                 * @ngdoc method
-                 * @name submitCancel
-                 * @methodOf migrationApp.controller:rspricingCtrl
-                 * @description 
-                 * function to cancel the migration. 
-                 */
-                vm.submitCancel = function() {
-                    if(vm.saveProgress == 'yes'){
-                        vm.saveItems(vm.cancelnSaveObj);
-                    }
-                    else{
-                        dataStoreService.resetAll();
-                        $rootRouter.navigate(["MigrationStatus"]);
-                        $('#cancel_modal').modal('hide');
-                    }
                 }
 
                 /**

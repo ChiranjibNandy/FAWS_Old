@@ -57,12 +57,6 @@
                         "modalName": '#save_for_later'
                     };
                      vm.acceptTermsAndConditions=false;
-                    vm.cancelnSaveObj = {
-                        "saveSuccess": false,
-                        "saveInProgress": false,
-                        "resultMsg": "",
-                        "modalName": '#cancel_modal'
-                    };
                     vm.saveProgress = "";
                     // vm.error = false;
                 };
@@ -128,74 +122,6 @@
                     vm.changedMigrationName = vm.migrationName;
                     $rootScope.$emit("vm.MigrationName", dataStoreService.selectedTime.migrationName);
                     vm.editName = false;
-                };
-
-                /**
-                 * @ngdoc method
-                 * @name saveItems
-                 * @methodOf migrationApp.controller:rsconfirmmigrationCtrl
-                 * @description 
-                 * Invokes "/api/users/uidata/" API call for fetching existing saved instances. 
-                 */
-                vm.saveItems = function (buttonDetails) {
-                    var saveInstance = {
-                        recommendations: dataStoreService.getItems(),
-                        scheduling_details: dataStoreService.getScheduleMigration(),
-                        step_name: "ConfirmMigration",
-                        migration_schedule: {
-                            migrationName: dataStoreService.getScheduleMigration().migrationName,
-                            time: dataStoreService.getScheduleMigration().time,
-                            timezone: dataStoreService.getScheduleMigration().timezone
-                        }
-                    };
-                    buttonDetails.saveInProgress = true;
-                    dataStoreService.saveItems(saveInstance).then(function (success) {
-                        if (success) {
-                            buttonDetails.saveInProgress = false;
-                            buttonDetails.saveSuccess = true;
-                            buttonDetails.resultMsg = "Saved your instance successfully with name: " + dataStoreService.getScheduleMigration().migrationName;
-                            $timeout(function () {
-                                buttonDetails.resultMsg = "";
-                                if (buttonDetails.modalName == '#cancel_modal') {
-                                    $('#cancel_modal').modal('hide');
-                                    dataStoreService.resetAll();
-                                    $rootRouter.navigate(["MigrationStatus"]);
-                                }
-                            }, 3000);
-                        } else {
-                            buttonDetails.saveInProgress = false;
-                            buttonDetails.saveSuccess = false;
-                            buttonDetails.resultMsg = "Error while saving. Please try again after sometime!!";
-                            $timeout(function () {
-                                buttonDetails.resultMsg = "";
-                                $(buttonDetails.modalName).modal('hide');
-                            }, 3000);
-                        }
-                    }, function (error) {
-                        buttonDetails.saveInProgress = false;
-                        buttonDetails.saveSuccess = false;
-                        buttonDetails.resultMsg = "Error while saving. Please try again after sometime!!";
-                        $timeout(function () {
-                            buttonDetails.resultMsg = "";
-                            $(buttonDetails.modalName).modal('hide');
-                        }, 3000);
-                    });
-                };
-
-
-                vm.submitCancel = function () {
-                    if (vm.saveProgress == 'yes') {
-                        vm.saveItems(vm.cancelnSaveObj);
-                    }
-                    else {
-                        dataStoreService.resetAll();
-                        $rootRouter.navigate(["MigrationStatus"]);
-                        $('#cancel_modal').modal('hide');
-                    }
-                }
-
-                vm.showCancelDialog = function () {
-                    $('#cancel_modal').modal('show');
                 };
 
                 vm.showConfirmMigrateDialog = function (scheduleMigration) {
