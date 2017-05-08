@@ -92,15 +92,13 @@
                         HttpWrapper.save("/api/jobs", { "operation": 'POST' }, requestObj)
                             .then(function (result) {
                                 console.log("Migration Response: ", result);
-                                $timeout(function () {
-                                }, 5000);
+                                $rootRouter.navigate(["MigrationStatus"]);
                             }, function (error) {
                                 console.log("Error: Could not trigger migration", error);
                                 vm.migrating = false;
                                 vm.errorInMigration = true;
                                 vm.scheduleMigration = true;
                             });
-                        $rootRouter.navigate(["MigrationStatus"]);
                     }else{
                         $("#no-equipments-modal").modal('show');
                     }

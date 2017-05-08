@@ -55,7 +55,6 @@
                     <a class="rs-btn " ng-link="['MigrationRecommendation']">Back</a>
                     <a class="rs-btn" role="button" ng-click="vm.showCancelDialog()">Cancel Migration</a>
                     <button class="rs-btn rs-btn-primary " type="submit" ng-click="vm.migrate()" ng-disabled="(!vm.scheduleMigration || !vm.acceptTermsAndConditions)  ">Confirm & Schedule</button>
-                    <a class="rs-btn rs-btn-primary disabled" ng-show="vm.migrating">Processing...</a>
                 </div>
                 <div class="clear"></div>
 
@@ -70,10 +69,10 @@
 
     <!-- modals -->
     <!-- no equipments modal -->
-    <div id="no-equipments-modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div id="no-equipments-modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
         <div class="modal-header">
-            <h3>Cannot do migration!!!!!.</h3>
+            <h3>Cannot do migration!</h3>
         </div>
         <div class="modal-body">
             <p>Currently you have no servers or networks to migrate. To select few, please press on continue...</p>
@@ -86,7 +85,7 @@
     <!-- no equipments modal -->
 
     <!-- confrm migration modal -->
-    <div id="confirm-migration-modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div id="confirm-migration-modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
         <div class="modal-header">
             <h3>You have chosen this time for your migration.</h3>
@@ -103,7 +102,7 @@
         </div>
     </div>
     <!-- confrm migration modal faws modal-->
-    <div id="confirm-migration-modalFAWS" class="modal modal-success hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div id="confirm-migration-modalFAWS" class="modal modal-warning modal-success hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
         <div class="modal-header">
             <h3>Confirm your Migration &amp; FAWS account. </h3>
@@ -148,7 +147,7 @@
     <!-- end modals -->
     <!-- modals -->
     <!-- calculator_modal -->
-    <div id="calculator_modal" class="modal hide animated fadeIn details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div id="calculator_modal" class="modal modal-warning hide animated fadeIn details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
