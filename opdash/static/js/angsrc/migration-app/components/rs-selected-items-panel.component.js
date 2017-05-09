@@ -116,10 +116,10 @@
                  */
                 vm.removeItem = function(item, type) {
                     if(vm.selectedItems[type].indexOf(item)>=0){
-                        $scope.$emit("ItemRemoved", item); // broadcast event to all child components
                         vm.selectedItems[type].splice(vm.selectedItems[type].indexOf(item), 1);
                         dataStoreService.setItems(vm.selectedItems);
                         item.selected = false;
+                        $scope.$emit("ItemRemoved", item); // broadcast event to all child components
                     }
                 }
 

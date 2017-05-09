@@ -239,7 +239,6 @@
                     },
                     version: "v1"
                 };
-console.log(request);
                 return request;
             };
 

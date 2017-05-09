@@ -55,7 +55,6 @@
                                 var job = response.jobs.job_status_list.find(function(job) {
                                     return job.job_id === job_id;
                                 });
-                                console.log(job);
                                 vm.job = job;
                                 vm.loading = false;
                                 vm.manualRefresh = false;

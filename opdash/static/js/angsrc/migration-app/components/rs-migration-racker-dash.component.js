@@ -77,11 +77,9 @@
                     $('.modal-backdrop').remove();
                     vm.isRacker = authservice.is_racker;
                     $rootScope.$on("vm.MigrationName",function(event,value){
-                        console.log(value);
                         vm.migrationName = value;
                     });
                     $rootScope.$on("vm.MigrationTime",function(event,value){
-                        console.log(value);
                         vm.migrationTime = value;
                     });
 

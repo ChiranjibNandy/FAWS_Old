@@ -140,63 +140,6 @@
 
                 /**
                  * @ngdoc method
-                 * @name saveItems
-                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
-                 * @param {Object} buttonDetails _Object_ assign appropriate values as per API response for save or cancel functionality.
-                 * @description
-                 * Invokes "/api/users/uidata/" API call for fetching existing saved instances.
-                 */
-                vm.saveItems = function(buttonDetails) {
-                    var saveInstance = {
-                        recommendations : {},
-                        scheduling_details : {},
-                        step_name: "MigrationResourceList",
-                        migration_schedule: {
-                            migrationName:vm.migrationName,
-                            time:'',
-                            timezone:''
-                        }
-                    };
-                    buttonDetails.saveInProgress = true;
-                    //make API call(through service) for saving the instance and wait for its response.
-                    dataStoreService.saveItems(saveInstance).then(function(success){
-                        if(success){
-                            buttonDetails.saveInProgress = false;
-                            buttonDetails.saveSuccess = true;
-                            buttonDetails.resultMsg = "Saved your instance successfully with name: "+dataStoreService.getScheduleMigration().migrationName;
-                            //make the popup or alert message disappear after 3 seconds of API response.
-                            $timeout(function () {
-                                buttonDetails.resultMsg = "";
-                                if(buttonDetails.modalName == '#cancel_modal'){
-                                    $('#cancel_modal').modal('hide');
-                                    dataStoreService.resetAll();
-                                    $rootRouter.navigate(["MigrationStatus"]);
-                                }
-                                else
-                                    $(buttonDetails.modalName).modal('hide');
-                            }, 3000);
-                        }else{
-                            buttonDetails.saveInProgress = false;
-                            buttonDetails.saveSuccess = false;
-                            buttonDetails.resultMsg = "Error while saving. Please try again after sometime!!";
-                            $timeout(function () {
-                                buttonDetails.resultMsg = "";
-                                $(buttonDetails.modalName).modal('hide');
-                            }, 3000);
-                        }
-                    },function(error){
-                        buttonDetails.saveInProgress = false;
-                        buttonDetails.saveSuccess = false;
-                        buttonDetails.resultMsg = "Error while saving. Please try again after sometime!!";
-                        $timeout(function () {
-                            buttonDetails.resultMsg = "";
-                            $(buttonDetails.modalName).modal('hide');
-                        }, 3000);
-                    });
-                };
-
-                /**
-                 * @ngdoc method
                  * @name dontShow
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
                  * @description
@@ -282,60 +225,6 @@
                         $("#no_selection").modal('show');
                         $('#intro_modal').modal('hide');
                     }
-                };
-                /**
-                 * @ngdoc method
-                 * @name cancelMigration
-                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
-                 * @description
-                 * Cancel Migration of resources and go back to migration dashboard page.
-                 */
-                vm.cancelMigration = function() {
-                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0){
-                        $('#cancel_modal').modal('show');
-                        var migration_name = dataStoreService.getScheduleMigration().migrationName;
-                        if(!migration_name && !vm.displayMigName){
-                            vm.displayMigName = true;
-                        };
-                    }
-                    else{
-                        dataStoreService.resetAll();
-                        $('#save_for_later').modal('hide');
-                        $('#name_modal').modal('hide');
-                        $('#cancel_modal').modal('hide');
-                        $('#intro_modal').modal('hide');
-                        $('#no_selection').modal('hide');
-                        $rootRouter.navigate(["MigrationStatus"]);
-                    }
-                };
-
-                /**
-                 * @ngdoc method
-                 * @name submitCancel
-                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
-                 * @description
-                 * Cancel Migration of resources and go back to migration dashboard page.
-                 */
-                vm.submitCancel = function() {
-                    if(vm.saveProgress == 'yes'){
-                        // var migration_name = dataStoreService.getScheduleMigration().migrationName;
-                        // if(!migration_name && !vm.displayMigName){
-                        //     vm.displayMigName = true;
-                        // }
-                        // else{
-                        vm.saveItems(vm.cancelnSaveObj);
-                        vm.displayMigName = false;
-                        //};
-                    }
-                    else{
-                        dataStoreService.resetAll();
-                        $rootRouter.navigate(["MigrationStatus"]);
-                        $('#cancel_modal').modal('hide');
-                    }
-                    $('#save_for_later').modal('hide');
-                    $('#name_modal').modal('hide');
-                    $('#intro_modal').modal('hide');
-                    $('#no_selection').modal('hide');
                 };
 
                 vm.equipmentDetailsModal = function(type, itemdetails) {

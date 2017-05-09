@@ -56,7 +56,7 @@
                         var url = '/api/ec2/regions'; 
                         HttpWrapper.send(url,{"operation":'GET'}).then(function(result){
                             vm.regions = result;
-                            vm.awsRegion = 'us-east-1';
+                            vm.awsRegion = result[0];
                             vm.getZones();
                             $('#rs-main-panel').css('height','310px');
                         },function(error){

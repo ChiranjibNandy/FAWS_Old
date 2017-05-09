@@ -111,7 +111,6 @@
                     return HttpWrapper.send(url, { "operation": 'GET' })
                                       .then(function(result) {
                                             ticketsLoaded = true;
-                                            console.log("Tickets: ", result);
                                             tickets = result.tickets;
                                             return result.tickets;
                                         }, function(errorResponse) {

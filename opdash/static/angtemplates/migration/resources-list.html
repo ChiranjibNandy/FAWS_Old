@@ -1,6 +1,6 @@
 <!--<div class="rs-wrapper">-->
 <div class="migration-mgr rs-container" ng-style="vm.isRacker == true ? {'margin-top':'30px'} : {'margin-top':'0px'}">
-    <a href="#" ng-click="vm.cancelMigration()"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
+    <rssaveprogress stepname="MigrationResourceList" type="link"></rssaveprogress>
     <div class="rs-main ">
         <div class="rs-content rs-panel">
             <!-- Start Stepper -->
@@ -37,7 +37,7 @@
                         <rsmigrationitem type="Files" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
                     <div class="rs-pull-right" style="margin-top: -49px; margin-left:790px">
-                        <a class="rs-btn" ng-click="vm.cancelMigration()">Cancel Migration</a>
+                        <rssaveprogress stepname="MigrationResourceList" type="button" ></rssaveprogress>
                         <a class="rs-btn rs-btn-primary " ng-click="vm.savencontinue()">Continue</a>
                     </div>
                 </rs-tabs>
@@ -50,7 +50,7 @@
     <rsinteractivefooter></rsinteractivefooter>
 </div>
 <!--</div>-->
-<div id="name_modal" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="ModalForSelect" aria-hidden="true">
+<div id="name_modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="ModalForSelect" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
         <h3>What would you like to name your migration?</h3>
@@ -88,7 +88,7 @@
       </div>
 </div>
 
-<div id="save_for_later" class="modal hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSave" aria-hidden="true">
+<div id="save_for_later" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSave" aria-hidden="true">
     <div class="modal-header">
           <h3>Please name your Migration in order to save this instance</h3>
     </div>
@@ -119,15 +119,13 @@
     <div class="modal-body">
         <form class=" ">
             <div class="rs-control-group">
-
                 <div class="rs-controls">
                     <label class="rs-radio">
                         <input type="radio" ng-model="vm.saveProgress" value="yes">
                         <strong>Yes</strong><br>
-                        <span class="rs-help-block">Save progress for later</span>
-                      </label>
-                    <label ng-show="vm.displayMigName && vm.saveProgress == 'yes'" class="rs-control-label">Name your migration and click '<b>Submit </b>' to save this instance</label>
-                    <div ng-show="vm.displayMigName && vm.saveProgress == 'yes'" class="rs-controls">
+                        <span class="rs-help-block">Name this migration and click <b>'Submit'</b> to save this migration for later</span>
+                    </label>
+                    <div class="rs-controls">
                         <input type="text" ng-model="vm.migrationName" placeholder="{{vm.migrationName}}">
                     </div>
                     <label class="rs-radio">

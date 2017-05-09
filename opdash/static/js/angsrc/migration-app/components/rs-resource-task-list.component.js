@@ -58,8 +58,6 @@
                                 vm.tasks = [];
                             else
                                 vm.tasks = response.tasks;
-
-                            console.log("Tasks", response);
                             ds.getTrimmedAllItems(params.resource_type==="instance" ? "server" : params.resource_type)
                                 .then(function (response) {
                                     var details = response.data.filter(function (item) { return item.id == params.resource_id })[0];

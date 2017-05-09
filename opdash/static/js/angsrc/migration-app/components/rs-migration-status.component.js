@@ -210,8 +210,8 @@
                             .then(function (response) {
                                 if (response.error)
                                     console.log("No data recieved");
-                                else
-                                    console.log("Batch: ", response);
+                                //else
+                                    //console.log("Batch: ", response);
 
                                 var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled"];
                                 var validCompletedBatchStatus = ["done"];
@@ -338,7 +338,6 @@
                  * Initiates scheduling of migration for a saved migration
                  */
                 vm.continueScheduling = function (batch) {
-                    console.log(batch);
 
                     if (!isValidBatch(batch)) {
                         $('#abort_continue').modal('show');
