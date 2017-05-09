@@ -37,6 +37,8 @@
                     //         var profileDetails = JSON.parse(result.savedDetails || '[]');
                     //     });
                     // If status is true, popup for migration won't be displayed in first step of Migration.
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
                     var status = dataStoreService.getDontShowStatus(); //check for flag status created for intorduction Modal.
                     if(status == false){
                         $('#intro_modal').modal('show');
@@ -344,6 +346,14 @@
                     $('#resource_info').modal('show');
                 }
 
+                //to detect browser back click and prevent the functionality for wrong events
+                $scope.$on('$locationChangeStart', function(event, newUrl, oldUrl) {
+                    if((oldUrl.indexOf("migration/resources") > -1) && (newUrl.indexOf("migration/confirm") > -1)){
+                        event.preventDefault();
+                        $('#cancel_modal').modal('show');
+                        //$rootRouter.navigate(["MigrationResourceList"]);
+                    }
+                });
                 return vm;
             }
         ]}); // end of component rsmigrationresourceslist

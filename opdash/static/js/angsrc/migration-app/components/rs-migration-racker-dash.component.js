@@ -28,7 +28,7 @@
              * @name migrationApp.controller:rsmigrationrackerdashCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationrackerdash rsmigrationrackerdash} component
              */
-            controller:["authservice", "datastoreservice", "$scope","httpwrapper","$q","$rootRouter","$window","$timeout","$rootScope",function(authservice,datastoreservice, $scope,HttpWrapper,$q,$rootRouter,$window,$timeout,$rootScope){
+            controller:["authservice", "datastoreservice", "$scope","httpwrapper","$q","$rootRouter","$window","$timeout","$rootScope", "$route",function(authservice,datastoreservice, $scope,HttpWrapper,$q,$rootRouter,$window,$timeout,$rootScope, $route){
                 var vm = this;
                 vm.items = [];
                 vm.addedAccount = '';
@@ -465,7 +465,7 @@
                     else 
                         vm.sortVal = sortByItem;
                 }
-
+                
             }]
         });
 })();
