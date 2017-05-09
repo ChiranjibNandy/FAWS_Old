@@ -44,7 +44,6 @@
                             return errorResponse;
                         });
                 } else {
-                    console.log(batches);
                     return $q.when(batches);
                 }
             };

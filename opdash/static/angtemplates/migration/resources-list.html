@@ -1,6 +1,6 @@
 <!--<div class="rs-wrapper">-->
 <div class="migration-mgr rs-container" ng-style="vm.isRacker == true ? {'margin-top':'30px'} : {'margin-top':'0px'}">
-    <rssaveprogress stepname="MigrationResourceList"></rssaveprogress>
+    <rssaveprogress stepname="MigrationResourceList" type="link"></rssaveprogress>
     <div class="rs-main ">
         <div class="rs-content rs-panel">
             <!-- Start Stepper -->
@@ -37,7 +37,7 @@
                         <rsmigrationitem type="Files" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
                     <div class="rs-pull-right" style="margin-top: -49px; margin-left:790px">
-                        <a class="rs-btn" ng-click="vm.cancelMigration()">Cancel Migration</a>
+                        <rssaveprogress stepname="MigrationResourceList" type="button" ></rssaveprogress>
                         <a class="rs-btn rs-btn-primary " ng-click="vm.savencontinue()">Continue</a>
                     </div>
                 </rs-tabs>

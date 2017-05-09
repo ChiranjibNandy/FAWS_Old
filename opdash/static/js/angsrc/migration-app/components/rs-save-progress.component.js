@@ -17,7 +17,8 @@
             templateUrl: "/static/angtemplates/migration/save-progress.html",
             controllerAs: "vm",
             bindings: {
-                stepname: "@"
+                stepname: "@",
+                type:"@"
             },
             /**
              * @ngdoc controller
@@ -28,8 +29,6 @@
                 var vm = this;
 
                 vm.$onInit = function () {
-                    console.log("step name");
-                    console.log(vm.stepname);
                     vm.cancelnSaveObj = {
                         "saveSuccess" : false,
                         "saveInProgress" : false,

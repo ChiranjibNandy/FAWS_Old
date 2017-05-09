@@ -1,4 +1,10 @@
-<a href="#" ng-click="vm.cancelMigration()"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
+<a class="rs-btn" ng-click="vm.cancelMigration()" ng-show="vm.type==='button' && vm.stepname == 'MigrationResourceList'">
+    Cancel Migration
+</a>
+<div class="rs-row pricing-buttons" ng-show="vm.type==='button' && vm.stepname !== 'MigrationResourceList'">
+    <a class="rs-btn span-12" role="button" ng-click="vm.cancelMigration()">Cancel Migration</a>
+</div>
+<a href="#" ng-click="vm.cancelMigration()" ng-show="vm.type==='link'"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
 <div id="cancel_modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="ModalForCancel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
@@ -13,9 +19,11 @@
                         <strong>Yes</strong><br>
                         <span class="rs-help-block">Name this migration and click <b>'Submit'</b> to save this migration for later</span>
                     </label>
-                    <div class="rs-controls">
-                        <input type="text" ng-model="vm.migrationName" placeholder="{{vm.migrationName}}">
-                    </div>
+                    <label class="rs-radio">
+                        <div class="rs-controls">
+                            <input type="text" ng-model="vm.migrationName" placeholder="{{vm.migrationName}}">
+                        </div>
+                    </label>
                     <label class="rs-radio">
                         <input type="radio" ng-model="vm.saveProgress" value="no">
                         <strong>No</strong>

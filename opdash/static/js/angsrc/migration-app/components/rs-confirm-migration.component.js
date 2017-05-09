@@ -84,14 +84,10 @@
                         $('#confirm-migration-modal').modal('hide');
                         requestObj = ds.prepareRequest();
                         vm.acceptTermsAndConditions= true;
-                        console.log(requestObj);
                         $rootScope.$emit("vm.MigrationName", dataStoreService.selectedTime.migrationName);
-                        console.log(dataStoreService.selectedTime.migrationName);
                         $rootScope.$emit("vm.MigrationTime", dataStoreService.selectedTime.time);
-                        console.log(dataStoreService.selectedTime.time);
                         HttpWrapper.save("/api/jobs", { "operation": 'POST' }, requestObj)
                             .then(function (result) {
-                                console.log("Migration Response: ", result);
                                 $rootRouter.navigate(["MigrationStatus"]);
                             }, function (error) {
                                 console.log("Error: Could not trigger migration", error);

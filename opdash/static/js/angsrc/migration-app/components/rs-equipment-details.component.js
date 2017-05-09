@@ -70,7 +70,6 @@
                                     ss.getJobTasks(jobId[0].id)
                                         .then(function(response){
                                             vm.jobStatus = response.data.results.instances[vm.id].status; 
-                                            console.log(vm.jobStatus);
                                             vm.tasks = response.data.results.instances[vm.id].tasks;
                                             vm.showData = true;
                                         });
