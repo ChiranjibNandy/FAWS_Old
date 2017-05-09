@@ -30,7 +30,7 @@
                  * @name migrationApp.controller:rsmigrationstatusCtrl
                  * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationstatus rsmigrationstatus} component
                  */
-                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "migrationitemdataservice", "alertsservice", "$filter", "$interval", "$timeout", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, ds, alertsService, $filter, $interval, $timeout) {
+                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "migrationitemdataservice", "alertsservice", "$filter", "$interval", "$timeout", "$scope", "$route", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, ds, alertsService, $filter, $interval, $timeout, $scope, $route) {
                     var vm = this, 
                         jobList = [],
                         lastRefreshIntervalPromise,
@@ -437,6 +437,14 @@
                             batch.showSettings = true;
                         }, 50);
                     };
+
+                    //to detect browser back click and prevent the functionality for wrong events
+                    $scope.$on('$locationChangeStart', function(event, newUrl, oldUrl) {
+                        if((oldUrl.indexOf("/migration-status") > -1) && (newUrl.indexOf("migration/confirm") > -1)){
+                            event.preventDefault();
+                            $('#browser_back').modal('show');
+                        };
+                    });
                 }]
             }); // end of comeponent rsmigrationstatus
 })();
