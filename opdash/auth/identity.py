@@ -1,6 +1,6 @@
+from flask import current_app
 import requests
 import json
-import logging
 
 
 class Identity(object):
@@ -8,7 +8,7 @@ class Identity(object):
     def __init__(self, identity_url):
 
         self._identity_url = identity_url
-        self.logger = logging.getLogger(__name__)
+        self.logger = current_app.logger
 
     def auth_username_and_password(self, username, password):
         """
@@ -170,6 +170,37 @@ class Identity(object):
                     status=response.status_code))
 
         return service_catalog
+
+    def get_impersonator(self, authtoken):
+        """
+            Determines if this authtoken is impersonated
+            and if so, returns the impersonator information
+        """
+
+        impersonator = None
+
+        response = requests.get(
+            url="{0}/tokens/{1}".format(
+                self._identity_url,
+                authtoken
+            ),
+            headers={
+                "Content-Type": "application/json",
+                "X-Auth-Token": authtoken
+            }
+        )
+
+        if response.status_code == requests.codes.ok:
+
+            racker_dict = json.loads(response.text)
+
+            impersonator = racker_dict['access'].get(
+                'RAX-AUTH:impersonator')
+
+            if impersonator:
+                self.logger.debug("** RACKER IS IMPERSONATING **")
+
+        return impersonator
 
     def impersonate_user(self, username, authtoken,
                          token_expiration_seconds=10800):

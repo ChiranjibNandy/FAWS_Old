@@ -3,6 +3,12 @@ requests
 redis
 waitress
 flask-caching
+
+# ONELOGIN PYTHON-SAML
+isodate
+defusedxml
+python-saml
+
 boto3
 pyyaml
 pycrypto

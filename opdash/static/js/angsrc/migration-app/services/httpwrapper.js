@@ -64,7 +64,7 @@
                 data: data
             });
         }
-        
+
         /**
          * Send the request. This function invokes the http service and returns the promise.
          * @param {String} url - URL where the request has to be sent. URLs can have macros like (":id") which
@@ -82,7 +82,7 @@
                 .success( function(data, status) {
                     if (status === 200 || status === 201 || status === 204){
                         deferred.resolve(data);
-                        // console.log(status, data);				
+                        // console.log(status, data);
                     }else {
                         // console.log(status, data);
                         deferred.reject({ error: status, data: data });
@@ -90,6 +90,8 @@
             })
             .error(function(data, status){
                 // console.log(status, data);
+                // User is not authenticated, logout
+                if(status == 403) document.location = "/logout";
                 deferred.reject({ error: status, data: data });
             });
             return deferred.promise;
@@ -102,7 +104,7 @@
              * @methodOf migrationApp.service:httpwrapper
              * @param {String} url URL where the request has to be sent.
              * @param {Object} params Params to specify the type of request
-             * @description 
+             * @description
              * This function invokes the HTTP service and returns the promise. This function is used for sending HTTP GET requests.
              */
             send: _send,
@@ -113,7 +115,7 @@
              * @methodOf migrationApp.service:httpwrapper
              * @param {String} url URL where the request has to be sent.
              * @param {Object} urlParams Params to specify the type of request
-             * @description 
+             * @description
              * This function invokes the HTTP service and returns the promise. This function is used for sending HTTP GET requests.
              */
             read: read,
@@ -124,7 +126,7 @@
              * @methodOf migrationApp.service:httpwrapper
              * @param {String} url URL where the request has to be sent.
              * @param {Object} urlParams Params to specify the type of request
-             * @description 
+             * @description
              * This function invokes the HTTP service and returns the promise. This function is used for sending HTTP GET requests.
              */
             readAll: readAll,
@@ -136,11 +138,11 @@
              * @param {String} url URL where the request has to be sent.
              * @param {Object} urlParams Params to specify the type of request
              * @param {Object} data Data to be sent with the request.
-             * @description 
+             * @description
              * This function invokes the HTTP service and returns the promise. This function is used for sending HTTP DELETE requests (usually while calling a REST API).
              */
             'delete': _delete,
-            
+
             /**
              * @ngdoc method
              * @name save
@@ -148,7 +150,7 @@
              * @param {String} url URL where the request has to be sent.
              * @param {Object} urlParams Params to specify the type of request
              * @param {Object} data Data to be sent with the request.
-             * @description 
+             * @description
              * This function invokes the HTTP service and returns the promise. This function is used for sending HTTP POST requests.
              */
             save: save
