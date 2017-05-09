@@ -1,9 +1,8 @@
 import os
 from flask import Flask
 from opdash.controllers.errors import register_error_handlers
-from opdash.controllers.proxy import register_api_proxy
 
-from opdash.controllers import unsecure, customer, racker, saml, login
+from opdash.controllers import unsecure, customer, racker, saml, login, proxy
 from flask_caching import Cache
 from opdash.config_loader import import_config_to_env_var_defaults
 from opdash.rax.remote_config import RemoteConfig
@@ -81,8 +80,8 @@ def build_app():
         context = (ssl_crt, ssl_key)
 
     # Register Routes and Blueprints
-    register_api_proxy(app)
     register_error_handlers(app)
+    app.register_blueprint(proxy.mod)
     app.register_blueprint(unsecure.mod)
     app.register_blueprint(racker.mod)
     app.register_blueprint(customer.mod)

@@ -311,6 +311,29 @@ class RackerBlueprint(SecureBlueprint):
                 self.get_base_url(request, remove_path=False)))
 
 
+class ProxyBlueprint(SecureBlueprint):
+    '''
+        This blueprint is for API proxy requests
+    '''
+
+    def register(self, app, options, first_registration=False):
+        super(ProxyBlueprint, self).register(app,
+                                             options,
+                                             first_registration)
+
+    def on_before_request(self):
+
+        # call parent method
+        super(ProxyBlueprint, self).on_before_request()
+
+        if g.user_data:
+            current_app.logger.debug('PROXY REQUEST IS A CUSTOMER OR RACKER')
+            return
+        else:
+            current_app.logger.debug("PROXY REQUEST NOT AUTHENTICATED")
+            abort(403)
+
+
 class SamlBlueprint(SecureBlueprint):
     '''
         This blueprint is for SAML ENDPOINTS
