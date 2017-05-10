@@ -57,25 +57,29 @@
     <div class="modal-header">
         <br>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-        <h3 class="rs-page-title" style="color : #333">Precheck Results</h3>
+        <h3 class="rs-page-title" style="color : #333">Validating AWS Compatibility…</h3>
     </div>
-    <div class="modal-body" ng-show="!vm.precheck && !vm.precheckError">
-        <p><strong>Validating items in your migration...</strong></p>        
+    <div class="modal-body" ng-show="!vm.precheck && !vm.precheckError && !vm.precheckSuccess">     
         <div class="rs-table-overlay rs-table-overlay-loading">
             <div class="rs-table-overlay-content">
                 <div class="rs-table-overlay-message">Loading&hellip;</div>
             </div>
         </div>
     </div>
-    <div class="modal-body" ng-show="!vm.precheck && vm.precheckError ">
+    <div class="modal-body" ng-show="!vm.precheck && vm.precheckError && !vm.precheckSuccess">
         <p>
             <strong>
                 Please come back again as we are facing some issues....
             </strong>
         </p>
     </div>
-    <div class="modal-body" ng-show="vm.precheck && !vm.precheckError">
-        <table class="rs-list-table">
+    <div class="modal-body" ng-show="vm.precheckSuccess">
+        <p>
+            All pre-checks passed, click continue to schedule your migration
+        </p>
+    </div>
+    <div class="modal-body" ng-show="vm.precheck && !vm.precheckError && !vm.precheckSuccess">
+        <table class="rs-list-table" ng-show="">
             <thead>
                 <tr>
                     <th style="width:136px">Resource</th>
@@ -109,8 +113,8 @@
         </strong></p>        
     </div>
     <div class="modal-footer">
-        <button class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-show="vm.precheck">Go Back</button>
-        <a ng-show="vm.errors.length === 0 && vm.failures.length === 0 && !vm.precheckError && vm.precheck" class="rs-btn rs-btn-primary" ng-click="vm.continueToSchedule()" >Continue</a>
+        <button class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-show="vm.precheck || vm.precheckSuccess">Go Back</button>
+        <a ng-show="(vm.errors.length === 0 && vm.failures.length === 0 && !vm.precheckError && vm.precheck) || vm.precheckSuccess" class="rs-btn rs-btn-primary" ng-click="vm.continueToSchedule()" >Continue</a>
     </div>
 </div>
 <!--modals End -->

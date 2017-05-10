@@ -230,7 +230,7 @@
                         </tbody>
                     </table>
                 </div>
-                <br>
+                <br><br>
                 <div class="pagination pagination-mini" ng-show="!vm.loading && vm.completedBatches.items.length!==0">
                     <ul>
                         <li><span>Showing {{(vm.completedBatches.currentPage == 1 ? vm.completedBatches.currentPage : ((vm.completedBatches.currentPage-1)*5)+1)}}-{{(vm.completedBatches.currentPage == vm.completedBatches.noOfPages ? vm.completedBatches.items.length : vm.completedBatches.currentPage*5)}} of {{vm.completedBatches.items.length}}</span></li>
@@ -243,30 +243,44 @@
                     <div class="span-6">
                         <div class="rs-facet-section">
                             <div class="rs-facet-section-body">
-                                <h3>Errors/Warnings <span class="rs-quiet">({{vm.alerts.length}})</span></h3>
+                                <h3>Errors/Warnings <span class="rs-quiet">({{vm.errors.items.length}})</span></h3>
                                 <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container" style="margin-top: 0;">
                                     <table class="rs-list-table rs-embedded-list-table">
                                         <thead>
                                             <tr>
+                                                <th class="rs-table-status"></th>
                                                 <th>Batch Name</th>
                                                 <th>Date</th>
                                                 <th>Message</th>
                                             </tr>
                                         </thead>
-                                        <tbody ng-show="!vm.loadingAlerts && vm.alerts.length>0">
-                                            <tr ng-repeat="alert in vm.alerts | orderBy: 'timestamp'">
+                                        <tbody ng-show="!vm.loadingAlerts && vm.errors.items.length>0">
+                                            <tr ng-repeat="alert in vm.errors.items | orderBy: '-timestamp'| limitTo : vm.errors.pageSize : (vm.errors.currentPage-1)*vm.errors.pageSize">
+                                                <td class="rs-table-status tip" ng-class="{ 'rs-table-status-warning': alert.type==='warning', 'rs-table-status-error': alert.type==='error'}"></td>
                                                 <td><span class="rs-status" ng-class="{'rs-status-warning': alert.type==='warning', 'rs-status-error': alert.type==='error'}">{{alert.type}}</span></td>
                                                 <td class="rs-table-text ng-binding">{{alert.timestamp | date : 'M/dd/yyyy'}}</td>
                                                 <!--<td><a ng-link="['BatchTaskList', {job_id: alert.job_id}]">{{alert.message}}</a></td>-->
-                                                <td>{{alert.message}}</td>
+                                                <td>
+                                                    {{alert.message | limitTo: 30}}
+                                                    <span ng-show="alert.message.length > 30">...</span>
+                                                </td>
                                             </tr>
                                         </tbody>
-                                        <tbody ng-show="!vm.loadingAlerts && vm.alerts.length===0">
+                                        <tbody ng-show="!vm.loadingAlerts && vm.errors.items.length===0">
                                             <tr>
                                                 <td colspan="3" class="empty-collection-info">Hooray! You don't have any errors or warnings.</td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                </div>
+                                <br>
+                                <div class="pagination pagination-mini" ng-show="!vm.loadingAlerts && vm.errors.items.length!==0">
+                                    <ul>
+                                        <li><span>Showing {{(vm.errors.currentPage == 1 ? vm.errors.currentPage : ((vm.errors.currentPage-1)*vm.errors.pageSize)+1)}}-{{(vm.errors.currentPage == vm.errors.noOfPages ? vm.errors.items.length : vm.errors.currentPage*vm.errors.pageSize)}} of {{vm.errors.items.length}}</span></li>
+                                        <li ng-class="{disabled: vm.errors.currentPage == 1}" ng-click="vm.errors.currentPage=vm.errors.currentPage-1"><a href="">Prev</a></li>
+                                        <li ng-repeat="n in vm.errors.pages track by $index" ng-click="vm.errors.currentPage = $index+1"><a href="">{{$index+1}}</a></li>
+                                        <li ng-class="{disabled: vm.errors.currentPage == vm.errors.noOfPages}" ng-click="vm.errors.currentPage=vm.errors.currentPage+1"><a href="">Next</a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>

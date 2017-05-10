@@ -53,7 +53,7 @@
                         <input id="accept_terms" name="accept_terms" type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required">                        <span class="ng-binding"> I acknowledge that I have read and accept the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a> and the <a href="http://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Terms and Conditions</a>.</span>
                     </div>
                     <a class="rs-btn " ng-link="['MigrationRecommendation']">Back</a>
-                    <a class="rs-btn" role="button" ng-click="vm.showCancelDialog()">Cancel Migration</a>
+                    <rssaveprogress stepname="ConfirmMigration" type="button" class="ng-isolate-scope"></rssaveprogress>
                     <button class="rs-btn rs-btn-primary " type="submit" ng-click="vm.migrate()" ng-disabled="(!vm.scheduleMigration || !vm.acceptTermsAndConditions)  ">Confirm & Schedule</button>
                 </div>
                 <div class="clear"></div>

@@ -87,6 +87,7 @@
                         } 
                     } 
                     else if(vm.page==="recommendation"){ 
+                        vm.precheckSuccess = false;
                         vm.precheck = false;
                         vm.precheckError = false;
                         $("#precheck_modal").modal('show');
@@ -94,7 +95,7 @@
                         var servers = dataStoreService.getItems("server");
                         HttpWrapper.save("/api/precheck", { "operation": 'POST' }, requestObj)
                         .then(function (result) {
-                            if(result.results.length != 0){
+                            if(Object.keys(result.results).length != 0){
                                 if(result.results.instances){
                                     angular.forEach(servers, function (server) {
                                         var serverObjects = result.results.instances[server.id];
@@ -127,9 +128,8 @@
                                     vm.warningMappingsOfEquipments(servers[0].details.networks[0],account);
                                 }
                             }
-                            if(result.results.length === 0 || (vm.errors.length === 0 && vm.warnings.length === 0 && vm.failures.length === 0)){
-                                $("#precheck_modal").modal('hide');
-                                $rootRouter.navigate(["ConfirmMigration"]);
+                            if(Object.keys(result.results).length === 0 || (vm.errors.length === 0 && vm.warnings.length === 0 && vm.failures.length === 0)){
+                                vm.precheckSuccess = true;
                             }else{
                                 vm.precheck = true;
                             }

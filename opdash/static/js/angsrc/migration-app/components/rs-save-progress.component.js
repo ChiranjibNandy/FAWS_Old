@@ -35,6 +35,8 @@
                         "resultMsg" : "",
                         "modalName": '#cancel_modal'
                     };
+                    vm.checkedButton = false;
+                    vm.saveProgress = '';
                     vm.displayMigName = false;
                 };
 
@@ -72,6 +74,10 @@
                         $rootRouter.navigate(["MigrationStatus"]);
                         $('#cancel_modal').modal('hide');
                     }
+                };
+
+                vm.enableSubmit = function(){
+                    vm.checkedButton = true;
                 };
 
                 /**

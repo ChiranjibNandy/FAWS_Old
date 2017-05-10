@@ -170,6 +170,18 @@
                 vm.tickets.currentPage = 1;
                 vm.tickets.pageSize = 3;
 
+                /**
+                 * @ngdoc property
+                 * @name errors
+                 * @propertyOf migrationApp.controller:rsmigrationstatusCtrl
+                 * @type {Object}
+                 * @description Errors list model
+                 */
+                vm.errors = {};
+                vm.errors.items = [];
+                vm.errors.currentPage = 1;
+                vm.errors.pageSize = 3;
+
                 var auth = authservice.getAuth();
                 vm.userOrTenant = auth.is_racker ? "Tenant" : "User";
                 vm.tenant_id = auth.tenant_id;
@@ -292,7 +304,9 @@
                     vm.loadingAlerts = true;
                     alertsService.getAllAlerts(refresh)
                                     .then(function(result) {
-                                        vm.alerts = result;
+                                        vm.errors.items = result;
+                                        vm.errors.noOfPages = Math.ceil(vm.errors.items.length / vm.errors.pageSize);
+                                        vm.errors.pages = new Array(vm.errors.noOfPages);
                                         vm.loadingAlerts = false;
                                     });
                 };

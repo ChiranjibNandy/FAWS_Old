@@ -1,7 +1,7 @@
-<a class="rs-btn" ng-click="vm.cancelMigration()" ng-show="vm.type==='button' && vm.stepname == 'MigrationResourceList'">
+<a class="rs-btn" role="button" ng-click="vm.cancelMigration()" ng-show="vm.type==='button' && (vm.stepname == 'MigrationResourceList' || vm.stepname == 'ConfirmMigration')">
     Cancel Migration
 </a>
-<div class="rs-row pricing-buttons" ng-show="vm.type==='button' && vm.stepname !== 'MigrationResourceList'">
+<div class="rs-row pricing-buttons" ng-show="vm.type==='button' && (vm.stepname !== 'MigrationResourceList' && vm.stepname !== 'ConfirmMigration')">
     <a class="rs-btn span-12" role="button" ng-click="vm.cancelMigration()">Cancel Migration</a>
 </div>
 <a href="#" ng-click="vm.cancelMigration()" ng-show="vm.type==='link'"><i class="fa fa-chevron-left"></i> Go to Migration Dashboard </a>
@@ -15,7 +15,7 @@
             <div class="rs-control-group">
                 <div class="rs-controls">
                     <label class="rs-radio">
-                        <input type="radio" ng-model="vm.saveProgress" value="yes">
+                        <input type="radio" ng-model="vm.saveProgress" value="yes" ng-click="vm.enableSubmit()">
                         <strong>Yes</strong><br>
                         <span class="rs-help-block">Name this migration and click <b>'Submit'</b> to save this migration for later</span>
                     </label>
@@ -25,14 +25,14 @@
                         </div>
                     </label>
                     <label class="rs-radio">
-                        <input type="radio" ng-model="vm.saveProgress" value="no">
+                        <input type="radio" ng-model="vm.saveProgress" value="no" ng-click="vm.enableSubmit()">
                         <strong>No</strong>
                         <span class="rs-help-block">Cancel and move on</span>
                       </label>
                 </div>
             </div>
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.saveClicked == true}">Close</button>
-            <button class="rs-btn rs-btn-primary " ng-class="{disabled:vm.saveProgress == '' || !vm.migrationName || vm.saveClicked == true}"
+            <button class="rs-btn rs-btn-primary " ng-class="{disabled:!vm.checkedButton && !vm.migrationName}"
                 ng-click="vm.submitCancel()" ng-hide="vm.cancelnSaveObj.saveInProgress">Submit</button>
             <a class="rs-btn disabled" disabled="disabled" ng-show="vm.cancelnSaveObj.saveInProgress">Submitting...</a>
             <i class="rs-processing-indicator" ng-show="vm.cancelnSaveObj.saveInProgress"></i>
