@@ -1,0 +1,158 @@
+[
+  {
+    "job-id": "job-a1e40523-8054-4c6e-a862-86bbf1aafad8", 
+    "messages": [
+      {
+        "message": "Task \"Snapshot A Rackspace Instance\" failed due to \"'Client' object has no attribute 'images'\"", 
+        "timestamp": "2017-05-09T17:15:03.378123", 
+        "type": "error"
+      }
+    ], 
+    "resource-id": "d07f396f-bea9-434d-909a-afaf91147145", 
+    "resource-name": "test-server-migrate-12", 
+    "resource-type": "instance"
+  }, 
+  {
+    "job-id": "job-22ba45f8-6b62-4b36-a57b-fad35934f987", 
+    "messages": [
+      {
+        "message": "Task \"Snapshot A Rackspace Instance\" failed due to \"'Client' object has no attribute 'images'\"", 
+        "timestamp": "2017-05-09T17:11:26.987035", 
+        "type": "error"
+      }
+    ], 
+    "resource-id": "d07f396f-bea9-434d-909a-afaf91147145", 
+    "resource-name": "test-server-migrate-12", 
+    "resource-type": "instance"
+  }, 
+  {
+    "job-id": "job-f66efd33-3d64-4746-93db-106433626092", 
+    "messages": [
+      {
+        "message": "Task \"Snapshot A Rackspace Instance\" failed due to \"Cannot 'createImage' instance d07f396f-bea9-434d-909a-afaf91147145 while it is in task_state image_uploading (HTTP 409) (Request-ID: req-ebbe4860-6727-4199-86a1-0ebf562b27bf)\"", 
+        "timestamp": "2017-05-09T17:04:26.092775", 
+        "type": "error"
+      }
+    ], 
+    "resource-id": "d07f396f-bea9-434d-909a-afaf91147145", 
+    "resource-name": "test-server-migrate-12", 
+    "resource-type": "instance"
+  }, 
+  {
+    "job-id": "job-2ec14091-ef06-4491-9384-e09a59f7a525", 
+    "messages": [
+      {
+        "message": "Task \"Snapshot A Rackspace Instance\" failed due to \"'Client' object has no attribute 'images'\"", 
+        "timestamp": "2017-05-09T17:07:54.766232", 
+        "type": "error"
+      }
+    ], 
+    "resource-id": "d07f396f-bea9-434d-909a-afaf91147145", 
+    "resource-name": "test-server-migrate-12", 
+    "resource-type": "instance"
+  }, 
+  {
+    "job-id": "job-6fcdfecf-3ce7-4be6-8fac-b09aa831a3bc", 
+    "messages": [
+      {
+        "message": "Task \"Snapshot A Rackspace Instance\" failed due to \"'Client' object has no attribute 'images'\"", 
+        "timestamp": "2017-05-09T20:32:10.996174", 
+        "type": "error"
+      }
+    ], 
+    "resource-id": "d07f396f-bea9-434d-909a-afaf91147145", 
+    "resource-name": "test-server-migrate-12", 
+    "resource-type": "instance"
+  }, 
+  {
+    "job-id": "job-1fd4842a-a543-4768-8d6f-1ea16ebdaceb", 
+    "messages": [
+      {
+        "message": "Task \"Snapshot A Rackspace Instance\" failed due to \"'Client' object has no attribute 'images'\"", 
+        "timestamp": "2017-05-09T20:39:38.769306", 
+        "type": "error"
+      }
+    ], 
+    "resource-id": "d07f396f-bea9-434d-909a-afaf91147145", 
+    "resource-name": "test-server-migrate-12", 
+    "resource-type": "instance"
+  }, 
+  {
+    "job-id": "job-7bba46c5-58b9-476e-aeeb-0acd5556ef96", 
+    "messages": [
+      {
+        "message": "Task \"Snapshot A Rackspace Instance\" failed due to \"'Client' object has no attribute 'images'\"", 
+        "timestamp": "2017-05-10T15:01:39.646550", 
+        "type": "error"
+      }
+    ], 
+    "resource-id": "d07f396f-bea9-434d-909a-afaf91147145", 
+    "resource-name": "test-server-migrate-12", 
+    "resource-type": "instance"
+  }, 
+  {
+    "job-id": "job-1d0eee8f-6f9f-49bf-93ab-e67116cb3eec", 
+    "messages": [
+      {
+        "message": "Task \"Retrieve AWS ENI IDs based on Rackspace Instance IPs\" failed due to \"IP 192.168.3.4 is missing from list of expected IPs for Rackspace instance f703eba9-d7fa-4329-9d82-51431c9af289: []\"", 
+        "timestamp": "2017-05-10T15:00:28.553602", 
+        "type": "error"
+      }
+    ], 
+    "resource-id": "f703eba9-d7fa-4329-9d82-51431c9af289", 
+    "resource-name": "test-server-migrate-04", 
+    "resource-type": "instance"
+  }, 
+  {
+    "job-id": "job-87f679ab-9a52-4353-a708-f139452b20de", 
+    "messages": [
+      {
+        "message": "Task \"Retrieve AWS ENI IDs based on Rackspace Instance IPs\" failed due to \"IP 192.168.3.4 is missing from list of expected IPs for Rackspace instance f703eba9-d7fa-4329-9d82-51431c9af289: []\"", 
+        "timestamp": "2017-05-10T15:00:59.294123", 
+        "type": "error"
+      }
+    ], 
+    "resource-id": "f703eba9-d7fa-4329-9d82-51431c9af289", 
+    "resource-name": "test-server-migrate-04", 
+    "resource-type": "instance"
+  }, 
+  {
+    "job-id": "job-8f324f1d-e4d6-465d-b7c8-566237a31342", 
+    "messages": [
+      {
+        "message": "Task \"Retrieve AWS ENI IDs based on Rackspace Instance IPs\" failed due to \"IP 192.168.3.4 is missing from list of expected IPs for Rackspace instance f703eba9-d7fa-4329-9d82-51431c9af289: []\"", 
+        "timestamp": "2017-05-10T15:03:09.939001", 
+        "type": "error"
+      }
+    ], 
+    "resource-id": "f703eba9-d7fa-4329-9d82-51431c9af289", 
+    "resource-name": "test-server-migrate-04", 
+    "resource-type": "instance"
+  }, 
+  {
+    "job-id": "job-8b191fb8-0889-40f0-84f9-504d5ba42828", 
+    "messages": [
+      {
+        "message": "Task \"Retrieve AWS ENI IDs based on Rackspace Instance IPs\" failed due to \"IP 192.168.3.4 is missing from list of expected IPs for Rackspace instance f703eba9-d7fa-4329-9d82-51431c9af289: []\"", 
+        "timestamp": "2017-05-10T15:01:10.271910", 
+        "type": "error"
+      }
+    ], 
+    "resource-id": "f703eba9-d7fa-4329-9d82-51431c9af289", 
+    "resource-name": "test-server-migrate-04", 
+    "resource-type": "instance"
+  }, 
+  {
+    "job-id": "job-c29e8019-924d-4071-a23e-1fd71175628a", 
+    "messages": [
+      {
+        "message": "Task \"Retrieve AWS ENI IDs based on Rackspace Instance IPs\" failed due to \"IP 192.168.3.4 is missing from list of expected IPs for Rackspace instance f703eba9-d7fa-4329-9d82-51431c9af289: []\"", 
+        "timestamp": "2017-05-10T15:08:46.630307", 
+        "type": "error"
+      }
+    ], 
+    "resource-id": "f703eba9-d7fa-4329-9d82-51431c9af289", 
+    "resource-name": "test-server-migrate-04", 
+    "resource-type": "instance"
+  }
+]
