@@ -43,7 +43,7 @@
              * @name migrationApp.controller:rsmigrationitemCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationitem rsmigrationitem} component
              */
-            controller: ["migrationitemdataservice", "datastoreservice", "serverservice", "httpwrapper", "$rootRouter", "authservice", "$q", "$scope", function (ds, datastoreservice, ss, HttpWrapper, $rootRouter, authservice, $q, $scope) {
+            controller: ["migrationitemdataservice", "datastoreservice", "serverservice", "httpwrapper", "$rootRouter", "authservice", "$q", "$scope","$window", function (ds, datastoreservice, ss, HttpWrapper, $rootRouter, authservice, $q, $scope,$window) {
                 var vm = this;
 
                 /**
@@ -273,6 +273,8 @@
                         vm.loading = false;
                         
                         var servers_selected = datastoreservice.getItems(vm.type);
+                        if(servers_selected.length != 0)
+                            $window.localStorage.selectedServers = JSON.stringify(servers_selected);
                         if(servers_selected.length != 0){
                             angular.forEach(vm.items, function (item) {
                                 for(var i=0;i<servers_selected.length;i++){

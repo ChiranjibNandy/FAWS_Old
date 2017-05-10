@@ -21,7 +21,7 @@
              * @name migrationApp.controller:rsmigrationrecommendationCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationrecommendation rsmigrationrecommendation} component
              */
-            controller: [ "$rootRouter","datastoreservice","$scope","authservice","$rootScope", function($rootRouter,datastoreservice,$scope,authservice,$rootScope) {
+            controller: [ "$rootRouter","datastoreservice","$scope","authservice","$rootScope","$window", function($rootRouter,datastoreservice,$scope,authservice,$rootScope,$window) {
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
@@ -31,7 +31,9 @@
                     vm.isRacker = authservice.is_racker;
                     $('title')[0].innerHTML =  "Recommendations - Rackspace Cloud Migration";
                     vm.migrationName = datastoreservice.getScheduleMigration().migrationName;
-                    var servers = datastoreservice.getItems('server');
+                    //var servers = datastoreservice.getItems('server');
+                    if($window.localStorage.selectedServers !== undefined)
+                        var servers = JSON.parse($window.localStorage.selectedServers);
                     vm.dataServer = servers.length;
                     var networkNames = [];
                     angular.forEach(servers, function (item) {
@@ -42,7 +44,12 @@
                         });
                     });  
                     vm.dataNetwork = networkNames.length;
-                    vm.dataLoadBalancers = datastoreservice.getItems('LoadBalancers').length;
+                    //vm.dataLoadBalancers = datastoreservice.getItems('LoadBalancers').length;
+                    if($window.localStorage.selectedLoadBalancers !== undefined)
+                        vm.dataLoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers).length;
+                    else
+                        vm.dataLoadBalancers = 0;
+
                     vm.editName = false;
 
                     datastoreservice.setPageName("recommendations");

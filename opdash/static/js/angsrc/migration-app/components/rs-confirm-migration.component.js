@@ -25,10 +25,11 @@
              * @name migrationApp.controller:rsconfirmmigrationCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsconfirmmigration rsconfirmmigration} component
              */
-            controller: ["$rootRouter", "datastoreservice", "migrationitemdataservice", "$q", "httpwrapper", "authservice", "$timeout", "$rootScope","$scope", function ($rootRouter, dataStoreService, ds, $q, HttpWrapper, authservice, $timeout, $rootScope,$scope) {
+            controller: ["$rootRouter", "datastoreservice", "migrationitemdataservice", "$q", "httpwrapper", "authservice", "$timeout", "$rootScope","$scope","$window", function ($rootRouter, dataStoreService, ds, $q, HttpWrapper, authservice, $timeout, $rootScope,$scope,$window) {
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
+                vm.cost = '';
 
                 vm.$onInit = function () {
                     vm.tenant_id = authservice.getAuth().tenant_id;
@@ -56,7 +57,7 @@
                         "resultMsg": "",
                         "modalName": '#save_for_later'
                     };
-                     vm.acceptTermsAndConditions=false;
+                    vm.acceptTermsAndConditions=false;
                     vm.saveProgress = "";
                     // vm.error = false;
                 };
@@ -67,6 +68,7 @@
                 
                 $scope.$on("ItemRemoved",function(event,item){
                     vm.cost = dataStoreService.getProjectedPricing();
+                    $window.localStorage.projectedPricing = JSON.stringify(vm.cost);
                 });
 
                 /**
@@ -164,8 +166,11 @@
                     vm.totalOfCostCalculationItems = 0;
                     vm.totalOfProjectedCostCalculationItems = 0;
                     vm.showCalculatedCostDialog = false;
+                    var selectedPricingMappingObj = [];
 
-                    var selectedPricingMappingObj = dataStoreService.getItems('server');
+                    //var selectedPricingMappingObj = dataStoreService.getItems('server');
+                    if($window.localStorage.selectedServers !== undefined)
+                        selectedPricingMappingObj = JSON.parse($window.localStorage.selectedServers);
                     selectedPricingMappingObj.forEach(function(server){
                         var selectedFlavor = server.selectedMapping.instance_type;
                         if(server.details.hasOwnProperty('rax_bandwidth')){

@@ -26,7 +26,7 @@
              * @name migrationApp.controller:rspricingCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rspricingpanel rspricingpanel} component
              */
-            controller:["datastoreservice","$rootRouter","httpwrapper","$filter","$timeout","$q","$rootScope","httpwrapper","migrationitemdataservice",function(dataStoreService,$rootRouter,HttpWrapper,$filter,$timeout,$q,$rootScope,httpwrapper,ds){
+            controller:["datastoreservice","$rootRouter","httpwrapper","$filter","$timeout","$q","$rootScope","httpwrapper","migrationitemdataservice","$window",function(dataStoreService,$rootRouter,HttpWrapper,$filter,$timeout,$q,$rootScope,httpwrapper,ds,$window){
                 var vm = this;
                 vm.invoiceTotal = '';
                 vm.totalProjectedPricingSum = 0;
@@ -204,7 +204,10 @@
                 vm.getCurrentPricingDetails = function(){
                     var invoiceTotal = 0.00;
                     var date = new Date();
-                    var selectedServers = dataStoreService.getItems('server');
+                    var selectedServers = [];
+                    //var selectedServers = dataStoreService.getItems('server');
+                    if($window.localStorage.selectedServers !== undefined)
+                        selectedServers = JSON.parse($window.localStorage.selectedServers);
                     angular.forEach(selectedServers, function (item) {
                         invoiceTotal += item.details.rax_price;
                     });
@@ -226,7 +229,10 @@
                  */
                 vm.getProjectedPricing = function(){
                     return $timeout(function(){
-                        var selectedPricingMappingObj = dataStoreService.getItems('server');
+                        var selectedPricingMappingObj = [];
+                        //var selectedPricingMappingObj = dataStoreService.getItems('server');
+                        if($window.localStorage.selectedServers !== undefined)
+                            selectedPricingMappingObj = JSON.parse($window.localStorage.selectedServers);
                         vm.totalProjectedPricingSum = 0;
                         selectedPricingMappingObj.forEach(function(item){
                             if(item.details.hasOwnProperty('rax_uptime') && item.details.hasOwnProperty('aws_bandwidth_cost'))
@@ -251,8 +257,10 @@
                     vm.totalOfCostCalculationItems = 0;
                     vm.totalOfProjectedCostCalculationItems = 0;
                     vm.showCalculatedCostDialog = false;
-
-                    var selectedPricingMappingObj = dataStoreService.getItems('server');
+                    var selectedPricingMappingObj = [];
+                    //var selectedPricingMappingObj = dataStoreService.getItems('server');
+                    if($window.localStorage.selectedServers !== undefined)
+                        selectedPricingMappingObj = JSON.parse($window.localStorage.selectedServers);
                     selectedPricingMappingObj.forEach(function(server){
                         var selectedFlavor = server.selectedMapping.instance_type;
                         if(server.details.hasOwnProperty('rax_bandwidth')){
