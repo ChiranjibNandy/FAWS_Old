@@ -237,6 +237,7 @@
                  * with newly selected data which is provided in the table format on popup.
                  */
                 vm.saveUpdatedObject  = function(id){
+                    debugger;
                     vm.data.filter(function(server){
                         if(server.id == id){
                             var selectedConfiguration = parseInt(vm.selectedConfiguration) || 0;
@@ -245,6 +246,8 @@
                         }    
                     });
                     dataStoreService.setItems({server:vm.data,network:[],LoadBalancers:dataStoreService.getItems('LoadBalancers')});
+                    if(vm.data.length !== 0)
+                        $window.localStorage.setItem('selectedServers',JSON.stringify(vm.data));
                     $rootScope.$emit("pricingChanged");
                     $('#modify_modal'+id).modal('hide');
                 };

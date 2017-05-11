@@ -42,7 +42,7 @@
                         <tbody>
                             <tr ng-repeat="instance in vm.job.instances | orderBy: vm.sortBy.server">
                                 <td class="rs-table-link">
-                                    <a href="#" ng-click="vm.equipmentDetails('server', instance.id)" role="button" data-toggle="modal">{{instance.name}}</a>
+                                    <a href="" ng-click="vm.equipmentDetails('server', instance.id)" role="button" data-toggle="modal">{{instance.name}}</a>
                                 </td>
                                 <td class="rs-table-text">
                                     {{(vm.job.end && vm.job.end * 1000) | date : 'M/dd/yyyy hh:mm a'}}
@@ -98,7 +98,7 @@
                         <tbody>
                             <tr ng-repeat="network in vm.job.networks | orderBy: vm.sortBy.network">
                                 <td class="rs-table-link">
-                                    <a href="#" ng-click="vm.equipmentDetails('network', network.id)" role="button" data-toggle="modal">{{network.name}}</a>
+                                    <a href="" ng-click="vm.equipmentDetails('network', network.id)" role="button" data-toggle="modal">{{network.name}}</a>
                                 </td>
                                 <!--<td class="rs-table-text">
                                     <div class="rs-progress rs-progress-medium" style="width: 50%;">

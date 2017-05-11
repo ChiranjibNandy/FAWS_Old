@@ -78,8 +78,8 @@
                                         <div class="rs-dropdown">
                                             <div class="rs-cog rs-dropdown-toggle" ng-click="vm.showQueuedBatchMenu = true;"></div>
                                             <ul class="rs-dropdown-menu visible" ng-show="vm.showQueuedBatchMenu" style="right: 0 !important">
-                                                <li class="disabled"><a href="#">Modify Migration (NA)</a></li>
-                                                <li class="disabled"><a href="#">Cancel Migration (NA)</a></li>
+                                                <li class="disabled"><a href="">Modify Migration (NA)</a></li>
+                                                <li class="disabled"><a href="">Cancel Migration (NA)</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -129,10 +129,10 @@
                                                 <li ng-show="batch.timestamp && !batch.deleting">
                                                     <a ng-show="!batch.deleting" href="javascript:void(0)" ng-click="vm.deleteSavedSchedule(batch)">Delete</a>
                                                 </li>
-                                                <li class="disabled" ng-show="batch.deleting"><a href="#">Deleting...</a></li>
+                                                <li class="disabled" ng-show="batch.deleting"><a href="">Deleting...</a></li>
                                                 <!--<li><a href="#">See log</a></li>-->
-                                                <li class="disabled"><a href="#">Modify Migration (NA)</a></li>
-                                                <li class="disabled"><a href="#">Cancel Migration (NA)</a></li>
+                                                <li class="disabled"><a href="">Modify Migration (NA)</a></li>
+                                                <li class="disabled"><a href="">Cancel Migration (NA)</a></li>
                                             </ul>
                                         </div>
                                     </div>
