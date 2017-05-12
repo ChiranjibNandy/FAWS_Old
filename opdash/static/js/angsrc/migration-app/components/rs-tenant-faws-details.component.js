@@ -55,7 +55,7 @@
                 vm.auth = authservice.getAuth();
 
                 vm.currentPage = dataStoreService.getPageName();
-                if (vm.currentPage == "select-resources")
+                if (vm.currentPage == "MigrationResourceList")
                     vm.showCreateAccount = true;
                 else 
                     vm.showCreateAccount = false;

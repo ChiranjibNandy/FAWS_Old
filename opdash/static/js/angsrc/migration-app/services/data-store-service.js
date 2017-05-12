@@ -442,7 +442,7 @@
                         "timestamp":moment().format('MMDYYYYhmmss'), //(so we know when was it saved)
                         "selected_resources": self.getItems(),
                         "recommendations":saveInstance.recommendations,
-                        "scheduling-details":saveInstance.scheduling_details,
+                        "scheduling-details":saveInstance.migration_schedule,
                         "step_name":saveInstance.step_name
                     }];
                 if(preSavedDetails.length > 0){
