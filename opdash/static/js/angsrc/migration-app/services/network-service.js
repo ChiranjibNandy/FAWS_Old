@@ -190,58 +190,6 @@
                 }
             };
 
-            /**
-             * @ngdoc method
-             * @name prepareRequest
-             * @methodOf migrationApp.service:networkservice
-             * @returns {Object} The request object to be used in the subsequent call for migration
-             * @description 
-             * Prepares request object to be submitted for network migration
-             */
-            self.prepareRequest = function(info){
-                var network = getNetworkDetails(info.id);
-                var auth = authservice.getAuth();
-                var request = {
-                    source: {
-                        cloud: "rackspace",
-                        tenantid: "1024814",
-                        auth: {
-                            method: "key",
-                            type: "customer",
-                            username: auth.rackUsername,
-                            apikey: auth.rackAPIKey
-                        }
-                    },
-                    destination: {
-                        cloud: "aws",
-                        account: auth.awsAccount,
-                        auth: {
-                            method: "keys",
-                            accesskey: auth.accessKey,
-                            secretkey: auth.secretKey
-                        }
-                    },
-                    resources: {
-                        networks: [
-                            {
-                                source: {
-                                    region: network.region
-                                },
-                                destination: {
-                                    region: info.region,
-                                    default_zone: "us-east-1a"
-                                },
-                                subnets: "All",
-                                instances: "All",
-                                security_groups: "All"
-                            }
-                        ]
-                    },
-                    version: "v1"
-                };
-                return request;
-            };
-
             return self;
         }]); // end of service definition
 })();

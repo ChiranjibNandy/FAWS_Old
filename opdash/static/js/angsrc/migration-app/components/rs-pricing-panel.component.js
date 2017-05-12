@@ -91,7 +91,7 @@
                         vm.precheck = false;
                         vm.precheckError = false;
                         $("#precheck_modal").modal('show');
-                        var requestObj = ds.prepareTemporaryRequest();
+                        var requestObj = ds.preparePrereqRequest();
                         var servers = dataStoreService.getItems("server");
                         HttpWrapper.save("/api/precheck", { "operation": 'POST' }, requestObj)
                         .then(function (result) {

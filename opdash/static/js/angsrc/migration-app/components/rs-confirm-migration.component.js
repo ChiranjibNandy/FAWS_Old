@@ -84,7 +84,7 @@
                         var requestObj;
                         vm.migrating = true;
                         $('#confirm-migration-modal').modal('hide');
-                        requestObj = ds.prepareRequest();
+                        requestObj = ds.prepareJobRequest();
                         vm.acceptTermsAndConditions= true;
                         $rootScope.$emit("vm.MigrationName", dataStoreService.selectedTime.migrationName);
                         $rootScope.$emit("vm.MigrationTime", dataStoreService.selectedTime.time);
