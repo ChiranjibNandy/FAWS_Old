@@ -26,7 +26,7 @@
              * @name migrationApp.controller:rspricingCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rspricingpanel rspricingpanel} component
              */
-            controller:["datastoreservice","$rootRouter","httpwrapper","$filter","$timeout","$q","$rootScope","httpwrapper","migrationitemdataservice",function(dataStoreService,$rootRouter,HttpWrapper,$filter,$timeout,$q,$rootScope,httpwrapper,ds){
+            controller:["datastoreservice","$rootRouter","httpwrapper","$filter","$timeout","$q","$rootScope","httpwrapper","migrationitemdataservice","$window",function(dataStoreService,$rootRouter,HttpWrapper,$filter,$timeout,$q,$rootScope,httpwrapper,ds,$window){
                 var vm = this;
                 vm.invoiceTotal = '';
                 vm.totalProjectedPricingSum = 0;
@@ -204,7 +204,10 @@
                 vm.getCurrentPricingDetails = function(){
                     var invoiceTotal = 0.00;
                     var date = new Date();
-                    var selectedServers = dataStoreService.getItems('server');
+                    var selectedServers = [];
+                    //var selectedServers = dataStoreService.getItems('server');
+                    if($window.localStorage.selectedServers !== undefined)
+                        selectedServers = JSON.parse($window.localStorage.selectedServers);
                     angular.forEach(selectedServers, function (item) {
                         invoiceTotal += item.details.rax_price;
                     });
@@ -226,7 +229,10 @@
                  */
                 vm.getProjectedPricing = function(){
                     return $timeout(function(){
-                        var selectedPricingMappingObj = dataStoreService.getItems('server');
+                        var selectedPricingMappingObj = [];
+                        //var selectedPricingMappingObj = dataStoreService.getItems('server');
+                        if($window.localStorage.selectedServers !== undefined)
+                            selectedPricingMappingObj = JSON.parse($window.localStorage.selectedServers);
                         vm.totalProjectedPricingSum = 0;
                         selectedPricingMappingObj.forEach(function(item){
                             if(item.details.hasOwnProperty('rax_uptime') && item.details.hasOwnProperty('aws_bandwidth_cost'))
@@ -251,8 +257,10 @@
                     vm.totalOfCostCalculationItems = 0;
                     vm.totalOfProjectedCostCalculationItems = 0;
                     vm.showCalculatedCostDialog = false;
-
-                    var selectedPricingMappingObj = dataStoreService.getItems('server');
+                    var selectedPricingMappingObj = [];
+                    //var selectedPricingMappingObj = dataStoreService.getItems('server');
+                    if($window.localStorage.selectedServers !== undefined)
+                        selectedPricingMappingObj = JSON.parse($window.localStorage.selectedServers);
                     selectedPricingMappingObj.forEach(function(server){
                         var selectedFlavor = server.selectedMapping.instance_type;
                         if(server.details.hasOwnProperty('rax_bandwidth')){
@@ -280,46 +288,46 @@
                         }
 
                         if(server.details.hasOwnProperty('aws_bandwidth_cost')){
-                            var cost = 0;
-                            for(var i =0; i< server.mappings.length; i++){
-                                if(server.mappings[i].instance_type == selectedFlavor){
-                                    cost = server.mappings[i].cost;
-                                }
-                            }
+                            // var cost = 0;
+                            // for(var i =0; i< server.mappings.length; i++){
+                            //     if(server.mappings[i].instance_type == selectedFlavor){
+                            //         cost = server.mappings[i].cost;
+                            //     }
+                            // }
                             vm.projectedCostCalculationItems.push({
                                 "resourceName" : server.details.name,
-                                "aws_uptime_cost":parseFloat(parseFloat(cost) * parseFloat(server.details.rax_uptime)).toFixed(2),
+                                "aws_uptime_cost":parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(server.details.rax_uptime)).toFixed(2),
                                 "aws_bandwidth_cost":server.details.aws_bandwidth_cost.toFixed(2),
                                 "aws_bandwidth":server.details.rax_bandwidth.toFixed(2),
                                 "aws_uptime":server.details.rax_uptime.toFixed(2),
-                                "aws_total_cost":parseFloat(parseFloat(parseFloat(cost) * parseFloat(server.details.rax_uptime)) + parseFloat(server.details.aws_bandwidth_cost)).toFixed(2),
+                                "aws_total_cost":parseFloat(parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(server.details.rax_uptime)) + parseFloat(server.details.aws_bandwidth_cost)).toFixed(2),
                                 "rax_bandwidth":server.details.rax_bandwidth.toFixed(2),
                                 "rax_uptime":server.details.rax_uptime.toFixed(2),                              
                             });
-                            vm.totalOfProjectedCostCalculationItems += (parseFloat(parseFloat(parseFloat(cost) * parseFloat(server.details.rax_uptime)) + parseFloat(server.details.aws_bandwidth_cost)));
+                            vm.totalOfProjectedCostCalculationItems += (parseFloat(parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(server.details.rax_uptime)) + parseFloat(server.details.aws_bandwidth_cost)));
                         }
 
                         if(!server.details.hasOwnProperty('aws_bandwidth_cost')){
-                            var cost = 0;
+                            //var cost = 0;
                             //Checks whether the showCalculatedCostDialog flag was set in the loop before
                             if(vm.showCalculatedCostDialog === false)
                                 vm.showCalculatedCostDialog = true;
 
-                            for(var i =0; i< server.mappings.length; i++){
-                                if(server.mappings[i].instance_type == selectedFlavor){
-                                    cost = server.mappings[i].cost;
-                                }
-                            }
+                            // for(var i =0; i< server.mappings.length; i++){
+                            //     if(server.mappings[i].instance_type == selectedFlavor){
+                            //         cost = server.mappings[i].cost;
+                            //     }
+                            // }
                             vm.projectedCostCalculationItems.push({
                                 "calculated_cost_resourcename" : server.details.name,
-                                "aws_uptime_cost":parseFloat(parseFloat(cost) * parseFloat(24 * 30)).toFixed(2),
+                                "aws_uptime_cost":parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(24 * 30)).toFixed(2),
                                 "aws_bandwidth":"NA",
                                 "aws_uptime":"NA",
-                                "aws_total_cost":parseFloat(parseFloat(cost) * parseFloat(24*30)).toFixed(2),
+                                "aws_total_cost":parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(24*30)).toFixed(2),
                                 "rax_bandwidth":"NA",
                                 "rax_uptime":"720.00",
                             });
-                        vm.totalOfProjectedCostCalculationItems += (parseFloat(parseFloat(cost) * parseFloat(24*30)));
+                        vm.totalOfProjectedCostCalculationItems += (parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(24*30)));
                     }
                 });
                 $('#calculator_modal').modal('show');

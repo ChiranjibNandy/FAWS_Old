@@ -8,7 +8,7 @@
      * This service is used to store data. This helps in accessing user data across pages.
      */
     angular.module("migrationApp")
-        .service("datastoreservice", ["httpwrapper","authservice","$q", function (HttpWrapper, authservice,$q) {
+        .service("datastoreservice", ["httpwrapper","authservice","$q","$window", function (HttpWrapper, authservice,$q,$window) {
             var loaded, fawsAccounts, self = this, currentTenant = null;
              /**
               * @ngdoc property
@@ -535,7 +535,12 @@
              * Gets projected cost based on selected migrations
             */
             self.getProjectedPricing = function() {
-                var instances = self.getItems('server');
+                //var instances = self.getItems('server');
+                var instances = [];
+	            if(self.getItems('server').length === 0)
+	                instances = JSON.parse($window.localStorage.selectedServers);
+	            else
+	                instances = self.getItems('server');
                 var totalProjectedPricing = 0;
                 instances.forEach(function(item){
                     if(item.details.hasOwnProperty('rax_uptime'))

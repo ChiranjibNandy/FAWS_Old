@@ -24,13 +24,14 @@
              * @name migrationApp.controller:rsmigrationresourceslistCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationresourceslist rsmigrationresourceslist} component
              */
-            controller: ["authservice", "$scope", "$rootRouter", "datastoreservice", "migrationitemdataservice", "httpwrapper", "$timeout", function(authservice, $scope, $rootRouter, dataStoreService, ds, HttpWrapper, $timeout) {
+            controller: ["authservice", "$scope", "$rootRouter", "datastoreservice", "migrationitemdataservice", "httpwrapper", "$timeout","$window", function(authservice, $scope, $rootRouter, dataStoreService, ds, HttpWrapper, $timeout,$window) {
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
                 vm.saveClicked = false;
 
                 vm.$onInit = function() {
+                    $window.localStorage.clear();
                     //testing
                     // dataStoreService.fetchUserProfile()
                     //     .then(function (result) {
@@ -89,6 +90,7 @@
                      * @description Create Migration considering Timestamp.
                      */
                     vm.migrationName = 'My Migration';
+                    $window.localStorage.migrationName = vm.migrationName;
                     vm.noName = false;
                     vm.numOfItems = {
                         server:0,
@@ -109,6 +111,39 @@
                     vm.selectedItems[type] = dataStoreService.getItems(type);
                     if(vm.selectedItems[type].indexOf(item)<0){
                         vm.selectedItems[type].push(item);
+                        if(type === 'server'){
+                            var old = $window.localStorage.getItem('selectedServers');
+                            if(old === null){
+                                var arr = [item];
+                                localStorage.setItem('selectedServers', JSON.stringify(arr));
+                            }
+                            else{
+                                old = JSON.parse(old);
+                                localStorage.setItem('selectedServers', JSON.stringify(old.concat(item)));
+                            }
+                        }
+                        else if(type === 'network'){
+                            var old = $window.localStorage.getItem('selectedNetworks');
+                            if(old === null){
+                                var arr = [item];
+                                localStorage.setItem('selectedNetworks', JSON.stringify(arr));
+                            }
+                            else{
+                                old = JSON.parse(old);
+                                localStorage.setItem('selectedNetworks', JSON.stringify(old.concat(item)));
+                            }
+                        }
+                        else if(type === 'LoadBalancers'){
+                            var old = $window.localStorage.getItem('selectedLoadBalancers');
+                            if(old === null){
+                                var arr = [item];
+                                localStorage.setItem('selectedLoadBalancers', JSON.stringify(arr));
+                            }
+                            else{
+                                old = JSON.parse(old);
+                                localStorage.setItem('selectedLoadBalancers', JSON.stringify(old.concat(item)));
+                            }
+                        }
                         dataStoreService.setItems(vm.selectedItems);//save items selected for migration in service.
                         $scope.$broadcast("ItemsModified");//make a function call to child component to enable checkobox for selected items.
                     };
@@ -129,6 +164,40 @@
                         if(item_selected.id == item.id){
                             vm.selectedItems[type].splice(key, 1);
                             dataStoreService.setItems(vm.selectedItems);
+                            if(type === 'server'){
+                                var old = $window.localStorage.getItem('selectedServers');
+                                if(old !== null)
+                                    old = JSON.parse(old);
+                                angular.forEach(old,function(item_selected,key){
+                                    if(item_selected.id == item.id){
+                                        old.splice(key,1);
+                                        localStorage.setItem('selectedServers', JSON.stringify(old));
+                                    }
+                                });                              
+                            }
+                            else if(type === 'network'){
+                                var old = $window.localStorage.getItem('selectedNetworks');
+                                if(old !== null)
+                                    old = JSON.parse(old);
+                                angular.forEach(old,function(item_selected,key){
+                                    if(item_selected.id == item.id){
+                                        old.splice(key,1);
+                                        localStorage.setItem('selectedNetworks', JSON.stringify(old));
+                                    }
+                                }); 
+                            }
+                            else if(type === 'LoadBalancers'){
+                                var old = $window.localStorage.getItem('selectedLoadBalancers');
+                                if(old !== null)
+                                    old = JSON.parse(old);
+                                angular.forEach(old,function(item_selected,key){
+                                    if(item_selected.id == item.id){
+                                        old.splice(key,1);
+                                        localStorage.setItem('selectedLoadBalancers', JSON.stringify(old));
+                                    }
+                                }); 
+                            }
+
                             $scope.$broadcast("ItemRemovedForChild", item); // broadcast event to all child components
                             $scope.$broadcast("ItemsModified");
                             return;

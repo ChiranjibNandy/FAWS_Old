@@ -44,7 +44,7 @@
              * @name migrationApp.controller:rsrecommendationitemCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsrecommendationitem rsrecommendationitem} component
              */
-            controller: ["migrationitemdataservice", "authservice", "$q", "datastoreservice", "$rootRouter","httpwrapper","$rootScope", function (ds, authservice, $q, dataStoreService, $rootRouter,HttpWrapper,$rootScope) {
+            controller: ["migrationitemdataservice", "authservice", "$q", "datastoreservice", "$rootRouter","httpwrapper","$rootScope","$window", function (ds, authservice, $q, dataStoreService, $rootRouter,HttpWrapper,$rootScope,$window) {
                 var vm = this;
 
                 vm.$onInit = function() {
@@ -62,13 +62,16 @@
                         },function(error){
                             console.log('error :', error);
                         });
-                        vm.data = dataStoreService.getItems(vm.type);
+                        //vm.data = dataStoreService.getItems(vm.type);
+                        if($window.localStorage.selectedServers !== undefined)
+                            vm.data = JSON.parse($window.localStorage.selectedServers);
                         vm.data.map(function(item){
                             if(!item.selectedMapping){
                                 item.selectedMapping = item.mappings[0];
                             }
                         });
                         dataStoreService.setItems({server:vm.data,network:[],LoadBalancers:dataStoreService.getItems('LoadBalancers')});
+                        $window.localStorage.selectedServers = JSON.stringify(vm.data);
                         vm.labels = [
                                         {field: "name", text: vm.type+" Name"},
                                         {field: "ip_address", text: "IP Address"},
@@ -81,7 +84,11 @@
                     }else if (vm.type === "network"){
                         vm.fetchNetworks();
                     }else{
-                        vm.data = dataStoreService.getItems("LoadBalancers");
+                        //vm.data = dataStoreService.getItems("LoadBalancers");
+                        if($window.localStorage.selectedLoadBalancers !== undefined)
+                            vm.data = JSON.parse($window.localStorage.selectedLoadBalancers);
+                        else
+                            vm.data = [];
                         vm.labels = [
                                         {field: "name", text: "CLB Name"},
                                         {field: "status", text: "CLB Status"},
@@ -131,7 +138,10 @@
                   * have labels which we are going to populate in the networks tab table.
                   */
                 vm.fetchNetworks = function(){
-                    var servers = dataStoreService.getItems('server');
+                    var servers = [];
+                    //var servers = dataStoreService.getItems('server');
+                    if($window.localStorage.selectedServers !== undefined)
+                        servers = JSON.parse($window.localStorage.selectedServers);
                     var networkNames = [];
                     vm.data = [];
                     vm.labels = [
@@ -197,6 +207,7 @@
                  * '/api/ec2/get_all_ec2_prices/<flavor-id>/<region>';
                  */
                 vm.getPricingDetails = function(item){
+                    debugger;
                     var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+vm.awsRegion;
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
                         item.pricingOptions = pricingOptions;
@@ -211,6 +222,7 @@
                  * This function helps to populate the pricing details when the modal is clicked first time.
                  */
                 vm.showModifyModal = function(item,id){
+                    debugger;
                     vm.disable = true;
                     $(id).modal('show');
                     vm.getPricingDetails(item);
@@ -225,6 +237,7 @@
                  * with newly selected data which is provided in the table format on popup.
                  */
                 vm.saveUpdatedObject  = function(id){
+                    debugger;
                     vm.data.filter(function(server){
                         if(server.id == id){
                             var selectedConfiguration = parseInt(vm.selectedConfiguration) || 0;
@@ -233,6 +246,8 @@
                         }    
                     });
                     dataStoreService.setItems({server:vm.data,network:[],LoadBalancers:dataStoreService.getItems('LoadBalancers')});
+                    if(vm.data.length !== 0)
+                        $window.localStorage.setItem('selectedServers',JSON.stringify(vm.data));
                     $rootScope.$emit("pricingChanged");
                     $('#modify_modal'+id).modal('hide');
                 };
