@@ -217,57 +217,6 @@
                     });
         };
 
-        /**
-         * @ngdoc method
-         * @name prepareRequest
-         * @methodOf migrationApp.service:serverservice
-         * @returns {Object} The request object to be used in the subsequent call for migration
-         * @description 
-         * Prepares request object to be submitted for server migration
-         */
-        self.prepareRequest = function(info){
-            var region = getRegionById(info.id);
-            var auth = authservice.getAuth();
-           
-            return {
-                source: {
-                    cloud: "rackspace",
-                    tenantid: auth.tenant_id,
-                    auth: {
-                        method: "key",
-                        type: "customer",
-                        username: auth.rackUsername,
-                        apikey: auth.rackAPIKey
-                    }
-                },
-                destination: {
-                    cloud: "aws",
-                    account: auth.awsAccount,
-                    auth: {
-                        method: "keys",
-                        accesskey: auth.accessKey,
-                        secretkey: auth.secretKey
-                    }
-                },
-                resources: {
-                    instances: [
-                        {
-                            source: {
-                                id: info.id,
-                                region: region,
-                            },
-                            destination: {
-                                region: "us-east-1",
-                                zone: "us-east-1a",
-                                type: info.type
-                            }
-                        }
-                    ]
-                },
-                version: "v1"
-            };
-        };
-
         return self;
     }]);
 })();

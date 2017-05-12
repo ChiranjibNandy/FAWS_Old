@@ -26,7 +26,7 @@
                 });
 
                 return names;
-            };
+            };// end of prepareNames method
 
             /**
              * @ngdoc method
@@ -48,7 +48,7 @@
                 } else if (type === "LoadBalancers") {
                     return self.getLoadBalancers();
                 }
-            }
+            }//end of getTrimmedAllItems method
 
             /**
              * @ngdoc method
@@ -71,7 +71,7 @@
                 } else if (type === "contactNumbers") {
                     return contactService.getContactNumbers();
                 }
-            }
+            }//end of getDetailedList method
 
             /**
              * @ngdoc method
@@ -88,11 +88,11 @@
                 if (type === "server") {
                     return serverService.getPricingDetails(flavor, ram);
                 }
-            };
+            };//end of getPricingDetails method
 
             /**
              * @ngdoc method
-             * @name prepareRequest
+             * @name prepareJobRequest
              * @methodOf migrationApp.service:migrationitemdataservice
              * @param {String} type Resource type (server, network etc)
              * @param {Object} info Object containing the relevant data to prepare the request object
@@ -100,7 +100,7 @@
              * @description 
              * This service method returns an _object_. This object has to be sent while making an HTTP POST request to migrate the resource.
              */
-            this.prepareRequest = function (batchName) {
+            this.prepareJobRequest = function (batchName) {
                 var equipments = {
                         instances: dataStoreService.getItems("server"),
                         networks: dataStoreService.getDistinctNetworks()
@@ -174,16 +174,24 @@
                 }
 
                 return reqObj;
-            }
+            }//end of prepareJobRequest method
 
-            //this function is used to create a temporary job-spec object for pre-checks API, to determine if the selected resources can be migrated or not.
-            this.prepareTemporaryRequest = function (batchName) {
+            /**
+             * @ngdoc method
+             * @name preparePrereqRequest
+             * @methodOf migrationApp.service:migrationitemdataservice
+             * @param {String} type Resource type (server, network etc)
+             * @param {Object} info Object containing the relevant data to prepare the Pre-req request object
+             * @returns {Object} A request _object_ for subsequesnt request in migrating a resource.
+             * @description 
+             * This service method creates and a temporary job-spec _object_ for pre-checks API. This object has to be sent while making an HTTP POST request to Pre-reqs API to determine if the selected resources can be migrated or not.
+            */
+            this.preparePrereqRequest = function (batchName) {
                 var equipments = {
                         instances: dataStoreService.getItems("server"),
                         networks: dataStoreService.getDistinctNetworks()
                     },
                     auth = authservice.getAuth(),
-                    names = prepareNames(),
                     instancesReqList = [],
                     networksReqList = [],
                     reqObj = {
@@ -202,7 +210,7 @@
                             region: instance.region.toUpperCase(),
                         },
                         destination: {
-                            region: instance.selectedMapping.region, //.toUpperCase(),
+                            region: instance.selectedMapping.region, 
                             zone: "us-east-1a",
                             // zone:instance.selectedMapping.zone,
                             type: instance.selectedMapping.instance_type
@@ -217,28 +225,29 @@
                             region: network.region.toUpperCase()
                         },
                         destination: {
-                            region: network.destRegion, //.toUpperCase(),
+                            region: network.destRegion, 
                             default_zone: "us-east-1a"
                         },
-                        subnets: "All",
-                        instances: "All",
+                        subnets: [
+                            {
+                                id : network.rrn
+                            }
+                        ],
+                        instances: [
+                            {
+                                id : network.instanceRrn
+                            }
+                        ],
                         security_groups: "All"
                     });
                 });
-
-                if (dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < moment().unix()) {
-                    //reqObj.start = moment().unix();
-                    dataStoreService.selectedTime.time = reqObj.start;
-                } else {
-                    //reqObj.start = dataStoreService.selectedTime.time;
-                }
 
                 reqObj.resources.instances = instancesReqList; //add servers to the resources list
                 if (networksReqList[0] != null) { //add networks to the resources list iff there are any networks
                     reqObj.resources.networks = networksReqList;
                 }
                 return reqObj;
-            }
+            }//end of preparePrereqRequest method.
 
 
             this.getServerMigrationStatus = function (tenant_id) {
@@ -253,7 +262,7 @@
                         };
                         return status;
                     });
-            }
+            }//end of getServerMigrationStatus method
 
             this.getResourceMigrationStatus = function (tenant_id) {
                 var url = "/api/jobs/all";
@@ -263,7 +272,7 @@
                     .then(function (response) {
                         return response;
                     });
-            }
+            }//end of getResourceMigrationStatus method
 
             /**
              * @ngdoc method
@@ -314,7 +323,7 @@
                 } else {
                     return $q.when(loadbalancers);
                 }
-            };
+            };//end of getLoadBalancers method
 
             return self;
         }]); // end of service definition

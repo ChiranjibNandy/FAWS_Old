@@ -122,7 +122,6 @@
                  * Remove an item from list of items selected.
                  */
                 vm.removeItem = function(item, type) {
-                        debugger;
                     if(vm.selectedItems[type].indexOf(item)>=0){
                         vm.selectedItems[type].splice(vm.selectedItems[type].indexOf(item), 1);
                         dataStoreService.setItems(vm.selectedItems);
