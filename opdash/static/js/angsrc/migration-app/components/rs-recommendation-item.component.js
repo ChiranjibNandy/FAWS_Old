@@ -207,7 +207,6 @@
                  * '/api/ec2/get_all_ec2_prices/<flavor-id>/<region>';
                  */
                 vm.getPricingDetails = function(item){
-                    debugger;
                     var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+vm.awsRegion;
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
                         item.pricingOptions = pricingOptions;
@@ -222,7 +221,6 @@
                  * This function helps to populate the pricing details when the modal is clicked first time.
                  */
                 vm.showModifyModal = function(item,id){
-                    debugger;
                     vm.disable = true;
                     $(id).modal('show');
                     vm.getPricingDetails(item);
@@ -237,7 +235,6 @@
                  * with newly selected data which is provided in the table format on popup.
                  */
                 vm.saveUpdatedObject  = function(id){
-                    debugger;
                     vm.data.filter(function(server){
                         if(server.id == id){
                             var selectedConfiguration = parseInt(vm.selectedConfiguration) || 0;
