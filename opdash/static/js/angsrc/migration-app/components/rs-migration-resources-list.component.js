@@ -110,42 +110,46 @@
                 vm.addItem = function(item, type) {
                     vm.selectedItems[type] = dataStoreService.getItems(type);
                     if(vm.selectedItems[type].indexOf(item)<0){
-                        vm.selectedItems[type].push(item);
-                        if(type === 'server'){
-                            var old = $window.localStorage.getItem('selectedServers');
-                            if(old === null){
-                                var arr = [item];
-                                localStorage.setItem('selectedServers', JSON.stringify(arr));
+                        var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/us-east-1';
+                        HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
+                            item.selectedMapping = pricingOptions[0];
+                            vm.selectedItems[type].push(item);
+                            if(type === 'server'){
+                                var old = $window.localStorage.getItem('selectedServers');
+                                if(old === null){
+                                    var arr = [item];
+                                    localStorage.setItem('selectedServers', JSON.stringify(arr));
+                                }
+                                else{
+                                    old = JSON.parse(old);
+                                    localStorage.setItem('selectedServers', JSON.stringify(old.concat(item)));
+                                }
                             }
-                            else{
-                                old = JSON.parse(old);
-                                localStorage.setItem('selectedServers', JSON.stringify(old.concat(item)));
+                            else if(type === 'network'){
+                                var old = $window.localStorage.getItem('selectedNetworks');
+                                if(old === null){
+                                    var arr = [item];
+                                    localStorage.setItem('selectedNetworks', JSON.stringify(arr));
+                                }
+                                else{
+                                    old = JSON.parse(old);
+                                    localStorage.setItem('selectedNetworks', JSON.stringify(old.concat(item)));
+                                }
                             }
-                        }
-                        else if(type === 'network'){
-                            var old = $window.localStorage.getItem('selectedNetworks');
-                            if(old === null){
-                                var arr = [item];
-                                localStorage.setItem('selectedNetworks', JSON.stringify(arr));
+                            else if(type === 'LoadBalancers'){
+                                var old = $window.localStorage.getItem('selectedLoadBalancers');
+                                if(old === null){
+                                    var arr = [item];
+                                    localStorage.setItem('selectedLoadBalancers', JSON.stringify(arr));
+                                }
+                                else{
+                                    old = JSON.parse(old);
+                                    localStorage.setItem('selectedLoadBalancers', JSON.stringify(old.concat(item)));
+                                }
                             }
-                            else{
-                                old = JSON.parse(old);
-                                localStorage.setItem('selectedNetworks', JSON.stringify(old.concat(item)));
-                            }
-                        }
-                        else if(type === 'LoadBalancers'){
-                            var old = $window.localStorage.getItem('selectedLoadBalancers');
-                            if(old === null){
-                                var arr = [item];
-                                localStorage.setItem('selectedLoadBalancers', JSON.stringify(arr));
-                            }
-                            else{
-                                old = JSON.parse(old);
-                                localStorage.setItem('selectedLoadBalancers', JSON.stringify(old.concat(item)));
-                            }
-                        }
-                        dataStoreService.setItems(vm.selectedItems);//save items selected for migration in service.
-                        $scope.$broadcast("ItemsModified");//make a function call to child component to enable checkobox for selected items.
+                            dataStoreService.setItems(vm.selectedItems);//save items selected for migration in service.
+                            $scope.$broadcast("ItemsModified");//make a function call to child component to enable checkobox for selected items.
+                        });
                     };
                 }
 
