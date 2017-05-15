@@ -42,7 +42,6 @@
                                             loaded = true;
                                             currentTenant = tenant_id;
                                             var tempAlerts = [];
-
                                             for(var j=0; j<result.length; j++){
                                                 var msgs = angular.copy(result[j].messages);
                                                 for(var k=0; k<msgs.length; k++){
@@ -50,6 +49,7 @@
                                                     msgs[k].resource_id = result[j]["resource-id"];
                                                     msgs[k].resource_name = result[j]["resource-name"];
                                                     msgs[k].resource_type = result[j]["resource-type"];
+                                                    msgs[k].batch_name = result[j]["batch-name"];
                                                 }
                                                 tempAlerts = tempAlerts.concat(msgs);
                                             }
