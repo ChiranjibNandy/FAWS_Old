@@ -65,12 +65,6 @@
                         //vm.data = dataStoreService.getItems(vm.type);
                         if($window.localStorage.selectedServers !== undefined)
                             vm.data = JSON.parse($window.localStorage.selectedServers);
-                        vm.data.map(function(item){
-                            if(!item.selectedMapping){
-                                item.selectedMapping = item.mappings[0];
-                            }
-                        });
-                        dataStoreService.setItems({server:vm.data,network:[],LoadBalancers:dataStoreService.getItems('LoadBalancers')});
                         $window.localStorage.selectedServers = JSON.stringify(vm.data);
                         vm.labels = [
                                         {field: "name", text: vm.type+" Name"},
@@ -115,6 +109,11 @@
                         vm.showModify = true;                                
                     else
                         vm.showModify = false;
+                };
+
+                vm.getAwsDetails = function(equipment){
+                    
+                    
                 };
 
                 /**
