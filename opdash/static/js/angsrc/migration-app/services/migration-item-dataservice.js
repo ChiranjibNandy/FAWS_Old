@@ -9,8 +9,8 @@
      */
     angular.module("migrationApp")
         .service("migrationitemdataservice", ["serverservice", "networkservice", "contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q", function (serverService, networkService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q) {
-            var loaded, loadbalancers, self = this, currentTenant = null;
-
+            var loaded, loadbalancers, self = this, currentTenant = null, default_zone = 'us-east-1a';
+            //the above default_zone is needed to get the default values.
             var prepareNames = function () {
                 var servers = dataStoreService.getItems("server");
                 var names = {};
@@ -129,7 +129,7 @@
                         },
                         destination: {
                             region: instance.selectedMapping.region, //.toUpperCase(),
-                            zone: "us-east-1a",
+                            zone: default_zone,
                             // zone:instance.selectedMapping.zone,
                             type: instance.selectedMapping.instance_type
                         }
@@ -145,7 +145,7 @@
                         },
                         destination: {
                             region: network.destRegion, //.toUpperCase(),
-                            default_zone: "us-east-1a"
+                            default_zone: default_zone
                         },
                         subnets: [
                             {
@@ -211,7 +211,7 @@
                         },
                         destination: {
                             region: instance.selectedMapping.region, 
-                            zone: "us-east-1a",
+                            zone: default_zone,
                             // zone:instance.selectedMapping.zone,
                             type: instance.selectedMapping.instance_type
                         }
@@ -226,7 +226,7 @@
                         },
                         destination: {
                             region: network.destRegion, 
-                            default_zone: "us-east-1a"
+                            default_zone: default_zone
                         },
                         subnets: [
                             {

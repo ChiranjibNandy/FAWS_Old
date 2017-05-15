@@ -110,6 +110,7 @@
                 vm.addItem = function(item, type) {
                     vm.selectedItems[type] = dataStoreService.getItems(type);
                     if(vm.selectedItems[type].indexOf(item)<0){
+                        //this hardcoded value of us-east-1 in url is needed to get the default pricing details. 
                         var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/us-east-1';
                         HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
                             item.selectedMapping = pricingOptions[0];
