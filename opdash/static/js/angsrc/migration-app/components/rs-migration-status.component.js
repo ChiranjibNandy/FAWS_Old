@@ -339,7 +339,7 @@
                  */
                 vm.startNewMigration = function () {
                     dataStoreService.resetAll();
-                    dataStoreService.setDontShowStatus(!(dataStoreService.getShowWelcomeModal()));
+                    // dataStoreService.setDontShowStatus(!(dataStoreService.getShowWelcomeModal()));
                     $rootRouter.navigate(["MigrationResourceList"]);
                 };
 
