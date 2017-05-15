@@ -65,11 +65,15 @@
                         //vm.data = dataStoreService.getItems(vm.type);
                         if($window.localStorage.selectedServers !== undefined)
                             vm.data = JSON.parse($window.localStorage.selectedServers);
-                        vm.data.map(function(item){
-                            if(!item.selectedMapping){
-                                item.selectedMapping = item.mappings[0];
-                            }
-                        });
+                            vm.data.map(function(item){
+                                if(!item.selectedMapping){
+                                    item.selectedMapping = item.mappings[0];
+                                    var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/us-east-1';
+                                    HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
+                                        item.awsDetails = pricingOptions;
+                                    });
+                                }
+                            });
                         dataStoreService.setItems({server:vm.data,network:[],LoadBalancers:dataStoreService.getItems('LoadBalancers')});
                         $window.localStorage.selectedServers = JSON.stringify(vm.data);
                         vm.labels = [
@@ -115,6 +119,11 @@
                         vm.showModify = true;                                
                     else
                         vm.showModify = false;
+                };
+
+                vm.getAwsDetails = function(equipment){
+                    
+                    
                 };
 
                 /**

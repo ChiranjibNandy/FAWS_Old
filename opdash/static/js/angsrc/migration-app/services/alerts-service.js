@@ -106,13 +106,12 @@
              */
             self.getAllTickets = function(refresh) {
                 var url = "/api/tickets/get_all";
-
                 if (refresh || !ticketsLoaded) {
                     return HttpWrapper.send(url, { "operation": 'GET' })
                                       .then(function(result) {
                                             ticketsLoaded = true;
                                             tickets = result.tickets;
-                                            return result.tickets;
+                                            return result;
                                         }, function(errorResponse) {
                                             return errorResponse;
                                         });
