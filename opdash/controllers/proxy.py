@@ -4,6 +4,8 @@ import requests
 
 mod = ProxyBlueprint('proxy', __name__)
 
+HANDLED_REDIRECTS = [301]
+
 
 @mod.route('/api/<path:path>', methods=['GET', 'PUT', 'POST', 'DELETE'])
 def api_proxy(path):
@@ -58,6 +60,11 @@ def api_proxy(path):
                for (name, value) in resp.raw.headers.items()
                if name.lower() not in excluded_headers]
 
-    response = Response(resp.content, resp.status_code, headers)
+    if resp.status_code in HANDLED_REDIRECTS:
+        # Remove the host and first slash since we rebuild those parts.
+        new_path = resp.headers.get('Location')[len(api_host) + 1:]
+        return api_proxy(new_path)
+    else:
+        response = Response(resp.content, resp.status_code, headers)
 
     return response
