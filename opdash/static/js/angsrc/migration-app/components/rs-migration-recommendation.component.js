@@ -52,7 +52,7 @@
 
                     vm.editName = false;
 
-                    datastoreservice.setPageName("recommendations");
+                    datastoreservice.setPageName("MigrationRecommendation");
                 }
 
                 /**

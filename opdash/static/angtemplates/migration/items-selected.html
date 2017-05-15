@@ -30,12 +30,12 @@
             <div id="file-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
                 <div class="accordion-inner">
                     <div class="selected-items" ng-repeat="network in vm.networksList">
-                        <a class="disabled" href="" ng-click="vm.removeItem(item,'server')"></a><b>&nbsp;{{network}} </b>
+                        <a class="disabled" href="#" ng-click="vm.removeItem(item,'server')"></a><b>&nbsp;{{network}} </b>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="accordion-group" ng-class="{disabled:vm.selectedItems.LoadBalancers.length == 0}" ng-hide="vm.selectedItems.LoadBalancers.length == 0">
+        <div class="accordion-group" ng-if="vm.isRacker" ng-class="{disabled:vm.selectedItems.LoadBalancers.length == 0}" ng-hide="vm.selectedItems.LoadBalancers.length == 0">
             <div class="accordion-heading ">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#clb-name">
                     <b class=""> Load Balancers ({{vm.selectedItems.LoadBalancers.length}})</b>

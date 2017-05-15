@@ -45,18 +45,11 @@
                     vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
                     vm.changedMigrationName = vm.migrationName;
 
-                    dataStoreService.setPageName("confirm-migrate");
+                    dataStoreService.setPageName("ConfirmMigration");
                     vm.scheduleMigration = false;
                     vm.cost = dataStoreService.getProjectedPricing();
                     vm.migrating = false;
                     vm.errorInMigration = false;
-
-                    vm.saveLaterObj = {
-                        "saveSuccess": false,
-                        "saveInProgress": false,
-                        "resultMsg": "",
-                        "modalName": '#save_for_later'
-                    };
                     vm.acceptTermsAndConditions=false;
                     vm.saveProgress = "";
                     // vm.error = false;
@@ -90,6 +83,7 @@
                         $rootScope.$emit("vm.MigrationTime", dataStoreService.selectedTime.time);
                         HttpWrapper.save("/api/jobs", { "operation": 'POST' }, requestObj)
                             .then(function (result) {
+                                vm.migrating = false;
                                 $rootRouter.navigate(["MigrationStatus"]);
                             }, function (error) {
                                 console.log("Error: Could not trigger migration", error);

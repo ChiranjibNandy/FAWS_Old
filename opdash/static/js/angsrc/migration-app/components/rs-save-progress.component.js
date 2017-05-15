@@ -35,9 +35,10 @@
                         "resultMsg" : "",
                         "modalName": '#cancel_modal'
                     };
-                    vm.checkedButton = false;
                     vm.saveProgress = '';
                     vm.displayMigName = false;
+                    vm.migrationName = 'My Migration';
+                    vm.stepname = dataStoreService.getPageName();
                 };
 
                 /**
@@ -76,10 +77,6 @@
                     }
                 };
 
-                vm.enableSubmit = function(){
-                    vm.checkedButton = true;
-                };
-
                 /**
                  * @ngdoc method
                  * @name saveItems
@@ -91,10 +88,10 @@
                 vm.saveItems = function(buttonDetails) {
                     var saveInstance = {
                         recommendations : vm.stepname !== "MigrationResourceList"?dataStoreService.getItems():{},
-                        scheduling_details : vm.stepname === "ConfirmMigration"?dataStoreService.getScheduleMigration():{},
+                        // scheduling_details : vm.stepname === "ConfirmMigration"?dataStoreService.getScheduleMigration():{},
                         step_name: vm.stepname ,
                         migration_schedule: {
-                            migrationName:vm.stepname === "ConfirmMigration"?dataStoreService.getScheduleMigration().migrationName:vm.migrationName,
+                            migrationName:vm.migrationName,
                             time:vm.stepname === "ConfirmMigration"?dataStoreService.getScheduleMigration().time:'',
                             timezone:vm.stepname === "ConfirmMigration"?dataStoreService.getScheduleMigration().timezone:''
                         }

@@ -31,8 +31,8 @@
               * @description Flag to avoid repeated dispaly of sliding window at initial step of migration
              */
             self.dontShowStatus = false;
-            self.showWelcomeModal = true;
-            self.dontShowNameModal = false
+            self.dontShowNameModal = false;
+            self.pageFlag = "";
             self.labelsServer = [];
             self.labelsNetwork = [];
             /**
@@ -235,14 +235,6 @@
                return self.dontShowStatus;
             }
 
-            this.setShowWelcomeModal = function(status){
-               self.showWelcomeModal = status;
-            }
-
-            this.getShowWelcomeModal = function(){
-               return self.showWelcomeModal;
-            }
-            
             this.setDontShowNameModal = function(status){
                self.dontShowNameModal = status;
             }
@@ -442,7 +434,7 @@
                         "timestamp":moment().format('MMDYYYYhmmss'), //(so we know when was it saved)
                         "selected_resources": self.getItems(),
                         "recommendations":saveInstance.recommendations,
-                        "scheduling-details":saveInstance.scheduling_details,
+                        "scheduling-details":saveInstance.migration_schedule,
                         "step_name":saveInstance.step_name
                     }];
                 if(preSavedDetails.length > 0){

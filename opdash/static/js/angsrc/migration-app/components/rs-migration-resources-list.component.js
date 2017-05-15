@@ -40,14 +40,14 @@
                     // If status is true, popup for migration won't be displayed in first step of Migration.
                     $('body').removeClass('modal-open');
                     $('.modal-backdrop').remove();
-                    var status = dataStoreService.getDontShowStatus(); //check for flag status created for intorduction Modal.
-                    if(status == false){
+                    var modalDisplayStatus = dataStoreService.getDontShowStatus(); //check for flag status created for intorduction Modal.
+                    var prePageName = dataStoreService.getPageName();
+                    if(modalDisplayStatus == false && (prePageName == "MigrationStatus" || prePageName == "")){
                         $('#intro_modal').modal('show');
+                        dataStoreService.setDontShowStatus(true);//set introduction modal flag to true after first time display.
                     }
-
-                    dataStoreService.setPageName("select-resources");
-
-                    dataStoreService.setDontShowStatus(true);//set introduction modal flag to true after first time display.
+                    
+                    dataStoreService.setPageName("MigrationResourceList");
                     $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Migration";
 
                     /**
@@ -81,6 +81,7 @@
                         "modalName": '#cancel_modal'
                     };
                     vm.displayMigName = false;
+                    vm.dontshowStatus = true;
                     var timestmp = moment(d).format("DDMMMYYYY-hhmma");
                     /**
                      * @ngdoc property
@@ -222,7 +223,7 @@
                  * Consider Dont show checkbox of introduction Modal if checked.
                  */
                 vm.dontShow = function() {
-                    dataStoreService.setShowWelcomeModal(!(vm.dontshowStatus));
+                    dataStoreService.setDontShowStatus(vm.dontshowStatus);
                 };
 
                 /**
@@ -274,7 +275,7 @@
                         if(vm.selectedItems.server.length > 0 || vm.selectedItems.LoadBalancers.length > 0){
                             dataStoreService.setItems(vm.selectedItems);
                         }                
-                        dataStoreService.setDontShowStatus(true);
+                        // dataStoreService.setDontShowStatus(true);
                         dataStoreService.setDontShowNameModal(true);
                         var migrationName = dataStoreService.getScheduleMigration().migrationName;
                         if(migrationName)

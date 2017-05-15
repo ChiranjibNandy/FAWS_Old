@@ -88,64 +88,6 @@
       </div>
 </div>
 
-<div id="save_for_later" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSave" aria-hidden="true">
-    <div class="modal-header">
-          <h3>Please name your Migration in order to save this instance</h3>
-    </div>
-    <div class="modal-body">
-        <form class=" ">
-            <div class="rs-control-group">
-                <label class="rs-control-label">Name your migration and click '<b>Save </b>' to save this instance</label>
-                <div class="rs-controls">
-                    <input type="text" ng-model="vm.migrationName" placeholder="{{vm.migrationName}}">
-                </div>
-            </div>
-            <button class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.saveClicked == true}">Cancel</button>
-            <a class="rs-btn rs-btn-primary" ng-class="{disabled:(vm.migrationName == '' || vm.saveClicked == true)}" ng-click="vm.saveItems(vm.saveLaterObj); vm.saveClicked = true;"
-                ng-hide="vm.saveLaterObj.saveInProgress">Save</a>
-            <a class="rs-btn disabled" disabled="disabled" ng-show="vm.saveLaterObj.saveInProgress">Saving...</a>
-            <i class="rs-processing-indicator" ng-show="vm.saveLaterObj.saveInProgress"></i>
-            <br>
-            <div ng-show="vm.saveLaterObj.resultMsg" ng-style="vm.saveLaterObj.saveSuccess == true ? {color:'green'} : {color:'red'}">{{vm.saveLaterObj.resultMsg}}</div>
-        </form>
-    </div>
-</div>
-
-<div id="cancel_modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="ModalForCancel" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-        <h3>You are cancelling this migration. Would you like to save the selections you've made so far for another time?</h3>
-    </div>
-    <div class="modal-body">
-        <form class=" ">
-            <div class="rs-control-group">
-                <div class="rs-controls">
-                    <label class="rs-radio">
-                        <input type="radio" ng-model="vm.saveProgress" value="yes">
-                        <strong>Yes</strong><br>
-                        <span class="rs-help-block">Name this migration and click <b>'Submit'</b> to save this migration for later</span>
-                    </label>
-                    <div class="rs-controls">
-                        <input type="text" ng-model="vm.migrationName" placeholder="{{vm.migrationName}}">
-                    </div>
-                    <label class="rs-radio">
-                        <input type="radio" ng-model="vm.saveProgress" value="no">
-                        <strong>No</strong>
-                        <span class="rs-help-block">Cancel and move on</span>
-                      </label>
-                </div>
-            </div>
-            <button class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.saveClicked == true}">Close</button>
-            <button class="rs-btn rs-btn-primary " ng-class="{disabled:vm.saveProgress == '' || !vm.migrationName || vm.saveClicked == true}"
-                ng-click="vm.submitCancel()" ng-hide="vm.cancelnSaveObj.saveInProgress">Submit</button>
-            <a class="rs-btn disabled" disabled="disabled" ng-show="vm.cancelnSaveObj.saveInProgress">Submitting...</a>
-            <i class="rs-processing-indicator" ng-show="vm.cancelnSaveObj.saveInProgress"></i>
-            <br>
-            <div ng-show="vm.cancelnSaveObj.resultMsg" ng-style="vm.cancelnSaveObj.saveSuccess == true ? {color:'green'} : {color:'red'}">{{vm.cancelnSaveObj.resultMsg}}</div>
-        </form>
-    </div>
-</div>
-
 <div id="intro_modal" class="modal hide animated fadeIn details" role="dialog">
     <br>
     <div class="modal-body">
@@ -183,7 +125,7 @@
                     Don't show this again
                 </label>
         </div>
-        <a ng-click="vm.submitCancel()" class="rs-btn">Cancel</a>
+        <a ng-link="['MigrationStatus']" class="rs-btn">Cancel</a>
         <!--<a href="#" class="rs-btn rs-btn-primary" data-dismiss="modal">Start a Migration</a>-->
         <!--<a class="rs-btn rs-btn-primary" ng-hide="vm.nameStatus" data-dismiss="modal" aria-hidden="true" href="#name_modal" role="button" data-toggle="modal">Start a Migration</a>-->
         <a class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true" href="javascript:void(0)">Start a Migration</a>

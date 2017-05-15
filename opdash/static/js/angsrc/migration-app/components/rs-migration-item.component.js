@@ -144,7 +144,7 @@
                     vm.noData = false;
                     vm.sortingOrder = true;
                     vm.isAllselected = false;
-                    vm.disableSelectAll = false;
+                    // vm.disableSelectAll = false;
                     vm.reverse = false;
                     vm.propertyName = "name";
                     /**
@@ -206,9 +206,9 @@
                                 if(item.selected == true){
                                     item.selected = false;
                                 }
-                                if(item.canMigrate == false || item.status.toLowerCase() != 'active'){ 
-                                    vm.disableSelectAll = true;
-                                }
+                                // if(item.canMigrate == false || item.status.toLowerCase() != 'active'){ 
+                                //     vm.disableSelectAll = true;
+                                // }
                             });
                             // if(vm.type === "server")
                             //     vm.items = mapServerStatus(dataList, results[1].server_status);
@@ -256,9 +256,9 @@
                         //For repeated fetch of resources after first time loading.
                         vm.items = datastoreservice.retrieveallItems(vm.type);
                         angular.forEach(vm.items, function (item) {
-                            if(item.canMigrate == false || item.status.toLowerCase() != 'active'){ 
-                                vm.disableSelectAll = true;
-                            }
+                            // if(item.canMigrate == false || item.status.toLowerCase() != 'active'){ 
+                            //     vm.disableSelectAll = true;
+                            // }
                         });
                         // pagination controls
                         vm.currentPage = 1;
@@ -346,8 +346,10 @@
                  */
                 vm.changeItemSelection = function () {
                     angular.forEach(vm.items, function (item) {
-                        item.selected = vm.isAllSelected;
-                        vm.changeSelectAll(item, true);
+                        if(item.canMigrate == true && item.status.toLowerCase() == 'active') { 
+                            item.selected = vm.isAllSelected;
+                            vm.changeSelectAll(item, true);
+                        }
                     });
                 };
 
