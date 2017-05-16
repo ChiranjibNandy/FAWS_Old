@@ -147,6 +147,7 @@
                     // vm.disableSelectAll = false;
                     vm.reverse = false;
                     vm.propertyName = "name";
+                    vm.activeItemCount = 0;
                     /**
                      * @ngdoc property
                      * @name tenant_id
@@ -206,9 +207,9 @@
                                 if(item.selected == true){
                                     item.selected = false;
                                 }
-                                // if(item.canMigrate == false || item.status.toLowerCase() != 'active'){ 
-                                //     vm.disableSelectAll = true;
-                                // }
+                                if(item.canMigrate == true && item.status.toLowerCase() == 'active'){ 
+                                    vm.activeItemCount++;
+                                }
                             });
                             // if(vm.type === "server")
                             //     vm.items = mapServerStatus(dataList, results[1].server_status);
@@ -256,9 +257,9 @@
                         //For repeated fetch of resources after first time loading.
                         vm.items = datastoreservice.retrieveallItems(vm.type);
                         angular.forEach(vm.items, function (item) {
-                            // if(item.canMigrate == false || item.status.toLowerCase() != 'active'){ 
-                            //     vm.disableSelectAll = true;
-                            // }
+                            if(item.canMigrate == true && item.status.toLowerCase() == 'active'){ 
+                                vm.activeItemCount++;
+                            }
                         });
                         // pagination controls
                         vm.currentPage = 1;
@@ -286,9 +287,12 @@
                                 };
                             });
                         };
+                        var count = 0;
                         angular.forEach(servers_selected, function (item_selected) {
-                             vm.parent.addItem(item_selected, vm.type);
-                         });
+                            count++;
+                            vm.parent.addItem(item_selected, vm.type);
+                        });
+                        vm.isAllSelected = count === vm.activeItemCount;
                     }
 
                     // Setup status filters
@@ -331,9 +335,8 @@
                         var count = 0;
                         for(var i=0; i<vm.items.length; i++) {
                             if(vm.items[i].selected) count++;
-                            else break;
                         }
-                        vm.isAllSelected = count === vm.items.length;
+                        vm.isAllSelected = count === vm.activeItemCount;
                     }
                 };
 

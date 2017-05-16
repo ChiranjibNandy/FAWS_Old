@@ -1,6 +1,6 @@
 <tr ng-repeat="item in vm.items | filter: vm.filtervalue | limitTo : vm.pageSize : (vm.currentPage-1)*vm.pageSize">
     <td class="rs-table-status" 
-            ng-class="{'rs-table-status-ok': item.status=='active', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR', 'rs-table-status-error': item.status=='STOPPED'}">
+            ng-class="{'rs-table-status-ok': item.status.toLowerCase()=='active', 'rs-table-status-processing rs-table-status-striped': item.status.toLowerCase()=='warning', 'rs-table-status-error': item.status.toLowerCase()=='error', 'rs-table-status-error': item.status.toLowerCase()=='stopped'}">
     </td>
     <td class="rs-table-checkbox" ng-style="(item.canMigrate == true && item.status == 'active')? {background: 'white'} : {background:'rgba(51, 51, 51, 0.15)', color:'#bbb'}"><input style="font-size: 10px" ng-disabled="item.canMigrate == false || item.status != 'active'" type="checkbox" title="{{item.canMigrate ? ' ' : 'This server cannot be migrated again'}}" ng-model="item.selected" ng-change="vm.changeSelectAll(item,false)" ng-checked="item.selected" /></td>
     <td class="rs-table-link" title="{{item.canMigrate ? ' ' : 'This server cannot be migrated again'}}" ng-style="(item.canMigrate == true && item.status == 'active')? {background: 'white'} : {background:'rgba(51, 51, 51, 0.15)', color:'#bbb'}"><a href="" ng-click="vm.equipmentDetails(vm.type, item)" style="overflow: visible !important">{{item.name}}</a></td>
