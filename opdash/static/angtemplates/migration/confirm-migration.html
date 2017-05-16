@@ -165,6 +165,7 @@
                         <th>Resource</th>
                         <th>Uptime Cost (for uptime hrs.)</th>
                         <th>Bandwidth Out Cost (for used bandwidth)</th>
+                        <th>Storage</th>
                         <th>Total Cost</th>
                     </tr>
                 </thead>
@@ -175,9 +176,11 @@
                         <td class="rs-table-text" ng-if="item.rax_uptime_cost === 'NA'">New Server</td>
                         <td class="rs-table-text" ng-if="item.rax_bandwidth_cost !== 'NA'">${{item.rax_bandwidth_cost + " (" + item.rax_bandwidth + " GB)"}}</td>
                         <td class="rs-table-text" ng-if="item.rax_bandwidth_cost === 'NA'">New Server</td>
+                        <td class="rs-table-text">{{item.storage ? item.storage:'New Server'}}</td>
                         <td class="rs-table-text">${{item.rax_total_cost}}</td>
                     </tr>
                     <tr>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td style="text-align:right;"><b>Grand Total = </b></td>
@@ -193,8 +196,9 @@
                 <thead>
                     <tr>
                         <th>Resource</th>
-                        <th>Uptime Cost (for uptime hrs.)</th>
+                        <th>Uptime Cost (for uptime hrs)</th>
                         <th>Bandwidth Out Cost (for used bandwidth)</th>
+                        <th>Storage Cost</th>
                         <th>Total Cost</th>
                     </tr>
                 </thead>
@@ -205,9 +209,12 @@
                         <td class="rs-table-text">${{item.aws_uptime_cost + " (" + item.rax_uptime + ")"}}</td>
                         <td class="rs-table-text" ng-if="item.aws_bandwidth !== 'NA'">${{item.aws_bandwidth_cost + " (" + item.rax_bandwidth + " GB)"}}</td>
                         <td class="rs-table-text" ng-if="item.aws_bandwidth === 'NA'">N/A</td>
+                        <td class="rs-table-text" ng-if="!item.storage_rate">N/A</td>
+                        <td class="rs-table-text" ng-if="item.storage_rate">${{item.storage_rate}}</td>
                         <td class="rs-table-text">${{item.aws_total_cost}}</td>
                     </tr>
                     <tr>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td style="text-align:right;"><b>Grand Total = </b></td>
