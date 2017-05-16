@@ -222,6 +222,7 @@
              */
             this.setScheduleMigration = function(items){
                 self.selectedTime = items;
+                debugger;
             }
             this.getScheduleMigration = function(){
                 return self.selectedTime;
