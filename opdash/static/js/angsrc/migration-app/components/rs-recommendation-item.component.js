@@ -62,10 +62,12 @@
                         },function(error){
                             console.log('error :', error);
                         });
-                        //vm.data = dataStoreService.getItems(vm.type);
+                        //vm.data = dataStoreService.getItems(vm.type); -- Previous Code
                         if($window.localStorage.selectedServers !== undefined)
                             vm.data = JSON.parse($window.localStorage.selectedServers);
-                        $window.localStorage.selectedServers = JSON.stringify(vm.data);
+                        else
+                           vm.data = dataStoreService.getItems(vm.type); 
+                        //$window.localStorage.selectedServers = JSON.stringify(vm.data);
                         vm.labels = [
                                         {field: "name", text: vm.type+" Name"},
                                         {field: "ip_address", text: "IP Address"},
@@ -82,7 +84,7 @@
                         if($window.localStorage.selectedLoadBalancers !== undefined)
                             vm.data = JSON.parse($window.localStorage.selectedLoadBalancers);
                         else
-                            vm.data = [];
+                            vm.data = dataStoreService.getItems("LoadBalancers");
                         vm.labels = [
                                         {field: "name", text: "CLB Name"},
                                         {field: "status", text: "CLB Status"},
@@ -141,6 +143,8 @@
                     //var servers = dataStoreService.getItems('server');
                     if($window.localStorage.selectedServers !== undefined)
                         servers = JSON.parse($window.localStorage.selectedServers);
+                    else
+                        servers = dataStoreService.getItems('server');
                     var networkNames = [];
                     vm.data = [];
                     vm.labels = [

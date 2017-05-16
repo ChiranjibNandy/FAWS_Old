@@ -46,6 +46,7 @@
                     vm.changedMigrationName = vm.migrationName;
 
                     dataStoreService.setPageName("ConfirmMigration");
+                    $window.localStorage.setItem('pageName',"ConfirmMigration");
                     vm.scheduleMigration = false;
                     vm.cost = dataStoreService.getProjectedPricing();
                     vm.migrating = false;
@@ -154,17 +155,18 @@
                  * @description 
                  * function to open the modal that displays the current and projected pricing calculations for the selected servers.
                  */ 
-                vm.openUsageCostsModal = function(){
+                 vm.openUsageCostsModal = function(){
                     vm.costCalculationItems =[];
                     vm.projectedCostCalculationItems = [];
                     vm.totalOfCostCalculationItems = 0;
                     vm.totalOfProjectedCostCalculationItems = 0;
                     vm.showCalculatedCostDialog = false;
                     var selectedPricingMappingObj = [];
-
                     //var selectedPricingMappingObj = dataStoreService.getItems('server');
                     if($window.localStorage.selectedServers !== undefined)
                         selectedPricingMappingObj = JSON.parse($window.localStorage.selectedServers);
+                    else
+                        selectedPricingMappingObj = dataStoreService.getItems('server');
                     selectedPricingMappingObj.forEach(function(server){
                         var selectedFlavor = server.selectedMapping.instance_type;
                         if(server.details.hasOwnProperty('rax_bandwidth')){
@@ -174,7 +176,8 @@
                                 "rax_bandwidth_cost":parseFloat(server.details.rax_bandwidth_cost).toFixed(2),
                                 "rax_bandwidth":server.details.rax_bandwidth.toFixed(2),
                                 "rax_uptime":server.details.rax_uptime.toFixed(2),
-                                "rax_total_cost":parseFloat(parseFloat(server.details.rax_uptime_cost) + parseFloat(server.details.rax_bandwidth_cost)).toFixed(2)
+                                "rax_total_cost":parseFloat(parseFloat(server.details.rax_uptime_cost) + parseFloat(server.details.rax_bandwidth_cost)).toFixed(2),
+                                "storage":server.details.rax_storage_size
                             });
                             vm.totalOfCostCalculationItems += (parseFloat(parseFloat(server.details.rax_uptime_cost) + parseFloat(server.details.rax_bandwidth_cost)));
                         }
@@ -188,7 +191,7 @@
                                 "rax_uptime":"NA",
                                 "rax_total_cost":server.details.rax_price,
                             });
-                            vm.totalOfCostCalculationItems += server.details.rax_price;;
+                            vm.totalOfCostCalculationItems += server.details.rax_price;
                         }
 
                         if(server.details.hasOwnProperty('aws_bandwidth_cost')){
@@ -198,17 +201,21 @@
                             //         cost = server.mappings[i].cost;
                             //     }
                             // }
+                            var storage_rate = parseFloat(parseFloat(server.details.rax_storage_size) * parseFloat(server.selectedMapping.storage_rate)).toFixed(2);
+                            var aws_bandwidth_cost = parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(server.details.rax_bandwidth)).toFixed(2);
+                            var aws_uptime_cost = parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(server.details.rax_uptime)).toFixed(2);
                             vm.projectedCostCalculationItems.push({
                                 "resourceName" : server.details.name,
-                                "aws_uptime_cost":parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(server.details.rax_uptime)).toFixed(2),
-                                "aws_bandwidth_cost":server.details.aws_bandwidth_cost.toFixed(2),
+                                "aws_uptime_cost":aws_uptime_cost,
+                                "aws_bandwidth_cost":aws_bandwidth_cost,
                                 "aws_bandwidth":server.details.rax_bandwidth.toFixed(2),
                                 "aws_uptime":server.details.rax_uptime.toFixed(2),
-                                "aws_total_cost":parseFloat(parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(server.details.rax_uptime)) + parseFloat(server.details.aws_bandwidth_cost)).toFixed(2),
+                                "aws_total_cost":parseFloat(parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost) + parseFloat(storage_rate)).toFixed(2),
                                 "rax_bandwidth":server.details.rax_bandwidth.toFixed(2),
-                                "rax_uptime":server.details.rax_uptime.toFixed(2),                              
+                                "rax_uptime":server.details.rax_uptime.toFixed(2),
+                                "storage_rate":storage_rate                         
                             });
-                            vm.totalOfProjectedCostCalculationItems += (parseFloat(parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(server.details.rax_uptime)) + parseFloat(server.details.aws_bandwidth_cost)));
+                            vm.totalOfProjectedCostCalculationItems += (parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost)+ parseFloat(storage_rate));
                         }
 
                         if(!server.details.hasOwnProperty('aws_bandwidth_cost')){
@@ -233,11 +240,21 @@
                             });
                         vm.totalOfProjectedCostCalculationItems += (parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(24*30)));
                     }
-                    });
-                    $('#calculator_modal').modal('show');
-                }
+                });
+                $('#calculator_modal').modal('show');
+            }
+            
+            $scope.$on('$locationChangeStart', function(event, newUrl, oldUrl) {
+                    debugger;
+                    if((oldUrl.indexOf("migration/confirm") > -1) && (newUrl.indexOf("migration/recommendation") > -1) && $window.localStorage.selectedServers === "[]"){
+                        event.preventDefault();
+                        //$('#cancel_modal').modal('show');
+                        $rootRouter.navigate(["MigrationResourceList"]);
+                        //$rootRouter.navigate(["MigrationResourceList"]);
+                    }
+            });
 
-                return vm;
+            return vm;
 
             }
             ]

@@ -58,9 +58,12 @@
                     //vm.selectedItems.LoadBalancers = dataStoreService.getItems('LoadBalancers');
                     if($window.localStorage.selectedServers !== undefined)
                         vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
+                    else
+                        vm.selectedItems.server = dataStoreService.getItems('server');
                     if($window.localStorage.selectedLoadBalancers !== undefined)
-                        vm.selectedItems.LoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers);                    
-
+                        vm.selectedItems.LoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers); 
+                    else
+                        vm.selectedItems.LoadBalancers = dataStoreService.getItems('LoadBalancers');                     
                     $("#accordion2").delegate('.accordion-heading a', "click", function () {
                         $('.plain-panel').find('.collapse.in').prev().find("i").removeClass("fa-chevron-up").addClass(
                             "fa-chevron-down");
@@ -77,7 +80,15 @@
                     
                     //vm.selectedItems = dataStoreService.getItems();
                     vm.selectedItems = [];
-                    vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
+                    if($window.localStorage.selectedServers !== undefined)
+                        vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
+                    else
+                        vm.selectedItems.server = dataStoreService.getItems('server');
+                    
+                    if($window.localStorage.selectedLoadBalancers !== undefined)
+                        vm.selectedItems.LoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers);
+                    else
+                        vm.selectedItems.LoadBalancers = [];
                 });
                 
                 //Watch for item selection from list of resources.
@@ -86,13 +97,15 @@
                     vm.networksList = [];
                     //loop through all the servers selected and networks associated with the servers.
                     angular.forEach(vm.selectedItems.server, function (item) {
-                        angular.forEach(item.details.networks, function (network) {
-                            //making separate list of networks associated with servers.
-                            if(vm.networksList.indexOf(network.name) == -1) {
-                                vm.networkCount += 1;
-                                vm.networksList.push(network.name);
-                            };
-                        });
+                        if(item.details.networks.length !== 0){
+                            angular.forEach(item.details.networks, function (network) {
+                                //making separate list of networks associated with servers.
+                                if(vm.networksList.indexOf(network.name) == -1) {
+                                    vm.networkCount += 1;
+                                    vm.networksList.push(network.name);
+                                };
+                            });
+                        }
                     });
                 });
 
@@ -122,12 +135,20 @@
                  * Remove an item from list of items selected.
                  */
                 vm.removeItem = function(item, type) {
+                    // if(vm.selectedItems[type].indexOf(item)>=0){
+                    //     vm.selectedItems[type].splice(vm.selectedItems[type].indexOf(item), 1);
+                    //     dataStoreService.setItems(vm.selectedItems);
+                    //     $window.localStorage.setItem('selectedServers',JSON.stringify(vm.selectedItems['server']));
+                    //     item.selected = false;
+                    //     $scope.$emit("ItemRemoved", item); // broadcast event to all child components
+                    // }
+                    
                     if(vm.selectedItems[type].indexOf(item)>=0){
-                        vm.selectedItems[type].splice(vm.selectedItems[type].indexOf(item), 1);
+                       vm.selectedItems[type].splice(vm.selectedItems[type].indexOf(item), 1);
                         dataStoreService.setItems(vm.selectedItems);
-                        $window.localStorage.setItem('selectedServers',JSON.stringify(vm.selectedItems['server']));
-                        item.selected = false;
-                        $scope.$emit("ItemRemoved", item); // broadcast event to all child components
+                        $window.localStorage.setItem('selectedServers',JSON.stringify(vm.selectedItems.server));
+                        item.selected = false;  
+                        $scope.$emit("ItemRemoved", item); // broadcast event to all child components                     
                     }
                 }
 

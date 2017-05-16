@@ -208,6 +208,8 @@
                     //var selectedServers = dataStoreService.getItems('server');
                     if($window.localStorage.selectedServers !== undefined)
                         selectedServers = JSON.parse($window.localStorage.selectedServers);
+                    else
+                        selectedServers = dataStoreService.getItems('server');
                     angular.forEach(selectedServers, function (item) {
                         invoiceTotal += item.details.rax_price;
                     });
@@ -233,10 +235,15 @@
                         //var selectedPricingMappingObj = dataStoreService.getItems('server');
                         if($window.localStorage.selectedServers !== undefined)
                             selectedPricingMappingObj = JSON.parse($window.localStorage.selectedServers);
+                        else
+                            selectedPricingMappingObj = dataStoreService.getItems('server');                        
                         vm.totalProjectedPricingSum = 0;
                         selectedPricingMappingObj.forEach(function(item){
-                            if(item.details.hasOwnProperty('rax_uptime') && item.details.hasOwnProperty('aws_bandwidth_cost'))
-                                vm.totalProjectedPricingSum += parseFloat(item.selectedMapping.cost * item.details.rax_uptime + item.details.aws_bandwidth_cost);
+                            if(item.details.hasOwnProperty('rax_uptime')){
+                                var aws_uptime_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_uptime)).toFixed(2);
+                                var aws_bandwidth_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_bandwidth)).toFixed(2);
+                                vm.totalProjectedPricingSum += parseFloat(aws_uptime_cost + aws_bandwidth_cost);
+                            }
                             else
                                 vm.totalProjectedPricingSum += parseFloat(item.selectedMapping.cost * (720));
                         });
@@ -261,6 +268,8 @@
                     //var selectedPricingMappingObj = dataStoreService.getItems('server');
                     if($window.localStorage.selectedServers !== undefined)
                         selectedPricingMappingObj = JSON.parse($window.localStorage.selectedServers);
+                    else
+                        selectedPricingMappingObj = dataStoreService.getItems('server');
                     selectedPricingMappingObj.forEach(function(server){
                         var selectedFlavor = server.selectedMapping.instance_type;
                         if(server.details.hasOwnProperty('rax_bandwidth')){

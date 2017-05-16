@@ -31,9 +31,12 @@
                     vm.isRacker = authservice.is_racker;
                     $('title')[0].innerHTML =  "Recommendations - Rackspace Cloud Migration";
                     vm.migrationName = datastoreservice.getScheduleMigration().migrationName;
-                    //var servers = datastoreservice.getItems('server');
+                    //var servers = datastoreservice.getItems('server'); -- Previous Code
+                    var servers = [];
                     if($window.localStorage.selectedServers !== undefined)
-                        var servers = JSON.parse($window.localStorage.selectedServers);
+                        servers = JSON.parse($window.localStorage.selectedServers);
+                    else
+                        servers = datastoreservice.getItems('server');
                     vm.dataServer = servers.length;
                     var networkNames = [];
                     angular.forEach(servers, function (item) {
@@ -44,15 +47,16 @@
                         });
                     });  
                     vm.dataNetwork = networkNames.length;
-                    //vm.dataLoadBalancers = datastoreservice.getItems('LoadBalancers').length;
+                    //vm.dataLoadBalancers = datastoreservice.getItems('LoadBalancers').length; -- Previous Code
                     if($window.localStorage.selectedLoadBalancers !== undefined)
                         vm.dataLoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers).length;
                     else
-                        vm.dataLoadBalancers = 0;
+                        vm.dataLoadBalancers = datastoreservice.getItems('LoadBalancers').length;
 
                     vm.editName = false;
 
                     datastoreservice.setPageName("MigrationRecommendation");
+                    $window.localStorage.setItem('pageName',"MigrationRecommendation");
                 }
 
                 /**
