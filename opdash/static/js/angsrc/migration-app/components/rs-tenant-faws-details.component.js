@@ -27,7 +27,7 @@
              * @name migrationApp.controller:tenantfawsdetailsCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rstenantfawsdetails rstenantfawsdetails} component
              */
-            controller: ["datastoreservice", "authservice", "$timeout", function (dataStoreService, authservice, $timeout) {
+            controller: ["datastoreservice", "authservice", "$timeout","$window", function (dataStoreService, authservice, $timeout,$window) {
                 var vm = this;
                 vm.fawsAcctStatus = true;
                 vm.tenant_id = '';
@@ -54,7 +54,7 @@
 
                 vm.auth = authservice.getAuth();
 
-                vm.currentPage = dataStoreService.getPageName();
+                vm.currentPage = dataStoreService.getPageName() || $window.localStorage.pageName;
                 if (vm.currentPage == "MigrationResourceList")
                     vm.showCreateAccount = true;
                 else 

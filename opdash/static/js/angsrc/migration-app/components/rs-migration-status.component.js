@@ -30,7 +30,7 @@
                  * @name migrationApp.controller:rsmigrationstatusCtrl
                  * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationstatus rsmigrationstatus} component
                  */
-                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "migrationitemdataservice", "alertsservice", "$filter", "$interval", "$timeout", "$scope", "$route", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, ds, alertsService, $filter, $interval, $timeout, $scope, $route) {
+                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "migrationitemdataservice", "alertsservice", "$filter", "$interval", "$timeout", "$scope", "$route","$window", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, ds, alertsService, $filter, $interval, $timeout, $scope, $route,$window) {
                     var vm = this, 
                         jobList = [],
                         lastRefreshIntervalPromise,
@@ -72,6 +72,7 @@
                     vm.afterNewMigration = false;
                     
                     dataStoreService.setPageName("MigrationStatus");
+                    $window.localStorage.setItem('pageName',"MigrationStatus");
 
                     if(authservice.getAuth().is_racker == false){   //get Account Name
                         var actname = dataStoreService.getAccountName(vm.tenant_id); //this service method is setting the accountname through api
@@ -360,13 +361,17 @@
 
                     dataStoreService.setDontShowStatus(true);
                     dataStoreService.selectedTime.migrationName = batch.batch_name;
+                    $window.localStorage.migrationName = batch.batch_name;
                     
                     if (batch.step_name === "MigrationResourceList") {
                         dataStoreService.setItems(batch.selected_resources);
+                        $window.localStorage.setItem('selectedServers',JSON.stringify(batch.selected_resources.server));
                     } else if (batch.step_name === "MigrationRecommendation") {
                         dataStoreService.setItems(batch.recommendations);
+                        $window.localStorage.setItem('selectedServers',JSON.stringify(batch.recommendations.server));
                     } else if (batch.step_name === "ScheduleMigration" || batch.step_name === "ConfirmMigration") {
                         dataStoreService.setItems(batch.recommendations);
+                        $window.localStorage.setItem('selectedServers',JSON.stringify(batch.recommendations.server));
                         dataStoreService.selectedTime = batch["scheduling-details"];
                     }
 

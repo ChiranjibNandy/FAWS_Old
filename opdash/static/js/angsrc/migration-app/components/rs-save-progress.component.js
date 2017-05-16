@@ -25,7 +25,7 @@
              * @name migrationApp.controller:rssaveprogressCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rssaveprogress rssaveprogress} component
              */
-            controller: ["datastoreservice","$timeout","$rootRouter", function (dataStoreService,$timeout,$rootRouter) {
+            controller: ["datastoreservice","$timeout","$rootRouter","$window", function (dataStoreService,$timeout,$rootRouter,$window) {
                 var vm = this;
 
                 vm.$onInit = function () {
@@ -38,7 +38,7 @@
                     vm.saveProgress = '';
                     vm.displayMigName = false;
                     vm.migrationName = 'My Migration';
-                    vm.stepname = dataStoreService.getPageName();
+                    vm.stepname = dataStoreService.getPageName() || $window.localStorage.pageName;
                 };
 
                 /**

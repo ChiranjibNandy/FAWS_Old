@@ -535,8 +535,12 @@
 	                instances = self.getItems('server');
                 var totalProjectedPricing = 0;
                 instances.forEach(function(item){
-                    if(item.details.hasOwnProperty('rax_uptime'))
-                        totalProjectedPricing += parseFloat(item.selectedMapping.cost * item.details.rax_uptime + item.details.aws_bandwidth_cost);
+                    
+                    if(item.details.hasOwnProperty('rax_uptime')){
+                        var aws_uptime_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_uptime)).toFixed(2);
+                        var aws_bandwidth_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_bandwidth)).toFixed(2);
+                        totalProjectedPricing += parseFloat(aws_uptime_cost + aws_bandwidth_cost);
+                    }
                     else
                         totalProjectedPricing += parseFloat(item.selectedMapping.cost * (720));;
                 });

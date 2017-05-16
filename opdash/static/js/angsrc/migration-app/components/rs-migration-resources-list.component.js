@@ -31,7 +31,6 @@
                 vm.saveClicked = false;
 
                 vm.$onInit = function() {
-                    $window.localStorage.clear();
                     //testing
                     // dataStoreService.fetchUserProfile()
                     //     .then(function (result) {
@@ -40,14 +39,16 @@
                     // If status is true, popup for migration won't be displayed in first step of Migration.
                     $('body').removeClass('modal-open');
                     $('.modal-backdrop').remove();
-                    var modalDisplayStatus = dataStoreService.getDontShowStatus(); //check for flag status created for intorduction Modal.
-                    var prePageName = dataStoreService.getPageName();
-                    if(modalDisplayStatus == false && (prePageName == "MigrationStatus" || prePageName == "")){
+                    var modalDisplayStatus = dataStoreService.getDontShowStatus() ; //check for flag status created for intorduction Modal.
+                    var prePageName = dataStoreService.getPageName() || $window.localStorage.pageName;
+                    if((modalDisplayStatus == false || $window.localStorage.dontShowStatus === "true")  && (prePageName == "MigrationStatus" || prePageName == "")){
                         $('#intro_modal').modal('show');
                         dataStoreService.setDontShowStatus(true);//set introduction modal flag to true after first time display.
+                        $window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
                     }
                     
                     dataStoreService.setPageName("MigrationResourceList");
+                    $window.localStorage.setItem('pageName',"MigrationResourceList");
                     $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Migration";
 
                     /**
@@ -82,6 +83,7 @@
                     };
                     vm.displayMigName = false;
                     vm.dontshowStatus = true;
+                    $window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
                     var timestmp = moment(d).format("DDMMMYYYY-hhmma");
                     /**
                      * @ngdoc property
@@ -109,8 +111,31 @@
                  * Called by child component when an item is selected
                  */
                 vm.addItem = function(item, type) {
-                    vm.selectedItems[type] = dataStoreService.getItems(type);
-                    if(vm.selectedItems[type].indexOf(item)<0){
+                     //vm.selectedItems[type] = dataStoreService.getItems(type); -- Previous Code
+                    var itemExists = false;
+                    if($window.localStorage.selectedServers !== undefined){
+                        vm.selectedItems[type] = JSON.parse($window.localStorage.selectedServers);
+                        var servers = JSON.parse($window.localStorage.selectedServers);
+                        for(var i =0;i < servers.length;i++){
+                            if(servers[i].name  === item.name){
+                                itemExists = true;
+                            }
+                        }
+                    }
+                    else 
+                    {
+                        vm.selectedItems[type] = dataStoreService.getItems(type);
+                        var servers = vm.selectedItems[type];
+                        for(var i =0;i < servers.length;i++){
+                            if(servers[i].name  === item.name){
+                                itemExists = true;
+                            }
+                        }
+
+                    }
+                    if(!itemExists){
+                    //if(vm.selectedItems[type].indexOf(item)<0){ -- Previous Code
+
                         //this hardcoded value of us-east-1 in url is needed to get the default pricing details. 
                         var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/us-east-1';
                         HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
@@ -149,6 +174,7 @@
                                     localStorage.setItem('selectedLoadBalancers', JSON.stringify(old.concat(item)));
                                 }
                             }
+                            vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
                             dataStoreService.setItems(vm.selectedItems);//save items selected for migration in service.
                             $scope.$broadcast("ItemsModified");//make a function call to child component to enable checkobox for selected items.
                         });
@@ -164,7 +190,11 @@
                  * Called by child component when an item is removed by user
                  */
                 vm.removeItem = function(item, type) {
-                    vm.selectedItems = dataStoreService.getItems();
+                    //vm.selectedItems = dataStoreService.getItems();
+                    if($window.localStorage.selectedServers !== undefined)
+                        vm.selectedItems[type] = JSON.parse($window.localStorage.selectedServers);
+                    else
+                        vm.selectedItems[type] = dataStoreService.getItems(type);
                     //look for item to be removed in array of selected items and splice it from the array.
                     angular.forEach(vm.selectedItems[type], function (item_selected, key) {
                         if(item_selected.id == item.id){
@@ -224,6 +254,7 @@
                  */
                 vm.dontShow = function() {
                     dataStoreService.setDontShowStatus(vm.dontshowStatus);
+                    $window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
                 };
 
                 /**
@@ -245,9 +276,14 @@
                  * Continue to next step: **Recommendations**
                  */
                  vm.continue = function() {
-                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0){
+                    // if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0){ -- Previous Code
+                    //     vm.nameStatus = dataStoreService.getdontShowNameModal(); //check for flag status created for Modal where user can name a migration.
+                    //     var migrationName = dataStoreService.getScheduleMigration().migrationName;
+                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 ){//dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 
                         vm.nameStatus = dataStoreService.getdontShowNameModal(); //check for flag status created for Modal where user can name a migration.
-                        var migrationName = dataStoreService.getScheduleMigration().migrationName;
+                        //var migrationName = dataStoreService.getScheduleMigration().migrationName;
+                        var migrationName = $window.localStorage.migrationName;
+
                         if(vm.nameStatus || migrationName){
                             vm.migrationName = migrationName;
                             vm.savencontinue();
@@ -271,13 +307,19 @@
                  * Assign Migration considering current Timestamp and continue to next step: **Recommendations**
                  */
                 vm.savencontinue = function() {
-                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0){
-                        if(vm.selectedItems.server.length > 0 || vm.selectedItems.LoadBalancers.length > 0){
+                    // if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0){
+                    //     if(vm.selectedItems.server.length > 0 || vm.selectedItems.LoadBalancers.length > 0){
+                    //         dataStoreService.setItems(vm.selectedItems);
+                    //     }   
+                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 ){//|| dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 
+                        if(vm.selectedItems.server.length > 0 || vm.selectedItems.LoadBalancers.length > 0 ){
                             dataStoreService.setItems(vm.selectedItems);
                         }                
                         // dataStoreService.setDontShowStatus(true);
                         dataStoreService.setDontShowNameModal(true);
-                        var migrationName = dataStoreService.getScheduleMigration().migrationName;
+                    
+                        //var migrationName = dataStoreService.getScheduleMigration().migrationName;
+                        var migrationName = $window.localStorage.migrationName;
                         if(migrationName)
                             $rootRouter.navigate(["MigrationRecommendation"]);
                         else{

@@ -177,7 +177,9 @@
                      */
                     var resources_retrieved = datastoreservice.retrieveallItems(vm.type);
                     //check if resources already retrieved
-                    if(resources_retrieved.length == 0){
+
+                    //if(resources_retrieved.length == 0){ -- Previous Block
+                    if($window.localStorage.allServers === undefined){
                         //During first time loading of resources
                         // Retrieve all migration items of a specific type (eg: server, network etc)
                         var list = ds.getTrimmedAllItems(vm.type);
@@ -219,7 +221,13 @@
                             // if(vm.type === "loadBalancers")
                             //     vm.items = mapNetworkStatus(dataList, results[1].network_status);
                             //Store all retrieved resources in factory variable
-                            var savedItems = datastoreservice.getItems(vm.type);
+                            
+                            //var savedItems = datastoreservice.getItems(vm.type); -- Previous Code
+                            var savedItems = [];
+                            if($window.localStorage.selectedServers !== undefined)
+                                savedItems = JSON.parse($window.localStorage.selectedServers);
+                            else
+                                savedItems = datastoreservice.getItems(vm.type);
                             if(savedItems.length != 0){
                                 angular.forEach(vm.items, function (item) {
                                     for(var i=0;i<savedItems.length;i++){
@@ -232,6 +240,7 @@
                                 });
                             };
                             datastoreservice.storeallItems(vm.items, vm.type);
+                            $window.localStorage.allServers = JSON.stringify(vm.items);
                             // pagination controls
                             vm.currentPage = 1;
                             vm.pageSize = 5; // items to be displayed per page
@@ -244,6 +253,7 @@
                             vm.labels = results[0].labels; // set table headers
                             //Store all labels in factory variable
                             datastoreservice.storeallItems(vm.labels, "label"+vm.type);
+                            $window.localStorage.setItem("serverLabels",JSON.stringify(vm.labels));
                             angular.forEach(results[0].labels, function(label){
                                 vm.search[label.field] = ""; // set search field variables
                             });
@@ -254,7 +264,12 @@
                         });
                     } else{
                         //For repeated fetch of resources after first time loading.
-                        vm.items = datastoreservice.retrieveallItems(vm.type);
+                        
+                        //vm.items = datastoreservice.retrieveallItems(vm.type); -- Previous Code
+                        if($window.localStorage.allServers !== undefined)
+                            vm.items = JSON.parse($window.localStorage.allServers);
+                        else
+                            vm.items = resources_retrieved;
                         angular.forEach(vm.items, function (item) {
                             // if(item.canMigrate == false || item.status.toLowerCase() != 'active'){ 
                             //     vm.disableSelectAll = true;
@@ -269,10 +284,22 @@
                             vm.pageArray.push(i);
                         };
 
-                        vm.labels = datastoreservice.retrieveallItems("label"+vm.type); // set table headers
+                        //vm.labels = datastoreservice.retrieveallItems("label"+vm.type); // set table headers -- Previous Code
+                        if($window.localStorage.serverLabels !== undefined)
+                            vm.labels = JSON.parse($window.localStorage.serverLabels);
+                        else
+                            vm.labels = datastoreservice.retrieveallItems("label"+vm.type); // set table headers
+
                         vm.loading = false;
                         
-                        var servers_selected = datastoreservice.getItems(vm.type);
+                        //var servers_selected = datastoreservice.getItems(vm.type); -- Previous Code
+                        var servers_selected = [];
+
+                        if($window.localStorage.selectedServers !== undefined)
+                            servers_selected = JSON.parse($window.localStorage.selectedServers);
+                        else
+                            servers_selected = datastoreservice.getItems(vm.type);
+
                         if(servers_selected.length != 0)
                             $window.localStorage.selectedServers = JSON.stringify(servers_selected);
                         if(servers_selected.length != 0){
@@ -304,6 +331,9 @@
 
                 $scope.$on("ItemRemovedForChild", function(event, item){
                         if(item.type === vm.type){
+                            for(var i=0; i<vm.items.length; i++) {
+                                if(vm.items[i].name === item.name) vm.items[i].selected = false;
+                            }
                             //item.selected = false;
                             vm.isAllSelected = false;
                         }
