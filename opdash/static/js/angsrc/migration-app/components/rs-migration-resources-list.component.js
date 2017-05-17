@@ -320,9 +320,9 @@
                     
                         //var migrationName = dataStoreService.getScheduleMigration().migrationName;
                         var migrationName = $window.localStorage.migrationName;
-                        if(migrationName)
-                            $rootRouter.navigate(["MigrationRecommendation"]);
-                        else{
+                        // if(migrationName)
+                        //     $rootRouter.navigate(["MigrationRecommendation"]);
+                        // else{
                             // migrationName = vm.migrationName;
                             vm.selectedTime = {
                                     migrationName:vm.migrationName,
@@ -336,7 +336,7 @@
                             $('#intro_modal').modal('hide');
                             $('#no_selection').modal('hide');
                             $rootRouter.navigate(["MigrationRecommendation"]);
-                        }
+                        // }
                     }
                     else{
                         $('#save_for_later').modal('hide');
