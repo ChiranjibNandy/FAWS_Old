@@ -68,3 +68,19 @@
     </div>
     <div ng-show="vm.selectedItems.server.length == 0 && vm.selectedItems.LoadBalancers.length == 0" style="color:red; text-align: center">No items selected</div>
 </div>
+
+<!-- no equipments modal -->
+    <div id="no-equipments-modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-header">
+            <h3>Cannot continue with this migration!</h3>
+        </div>
+        <div class="modal-body">
+            <p>Currently you have no resources selected. To select few, please press on continue...</p>
+        </div>
+        <div class="modal-footer">
+            <a ng-click="vm.selectServers()" class="rs-btn rs-btn-primary">Continue </a>
+            <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
+        </div>
+    </div>
+    <!-- no equipments modal -->
