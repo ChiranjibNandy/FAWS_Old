@@ -80,8 +80,6 @@
                         $('#confirm-migration-modal').modal('hide');
                         requestObj = ds.prepareJobRequest();
                         vm.acceptTermsAndConditions= true;
-                        $rootScope.$emit("vm.MigrationName", dataStoreService.selectedTime.migrationName);
-                        $rootScope.$emit("vm.MigrationTime", dataStoreService.selectedTime.time);
                         HttpWrapper.save("/api/jobs", { "operation": 'POST' }, requestObj)
                             .then(function (result) {
                                 vm.migrating = false;
@@ -245,7 +243,6 @@
             }
             
             $scope.$on('$locationChangeStart', function(event, newUrl, oldUrl) {
-                    debugger;
                     if((oldUrl.indexOf("migration/confirm") > -1) && (newUrl.indexOf("migration/recommendation") > -1) && $window.localStorage.selectedServers === "[]"){
                         event.preventDefault();
                         //$('#cancel_modal').modal('show');
