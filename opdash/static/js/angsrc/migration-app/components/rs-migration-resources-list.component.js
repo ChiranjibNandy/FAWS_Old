@@ -331,7 +331,6 @@
                             $('#intro_modal').modal('hide');
                             $('#no_selection').modal('hide');
                             $rootRouter.navigate(["MigrationRecommendation"]);
-                        // }
                     }
                     else{
                         $('#save_for_later').modal('hide');
