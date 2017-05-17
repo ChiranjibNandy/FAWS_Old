@@ -318,12 +318,7 @@
                         // dataStoreService.setDontShowStatus(true);
                         dataStoreService.setDontShowNameModal(true);
                     
-                        //var migrationName = dataStoreService.getScheduleMigration().migrationName;
                         var migrationName = $window.localStorage.migrationName;
-                        // if(migrationName)
-                        //     $rootRouter.navigate(["MigrationRecommendation"]);
-                        // else{
-                            // migrationName = vm.migrationName;
                             vm.selectedTime = {
                                     migrationName:vm.migrationName,
                                     time:'',
