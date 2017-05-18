@@ -95,7 +95,6 @@
                             vm.errorInMigration = true;
                             vm.scheduleMigration = true;
                         });
-                    
                 };
 
                 /**
