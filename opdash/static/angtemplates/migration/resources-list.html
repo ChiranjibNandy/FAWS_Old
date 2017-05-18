@@ -1,5 +1,5 @@
 <!--<div class="rs-wrapper">-->
-<div class="migration-mgr rs-container" ng-style="vm.isRacker == true ? {'margin-top':'30px'} : {'margin-top':'0px'}">
+<div class="migration-mgr rs-container" ng-class="{disabled:vm.continuing}" ng-style="vm.isRacker == true ? {'margin-top':'30px'} : {'margin-top':'0px'}">
     <rssaveprogress stepname="MigrationResourceList" type="link"></rssaveprogress>
     <div class="rs-main ">
         <div class="rs-content rs-panel">
@@ -38,9 +38,12 @@
                     </rs-tab>
                     <div class="rs-pull-right" style="margin-top: -49px; margin-left:790px">
                         <rssaveprogress stepname="MigrationResourceList" type="button" ></rssaveprogress>
-                        <a class="rs-btn rs-btn-primary " ng-click="vm.savencontinue()">Continue</a>
+                        <a class="rs-btn rs-btn-primary " ng-hide="vm.continuing" ng-click="vm.savencontinue()">Continue</a>
+                        <a class="rs-btn disabled" disabled="disabled" ng-show="vm.continuing">Continuing...</a>
+                        <i class="rs-processing-indicator" ng-show="vm.continuing"></i>
                     </div>
                 </rs-tabs>
+                <div style="color: red; text-align: right;" ng-show="vm.errorInContinue">Error......</div>
                 <div class="rs-pull-right" ng-show="vm.saveLaterObj.resultMsg" ng-style="vm.saveLaterObj.saveSuccess == true ? {color:'green'} : {color:'red'}">{{vm.saveLaterObj.resultMsg}}</div>
                 <br>
                 <rsselecteditemspanel showrec="false"></rsselecteditemspanel>
