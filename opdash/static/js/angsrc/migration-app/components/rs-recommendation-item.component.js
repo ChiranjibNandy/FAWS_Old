@@ -50,6 +50,7 @@
                 vm.$onInit = function() {
                     // vm.recSelectedItems = dataStoreService.getRecommendedItems() || [];
                     vm.propertyName = "name";
+                    vm.errorInApi = false;
                     vm.reverse = false;
                     vm.disable = true;
                     if(vm.type === "server"){
@@ -60,7 +61,8 @@
                             vm.getZones();
                             $('#rs-main-panel').css('height','310px');
                         },function(error){
-                            console.log('error :', error);
+                            console.log('Error in getting regions :', error);
+                            vm.errorInApi = true;
                         });
                         //vm.data = dataStoreService.getItems(vm.type); -- Previous Code
                         if($window.localStorage.selectedServers !== undefined)
@@ -197,7 +199,8 @@
                         vm.awsZone = zones[0];
                         vm.zones = zones;
                     },function(error){
-                        console.log("error: ",error);
+                        vm.errorInApi = true;
+                        console.log("Error in getting zones: ",error);
                    });
                 };
 
@@ -213,6 +216,9 @@
                     var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+vm.awsRegion;
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
                         item.pricingOptions = pricingOptions;
+                    },function(error){
+                        vm.errorInApi = true;
+                        console.log("Error in pricing details "+error);
                     });
                 }
  
@@ -224,9 +230,13 @@
                  * This function helps to populate the pricing details when the modal is clicked first time.
                  */
                 vm.showModifyModal = function(item,id){
-                    vm.disable = true;
-                    $(id).modal('show');
-                    vm.getPricingDetails(item);
+                    if(!vm.errorInApi){
+                        vm.disable = true;
+                        $(id).modal('show');
+                        vm.getPricingDetails(item);
+                    }else{
+                        $("#error-in-api").modal('show');
+                    }
                 };
 
                 /**
@@ -251,34 +261,6 @@
                     $rootScope.$emit("pricingChanged");
                     $('#modify_modal'+id).modal('hide');
                 };
-
-                // Currently we are not using this method, which helps to remove the server from selected items.
-                // We may use it in the future, so keeping it commented as of now.
-                // /**
-                //  * @ngdoc method
-                //  * @name removeServer
-                //  * @methodOf migrationApp.controller:rsrecommendationitemCtrl
-                //  * @description 
-                //  * This function helps to remove the selected servers and also modify the original object 
-                //  * of the particular server.
-                //  */
-                // vm.removeServer = function(id){
-                //     var allData = dataStoreService.retrieveallItems('server');     
-                //     var selectedServer = allData.filter(function(item){
-                //                             if(item.id === id){
-                //                                 item.selected = !item.selected;
-                //                                 return item;
-                //                             };
-                //                          });    
-                //     //it helps to store the updated object back
-                //     dataStoreService.storeallItems(allData,'server');     
-                //     vm.data.splice(vm.data.indexOf(selectedServer[0]), 1);
-                //     //updating networks tab and pricing panel that an server is removed
-                //     $rootScope.$emit("pricingChanged");
-                //     $('.rs-tabs').children()[0].children[0].innerHTML = "Servers ("+vm.data.length+")";
-                //     if(vm.data.length === 0)  $('.rs-tabs').children()[1].children[0].innerHTML = "Networks (0)";
-                //     dataStoreService.setItems({server:vm.data,network:[],LoadBalancers:dataStoreService.getItems('LoadBalancers')});
-                // }
 
                 /**
                  * @ngdoc method

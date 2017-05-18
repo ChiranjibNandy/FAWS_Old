@@ -134,4 +134,19 @@
             <button class="rs-btn rs-btn-primary" ng-click="vm.saveUpdatedObject(item.id)" ng-disabled="vm.disable">Save Changes</button>
         </div>
     </div>
+
+    <div id="error-in-api" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-header">
+            <h3>Cannot continue with this migration!</h3>
+        </div>
+        <div class="modal-body">
+            <p>Currently we are facing some issues to show you other configurations for this equipment
+               <br> but still you can migrate with current configuration. 
+            </p>
+        </div>
+        <div class="modal-footer">
+            <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
+        </div>
+    </div>
     
