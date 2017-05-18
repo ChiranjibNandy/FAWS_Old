@@ -73,8 +73,8 @@
                  * Starts a batch to migrate all resources selected by user
                  */
                 vm.migrate = function () {
-                    var selectedItems = dataStoreService.getItems();
-                    if(selectedItems.server.length > 0 || selectedItems.network.length > 0 || selectedItems.LoadBalancers.length > 0){
+                    var selectedItems = JSON.parse($window.localStorage.selectedServers);//dataStoreService.getItems(); -- Previous Code
+                    if(selectedItems.length > 0){
                         var requestObj;
                         vm.migrating = true;
                         $('#confirm-migration-modal').modal('hide');
