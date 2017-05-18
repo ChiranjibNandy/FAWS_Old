@@ -30,7 +30,7 @@
                  * @name migrationApp.controller:rsmigrationstatusCtrl
                  * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationstatus rsmigrationstatus} component
                  */
-                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "migrationitemdataservice", "alertsservice", "$filter", "$interval", "$timeout", "$scope", "$route","$window", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, ds, alertsService, $filter, $interval, $timeout, $scope, $route,$window) {
+                controller: ["httpwrapper", "datastoreservice", "$rootRouter", "authservice", "dashboardservice", "migrationitemdataservice", "alertsservice", "$filter", "$interval", "$timeout", "$scope", "$route","$window","migrationService", function(HttpWrapper, dataStoreService, $rootRouter, authservice, dashboardService, ds, alertsService, $filter, $interval, $timeout, $scope, $route,$window,migrationService) {
                     var vm = this, 
                         jobList = [],
                         lastRefreshIntervalPromise,
@@ -225,7 +225,7 @@
                                     console.log("No data recieved");
                                 //else
                                     //console.log("Batch: ", response);
-                                var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled"];
+                                var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled", "paused"];
                                 var validCompletedBatchStatus = ["done"];
                                 jobList = response.jobs.job_status_list;
                                 var currentBatches = [];
@@ -465,6 +465,25 @@
                             $('#browser_back').modal('show');
                         };
                     });
+
+                    /**
+                     * @ngdoc method
+                     * @name pauseAndCancelMigration
+                     * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                     * @param {Object} batch The batch object for which the menu is to be displayed
+                     * @description 
+                     * This function will call an api to pause,unpause and delete a "Scheduled Migration".
+                     */
+                    vm.pauseAndCancelMigration = function(batch,detail){
+                        migrationService.pauseMigration(batch.job_id,detail).then(function(result){
+                            if(result){
+                                vm.getBatches(true);
+                            }else{
+                                vm.message = "We are facing some issues to "+detail+" your migration. Please try again after some time."
+                                $('#error_modal').modal('show');
+                            }
+                        });
+                    };
                 }]
             }); // end of comeponent rsmigrationstatus
 })();

@@ -7,7 +7,8 @@
     </td>
     <td class="rs-table-text">{{item.ip_address}}</td>
     <td class="rs-table-text"><i class="fa fa-arrow-right rs-status-ok pullLeft"></i>{{item.selectedMapping.region }}</td>
-    <td class="rs-table-text">{{item.selectedMapping.zone  }}</td>
+    <!--Default zone is always going to be us-east-1a, its not available from ec2_pricing kept as a secondary value-->
+    <td class="rs-table-text">{{item.selectedMapping.zone || 'us-east-1a' }}</td>
     <td class="rs-table-text">{{item.selectedMapping.instance_type}}</td>
     <td class="rs-table-text" ng-if="item.details.rax_uptime !==undefined">{{item.selectedMapping.cost * item.details.rax_uptime + item.details.aws_bandwidth_cost | currency}}</td>
     <td class="rs-table-text" ng-if="item.details.rax_uptime ===undefined">{{item.selectedMapping.cost * 24 * 30 | currency}}</td>
