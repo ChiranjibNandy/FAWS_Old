@@ -225,13 +225,14 @@
                                     console.log("No data recieved");
                                 //else
                                     //console.log("Batch: ", response);
-
                                 var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled"];
                                 var validCompletedBatchStatus = ["done"];
                                 jobList = response.jobs.job_status_list;
                                 var currentBatches = [];
                                 var completedBatches = [];
                                 angular.forEach(jobList, function (job) {
+                                    if(job.batch_name == dataStoreService.selectedTime.migrationName)
+                                        vm.showInitiatedMigration =  false;
                                     if (validCurrentBatchStatus.indexOf(job.batch_status) >= 0)
                                         currentBatches.push(job);
                                     if (validCompletedBatchStatus.indexOf(job.batch_status) >= 0)
@@ -324,7 +325,7 @@
                     vm.loadingTickets = true;
                     alertsService.getAllTickets(refresh)
                                     .then(function(result) {
-                                        vm.tickets.items = result;
+                                        vm.tickets.items = result || [];
                                         vm.tickets.noOfPages = Math.ceil(vm.tickets.items.length / vm.tickets.pageSize);
                                         vm.tickets.pages = new Array(vm.tickets.noOfPages);
                                         vm.loadingTickets = false;
