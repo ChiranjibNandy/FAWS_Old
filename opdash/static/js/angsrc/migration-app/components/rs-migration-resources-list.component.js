@@ -24,7 +24,7 @@
              * @name migrationApp.controller:rsmigrationresourceslistCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationresourceslist rsmigrationresourceslist} component
              */
-            controller: ["authservice", "$scope", "$rootRouter", "datastoreservice", "migrationitemdataservice", "httpwrapper", "$timeout","$window", function(authservice, $scope, $rootRouter, dataStoreService, ds, HttpWrapper, $timeout,$window) {
+            controller: ["authservice", "$scope", "$rootRouter", "datastoreservice", "migrationitemdataservice", "httpwrapper", "$timeout","$window","$q", function(authservice, $scope, $rootRouter, dataStoreService, ds, HttpWrapper, $timeout,$window,$q) {
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
@@ -95,6 +95,8 @@
                     vm.migrationName = 'My Migration';
                     //$window.localStorage.migrationName = vm.migrationName;
                     vm.noName = false;
+                    vm.continuing = false;
+                    vm.errorInContinue = false;
                     vm.numOfItems = {
                         server:0,
                         network:0,
@@ -137,9 +139,9 @@
                     //if(vm.selectedItems[type].indexOf(item)<0){ -- Previous Code
 
                         //this hardcoded value of us-east-1 in url is needed to get the default pricing details. 
-                        var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/us-east-1';
-                        HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
-                            item.selectedMapping = pricingOptions[0];
+                        // var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/us-east-1';
+                        // HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
+                        //     item.selectedMapping = pricingOptions[0];
                             vm.selectedItems[type].push(item);
                             if(type === 'server'){
                                 var old = $window.localStorage.getItem('selectedServers');
@@ -177,7 +179,7 @@
                             vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
                             dataStoreService.setItems(vm.selectedItems);//save items selected for migration in service.
                             $scope.$broadcast("ItemsModified");//make a function call to child component to enable checkobox for selected items.
-                        });
+                        //});
                     };
                 }
 
@@ -314,7 +316,28 @@
                     if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 ){//|| dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 
                         if(vm.selectedItems.server.length > 0 || vm.selectedItems.LoadBalancers.length > 0 ){
                             dataStoreService.setItems(vm.selectedItems);
-                        }                
+                        } 
+                        vm.continuing = true;
+                        var items = JSON.parse($window.localStorage.selectedServers);
+                        // var arr = angular.copy(vm.selectedItems.server);
+                        var arr = [];
+                        var promises = items.map(function(item) {
+                            var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/us-east-1';
+                            return HttpWrapper.send(url, {"operation": 'GET'}).then(function(pricingOptions) {
+                                item.selectedMapping = pricingOptions[0]; 
+                                arr.push(item);
+                            });
+                        });
+
+                        $q.all(promises).then(function() {
+                            $window.localStorage.setItem('selectedServers', JSON.stringify(arr));
+                            vm.continuing = false;
+                            $rootRouter.navigate(["MigrationRecommendation"]);    
+                        },function(error){
+                            vm.continuing = false;
+                            vm.errorInContinue = true;
+                        });
+
                         // dataStoreService.setDontShowStatus(true);
                         dataStoreService.setDontShowNameModal(true);
                     
@@ -331,7 +354,7 @@
                             $('#cancel_modal').modal('hide');
                             $('#intro_modal').modal('hide');
                             $('#no_selection').modal('hide');
-                            $rootRouter.navigate(["MigrationRecommendation"]);
+                            // $rootRouter.navigate(["MigrationRecommendation"]);
                     }
                     else{
                         $('#save_for_later').modal('hide');

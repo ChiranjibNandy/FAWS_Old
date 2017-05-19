@@ -27,7 +27,7 @@
              * @name migrationApp.controller:rsselecteditemspanelCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsselecteditemspanel rsselecteditemspanel} component
              */
-            controller: ["datastoreservice", "$scope", "authservice","$window", function (dataStoreService, $scope, authservice,$window) {
+            controller: ["datastoreservice", "$scope", "authservice","$window","$rootRouter", function (dataStoreService, $scope, authservice,$window,$rootRouter) {
                 var vm = this;
                 vm.$onInit = function() {
                     vm.selectedItems = {
@@ -127,6 +127,18 @@
 
                 /**
                  * @ngdoc method
+                 * @name selectServers
+                 * @methodOf migrationApp.controller:rsselecteditemspanelCtrl
+                 * @description 
+                 * Navigates to resources page
+                 */
+                vm.selectServers = function(){
+                    $("#no-equipments-modal").modal('hide');
+                    $rootRouter.navigate(["MigrationResourceList"]);
+                };
+
+                /**
+                 * @ngdoc method
                  * @name removeItem
                  * @methodOf migrationApp.controller:rsselecteditemspanelCtrl
                  * @param {Object} item _Object_ list of servers selected.
@@ -142,13 +154,15 @@
                     //     item.selected = false;
                     //     $scope.$emit("ItemRemoved", item); // broadcast event to all child components
                     // }
-                    
                     if(vm.selectedItems[type].indexOf(item)>=0){
                        vm.selectedItems[type].splice(vm.selectedItems[type].indexOf(item), 1);
                         dataStoreService.setItems(vm.selectedItems);
                         $window.localStorage.setItem('selectedServers',JSON.stringify(vm.selectedItems.server));
                         item.selected = false;  
-                        $scope.$emit("ItemRemoved", item); // broadcast event to all child components                     
+                        $scope.$emit("ItemRemoved", item); // broadcast event to all child components 
+                        if(vm.selectedItems[type].length == 0 && vm.showrec == 'true'){
+                            $("#no-equipments-modal").modal('show');
+                        }                    
                     }
                 }
 

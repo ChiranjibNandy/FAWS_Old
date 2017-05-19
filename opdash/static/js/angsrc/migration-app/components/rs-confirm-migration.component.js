@@ -52,6 +52,7 @@
                     vm.migrating = false;
                     vm.errorInMigration = false;
                     vm.acceptTermsAndConditions=false;
+                    vm.emptyEquipments=true;
                     vm.saveProgress = "";
                     // vm.error = false;
                 };
@@ -61,6 +62,10 @@
                 });
                 
                 $scope.$on("ItemRemoved",function(event,item){
+                    var selectedItems = dataStoreService.getItems();
+                    if(selectedItems.server.length > 0 || selectedItems.network.length > 0 || selectedItems.LoadBalancers.length > 0) 
+                        vm.emptyEquipments=true;
+                    else vm.emptyEquipments=false;
                     vm.cost = dataStoreService.getProjectedPricing();
                     $window.localStorage.projectedPricing = JSON.stringify(vm.cost);
                 });
@@ -105,6 +110,23 @@
                 vm.selectServers = function(){
                     $("#no-equipments-modal").modal('hide');
                     $rootRouter.navigate(["MigrationResourceList"]);
+                    var requestObj;
+                    vm.migrating = true;
+                    $('#confirm-migration-modal').modal('hide');
+                    requestObj = ds.prepareJobRequest();
+                    vm.acceptTermsAndConditions= true;
+                    $rootScope.$emit("vm.MigrationName", dataStoreService.selectedTime.migrationName);
+                    $rootScope.$emit("vm.MigrationTime", dataStoreService.selectedTime.time);
+                    HttpWrapper.save("/api/jobs", { "operation": 'POST' }, requestObj)
+                        .then(function (result) {
+                            vm.migrating = false;
+                            $rootRouter.navigate(["MigrationStatus"]);
+                        }, function (error) {
+                            console.log("Error: Could not trigger migration", error);
+                            vm.migrating = false;
+                            vm.errorInMigration = true;
+                            vm.scheduleMigration = true;
+                        });
                 };
 
                 /**
@@ -139,9 +161,10 @@
                         $('#confirm-migration-modalFAWS').modal('show');
                      }
                     else {
-                   $('#confirm-migration-modal').modal('show');
+                        $('#confirm-migration-modal').modal('show');
                     }
                 };
+
                 vm.showProjectedCostCalculation = function (projectedCalculation) {
                     $('#calculator_modal').modal('show');
                 };
