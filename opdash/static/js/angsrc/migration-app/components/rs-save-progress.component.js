@@ -49,11 +49,18 @@
                  * It will open cancel migration popup and go back to migration dashboard page.
                  */
                 vm.cancelMigration = function() {
-                    var selectedItems = dataStoreService.getItems();
-                    if(selectedItems.server.length > 0 || selectedItems.network.length > 0 || selectedItems.LoadBalancers.length > 0){
+                    //var selectedItems = dataStoreService.getItems();
+                    var selectedItems = [];
+                    if($window.localStorage.selectedServers !== undefined)
+                        selectedItems = JSON.parse($window.localStorage.selectedServers);
+                    else
+                        selectedItems = [];
+                    if(selectedItems.length > 0){
                         $('#cancel_modal').modal('show');
                     }else{
                         dataStoreService.resetAll();
+                        if($window.localStorage.selectedServers !== undefined)
+                            $window.localStorage.removeItem('selectedServers');
                         $rootRouter.navigate(["MigrationStatus"]);
                     }
                 };
@@ -72,6 +79,8 @@
                     }
                     else{
                         dataStoreService.resetAll();
+                        if($window.localStorage.selectedServers !== undefined)
+                            $window.localStorage.removeItem('selectedServers');
                         $rootRouter.navigate(["MigrationStatus"]);
                         $('#cancel_modal').modal('hide');
                     }
@@ -109,6 +118,8 @@
                                 if(buttonDetails.modalName == '#cancel_modal'){
                                     $('#cancel_modal').modal('hide');
                                     dataStoreService.resetAll();
+                                    if($window.localStorage.selectedServers !== undefined)
+                                        $window.localStorage.removeItem('selectedServers');
                                     $rootRouter.navigate(["MigrationStatus"]);
                                 }
                                 else

@@ -144,7 +144,7 @@
                  * @description 
                  * function to open the modal that displays the current and projected pricing calculations for the selected servers.
                  */ 
-                 vm.openUsageCostsModal = function(){
+                vm.openUsageCostsModal = function(){
                     vm.costCalculationItems =[];
                     vm.projectedCostCalculationItems = [];
                     vm.totalOfCostCalculationItems = 0;
@@ -179,11 +179,12 @@
                                 "rax_bandwidth":"NA",
                                 "rax_uptime":"NA",
                                 "rax_total_cost":server.details.rax_price,
+                                "storage":server.details.rax_storage_size
                             });
                             vm.totalOfCostCalculationItems += server.details.rax_price;
                         }
 
-                        if(server.details.hasOwnProperty('aws_bandwidth_cost')){
+                        if(server.details.hasOwnProperty('rax_bandwidth')){
                             // var cost = 0;
                             // for(var i =0; i< server.mappings.length; i++){
                             //     if(server.mappings[i].instance_type == selectedFlavor){
@@ -202,12 +203,13 @@
                                 "aws_total_cost":parseFloat(parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost) + parseFloat(storage_rate)).toFixed(2),
                                 "rax_bandwidth":server.details.rax_bandwidth.toFixed(2),
                                 "rax_uptime":server.details.rax_uptime.toFixed(2),
-                                "storage_rate":storage_rate                         
+                                "storage_rate":storage_rate ,
+                                "rax_storage":server.details.rax_storage_size                       
                             });
                             vm.totalOfProjectedCostCalculationItems += (parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost)+ parseFloat(storage_rate));
                         }
 
-                        if(!server.details.hasOwnProperty('aws_bandwidth_cost')){
+                        if(!server.details.hasOwnProperty('rax_bandwidth')){
                             //var cost = 0;
                             //Checks whether the showCalculatedCostDialog flag was set in the loop before
                             if(vm.showCalculatedCostDialog === false)
@@ -218,20 +220,23 @@
                             //         cost = server.mappings[i].cost;
                             //     }
                             // }
+                            var storage_rate = parseFloat(parseFloat(server.details.rax_storage_size) * parseFloat(server.selectedMapping.storage_rate)).toFixed(2);
                             vm.projectedCostCalculationItems.push({
                                 "calculated_cost_resourcename" : server.details.name,
                                 "aws_uptime_cost":parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(24 * 30)).toFixed(2),
                                 "aws_bandwidth":"NA",
                                 "aws_uptime":"NA",
-                                "aws_total_cost":parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(24*30)).toFixed(2),
+                                "aws_total_cost":parseFloat((parseFloat(server.selectedMapping.cost) * parseFloat(24*30)) + parseFloat(storage_rate)).toFixed(2),
                                 "rax_bandwidth":"NA",
                                 "rax_uptime":"720.00",
+                                "storage_rate":storage_rate,
+                                "rax_storage":server.details.rax_storage_size  
                             });
-                        vm.totalOfProjectedCostCalculationItems += (parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(24*30)));
+                        vm.totalOfProjectedCostCalculationItems += (parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(24*30))+parseFloat(storage_rate));
                     }
                 });
                 $('#calculator_modal').modal('show');
-            }
+                }
             
             $scope.$on('$locationChangeStart', function(event, newUrl, oldUrl) {
                     if((oldUrl.indexOf("migration/confirm") > -1) && (newUrl.indexOf("migration/recommendation") > -1) && $window.localStorage.selectedServers === "[]"){

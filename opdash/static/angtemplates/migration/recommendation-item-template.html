@@ -123,7 +123,10 @@
                             <td class="rs-table-text">{{server.vcpu || 2}}</td>
                             <td class="rs-table-text">{{server.memory || '2 GB'}}</td>
                             <td class="rs-table-text">{{server.storage || 'EBS-Only'}}</td>
-                            <td class="rs-table-text">{{server.cost*item.details.rax_uptime + item.details.aws_bandwidth_cost|| '$0.00' | currency}}</td>
+                            <td class="rs-table-text">{{server.cost * (server.details.rax_uptime || 720) + (server.cost * (server.details.rax_bandwidth || 0)) | currency}}</td>
+                            <!--<td class="rs-table-text" ng-if="item.details.rax_uptime !== undefined">{{server.selectedMapping.cost*(item.details.rax_uptime) + item.details.aws_bandwidth_cost|| '$0.00' | currency}}</td>
+                            <td class="rs-table-text" ng-if="item.details.rax_uptime === undefined">{{server.selectedMapping.cost*(720) + item.details.aws_bandwidth_cost|| '$0.00' | currency}}</td>-->
+
                         </tr>
                     </tbody>
                 </table>

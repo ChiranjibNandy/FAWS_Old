@@ -216,6 +216,7 @@
                     var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+vm.awsRegion;
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
                         item.pricingOptions = pricingOptions;
+                        //item.pricingOptions.concat(item.details);
                     },function(error){
                         vm.errorInApi = true;
                         console.log("Error in pricing details "+error);
