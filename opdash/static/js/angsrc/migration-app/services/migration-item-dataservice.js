@@ -277,7 +277,7 @@
             /**
              * @ngdoc method
              * @name getAll
-             * @methodOf migrationApp.service:serverservice
+             * @methodOf migrationApp.service:migrationitemdataservice
              * @returns {Promise} a promise to fetch all servers.
              * @description 
              * Gets the entire list of servers in its raw JSON form, from the api.
@@ -324,6 +324,32 @@
                     return $q.when(loadbalancers);
                 }
             };//end of getLoadBalancers method
+
+            /**
+                 * @ngdoc method
+                 * @name eligibilityPrecheck
+                 * @methodOf migrationApp.service:migrationitemdataservice
+                 * @description 
+                 * Invokes "/api/eligibility" API call for checking eligibility of servers to migrate.
+            */
+            this.eligibilityPrecheck = function(itemsArr) {
+                var tenant_id = authservice.getAuth().tenant_id;
+                var requestObj = {
+                    "source":{
+                        "tenantid": tenant_id
+                    },
+                    "resources": {
+                        "instances":itemsArr
+                    },
+                    "version": "v1"
+                };
+                return HttpWrapper.save("/api/eligibility", {"operation":'POST'}, requestObj)
+                    .then(function(result){
+                        return result;
+                    },function(error) {
+                       return error;
+                    });
+            };
 
             return self;
         }]); // end of service definition

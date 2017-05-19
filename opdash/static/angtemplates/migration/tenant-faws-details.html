@@ -8,7 +8,8 @@
                 <ul class="rs-dropdown-menu hidden">
                     <li class="rs-dropdown-item" ng-show="vm.showCreateAccount">
                         <span class="rs-dropdown-category">You may create a new Account for this migration:
-                            <a href="" role="button" ng-click="vm.displayFawsAccounModal()" data-toggle="modal" ng-show="vm.editmigration === 'false'" aria-hidden="false">Create new AWS Account</a>
+                            <a href="" role="button" ng-click="vm.displayFawsAccounModal()" data-toggle="modal" ng-show="vm.editmigration === 'false' && vm.is_racker == true" aria-hidden="false">Create new AWS Account</a>
+                            <a ng-href="{{vm.fawsLink}}" target="_blank" ng-show="vm.editmigration === 'false' && vm.is_racker == false" >Create new AWS Account</a>
                         </span>
                     </li>
                     <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && vm.showCreateAccount">

@@ -24,7 +24,7 @@
              * @name migrationApp.controller:rsmigrationresourceslistCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationresourceslist rsmigrationresourceslist} component
              */
-            controller: ["authservice", "$scope", "$rootRouter", "datastoreservice", "migrationitemdataservice", "httpwrapper", "$timeout","$window","$q", function(authservice, $scope, $rootRouter, dataStoreService, ds, HttpWrapper, $timeout,$window,$q) {
+            controller: ["authservice", "$scope", "$rootRouter", "datastoreservice", "migrationitemdataservice", "httpwrapper", "$timeout","$window","$q","$rootScope", function(authservice, $scope, $rootRouter, dataStoreService, ds, HttpWrapper, $timeout,$window,$q, $rootScope) {
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
@@ -39,9 +39,24 @@
                     // If status is true, popup for migration won't be displayed in first step of Migration.
                     $('body').removeClass('modal-open');
                     $('.modal-backdrop').remove();
+                    vm.dontshowStatus = true;
+                    vm.introModalLoading = true;
+                    vm.noFawsAccounts = false;
                     var modalDisplayStatus = dataStoreService.getDontShowStatus() ; //check for flag status created for intorduction Modal.
                     var prePageName = dataStoreService.getPageName() || $window.localStorage.pageName;
-                    if((modalDisplayStatus == false || $window.localStorage.dontShowStatus === "true")  && (prePageName == "MigrationStatus" || prePageName == "")){
+                    dataStoreService.getFawsAccounts()
+                        .then(function (result) {
+                            if((result == null || result.awsAccounts.length == 0)){
+                                vm.noFawsAccounts = true;
+                                var tenant_id = authservice.getAuth().tenant_id;
+                                vm.fawsLink = "https://mycloud.rackspace.com/cloud/"+tenant_id+"/tickets#new";
+                            }
+                            else{
+                                vm.noFawsAccounts = false;
+                            }
+                            vm.introModalLoading = false;
+                        });
+                    if((modalDisplayStatus == false || $window.localStorage.dontShowStatus === false)  && (prePageName == "MigrationStatus" || prePageName == "MigrationResourceList" || prePageName == undefined)){
                         $('#intro_modal').modal('show');
                         dataStoreService.setDontShowStatus(true);//set introduction modal flag to true after first time display.
                         $window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
@@ -82,7 +97,6 @@
                         "modalName": '#cancel_modal'
                     };
                     vm.displayMigName = false;
-                    vm.dontshowStatus = true;
                     $window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
                     var timestmp = moment(d).format("DDMMMYYYY-hhmma");
                     /**
@@ -378,6 +392,7 @@
                         //$rootRouter.navigate(["MigrationResourceList"]);
                     }
                 });
+
                 return vm;
             }
         ]}); // end of component rsmigrationresourceslist
