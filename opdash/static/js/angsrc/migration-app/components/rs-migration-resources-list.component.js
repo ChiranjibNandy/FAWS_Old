@@ -93,7 +93,7 @@
                      * @description Create Migration considering Timestamp.
                      */
                     vm.migrationName = 'My Migration';
-                    $window.localStorage.migrationName = vm.migrationName;
+                    //$window.localStorage.migrationName = vm.migrationName;
                     vm.noName = false;
                     vm.continuing = false;
                     vm.errorInContinue = false;
@@ -348,6 +348,7 @@
                                     timezone:''
                                 };
                             dataStoreService.setScheduleMigration(vm.selectedTime);
+                            $window.localStorage.migrationName = vm.migrationName;
                             $('#save_for_later').modal('hide');
                             $('#name_modal').modal('hide');
                             $('#cancel_modal').modal('hide');
