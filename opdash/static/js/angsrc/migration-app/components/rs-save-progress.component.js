@@ -49,12 +49,12 @@
                  * It will open cancel migration popup and go back to migration dashboard page.
                  */
                 vm.cancelMigration = function() {
-                    var selectedItems = JSON.parse($window.localStorage.selectedServers);//dataStoreService.getItems(); -- Previous Code
-                    if(selectedItems.length > 0){
+                    //var selectedItems = dataStoreService.getItems();
+                    var selectedItems = [];
+                    if($window.localStorage.selectedServers !== undefined){
+                        selectedItems = JSON.parse($window.localStorage.selectedServers);
                         $('#cancel_modal').modal('show');
                     }else{
-                        if($window.localStorage.selectedServers !== undefined)
-                            $window.localStorage.removeItem('selectedServers');
                         dataStoreService.resetAll();
                         $rootRouter.navigate(["MigrationStatus"]);
                     }
@@ -73,9 +73,10 @@
                         vm.displayMigName = false;
                     }
                     else{
+                        dataStoreService.resetAll();
                         if($window.localStorage.selectedServers !== undefined)
-                        $window.localStorage.removeItem('selectedServers');
-                            dataStoreService.resetAll();
+                            $window.localStorage.removeItem('selectedServers');
+                        dataStoreService.resetAll();
                         $rootRouter.navigate(["MigrationStatus"]);
                         $('#cancel_modal').modal('hide');
                     }

@@ -136,7 +136,7 @@
                     <th>Resource</th>
                     <th>Uptime Cost (uptime hrs.)</th>
                     <th>Bandwidth Out Cost (used bandwidth)</th>
-                    <th>Storage</th>
+                    <th>Rackspace Storage (GB)</th>
                     <th>Total Cost</th>
                 </tr>
             </thead>
@@ -147,7 +147,7 @@
                     <td class="rs-table-text" ng-if="item.rax_uptime_cost === 'NA'">New Server</td>
                     <td class="rs-table-text" ng-if="item.rax_bandwidth_cost !== 'NA'">${{item.rax_bandwidth_cost + " (" + item.rax_bandwidth + " GB)"}}</td>
                     <td class="rs-table-text" ng-if="item.rax_bandwidth_cost === 'NA'">New Server</td>
-                    <td class="rs-table-text">{{item.storage ? item.storage:'New Server'}}</td>
+                    <td class="rs-table-text">{{item.storage}}</td>
                     <td class="rs-table-text">${{item.rax_total_cost}}</td>
                 </tr>
                 <tr>
@@ -169,7 +169,7 @@
                     <th>Resource</th>
                     <th>Uptime Cost (uptime hrs.)</th>
                     <th>Bandwidth Out Cost (used bandwidth)</th>
-                    <th>Storage Cost</th>
+                    <th>AWS Storage Cost (GB)</th>
                     <th>Total Cost</th>
                 </tr>
             </thead>
@@ -180,8 +180,7 @@
                     <td class="rs-table-text">${{item.aws_uptime_cost + " (" + item.rax_uptime + ")"}}</td>
                     <td class="rs-table-text" ng-if="item.aws_bandwidth !== 'NA'">${{item.aws_bandwidth_cost + " (" + item.rax_bandwidth + " GB)"}}</td>
                     <td class="rs-table-text" ng-if="item.aws_bandwidth === 'NA'">N/A</td>
-                    <td class="rs-table-text" ng-if="!item.storage_rate">N/A</td>
-                    <td class="rs-table-text" ng-if="item.storage_rate">${{item.storage_rate}}</td>
+                    <td class="rs-table-text">${{item.storage_rate + " (" + item.rax_storage + ")"}}</td>
                     <td class="rs-table-text">${{item.aws_total_cost}}</td>
                 </tr>
                 <tr>

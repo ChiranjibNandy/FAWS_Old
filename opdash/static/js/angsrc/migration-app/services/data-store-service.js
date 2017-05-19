@@ -541,9 +541,11 @@
                         var aws_bandwidth_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_bandwidth)).toFixed(2);
                         totalProjectedPricing += parseFloat(aws_uptime_cost + aws_bandwidth_cost);
                     }
-                    else
-                        totalProjectedPricing += parseFloat(item.selectedMapping.cost * (720));;
-                });
+                    else{
+                        var storage_rate = parseFloat(parseFloat(item.details.rax_storage_size) * parseFloat(item.selectedMapping.storage_rate)).toFixed(2);
+                        totalProjectedPricing += parseFloat(parseFloat(item.selectedMapping.cost * (720)) + parseFloat(storage_rate));
+                    }                
+            });
 
                 return totalProjectedPricing;
             };
