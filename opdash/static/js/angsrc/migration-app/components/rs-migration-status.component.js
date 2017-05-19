@@ -341,6 +341,8 @@
                  */
                 vm.startNewMigration = function () {
                     dataStoreService.resetAll();
+                    if($window.localStorage.selectedServers !== undefined)
+                        $window.localStorage.removeItem('selectedServers');
                     // dataStoreService.setDontShowStatus(!(dataStoreService.getShowWelcomeModal()));
                     $rootRouter.navigate(["MigrationResourceList"]);
                 };

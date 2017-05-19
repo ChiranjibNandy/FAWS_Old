@@ -78,6 +78,38 @@
                  * Starts a batch to migrate all resources selected by user
                  */
                 vm.migrate = function () {
+                    var selectedItems = JSON.parse($window.localStorage.selectedServers);//dataStoreService.getItems(); -- Previous Code
+                    if(selectedItems.length > 0){
+                        var requestObj;
+                        vm.migrating = true;
+                        $('#confirm-migration-modal').modal('hide');
+                        requestObj = ds.prepareJobRequest();
+                        vm.acceptTermsAndConditions= true;
+                        HttpWrapper.save("/api/jobs", { "operation": 'POST' }, requestObj)
+                            .then(function (result) {
+                                vm.migrating = false;
+                                $rootRouter.navigate(["MigrationStatus"]);
+                            }, function (error) {
+                                console.log("Error: Could not trigger migration", error);
+                                vm.migrating = false;
+                                vm.errorInMigration = true;
+                                vm.scheduleMigration = true;
+                            });
+                    }else{
+                        $("#no-equipments-modal").modal('show');
+                    }
+                };
+
+                /**
+                 * @ngdoc method
+                 * @name selectServers
+                 * @methodOf migrationApp.controller:rsconfirmmigrationCtrl
+                 * @description 
+                 * Navigates to resources page
+                 */
+                vm.selectServers = function(){
+                    $("#no-equipments-modal").modal('hide');
+                    $rootRouter.navigate(["MigrationResourceList"]);
                     var requestObj;
                     vm.migrating = true;
                     $('#confirm-migration-modal').modal('hide');
