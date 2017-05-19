@@ -235,7 +235,7 @@
                             /*
                             ds.eligibilityPrecheck(vm.activeItemsArr)
                                 .then(function (result) {
-                                    if (result.error < 600){
+                                    if (result.error < 400){
                                         vm.loading = false;
                                         angular.forEach(result.results.instances, function (descriptions, ID) {
                                             angular.forEach(descriptions, function (instance) {
