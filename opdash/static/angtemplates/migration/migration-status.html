@@ -64,7 +64,7 @@
                             <tr>
                                 <td class="rs-table-status tip rs-table-status-ok"></td>
                                 <td class="rs-table-link">
-                                    {{vm.initiatedMigration.name}}
+                                    <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: vm.initiatedMigration.job_id}]">{{vm.initiatedMigration.batch_name}}</a>
                                 </td>
                                 <td>{{vm.batchInitiatedBy}}</td>
                                 <td class="rs-table-text ng-binding">
@@ -137,7 +137,7 @@
                                                 </li>
                                                 <li class="disabled" ng-show="batch.deleting"><a href="">Deleting...</a></li>
                                                 <li class="disabled"><a href="">Modify Migration (NA)</a></li>
-                                                <li ng-show="batch.batch_status==='scheduled' || 'paused'">
+                                                <li ng-show="(batch.batch_status==='scheduled' || 'paused') && !batch.timestamp">
                                                     <a href="javascript:void(0)" ng-click="vm.pauseAndCancelMigration(batch,'cancel')">Cancel Migration</a>
                                                 </li>
                                             </ul>
@@ -316,7 +316,7 @@
                                                 </td>
                                             </tr>
                                         </tbody>
-                                        <tbody ng-show="!vm.loadingTickets && vm.tickets.length===0">
+                                        <tbody ng-show="!vm.loadingTickets && vm.tickets.items.length===0">
                                             <tr>
                                                 <td colspan="3" class="empty-collection-info">You don't have any tickets.</td>
                                             </tr>
