@@ -101,6 +101,7 @@
              * This service method returns an _object_. This object has to be sent while making an HTTP POST request to migrate the resource.
              */
             this.prepareJobRequest = function (batchName) {
+                var destaccount = JSON.parse($window.localStorage.getItem("fawsAccounts"));
                 var equipments = {
                         instances: JSON.parse($window.localStorage.selectedServers),//dataStoreService.getItems("server")
                         networks: dataStoreService.getDistinctNetworks()
@@ -115,6 +116,9 @@
                         names: names,
                         source: {
                             tenantid: auth.tenant_id
+                        },
+                        destination: {
+                            account: destaccount.selectedFawsAccountNumber
                         },
                         resources: {},
                         version: "v1"
@@ -187,6 +191,7 @@
              * This service method creates and a temporary job-spec _object_ for pre-checks API. This object has to be sent while making an HTTP POST request to Pre-reqs API to determine if the selected resources can be migrated or not.
             */
             this.preparePrereqRequest = function (batchName) {
+                var destaccount = JSON.parse($window.localStorage.getItem("fawsAccounts"));
                 var equipments = {
                         instances: JSON.parse($window.localStorage.selectedServers),
                         networks: dataStoreService.getDistinctNetworks()
@@ -197,6 +202,9 @@
                     reqObj = {
                         source: {
                             tenantid: auth.tenant_id
+                        },
+                        destination: {
+                            account: destaccount.selectedFawsAccountNumber
                         },
                         resources: {},
                         version: "v1"
