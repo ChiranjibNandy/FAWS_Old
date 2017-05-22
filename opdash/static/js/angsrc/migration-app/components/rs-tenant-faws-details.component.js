@@ -79,13 +79,16 @@
                                 vm.fawsAcctStatus = true;
                                 if(dataStoreService.fetchFawsDetails().selectedFawsAccount == undefined || dataStoreService.fetchFawsDetails().selectedFawsAccount == ''){
                                     vm.selectedFaws = vm.awsAccountsDetails[0].name + " " + "(#" + vm.awsAccountsDetails[0].awsAccountNumber + ")";
+                                    vm.selectedFawsNum=vm.awsAccountsDetails[0].awsAccountNumber;
                                 }
                                 else{
                                     vm.selectedFaws = dataStoreService.fetchFawsDetails().selectedFawsAccount;
+                                    vm.selectedFawsNum = dataStoreService.fetchFawsDetails().selectedFawsAccountNumber;
                                 }
                                 vm.fawsAccountDetails = {
                                         awsAccounts:vm.awsAccountsDetails,
                                         selectedFawsAccount: vm.selectedFaws,
+                                        selectedFawsAccountNumber:vm.selectedFawsNum,
                                         totalAccounts: result.awsAccountLimit - result.remainingAccounts
                                     };
                                 dataStoreService.saveFawsDetails(vm.fawsAccountDetails);
@@ -104,6 +107,7 @@
                  */
                 vm.fawsAccountchanged = function(){
                     dataStoreService.fawsAccounts.selectedFawsAccount = vm.selectedFaws;
+                    dataStoreService.fawsAccounts.selectedFawsAccountNumber = vm.selectedFawsNum;
                 };
 
                 /**

@@ -90,6 +90,7 @@
             self.fawsAccounts = {
                 awsAccounts:[],
                 selectedFawsAccount:'',
+                selectedFawsAccountNumber:'',
                 totalAccounts: 0
             };
             /**
@@ -261,6 +262,7 @@
              */
             this.saveFawsDetails = function(items){
                 self.fawsAccounts = items;
+                $window.localStorage.setItem("fawsAccounts",JSON.stringify(items));
             }
 
             /**
@@ -302,6 +304,7 @@
                 self.fawsAccounts = {
                     awsAccounts:[],
                     selectedFawsAccount:'',
+                    selectedFawsAccountNumber:'',
                     totalAccounts: 0
                 };
             };
@@ -604,11 +607,11 @@
              * Gets FAWS Accounts associated with a tenant.
             */
             this.getFawsAccounts = function() {
-                var getSavedInstancesUrl = "/api/tenants/get_faws_accounts";
+                var getFawsAccountsUrl = "/api/tenants/get_faws_accounts";
                 var tenant_id = authservice.getAuth().tenant_id;
                 
                 if (!loaded || (currentTenant !== tenant_id)){
-                    return HttpWrapper.send(getSavedInstancesUrl, {"operation":'GET'})
+                    return HttpWrapper.send(getFawsAccountsUrl, {"operation":'GET'})
                                         .then(function(result){
                                             loaded = true;
                                             currentTenant = tenant_id;
