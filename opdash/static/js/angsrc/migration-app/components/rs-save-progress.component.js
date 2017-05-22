@@ -92,7 +92,7 @@
                  */
                 vm.saveItems = function(buttonDetails) {
                     var saveInstance = {
-                        recommendations : vm.stepname !== "MigrationResourceList"?dataStoreService.getItems():{},
+                        recommendations : vm.stepname !== "MigrationResourceList"?JSON.parse($window.localStorage.selectedServers):{},
                         // scheduling_details : vm.stepname === "ConfirmMigration"?dataStoreService.getScheduleMigration():{},
                         step_name: vm.stepname ,
                         migration_schedule: {
@@ -114,8 +114,8 @@
                                 if(buttonDetails.modalName == '#cancel_modal'){
                                     $('#cancel_modal').modal('hide');
                                     dataStoreService.resetAll();
-                                    if($window.localStorage.selectedServers !== undefined)
-                                        $window.localStorage.removeItem('selectedServers');
+                                    // if($window.localStorage.selectedServers !== undefined)
+                                    //     $window.localStorage.removeItem('selectedServers');
                                     $rootRouter.navigate(["MigrationStatus"]);
                                 }
                                 else

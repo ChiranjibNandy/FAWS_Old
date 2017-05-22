@@ -8,7 +8,7 @@
      * This service acts as a facade which handles calling the specific service implementation for each resoource type (server, network etc).
      */
     angular.module("migrationApp")
-        .service("migrationitemdataservice", ["serverservice", "networkservice", "contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q", function (serverService, networkService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q) {
+        .service("migrationitemdataservice", ["serverservice", "networkservice", "contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q","$window", function (serverService, networkService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q,$window) {
             var loaded, loadbalancers, self = this, currentTenant = null, default_zone = 'us-east-1a';
             //the above default_zone is needed to get the default values.
             var prepareNames = function () {
@@ -102,7 +102,7 @@
              */
             this.prepareJobRequest = function (batchName) {
                 var equipments = {
-                        instances: dataStoreService.getItems("server"),
+                        instances: JSON.parse($window.localStorage.selectedServers),//dataStoreService.getItems("server")
                         networks: dataStoreService.getDistinctNetworks()
                     },
 
@@ -111,7 +111,7 @@
                     instancesReqList = [],
                     networksReqList = [],
                     reqObj = {
-                        batch_name: dataStoreService.getScheduleMigration().migrationName,
+                        batch_name: dataStoreService.getScheduleMigration().migrationName || $window.localStorage.migrationName,
                         names: names,
                         source: {
                             tenantid: auth.tenant_id
@@ -188,7 +188,7 @@
             */
             this.preparePrereqRequest = function (batchName) {
                 var equipments = {
-                        instances: dataStoreService.getItems("server"),
+                        instances: JSON.parse($window.localStorage.selectedServers),
                         networks: dataStoreService.getDistinctNetworks()
                     },
                     auth = authservice.getAuth(),
