@@ -68,7 +68,7 @@
                         if($window.localStorage.selectedServers !== undefined)
                             vm.data = JSON.parse($window.localStorage.selectedServers);
                         else
-                           vm.data = dataStoreService.getItems(vm.type); 
+                           vm.data = [];//dataStoreService.getItems(vm.type); 
                         //$window.localStorage.selectedServers = JSON.stringify(vm.data);
                         vm.labels = [
                                         {field: "name", text: vm.type+" Name", sortingNeeded:true},
@@ -86,7 +86,7 @@
                         if($window.localStorage.selectedLoadBalancers !== undefined)
                             vm.data = JSON.parse($window.localStorage.selectedLoadBalancers);
                         else
-                            vm.data = dataStoreService.getItems("LoadBalancers");
+                            vm.data = []//;dataStoreService.getItems("LoadBalancers");
                         vm.labels = [
                                         {field: "name", text: "CLB Name"},
                                         {field: "status", text: "CLB Status"},

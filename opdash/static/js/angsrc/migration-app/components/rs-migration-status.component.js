@@ -371,10 +371,10 @@
                         $window.localStorage.setItem('selectedServers',JSON.stringify(batch.selected_resources.server));
                     } else if (batch.step_name === "MigrationRecommendation") {
                         dataStoreService.setItems(batch.recommendations);
-                        $window.localStorage.setItem('selectedServers',JSON.stringify(batch.recommendations.server));
+                        $window.localStorage.setItem('selectedServers',JSON.stringify(batch.recommendations));
                     } else if (batch.step_name === "ScheduleMigration" || batch.step_name === "ConfirmMigration") {
                         dataStoreService.setItems(batch.recommendations);
-                        $window.localStorage.setItem('selectedServers',JSON.stringify(batch.recommendations.server));
+                        $window.localStorage.setItem('selectedServers',JSON.stringify(batch.recommendations));
                         dataStoreService.selectedTime = batch["scheduling-details"];
                     }
 

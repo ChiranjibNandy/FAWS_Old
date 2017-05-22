@@ -343,10 +343,11 @@
              */
             self.getMigrationResourceCount = function() {
                 // initialize with server count
-                var migrationResourceCount = self.selectedItems.server.length + self.selectedItems.LoadBalancers.length;
+                var migrationResourceCount = JSON.parse($window.localStorage.selectedServers).length;//self.selectedItems.server.length + self.selectedItems.LoadBalancers.length;
                 var resourcesCountArray = [];
                 //loop through all the servers selected and networks associated with the servers.
-                angular.forEach(self.selectedItems.server, function (item) {
+                var servers = JSON.parse($window.localStorage.selectedServers);
+                angular.forEach(servers, function (item) {
                     angular.forEach(item.details.networks, function (network) {
                         //making separate list of networks associated with servers.
                         if(resourcesCountArray.indexOf(network.name) == -1) {
@@ -500,8 +501,8 @@
             self.getDistinctNetworks = function() {
                 var networksList = [];
                 var networkIdList = [];
-
-                angular.forEach(self.getItems('server'), function (server) {
+                var servers = JSON.parse($window.localStorage.selectedServers);//self.getItems('server') 
+                angular.forEach(servers, function (server) {
                     var region = server.region;
                     var instanceRrn = server.rrn;
                     
@@ -529,7 +530,9 @@
             self.getProjectedPricing = function() {
                 //var instances = self.getItems('server');
                 var instances = [];
-	            if(self.getItems('server').length === 0)
+                if(self.getItems('server') === undefined)
+                    instances = JSON.parse($window.localStorage.selectedServers);
+	            else if(self.getItems('server').length === 0)
 	                instances = JSON.parse($window.localStorage.selectedServers);
 	            else
 	                instances = self.getItems('server');
@@ -539,7 +542,8 @@
                     if(item.details.hasOwnProperty('rax_uptime')){
                         var aws_uptime_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_uptime)).toFixed(2);
                         var aws_bandwidth_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_bandwidth)).toFixed(2);
-                        totalProjectedPricing += parseFloat(aws_uptime_cost + aws_bandwidth_cost);
+                        var storage_rate = parseFloat(parseFloat(item.details.rax_storage_size) * parseFloat(item.selectedMapping.storage_rate)).toFixed(2);
+                        totalProjectedPricing += parseFloat(parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost) + parseFloat(storage_rate));
                     }
                     else{
                         var storage_rate = parseFloat(parseFloat(item.details.rax_storage_size) * parseFloat(item.selectedMapping.storage_rate)).toFixed(2);

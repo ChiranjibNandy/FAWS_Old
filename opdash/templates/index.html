@@ -23,10 +23,8 @@
                 controller: ["authservice","$rootRouter","httpwrapper","$q","$window", function(ase,$rootRouter,HttpWrapper,$q,$window){
                   this.$onInit = function () {
                     if (performance.navigation.type == 1) {
-                      console.info( "This page is reloaded" );
                     } else {
                       $window.localStorage.clear();
-                      console.info( "This page is not reloaded");
                     }
                     // This sets the default values
                     this.username = user_data.username;

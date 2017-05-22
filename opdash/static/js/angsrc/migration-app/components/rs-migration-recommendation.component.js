@@ -35,8 +35,7 @@
                     var servers = [];
                     if($window.localStorage.selectedServers !== undefined)
                         servers = JSON.parse($window.localStorage.selectedServers);
-                    else
-                        servers = datastoreservice.getItems('server');
+                    //datastoreservice.getItems('server');
                     vm.dataServer = servers.length;
                     var networkNames = [];
                     angular.forEach(servers, function (item) {
@@ -51,7 +50,7 @@
                     if($window.localStorage.selectedLoadBalancers !== undefined)
                         vm.dataLoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers).length;
                     else
-                        vm.dataLoadBalancers = datastoreservice.getItems('LoadBalancers').length;
+                        vm.dataLoadBalancers = [];//datastoreservice.getItems('LoadBalancers').length;
 
                     vm.editName = false;
 
