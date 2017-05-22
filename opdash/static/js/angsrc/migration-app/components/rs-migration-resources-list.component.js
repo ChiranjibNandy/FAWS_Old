@@ -328,8 +328,9 @@
                                 arr.push(item);
                             });
                         });
-
-                        $q.all(promises).then(function() {
+                        $q.all(promises).then(function(result) {
+                            vm.selectedItems.server = arr;
+                            dataStoreService.setItems(vm.selectedItems);
                             $window.localStorage.setItem('selectedServers', JSON.stringify(arr));
                             vm.continuing = false;
                             $rootRouter.navigate(["MigrationRecommendation"]);    
