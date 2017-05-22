@@ -306,10 +306,15 @@
                     vm.loadingAlerts = true;
                     alertsService.getAllAlerts(refresh)
                                     .then(function(result) {
-                                        vm.errors.items = result;
-                                        vm.errors.noOfPages = Math.ceil(vm.errors.items.length / vm.errors.pageSize);
-                                        vm.errors.pages = new Array(vm.errors.noOfPages);
-                                        vm.loadingAlerts = false;
+                                        if(result.error !==500){
+                                            vm.errors.items = result;
+                                            vm.errors.noOfPages = Math.ceil(vm.errors.items.length / vm.errors.pageSize);
+                                            vm.errors.pages = new Array(vm.errors.noOfPages);
+                                            vm.loadingAlerts = false;
+                                        }else{
+                                            vm.errors.items.length=0;
+                                            vm.loadingAlerts = false;
+                                        }
                                     });
                 };
 
