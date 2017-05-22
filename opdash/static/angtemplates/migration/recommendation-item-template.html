@@ -19,7 +19,8 @@
                   <tr>
                       <th class="rs-table-status"></th>
                       <th ng-repeat="item in vm.labels">
-                          <span class="rs-table-sort-text" ng-click="vm.sortBy(item.field)">{{item.text}}</span>
+                          <span ng-show='item.sortingNeeded' class="rs-table-sort-text" ng-click="vm.sortBy(item.field)">{{item.text}}</span>
+                          <span ng-show='!item.sortingNeeded'>{{item.text}}</span>
                       </th>
                       <th ng-show="vm.type === 'server'"></th>
                   </tr>

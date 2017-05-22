@@ -71,13 +71,13 @@
                            vm.data = dataStoreService.getItems(vm.type); 
                         //$window.localStorage.selectedServers = JSON.stringify(vm.data);
                         vm.labels = [
-                                        {field: "name", text: vm.type+" Name"},
-                                        {field: "ip_address", text: "IP Address"},
-                                        {field: "region", text: "AWS Region"},
-                                        {field: "zone", text: "AWS Zone"},
-                                        {field: "instance_type", text: "AWS instance"},
-                                        {field: "cost", text: "Cost/Month"},
-                                        {field: "action", text: "Actions"}
+                                        {field: "name", text: vm.type+" Name", sortingNeeded:true},
+                                        {field: "ip_address", text: "IP Address", sortingNeeded:true},
+                                        {field: "region", text: "AWS Region", sortingNeeded:true},
+                                        {field: "zone", text: "AWS Zone", sortingNeeded:true},
+                                        {field: "instance_type", text: "AWS instance", sortingNeeded:true},
+                                        {field: "cost", text: "Cost/Month", sortingNeeded:true},
+                                        {field: "action", text: "Actions", sortingNeeded:false}
                                     ];
                     }else if (vm.type === "network"){
                         vm.fetchNetworks();
