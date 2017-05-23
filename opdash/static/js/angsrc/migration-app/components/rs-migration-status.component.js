@@ -192,6 +192,20 @@
                 vm.alerts = [];
                 vm.loadingAlerts = true;
 
+
+                /**
+                 * @ngdoc method
+                 * @name getTotalBatches
+                 * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                 * @description
+                 * Gets a total of all batches, the current and completed ones.
+                 * @returns {number} The sum of current and completed batches.
+                 */
+                vm.getTotalBatches = function(){
+                    return vm.currentBatches.items.length +
+                           vm.completedBatches.items.length;
+                };
+
                 /**
                  * @ngdoc method
                  * @name getBatches
