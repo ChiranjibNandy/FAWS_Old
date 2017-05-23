@@ -134,13 +134,17 @@
                     var tempAlerts = [];
                     alertsService.getAllAlerts(refresh)
                                     .then(function(result) {
-                                        for(var i=0; i<result.length; i++)
-                                            if(job_id === result[i].job_id)
-                                                tempAlerts.push(result[i]);
-                                        
-                                        //console.log(job_id, tempAlerts);
-                                        vm.alerts = tempAlerts;
-                                        vm.loadingAlerts = false;
+                                        if(result.error !==500){
+                                            for(var i=0; i<result.length; i++)
+                                                if(job_id === result[i].job_id)
+                                                    tempAlerts.push(result[i]);
+
+                                            vm.alerts = tempAlerts;
+                                            vm.loadingAlerts = false;
+                                        }else{
+                                            vm.alerts.length=0;
+                                            vm.loadingAlerts = false;
+                                        }
                                     });
                 };
             }
