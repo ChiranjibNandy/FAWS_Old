@@ -203,6 +203,7 @@
                             }
 
                             var dataList = results[0].data;
+                            vm.activeItemsArr = [];
                             vm.items = mapServerStatus(dataList, results[1].job_status_list);
                             //check if all the servers can be migrated else disable checkbox(to select all items) at the header of item selection table.
                             angular.forEach(vm.items, function (item) {
@@ -211,6 +212,11 @@
                                 }
                                 if(item.canMigrate == true && item.status.toLowerCase() == 'active'){ 
                                     vm.activeItemCount++;
+                                    var activeInstance = {
+                                        "id":item.id,
+                                        "region":item.region.toUpperCase()
+                                    }
+                                    vm.activeItemsArr.push(activeInstance);
                                 }
                             });
                             // if(vm.type === "server")
@@ -224,6 +230,35 @@
                             //Store all retrieved resources in factory variable
                             
                             //var savedItems = datastoreservice.getItems(vm.type); -- Previous Code
+                            
+                            //eligibility precheck API call
+                            /*
+                            ds.eligibilityPrecheck(vm.activeItemsArr)
+                                .then(function (result) {
+                                    if (result.error < 400){
+                                        vm.loading = false;
+                                        angular.forEach(result.results.instances, function (descriptions, ID) {
+                                            angular.forEach(descriptions, function (instance) {
+                                                var keepGoing = true;
+                                                angular.forEach(vm.items, function (item) {
+                                                    if(keepGoing) {
+                                                        if(ID == item.id && instance.type != "success"){ 
+                                                            item.canMigrate = false;
+                                                            keepGoing = false;
+                                                        }
+
+                                                    };
+                                                });
+                                            });
+                                        });
+                                    } 
+                                    else {
+                                        vm.loading = false;
+                                        //vm.loadError = true; to be enabled once precheck call is up.  
+                                    }
+                                });
+                                */
+
                             var savedItems = [];
                             if($window.localStorage.selectedServers !== undefined)
                                 savedItems = JSON.parse($window.localStorage.selectedServers);
@@ -258,6 +293,7 @@
                             angular.forEach(results[0].labels, function(label){
                                 vm.search[label.field] = ""; // set search field variables
                             });
+                            //to be removed after precheck API works fine
                             vm.loading = false;
                         }, function(error){
                             vm.loading = false;

@@ -91,14 +91,19 @@
       </div>
 </div>
 
-<div id="intro_modal" class="modal hide animated fadeIn details" role="dialog">
+<div id="intro_modal" class="modal hide animated fadeIn details" data-backdrop="static" data-keyboard="false" role="dialog">
     <br>
     <div class="modal-body">
         <h1 class="rs-page-title">Welcome to the Rackspace Migration Manager!</h1>
         <!-- <h3>On average, our customers save more than 20% by migrating from Rackspace Public Cloud to Managed AWS. All while keeping the fanatical support they love.</h3> -->
         <br>
         <div class="rs-row">
-            <div class="span-7">
+            <div class="span-7" ng-show="vm.introModalLoading" class="rs-table-overlay rs-table-overlay-loading">
+                <div class="rs-table-overlay-content">
+                    <div class="rs-table-overlay-message">Checking for AWS Accounts&hellip;</div>
+                </div>
+            </div>
+            <div class="span-7" ng-show="!vm.noFawsAccounts && !vm.introModalLoading">
                 <h2>Migrate in just 3 easy steps:</h2>
                 <big>
                     <ol class="rs-custom-counter">
@@ -114,6 +119,9 @@
                 <a href="https://www.rackspace.com/en-us/managed-aws" target="_blank">Rackspace Managed AWS</a>
                 <br>
                 <a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Pricing and Support Levels</a>
+            </div>
+            <div class="span-7" ng-show="vm.noFawsAccounts && !vm.introModalLoading">
+                <big>It seems you don't have an AWS account. Please click <a ng-href="{{vm.fawsLink}}" target="_blank">here</a> to create one</big>
             </div>
             <div class="span-5 rs-center" style="width : 35%">
                 <img src="/static/img/monitor.png" alt="">
@@ -131,7 +139,7 @@
         <a ng-link="['MigrationStatus']" class="rs-btn">Cancel</a>
         <!--<a href="#" class="rs-btn rs-btn-primary" data-dismiss="modal">Start a Migration</a>-->
         <!--<a class="rs-btn rs-btn-primary" ng-hide="vm.nameStatus" data-dismiss="modal" aria-hidden="true" href="#name_modal" role="button" data-toggle="modal">Start a Migration</a>-->
-        <a class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true" href="javascript:void(0)">Start a Migration</a>
+        <a class="rs-btn rs-btn-primary" ng-class="{disabled:vm.introModalLoading || vm.noFawsAccounts}" data-dismiss="modal" aria-hidden="true" href="javascript:void(0)">Start a Migration</a>
     </div>
 </div>
 
