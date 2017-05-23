@@ -1,20 +1,41 @@
-.PHONY: setup docs test ops-%
+.PHONY: venv tox setup docs test ops-% clean
 
-VIRTUALENV = virtualenv --python=python2.7
+# Ensure virtualenv has correct Python version
+VIRTUALENV              = virtualenv --python=python2.7
 
-VENV=.venv
-VENV_ACTIVATE=. $(VENV)/bin/activate
+# Use this for "plain" pip installs
+PLAIN_PIP_INSTALL       = pip install -U
 
-# Use a separate .venv for ops b/c of conflicting deps :(
-OPS_VENV=.ops_venv
-OPS_VENV_ACTIVATE=. $(OPS_VENV)/bin/activate
-MIGRATOR_OPS=python ops/main.py
+# Use this for pip installs that require environment settings
+WE_PIP_INSTALL	        = we -e pip-$(ENV).yml $(PLAIN_PIP_INSTALL)
 
-WITHENV=we -a env-$(ENV).yml
-WITHLOCAL=we -a env-local.yml
-CREDS=$(VENV)/bin/we -e .creds.yml
+# Use this for build commands that require environment settings
+WE_ENV			= we -a env-$(ENV).yml
 
-CONTROL_ARGS="-h"
+# Define the virtualenv for "local" builds
+VENV                    = .venv
+VENV_ACTIVATE           = . $(VENV)/bin/activate
+
+# Define the virtualenv for "ops" builds
+OPS_VENV                = .ops_venv
+OPS_VENV_ACTIVATE       = . $(OPS_VENV)/bin/activate
+OPS_REQUIREMENTS        = $(OPS_VENV) require-env
+
+# Define tox defaults
+TOX 			= tox
+TOX_ARGS 		?= -r
+
+# Define method for invoking "ops" commands
+OPDASH_CP_OPS           = python ops/main.py
+
+ALIAS_DOC_URL           = http://withenv.readthedocs.io/en/latest/usage.html#creating-an-alias
+
+ENV 			?= local
+
+OPEN                    = open
+
+
+##### Help #####
 
 # As you add new Makefile targets, you can document them for those
 # that come afterwards by adding a `## My documentation here` after
@@ -28,45 +49,75 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 
+##### Development #####
+
 $(VENV):
-	# just create the virtualenv on first-time setup
 	$(VIRTUALENV) $(VENV)
+	$(VENV_ACTIVATE); $(PLAIN_PIP_INSTALL) pip
+	$(VENV_ACTIVATE); $(PLAIN_PIP_INSTALL) -c constraints.txt withenv
+	$(VENV_ACTIVATE); $(WE_PIP_INSTALL) -c constraints.txt tox
+
+venv: $(VENV) ## Create Python virtual environment.
+
+setup: $(VENV) ## Install/upgrade project and development requirements in virtual environment.
+        # install in same order as tox: 1. dev requirements 2. project
+	$(VENV_ACTIVATE); $(WE_PIP_INSTALL) -c constraints.txt -r dev_requirements.txt
+	$(VENV_ACTIVATE); $(WE_PIP_INSTALL) -c constraints.txt -e .
+
+test: $(VENV) ## The official test suite entry point. You can verify your patch by running `make test`.
+	$(VENV_ACTIVATE); $(TOX) $(TOX_ARGS)
+
+test-unit: $(VENV) ## Run unit tests.  Skips integrated tests requiring fixtures like Dynamo.  To refresh Python dependencies, run `tox -r`
+	$(VENV_ACTIVATE); $(TOX) -e py27,flake8 -- tests/unit
 
 
-setup: $(VENV) ## Create a virtualenv and install all the development requirements
-	# install 1. dev requirements and 2. project in same order as tox
-	$(VENV)/bin/pip install -c constraints.txt -r dev_requirements.txt
-	$(VENV)/bin/pip install -c constraints.txt -e .
+##### Documentation #####
+
+docs: $(VENV) ## Build the docs and open them in a browser. If you're on linux you can use `make -e OPEN=xdg-open` to see them in a browser automatically.
+	$(VENV_ACTIVATE); $(PLAIN_PIP_INSTALL) sphinx
+	$(VENV_ACTIVATE); cd docs && make html
+	$(OPEN) docs/_build/html/index.html
 
 
-test: ## The official test suite entry point. You can verify your patch by running `make test`. NOTE: `tox` must be installed.
-	$(eval TOX_ARGS := -r)
-	$(VENV)/bin/tox $(TOX_ARGS)
+##### Execution #####
 
-
-require-env: ## Ensure the `ENV` variable has been set. `make -e ENV=dev`
-ifndef ENV
-	$(error ENV is required! It will be used to load an env alias $(ALIAS_DOC_URL). Ex: ENV=dev env-dev.yml ?)
+require-env: ## Ensure the "ENV" variable has been set
+ifeq "$(origin ENV)" "file"
+	$(error ENV not explicitly set! \
+	ENV used to load an env alias (see $(ALIAS_DOC_URL)). \
+	Ex: "make ENV=foo ..." loads env-foo.yml)
 endif
 
 
+##### Operations #####
+
+ops-help: ## Learn a bit about the ops workflow.
+	@echo "From the docs/ops.rst"
+	@echo ""
+	cat docs/ops.rst
+
 setup-ops: ## Create a virtualenv for running ops tasks
-	# just create the virtualenv on first-time setup
 	$(VIRTUALENV) $(OPS_VENV)
-	$(OPS_VENV)/bin/pip install -r ops_requirements.txt
+	$(OPS_VENV_ACTIVATE); $(PLAIN_PIP_INSTALL) pip
+	$(OPS_VENV_ACTIVATE); $(PLAIN_PIP_INSTALL) withenv
+	$(OPS_VENV_ACTIVATE); $(WE_PIP_INSTALL) -r ops_requirements.txt
+
+release: $(OPS_REQUIREMENTS) ## Tag and push a Docker image to ECR
+	$(OPS_VENV_ACTIVATE); $(WE_ENV) $(OPDASH_CP_OPS) release
+
+deploy: $(OPS_REQUIREMENTS) ## Create/Update ECS Tasks and Services with current tag
+	$(OPS_VENV_ACTIVATE); $(WE_ENV) $(OPDASH_CP_OPS) deploy
 
 
-release: require-env ## Tag and push a Docker image to ECR
-	$(OPS_VENV_ACTIVATE) && $(WITHENV) $(MIGRATOR_OPS) release
+##### Utilities #####
 
-
-deploy: require-env ## Create/Update ECS Tasks and Services with current tag
-	$(OPS_VENV_ACTIVATE) && $(WITHENV) $(MIGRATOR_OPS) deploy
-
-
-# Utils
 clean-pyc:
-	find . -name '*.pyc' -exec rm -f {} +
-	find . -name '*.pyo' -exec rm -f {} +
-	find . -name '*~' -exec rm -f {} +
-	find . -name '__pycache__' -exec rm -fr {} +
+	find opdash/ tests/ -name '*.pyc' -exec rm -f {} +
+	find opdash/ tests/ -name '*.pyo' -exec rm -f {} +
+	find opdash/ tests/ -name '*~' -exec rm -f {} +
+	find opdash/ tests/ -name '__pycache__' -exec rm -fr {} +
+
+clean: clean-pyc ## Delete temporary and intermediate files
+	rm -rf .venv
+	rm -rf .ops_venv
+	rm -rf .tox
