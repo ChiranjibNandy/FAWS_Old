@@ -1,0 +1,2 @@
+- file: envs/qe/aws_creds.yml
+- file: envs/qe/conf.yml
