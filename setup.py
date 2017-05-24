@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 # reqs is a list of requirement
 # e.g. ['django==1.5.1', 'mezzanine==1.4.6']
 install_reqs = [str(ir.req) for ir in
-                parse_requirements('requirements.txt', session=PipSession())]
+                parse_requirements('dev_requirements.txt', session=PipSession())]
 
 setup(
     name='opdash-cp',
