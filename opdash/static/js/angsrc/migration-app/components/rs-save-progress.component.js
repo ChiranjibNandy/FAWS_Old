@@ -37,7 +37,7 @@
                     };
                     vm.saveProgress = '';
                     vm.displayMigName = false;
-                    vm.migrationName = 'My Migration';
+                    vm.migrationName = $window.localStorage.migrationName || 'My Migration';
                     vm.stepname = dataStoreService.getPageName() || $window.localStorage.pageName;
                 };
 
@@ -52,6 +52,7 @@
                     //var selectedItems = dataStoreService.getItems();
                     var selectedItems = [];
                     if($window.localStorage.selectedServers !== undefined){
+                        vm.migrationName = $window.localStorage.migrationName;
                         selectedItems = JSON.parse($window.localStorage.selectedServers);
                         $('#cancel_modal').modal('show');
                     }else{

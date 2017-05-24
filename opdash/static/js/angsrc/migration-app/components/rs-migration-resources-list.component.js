@@ -106,7 +106,7 @@
                      * @type {String}
                      * @description Create Migration considering Timestamp.
                      */
-                    vm.migrationName = 'My Migration';
+                    vm.migrationName = $window.localStorage.migrationName || 'My Migration';
                     //$window.localStorage.migrationName = vm.migrationName;
                     vm.noName = false;
                     vm.continuing = false;
