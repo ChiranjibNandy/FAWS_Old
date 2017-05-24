@@ -136,7 +136,9 @@
                                                     <a href="javascript:void(0)" ng-click="vm.pauseAndCancelMigration(batch,'unpause')">Unpause Migration</a>
                                                 </li>
                                                 <li class="disabled" ng-show="batch.deleting"><a href="">Deleting...</a></li>
-                                                <li class="disabled"><a href="">Modify Migration (NA)</a></li>
+                                                <li ng-show="batch.batch_status==='paused'">
+                                                    <a href="javascript:void(0)" ng-click="vm.pauseAndCancelMigration(batch,'cancel',true)">Modify Migration</a>
+                                                </li>
                                                 <li ng-show="(batch.batch_status==='scheduled' || 'paused') && !batch.timestamp">
                                                     <a href="javascript:void(0)" ng-click="vm.pauseAndCancelMigration(batch,'cancel')">Cancel Migration</a>
                                                 </li>

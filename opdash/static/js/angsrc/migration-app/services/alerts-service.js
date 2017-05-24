@@ -35,7 +35,6 @@
                 var alertsApiUrl = "/api/alerts/all";
                 //var alertsApiUrl = "/api/alerts/job/job-56d50e1a-ce7f-4be8-a1fa-8cdb734cd3d6";
                 //var alertsApiUrl = "/static/angassets/alerts.json";
-
                 if (refresh || !loaded || (currentTenant !== tenant_id)) {
                     return HttpWrapper.send(alertsApiUrl, { "operation": 'GET' })
                                       .then(function(result) {
@@ -57,7 +56,9 @@
                                             //console.log("Alerts: ", alerts);
                                             return alerts;
                                         }, function(errorResponse) {
-                                            return errorResponse;
+                                            console.log("alerts-service");
+                                            console.log(errorResponse);
+                                            return [];
                                         });
                 } else {
                     return $q.when(alerts);

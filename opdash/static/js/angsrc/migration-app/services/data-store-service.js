@@ -23,6 +23,22 @@
                 files:[],
                 LoadBalancers:[]
             };
+
+            /**
+              * @ngdoc property
+              * @name resourceItemsForEditingMigration
+              * @propertyOf migrationApp.service:datastoreservice
+              * @type {Array}
+              * @description Set of resources that helps to retrieve the data when modifying a migration
+             */
+            self.resourceItemsForEditingMigration = {
+                shouldTrigger:false,
+                server:[],
+                network:[],
+                files:[],
+                LoadBalancers:[]
+            };
+            
             /**
               * @ngdoc property
               * @name dontShowStatus
