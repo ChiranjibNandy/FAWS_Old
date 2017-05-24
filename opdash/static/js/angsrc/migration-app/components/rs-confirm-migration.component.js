@@ -54,6 +54,7 @@
                     vm.acceptTermsAndConditions=false;
                     vm.emptyEquipments=true;
                     vm.saveProgress = "";
+                    $window.localStorage.setItem("migrationScheduled","false");
                     // vm.error = false;
                 };
                 
@@ -78,7 +79,9 @@
                  * Starts a batch to migrate all resources selected by user
                  */
                 vm.migrate = function () {
-                    var selectedItems = JSON.parse($window.localStorage.selectedServers);//dataStoreService.getItems(); -- Previous Code
+                    var selectedItems = [];
+                    if($window.localStorage.selectedServers !== undefined)
+                        selectedItems = JSON.parse($window.localStorage.selectedServers);//dataStoreService.getItems(); -- Previous Code
                     if(selectedItems.length > 0){
                         var requestObj;
                         vm.migrating = true;
@@ -87,11 +90,15 @@
                         vm.acceptTermsAndConditions= true;
                         HttpWrapper.save("/api/jobs", { "operation": 'POST' }, requestObj)
                             .then(function (result) {
-                                vm.migrating = false;
+                                vm.migrating = false; 
+                                $window.localStorage.setItem("migrationScheduled","true");
                                 $rootRouter.navigate(["MigrationStatus"]);
+
+                                
                             }, function (error) {
                                 console.log("Error: Could not trigger migration", error);
                                 vm.migrating = false;
+                                $window.localStorage.setItem("migrationScheduled","false");
                                 vm.errorInMigration = true;
                                 vm.scheduleMigration = true;
                             });
