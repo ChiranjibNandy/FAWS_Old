@@ -321,7 +321,7 @@
                     alertsService.getAllAlerts(refresh)
                                     .then(function(result) {
                                         if(result.error !==500){
-                                            vm.errors.items = result;
+                                            vm.errors.items = result || [];
                                             vm.errors.noOfPages = Math.ceil(vm.errors.items.length / vm.errors.pageSize);
                                             vm.errors.pages = new Array(vm.errors.noOfPages);
                                             vm.loadingAlerts = false;
