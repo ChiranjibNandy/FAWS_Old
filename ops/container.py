@@ -11,7 +11,7 @@ class Container(object):
 
     def __init__(self):
         self.ecr = boto3.client('ecr')
-        self.client = docker.from_env()
+        self.client = docker.from_env(version='auto')
         self.env = self._get_env()
         self.repo_name = self.env
 
