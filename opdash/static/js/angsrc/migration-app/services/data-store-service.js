@@ -346,20 +346,22 @@
              */
             self.getMigrationResourceCount = function() {
                 // initialize with server count
-                var migrationResourceCount = JSON.parse($window.localStorage.selectedServers).length;//self.selectedItems.server.length + self.selectedItems.LoadBalancers.length;
-                var resourcesCountArray = [];
-                //loop through all the servers selected and networks associated with the servers.
-                var servers = JSON.parse($window.localStorage.selectedServers);
-                angular.forEach(servers, function (item) {
-                    angular.forEach(item.details.networks, function (network) {
-                        //making separate list of networks associated with servers.
-                        if(resourcesCountArray.indexOf(network.name) == -1) {
-                            migrationResourceCount += 1;
-                            resourcesCountArray.push(network.name);
-                        };
+                if($window.localStorage.selectedServers != undefined){
+                    var migrationResourceCount = JSON.parse($window.localStorage.selectedServers).length;//self.selectedItems.server.length + self.selectedItems.LoadBalancers.length;
+                    var resourcesCountArray = [];
+                    //loop through all the servers selected and networks associated with the servers.
+                    var servers = JSON.parse($window.localStorage.selectedServers);
+                    angular.forEach(servers, function (item) {
+                        angular.forEach(item.details.networks, function (network) {
+                            //making separate list of networks associated with servers.
+                            if(resourcesCountArray.indexOf(network.name) == -1) {
+                                migrationResourceCount += 1;
+                                resourcesCountArray.push(network.name);
+                            };
+                        });
                     });
-                });
-                return migrationResourceCount;
+                    return migrationResourceCount;
+                }
             };
 
             /**
