@@ -321,7 +321,7 @@
                     alertsService.getAllAlerts(refresh)
                                     .then(function(result) {
                                         if(result.error !==500){
-                                            vm.errors.items = result;
+                                            vm.errors.items = result || [];
                                             vm.errors.noOfPages = Math.ceil(vm.errors.items.length / vm.errors.pageSize);
                                             vm.errors.pages = new Array(vm.errors.noOfPages);
                                             vm.loadingAlerts = false;
@@ -359,6 +359,7 @@
                  * Resets all previous resource data and helps to starts a new migration
                  */
                 vm.startNewMigration = function () {
+                    dataStoreService.resourceItemsForEditingMigration.shouldTrigger = false;
                     dataStoreService.resetAll();
                     if($window.localStorage.selectedServers !== undefined)
                         $window.localStorage.removeItem('selectedServers');
@@ -375,7 +376,7 @@
                  * Initiates scheduling of migration for a saved migration
                  */
                 vm.continueScheduling = function (batch) {
-
+                    dataStoreService.resourceItemsForEditingMigration.shouldTrigger = false;
                     if (!isValidBatch(batch)) {
                         $('#abort_continue').modal('show');
                         return;
@@ -495,15 +496,36 @@
                      * @description 
                      * This function will call an api to pause,unpause and delete a "Scheduled Migration".
                      */
-                    vm.pauseAndCancelMigration = function(batch,detail){
+                    vm.pauseAndCancelMigration = function(batch,detail,isModify){
                         migrationService.pauseMigration(batch.job_id,detail).then(function(result){
                             if(result){
                                 vm.getBatches(true);
+                                //going to enable this as soon as cancel works
+                                //if(isModify) vm.modifyMigration(batch);
                             }else{
-                                vm.message = "We are facing some issues to "+detail+" your migration. Please try again after some time."
+                                if(isModify)
+                                    vm.message = "We are facing some issues to cancel and modify your migration. Please try again after some time."
+                                else
+                                    vm.message = "We are facing some issues to "+detail+" your migration. Please try again after some time."
                                 $('#error_modal').modal('show');
                             }
                         });
+                    };
+
+                    /**
+                     * @ngdoc method
+                     * @name modifyMigration
+                     * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                     * @param {Object} batch The batch object for which the menu is to be displayed
+                     * @description 
+                     * This function will be able to trigger the edit migration by saving the instances details and
+                     * navigating to the select resources page
+                     */
+                    vm.modifyMigration = function(batch){
+                        dataStoreService.resourceItemsForEditingMigration.server = batch.instances;
+                        dataStoreService.resourceItemsForEditingMigration.shouldTrigger = true;
+                        dataStoreService.selectedTime.migrationName = batch.batch_name
+                        $rootRouter.navigate(["MigrationResourceList"]);
                     };
                 }]
             }); // end of comeponent rsmigrationstatus

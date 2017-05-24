@@ -258,12 +258,12 @@
                                     }
                                 });
                                 */
-
                             var savedItems = [];
                             if($window.localStorage.selectedServers !== undefined)
                                 savedItems = JSON.parse($window.localStorage.selectedServers);
                             else
                                 savedItems = datastoreservice.getItems(vm.type);
+                            
                             if(savedItems.length != 0){
                                 angular.forEach(vm.items, function (item) {
                                     for(var i=0;i<savedItems.length;i++){
@@ -275,6 +275,23 @@
                                     };
                                 });
                             };
+
+                            var savedModifyMigrationItems = datastoreservice.resourceItemsForEditingMigration[vm.type];
+                            var savedModifyItems = [];
+                            if(savedModifyMigrationItems.length != 0 && datastoreservice.resourceItemsForEditingMigration.shouldTrigger){
+                                angular.forEach(vm.items, function (item) {
+                                    for(var i=0;i<savedModifyMigrationItems.length;i++){
+                                        item.selected = false;
+                                        if(savedModifyMigrationItems[i].id == item.id){
+                                            item.selected = true;
+                                            savedModifyItems.push(item);
+                                            break
+                                        };
+                                    };
+                                });
+                                datastoreservice.setItems({'server':savedModifyItems,'network':[],'loadBalancers':[]})
+                            };
+
                             datastoreservice.storeallItems(vm.items, vm.type);
                             $window.localStorage.allServers = JSON.stringify(vm.items);
                             // pagination controls
