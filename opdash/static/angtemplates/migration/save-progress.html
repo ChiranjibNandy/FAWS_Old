@@ -15,13 +15,13 @@
             <div class="rs-control-group">
                 <div class="rs-controls">
                     <label class="rs-radio">
-                        <input type="radio" ng-model="vm.saveProgress" value="yes">
+                        <input type="radio" ng-model="vm.saveProgress" value="yes" ng-checked="vm.saveProgress">
                         <strong>Yes</strong><br>
                         <span class="rs-help-block">Name this migration and click <b>'Submit'</b> to save this migration for later</span>
                     </label>
-                    <label class="rs-radio" ng-show="vm.saveProgress == 'yes'">
+                    <label class="rs-radio" >
                         <div class="rs-controls">
-                            <input ng-class="{disabled:vm.cancelnSaveObj.saveInProgress}" type="text" ng-model="vm.migrationName">
+                            <input ng-class="{disabled:vm.cancelnSaveObj.saveInProgress}" type="text" ng-model="vm.migrationName" placeholder="{{vm.migrationName}}">
                         </div>
                     </label>
                     <label class="rs-radio">

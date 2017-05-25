@@ -25,7 +25,7 @@
              * @name migrationApp.controller:rssaveprogressCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rssaveprogress rssaveprogress} component
              */
-            controller: ["datastoreservice","$timeout","$rootRouter","$window", function (dataStoreService,$timeout,$rootRouter,$window) {
+            controller: ["datastoreservice","$timeout","$rootRouter","$window","$rootScope", function (dataStoreService,$timeout,$rootRouter,$window,$rootScope) {
                 var vm = this;
 
                 vm.$onInit = function () {
@@ -35,11 +35,17 @@
                         "resultMsg" : "",
                         "modalName": '#cancel_modal'
                     };
-                    vm.saveProgress = '';
+                    vm.saveProgress = 'yes';
                     vm.displayMigName = false;
-                    vm.migrationName = $window.localStorage.migrationName || 'My Migration';
+                    vm.migrationName = $window.localStorage.migrationName;
                     vm.stepname = dataStoreService.getPageName() || $window.localStorage.pageName;
                 };
+                    $rootScope.$on("vm.changedMigrationName", function (event, value) {
+                  vm.migrationName = value;
+             });
+           $rootScope.$on("vm.migrationName", function (event, value) {
+                  vm.migrationName = value;
+            });
 
                 /**
                  * @ngdoc method

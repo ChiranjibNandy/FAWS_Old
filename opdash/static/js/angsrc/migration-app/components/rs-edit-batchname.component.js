@@ -32,12 +32,14 @@
              * @name migrationApp.controller:rseditbatchnameCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsrecommendationitem rsrecommendationitem} component
              */
-            controller: ["datastoreservice","$window",function(dataStoreService,$window) {
+            controller: ["datastoreservice","$window","$rootScope",function(dataStoreService,$window,$rootScope) {
                 var vm = this;
                 vm.$onInit = function() {
                     vm.editName = false;
                     //vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
                     vm.migrationName = $window.localStorage.migrationName;
+                  $rootScope.$emit("vm.migrationName", dataStoreService.selectedTime.migrationName); 
+
                 };
 
                 /**
@@ -71,6 +73,7 @@
                         vm.migrationName = vm.changedMigrationName;
                         dataStoreService.setScheduleMigration(vm.selectedTime);
                         $window.localStorage.migrationName = vm.changedMigrationName;
+                      $rootScope.$emit("vm.changedMigrationName", dataStoreService.selectedTime.migrationName);
                     }
                     vm.editName = false;
                 };
