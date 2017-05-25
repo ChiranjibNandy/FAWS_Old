@@ -875,3 +875,25 @@ body .modal.details2 {
 .pricing-modals {
     left:-115% !important;
 }
+
+.faws-account {
+   float: left; 
+}
+
+.faws-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 85px;
+  float: left;
+}
+
+.control-label{
+    float: left;
+    margin-right: 20px;
+}
+
+.control-div{
+    float: right;
+    margin-right: 70px;
+}

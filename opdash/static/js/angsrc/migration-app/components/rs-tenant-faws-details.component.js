@@ -33,6 +33,11 @@
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
                 vm.fawsAcctName = '';
+                vm.fawsAcctId = '';
+                vm.fawsAccessKey = '';
+                vm.fawsSecretKey = '';
+                vm.fawsSourceKey = '';
+                vm.fawsTenantId = '';
                 vm.fawsCreated = false;
                 vm.fawsCreationProgress = false;
                 vm.showCreateAccount = false;
@@ -137,26 +142,37 @@
                     vm.fawsCreationProgress = true;
                                         
                     //var requestObj = {"test": vm.fawsAcctName}; //for testing FAWS account creation API 
-                    var requestObj = {"project_name": vm.fawsAcctName}; //for actual creation of a new FAWS account - use only in prod
-                    
-                    dataStoreService.createFawsAccount(requestObj)
+                    // var requestObj = {"project_name": vm.fawsAcctName}; //for actual creation of a new FAWS account - use only in prod
+                    var requestObj = {
+                        "dest_name":vm.fawsAcctName,
+                        "dest_account": vm.fawsAcctId,
+                        "dest_auth_accesskey": vm.fawsAccessKey,
+                        "dest_auth_secretkey": vm.fawsSecretKey
+                     };
+                    // dataStoreService.createFawsAccount(requestObj)
+                    dataStoreService.addCredsForFawsAccount(requestObj)
                         .then(function (result) {
                             vm.newAccountDetails = result;
-                            if (vm.newAccountDetails.error != 400){
+                            // if (vm.newAccountDetails.error < 400){
+                            if (result == "OK"){
                                     vm.fawsResponse = true;
                                     vm.fawsError = false;
                                     vm.fawsCreated = true;
                                     vm.fawsCreationProgress = false;
                                     vm.fetchFawsAccounts();
-                                    vm.fawsAcctName = '';
                             } 
                             else {
                                     vm.fawsError = true;
                                     vm.fawsResponse = false;
                                     vm.fawsCreated = false;
                                     vm.fawsCreationProgress = false;
-                                    vm.fawsAcctName = '';
                             }
+                            vm.fawsAcctName = '';
+                            vm.fawsAcctId = '';
+                            vm.fawsAccessKey = '';
+                            vm.fawsSecretKey = '';
+                            vm.fawsSourceKey = '';
+                            vm.fawsTenantId = '';
                         });
                     };
 

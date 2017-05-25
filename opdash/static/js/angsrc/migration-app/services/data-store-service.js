@@ -660,6 +660,16 @@
                        return error;
                     });
             };
+
+            this.addCredsForFawsAccount = function(requestObj) {
+                var self = this;
+                return HttpWrapper.save("/api/tenants/add_credentials", {"operation":'POST'}, requestObj)
+                    .then(function(result){
+                       return result;
+                    },function(error) {
+                       return error;
+                    });
+            };
                 return self;
         }]); // end of service definition
 })();

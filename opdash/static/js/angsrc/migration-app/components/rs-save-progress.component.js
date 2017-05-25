@@ -51,13 +51,12 @@
                 vm.cancelMigration = function() {
                     //var selectedItems = dataStoreService.getItems();
                     var selectedItems = [];
-                    if($window.localStorage.selectedServers !== undefined){
-                        vm.migrationName = $window.localStorage.migrationName;
-                        selectedItems = JSON.parse($window.localStorage.selectedServers);
-                        $('#cancel_modal').modal('show');
-                    }else{
+                    if($window.localStorage.selectedServers == undefined || $window.localStorage.selectedServers == "[]"){
                         dataStoreService.resetAll();
                         $rootRouter.navigate(["MigrationStatus"]);
+                    }else{
+                        selectedItems = JSON.parse($window.localStorage.selectedServers);
+                        $('#cancel_modal').modal('show');
                     }
                 };
 
