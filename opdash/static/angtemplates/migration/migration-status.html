@@ -266,7 +266,7 @@
                                         <tbody ng-show="!vm.loadingAlerts && vm.errors.items.length>0">
                                             <tr ng-repeat="alert in vm.errors.items | orderBy: 'timestamp'| limitTo : vm.errors.pageSize : (vm.errors.currentPage-1)*vm.errors.pageSize">
                                                 <td class="rs-table-status tip" ng-class="{ 'rs-table-status-warning': alert.type==='warning', 'rs-table-status-error': alert.type==='error'}"></td>
-                                                <td><span>{{alert.batch_name}}</span></td>
+                                                <td><a ng-link="['CurrentBatchDetails', {job_id: alert.job_id}]">{{alert.batch_name}}</a></td>
                                                 <td class="rs-table-text ng-binding">{{alert.timestamp | date : 'M/dd/yyyy'}}</td>
                                                 <!--<td><a ng-link="['BatchTaskList', {job_id: alert.job_id}]">{{alert.message}}</a></td>-->
                                                 <td>
