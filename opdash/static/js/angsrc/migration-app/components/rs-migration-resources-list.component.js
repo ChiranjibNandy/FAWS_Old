@@ -111,6 +111,17 @@
                     vm.noName = false;
                     vm.continuing = false;
                     vm.errorInContinue = false;
+                    vm.fawsCreated = false;
+                    vm.fawsCreationProgress = false;
+                    vm.showCreateAccount = false;
+                    vm.fawsResponse = false;
+                    vm.fawsError = false;
+                    vm.fawsAcctName = '';
+                    vm.fawsAcctId = '';
+                    vm.fawsAccessKey = '';
+                    vm.fawsSecretKey = '';
+                    vm.fawsSourceKey = '';
+                    vm.fawsTenantId = '';
                     vm.numOfItems = {
                         server:0,
                         network:0,
@@ -223,7 +234,7 @@
                                 angular.forEach(old,function(item_selected,key){
                                     if(item_selected.id == item.id){
                                         old.splice(key,1);
-                                        localStorage.setItem('selectedServers', JSON.stringify(old));
+                                        $window.localStorage.setItem('selectedServers', JSON.stringify(old));
                                     }
                                 });                              
                             }
@@ -292,20 +303,8 @@
                  * Continue to next step: **Recommendations**
                  */
                  vm.continue = function() {
-                    // if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0){ -- Previous Code
-                    //     vm.nameStatus = dataStoreService.getdontShowNameModal(); //check for flag status created for Modal where user can name a migration.
-                    //     var migrationName = dataStoreService.getScheduleMigration().migrationName;
                     if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 ){//dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 
-                        vm.nameStatus = dataStoreService.getdontShowNameModal(); //check for flag status created for Modal where user can name a migration.
-                        //var migrationName = dataStoreService.getScheduleMigration().migrationName;
-                        var migrationName = $window.localStorage.migrationName;
-
-                        if(vm.nameStatus || migrationName){
-                            vm.migrationName = migrationName;
-                            vm.savencontinue();
-                        }
-                        else
-                            $('#name_modal').modal('show');
+                        vm.savencontinue();
                     }
                     else{
                         $('#save_for_later').modal('hide');
@@ -322,11 +321,7 @@
                  * @description
                  * Assign Migration considering current Timestamp and continue to next step: **Recommendations**
                  */
-                vm.savencontinue = function() {
-                    // if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0){
-                    //     if(vm.selectedItems.server.length > 0 || vm.selectedItems.LoadBalancers.length > 0){
-                    //         dataStoreService.setItems(vm.selectedItems);
-                    //     }   
+                vm.savencontinue = function() { 
                     if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 ){//|| dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 
                         if(vm.selectedItems.server.length > 0 || vm.selectedItems.LoadBalancers.length > 0 ){
                             dataStoreService.setItems(vm.selectedItems);
@@ -347,29 +342,32 @@
                             dataStoreService.setItems(vm.selectedItems);
                             $window.localStorage.setItem('selectedServers', JSON.stringify(arr));
                             vm.continuing = false;
-                            $rootRouter.navigate(["MigrationRecommendation"]);    
-                        },function(error){
-                            vm.continuing = false;
-                            vm.errorInContinue = true;
-                        });
-
-                        // dataStoreService.setDontShowStatus(true);
-                        dataStoreService.setDontShowNameModal(true);
-                    
-                        var migrationName = $window.localStorage.migrationName;
+                            // dataStoreService.setDontShowStatus(true);
+                            dataStoreService.setDontShowNameModal(true);
+                        
+                            if($window.localStorage.migrationName != undefined){
+                                vm.migrationName = $window.localStorage.migrationName;
+                            }
+                            else{
+                                $window.localStorage.migrationName = vm.migrationName;
+                            }
                             vm.selectedTime = {
                                     migrationName:vm.migrationName,
                                     time:'',
                                     timezone:''
                                 };
                             dataStoreService.setScheduleMigration(vm.selectedTime);
-                            $window.localStorage.migrationName = vm.migrationName;
                             $('#save_for_later').modal('hide');
                             $('#name_modal').modal('hide');
                             $('#cancel_modal').modal('hide');
                             $('#intro_modal').modal('hide');
                             $('#no_selection').modal('hide');
                             // $rootRouter.navigate(["MigrationRecommendation"]);
+                            $rootRouter.navigate(["MigrationRecommendation"]);    
+                        },function(error){
+                            vm.continuing = false;
+                            vm.errorInContinue = true;
+                        });
                     }
                     else{
                         $('#save_for_later').modal('hide');
@@ -393,6 +391,50 @@
                         //$rootRouter.navigate(["MigrationResourceList"]);
                     }
                 });
+
+                /**
+                  * @ngdoc method
+                  * @name createFawsAccount
+                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                  * @description 
+                  * Makes a call to api/tenants/create_faws_account API to create new FAWS account for a tenant ID.
+                */
+                vm.createFawsAccount = function() {
+                    vm.fawsCreationProgress = true; 
+                    //var requestObj = {"test": vm.fawsAcctName}; //for testing FAWS account creation API 
+                    // var requestObj = {"project_name": vm.fawsAcctName}; //for actual creation of a new FAWS account - use only in prod
+                    var requestObj = {
+                        "dest_name":vm.fawsAcctName,
+                        "dest_account": vm.fawsAcctId,
+                        "dest_auth_accesskey": vm.fawsAccessKey,
+                        "dest_auth_secretkey": vm.fawsSecretKey
+                     };
+                    // dataStoreService.createFawsAccount(requestObj)
+                    dataStoreService.addCredsForFawsAccount(requestObj)
+                        .then(function (result) {
+                            vm.newAccountDetails = result;
+                            // if (vm.newAccountDetails.error < 400){
+                            if (result == "OK"){
+                                    vm.fawsResponse = true;
+                                    vm.fawsError = false;
+                                    vm.fawsCreated = true;
+                                    vm.fawsCreationProgress = false;
+                                    location.reload();
+                            } 
+                            else {
+                                    vm.fawsError = true;
+                                    vm.fawsResponse = false;
+                                    vm.fawsCreated = false;
+                                    vm.fawsCreationProgress = false;
+                            }
+                            vm.fawsAcctName = '';
+                            vm.fawsAcctId = '';
+                            vm.fawsAccessKey = '';
+                            vm.fawsSecretKey = '';
+                            vm.fawsSourceKey = '';
+                            vm.fawsTenantId = '';
+                        });
+                    };
 
                 return vm;
             }
