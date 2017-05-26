@@ -14,7 +14,7 @@
             <div id="server-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
                 <div class="accordion-inner">
                     <div class="selected-items" ng-repeat="item in vm.selectedItems.server">
-                        <a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'server')"><i class="fa fa-times-circle"></i></a><b title="({{item.details.networks.length}}) Networks: {{vm.networksToServer(item).toString()}}"> {{item.name}} </b>
+                        <a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'server')" ng-show="vm.showrec == 'false'"><i class="fa fa-times-circle"></i></a><b title="({{item.details.networks.length}}) Networks: {{vm.networksToServer(item).toString()}}"> {{item.name}} </b>
                         <i class="fa fa-arrow-right fa fw" ng-if="vm.showrec == 'true'"></i><span ng-if="vm.showrec == 'true'"> {{item.mappings[0].region}} - {{item.mappings[0].zone}} - {{item.mappings[0].instance_type}} </span>
                     </div>
                 </div>
@@ -30,7 +30,8 @@
             <div id="file-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
                 <div class="accordion-inner">
                     <div class="selected-items" ng-repeat="network in vm.networksList">
-                        <a class="disabled" href="#" ng-click="vm.removeItem(item,'server')"></a><b>&nbsp;{{network}} </b>
+                        <a class="disabled" href="#" ng-click="vm.removeItem(item,'server')" ng-show="vm.showrec == 'false'"></a>
+                        <b>&nbsp;{{network}} </b>
                     </div>
                 </div>
             </div>
@@ -45,7 +46,7 @@
             <div id="clb-name" class="accordion-body collapse " ng-if="vm.selectedItems.LoadBalancers.length > 0">
                 <div class="accordion-inner">
                     <div class="selected-items" ng-repeat="item in vm.selectedItems.LoadBalancers">
-                        <a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'LoadBalancers')"></a><b>&nbsp;{{item.name}}</b>
+                        <a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'LoadBalancers')" ng-show="vm.showrec == 'false'"></a><b>&nbsp;{{item.name}}</b>
                         <i class="fa fa-arrow-right fa fw" ng-if="vm.showrec == 'true'"></i><span ng-if="vm.showrec == 'true'"> {{item.mappings[0].region}} - {{item.mappings[0].zone}} - {{item.mappings[0].instance_type}} </span>
                     </div>
                 </div>
@@ -68,19 +69,3 @@
     </div>
     <div ng-show="vm.selectedItems.server.length == 0 && vm.selectedItems.LoadBalancers.length == 0" style="color:red; text-align: center">No items selected</div>
 </div>
-
-<!-- no equipments modal -->
-<div id="no-equipments-modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
-    <div class="modal-header">
-        <h3>Cannot continue with this migration!</h3>
-    </div>
-    <div class="modal-body">
-        <p>Currently you have no resources selected. To select few, please press on continue...</p>
-    </div>
-    <div class="modal-footer">
-        <a ng-click="vm.selectServers()" class="rs-btn rs-btn-primary">Continue </a>
-        <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
-    </div>
-</div>
-<!-- no equipments modal -->

@@ -127,18 +127,6 @@
 
                 /**
                  * @ngdoc method
-                 * @name selectServers
-                 * @methodOf migrationApp.controller:rsselecteditemspanelCtrl
-                 * @description 
-                 * Navigates to resources page
-                 */
-                vm.selectServers = function(){
-                    $("#no-equipments-modal").modal('hide');
-                    $rootRouter.navigate(["MigrationResourceList"]);
-                };
-
-                /**
-                 * @ngdoc method
                  * @name removeItem
                  * @methodOf migrationApp.controller:rsselecteditemspanelCtrl
                  * @param {Object} item _Object_ list of servers selected.
@@ -160,9 +148,6 @@
                         $window.localStorage.setItem('selectedServers',JSON.stringify(vm.selectedItems.server));
                         item.selected = false;  
                         $scope.$emit("ItemRemoved", item); // broadcast event to all child components 
-                        if(vm.selectedItems[type].length == 0 && vm.showrec == 'true'){
-                            $("#no-equipments-modal").modal('show');
-                        }                    
                     }
                 }
 
