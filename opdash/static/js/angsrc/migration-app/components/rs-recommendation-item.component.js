@@ -198,6 +198,7 @@
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(zones){
                         vm.awsZone = zones[0];
                         vm.zones = zones;
+                      vm.disableConfirm();
                     },function(error){
                         vm.errorInApi = true;
                         console.log("Error in getting zones: ",error);
