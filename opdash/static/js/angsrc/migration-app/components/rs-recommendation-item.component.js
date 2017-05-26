@@ -58,7 +58,9 @@
                         HttpWrapper.send(url,{"operation":'GET'}).then(function(result){
                             vm.regions = result;
                             vm.awsRegion = result[0];
+var firstLoad =true;
                             vm.getZones();
+                            vm.disable = true;
                             $('#rs-main-panel').css('height','310px');
                         },function(error){
                             console.log('Error in getting regions :', error);
@@ -198,6 +200,10 @@
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(zones){
                         vm.awsZone = zones[0];
                         vm.zones = zones;
+			if(region){
+vm.disableConfirm();
+}
+                      
                     },function(error){
                         vm.errorInApi = true;
                         console.log("Error in getting zones: ",error);
