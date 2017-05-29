@@ -44,7 +44,7 @@
              * @name migrationApp.controller:rsrecommendationitemCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsrecommendationitem rsrecommendationitem} component
              */
-            controller: ["migrationitemdataservice", "authservice", "$q", "datastoreservice", "$rootRouter","httpwrapper","$rootScope","$window", function (ds, authservice, $q, dataStoreService, $rootRouter,HttpWrapper,$rootScope,$window) {
+            controller: ["migrationitemdataservice", "authservice", "$q", "datastoreservice", "$rootRouter","httpwrapper","$rootScope","$window","$filter","$scope", function (ds, authservice, $q, dataStoreService, $rootRouter,HttpWrapper,$rootScope,$window,$filter,$scope) {
                 var vm = this;
 
                 vm.$onInit = function() {
@@ -53,12 +53,12 @@
                     vm.errorInApi = false;
                     vm.reverse = false;
                     vm.disable = true;
+                    vm.filteredArr = [];
                     if(vm.type === "server"){
                         var url = '/api/ec2/regions'; 
                         HttpWrapper.send(url,{"operation":'GET'}).then(function(result){
                             vm.regions = result;
                             vm.awsRegion = result[0];
-var firstLoad =true;
                             vm.getZones();
                             vm.disable = true;
                             $('#rs-main-panel').css('height','310px');
@@ -200,9 +200,9 @@ var firstLoad =true;
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(zones){
                         vm.awsZone = zones[0];
                         vm.zones = zones;
-			if(region){
-vm.disableConfirm();
-}
+                        if(region){
+                            vm.disableConfirm();
+                        }
                       
                     },function(error){
                         vm.errorInApi = true;
@@ -281,6 +281,19 @@ vm.disableConfirm();
                     if (type === "loadbalancers") type = "LoadBalancers";
                     vm.parent.equipmentDetails(type, itemdetails);
                 };
+
+                $scope.$watch('vm.filtervalue', function (query) {
+                    vm.filteredArr = $filter("filter")(vm.data, query);
+                    // pagination controls
+                    vm.currentPage = 1;
+                    vm.pageArray = [];
+                    vm.pageSize = 5; // items to be displayed per page
+                    vm.totalItems = vm.filteredArr.length; // number of items received.
+                    vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
+                    for(var i=1;i<=vm.noOfPages;i++){
+                        vm.pageArray.push(i);
+                    };    
+                });
                 
                 return vm;
             }]

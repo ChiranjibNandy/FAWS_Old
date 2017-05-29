@@ -43,7 +43,7 @@
              * @name migrationApp.controller:rsmigrationitemCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationitem rsmigrationitem} component
              */
-            controller: ["migrationitemdataservice", "datastoreservice", "serverservice", "httpwrapper", "$rootRouter", "authservice", "$q", "$scope","$window", function (ds, datastoreservice, ss, HttpWrapper, $rootRouter, authservice, $q, $scope,$window) {
+            controller: ["migrationitemdataservice", "datastoreservice", "serverservice", "httpwrapper", "$rootRouter", "authservice", "$q", "$scope","$window", "$filter", function (ds, datastoreservice, ss, HttpWrapper, $rootRouter, authservice, $q, $scope,$window, $filter) {
                 var vm = this;
 
                 /**
@@ -138,6 +138,7 @@
                      * @description number of items to be showed per page
                      */
                     vm.pageArray = [];
+                    vm.filteredArr = [];
                     vm.search = {};
                     vm.loading = true;
                     vm.loadError = false;
@@ -516,6 +517,20 @@
                 vm.equipmentDetails = function(type, itemdetails) {
                     vm.parent.equipmentDetailsModal(type, itemdetails);
                 }
+
+                $scope.$watch('vm.filtervalue', function (query) {
+                    vm.filteredArr = $filter("filter")(vm.items, query);
+                    // pagination controls
+                    vm.currentPage = 1;
+                    vm.pageArray = [];
+                    vm.pageSize = 5; // items to be displayed per page
+                    vm.totalItems = vm.filteredArr.length; // number of items received.
+                    vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
+                    for(var i=1;i<=vm.noOfPages;i++){
+                        vm.pageArray.push(i);
+                    };    
+                });
+
                 return vm;
             }]
         }); // end of component definition
