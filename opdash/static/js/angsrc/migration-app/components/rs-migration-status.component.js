@@ -248,7 +248,7 @@
                                     job.showRefreshForApiLoading = false;
                                     if(job.batch_name == dataStoreService.selectedTime.migrationName)
                                         vm.showInitiatedMigration =  false;
-                                    if (validCurrentBatchStatus.indexOf(job.batch_status) >= 0){}
+                                    if (validCurrentBatchStatus.indexOf(job.batch_status) >= 0)
                                         currentBatches.push(job);
                                     if (validCompletedBatchStatus.indexOf(job.batch_status) >= 0)
                                         completedBatches.push(job);
