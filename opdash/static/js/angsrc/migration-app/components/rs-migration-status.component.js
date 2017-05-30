@@ -245,6 +245,7 @@
                                 var currentBatches = [];
                                 var completedBatches = [];
                                 angular.forEach(jobList, function (job) {
+                                    job.showRefreshForApiLoading = false;
                                     if(job.batch_name == dataStoreService.selectedTime.migrationName)
                                         vm.showInitiatedMigration =  false;
                                     if (validCurrentBatchStatus.indexOf(job.batch_status) >= 0)
@@ -498,12 +499,14 @@
                      * This function will call an api to pause,unpause and delete a "Scheduled Migration".
                      */
                     vm.pauseAndCancelMigration = function(batch,detail,isModify){
+                        batch.showRefreshForApiLoading = true;
                         migrationService.pauseMigration(batch.job_id,detail).then(function(result){
                             if(result){
                                 vm.getBatches(true);
                                 //going to enable this as soon as cancel works
                                 //if(isModify) vm.modifyMigration(batch);
                             }else{
+                                batch.showRefreshForApiLoading = false;
                                 if(isModify)
                                     vm.message = "We are facing some issues to cancel and modify your migration. Please try again after some time."
                                 else

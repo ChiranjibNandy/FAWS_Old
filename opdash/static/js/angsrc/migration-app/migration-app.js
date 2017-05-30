@@ -79,7 +79,10 @@
                 return arrInput[0].toUpperCase()+'-'+arrInput[1][0].toUpperCase()+arrInput[1].substr(1).toLowerCase()+'-'+arrInput[2].toLowerCase();
             }
     });
-
+    migrationApp.constant('DEFAULT_VALUES', {
+        "REGION":'us-east-1',
+        "ZONE":'us-east-1a'
+    });
     /**
     * @ngdoc directive
     * @name migrationApp.directive:datetimepicker

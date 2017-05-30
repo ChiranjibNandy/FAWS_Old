@@ -44,7 +44,7 @@
              * @name migrationApp.controller:rsrecommendationitemCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsrecommendationitem rsrecommendationitem} component
              */
-            controller: ["migrationitemdataservice", "authservice", "$q", "datastoreservice", "$rootRouter","httpwrapper","$rootScope","$window","$filter","$scope", function (ds, authservice, $q, dataStoreService, $rootRouter,HttpWrapper,$rootScope,$window,$filter,$scope) {
+            controller: ["migrationitemdataservice", "authservice", "$q", "datastoreservice", "$rootRouter","httpwrapper","$rootScope","$window","DEFAULT_VALUES","$filter","$scope", function (ds, authservice, $q, dataStoreService, $rootRouter,HttpWrapper,$rootScope,$window,DEFAULT_VALUES,$filter,$scope) {
                 var vm = this;
 
                 vm.$onInit = function() {
@@ -58,7 +58,8 @@
                         var url = '/api/ec2/regions'; 
                         HttpWrapper.send(url,{"operation":'GET'}).then(function(result){
                             vm.regions = result;
-                            vm.awsRegion = result[0];
+                            vm.awsRegion = DEFAULT_VALUES.REGION;
+                            var firstLoad =true;
                             vm.getZones();
                             vm.disable = true;
                             $('#rs-main-panel').css('height','310px');
