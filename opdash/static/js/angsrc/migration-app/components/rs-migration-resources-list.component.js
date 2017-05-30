@@ -24,7 +24,7 @@
              * @name migrationApp.controller:rsmigrationresourceslistCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationresourceslist rsmigrationresourceslist} component
              */
-            controller: ["authservice", "$scope", "$rootRouter", "datastoreservice", "migrationitemdataservice", "httpwrapper", "$timeout","$window","$q","$rootScope", function(authservice, $scope, $rootRouter, dataStoreService, ds, HttpWrapper, $timeout,$window,$q, $rootScope) {
+            controller: ["authservice", "$scope", "$rootRouter", "datastoreservice", "migrationitemdataservice", "httpwrapper", "$timeout","$window","$q","$rootScope","DEFAULT_VALUES", function(authservice, $scope, $rootRouter, dataStoreService, ds, HttpWrapper, $timeout,$window,$q, $rootScope,DEFAULT_VALUES) {
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
@@ -158,52 +158,46 @@
                                 itemExists = true;
                             }
                         }
-
                     }
                     if(!itemExists){
                     //if(vm.selectedItems[type].indexOf(item)<0){ -- Previous Code
-
-                        //this hardcoded value of us-east-1 in url is needed to get the default pricing details. 
-                        // var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/us-east-1';
-                        // HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
-                        //     item.selectedMapping = pricingOptions[0];
-                            vm.selectedItems[type].push(item);
-                            if(type === 'server'){
-                                var old = $window.localStorage.getItem('selectedServers');
-                                if(old === null){
-                                    var arr = [item];
-                                    localStorage.setItem('selectedServers', JSON.stringify(arr));
-                                }
-                                else{
-                                    old = JSON.parse(old);
-                                    localStorage.setItem('selectedServers', JSON.stringify(old.concat(item)));
-                                }
+                        vm.selectedItems[type].push(item);
+                        if(type === 'server'){
+                            var old = $window.localStorage.getItem('selectedServers');
+                            if(old === null){
+                                var arr = [item];
+                                localStorage.setItem('selectedServers', JSON.stringify(arr));
                             }
-                            else if(type === 'network'){
-                                var old = $window.localStorage.getItem('selectedNetworks');
-                                if(old === null){
-                                    var arr = [item];
-                                    localStorage.setItem('selectedNetworks', JSON.stringify(arr));
-                                }
-                                else{
-                                    old = JSON.parse(old);
-                                    localStorage.setItem('selectedNetworks', JSON.stringify(old.concat(item)));
-                                }
+                            else{
+                                old = JSON.parse(old);
+                                localStorage.setItem('selectedServers', JSON.stringify(old.concat(item)));
                             }
-                            else if(type === 'LoadBalancers'){
-                                var old = $window.localStorage.getItem('selectedLoadBalancers');
-                                if(old === null){
-                                    var arr = [item];
-                                    localStorage.setItem('selectedLoadBalancers', JSON.stringify(arr));
-                                }
-                                else{
-                                    old = JSON.parse(old);
-                                    localStorage.setItem('selectedLoadBalancers', JSON.stringify(old.concat(item)));
-                                }
+                        }
+                        else if(type === 'network'){
+                            var old = $window.localStorage.getItem('selectedNetworks');
+                            if(old === null){
+                                var arr = [item];
+                                localStorage.setItem('selectedNetworks', JSON.stringify(arr));
                             }
-                            vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
-                            dataStoreService.setItems(vm.selectedItems);//save items selected for migration in service.
-                            $scope.$broadcast("ItemsModified");//make a function call to child component to enable checkobox for selected items.
+                            else{
+                                old = JSON.parse(old);
+                                localStorage.setItem('selectedNetworks', JSON.stringify(old.concat(item)));
+                            }
+                        }
+                        else if(type === 'LoadBalancers'){
+                            var old = $window.localStorage.getItem('selectedLoadBalancers');
+                            if(old === null){
+                                var arr = [item];
+                                localStorage.setItem('selectedLoadBalancers', JSON.stringify(arr));
+                            }
+                            else{
+                                old = JSON.parse(old);
+                                localStorage.setItem('selectedLoadBalancers', JSON.stringify(old.concat(item)));
+                            }
+                        }
+                        vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
+                        dataStoreService.setItems(vm.selectedItems);//save items selected for migration in service.
+                        $scope.$broadcast("ItemsModified");//make a function call to child component to enable checkobox for selected items.
                         //});
                     };
                 }
@@ -260,7 +254,6 @@
                                     }
                                 }); 
                             }
-
                             $scope.$broadcast("ItemRemovedForChild", item); // broadcast event to all child components
                             $scope.$broadcast("ItemsModified");
                             return;
@@ -331,7 +324,7 @@
                         // var arr = angular.copy(vm.selectedItems.server);
                         var arr = [];
                         var promises = items.map(function(item) {
-                            var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/us-east-1';
+                            var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+DEFAULT_VALUES.REGION;
                             return HttpWrapper.send(url, {"operation": 'GET'}).then(function(pricingOptions) {
                                 item.selectedMapping = pricingOptions[0]; 
                                 arr.push(item);
