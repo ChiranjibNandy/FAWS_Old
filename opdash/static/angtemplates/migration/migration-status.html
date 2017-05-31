@@ -87,7 +87,7 @@
                             </tr>
                         </tbody>
                         <tbody ng-show="!vm.loading && !vm.currentBatches.loadError && vm.currentBatches.items.length!==0">
-                            <tr ng-repeat="batch in vm.currentBatches.items | orderBy: vm.sortBy.current_batch | limitTo : vm.currentBatches.pageSize : (vm.currentBatches.currentPage-1)*vm.currentBatches.pageSize" class="ng-scope">
+                            <tr ng-repeat="batch in vm.currentBatches.items | orderBy: -vm.sortBy.current_batch | limitTo : vm.currentBatches.pageSize : (vm.currentBatches.currentPage-1)*vm.currentBatches.pageSize" class="ng-scope">
                                 <td class="rs-table-status tip" ng-class="{'rs-table-status-pending': (batch.batch_status==='not available' || batch.timestamp), 'rs-table-status-warning': batch.batch_status==='scheduled'||'paused', 'rs-table-status-ok rs-table-status-ok-processing rs-table-status-striped': batch.batch_status==='in progress' , 'rs-table-status-error': batch.batch_status==='error'}"></td>
                                 <td class="rs-table-link">
                                     <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]">{{batch.batch_name}}</a>
@@ -211,7 +211,7 @@
                             </tr>
                         </thead>
                         <tbody ng-show="!vm.loading && !vm.completedBatches.loadError && vm.completedBatches.items.length!==0">
-                            <tr ng-repeat="batch in vm.completedBatches.items | orderBy: vm.sortBy.completed_batch | limitTo : vm.completedBatches.pageSize : (vm.completedBatches.currentPage-1)*vm.completedBatches.pageSize" class="ng-scope">
+                            <tr ng-repeat="batch in vm.completedBatches.items | orderBy: -vm.sortBy.completed_batch | limitTo : vm.completedBatches.pageSize : (vm.completedBatches.currentPage-1)*vm.completedBatches.pageSize" class="ng-scope">
                                 <td class="rs-table-status rs-table-status-ok tip"></td>
                                 <td class="rs-table-link large-col"><a ng-link="['CompletedBatchDetails', {job_id: batch.job_id}]" class="ng-binding">{{batch.batch_name}}</a></td>
                                 <td class="rs-table-text ng-binding">{{(batch.start && batch.start * 1000) | date : 'M/dd/yyyy hh:mm a'}}</td>
@@ -267,7 +267,7 @@
                                             </tr>
                                         </thead>
                                         <tbody ng-show="!vm.loadingAlerts && vm.errors.items.length>0">
-                                            <tr ng-repeat="alert in vm.errors.items | orderBy: 'timestamp'| limitTo : vm.errors.pageSize : (vm.errors.currentPage-1)*vm.errors.pageSize">
+                                            <tr ng-repeat="alert in vm.errors.items | orderBy: '-timestamp'| limitTo : vm.errors.pageSize : (vm.errors.currentPage-1)*vm.errors.pageSize">
                                                 <td class="rs-table-status tip" ng-class="{ 'rs-table-status-warning': alert.type==='warning', 'rs-table-status-error': alert.type==='error'}"></td>
                                                 <td><a ng-link="['CurrentBatchDetails', {job_id: alert.job_id}]">{{alert.batch_name}}</a></td>
                                                 <td class="rs-table-text ng-binding">{{alert.timestamp | date : 'M/dd/yyyy'}}</td>
@@ -312,7 +312,7 @@
                                             </tr>
                                         </thead>
                                         <tbody ng-show="!vm.loadingTickets && vm.tickets.items.length>0">
-                                            <tr ng-repeat="ticket in vm.tickets.items | orderBy: 'created' | limitTo : vm.tickets.pageSize : (vm.tickets.currentPage-1)*vm.tickets.pageSize">
+                                            <tr ng-repeat="ticket in vm.tickets.items | orderBy: '-created' | limitTo : vm.tickets.pageSize : (vm.tickets.currentPage-1)*vm.tickets.pageSize">
                                                 <td><a href="https://mycloud.rackspace.com/cloud/{{vm.tenant_id}}/tickets#{{ticket.ticket_id}}">{{ticket.ticket_id}}</a></td>
                                                 <td class="rs-table-text ng-binding">{{ticket.created | date : 'M/dd/yyyy hh:mm a'}}</td>
                                                 <td>
