@@ -14,7 +14,7 @@
             <div id="server-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
                 <div class="accordion-inner">
                     <div class="selected-items" ng-repeat="item in vm.selectedItems.server">
-                        <div><a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'server')"><i class="fa fa-times-circle"></i></a><b title="({{item.details.networks.length}}) Networks: {{vm.networksToServer(item).toString()}}&#013;({{item.details.cbs_volumes.length}}) CBS: {{vm.cbsToServer(item).toString()}}"> {{item.name}} </b>
+                        <div><a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'server')" ng-show="vm.showrec == 'false'"><i class="fa fa-times-circle"></i></a><b title="({{item.details.networks.length}}) Networks: {{vm.networksToServer(item).toString()}}&#013;({{item.details.cbs_volumes.length}}) CBS: {{vm.cbsToServer(item).toString()}}"> {{item.name}} </b>
                         <i class="fa fa-arrow-right fa fw" ng-if="vm.showrec == 'true'"></i><span ng-if="vm.showrec == 'true'"> {{item.selectedMapping.region}} - {{item.selectedMapping.instance_type}} </span></div>
                         <div ng-repeat="network in item.details.networks">&emsp;&emsp;-&nbsp;(Network)&nbsp;
                             {{network.name}}
