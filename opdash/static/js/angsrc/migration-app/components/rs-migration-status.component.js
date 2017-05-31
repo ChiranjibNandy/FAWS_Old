@@ -84,8 +84,8 @@
                          vm.currentUser = authservice.getAuth().account_name;
                     } //end of if condition
                     vm.sortBy = {
-                        current_batch: 'start',
-                        completed_batch: 'start'
+                        current_batch: '-start',
+                        completed_batch: '-start'
                     };
 
                     document.addEventListener("click", function() {
