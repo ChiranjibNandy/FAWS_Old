@@ -41,6 +41,7 @@
                 vm.fawsCreated = false;
                 vm.fawsCreationProgress = false;
                 vm.showCreateAccount = false;
+                vm.displayFawsDropdown = true;
                 vm.fawsResponse = false;
                 vm.fawsError = false;
                 vm.newAccountDetails = {};
@@ -66,6 +67,13 @@
                     vm.showCreateAccount = true;
                 else 
                     vm.showCreateAccount = false;
+
+                if (vm.currentPage == "ConfirmMigration"){
+                    vm.displayFawsDropdown = false;
+                }
+                else{
+                    vm.displayFawsDropdown = true;
+                }
 
                 /**
                   * @ngdoc method

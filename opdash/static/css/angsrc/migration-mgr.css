@@ -671,7 +671,7 @@ body .modal.details2 {
     border-top: none;
     padding: 10px;
     background: #f9f9f9;
-    color: #999;
+    color: #000;
 }
 
 .accordion-toggle:hover,

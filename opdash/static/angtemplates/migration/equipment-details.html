@@ -52,7 +52,8 @@
             </div>
             <div class="rs-detail-section-body">
                 <div class="rs-embedded-list-table-wrapper rs-embedded-small">
-                    <table class="rs-list-table rs-embedded-list-table">
+                    <h4 ng-show="!vm.itemDetails.details.networks.length">No Networks associated with this Server!</h4>
+                    <table ng-show="vm.itemDetails.details.networks.length" class="rs-list-table rs-embedded-list-table">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -65,6 +66,34 @@
                                 <td class="rs-table-text">{{network.name}}</td>
                                 <td class="rs-table-text">{{network.id}}</td>
                                 <td class="rs-table-text"><span class="rs-status rs-status-ok">{{network.status}}</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="rs-detail-section">
+            <div class="rs-detail-section-header">
+                <div class="rs-detail-section-title">CBS Volumes</div>
+            </div>
+            <div class="rs-detail-section-body">
+                <div class="rs-embedded-list-table-wrapper rs-embedded-small">
+                    <h4 ng-show="!vm.itemDetails.details.cbs_volumes.length">No CBS Volumes associated with this Server!</h4>
+                    <table ng-show="vm.itemDetails.details.cbs_volumes.length" class="rs-list-table rs-embedded-list-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>ID</th>
+                                <th>Volume type</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="cbs in vm.itemDetails.details.cbs_volumes">
+                                <td class="rs-table-text">{{cbs.display_name}}</td>
+                                <td class="rs-table-text">{{cbs.id}}</td>
+                                <td class="rs-table-text">{{cbs.volume_type}}</td>
+                                <td class="rs-table-text"><span class="rs-status rs-status-ok">{{cbs.status}}</span></td>
                             </tr>
                         </tbody>
                     </table>

@@ -122,11 +122,7 @@
                     vm.fawsSecretKey = '';
                     vm.fawsSourceKey = '';
                     vm.fawsTenantId = '';
-                    vm.numOfItems = {
-                        server:0,
-                        network:0,
-                        file:0
-                    };
+                    vm.itemsLoading = true;
                 }
 
                 /**
@@ -428,6 +424,10 @@
                             vm.fawsTenantId = '';
                         });
                     };
+
+                vm.itemsLoadingStatus = function(status){
+                    vm.itemsLoading = status;
+                };
 
                 return vm;
             }

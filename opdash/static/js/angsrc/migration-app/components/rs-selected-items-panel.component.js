@@ -52,6 +52,7 @@
                      */
                     vm.networksList = [];
                     vm.networksForServer = {};
+                    vm.cbsForServer = {};
                     vm.isRacker = authservice.is_racker;
                     //Fetch items selected from service.
                     //vm.selectedItems.server = dataStoreService.getItems('server');
@@ -91,24 +92,6 @@
                         vm.selectedItems.LoadBalancers = [];
                 });
                 
-                //Watch for item selection from list of resources.
-                $scope.$watch('vm.selectedItems.server.length', function () {
-                    vm.networkCount = 0;
-                    vm.networksList = [];
-                    //loop through all the servers selected and networks associated with the servers.
-                    angular.forEach(vm.selectedItems.server, function (item) {
-                        if(item.details.networks.length !== 0){
-                            angular.forEach(item.details.networks, function (network) {
-                                //making separate list of networks associated with servers.
-                                if(vm.networksList.indexOf(network.name) == -1) {
-                                    vm.networkCount += 1;
-                                    vm.networksList.push(network.name);
-                                };
-                            });
-                        }
-                    });
-                });
-
                 /**
                  * @ngdoc method
                  * @name networksToServer
@@ -123,6 +106,22 @@
                         vm.networksForServer[item.name].push(network.name);
                     });
                     return vm.networksForServer[item.name];
+                };
+
+                /**
+                 * @ngdoc method
+                 * @name cbsToServer
+                 * @methodOf migrationApp.controller:rsselecteditemspanelCtrl
+                 * @param {Object} item _Object_ list of servers selected.
+                 * @description
+                 * Fetch networks associated with server.
+                 */
+                vm.cbsToServer = function(item) {
+                    vm.cbsForServer[item.name] = [];
+                    angular.forEach(item.details.cbs_volumes, function (cbs) {
+                        vm.cbsForServer[item.name].push(cbs.display_name);
+                    });
+                    return vm.cbsForServer[item.name];
                 };
 
                 /**

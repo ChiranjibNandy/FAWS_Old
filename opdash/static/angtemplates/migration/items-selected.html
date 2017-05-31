@@ -14,61 +14,15 @@
             <div id="server-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
                 <div class="accordion-inner">
                     <div class="selected-items" ng-repeat="item in vm.selectedItems.server">
-                        <a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'server')" ng-show="vm.showrec == 'false'">
-                            <i class="fa fa-times-circle"></i>
-                        </a>
-                        <b title="({{item.details.networks.length}}) Networks: {{vm.networksToServer(item).toString()}}"> 
-                            {{item.name}} 
-                            <i class="fa fa-arrow-right fa fw" ng-if="vm.showrec == 'true'"></i>
-                            <span ng-if="vm.showrec == 'true'"> {{item.selectedMapping.region}} - {{item.selectedMapping.instance_type}} </span>
-                        </b>
+                        <div><a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'server')"><i class="fa fa-times-circle"></i></a><b title="({{item.details.networks.length}}) Networks: {{vm.networksToServer(item).toString()}}&#013;({{item.details.cbs_volumes.length}}) CBS: {{vm.cbsToServer(item).toString()}}"> {{item.name}} </b>
+                        <i class="fa fa-arrow-right fa fw" ng-if="vm.showrec == 'true'"></i><span ng-if="vm.showrec == 'true'"> {{item.selectedMapping.region}} - {{item.selectedMapping.instance_type}} </span></div>
+                        <div ng-repeat="network in item.details.networks">&emsp;&emsp;-&nbsp;(Network)&nbsp;
+                            {{network.name}}
+                        </div>
+                        <div ng-repeat="cbs in item.details.cbs_volumes">&emsp;&emsp;-&nbsp;(CBS)&nbsp;
+                            {{cbs.display_name}}
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}" ng-hide="vm.selectedItems.server.length == 0">
-            <div class="accordion-heading ">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#file-name">
-                    <b>  Networks ({{vm.networkCount}})</b>
-                    <i class='fa fa-chevron-down'></i>
-                </a>
-            </div>
-            <div id="file-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
-                <div class="accordion-inner">
-                    <div class="selected-items" ng-repeat="network in vm.networksList">
-                        <a class="disabled" href="#" ng-click="vm.removeItem(item,'server')" ng-show="vm.showrec == 'false'"></a>
-                        <b>&nbsp;{{network}} </b>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="accordion-group" ng-if="vm.isRacker" ng-class="{disabled:vm.selectedItems.LoadBalancers.length == 0}" ng-hide="vm.selectedItems.LoadBalancers.length == 0">
-            <div class="accordion-heading ">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#clb-name">
-                    <b class=""> Load Balancers ({{vm.selectedItems.LoadBalancers.length}})</b>
-                    <i class='fa fa-chevron-down'></i>
-                </a>
-            </div>
-            <div id="clb-name" class="accordion-body collapse " ng-if="vm.selectedItems.LoadBalancers.length > 0">
-                <div class="accordion-inner">
-                    <div class="selected-items" ng-repeat="item in vm.selectedItems.LoadBalancers">
-                        <a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'LoadBalancers')" ng-show="vm.showrec == 'false'"></a><b>&nbsp;{{item.name}}</b>
-                        <i class="fa fa-arrow-right fa fw" ng-if="vm.showrec == 'true'"></i><span ng-if="vm.showrec == 'true'"> {{item.mappings[0].region}} - {{item.mappings[0].zone}} - {{item.mappings[0].instance_type}} </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="accordion-group disabled" ng-if="vm.isRacker" style="display: none">
-            <div class="accordion-heading ">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#block-name">
-                    <b class=""> Files (0) <i class="fa fa-caret-down"></i></b>
-                    <i class='fa fa-chevron-down'></i>
-                </a>
-            </div>
-            <div id="block-name" class="accordion-body collapse">
-                <div class="accordion-inner">
-                    <ul class="inline">
-                    </ul>
                 </div>
             </div>
         </div>
