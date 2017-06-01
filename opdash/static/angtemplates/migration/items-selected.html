@@ -16,11 +16,11 @@
                     <div class="selected-items" ng-repeat="item in vm.selectedItems.server">
                         <div><a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'server')" ng-show="vm.showrec == 'false'"><i class="fa fa-times-circle"></i></a><b title="({{item.details.networks.length}}) Networks: {{vm.networksToServer(item).toString()}}&#013;({{item.details.cbs_volumes.length}}) CBS: {{vm.cbsToServer(item).toString()}}"> {{item.name}} </b>
                         <i class="fa fa-arrow-right fa fw" ng-if="vm.showrec == 'true'"></i><span ng-if="vm.showrec == 'true'"> {{item.selectedMapping.region}} - {{item.selectedMapping.instance_type}} </span></div>
-                        <div ng-repeat="network in item.details.networks">&emsp;&emsp;-&nbsp;(Network)&nbsp;
-                            {{network.name}}
+                        <div ng-repeat="network in item.details.networks">
+                            <span class="tab">- (Network) {{network.name}}</span>
                         </div>
-                        <div ng-repeat="cbs in item.details.cbs_volumes">&emsp;&emsp;-&nbsp;(CBS)&nbsp;
-                            {{cbs.display_name}}
+                        <div ng-repeat="cbs in item.details.cbs_volumes">
+                            <span class="tab">- (CBS) {{cbs.display_name}}</span>
                         </div>
                     </div>
                 </div>

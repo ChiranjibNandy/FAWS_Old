@@ -897,3 +897,22 @@ body .modal.details2 {
     float: right;
     margin-right: 70px;
 }
+
+.tab {
+    display:inline-block; 
+    margin-left: 40px;
+}
+
+.space {
+    text-indent: 10px;
+}
+
+.equipment-err {
+    padding-top: 5px;
+    text-align: center; 
+}
+
+.allign-buttons{
+    margin-top: -49px; 
+    margin-left:790px
+}
