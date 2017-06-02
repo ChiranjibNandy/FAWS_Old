@@ -103,10 +103,10 @@ setup-ops: ## Create a virtualenv for running ops tasks
 	$(OPS_VENV_ACTIVATE); $(WE_PIP_INSTALL) -r ops_requirements.txt
 
 release: $(OPS_REQUIREMENTS) ## Tag and push a Docker image to ECR
-	$(OPS_VENV_ACTIVATE); $(WE_ENV) $(OPDASH_CP_OPS) release
+	$(OPS_VENV_ACTIVATE); $(OPDASH_CP_OPS) release
 
 deploy: $(OPS_REQUIREMENTS) ## Create/Update ECS Tasks and Services with current tag
-	$(OPS_VENV_ACTIVATE); $(WE_ENV) $(OPDASH_CP_OPS) deploy
+	$(OPS_VENV_ACTIVATE); $(OPDASH_CP_OPS) deploy
 
 
 ##### Utilities #####
