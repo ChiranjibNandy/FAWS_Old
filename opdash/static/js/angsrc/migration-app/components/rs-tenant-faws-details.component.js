@@ -75,9 +75,9 @@
                   * Fetches FAWS accounts associated with tenant/customer ID.
                 */
                 vm.fetchFawsAccounts = function() {
-                    dataStoreService.getFawsAccounts()
+                    dataStoreService.getFawsAccounts() ///make api call to retrieve list of FAWS account for this tenant ID
                         .then(function (result) {
-                            if((result == null || result.awsAccounts.length == 0)){
+                            if((result == null || result.awsAccounts.length == 0)){     //if there are no accounts array will be empty
                                 vm.awsAccountsDetails = [];
                                 vm.fawsAcctStatus = false;
                             }
@@ -85,16 +85,18 @@
                                 vm.awsAccountsDetails = result.awsAccounts;
                                 vm.fawsAcctStatus = true;
                                 if(dataStoreService.fetchFawsDetails().selectedFawsAccount == undefined || dataStoreService.fetchFawsDetails().selectedFawsAccount == ''){
-                                    vm.selectedFaws = vm.awsAccountsDetails[0].name + " " + "(#" + vm.awsAccountsDetails[0].awsAccountNumber + ")";
+                                    vm.selectedFawsName = vm.awsAccountsDetails[0].name;
                                     vm.selectedFawsNum=vm.awsAccountsDetails[0].awsAccountNumber;
+                                    vm.selectedFaws = vm.selectedFawsName + "(#" +  vm.selectedFawsNum + ")"; //to display in faws dropdown default value 
                                 }
                                 else{
-                                    vm.selectedFaws = dataStoreService.fetchFawsDetails().selectedFawsAccount;
+                                    vm.selectedFawsName = dataStoreService.fetchFawsDetails().selectedFawsAccount;
                                     vm.selectedFawsNum = dataStoreService.fetchFawsDetails().selectedFawsAccountNumber;
+                                    vm.selectedFaws = vm.selectedFawsName + "(#" +  vm.selectedFawsNum + ")"; //to display in faws dropdown default value
                                 }
                                 vm.fawsAccountDetails = {
                                         awsAccounts:vm.awsAccountsDetails,
-                                        selectedFawsAccount: vm.selectedFaws,
+                                        selectedFawsAccount: vm.selectedFawsName,
                                         selectedFawsAccountNumber:vm.selectedFawsNum,
                                         totalAccounts: result.awsAccountLimit - result.remainingAccounts
                                     };
@@ -103,7 +105,16 @@
                     });
                 };
 
-                vm.fetchFawsAccounts();
+                vm.fawsAccountDetails = JSON.parse($window.localStorage.getItem("fawsAccounts")); //if the page was refreshed, fetch the saved details
+                
+                if (vm.fawsAccountDetails === null) //will be null for first time login - make api call to fetch account list
+                    vm.fetchFawsAccounts();
+                else{
+                    vm.awsAccountsDetails = vm.fawsAccountDetails.awsAccounts;
+                    vm.selectedFawsName = vm.fawsAccountDetails.selectedFawsAccount;
+                    vm.selectedFawsNum = vm.fawsAccountDetails.selectedFawsAccountNumber;
+                    vm.selectedFaws = vm.selectedFawsName + "(#" +  vm.selectedFawsNum + ")"; //to display in faws dropdown default value
+                }
 
                 /**
                   * @ngdoc method
@@ -113,8 +124,21 @@
                   * To Detect if there is any change in selection of FAWS Account.
                  */
                 vm.fawsAccountchanged = function(){
-                    dataStoreService.fawsAccounts.selectedFawsAccount = vm.selectedFaws;
-                    dataStoreService.fawsAccounts.selectedFawsAccountNumber = vm.selectedFawsNum;
+                    var tempSelectedFaws = vm.selectedFaws;
+
+                    //split the name and number from the selected value 
+                    var tempName = tempSelectedFaws.split('(')[0];
+                    var temp1 = tempSelectedFaws.split('#')[1];
+                    var tempNum = temp1.split(')')[0];
+
+
+                    vm.selectedFawsName = tempName; //local component vars
+                    vm.selectedFawsNum = tempNum;                                  
+
+                    vm.fawsAccountDetails.selectedFawsAccount = tempName; //for localstorage save
+                    vm.fawsAccountDetails.selectedFawsAccountNumber = tempNum;
+                    
+                    dataStoreService.saveFawsDetails(vm.fawsAccountDetails); //save in localstorage for future
                 };
 
                 /**
