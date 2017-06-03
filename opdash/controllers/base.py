@@ -429,6 +429,9 @@ class SamlBlueprint(SecureBlueprint):
         if len(errors) > 0:
 
             # Encountered An Error Authenticating
+            current_app.logger.error(
+                "Received errors from SAML authentication: {0}".format(
+                    ', '.join(errors)), extra=errors)
             abort(403)
 
         else:
