@@ -131,7 +131,6 @@
                     var temp1 = tempSelectedFaws.split('#')[1];
                     var tempNum = temp1.split(')')[0];
 
-
                     vm.selectedFawsName = tempName; //local component vars
                     vm.selectedFawsNum = tempNum;                                  
 
