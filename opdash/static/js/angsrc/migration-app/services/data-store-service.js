@@ -283,11 +283,10 @@
 
             /**
              * @ngdoc method
-             * @name saveFawsDetails
+             * @name fetchFawsDetails
              * @methodOf migrationApp.service:datastoreservice
-             * @param {Array} items The list of FAWS accounts associated with a tenant
              * @description 
-             * Saves list of FAWS accounts for a Tenant ID.
+             * Returns list of FAWS accounts for a Tenant ID.
              */
             this.fetchFawsDetails = function(){
                return self.fawsAccounts;
