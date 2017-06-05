@@ -7,9 +7,8 @@ flask-caching
 # ONELOGIN PYTHON-SAML
 isodate
 defusedxml
-python-saml
+python-saml==2.2.0
 
 boto3
 pyyaml
 pycrypto
-
