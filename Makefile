@@ -3,15 +3,6 @@
 # Ensure virtualenv has correct Python version
 VIRTUALENV              = virtualenv --python=python2.7
 
-# Use this for "plain" pip installs
-PLAIN_PIP_INSTALL       = pip install -U
-
-# Use this for pip installs that require environment settings
-WE_PIP_INSTALL	        = we -e pip-$(ENV).yml $(PLAIN_PIP_INSTALL)
-
-# Use this for build commands that require environment settings
-WE_ENV			= we -a env-$(ENV).yml
-
 # Define the virtualenv for "local" builds
 VENV                    = .venv
 VENV_ACTIVATE           = . $(VENV)/bin/activate
@@ -22,17 +13,25 @@ OPS_VENV_ACTIVATE       = . $(OPS_VENV)/bin/activate
 OPS_REQUIREMENTS        = $(OPS_VENV) require-env
 
 # Define tox defaults
-TOX 			= tox
-TOX_ARGS 		?= -r
+TOX                     = tox
+TOX_ARGS                ?= -r
 
 # Define method for invoking "ops" commands
 OPDASH_CP_OPS           = python ops/main.py
 
-ALIAS_DOC_URL           = http://withenv.readthedocs.io/en/latest/usage.html#creating-an-alias
+ENV                     ?= local
 
-ENV 			?= local
+PIP_CONFIG_FILE         ?= config/pip/$(ENV).conf
+PIP_CONF                = PIP_CONFIG_FILE=$(PIP_CONFIG_FILE)
+PIP_INSTALL             = $(PIP_CONF) pip install -U
+
+DOCKER                  = docker
 
 OPEN                    = open
+
+CONTAINER_TAG           = `git describe --tags --long --always --dirty`
+
+CONTROL_ARGS            = "-h"
 
 
 ##### Help #####
@@ -53,19 +52,18 @@ help:
 
 $(VENV):
 	$(VIRTUALENV) $(VENV)
-	$(VENV_ACTIVATE); $(PLAIN_PIP_INSTALL) pip
-	$(VENV_ACTIVATE); $(PLAIN_PIP_INSTALL) -c constraints.txt withenv
-	$(VENV_ACTIVATE); $(WE_PIP_INSTALL) -c constraints.txt tox
+	$(VENV_ACTIVATE); $(PIP_INSTALL) pip
+	$(VENV_ACTIVATE); $(PIP_INSTALL) -c constraints.txt tox
 
 venv: $(VENV) ## Create Python virtual environment.
 
 setup: $(VENV) ## Install/upgrade project and development requirements in virtual environment.
         # install in same order as tox: 1. dev requirements 2. project
-	$(VENV_ACTIVATE); $(WE_PIP_INSTALL) -c constraints.txt -r dev_requirements.txt
-	$(VENV_ACTIVATE); $(WE_PIP_INSTALL) -c constraints.txt -e .
+	$(VENV_ACTIVATE); $(PIP_INSTALL) -c constraints.txt -r dev_requirements.txt
+	$(VENV_ACTIVATE); $(PIP_INSTALL) -c constraints.txt -e .
 
 test: $(VENV) ## The official test suite entry point. You can verify your patch by running `make test`.
-	$(VENV_ACTIVATE); $(TOX) $(TOX_ARGS)
+	$(VENV_ACTIVATE); $(PIP_CONF) $(TOX) $(TOX_ARGS)
 
 test-unit: $(VENV) ## Run unit tests.  Skips integrated tests requiring fixtures like Dynamo.  To refresh Python dependencies, run `tox -r`
 	$(VENV_ACTIVATE); $(TOX) -e py27,flake8 -- tests/unit
@@ -74,19 +72,15 @@ test-unit: $(VENV) ## Run unit tests.  Skips integrated tests requiring fixtures
 ##### Documentation #####
 
 docs: $(VENV) ## Build the docs and open them in a browser. If you're on linux you can use `make -e OPEN=xdg-open` to see them in a browser automatically.
-	$(VENV_ACTIVATE); $(PLAIN_PIP_INSTALL) sphinx
+	$(VENV_ACTIVATE); $(PIP_INSTALL) sphinx
 	$(VENV_ACTIVATE); cd docs && make html
 	$(OPEN) docs/_build/html/index.html
 
 
 ##### Execution #####
 
-require-env: ## Ensure the "ENV" variable has been set
-ifeq "$(origin ENV)" "file"
-	$(error ENV not explicitly set! \
-	ENV used to load an env alias (see $(ALIAS_DOC_URL)). \
-	Ex: "make ENV=foo ..." loads env-foo.yml)
-endif
+run: $(VENV) ## Run opdash-cp locally
+	$(VENV_ACTIVATE); python application.py
 
 
 ##### Operations #####
@@ -96,17 +90,33 @@ ops-help: ## Learn a bit about the ops workflow.
 	@echo ""
 	cat docs/ops.rst
 
+require-env: ## Ensure the required variables have been set
+ifeq "$(origin ENV)" "file"
+	$(error ENV not explicitly set! \
+	ENV is needed to pass params to PIP. \
+	Ex: "make ENV=foo ..." sets PIP_INDEX_URL, etc)
+endif
+
+ifndef AWS_DEFAULT_REGION
+	    $(error Please set the AWS_DEFAULT_REGION environment variable explicitly!)
+endif
+ifndef AWS_ACCESS_KEY_ID
+	    $(error Please set the AWS_ACCESS_KEY_ID environment variable explicitly!)
+endif
+ifndef AWS_SECRET_ACCESS_KEY
+	    $(error Please set the AWS_SECRET_ACCESS_KEY environment variable explicitly!)
+endif
+
 setup-ops: ## Create a virtualenv for running ops tasks
 	$(VIRTUALENV) $(OPS_VENV)
-	$(OPS_VENV_ACTIVATE); $(PLAIN_PIP_INSTALL) pip
-	$(OPS_VENV_ACTIVATE); $(PLAIN_PIP_INSTALL) withenv
-	$(OPS_VENV_ACTIVATE); $(WE_PIP_INSTALL) -r ops_requirements.txt
+	$(OPS_VENV_ACTIVATE); $(PIP_INSTALL) pip
+	$(OPS_VENV_ACTIVATE); $(PIP_INSTALL) -r ops_requirements.txt
 
-release: $(OPS_REQUIREMENTS) ## Tag and push a Docker image to ECR
-	$(OPS_VENV_ACTIVATE); $(OPDASH_CP_OPS) release
+release: require-env ## Tag and push a Docker image to ECR
+	$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) release
 
-deploy: $(OPS_REQUIREMENTS) ## Create/Update ECS Tasks and Services with current tag
-	$(OPS_VENV_ACTIVATE); $(OPDASH_CP_OPS) deploy
+deploy: require-env ## Create/Update ECS Tasks and Services with current tag
+	$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) deploy
 
 
 ##### Utilities #####

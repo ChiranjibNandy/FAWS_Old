@@ -40,3 +40,18 @@ pip install .
 ```
 python application.py
 ```
+
+# Setup using the Makefile
+
+```bash
+# install python dependencies in a virtualenv
+make setup
+
+# run the unit tests with tox
+make test
+
+# run flask
+make run
+```
+
+Use `make help` to get descriptions of all the Makefile targets.
