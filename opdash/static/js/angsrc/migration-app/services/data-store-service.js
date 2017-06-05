@@ -662,7 +662,7 @@
 
             this.addCredsForFawsAccount = function(requestObj) {
                 var self = this;
-                return HttpWrapper.save("/api/tenants/add_credentials", {"operation":'POST'}, requestObj)
+                return HttpWrapper.save("/api/tenants/credentials", {"operation":'POST'}, requestObj)
                     .then(function(result){
                        return result;
                     },function(error) {
