@@ -430,9 +430,30 @@ class SamlBlueprint(SecureBlueprint):
 
             # Encountered An Error Authenticating
 
+            current_app.logger.error("********** START ***************")
+
             current_app.logger.error(
-                "Error when processing SAML Response: %s" % (
-                    ', '.join(errors)))
+                "Error processing SAML Response: {0}".format(
+                    ', '.join(errors))
+            )
+
+            current_app.logger.error(
+                "Last SAML error reason: {0}".format(
+                    self.saml_auth.get_last_error_reason())
+            )
+
+            current_app.logger.error(
+                "Last SAML request XML: {0}".format(
+                    self.saml_auth.get_last_request_xml())
+            )
+
+            current_app.logger.error(
+                "Last SAML response XML: {0}".format(
+                    self.saml_auth.get_last_response_xml())
+            )
+
+            current_app.logger.error("************ END *************")
+
             abort(403)
 
         else:
