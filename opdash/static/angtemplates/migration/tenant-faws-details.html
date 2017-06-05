@@ -3,7 +3,7 @@
         <span class="migr-ddi-name"><i class="fa fa-arrow-right fa-fw"></i>
             <div class="rs-dropdown rs-primary-dropdown" ng-class="{'disabled': !vm.displayFawsDropdown}">
                 <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.fawsAcctStatus && !vm.displayFawsDropdown"> <div>{{vm.selectedFaws}}</div></a>
-                <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.fawsAcctStatus && vm.displayFawsDropdown"> <div class="faws-name">{{vm.selectedFawsName}}</div><div class="faws-account"> &nbsp;({{vm.selectedFawsNum}}</div> <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span></a>
+                <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.fawsAcctStatus && vm.displayFawsDropdown"> <div class="faws-name">{{vm.selectedFawsName}}</div><div class="faws-account"> &nbsp;({{vm.selectedFawsNum}})</div> <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span></a>
                 <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="!vm.fawsAcctStatus"> No AWS Accounts Found <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span></a>
                 <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.displayFawsDropdown"><i class="rs-caret"></i></a>
                 <ul class="rs-dropdown-menu hidden">
@@ -38,11 +38,11 @@
 <div id="create-faws-account-modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-        <big>Please provide following details to Add credentials for the new FAWS Account.</big>
+        <big>Please provide following details to add credentials for the new FAWS Account.</big>
     </div>
     <div class="modal-body">
         <div ng-show="vm.fawsCreated">
-            <big>Successfully Added Credentials!</big><br>
+            <big>Successfully added Credentials!</big><br>
             <!--<br>
             <b>Account Name : </b> {{vm.newAccountDetails.name}}<br> 
             <b>Accout Number :</b> {{vm.newAccountDetails.awsAccountNumber}}<br>
@@ -57,17 +57,17 @@
                     <div class="col-sm-10">
                         <input type="text" ng-model="vm.fawsAcctName" class="rs-input-xlarge" placeholder="AWS Account Name" />
                     </div>
-                    <label class="col-sm-2 control-label">Account ID &nbsp;&nbsp;&nbsp;&nbsp;  </label>
+                    <label class="col-sm-2 control-label">Account ID <span class="tab"></span></label>
                     <div class="col-sm-10">
                         <input type="text" ng-model="vm.fawsAcctId" class="rs-input-xlarge" placeholder="AWS Account ID" />
                     </div>
                 
-                    <label class="col-sm-2 control-label">Access Key &nbsp;&nbsp;&nbsp;  </label>
+                    <label class="col-sm-2 control-label">Access Key<span class="tab"></span></label>
                     <div class="col-sm-10">
                         <input type="text" ng-model="vm.fawsAccessKey" class="rs-input-xlarge" placeholder="AWS Access Key" />
                     </div>
                 
-                    <label class="col-sm-2 control-label">Secret Key &nbsp;&nbsp;&nbsp;&nbsp;  </label>
+                    <label class="col-sm-2 control-label">Secret Key<span class="tab"></span></label>
                     <div class="col-sm-10">
                         <input type="text" ng-model="vm.fawsSecretKey" class="rs-input-xlarge" placeholder="AWS Secret Key" />
                     </div>
