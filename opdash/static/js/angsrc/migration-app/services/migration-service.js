@@ -23,7 +23,7 @@
              */
             this.pauseMigration = function(job_id,detail){
                var pauseUrl = "api/jobs/"+job_id+"/"+detail;
-               return HttpWrapper.send(pauseUrl, {"operation":'GET'})
+               return HttpWrapper.send(pauseUrl, {"operation":'POST'})
                     .then(function(result){
                         return true;
                     },function(error) {
