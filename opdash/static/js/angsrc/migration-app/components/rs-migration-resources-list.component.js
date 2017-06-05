@@ -53,6 +53,7 @@
                             }
                             else{
                                 vm.noFawsAccounts = false;
+                                vm.fawsAccType = result.mode;
                             }
                             vm.introModalLoading = false;
                         });
@@ -429,6 +430,15 @@
                     vm.itemsLoading = status;
                 };
 
+                vm.switchUser = function(){
+                    vm.isRacker = !vm.isRacker;
+                }
+
+                vm.simulateNoFaws = function(){
+                    vm.noFawsAccounts = !vm.noFawsAccounts;
+                    var tenant_id = authservice.getAuth().tenant_id;
+                    vm.fawsLink = "https://mycloud.rackspace.com/cloud/"+tenant_id+"/tickets#new";
+                }
                 return vm;
             }
         ]}); // end of component rsmigrationresourceslist

@@ -125,21 +125,21 @@
                 <br><br>
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Account Name </label>
+                        <label class="col-sm-2 control-label">Account Name <span class="half-tab"></span></label>
                         <div class="col-sm-10">
                             <input  style="margin-left: -4px" type="text" ng-model="vm.fawsAcctName" class="rs-input-xlarge" placeholder="AWS Account Name" />
                         </div>
-                        <label class="col-sm-2 control-label">Account ID &nbsp;&nbsp;&nbsp;&nbsp;  </label>
+                        <label class="col-sm-2 control-label">Account ID <span class="tab"></span></label>
                         <div class="col-sm-10">
                             <input type="text" ng-model="vm.fawsAcctId" class="rs-input-xlarge" placeholder="AWS Account ID" />
                         </div>
                     
-                        <label class="col-sm-2 control-label">Access Key &nbsp;&nbsp;&nbsp;  </label>
+                        <label class="col-sm-2 control-label">Access Key<span class="tab"></span></label>
                         <div class="col-sm-10">
                             <input type="text" ng-model="vm.fawsAccessKey" class="rs-input-xlarge" placeholder="AWS Access Key" />
                         </div>
                     
-                        <label class="col-sm-2 control-label">Secret Key &nbsp;&nbsp;&nbsp;&nbsp;  </label>
+                        <label class="col-sm-2 control-label">Secret Key <span class="space"></span><span class="tab"></span></label>
                         <div class="col-sm-10">
                             <input type="text" ng-model="vm.fawsSecretKey" class="rs-input-xlarge" placeholder="AWS Secret Key" />
                         </div>
@@ -149,11 +149,31 @@
                 <a class="rs-btn rs-btn-primary rs-pull-right" style="margin-right: 75px;" ng-disabled="!vm.fawsAcctName || !vm.fawsAccessKey || !vm.fawsSecretKey || !vm.fawsAcctId" ng-click="vm.createFawsAccount()" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
                 <a class="rs-btn disabled rs-pull-right" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
             </div>
-            <div class="span-7" style="margin-top:120px" ng-show="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker">
-                <big>It seems you don't have an AWS account. Please click <a ng-href="{{vm.fawsLink}}" target="_blank">here</a> to create one</big>
+            <div class="span-7" ng-show="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker">
+                <h2>Migrate in just 4 easy steps:</h2>
+                <big>
+                    <ol class="rs-custom-counter">
+                        <li><b><a ng-href="{{vm.fawsLink}}" target="_blank">Create</a> FAWS account to start migration</b></li>
+                        <li style="color: #888"><b>Select resources to migrate</b></li>
+                        <li style="color: #888"><b>Get our recommendation and make modifications</b></li>
+                        <li style="color: #888"><b>Schedule and confirm migration</b></li>
+                    </ol>
+                </big>
+                <br>
+                <br>
+                <h3><em>Need more information?</em></h3>
+
+                <a href="https://www.rackspace.com/en-us/managed-aws" target="_blank">Rackspace Managed AWS</a>
+                <br>
+                <a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Pricing and Support Levels</a>
+                <!--<big>It seems you don't have an AWS account. Please click <a ng-href="{{vm.fawsLink}}" target="_blank">here</a> to create one</big>-->
             </div>
             <div class="span-5 rs-center" style="width : 35%">
                 <img src="/static/img/monitor.png" alt="">
+                <div class="rs-row">
+                    <button class="rs-btn" style="float:left; font-size:11px !important" ng-click="vm.switchUser()">Switch to {{vm.isRacker ? 'Customer' : 'Racker'}}</button>
+                    <button class="rs-btn" style="float:right; font-size:11px !important" ng-click="vm.simulateNoFaws()">{{vm.noFawsAccounts ? 'Revert to original status' : 'Simulate No FAWS Accounts'}}</button>
+                </div>
             </div>
         </div>
         <br>

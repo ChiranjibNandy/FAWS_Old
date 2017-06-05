@@ -29,6 +29,9 @@
                 </ul>
             </div>
         </span>
+        <span>
+            <button ng-show="vm.showCreateAccount" class="rs-btn pull-right" ng-click="vm.switchUser()">Switch to {{vm.is_racker ? 'Customer' : 'Racker'}}</button>
+        </span>
     </div>
 </div>
 <div class="migr-name" ng-show="vm.editmigration === 'true'">
@@ -53,7 +56,7 @@
         <div ng-hide= "vm.fawsCreated || vm.fawsError">
             <form class="form-horizontal">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Account Name </label>
+                    <label class="col-sm-2 control-label">Account Name <span class="half-tab"></span></label>
                     <div class="col-sm-10">
                         <input type="text" ng-model="vm.fawsAcctName" class="rs-input-xlarge" placeholder="AWS Account Name" />
                     </div>
@@ -67,7 +70,7 @@
                         <input type="text" ng-model="vm.fawsAccessKey" class="rs-input-xlarge" placeholder="AWS Access Key" />
                     </div>
                 
-                    <label class="col-sm-2 control-label">Secret Key<span class="tab"></span></label>
+                    <label class="col-sm-2 control-label">Secret Key <span class="space"></span><span class="tab"></span></label>
                     <div class="col-sm-10">
                         <input type="text" ng-model="vm.fawsSecretKey" class="rs-input-xlarge" placeholder="AWS Secret Key" />
                     </div>
