@@ -41,6 +41,7 @@
                 vm.fawsCreated = false;
                 vm.fawsCreationProgress = false;
                 vm.showCreateAccount = false;
+                vm.displayFawsDropdown = true;
                 vm.fawsResponse = false;
                 vm.fawsError = false;
                 vm.newAccountDetails = {};
@@ -67,6 +68,13 @@
                 else 
                     vm.showCreateAccount = false;
 
+                if (vm.currentPage == "ConfirmMigration"){
+                     vm.displayFawsDropdown = false;
+                }
+                else{
+                    vm.displayFawsDropdown = true;
+                }
+
                 /**
                   * @ngdoc method
                   * @name fetchFawsAccounts
@@ -87,12 +95,12 @@
                                 if(dataStoreService.fetchFawsDetails().selectedFawsAccount == undefined || dataStoreService.fetchFawsDetails().selectedFawsAccount == ''){
                                     vm.selectedFawsName = vm.awsAccountsDetails[0].name;
                                     vm.selectedFawsNum=vm.awsAccountsDetails[0].awsAccountNumber;
-                                    vm.selectedFaws = vm.selectedFawsName + "(#" +  vm.selectedFawsNum + ")"; //to display in faws dropdown default value 
+                                    vm.selectedFaws = vm.selectedFawsName.trim() + " " + "(#" + vm.selectedFawsNum + ")"; //to display in faws dropdown default value
                                 }
                                 else{
                                     vm.selectedFawsName = dataStoreService.fetchFawsDetails().selectedFawsAccount;
                                     vm.selectedFawsNum = dataStoreService.fetchFawsDetails().selectedFawsAccountNumber;
-                                    vm.selectedFaws = vm.selectedFawsName + "(#" +  vm.selectedFawsNum + ")"; //to display in faws dropdown default value
+                                    vm.selectedFaws = vm.selectedFawsName.trim() + " " + "(#" + vm.selectedFawsNum + ")"; //to display in faws dropdown default value
                                 }
                                 vm.fawsAccountDetails = {
                                         awsAccounts:vm.awsAccountsDetails,
@@ -113,7 +121,7 @@
                     vm.awsAccountsDetails = vm.fawsAccountDetails.awsAccounts;
                     vm.selectedFawsName = vm.fawsAccountDetails.selectedFawsAccount;
                     vm.selectedFawsNum = vm.fawsAccountDetails.selectedFawsAccountNumber;
-                    vm.selectedFaws = vm.selectedFawsName + "(#" +  vm.selectedFawsNum + ")"; //to display in faws dropdown default value
+                    vm.selectedFaws = vm.selectedFawsName.trim() + " " + "(#" + vm.selectedFawsNum + ")"; //to display in faws dropdown default value
                 }
 
                 /**
@@ -132,7 +140,7 @@
                     var tempNum = temp1.split(')')[0];
 
                     vm.selectedFawsName = tempName; //local component vars
-                    vm.selectedFawsNum = tempNum;                                  
+                    vm.selectedFawsNum = tempNum;                          
 
                     vm.fawsAccountDetails.selectedFawsAccount = tempName; //for localstorage save
                     vm.fawsAccountDetails.selectedFawsAccountNumber = tempNum;

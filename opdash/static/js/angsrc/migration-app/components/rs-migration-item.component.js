@@ -178,6 +178,7 @@
                      * @description Set of resources retrieved during first time loading of application
                      */
                     var resources_retrieved = datastoreservice.retrieveallItems(vm.type);
+                    vm.parent.itemsLoadingStatus(true);
                     //check if resources already retrieved
 
                     //if(resources_retrieved.length == 0){ -- Previous Block
@@ -313,6 +314,7 @@
                             });
                             //to be removed after precheck API works fine
                             vm.loading = false;
+                            vm.parent.itemsLoadingStatus(false);
                         }, function(error){
                             vm.loading = false;
                             vm.loadError = true;
@@ -346,6 +348,7 @@
                             vm.labels = datastoreservice.retrieveallItems("label"+vm.type); // set table headers
 
                         vm.loading = false;
+                        vm.parent.itemsLoadingStatus(false);
                         
                         //var servers_selected = datastoreservice.getItems(vm.type); -- Previous Code
                         var servers_selected = [];

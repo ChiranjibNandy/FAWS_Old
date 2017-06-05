@@ -671,7 +671,7 @@ body .modal.details2 {
     border-top: none;
     padding: 10px;
     background: #f9f9f9;
-    color: #999;
+    color: #000;
 }
 
 .accordion-toggle:hover,
@@ -896,4 +896,23 @@ body .modal.details2 {
 .control-div{
     float: right;
     margin-right: 70px;
+}
+
+.tab {
+    display:inline-block; 
+    margin-left: 40px;
+}
+
+.space {
+    text-indent: 10px;
+}
+
+.equipment-err {
+    padding-top: 5px;
+    text-align: center; 
+}
+
+.allign-buttons{
+    margin-top: -49px; 
+    margin-left:790px
 }
