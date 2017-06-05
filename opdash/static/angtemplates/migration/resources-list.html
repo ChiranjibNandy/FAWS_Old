@@ -28,11 +28,11 @@
                     <!--<rs-tab title="Networks">
                                     <rsmigrationitem type="network" filtervalue="vm.filterSearch"></rsmigrationitem>
                                 </rs-tab>-->
-                    <rs-tab tabtitle="Load Balancers" ng-if="vm.isRacker" showtab="true">
+                    <rs-tab tabtitle="Load Balancers" ng-show="vm.isRacker" showtab="false">
                         <!--Load Balancers-->
                         <rsmigrationitem type="LoadBalancers" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
-                    <rs-tab tabtitle="Files" ng-if="vm.isRacker" class="disabled" showtab="true">
+                    <rs-tab tabtitle="Files" ng-show="vm.isRacker" class="disabled" showtab="false">
                         <!--Files-->
                         <rsmigrationitem type="Files" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
@@ -172,7 +172,7 @@
                 <img src="/static/img/monitor.png" alt="">
                 <div class="rs-row">
                     <button class="rs-btn" style="float:left; font-size:11px !important" ng-click="vm.switchUser()">Switch to {{vm.isRacker ? 'Customer' : 'Racker'}}</button>
-                    <button class="rs-btn" style="float:right; font-size:11px !important" ng-click="vm.simulateNoFaws()">{{vm.noFawsAccounts ? 'Revert to original status' : 'Simulate No FAWS Accounts'}}</button>
+                    <button class="rs-btn" style="float:right; font-size:11px !important" ng-click="vm.simulateNoFaws()">{{vm.noFawsAccounts ? 'Revert to original status' : 'No FAWS Accounts'}}</button>
                 </div>
             </div>
         </div>
