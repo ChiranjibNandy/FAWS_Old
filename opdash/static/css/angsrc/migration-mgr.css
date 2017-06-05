@@ -903,6 +903,11 @@ body .modal.details2 {
     margin-left: 40px;
 }
 
+.half-tab {
+    display:inline-block; 
+    margin-left: 20px;
+}
+
 .space {
     text-indent: 10px;
 }

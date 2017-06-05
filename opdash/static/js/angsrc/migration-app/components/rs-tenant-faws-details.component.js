@@ -96,11 +96,13 @@
                                     vm.selectedFawsName = vm.awsAccountsDetails[0].name;
                                     vm.selectedFawsNum=vm.awsAccountsDetails[0].awsAccountNumber;
                                     vm.selectedFaws = vm.selectedFawsName.trim() + " " + "(#" + vm.selectedFawsNum + ")"; //to display in faws dropdown default value
+                                    vm.fawsAccType = result.mode;
                                 }
                                 else{
                                     vm.selectedFawsName = dataStoreService.fetchFawsDetails().selectedFawsAccount;
                                     vm.selectedFawsNum = dataStoreService.fetchFawsDetails().selectedFawsAccountNumber;
                                     vm.selectedFaws = vm.selectedFawsName.trim() + " " + "(#" + vm.selectedFawsNum + ")"; //to display in faws dropdown default value
+                                    vm.fawsAccType = result.mode;
                                 }
                                 vm.fawsAccountDetails = {
                                         awsAccounts:vm.awsAccountsDetails,
@@ -207,6 +209,9 @@
                         });
                     };
 
+                vm.switchUser = function() {
+                    vm.is_racker = !vm.is_racker;
+                }
                 return vm;
             }]
         }); // end of component definition
