@@ -29,10 +29,6 @@ DOCKER                  = docker
 
 OPEN                    = open
 
-CONTAINER_TAG           = `git describe --tags --long --always --dirty`
-
-CONTROL_ARGS            = "-h"
-
 
 ##### Help #####
 
@@ -58,7 +54,7 @@ $(VENV):
 venv: $(VENV) ## Create Python virtual environment.
 
 setup: $(VENV) ## Install/upgrade project and development requirements in virtual environment.
-        # install in same order as tox: 1. dev requirements 2. project
+	# install in same order as tox: 1. dev requirements 2. project
 	$(VENV_ACTIVATE); $(PIP_INSTALL) -c constraints.txt -r dev_requirements.txt
 	$(VENV_ACTIVATE); $(PIP_INSTALL) -c constraints.txt -e .
 
@@ -66,7 +62,7 @@ test: $(VENV) ## The official test suite entry point. You can verify your patch 
 	$(VENV_ACTIVATE); $(PIP_CONF) $(TOX) $(TOX_ARGS)
 
 test-unit: $(VENV) ## Run unit tests.  Skips integrated tests requiring fixtures like Dynamo.  To refresh Python dependencies, run `tox -r`
-	$(VENV_ACTIVATE); $(TOX) -e py27,flake8 -- tests/unit
+	$(VENV_ACTIVATE); $(PIP_CONF) $(TOX) -e py27,flake8 -- tests/unit
 
 
 ##### Documentation #####
@@ -113,10 +109,10 @@ setup-ops: ## Create a virtualenv for running ops tasks
 	$(OPS_VENV_ACTIVATE); $(PIP_INSTALL) -r ops_requirements.txt
 
 release: require-env ## Tag and push a Docker image to ECR
-	$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) release
+	$(OPS_VENV_ACTIVATE); ENV=$(ENV) $(OPDASH_CP_OPS) release
 
 deploy: require-env ## Create/Update ECS Tasks and Services with current tag
-	$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) deploy
+	$(OPS_VENV_ACTIVATE); ENV=$(ENV) $(OPDASH_CP_OPS) deploy
 
 
 ##### Utilities #####
