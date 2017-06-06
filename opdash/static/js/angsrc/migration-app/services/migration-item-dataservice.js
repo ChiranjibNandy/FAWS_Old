@@ -166,9 +166,17 @@
                 });
 
                 if (dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < moment().unix()) {
-                    reqObj.start = moment().unix();
+   reqObj.start =  moment().unix(); 
+//code for iso conversion           
+ //var isoDate = moment().unix();
+//reqObj.start = moment().unix(isoDate).toISOString();
                     dataStoreService.selectedTime.time = reqObj.start;
                 } else {
+//code for iso conversion
+                 //var isoDate =dataStoreService.selectedTime.time;
+
+                    //reqObj.start = moment.unix(isoDate).toISOString();
+
                     reqObj.start = dataStoreService.selectedTime.time;
                 }
 
