@@ -3,6 +3,8 @@
     font-family: FontAwesome;
     src: url('../font-awesome/fonts/FontAwesome.otf');
 }
+
+
 .white-panel {
     background: #fff;
     padding: 1em;
@@ -394,11 +396,11 @@ a:hover,
 }*/
 
 .migration-mgr .rs-list-table td:nth-child(2) a {
-    display: inline-block;
-    max-width: 200px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    display: inline-block ;
+    max-width: 200px ;
+    white-space: nowrap ;
+    overflow: hidden ;
+    text-overflow: ellipsis ;
 }
 
 .migration-mgr .rs-list-table.no-truncate-td td:nth-child(2) a {
@@ -923,4 +925,17 @@ body .modal.details2 {
 }
 .current{
 font-weight:bold;
+
+}
+
+.pagination ul > li current{
+background-color:#dddddd !important;
+
+}
+.migrationdashBoard-mgr .rs-list-table td:nth-child(2) a {
+    display: inline-block !important;
+    max-width: 417px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
 }

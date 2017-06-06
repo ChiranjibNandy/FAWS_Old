@@ -1,5 +1,5 @@
 <br>
-<div class="rs-container migration-mgr" ng-style="vm.isRacker == true ? {'margin-top':'30px'} : {'margin-top':'0px'}">
+<div class="rs-container migrationdashBoard-mgr migration-mgr " ng-style="vm.isRacker == true ? {'margin-top':'30px'} : {'margin-top':'0px'}">
     <div class="alert alert-success animated fadeIn" ng-if="vm.afterNewMigration">
         <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
         <h3>Success! Migration for {{vm.resourceCount}} resources confirmed at {{vm.schedule.date}} at {{vm.schedule.time}}</h3>
@@ -64,11 +64,7 @@
                             <tr>
                                 <td class="rs-table-status tip rs-table-status-ok"></td>
                                 <td class="rs-table-link">
-                                    <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: vm.initiatedMigration.job_id}]" style="{display: inline-block;
-    max-width: 342px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;}">{{vm.initiatedMigration.batch_name}}</a>
+                                    <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: vm.initiatedMigration.job_id}]" class="dashBoard"  >{{vm.initiatedMigration.batch_name}}</a>
                                 </td>
                                 <td>{{vm.batchInitiatedBy}}</td>
                                 <td class="rs-table-text ng-binding">
@@ -95,7 +91,7 @@
                                 <td class="rs-table-status tip" ng-class="{'rs-table-status-pending': (batch.batch_status==='not available' || batch.timestamp), 'rs-table-status-warning': batch.batch_status==='scheduled'||'paused', 'rs-table-status-ok rs-table-status-ok-processing rs-table-status-striped': batch.batch_status==='in progress' , 'rs-table-status-error': batch.batch_status==='error'}"></td>
                                 <td class="rs-table-link">
                                     <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]">{{batch.batch_name}}</a>
-                                    <a ng-show="batch.timestamp" href="javascript:void(0)" ng-click="vm.continueScheduling(batch);">{{batch.batch_name}}</a>
+                                    <!-- <a ng-show="batch.timestamp" href="javascript:void(0)" ng-click="vm.continueScheduling(batch);">{{batch.batch_name}}</a>-->
                                 </td>
                                 <td>{{vm.batchInitiatedBy}}</td>
                                 <td class="rs-table-text ng-binding">
