@@ -430,29 +430,27 @@ class SamlBlueprint(SecureBlueprint):
 
             # Encountered An Error Authenticating
 
-            current_app.logger.error("********** START ***************")
+            current_app.logger.debug("***** SAML DEBUG START *****")
 
             current_app.logger.error(
-                "Error processing SAML Response: {0}".format(
-                    ', '.join(errors))
-            )
+                "SAML ERROR ENCOUNTERED, IS IDP PUBLIC KEY UP TO DATE?")
+
+            current_app.logger.error("SAML ERROR IS: {0}".format(
+                ', '.join(errors)))
 
             current_app.logger.error(
-                "Last SAML error reason: {0}".format(
-                    self.saml_auth.get_last_error_reason())
-            )
+                "SAML ERROR LAST REASON IS: {0}".format(
+                    self.saml_auth.get_last_error_reason()))
 
-            current_app.logger.error(
+            current_app.logger.debug(
                 "Last SAML request XML: {0}".format(
-                    self.saml_auth.get_last_request_xml())
-            )
+                    self.saml_auth.get_last_request_xml()))
 
-            current_app.logger.error(
+            current_app.logger.debug(
                 "Last SAML response XML: {0}".format(
-                    self.saml_auth.get_last_response_xml())
-            )
+                    self.saml_auth.get_last_response_xml()))
 
-            current_app.logger.error("************ END *************")
+            current_app.logger.debug("***** SAML DEBUG END *****")
 
             abort(403)
 
