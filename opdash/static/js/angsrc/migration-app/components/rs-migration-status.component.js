@@ -84,7 +84,7 @@
                          vm.currentUser = authservice.getAuth().account_name;
                     } //end of if condition
                     vm.sortBy = {
-                        current_batch: '-start',
+                        current_batch: '-batch_status',
                         completed_batch: '-start'
                     };
 
