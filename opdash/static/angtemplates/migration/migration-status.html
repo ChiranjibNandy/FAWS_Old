@@ -64,7 +64,11 @@
                             <tr>
                                 <td class="rs-table-status tip rs-table-status-ok"></td>
                                 <td class="rs-table-link">
-                                    <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: vm.initiatedMigration.job_id}]">{{vm.initiatedMigration.batch_name}}</a>
+                                    <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: vm.initiatedMigration.job_id}]" style="{display: inline-block;
+    max-width: 342px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;}">{{vm.initiatedMigration.batch_name}}</a>
                                 </td>
                                 <td>{{vm.batchInitiatedBy}}</td>
                                 <td class="rs-table-text ng-binding">
@@ -179,7 +183,7 @@
                     <ul>
                         <li><span>Showing {{(vm.currentBatches.currentPage == 1 ? vm.currentBatches.currentPage : ((vm.currentBatches.currentPage-1)*5)+1)}}-{{(vm.currentBatches.currentPage == vm.currentBatches.noOfPages ? vm.currentBatches.items.length : vm.currentBatches.currentPage*5)}} of {{vm.currentBatches.items.length}}</span></li>
                         <li ng-class="{disabled: vm.currentBatches.currentPage == 1}" ng-click="vm.currentBatches.currentPage=vm.currentBatches.currentPage-1"><a href="">Prev</a></li>
-                        <li ng-repeat="n in vm.currentBatches.pages track by $index" ng-click="vm.currentBatches.currentPage = $index+1"><a href="">{{$index+1}}</a></li>
+                        <li ng-repeat="n in vm.currentBatches.pages track by $index" ng-click="vm.currentBatches.currentPage = $index+1" ng-class ="{current: vm.currentBatches.currentPage == $index+1}"><a href="">{{$index+1}}</a></li>
                         <li ng-class="{disabled: vm.currentBatches.currentPage == vm.currentBatches.noOfPages}" ng-click="vm.currentBatches.currentPage=vm.currentBatches.currentPage+1"><a href="">Next</a></li>
                     </ul>
                 </div>  
