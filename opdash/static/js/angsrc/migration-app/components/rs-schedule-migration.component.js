@@ -112,7 +112,17 @@
                             time: moment(moment(vm.date).format("YYYY-MM-DD") + "T" + vm.getTime() + timeZoneDiff).unix(),
                             timezone:vm.timezone1,
                         };
-                        dataStoreService.setScheduleMigration(vm.migrationScheduleDetails);
+console.log(vm.migrationScheduleDetails.time);
+console.log(moment.unix(vm.migrationScheduleDetails.time).toISOString());
+var iSOTime = moment.unix(vm.migrationScheduleDetails.time).toISOString();
+
+vm.migrationScheduleDetail = {
+                            migrationName: dataStoreService.getScheduleMigration().migrationName,
+                            time: iSOTime,
+                            timezone:new Date().toTimeString().split(" ")[1]+" "+new Date().toTimeString().split(" ")[2],
+                        };
+
+                        dataStoreService.setScheduleMigration(vm.migrationScheduleDetail);
                     }else{
                         vm.showMigrationTime = true;
                         vm.showTimeForm = false;
@@ -122,7 +132,19 @@
                             time: moment().unix(),
                             timezone:new Date().toTimeString().split(" ")[1]+" "+new Date().toTimeString().split(" ")[2],
                         };
-                        dataStoreService.setScheduleMigration(vm.migrationScheduleDetails);
+
+console.log(vm.migrationScheduleDetails.time);
+console.log(moment.unix(vm.migrationScheduleDetails.time).toISOString());
+var iSOTime = moment.unix(vm.migrationScheduleDetails.time).toISOString();
+
+vm.migrationScheduleDetail = {
+                            migrationName: dataStoreService.getScheduleMigration().migrationName,
+                            time: iSOTime,
+                            timezone:new Date().toTimeString().split(" ")[1]+" "+new Date().toTimeString().split(" ")[2],
+                        };
+
+
+                        dataStoreService.setScheduleMigration(vm.migrationScheduleDetail);
                     }
                     //migrationItems.date = vm.selectedDate;
                     $rootScope.$emit("vm.scheduleMigration",true);

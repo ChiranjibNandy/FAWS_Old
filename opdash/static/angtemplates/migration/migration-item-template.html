@@ -40,7 +40,7 @@
 <div class="pagination pagination-mini span-4" ng-if="vm.totalItems">
     <ul>
         <li ng-class="{disabled: vm.currentPage == 1}" ng-click="vm.currentPage=vm.currentPage-1"><a href="">Prev</a></li>
-        <li ng-repeat="n in vm.pageArray" ng-click="vm.currentPage = $index+1"><a href="">{{n}}</a></li>
+        <li ng-repeat="n in vm.pageArray" ng-click="vm.currentPage = $index+1" ng-class ="{current: vm.currentPage == $index+1}"><a  ng-class ="{current: vm.currentPage == $index+1}" ng-style="{'background-color': vm.currentPage == $index+1 ? '#D3D3D3' : 'white'}" href="">{{n}}</a></li>
         <li ng-class="{disabled: vm.currentPage == vm.noOfPages}" ng-click="vm.currentPage=vm.currentPage+1"><a href="">Next</a></li>
         <li><span>Showing {{(vm.currentPage == 1 ? vm.currentPage : ((vm.currentPage-1)*5)+1)}}-{{(vm.currentPage == vm.noOfPages ? vm.totalItems : vm.currentPage*5)}} of {{vm.items.length}}</span></li>
     </ul>

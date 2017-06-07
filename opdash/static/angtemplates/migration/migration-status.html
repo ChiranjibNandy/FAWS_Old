@@ -1,5 +1,5 @@
 <br>
-<div class="rs-container migration-mgr" ng-style="vm.isRacker == true ? {'margin-top':'30px'} : {'margin-top':'0px'}">
+<div class="rs-container migrationdashBoard-mgr migration-mgr " ng-style="vm.isRacker == true ? {'margin-top':'30px'} : {'margin-top':'0px'}">
     <div class="alert alert-success animated fadeIn" ng-if="vm.afterNewMigration">
         <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
         <h3>Success! Migration for {{vm.resourceCount}} resources confirmed at {{vm.schedule.date}} at {{vm.schedule.time}}</h3>
@@ -64,7 +64,7 @@
                             <tr>
                                 <td class="rs-table-status tip rs-table-status-ok"></td>
                                 <td class="rs-table-link">
-                                    <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: vm.initiatedMigration.job_id}]">{{vm.initiatedMigration.batch_name}}</a>
+                                    <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: vm.initiatedMigration.job_id}]" class="dashBoard"  >{{vm.initiatedMigration.batch_name}}</a>
                                 </td>
                                 <td>{{vm.batchInitiatedBy}}</td>
                                 <td class="rs-table-text ng-binding">
@@ -91,7 +91,7 @@
                                 <td class="rs-table-status tip" ng-class="{'rs-table-status-pending': (batch.batch_status==='not available' || batch.timestamp), 'rs-table-status-warning': batch.batch_status==='scheduled'||'paused', 'rs-table-status-ok rs-table-status-ok-processing rs-table-status-striped': batch.batch_status==='in progress' , 'rs-table-status-error': batch.batch_status==='error'}"></td>
                                 <td class="rs-table-link">
                                     <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]">{{batch.batch_name}}</a>
-                                    <a ng-show="batch.timestamp" href="javascript:void(0)" ng-click="vm.continueScheduling(batch);">{{batch.batch_name}}</a>
+                                    <!-- <a ng-show="batch.timestamp" href="javascript:void(0)" ng-click="vm.continueScheduling(batch);">{{batch.batch_name}}</a>-->
                                 </td>
                                 <td>{{vm.batchInitiatedBy}}</td>
                                 <td class="rs-table-text ng-binding">
@@ -179,7 +179,7 @@
                     <ul>
                         <li><span>Showing {{(vm.currentBatches.currentPage == 1 ? vm.currentBatches.currentPage : ((vm.currentBatches.currentPage-1)*5)+1)}}-{{(vm.currentBatches.currentPage == vm.currentBatches.noOfPages ? vm.currentBatches.items.length : vm.currentBatches.currentPage*5)}} of {{vm.currentBatches.items.length}}</span></li>
                         <li ng-class="{disabled: vm.currentBatches.currentPage == 1}" ng-click="vm.currentBatches.currentPage=vm.currentBatches.currentPage-1"><a href="">Prev</a></li>
-                        <li ng-repeat="n in vm.currentBatches.pages track by $index" ng-click="vm.currentBatches.currentPage = $index+1"><a href="">{{$index+1}}</a></li>
+                        <li ng-repeat="n in vm.currentBatches.pages track by $index" ng-click="vm.currentBatches.currentPage = $index+1" ><a ng-class ="{current: vm.currentBatches.currentPage == $index+1}" ng-style="{'background-color': vm.currentBatches.currentPage == $index+1 ? '#D3D3D3' : 'white'}">{{$index+1}}</a></li>
                         <li ng-class="{disabled: vm.currentBatches.currentPage == vm.currentBatches.noOfPages}" ng-click="vm.currentBatches.currentPage=vm.currentBatches.currentPage+1"><a href="">Next</a></li>
                     </ul>
                 </div>  
@@ -247,7 +247,7 @@
                     <ul>
                         <li><span>Showing {{(vm.completedBatches.currentPage == 1 ? vm.completedBatches.currentPage : ((vm.completedBatches.currentPage-1)*5)+1)}}-{{(vm.completedBatches.currentPage == vm.completedBatches.noOfPages ? vm.completedBatches.items.length : vm.completedBatches.currentPage*5)}} of {{vm.completedBatches.items.length}}</span></li>
                         <li ng-class="{disabled: vm.completedBatches.currentPage == 1}" ng-click="vm.completedBatches.currentPage=vm.completedBatches.currentPage-1"><a href="">Prev</a></li>
-                        <li ng-repeat="n in vm.completedBatches.pages track by $index" ng-click="vm.completedBatches.currentPage = $index+1"><a href="">{{$index+1}}</a></li>
+                        <li ng-repeat="n in vm.completedBatches.pages track by $index" ng-click="vm.completedBatches.currentPage = $index+1"><a ng-class ="{current: vm.completedBatches.currentPage == $index+1}" ng-style="{'background-color': vm.completedBatches.currentPage == $index+1 ? '#D3D3D3' : 'white'}"href="">{{$index+1}}</a></li>
                         <li ng-class="{disabled: vm.completedBatches.currentPage == vm.completedBatches.noOfPages}" ng-click="vm.completedBatches.currentPage=vm.completedBatches.currentPage+1"><a href="">Next</a></li>
                     </ul>
                 </div>  
@@ -290,7 +290,7 @@
                                     <ul>
                                         <li><span>Showing {{(vm.errors.currentPage == 1 ? vm.errors.currentPage : ((vm.errors.currentPage-1)*vm.errors.pageSize)+1)}}-{{(vm.errors.currentPage == vm.errors.noOfPages ? vm.errors.items.length : vm.errors.currentPage*vm.errors.pageSize)}} of {{vm.errors.items.length}}</span></li>
                                         <li ng-class="{disabled: vm.errors.currentPage == 1}" ng-click="vm.errors.currentPage=vm.errors.currentPage-1"><a href="">Prev</a></li>
-                                        <li ng-repeat="n in vm.errors.pages track by $index" ng-click="vm.errors.currentPage = $index+1"><a href="">{{$index+1}}</a></li>
+                                        <li ng-repeat="n in vm.errors.pages track by $index" ng-click="vm.errors.currentPage = $index+1"><a  ng-class ="{current: vm.errors.currentPage == $index+1}" ng-style="{'background-color': vm.errors.currentPage == $index+1 ? '#D3D3D3' : 'white'}"href="">{{$index+1}}</a></li>
                                         <li ng-class="{disabled: vm.errors.currentPage == vm.errors.noOfPages}" ng-click="vm.errors.currentPage=vm.errors.currentPage+1"><a href="">Next</a></li>
                                     </ul>
                                 </div>
