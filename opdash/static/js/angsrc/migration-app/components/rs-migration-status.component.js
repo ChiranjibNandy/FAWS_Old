@@ -84,7 +84,7 @@
                          vm.currentUser = authservice.getAuth().account_name;
                     } //end of if condition
                     vm.sortBy = {
-                        current_batch: '-batch_status',
+                        //current_batch: '-start',
                         completed_batch: '-start'
                     };
 
@@ -94,6 +94,15 @@
                             resetActionFlags();
                         });
                     }, true);
+
+                   vm.getAllTickets();
+
+                   var element = document.getElementsByClassName('custom-sort-a');
+                   for(var i = 0; i < element.length; i++)
+                    {
+                        element[i].classList.remove('rs-table-sort');
+                        element[i].classList.add('rs-table-sort-desc');
+                    }
                 };
 
                 vm.$routerOnActivate = function(next, previous) {
@@ -111,7 +120,7 @@
                     }
                     vm.getBatches(true);
                     vm.getAllAlerts();
-                    vm.getAllTickets();
+                    //vm.getAllTickets();
                 };
 
                 /**
@@ -242,17 +251,21 @@
                                 var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled", "paused"];
                                 var validCompletedBatchStatus = ["done"];
                                 jobList = response.jobs.job_status_list;
-                                var currentBatches = [];
+                                var tempcurrentBatches = [];
                                 var completedBatches = [];
+                                var currentBatches = [];
                                 angular.forEach(jobList, function (job) {
                                     job.showRefreshForApiLoading = false;
                                     if(job.batch_name == dataStoreService.selectedTime.migrationName)
                                         vm.showInitiatedMigration =  false;
-                                    if (validCurrentBatchStatus.indexOf(job.batch_status) >= 0)
-                                        currentBatches.push(job);
+                                    if (validCurrentBatchStatus.indexOf(job.batch_status) >= 0){
+                                        tempcurrentBatches.push(job);
+                                    }
                                     if (validCompletedBatchStatus.indexOf(job.batch_status) >= 0)
                                         completedBatches.push(job);
                                 });
+
+                                currentBatches = tempcurrentBatches.filter(x=>x.batch_status=='started').concat(tempcurrentBatches.filter(x=>x.batch_status=='in progress')).concat(tempcurrentBatches.filter(x=>x.batch_status=='paused')).concat(tempcurrentBatches.filter(x=>x.batch_status=='scheduled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='error'))
 
                                 var tempSavedMigrations = [];
                                 for(var j=0; j<response.savedMigrations.length; j++){
@@ -268,7 +281,7 @@
                                 }
 
                                 var savedMigrations = $filter('orderBy')(tempSavedMigrations, '-timestamp');
-                                vm.currentBatches.items = $filter('orderBy')(currentBatches, '-start').concat(savedMigrations);
+                                vm.currentBatches.items = currentBatches.concat(savedMigrations);//$filter('orderBy')(currentBatches, '-start').concat(savedMigrations);
                                 vm.currentBatches.noOfPages = Math.ceil(vm.currentBatches.items.length / vm.currentBatches.pageSize);
                                 vm.currentBatches.pages = new Array(vm.currentBatches.noOfPages);
                                 
@@ -319,6 +332,7 @@
                  */
                 vm.getAllAlerts = function(refresh) {
                     vm.loadingAlerts = true;
+
                     alertsService.getAllAlerts(refresh)
                                     .then(function(result) {
                                         if(result.error !==500){
@@ -343,7 +357,8 @@
                  */
                 vm.getAllTickets = function(refresh) {
                     vm.loadingTickets = true;
-                    alertsService.getAllTickets(refresh)
+                    var statusFlag = true;
+                    alertsService.getAllTickets(refresh,statusFlag)
                                     .then(function(result) {
                                         vm.tickets.items = result || [];
                                         vm.tickets.noOfPages = Math.ceil(vm.tickets.items.length / vm.tickets.pageSize);
@@ -461,6 +476,11 @@
                      * Sets the sort parameter for current and completed batch list
                      */
                     vm.setSortBy = function(batch, sortBy) {
+                        var element = document.getElementsByClassName('custom-sort-a');
+                        for(var i = 0; i < element.length; i++)
+                        {
+                            element[i].classList.remove('rs-table-sort-desc');
+                        }                        
                         if(vm.sortBy[batch] === sortBy && vm.sortBy[batch][0] !== "-")
                             vm.sortBy[batch] = "-" + sortBy;
                         else

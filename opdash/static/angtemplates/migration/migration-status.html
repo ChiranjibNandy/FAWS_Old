@@ -31,25 +31,25 @@
                             <tr>
                                 <th class="rs-table-status"></th>
                                 <th>
-                                    <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('current_batch', 'batch_name')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['current_batch']==='batch_name', 'custom-table-sort-desc current-sort-param': vm.sortBy['current_batch']==='-batch_name', 'custom-table-sort-desc': vm.sortBy['current_batch'].indexOf('batch_name') < 0}">
+                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a" ng-click="vm.setSortBy('current_batch', 'batch_name')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['current_batch']==='batch_name', 'custom-table-sort-desc current-sort-param': vm.sortBy['current_batch']==='-batch_name', 'custom-table-sort-desc': vm.sortBy['current_batch'].indexOf('batch_name') < 0}">
                                         <span class="rs-table-sort-text">Batch Queue</span>
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
                                 <th>
-                                    <a href="javascript:void(0);" class="rs-table-sort">
+                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a">
                                         <span class="rs-table-sort-text">Batch Initiated by</span>
                                         <!--<span class="rs-table-sort-indicator"></span>-->
                                     </a>
                                 </th>
                                 <th>
-                                    <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('current_batch', 'start')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['current_batch']==='start', 'custom-table-sort-desc current-sort-param': vm.sortBy['current_batch']==='-start', 'custom-table-sort-desc': vm.sortBy['current_batch'].indexOf('start') < 0}">
+                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a" ng-click="vm.setSortBy('current_batch', 'start')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['current_batch']==='start', 'custom-table-sort-desc current-sort-param': vm.sortBy['current_batch']==='-start', 'custom-table-sort-desc': vm.sortBy['current_batch'].indexOf('start') < 0}">
                                         <span class="rs-table-sort-text">Start Date/Time</span>
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
                                 <th>
-                                    <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('current_batch', 'batch_status')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['current_batch']==='batch_status', 'custom-table-sort-desc current-sort-param': vm.sortBy['current_batch']==='-batch_status', 'custom-table-sort-desc': vm.sortBy['current_batch'].indexOf('batch_status') < 0}">
+                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a" ng-click="vm.setSortBy('current_batch', 'batch_status')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['current_batch']==='batch_status', 'custom-table-sort-desc current-sort-param': vm.sortBy['current_batch']==='-batch_status', 'custom-table-sort-desc': vm.sortBy['current_batch'].indexOf('batch_status') < 0}">
                                         <span class="rs-table-sort-text">Status</span>
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>

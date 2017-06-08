@@ -35,7 +35,7 @@
                 var alertsApiUrl = "/api/alerts/all";
                 //var alertsApiUrl = "/api/alerts/job/job-56d50e1a-ce7f-4be8-a1fa-8cdb734cd3d6";
                 //var alertsApiUrl = "/static/angassets/alerts.json";
-                if (refresh || !loaded || (currentTenant !== tenant_id)) {
+                if (refresh|| !loaded || (currentTenant !== tenant_id)) {
                     return HttpWrapper.send(alertsApiUrl, { "operation": 'GET' })
                                       .then(function(result) {
                                             loaded = true;
@@ -105,9 +105,9 @@
              * @description 
              * This service method returns a promise to fetch an array containing the list of tickets raised for a tenant
              */
-            self.getAllTickets = function(refresh) {
+            self.getAllTickets = function(refresh,statusFlag) {
                 var url = "/api/tickets/get_all";
-                if (refresh || !ticketsLoaded) {
+                if (refresh || statusFlag|| !ticketsLoaded) {
                     return HttpWrapper.send(url, { "operation": 'GET' })
                                       .then(function(result) {
                                             ticketsLoaded = true;
