@@ -911,7 +911,7 @@ body .modal.details2 {
 }
 
 .space {
-    text-indent: 10px;
+    margin-right: 10px;
 }
 
 .equipment-err {
@@ -923,6 +923,7 @@ body .modal.details2 {
     margin-top: -49px; 
     margin-left:790px
 }
+
 .current{
 font-weight:bold;
 
@@ -938,4 +939,13 @@ background-color:#dddddd !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
+}
+
+.intro-modal-nofaws {
+    margin-right: 58px; 
+    margin-top: 13px;
+}
+
+.span-2 {
+    margin-left:2px;
 }

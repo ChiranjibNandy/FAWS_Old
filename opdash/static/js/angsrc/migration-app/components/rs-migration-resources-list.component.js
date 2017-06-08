@@ -409,13 +409,18 @@
                                     vm.fawsError = false;
                                     vm.fawsCreated = true;
                                     vm.fawsCreationProgress = false;
-                                    location.reload();
+                                    $timeout(function () {
+                                        location.reload();
+                                    },2000);
                             } 
                             else {
                                     vm.fawsError = true;
                                     vm.fawsResponse = false;
                                     vm.fawsCreated = false;
                                     vm.fawsCreationProgress = false;
+                                    $timeout(function () {
+                                        vm.fawsError = false;
+                                    },3000);
                             }
                             vm.fawsAcctName = '';
                             vm.fawsAcctId = '';

@@ -95,7 +95,6 @@
     <br>
     <div class="modal-body">
         <h1 class="rs-page-title">Welcome to the Rackspace Migration Manager!</h1>
-        <!-- <h3>On average, our customers save more than 20% by migrating from Rackspace Public Cloud to Managed AWS. All while keeping the fanatical support they love.</h3> -->
         <br>
         <div class="rs-row">
             <div class="span-7" ng-show="vm.introModalLoading" class="rs-table-overlay rs-table-overlay-loading">
@@ -125,48 +124,56 @@
                 <br><br>
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Account Name <span class="half-tab"></span></label>
-                        <div class="col-sm-10">
-                            <input  style="margin-left: -4px" type="text" ng-model="vm.fawsAcctName" class="rs-input-xlarge" placeholder="AWS Account Name" />
+                        <div class="row">
+                            <span class="col-sm-2 control-label">Account Name<span class="half-tab"></span></span>
+                            <div class="col-sm-10">
+                                <input type="text" ng-model="vm.fawsAcctName" class="rs-input-xlarge" placeholder="AWS Account Name" />
+                            </div>
                         </div>
-                        <label class="col-sm-2 control-label">Account ID <span class="tab"></span></label>
-                        <div class="col-sm-10">
-                            <input type="text" ng-model="vm.fawsAcctId" class="rs-input-xlarge" placeholder="AWS Account ID" />
+                        <div class="row">
+                            <span class="col-sm-2 control-label">Account ID <span class="tab"></span></span>
+                            <div class="col-sm-10">
+                                <input type="text" ng-model="vm.fawsAcctId" class="rs-input-xlarge" placeholder="AWS Account ID" />
+                            </div>
                         </div>
-                    
-                        <label class="col-sm-2 control-label">Access Key<span class="tab"></span></label>
-                        <div class="col-sm-10">
-                            <input type="text" ng-model="vm.fawsAccessKey" class="rs-input-xlarge" placeholder="AWS Access Key" />
+                        <div class="row">
+                            <span class="col-sm-2 control-label">{{vm.fawsAccType == 'key-based' ? 'Access Key':'Role ARN'}}<span class="tab"></span></span>
+                            <div class="col-sm-10">
+                                <input type="text" ng-model="vm.fawsAccessKey" class="rs-input-xlarge" placeholder="{{vm.fawsAccType == 'key-based' ? 'AWS Access Key':'Role ARN'}}" />
+                            </div>
                         </div>
-                    
-                        <label class="col-sm-2 control-label">Secret Key <span class="space"></span><span class="tab"></span></label>
-                        <div class="col-sm-10">
-                            <input type="text" ng-model="vm.fawsSecretKey" class="rs-input-xlarge" placeholder="AWS Secret Key" />
+                        <div class="row">
+                            <span class="col-sm-2 control-label">{{vm.fawsAccType == 'key-based' ? 'Secret Key':'External ID'}}  <span class="tab"></span></span>
+                            <div class="col-sm-10">
+                                <input type="text" ng-model="vm.fawsSecretKey" class="rs-input-xlarge" placeholder="{{vm.fawsAccType == 'key-based' ? 'AWS Secret Key':'External ID'}}" />
+                            </div>
                         </div>
                     </div>
                 </form>
                 <br>
-                <a class="rs-btn rs-btn-primary rs-pull-right" style="margin-right: 75px;" ng-disabled="!vm.fawsAcctName || !vm.fawsAccessKey || !vm.fawsSecretKey || !vm.fawsAcctId" ng-click="vm.createFawsAccount()" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
-                <a class="rs-btn disabled rs-pull-right" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
+                <a class="rs-btn rs-btn-primary rs-pull-right intro-modal-nofaws" ng-class="{disabled:!vm.fawsAcctName || !vm.fawsAccessKey || !vm.fawsSecretKey || !vm.fawsAcctId}" ng-click="vm.createFawsAccount()" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
+                <a class="rs-btn disabled rs-pull-right intro-modal-nofaws" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
+                <div class="intro-modal-nofaws rs-success" ng-show="vm.fawsCreated">Added credentials successfully</div>
+                <div class="intro-modal-nofaws" style="color: #c40022" ng-show="vm.fawsError">Uh oh! Something went wrong while adding credentials. Please try again after sometime...</div>
             </div>
             <div class="span-7" ng-show="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker">
-                <h2>Migrate in just 4 easy steps:</h2>
+                <h3>Migrating to Fanatical Support for AWS</h3>
+                <h3>Benefits:</h3>
                 <big>
-                    <ol class="rs-custom-counter">
-                        <li><b><a ng-href="{{vm.fawsLink}}" target="_blank">Create</a> FAWS account to start migration</b></li>
-                        <li style="color: #888"><b>Select resources to migrate</b></li>
-                        <li style="color: #888"><b>Get our recommendation and make modifications</b></li>
-                        <li style="color: #888"><b>Schedule and confirm migration</b></li>
-                    </ol>
+                    <ul class="rs-custom-counter">
+                        <li><b>Increase infratructure efficiency</b></li>
+                        <li><b>Explore the newest Rackspace offerings</b></li>
+                        <li><b>May be even save some money!</b></li>
+                    </ul>
+                </big>
+                <h3>What to expect:</h3>
+                <big>
+                    <ul class="rs-custom-counter">
+                        <li><b>Fill out the form below</b></li>
+                        <li><b>We will create new AWS account for you and notify <span class="tab"></span>you when you can start migrating</b></li>
+                    </ul>
                 </big>
                 <br>
-                <br>
-                <h3><em>Need more information?</em></h3>
-
-                <a href="https://www.rackspace.com/en-us/managed-aws" target="_blank">Rackspace Managed AWS</a>
-                <br>
-                <a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Pricing and Support Levels</a>
-                <!--<big>It seems you don't have an AWS account. Please click <a ng-href="{{vm.fawsLink}}" target="_blank">here</a> to create one</big>-->
             </div>
             <div class="span-5 rs-center" style="width : 35%">
                 <img src="/static/img/monitor.png" alt="">
@@ -176,9 +183,37 @@
                 </div>
             </div>
         </div>
-        <br>
+        <div class="row" ng-show="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker">
+            <h3>Create new AWS account now:</h3>
+            <div class="row">
+                <span>
+                    <span>Account Name </span><span class="half-tab"></span>
+                    <input type="text" ng-model="vm.fawsAcctName" class="rs-input-xlarge" placeholder="AWS Account Name" />
+                </span>
+                <span class="tab"></span><span class="tab"></span>
+                <span>
+                    <span>Service Level  </span><span class="half-tab"></span>
+                    <span>
+                        <span>
+                            <input type="radio" ng-model="vm.serviceLevel" value="Navigator">
+                            <strong>Navigator</strong>
+                        </span>
+                        <span>
+                            <input type="radio" ng-model="vm.serviceLevel" value="Aviator">
+                            <strong>Aviator</strong>
+                        </span>
+                    </span>
+                </span>
+            </div>   
+            <div class="row">
+                <a class="rs-btn rs-btn-primary rs-pull-right intro-modal-nofaws" ng-class="{disabled:!vm.fawsAcctName || !vm.serviceLevel}" ng-click="vm.createFawsAccount()" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
+                <a class="rs-btn disabled rs-pull-right intro-modal-nofaws" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
+                <div class="intro-modal-nofaws rs-success" ng-show="vm.fawsCreated">Request for new FAWS account creation is successfull.</div>
+                <div class="intro-modal-nofaws" style="color: #c40022" ng-show="vm.fawsError">Uh oh! Something went wrong while submitting request. Please try again after sometime...</div>
+            </div>
+        </div>
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer" ng-hide="vm.noFawsAccounts && !vm.introModalLoading && vm.isRacker">
         <div class="rs-pull-left">
             <label class="rs-checkbox">
                     <input type="checkbox" ng-change="vm.dontShow()" ng-model="vm.dontshowStatus">

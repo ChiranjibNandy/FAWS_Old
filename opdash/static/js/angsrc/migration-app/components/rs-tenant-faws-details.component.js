@@ -108,7 +108,8 @@
                                         awsAccounts:vm.awsAccountsDetails,
                                         selectedFawsAccount: vm.selectedFawsName,
                                         selectedFawsAccountNumber:vm.selectedFawsNum,
-                                        totalAccounts: result.awsAccountLimit - result.remainingAccounts
+                                        totalAccounts: result.awsAccountLimit - result.remainingAccounts,
+                                        mode:result.mode
                                     };
                                 dataStoreService.saveFawsDetails(vm.fawsAccountDetails);
                             }
@@ -123,6 +124,7 @@
                     vm.awsAccountsDetails = vm.fawsAccountDetails.awsAccounts;
                     vm.selectedFawsName = vm.fawsAccountDetails.selectedFawsAccount;
                     vm.selectedFawsNum = vm.fawsAccountDetails.selectedFawsAccountNumber;
+                    vm.fawsAccType = vm.fawsAccountDetails.mode;
                     vm.selectedFaws = vm.selectedFawsName.trim() + " " + "(#" + vm.selectedFawsNum + ")"; //to display in faws dropdown default value
                 }
 
@@ -161,7 +163,12 @@
                     vm.fawsResponse = false;
                     vm.fawsError = false;
                     vm.fawsCreated = false;
-                    $('#create-faws-account-modal').modal('show');
+                    if(vm.is_racker){
+                        $('#create-faws-account-modal').modal('show');
+                    }
+                    else{
+                        $('#request-faws-account-modal').modal('show');
+                    }
                 };
 
                 /**
@@ -212,6 +219,13 @@
                 vm.switchUser = function() {
                     vm.is_racker = !vm.is_racker;
                 }
+
+                vm.displayDeleteFawsModal = function() {
+                    vm.fawsResponse = false;
+                    vm.fawsError = false;
+                    vm.fawsCreated = false;
+                    $('#delete-faws-account-modal').modal('show');
+                };
                 return vm;
             }]
         }); // end of component definition
