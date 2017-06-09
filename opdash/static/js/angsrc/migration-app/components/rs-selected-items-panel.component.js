@@ -84,7 +84,7 @@
                     if($window.localStorage.selectedServers !== undefined)
                         vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
                     else
-                        vm.selectedItems.server = dataStoreService.getItems('server');
+                        vm.selectedItems.server = [];//dataStoreService.getItems('server');
                     
                     if($window.localStorage.selectedLoadBalancers !== undefined)
                         vm.selectedItems.LoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers);
@@ -144,7 +144,10 @@
                     if(vm.selectedItems[type].indexOf(item)>=0){
                        vm.selectedItems[type].splice(vm.selectedItems[type].indexOf(item), 1);
                         dataStoreService.setItems(vm.selectedItems);
-                        $window.localStorage.setItem('selectedServers',JSON.stringify(vm.selectedItems.server));
+                        if(vm.selectedItems.server.length >= 1)
+                            $window.localStorage.setItem('selectedServers',JSON.stringify(vm.selectedItems.server));
+                        else
+                            $window.localStorage.removeItem('selectedServers');
                         item.selected = false;  
                         $scope.$emit("ItemRemoved", item); // broadcast event to all child components 
                     }

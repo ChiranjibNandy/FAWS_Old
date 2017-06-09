@@ -225,7 +225,10 @@
                                 angular.forEach(old,function(item_selected,key){
                                     if(item_selected.id == item.id){
                                         old.splice(key,1);
-                                        $window.localStorage.setItem('selectedServers', JSON.stringify(old));
+                                        if(old.length >= 1)
+                                            $window.localStorage.setItem('selectedServers', JSON.stringify(old));
+                                        else
+                                            $window.localStorage.removeItem('selectedServers');
                                     }
                                 });                              
                             }
@@ -312,10 +315,11 @@
                  * Assign Migration considering current Timestamp and continue to next step: **Recommendations**
                  */
                 vm.savencontinue = function() { 
-                    if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 ){//|| dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 
-                        if(vm.selectedItems.server.length > 0 || vm.selectedItems.LoadBalancers.length > 0 ){
-                            dataStoreService.setItems(vm.selectedItems);
-                        } 
+                    //if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 ){//|| dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 -- Previous Code
+                    if($window.localStorage.selectedServers !== undefined || $window.localStorage.selectedLoadBalancers !== undefined){
+                        // if(vm.selectedItems.server.length > 0 || vm.selectedItems.LoadBalancers.length > 0 ){
+                        //     dataStoreService.setItems(vm.selectedItems);
+                        // } 
                         vm.continuing = true;
                         var items = JSON.parse($window.localStorage.selectedServers);
                         // var arr = angular.copy(vm.selectedItems.server);
