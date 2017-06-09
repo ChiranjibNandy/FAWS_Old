@@ -50,11 +50,6 @@
     <div class="modal-body">
         <div ng-show="vm.fawsCreated">
             <big>Successfully added Credentials!</big><br>
-            <!--<br>
-            <b>Account Name : </b> {{vm.newAccountDetails.name}}<br> 
-            <b>Accout Number :</b> {{vm.newAccountDetails.awsAccountNumber}}<br>
-            <b>Service Level :</b> {{vm.newAccountDetails.serviceLevelName}}<br><br>
-            Click&nbsp;<a target="_blank" ng-href="https://manage.rackspace.com/aws/accounts">here</a>&nbsp;for more details.-->
         </div>   
        <span ng-show="vm.fawsError" style="color: #c40022">Uh oh! Something went wrong while adding credentials. Please try again after sometime...</span>
         <div ng-hide= "vm.fawsCreated || vm.fawsError">
@@ -90,7 +85,7 @@
     </div>
     <div class="modal-footer">
        
-        <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.fawsAccessKey || !vm.fawsSecretKey || !vm.fawsAcctId}" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
+        <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.fawsAccessKey || !vm.fawsSecretKey || !vm.fawsAcctId}" ng-click="vm.createFawsAccount()" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
         <a class="rs-btn disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
         <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</a>
     </div>
@@ -145,15 +140,15 @@
         <big>Select one of the account from the dropdown to delete.</big>
     </div>
     <div class="modal-body">
-        <div ng-show="vm.fawsCreated">
+        <div ng-show="vm.fawsDeleted">
             <big>Request for deleting the account is complete.</big><br>
         </div>   
-       <span ng-show="vm.fawsError" style="color: #c40022">Uh oh! Something went wrong while deleting the account. Please try again after sometime...</span>
-        <div ng-hide= "vm.fawsCreated || vm.fawsError">
+       <span ng-show="vm.fawsDeleteError" style="color: #c40022">Uh oh! Something went wrong while deleting the account. Please try again after sometime...</span>
+        <div ng-hide= "vm.fawsDeleted || vm.fawsDeleteError">
             <form class="form-horizontal">
                 <div class="form-group">
                     <div class="row">
-                        <select ng-model="vm.selectedFaws" class="ng-pristine ng-valid ng-not-empty ng-touched" aria-invalid="false">
+                        <select ng-model="vm.deleteFaws" class="ng-pristine ng-valid ng-not-empty ng-touched" aria-invalid="false">
                             <!-- ngRepeat: account in vm.awsAccountsDetails -->
                             <option ng-repeat="account in vm.awsAccountsDetails" class="ng-binding ng-scope" value="{{account.name}} (#{{account.awsAccountNumber}})">{{account.name}} (#{{account.awsAccountNumber}})</option>
                             <!-- end ngRepeat: account in vm.awsAccountsDetails -->
@@ -165,8 +160,8 @@
     </div>
     <div class="modal-footer">
        
-        <a class="rs-btn rs-btn-primary" ng-click="vm.requestFawsAccount()" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Delete</a>
-        <a class="rs-btn disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Deleting...</a>
+        <a class="rs-btn rs-btn-primary" ng-click="vm.deleteAWSAccount()" ng-hide="vm.fawsDeleteError || vm.fawsDeleteProgress || vm.fawsDeleted">Delete</a>
+        <a class="rs-btn disabled" disabled="disabled" ng-show="vm.fawsDeleteProgress">Deleting...</a>
         <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</a>
     </div>
 </div>

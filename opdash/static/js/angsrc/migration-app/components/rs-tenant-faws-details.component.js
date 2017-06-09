@@ -27,7 +27,7 @@
              * @name migrationApp.controller:tenantfawsdetailsCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rstenantfawsdetails rstenantfawsdetails} component
              */
-            controller: ["datastoreservice", "authservice", "$timeout","$window", function (dataStoreService, authservice, $timeout,$window) {
+            controller: ["datastoreservice", "authservice", "$timeout","$window","httpwrapper", function (dataStoreService, authservice, $timeout,$window,HttpWrapper) {
                 var vm = this;
                 vm.fawsAcctStatus = true;
                 vm.tenant_id = '';
@@ -44,6 +44,9 @@
                 vm.displayFawsDropdown = true;
                 vm.fawsResponse = false;
                 vm.fawsError = false;
+                vm.fawsDeleteProgress = false;
+                vm.fawsDeleteError = false;
+                vm.fawsDeleted = false;
                 vm.newAccountDetails = {};
 
                 vm.tenant_id = authservice.getAuth().tenant_id; //get Tenant ID
@@ -92,25 +95,17 @@
                             else{
                                 vm.awsAccountsDetails = result.awsAccounts;
                                 vm.fawsAcctStatus = true;
-                                if(dataStoreService.fetchFawsDetails().selectedFawsAccount == undefined || dataStoreService.fetchFawsDetails().selectedFawsAccount == ''){
-                                    vm.selectedFawsName = vm.awsAccountsDetails[0].name;
-                                    vm.selectedFawsNum=vm.awsAccountsDetails[0].awsAccountNumber;
-                                    vm.selectedFaws = vm.selectedFawsName.trim() + " " + "(#" + vm.selectedFawsNum + ")"; //to display in faws dropdown default value
-                                    vm.fawsAccType = result.mode;
-                                }
-                                else{
-                                    vm.selectedFawsName = dataStoreService.fetchFawsDetails().selectedFawsAccount;
-                                    vm.selectedFawsNum = dataStoreService.fetchFawsDetails().selectedFawsAccountNumber;
-                                    vm.selectedFaws = vm.selectedFawsName.trim() + " " + "(#" + vm.selectedFawsNum + ")"; //to display in faws dropdown default value
-                                    vm.fawsAccType = result.mode;
-                                }
+                                vm.selectedFawsName = vm.awsAccountsDetails[0].name;
+                                vm.selectedFawsNum=vm.awsAccountsDetails[0].awsAccountNumber;
+                                vm.selectedFaws = vm.selectedFawsName.trim() + " " + "(#" + vm.selectedFawsNum + ")"; //to display in faws dropdown default value
+                                vm.fawsAccType = result.mode;
                                 vm.fawsAccountDetails = {
                                         awsAccounts:vm.awsAccountsDetails,
                                         selectedFawsAccount: vm.selectedFawsName,
                                         selectedFawsAccountNumber:vm.selectedFawsNum,
                                         totalAccounts: result.awsAccountLimit - result.remainingAccounts,
                                         mode:result.mode
-                                    };
+                                };
                                 dataStoreService.saveFawsDetails(vm.fawsAccountDetails);
                             }
                     });
@@ -221,11 +216,29 @@
                 }
 
                 vm.displayDeleteFawsModal = function() {
-                    vm.fawsResponse = false;
-                    vm.fawsError = false;
-                    vm.fawsCreated = false;
+                    vm.fawsDeleteError = false;
+                    vm.fawsDeleted = false;
+                    vm.deleteFaws = angular.copy(vm.selectedFaws);
                     $('#delete-faws-account-modal').modal('show');
                 };
+
+                vm.deleteAWSAccount = function(){
+                    vm.fawsDeleteProgress = true;
+                    var accountId = vm.deleteFaws.split('#')[1].slice(0, - 1);
+                    //if (result == "OK")
+                    dataStoreService.deleteAWSAccount(accountId)
+                        .then(function (result) {
+                            if (result.data == "OK"){
+                                vm.fawsDeleteProgress = false;
+                                vm.fawsDeleted = true;
+                                vm.fetchFawsAccounts();
+                            }
+                            else {
+                                vm.fawsDeleteProgress = false;
+                                vm.fawsDeleteError = true;
+                            };
+                    });
+                }
                 return vm;
             }]
         }); // end of component definition
