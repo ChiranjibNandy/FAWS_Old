@@ -95,7 +95,7 @@
                         <div class="rs-detail-item">
                             <div class="rs-detail-key"><b>AWS Zone</b></div>
                             <div class="rs-detail-value">
-                                <select ng-model="vm.awsZone">
+                                <select ng-model="vm.awsZone" ng-change="vm.disable = false">
                                     <option ng-repeat="zone in vm.zones track by $index" value="{{zone}}">{{zone | convertCase}}</option>
                                 </select>
                             </div>

@@ -9,12 +9,16 @@
                 <ul class="rs-dropdown-menu hidden">
                     <li class="rs-dropdown-item" ng-show="vm.showCreateAccount">
                         <span class="rs-dropdown-category">You may create a new Account for this migration:
-                            <a href="" role="button" ng-click="vm.displayFawsAccounModal()" data-toggle="modal" ng-show="vm.editmigration === 'false' && vm.is_racker == true" aria-hidden="false">Assign new AWS account</a>
-                            <a ng-href="{{vm.fawsLink}}" target="_blank" ng-show="vm.editmigration === 'false' && vm.is_racker == false" >Create Ticket to request new AWS Account</a>
+                            <a href="" role="button" ng-click="vm.displayFawsAccounModal()" data-toggle="modal" ng-show="vm.editmigration === 'false'" aria-hidden="false">{{vm.is_racker ? 'Assign new AWS account' : 'Request a new AWS account'}}</a>
+                        </span>
+                    </li>
+                    <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && vm.showCreateAccount && vm.is_racker" style="margin-top:5px">
+                        <span class="rs-dropdown-category">or Delete an Account:
+                            <a href="" role="button" data-toggle="modal" aria-invalid="false" ng-click="vm.displayDeleteFawsModal()">Delete an existing account</a>
                         </span>
                     </li>
                     <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && vm.showCreateAccount">
-                        <span class="rs-dropdown-category">or Select an Existing account:</span>
+                        <span class="rs-dropdown-category">or Select an existing account:</span>
                     </li>
                     <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && !vm.showCreateAccount">
                         <span class="rs-dropdown-category">Select another AWS account:</span>
@@ -41,38 +45,39 @@
 <div id="create-faws-account-modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-        <big>Please provide following details to add credentials for the new FAWS Account.</big>
+        <big>Please provide following details to add credentials for the new AWS Account.</big>
     </div>
     <div class="modal-body">
         <div ng-show="vm.fawsCreated">
             <big>Successfully added Credentials!</big><br>
-            <!--<br>
-            <b>Account Name : </b> {{vm.newAccountDetails.name}}<br> 
-            <b>Accout Number :</b> {{vm.newAccountDetails.awsAccountNumber}}<br>
-            <b>Service Level :</b> {{vm.newAccountDetails.serviceLevelName}}<br><br>
-            Click&nbsp;<a target="_blank" ng-href="https://manage.rackspace.com/aws/accounts">here</a>&nbsp;for more details.-->
         </div>   
        <span ng-show="vm.fawsError" style="color: #c40022">Uh oh! Something went wrong while adding credentials. Please try again after sometime...</span>
         <div ng-hide= "vm.fawsCreated || vm.fawsError">
             <form class="form-horizontal">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Account Name <span class="half-tab"></span></label>
-                    <div class="col-sm-10">
-                        <input type="text" ng-model="vm.fawsAcctName" class="rs-input-xlarge" placeholder="AWS Account Name" />
+                    <div class="row">
+                        <span class="col-sm-2 control-label">Account Name<span class="half-tab"></span><span class="span-2"></span></span>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="vm.fawsAcctName" class="rs-input-xlarge" placeholder="AWS Account Name" />
+                        </div>
                     </div>
-                    <label class="col-sm-2 control-label">Account ID <span class="tab"></span></label>
-                    <div class="col-sm-10">
-                        <input type="text" ng-model="vm.fawsAcctId" class="rs-input-xlarge" placeholder="AWS Account ID" />
+                    <div class="row">
+                        <span class="col-sm-2 control-label">Account ID <span class="tab"></span></span>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="vm.fawsAcctId" class="rs-input-xlarge" placeholder="AWS Account ID" />
+                        </div>
                     </div>
-                
-                    <label class="col-sm-2 control-label">Access Key<span class="tab"></span></label>
-                    <div class="col-sm-10">
-                        <input type="text" ng-model="vm.fawsAccessKey" class="rs-input-xlarge" placeholder="AWS Access Key" />
+                    <div class="row">
+                        <span class="col-sm-2 control-label">{{vm.fawsAccType == 'key-based' ? 'Access Key':'Role ARN'}}<span class="tab"></span></span>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="vm.fawsAccessKey" class="rs-input-xlarge" placeholder="{{vm.fawsAccType == 'key-based' ? 'AWS Access Key':'Role ARN'}}" />
+                        </div>
                     </div>
-                
-                    <label class="col-sm-2 control-label">Secret Key <span class="space"></span><span class="tab"></span></label>
-                    <div class="col-sm-10">
-                        <input type="text" ng-model="vm.fawsSecretKey" class="rs-input-xlarge" placeholder="AWS Secret Key" />
+                    <div class="row">
+                        <span class="col-sm-2 control-label">{{vm.fawsAccType == 'key-based' ? 'Secret Key ':'External ID'}}  <span class="tab"></span><span class="span-2"></span></span>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="vm.fawsSecretKey" class="rs-input-xlarge" placeholder="{{vm.fawsAccType == 'key-based' ? 'AWS Secret Key':'External ID'}}" />
+                        </div>
                     </div>
                 </div>
             </form>
@@ -80,8 +85,83 @@
     </div>
     <div class="modal-footer">
        
-        <a class="rs-btn rs-btn-primary" ng-disabled="!vm.fawsAcctName || !vm.fawsAccessKey || !vm.fawsSecretKey || !vm.fawsAcctId" ng-click="vm.createFawsAccount()" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
+        <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.fawsAccessKey || !vm.fawsSecretKey || !vm.fawsAcctId}" ng-click="vm.createFawsAccount()" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
         <a class="rs-btn disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
+        <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</a>
+    </div>
+</div>
+<div id="request-faws-account-modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <big>Please provide following details to create new AWS account for you.</big>
+    </div>
+    <div class="modal-body">
+        <div ng-show="vm.fawsCreated">
+            <big>Request for new AWS account creation is successfull.</big><br>
+        </div>   
+       <span ng-show="vm.fawsError" style="color: #c40022">Uh oh! Something went wrong while submitting request. Please try again after sometime...</span>
+        <div ng-hide= "vm.fawsCreated || vm.fawsError">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <div class="row">
+                        <span class="col-sm-2 control-label">Account Name </span>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="vm.fawsAcctName" class="rs-input-xlarge" placeholder="AWS Account Name" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <span class="col-sm-2 control-label">Service Level<span class="space"></span></span>
+                        <span>
+                            <span>
+                                <input type="radio" ng-model="vm.serviceLevel" value="Navigator">
+                                <strong>Navigator</strong>
+                            </span>
+                            <span class="half-tab"></span>
+                            <span>
+                                <input type="radio" ng-model="vm.serviceLevel" value="Aviator">
+                                <strong>Aviator</strong>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>    
+    </div>
+    <div class="modal-footer">
+       
+        <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.serviceLevel}" ng-click="vm.requestFawsAccount()" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
+        <a class="rs-btn disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
+        <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</a>
+    </div>
+</div>
+<div id="delete-faws-account-modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <big>Select one of the account from the dropdown to delete.</big>
+    </div>
+    <div class="modal-body">
+        <div ng-show="vm.fawsDeleted">
+            <big>Request for deleting the account is complete.</big><br>
+        </div>   
+       <span ng-show="vm.fawsDeleteError" style="color: #c40022">Uh oh! Something went wrong while deleting the account. Please try again after sometime...</span>
+        <div ng-hide= "vm.fawsDeleted || vm.fawsDeleteError">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <div class="row">
+                        <select ng-model="vm.deleteFaws" class="ng-pristine ng-valid ng-not-empty ng-touched" aria-invalid="false">
+                            <!-- ngRepeat: account in vm.awsAccountsDetails -->
+                            <option ng-repeat="account in vm.awsAccountsDetails" class="ng-binding ng-scope" value="{{account.name}} (#{{account.awsAccountNumber}})">{{account.name}} (#{{account.awsAccountNumber}})</option>
+                            <!-- end ngRepeat: account in vm.awsAccountsDetails -->
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>    
+    </div>
+    <div class="modal-footer">
+       
+        <a class="rs-btn rs-btn-primary" ng-click="vm.deleteAWSAccount()" ng-hide="vm.fawsDeleteError || vm.fawsDeleteProgress || vm.fawsDeleted">Delete</a>
+        <a class="rs-btn disabled" disabled="disabled" ng-show="vm.fawsDeleteProgress">Deleting...</a>
         <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</a>
     </div>
 </div>

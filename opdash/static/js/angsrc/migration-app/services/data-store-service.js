@@ -626,21 +626,14 @@
             this.getFawsAccounts = function() {
                 var getFawsAccountsUrl = "/api/tenants/get_faws_accounts";
                 var tenant_id = authservice.getAuth().tenant_id;
-                
-                if (!loaded || (currentTenant !== tenant_id)){
-                    return HttpWrapper.send(getFawsAccountsUrl, {"operation":'GET'})
-                                        .then(function(result){
-                                            loaded = true;
-                                            currentTenant = tenant_id;
-                                            fawsAccounts = result;
-                                            return fawsAccounts;
-                                        },function(error) {
-                                            return error;
-                                        });
-                }
-                else {
-                    return $q.when(fawsAccounts);
-                }
+                return HttpWrapper.send(getFawsAccountsUrl, {"operation":'GET'})
+                    .then(function(result){
+                        currentTenant = tenant_id;
+                        fawsAccounts = result;
+                        return fawsAccounts;
+                    },function(error) {
+                        return error;
+                    });
             };
 
             /**
@@ -669,6 +662,17 @@
                        return error;
                     });
             };
-                return self;
+
+            this.deleteAWSAccount = function(accountId) {
+                var self = this;
+                return HttpWrapper.delete("/api/tenants/credentials/"+accountId, {"operation":'delete'})
+                    .then(function(result){
+                       return result;
+                    },function(error) {
+                       return error;
+                    });
+            };
+
+            return self;
         }]); // end of service definition
 })();
