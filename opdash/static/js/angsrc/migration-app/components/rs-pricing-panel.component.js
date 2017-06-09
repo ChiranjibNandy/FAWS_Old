@@ -121,11 +121,11 @@
                                 }
                                 var networks = result.results.network;
                                 if(networks){
-                                    vm.warningMappingsOfEquipments(servers[0].details.networks[0],networks);
+                                    vm.warningMappingsOfEquipments(networks);
                                 }
                                 var account = result.results.account;
                                 if(account){
-                                    vm.warningMappingsOfEquipments(servers[0].details.networks[0],account);
+                                    vm.warningMappingsOfEquipments(account);
                                 }
                             }
                             if(Object.keys(result.results).length === 0 || (vm.errors.length === 0 && vm.warnings.length === 0 && vm.failures.length === 0)){
@@ -142,23 +142,23 @@
                     }
                 };
 
-                vm.warningMappingsOfEquipments = function(nameBlock,descriptionBlock){
+                vm.warningMappingsOfEquipments = function(descriptionBlock){
                     for(var key in descriptionBlock){
                         if (descriptionBlock.hasOwnProperty(key)) {
                             angular.forEach(descriptionBlock[key],function(networkBlock){
                                 if(networkBlock.type=="warning"){
                                     vm.warnings.push({
-                                        name:nameBlock.name,
+                                        name:networkBlock.name,
                                         description:networkBlock.description
                                     })
                                 }else if(networkBlock.type=="error"){
                                     vm.errors.push({
-                                        name:nameBlock.name,
+                                        name:networkBlock.name,
                                         description:networkBlock.description
                                     })
                                 }else if(networkBlock.type=="failure"){
                                     vm.failures.push({
-                                        name:nameBlock.name,
+                                        name:networkBlock.name,
                                         description:networkBlock.description
                                     })
                                 }
