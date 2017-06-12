@@ -214,11 +214,11 @@
                                 }
                                 if(item.canMigrate == true && item.status.toLowerCase() == 'active'){ 
                                     vm.activeItemCount++;
-                                    var activeInstance = {
-                                        "id":item.id,
-                                        "region":item.region.toUpperCase()
-                                    }
-                                    vm.activeItemsArr.push(activeInstance);
+                                    // var activeInstance = {
+                                    //     "id":item.id,
+                                    //     "region":item.region.toUpperCase()
+                                    // }
+                                    // vm.activeItemsArr.push(activeInstance);
                                 }
                             });
                             // if(vm.type === "server")

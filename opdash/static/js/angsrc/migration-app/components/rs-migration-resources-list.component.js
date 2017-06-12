@@ -325,11 +325,16 @@
                         // var arr = angular.copy(vm.selectedItems.server);
                         var arr = [];
                         var promises = items.map(function(item) {
-                            var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+DEFAULT_VALUES.REGION;
-                            return HttpWrapper.send(url, {"operation": 'GET'}).then(function(pricingOptions) {
-                                item.selectedMapping = pricingOptions[0]; 
+                            if(item.selectedMapping == undefined){
+                                var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+DEFAULT_VALUES.REGION;
+                                return HttpWrapper.send(url, {"operation": 'GET'}).then(function(pricingOptions) {
+                                    item.selectedMapping = pricingOptions[0]; 
+                                    arr.push(item);
+                                });
+                            }
+                            else{
                                 arr.push(item);
-                            });
+                            }
                         });
                         $q.all(promises).then(function(result) {
                             vm.selectedItems.server = arr;

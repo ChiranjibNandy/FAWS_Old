@@ -53,14 +53,14 @@
                     vm.errorInApi = false;
                     vm.reverse = false;
                     vm.disable = true;
+                    vm.loadingZone = false;
+                    vm.loadingPrice = false;
                     vm.filteredArr = [];
                     if(vm.type === "server"){
                         var url = '/api/ec2/regions'; 
                         HttpWrapper.send(url,{"operation":'GET'}).then(function(result){
                             vm.regions = result;
-                            vm.awsRegion = DEFAULT_VALUES.REGION;
-                            var firstLoad =true;
-                            vm.getZones();
+                            // vm.awsRegion = DEFAULT_VALUES.REGION;
                             vm.disable = true;
                             $('#rs-main-panel').css('height','310px');
                         },function(error){
@@ -131,8 +131,11 @@
                   * This method will diable confirm button in the recommendations modal. Based on the 
                   * selection again confirm button will be enabled.
                   */
-                vm.disableConfirm = function(){
+                vm.disableConfirm = function(index){
                     vm.disable = false;
+                    if(index){
+                        vm.selectedConfiguration = index;
+                    }
                 }
 
                 /**
@@ -194,11 +197,14 @@
                  * This function helps to get the zones based on the region you selected.
                  */
                 vm.getZones = function(region){
+                    vm.disable = true;
+                    vm.loadingZone = true;
                     var url =  '/api/ec2/availability_zones/'+vm.awsRegion; 
                     //If this method is called from modify modal, we will have the region , at that
                     //time we have to get pricing details.
                     if(region) vm.getPricingDetails(region);
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(zones){
+                        vm.loadingZone = false;
                         vm.awsZone = zones[0];
                         vm.zones = zones;
                         if(region){
@@ -206,6 +212,7 @@
                         }
                       
                     },function(error){
+                        vm.loadingZone = false;
                         vm.errorInApi = true;
                         console.log("Error in getting zones: ",error);
                    });
@@ -220,11 +227,17 @@
                  * '/api/ec2/get_all_ec2_prices/<flavor-id>/<region>';
                  */
                 vm.getPricingDetails = function(item){
+                    vm.loadingPrice = true;
                     var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+vm.awsRegion;
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
+                        vm.loadingPrice = false;
                         item.pricingOptions = pricingOptions;
+                        if(item.pricingOptions.length == 0){
+                            vm.selectedConfigurationType = "";
+                        }
                         //item.pricingOptions.concat(item.details);
                     },function(error){
+                        vm.loadingPrice = false;
                         vm.errorInApi = true;
                         console.log("Error in pricing details "+error);
                     });
@@ -240,6 +253,10 @@
                 vm.showModifyModal = function(item,id){
                     if(!vm.errorInApi){
                         vm.disable = true;
+                        vm.awsRegion = item.selectedMapping.region;
+                        vm.awsZone = item.selectedMapping.zone || 'us-east-1a';
+                        vm.selectedConfigurationType = item.selectedMapping.instance_type
+                        vm.getZones();
                         $(id).modal('show');
                         vm.getPricingDetails(item);
                     }else{
