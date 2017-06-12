@@ -270,6 +270,18 @@
                     $('#modify_modal'+id).modal('hide');
                 };
 
+                vm.totalCost = function(item){
+                    var storage_rate = parseFloat(parseFloat(item.details.rax_storage_size) * parseFloat(item.selectedMapping.storage_rate)).toFixed(2);
+                    var aws_bandwidth_cost = 0;
+                    if(item.details.rax_bandwidth !== undefined)
+                        aws_bandwidth_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_bandwidth)).toFixed(2);
+                    else
+                        aws_bandwidth_cost = parseFloat(parseFloat(item.selectedMapping.cost) * 0).toFixed(2);
+                    var aws_uptime_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_uptime)).toFixed(2);
+
+                    return (parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost)+ parseFloat(storage_rate)).toFixed(2);
+                }
+
                 /**
                  * @ngdoc method
                  * @name equipmentDetails

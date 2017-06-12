@@ -146,16 +146,16 @@
                             }
                         }
                     }
-                    else 
-                    {
-                        vm.selectedItems[type] = dataStoreService.getItems(type);
-                        var servers = vm.selectedItems[type];
-                        for(var i =0;i < servers.length;i++){
-                            if(servers[i].name  === item.name){
-                                itemExists = true;
-                            }
-                        }
-                    }
+                    // else -- Previous Code
+                    // {
+                    //     vm.selectedItems[type] = dataStoreService.getItems(type);
+                    //     var servers = vm.selectedItems[type];
+                    //     for(var i =0;i < servers.length;i++){
+                    //         if(servers[i].name  === item.name){
+                    //             itemExists = true;
+                    //         }
+                    //     }
+                    // }
                     if(!itemExists){
                     //if(vm.selectedItems[type].indexOf(item)<0){ -- Previous Code
                         vm.selectedItems[type].push(item);
@@ -192,7 +192,8 @@
                                 localStorage.setItem('selectedLoadBalancers', JSON.stringify(old.concat(item)));
                             }
                         }
-                        vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
+                        if($window.localStorage.selectedServers !== undefined)
+                            vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
                         dataStoreService.setItems(vm.selectedItems);//save items selected for migration in service.
                         $scope.$broadcast("ItemsModified");//make a function call to child component to enable checkobox for selected items.
                         //});
@@ -212,7 +213,7 @@
                     if($window.localStorage.selectedServers !== undefined)
                         vm.selectedItems[type] = JSON.parse($window.localStorage.selectedServers);
                     else
-                        vm.selectedItems[type] = dataStoreService.getItems(type);
+                        vm.selectedItems[type] = [];//dataStoreService.getItems(type); -- Previous Code
                     //look for item to be removed in array of selected items and splice it from the array.
                     angular.forEach(vm.selectedItems[type], function (item_selected, key) {
                         if(item_selected.id == item.id){

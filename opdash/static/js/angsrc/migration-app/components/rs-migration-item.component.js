@@ -177,7 +177,8 @@
                      * @type {Array}
                      * @description Set of resources retrieved during first time loading of application
                      */
-                    var resources_retrieved = datastoreservice.retrieveallItems(vm.type);
+
+                    //var resources_retrieved = datastoreservice.retrieveallItems(vm.type); -- Previous Code
                     vm.parent.itemsLoadingStatus(true);
                     //check if resources already retrieved
 
@@ -263,8 +264,8 @@
                             var savedItems = [];
                             if($window.localStorage.selectedServers !== undefined)
                                 savedItems = JSON.parse($window.localStorage.selectedServers);
-                            else
-                                savedItems = datastoreservice.getItems(vm.type);
+                            // else -- Previous Code
+                            //     savedItems = datastoreservice.getItems(vm.type);
                             
                             if(savedItems.length != 0){
                                 angular.forEach(vm.items, function (item) {
@@ -291,7 +292,8 @@
                                         };
                                     };
                                 });
-                                datastoreservice.setItems({'server':savedModifyItems,'network':[],'loadBalancers':[]})
+                                datastoreservice.setItems({'server':savedModifyItems,'network':[],'loadBalancers':[]});
+                                $window.localStorage.setItem('selectedServers',JSON.stringify(savedModifyItems));
                             };
 
                             datastoreservice.storeallItems(vm.items, vm.type);
@@ -323,10 +325,10 @@
                         //For repeated fetch of resources after first time loading.
                         
                         //vm.items = datastoreservice.retrieveallItems(vm.type); -- Previous Code
-                        if($window.localStorage.allServers !== undefined)
-                            vm.items = JSON.parse($window.localStorage.allServers);
-                        else
-                            vm.items = resources_retrieved;
+                        //if($window.localStorage.allServers !== undefined) -- Previous Code
+                        vm.items = JSON.parse($window.localStorage.allServers);
+                        // else
+                        //     vm.items = resources_retrieved;
                         angular.forEach(vm.items, function (item) {
                             if(item.canMigrate == true && item.status.toLowerCase() == 'active'){ 
                                 vm.activeItemCount++;
@@ -355,11 +357,11 @@
 
                         if($window.localStorage.selectedServers !== undefined)
                             servers_selected = JSON.parse($window.localStorage.selectedServers);
-                        else
-                            servers_selected = datastoreservice.getItems(vm.type);
+                        // else
+                        //     servers_selected = datastoreservice.getItems(vm.type);
 
-                        if(servers_selected.length != 0)
-                            $window.localStorage.selectedServers = JSON.stringify(servers_selected);
+                        // if(servers_selected.length != 0)
+                        //     $window.localStorage.selectedServers = JSON.stringify(servers_selected);
                         if(servers_selected.length != 0){
                             angular.forEach(vm.items, function (item) {
                                 for(var i=0;i<servers_selected.length;i++){
