@@ -116,9 +116,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="server in item.pricingOptions track by $index" class="">
+                        <tr ng-show="vm.loadingPrice || vm.loadingZone">
+                            <td colspan="6">
+                                <div class="rs-table-overlay rs-table-overlay-loading" style="height:100px !important; margin-bottom:-20px">
+                                    <div class="rs-table-overlay-content">
+                                        <div class="rs-table-overlay-message">Loading&hellip;</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" ng-show="!item.pricingOptions.length && !vm.loadingPrice && !vm.loadingZone" class="collection-error-msg">No instance types found.</td>
+                        </tr>
+                        <tr ng-show="!vm.loadingPrice && !vm.loadingZone" ng-repeat="server in item.pricingOptions track by $index" class="">
                             <td class="rs-table-checkbox">    
-                                <input type="radio" name="{{'selection'+item.name }}" ng-model="vm.selectedConfiguration" ng-value="$index" ng-click="vm.disableConfirm()"/>
+                                <input type="radio" name="{{'selection'+item.name }}" ng-model="vm.selectedConfigurationType" ng-value="server.instance_type" ng-click="vm.disableConfirm($index)"/>
                             </td>
                             <td class="rs-table-text">{{server.instance_type}}</td>
                             <td class="rs-table-text">{{server.vcpu || 2}}</td>
@@ -132,7 +144,7 @@
         </div>
         <div class="modal-footer">
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <button class="rs-btn rs-btn-primary" ng-click="vm.saveUpdatedObject(item.id)" ng-disabled="vm.disable">Save Changes</button>
+            <button class="rs-btn rs-btn-primary" ng-click="vm.saveUpdatedObject(item.id)" ng-class="{disabled:!vm.awsRegion || !vm.awsZone || !vm.selectedConfigurationType || vm.disable || vm.loadingPrice || vm.loadingZone}">Save Changes</button>
         </div>
     </div>
 
