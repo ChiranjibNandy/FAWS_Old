@@ -37,16 +37,10 @@
                     };
                     vm.saveProgress = 'yes';
                     vm.displayMigName = false;
-                    vm.migrationName = 'MyMigration' || $window.localStorage.migrationName;
+                    vm.migrationName =  $window.localStorage.migrationName || 'MyMigration';
                     vm.stepname = dataStoreService.getPageName() || $window.localStorage.pageName;
                 };
-        //             $rootScope.$on("vm.changedMigrationName", function (event, value) {
-        //           vm.migrationName = value;
-        //      });
-        //    $rootScope.$on("vm.migrationName", function (event, value) {
-        //           vm.migrationName = value;
-        //     });
-
+       
                 /**
                  * @ngdoc method
                  * @name cancelMigration
@@ -120,9 +114,6 @@
                                 buttonDetails.resultMsg = "";
                                 if(buttonDetails.modalName == '#cancel_modal'){
                                     $('#cancel_modal').modal('hide');
-                                    //dataStoreService.resetAll();
-                                    // if($window.localStorage.selectedServers !== undefined)
-                                    //     $window.localStorage.removeItem('selectedServers');
                                     $rootRouter.navigate(["MigrationStatus"]);
                                 }
                                 else
