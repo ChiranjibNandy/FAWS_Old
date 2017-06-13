@@ -11,8 +11,6 @@
     <td class="rs-table-text">{{item.selectedMapping.zone || 'us-east-1a' }}</td>
     <td class="rs-table-text">{{item.selectedMapping.instance_type}}</td>
     <td class="rs-table-text"> ${{vm.totalCost(item)}}</td>
-    <!--<td class="rs-table-text" ng-if="item.details.rax_uptime !==undefined">{{(item.selectedMapping.cost * item.details.rax_uptime) + ((item.selectedMapping.cost | number) * item.details.rax_bandwidth | number) + (item.details.rax_storage_size * item.selectedMapping.storage_rate) | currency}}</td>
-    <td class="rs-table-text" ng-if="item.details.rax_uptime ===undefined">{{(item.selectedMapping.cost * 720) + ((item.selectedMapping.cost | number) * 0) + (item.details.rax_storage_size * item.selectedMapping.storage_rate) | currency}}</td>-->
     <td class="rs-table-cog">
         <a href="" ng-click="vm.showModifyModal(item,'#modify_modal'+ item.id)" data-toggle="modal" class="rs-btn-action">
             <i class="rs-edit" title="Modify this"></i>
