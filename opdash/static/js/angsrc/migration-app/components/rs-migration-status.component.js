@@ -70,6 +70,7 @@
                     vm.count = 0;
                     vm.is_racker = authservice.getAuth().is_racker;
                     vm.afterNewMigration = false;
+                    //getting the migration name.
                     vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
                     dataStoreService.setPageName("MigrationStatus");
                     $window.localStorage.setItem('pageName',"MigrationStatus");
