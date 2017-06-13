@@ -177,11 +177,9 @@
                      * @type {Array}
                      * @description Set of resources retrieved during first time loading of application
                      */
-                    var resources_retrieved = datastoreservice.retrieveallItems(vm.type);
+
                     vm.parent.itemsLoadingStatus(true);
                     //check if resources already retrieved
-
-                    //if(resources_retrieved.length == 0){ -- Previous Block
                     if($window.localStorage.allServers === undefined){
                         //During first time loading of resources
                         // Retrieve all migration items of a specific type (eg: server, network etc)
@@ -221,51 +219,10 @@
                                     // vm.activeItemsArr.push(activeInstance);
                                 }
                             });
-                            // if(vm.type === "server")
-                            //     vm.items = mapServerStatus(dataList, results[1].server_status);
-                            // if(vm.type === "network")
-                            //     vm.items = mapNetworkStatus(dataList, results[1].network_status);
-                            // if(vm.type === "files")
-                            //     vm.items = mapNetworkStatus(dataList, results[1].network_status);
-                            // if(vm.type === "loadBalancers")
-                            //     vm.items = mapNetworkStatus(dataList, results[1].network_status);
-                            //Store all retrieved resources in factory variable
-                            
-                            //var savedItems = datastoreservice.getItems(vm.type); -- Previous Code
-                            
-                            //eligibility precheck API call
-                            /*
-                            ds.eligibilityPrecheck(vm.activeItemsArr)
-                                .then(function (result) {
-                                    if (result.error < 400){
-                                        vm.loading = false;
-                                        angular.forEach(result.results.instances, function (descriptions, ID) {
-                                            angular.forEach(descriptions, function (instance) {
-                                                var keepGoing = true;
-                                                angular.forEach(vm.items, function (item) {
-                                                    if(keepGoing) {
-                                                        if(ID == item.id && instance.type != "success"){ 
-                                                            item.canMigrate = false;
-                                                            keepGoing = false;
-                                                        }
-
-                                                    };
-                                                });
-                                            });
-                                        });
-                                    } 
-                                    else {
-                                        vm.loading = false;
-                                        //vm.loadError = true; to be enabled once precheck call is up.  
-                                    }
-                                });
-                                */
                             var savedItems = [];
                             if($window.localStorage.selectedServers !== undefined)
                                 savedItems = JSON.parse($window.localStorage.selectedServers);
-                            else
-                                savedItems = datastoreservice.getItems(vm.type);
-                            
+
                             if(savedItems.length != 0){
                                 angular.forEach(vm.items, function (item) {
                                     for(var i=0;i<savedItems.length;i++){
@@ -291,7 +248,8 @@
                                         };
                                     };
                                 });
-                                datastoreservice.setItems({'server':savedModifyItems,'network':[],'loadBalancers':[]})
+                                datastoreservice.setItems({'server':savedModifyItems,'network':[],'loadBalancers':[]});
+                                $window.localStorage.setItem('selectedServers',JSON.stringify(savedModifyItems));
                             };
 
                             datastoreservice.storeallItems(vm.items, vm.type);
@@ -321,12 +279,7 @@
                         });
                     } else{
                         //For repeated fetch of resources after first time loading.
-                        
-                        //vm.items = datastoreservice.retrieveallItems(vm.type); -- Previous Code
-                        if($window.localStorage.allServers !== undefined)
-                            vm.items = JSON.parse($window.localStorage.allServers);
-                        else
-                            vm.items = resources_retrieved;
+                        vm.items = JSON.parse($window.localStorage.allServers);
                         angular.forEach(vm.items, function (item) {
                             if(item.canMigrate == true && item.status.toLowerCase() == 'active'){ 
                                 vm.activeItemCount++;
@@ -350,16 +303,10 @@
                         vm.loading = false;
                         vm.parent.itemsLoadingStatus(false);
                         
-                        //var servers_selected = datastoreservice.getItems(vm.type); -- Previous Code
                         var servers_selected = [];
-
                         if($window.localStorage.selectedServers !== undefined)
                             servers_selected = JSON.parse($window.localStorage.selectedServers);
-                        else
-                            servers_selected = datastoreservice.getItems(vm.type);
-
-                        if(servers_selected.length != 0)
-                            $window.localStorage.selectedServers = JSON.stringify(servers_selected);
+                        
                         if(servers_selected.length != 0){
                             angular.forEach(vm.items, function (item) {
                                 for(var i=0;i<servers_selected.length;i++){

@@ -31,12 +31,7 @@
                 vm.saveClicked = false;
 
                 vm.$onInit = function() {
-                    //testing
-                    // dataStoreService.fetchUserProfile()
-                    //     .then(function (result) {
-                    //         var profileDetails = JSON.parse(result.savedDetails || '[]');
-                    //     });
-                    // If status is true, popup for migration won't be displayed in first step of Migration.
+                   // If status is true, popup for migration won't be displayed in first step of Migration.
                     $('body').removeClass('modal-open');
                     $('.modal-backdrop').remove();
                     vm.dontshowStatus = true;
@@ -146,18 +141,7 @@
                             }
                         }
                     }
-                    else 
-                    {
-                        vm.selectedItems[type] = dataStoreService.getItems(type);
-                        var servers = vm.selectedItems[type];
-                        for(var i =0;i < servers.length;i++){
-                            if(servers[i].name  === item.name){
-                                itemExists = true;
-                            }
-                        }
-                    }
                     if(!itemExists){
-                    //if(vm.selectedItems[type].indexOf(item)<0){ -- Previous Code
                         vm.selectedItems[type].push(item);
                         if(type === 'server'){
                             var old = $window.localStorage.getItem('selectedServers');
@@ -192,10 +176,10 @@
                                 localStorage.setItem('selectedLoadBalancers', JSON.stringify(old.concat(item)));
                             }
                         }
-                        vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
+                        if($window.localStorage.selectedServers !== undefined)
+                            vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
                         dataStoreService.setItems(vm.selectedItems);//save items selected for migration in service.
                         $scope.$broadcast("ItemsModified");//make a function call to child component to enable checkobox for selected items.
-                        //});
                     };
                 }
 
@@ -208,11 +192,10 @@
                  * Called by child component when an item is removed by user
                  */
                 vm.removeItem = function(item, type) {
-                    //vm.selectedItems = dataStoreService.getItems();
                     if($window.localStorage.selectedServers !== undefined)
                         vm.selectedItems[type] = JSON.parse($window.localStorage.selectedServers);
                     else
-                        vm.selectedItems[type] = dataStoreService.getItems(type);
+                        vm.selectedItems[type] = []; //dataStoreService.getItems(type); -- Previous Code
                     //look for item to be removed in array of selected items and splice it from the array.
                     angular.forEach(vm.selectedItems[type], function (item_selected, key) {
                         if(item_selected.id == item.id){
@@ -315,14 +298,10 @@
                  * Assign Migration considering current Timestamp and continue to next step: **Recommendations**
                  */
                 vm.savencontinue = function() { 
-                    //if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 ){//|| dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 -- Previous Code
                     if($window.localStorage.selectedServers !== undefined || $window.localStorage.selectedLoadBalancers !== undefined){
-                        // if(vm.selectedItems.server.length > 0 || vm.selectedItems.LoadBalancers.length > 0 ){
-                        //     dataStoreService.setItems(vm.selectedItems);
-                        // } 
                         vm.continuing = true;
                         var items = JSON.parse($window.localStorage.selectedServers);
-                        // var arr = angular.copy(vm.selectedItems.server);
+
                         var arr = [];
                         var promises = items.map(function(item) {
                             if(item.selectedMapping == undefined){
@@ -341,7 +320,6 @@
                             dataStoreService.setItems(vm.selectedItems);
                             $window.localStorage.setItem('selectedServers', JSON.stringify(arr));
                             vm.continuing = false;
-                            // dataStoreService.setDontShowStatus(true);
                             dataStoreService.setDontShowNameModal(true);
                         
                             if($window.localStorage.migrationName != undefined){
@@ -361,7 +339,6 @@
                             $('#cancel_modal').modal('hide');
                             $('#intro_modal').modal('hide');
                             $('#no_selection').modal('hide');
-                            // $rootRouter.navigate(["MigrationRecommendation"]);
                             $rootRouter.navigate(["MigrationRecommendation"]);    
                         },function(error){
                             vm.continuing = false;
@@ -387,7 +364,6 @@
                     if((oldUrl.indexOf("migration/resources") > -1) && (newUrl.indexOf("migration/confirm") > -1)){
                         event.preventDefault();
                         $('#cancel_modal').modal('show');
-                        //$rootRouter.navigate(["MigrationResourceList"]);
                     }
                 });
 

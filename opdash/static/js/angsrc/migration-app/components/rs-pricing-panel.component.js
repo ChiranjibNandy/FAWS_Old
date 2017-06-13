@@ -302,12 +302,6 @@
                         }
 
                         if(server.details.hasOwnProperty('rax_bandwidth')){
-                            // var cost = 0;
-                            // for(var i =0; i< server.mappings.length; i++){
-                            //     if(server.mappings[i].instance_type == selectedFlavor){
-                            //         cost = server.mappings[i].cost;
-                            //     }
-                            // }
                             var storage_rate = parseFloat(parseFloat(server.details.rax_storage_size) * parseFloat(server.selectedMapping.storage_rate)).toFixed(2);
                             var aws_bandwidth_cost = parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(server.details.rax_bandwidth)).toFixed(2);
                             var aws_uptime_cost = parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(server.details.rax_uptime)).toFixed(2);
@@ -327,16 +321,10 @@
                         }
 
                         if(!server.details.hasOwnProperty('rax_bandwidth')){
-                            //var cost = 0;
                             //Checks whether the showCalculatedCostDialog flag was set in the loop before
                             if(vm.showCalculatedCostDialog === false)
                                 vm.showCalculatedCostDialog = true;
 
-                            // for(var i =0; i< server.mappings.length; i++){
-                            //     if(server.mappings[i].instance_type == selectedFlavor){
-                            //         cost = server.mappings[i].cost;
-                            //     }
-                            // }
                             var storage_rate = parseFloat(parseFloat(server.details.rax_storage_size) * parseFloat(server.selectedMapping.storage_rate)).toFixed(2);
                             vm.projectedCostCalculationItems.push({
                                 "calculated_cost_resourcename" : server.details.name,
