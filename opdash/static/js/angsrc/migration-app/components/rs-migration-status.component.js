@@ -70,7 +70,8 @@
                     vm.count = 0;
                     vm.is_racker = authservice.getAuth().is_racker;
                     vm.afterNewMigration = false;
-                    
+                    //getting the migration name.
+                    vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
                     dataStoreService.setPageName("MigrationStatus");
                     $window.localStorage.setItem('pageName',"MigrationStatus");
 
@@ -96,7 +97,6 @@
                     }, true);
 
                    vm.getAllTickets();
-
                    var element = document.getElementsByClassName('custom-sort-a');
                    for(var i = 0; i < element.length; i++)
                     {
@@ -104,6 +104,8 @@
                         element[i].classList.add('rs-table-sort-desc');
                     }
                 };
+
+        
 
                 vm.$routerOnActivate = function(next, previous) {
                     if(previous && previous.urlPath.indexOf("confirm") > -1 && dataStoreService.selectedTime.migrationName && $window.localStorage.migrationScheduled === "true"){
