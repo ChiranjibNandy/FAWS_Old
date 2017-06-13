@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, request
 
 
 def register_error_handlers(app):
@@ -10,7 +10,7 @@ def register_error_handlers(app):
         """
             Logs unauthorized access error
         """
-        logger.error('%s: Unauthorized access attempt.' % error_code)
+        logger.error('401 Error: {0}'.format(request.url))
         return render_template("error-401.html"), 401
 
     @app.errorhandler(403)
@@ -18,7 +18,7 @@ def register_error_handlers(app):
         """
             Logs forbidden errors
         """
-        logger.error('%s: Access forbidden.' % error_code)
+        logger.error('403 Error: {0}'.format(request.url))
         return render_template("error-403.html"), 403
 
     @app.errorhandler(404)
@@ -26,7 +26,7 @@ def register_error_handlers(app):
         """
             Logs page not found errors
         """
-        logger.error('%s: Page Not Found' % error_code)
+        logger.error('404 Error: {0}'.format(request.url))
         return render_template("error-404.html"), 404
 
     @app.errorhandler(500)
@@ -34,5 +34,5 @@ def register_error_handlers(app):
         """
             Logs internal server errors
         """
-        logger.error('%s: Internal Server Error' % error_code)
+        logger.error('500 Error: {0}'.format(request.url))
         return render_template("error-500.html"), 500
