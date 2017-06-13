@@ -4,6 +4,11 @@
         <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
         <h3>Success! Migration for {{vm.resourceCount}} resources confirmed at {{vm.schedule.date}} at {{vm.schedule.time}}</h3>
     </div>
+    <div class="alert alert-success animated fadeIn" ng-if="vm.migrationName">
+        <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
+        <h3>Your Migration was saved successfully with the name {{vm.migrationName}}</h3>
+    </div>
+</div>
     <div class="rs-main rs-panel">
         <div class="rs-content rs-panel">
             <div class="rs-inner">

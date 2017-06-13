@@ -37,15 +37,15 @@
                     };
                     vm.saveProgress = 'yes';
                     vm.displayMigName = false;
-                    vm.migrationName = $window.localStorage.migrationName;
+                    vm.migrationName = 'MyMigration' || $window.localStorage.migrationName;
                     vm.stepname = dataStoreService.getPageName() || $window.localStorage.pageName;
                 };
-                    $rootScope.$on("vm.changedMigrationName", function (event, value) {
-                  vm.migrationName = value;
-             });
-           $rootScope.$on("vm.migrationName", function (event, value) {
-                  vm.migrationName = value;
-            });
+        //             $rootScope.$on("vm.changedMigrationName", function (event, value) {
+        //           vm.migrationName = value;
+        //      });
+        //    $rootScope.$on("vm.migrationName", function (event, value) {
+        //           vm.migrationName = value;
+        //     });
 
                 /**
                  * @ngdoc method
@@ -63,6 +63,7 @@
                     }else{
                         selectedItems = JSON.parse($window.localStorage.selectedServers);
                         $('#cancel_modal').modal('show');
+                         vm.migrationName = 'MyMigration' || $window.localStorage.migrationName;
                     }
                 };
 
@@ -108,18 +109,18 @@
                         }
                     };
                     buttonDetails.saveInProgress = true;
+                    
                     //make API call(through service) for saving the instance and wait for its response.
                     dataStoreService.saveItems(saveInstance).then(function(success){
                         if(success){
                             buttonDetails.saveInProgress = false;
                             buttonDetails.saveSuccess = true;
-                            buttonDetails.resultMsg = "Saved your instance successfully with name: "+dataStoreService.getScheduleMigration().migrationName;
                             //make the popup or alert message disappear after 3 seconds of API response.
                             $timeout(function () {
                                 buttonDetails.resultMsg = "";
                                 if(buttonDetails.modalName == '#cancel_modal'){
                                     $('#cancel_modal').modal('hide');
-                                    dataStoreService.resetAll();
+                                    //dataStoreService.resetAll();
                                     // if($window.localStorage.selectedServers !== undefined)
                                     //     $window.localStorage.removeItem('selectedServers');
                                     $rootRouter.navigate(["MigrationStatus"]);
