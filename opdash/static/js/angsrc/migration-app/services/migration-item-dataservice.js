@@ -112,7 +112,9 @@
                     instancesReqList = [],
                     networksReqList = [],
                     reqObj = {
-                        batch_name: dataStoreService.getScheduleMigration().migrationName || $window.localStorage.migrationName,
+                        metadata: {
+                            batch_name: dataStoreService.getScheduleMigration().migrationName || $window.localStorage.migrationName
+                        },
                         names: names,
                         source: {
                             tenantid: auth.tenant_id
