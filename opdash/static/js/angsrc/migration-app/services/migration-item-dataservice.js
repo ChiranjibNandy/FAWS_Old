@@ -12,7 +12,7 @@
             var loaded, loadbalancers, self = this, currentTenant = null, default_zone = 'us-east-1a';
             //the above default_zone is needed to get the default values.
             var prepareNames = function () {
-                var servers = dataStoreService.getItems("server");
+                var servers = JSON.parse($window.localStorage.selectedServers);//dataStoreService.getItems("server");
                 var names = {};
                 names.instances = {};
                 names.networks = {};

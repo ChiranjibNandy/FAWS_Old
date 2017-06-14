@@ -88,25 +88,18 @@
                 vm.fetchFawsAccounts = function() {
                     dataStoreService.getFawsAccounts() ///make api call to retrieve list of FAWS account for this tenant ID
                         .then(function (result) {
-                            if((result == null || result.awsAccounts.length == 0)){     //if there are no accounts array will be empty
+                            if(result == null){     //if there are no accounts array will be empty
                                 vm.awsAccountsDetails = [];
                                 vm.fawsAcctStatus = false;
                             }
                             else{
-                                vm.awsAccountsDetails = result.awsAccounts;
+                                var fawsAccountDetails = result;
                                 vm.fawsAcctStatus = true;
-                                vm.selectedFawsName = vm.awsAccountsDetails[0].name;
-                                vm.selectedFawsNum=vm.awsAccountsDetails[0].awsAccountNumber;
-                                vm.selectedFaws = vm.selectedFawsName.trim() + " " + "(#" + vm.selectedFawsNum + ")"; //to display in faws dropdown default value
-                                vm.fawsAccType = result.mode;
-                                vm.fawsAccountDetails = {
-                                        awsAccounts:vm.awsAccountsDetails,
-                                        selectedFawsAccount: vm.selectedFawsName,
-                                        selectedFawsAccountNumber:vm.selectedFawsNum,
-                                        totalAccounts: result.awsAccountLimit - result.remainingAccounts,
-                                        mode:result.mode
-                                };
-                                dataStoreService.saveFawsDetails(vm.fawsAccountDetails);
+                                vm.awsAccountsDetails = fawsAccountDetails.awsAccounts;
+                                vm.selectedFawsName = fawsAccountDetails.selectedFawsAccount;
+                                vm.selectedFawsNum = fawsAccountDetails.selectedFawsAccountNumber;
+                                vm.fawsAccType = fawsAccountDetails.mode;
+                                vm.selectedFaws = vm.selectedFawsName.trim() + " " + "(#" + vm.selectedFawsNum + ")";
                             }
                     });
                 };
