@@ -113,8 +113,8 @@
                     networksReqList = [],
                     reqObj = {
                         metadata: {
-                            batch_name: dataStoreService.getScheduleMigration().migrationName || $window.localStorage.migrationName
-                        },
+                            batch_name: $window.localStorage.migrationName || dataStoreService.getScheduleMigration().migrationName,
+                      },
                         names: names,
                         source: {
                             tenantid: auth.tenant_id
@@ -168,18 +168,17 @@
                 });
 
                 if (dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < moment().unix()) {
-   reqObj.start =  moment().unix(); 
-//code for iso conversion           
- //var isoDate = moment().unix();
-//reqObj.start = moment().unix(isoDate).toISOString();
+                    // reqObj.start = moment().unix();
+                    //code for iso conversion           
+                    var isoDate = moment().unix();
+                    reqObj.start = moment().unix(isoDate).toISOString();
                     dataStoreService.selectedTime.time = reqObj.start;
                 } else {
-//code for iso conversion
-                 //var isoDate =dataStoreService.selectedTime.time;
-
-                    //reqObj.start = moment.unix(isoDate).toISOString();
-
-                    reqObj.start = dataStoreService.selectedTime.time;
+                    //code for iso conversion
+                    var isoDate =dataStoreService.selectedTime.time;
+                    reqObj.start = moment.unix(isoDate).toISOString();
+                    dataStoreService.selectedTime.time = reqObj.start;
+                    // reqObj.start = dataStoreService.selectedTime.time;
                 }
 
                 reqObj.resources.instances = instancesReqList; //add servers to the resources list
