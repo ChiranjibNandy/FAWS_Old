@@ -54,17 +54,14 @@
                     vm.networksForServer = {};
                     vm.cbsForServer = {};
                     vm.isRacker = authservice.is_racker;
-                    //Fetch items selected from service.
-                    //vm.selectedItems.server = dataStoreService.getItems('server');
-                    //vm.selectedItems.LoadBalancers = dataStoreService.getItems('LoadBalancers');
+                    //Fetch items selected from local storage.
                     if($window.localStorage.selectedServers !== undefined)
                         vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
-                    else
-                        vm.selectedItems.server = dataStoreService.getItems('server');
+
+                    //Fetch load balancers selected from local storage.
                     if($window.localStorage.selectedLoadBalancers !== undefined)
                         vm.selectedItems.LoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers); 
-                    else
-                        vm.selectedItems.LoadBalancers = dataStoreService.getItems('LoadBalancers');                     
+                    
                     $("#accordion2").delegate('.accordion-heading a', "click", function () {
                         $('.plain-panel').find('.collapse.in').prev().find("i").removeClass("fa-chevron-up").addClass(
                             "fa-chevron-down");
@@ -77,15 +74,15 @@
 
                 //Catch broadcast requests from parent(rsmigrationresourcelist) component.
                 $scope.$on("ItemsModified", function(event){
-                    // vm.selectedItems.server = dataStoreService.getItems('server');
-                    
-                    //vm.selectedItems = dataStoreService.getItems();
+
                     vm.selectedItems = [];
+                    //Checks whether servers selected are already there in local storage
                     if($window.localStorage.selectedServers !== undefined)
                         vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
                     else
                         vm.selectedItems.server = [];//dataStoreService.getItems('server');
                     
+                    //Checks whether load balancers selected are already there in local storage
                     if($window.localStorage.selectedLoadBalancers !== undefined)
                         vm.selectedItems.LoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers);
                     else
@@ -134,20 +131,21 @@
                  * Remove an item from list of items selected.
                  */
                 vm.removeItem = function(item, type) {
-                    // if(vm.selectedItems[type].indexOf(item)>=0){
-                    //     vm.selectedItems[type].splice(vm.selectedItems[type].indexOf(item), 1);
-                    //     dataStoreService.setItems(vm.selectedItems);
-                    //     $window.localStorage.setItem('selectedServers',JSON.stringify(vm.selectedItems['server']));
-                    //     item.selected = false;
-                    //     $scope.$emit("ItemRemoved", item); // broadcast event to all child components
-                    // }
                     if(vm.selectedItems[type].indexOf(item)>=0){
                        vm.selectedItems[type].splice(vm.selectedItems[type].indexOf(item), 1);
                         dataStoreService.setItems(vm.selectedItems);
+
+                        //If not the last item, set the selected servers into local storage.
                         if(vm.selectedItems.server.length >= 1)
                             $window.localStorage.setItem('selectedServers',JSON.stringify(vm.selectedItems.server));
-                        else
+                        else {//If is the the last item in localstorage , remove the key value pair altogether
                             $window.localStorage.removeItem('selectedServers');
+                            if(document.getElementsByClassName("fa fa-chevron-up")[0]){
+                                var element = document.getElementsByClassName("fa fa-chevron-up")[0];
+                                element.classList.remove("fa-chevron-up");
+                                element.classList.add("fa-chevron-down");
+                            }
+                        }
                         item.selected = false;  
                         $scope.$emit("ItemRemoved", item); // broadcast event to all child components 
                     }

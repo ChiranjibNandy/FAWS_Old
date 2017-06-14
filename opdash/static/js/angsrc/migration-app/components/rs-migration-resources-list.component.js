@@ -132,6 +132,7 @@
                 vm.addItem = function(item, type) {
                      //vm.selectedItems[type] = dataStoreService.getItems(type); -- Previous Code
                     var itemExists = false;
+                    //Checks to see if the item is already selected and placed in the local storage
                     if($window.localStorage.selectedServers !== undefined){
                         vm.selectedItems[type] = JSON.parse($window.localStorage.selectedServers);
                         var servers = JSON.parse($window.localStorage.selectedServers);
@@ -141,7 +142,7 @@
                             }
                         }
                     }
-                    if(!itemExists){
+                    if(!itemExists){ //If not, add the item to the local storage
                         vm.selectedItems[type].push(item);
                         if(type === 'server'){
                             var old = $window.localStorage.getItem('selectedServers');
@@ -208,10 +209,16 @@
                                 angular.forEach(old,function(item_selected,key){
                                     if(item_selected.id == item.id){
                                         old.splice(key,1);
-                                        if(old.length >= 1)
+                                        if(old.length >= 1) //If not the last item, set the selected servers into local storage.
                                             $window.localStorage.setItem('selectedServers', JSON.stringify(old));
-                                        else
+                                        else{ //If is the the last item in localstorage , remove the key value pair altogether
                                             $window.localStorage.removeItem('selectedServers');
+                                            if(document.getElementsByClassName("fa fa-chevron-up")[0]){
+                                                var element = document.getElementsByClassName("fa fa-chevron-up")[0];
+                                                element.classList.remove("fa-chevron-up");
+                                                element.classList.add("fa-chevron-down");
+                                            }
+                                        }
                                     }
                                 });                              
                             }
