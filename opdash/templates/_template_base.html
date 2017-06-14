@@ -54,10 +54,10 @@
   {! javascript("anglib/knockout-3.2.0.js") !}
   {! javascript("anglib/Chart.min.js") !}
   {! javascript("anglib/Chart.bundle.js") !}
-  {! javascript("anglib/angular-translate.js") !}  
-  {! javascript("anglib/bootstrap-popover.js") !}  
-  {! javascript("anglib/bootstrap-tooltip.js") !}  
-  {! javascript("anglib/angular-animate.js") !}  
+  {! javascript("anglib/angular-translate.js") !}
+  {! javascript("anglib/bootstrap-popover.js") !}
+  {! javascript("anglib/bootstrap-tooltip.js") !}
+  {! javascript("anglib/angular-animate.js") !}
   {! javascript("anglib/angular-material.js") !}
   {! javascript("anglib/angular-aria.js") !}
 
@@ -103,6 +103,11 @@
   {! javascript("angsrc/migration-app/components/rs-save-progress.component.js") !}
   {! javascript("angsrc/migration-app/components/rs-migration-home.component.js") !}
 
+  <!--Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-M8LWJF"height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-M8LWJF');</script>
+  <!--End Google Tag Manager -->
+
   <script>
 
   var user_data = {
@@ -122,7 +127,18 @@
     {% endif %}
   };
 
+
+  /* GOOGLE ANALYTICS */
+  dataLayer = [{
+    "Page_view": "virtual",
+    "page_name":document.title,
+    "site_language":"en", //change as needed
+    "site_section":"rackspace" //change as needed
+  }];
+  /* END GOOGLE ANALYTICS */
+
   </script>
+
 </head>
 
 <body class="rs-fixed">
