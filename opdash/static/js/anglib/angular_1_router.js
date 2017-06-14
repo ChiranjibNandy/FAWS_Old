@@ -3076,6 +3076,18 @@ function canActivateOne(nextInstruction, prevInstruction) {
   $rootScope.$watch(function () { return $location.url(); }, function (path) {
     if (router.lastNavigationAttempt !== path) {
       router.navigateByUrl(path);
+
+      // FOR GOOGLE ANALYTICS - JB
+      currentComponent = router.hostComponent;
+      if(router.hasOwnProperty("_childRouter")) {
+        currentComponent = router._childRouter.hostComponent;
+      }
+      $rootScope.$broadcast('$routeChanged', {
+          "path":path,
+          "componentName": currentComponent
+      });
+      // END GOOGLE ANALYTICS - JB
+
     }
   });
 

@@ -8,7 +8,23 @@
      * @description
      * A module to facilitate and initiate migration of resources. It requires **ngComponentRouter** for handling routing through [Component router](https://docs.angularjs.org/guide/component-router).
      */
-    var migrationApp = angular.module("migrationApp", ["ngComponentRouter","ngMaterial","ngAnimate","ngAria"]);
+    var migrationApp = angular.module(
+      "migrationApp",
+      ["ngComponentRouter","ngMaterial","ngAnimate","ngAria"]).run(
+        function($rootScope, $location) {
+          // GOOGLE ANALYTICS - JB
+          $rootScope.$on("$routeChanged", function(event, data) {
+            console.info("*** ROUTE CHANGE:" + data.path + " COMPONENT:" + data.componentName);
+            dataLayer.push({
+                event: 'VirtualPageview',
+                virtualPageURL: document.location + data.path,
+                virtualPageTitle: document.title,
+                page_name: data.componentName
+            });
+          // END GOOGLE ANALYTICS
+        })
+    });
+
 
     // Defining the root component which will initiate routing handling
     migrationApp.value("$routerRootComponent", "rsmigrationroot");
@@ -66,7 +82,7 @@
                 $timeout(function(){
                     element.bind('click', function(){
                         document.getElementById(attrs.setFocus).focus();
-                    }); 
+                    });
                 });
             }
         }
