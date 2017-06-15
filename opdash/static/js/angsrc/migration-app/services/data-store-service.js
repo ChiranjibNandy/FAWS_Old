@@ -356,7 +356,7 @@
                 }
             };
 
-            /**temp2
+            /**
              * @ngdoc method
              * @name getMigrationDate
              * @methodOf migrationApp.service:datastoreservice
