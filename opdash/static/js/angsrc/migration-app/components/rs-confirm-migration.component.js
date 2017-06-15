@@ -88,6 +88,8 @@
                         $('#confirm-migration-modal').modal('hide');
                         requestObj = ds.prepareJobRequest();
                         vm.acceptTermsAndConditions= true;
+                        console.log(requestObj);
+
                         HttpWrapper.save("/api/jobs", { "operation": 'POST' }, requestObj)
                             .then(function (result) {
                                 vm.migrating = false; 
@@ -102,7 +104,7 @@
                             });
                     }else{
                         $("#no-equipments-modal").modal('show');
-                    }
+                     }
                 };
 
                 /**
