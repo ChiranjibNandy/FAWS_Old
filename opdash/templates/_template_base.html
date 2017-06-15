@@ -103,13 +103,33 @@
   {! javascript("angsrc/migration-app/components/rs-save-progress.component.js") !}
   {! javascript("angsrc/migration-app/components/rs-migration-home.component.js") !}
 
-  <!--Google Tag Manager -->
-  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-M8LWJF"height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-M8LWJF');</script>
-  <!--End Google Tag Manager -->
+
+  <!-- GOOGLE ANALYTICS AND TAG MANAGER - PLEASE DO NOT MODIFY - JB -->
+    <!-- NOTE: The virtual page views are logged in migration-app.js -->
+    <!-- GOOGLE ANALYTICS - JB -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-101055557-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <!-- END GOOGLE ANALYTICS - JB -->
+    <!-- GOOGLE TAG MANAGER (SCRIPT)- JB -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-NB53T2L');</script>
+    <!-- END GOOGLE TAG MANAGER (SCRIPT) -->
+    <!-- GOOGLE TAG MANAGER (NOSCRIPT) - JB-->
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NB53T2L"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- END GOOGLE TAG MANAGER (NOSCRIPT) -->
+  <!-- END GOOGLE ANALYTICS AND TAG MANAGER - JB -->
 
   <script>
-
   var user_data = {
     // Selected Tenant
     {% if g.user_data %}
