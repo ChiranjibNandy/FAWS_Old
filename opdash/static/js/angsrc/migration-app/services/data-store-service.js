@@ -456,7 +456,8 @@
                         "selected_resources": self.getItems(),
                         "recommendations":saveInstance.recommendations,
                         "scheduling-details":saveInstance.migration_schedule,
-                        "step_name":saveInstance.step_name
+                        "step_name":saveInstance.step_name,
+                        "aws-account":JSON.parse($window.localStorage.getItem("fawsAccounts")).selectedFawsAccount
                     }];
                 if(preSavedDetails.length > 0){
                     angular.forEach(preSavedDetails, function (instance, key) {
@@ -624,13 +625,28 @@
              * Gets FAWS Accounts associated with a tenant.
             */
             this.getFawsAccounts = function() {
+                var self = this;
                 var getFawsAccountsUrl = "/api/tenants/get_faws_accounts";
                 var tenant_id = authservice.getAuth().tenant_id;
                 return HttpWrapper.send(getFawsAccountsUrl, {"operation":'GET'})
                     .then(function(result){
                         currentTenant = tenant_id;
-                        fawsAccounts = result;
-                        return fawsAccounts;
+                        // fawsAccounts = result;
+                        if((result == null || result.awsAccounts.length == 0)){     //if there are no accounts array will be empty
+                            var fawsAccountDetails = null;
+                        }
+                        else{
+                            var awsAccountsDetails = result.awsAccounts;
+                            var fawsAccountDetails = {
+                                    awsAccounts:awsAccountsDetails,
+                                    selectedFawsAccount: awsAccountsDetails[0].name,
+                                    selectedFawsAccountNumber:awsAccountsDetails[0].awsAccountNumber,
+                                    totalAccounts: result.awsAccountLimit - result.remainingAccounts,
+                                    mode:result.mode
+                            };
+                        }
+                        self.saveFawsDetails(fawsAccountDetails);
+                        return fawsAccountDetails;
                     },function(error) {
                         return error;
                     });

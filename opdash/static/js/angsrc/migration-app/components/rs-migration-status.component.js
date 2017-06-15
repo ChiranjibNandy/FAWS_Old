@@ -56,6 +56,28 @@
                     return valid;
                 };
 
+                var isValidAccount = function(batch) {
+                    var valid = false;
+                    vm.fawsAccountDetails = JSON.parse($window.localStorage.getItem("fawsAccounts"));
+                    if(vm.fawsAccountDetails == null){
+                        valid = false;
+                    }
+                    else{
+                        var fawsTobeSelected = vm.fawsAccountDetails.awsAccounts.filter(x => x["name"]=== batch.aws_account.trim());
+                        if(fawsTobeSelected.length > 0){
+                            valid = true;
+                            vm.fawsAccountDetails.selectedFawsAccount = fawsTobeSelected[0].name;
+                            vm.fawsAccountDetails.selectedFawsAccountNumber = fawsTobeSelected[0].awsAccountNumber;
+                            dataStoreService.saveFawsDetails(vm.fawsAccountDetails); //save in localstorage for future
+                        }
+                        else{
+                            valid = false; 
+                        }
+                    }
+                    
+                    return valid;
+                };
+
                 var resetActionFlags = function() {
                     for(var i=0; i<vm.currentBatches.items.length; i++){
                         vm.currentBatches.items[i].showSettings = false;
@@ -278,6 +300,7 @@
                                     t.selected_resources = response.savedMigrations[j].selected_resources;
                                     t.step_name = response.savedMigrations[j].step_name;
                                     t.timestamp = response.savedMigrations[j].timestamp;
+                                    t.aws_account = response.savedMigrations[j]["aws-account"] || "";
                                     
                                     tempSavedMigrations.push(t);
                                 }
@@ -309,8 +332,16 @@
                                         item.end = item.start + estCompletionTime;
                                     }
                                 });
-
-                                vm.loading = false;
+                                vm.fawsAccountDetails = JSON.parse($window.localStorage.getItem("fawsAccounts"));
+                                if (vm.fawsAccountDetails === null){
+                                    dataStoreService.getFawsAccounts() ///make api call to retrieve list of FAWS account for this tenant ID
+                                        .then(function (result) {
+                                            vm.loading = false;
+                                    });
+                                }
+                                else{
+                                    vm.loading = false;
+                                }
                                 vm.manualRefresh = false;
                                 lastRefreshIntervalPromise = $interval(function(){
                                     vm.timeSinceLastRefresh++;
@@ -398,6 +429,10 @@
                     dataStoreService.resourceItemsForEditingMigration.shouldTrigger = false;
                     if (!isValidBatch(batch)) {
                         $('#abort_continue').modal('show');
+                        return;
+                    }
+                    if(!isValidAccount(batch)) {
+                        $('#aws_check').modal('show');
                         return;
                     }
 

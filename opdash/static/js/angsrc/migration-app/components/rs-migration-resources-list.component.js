@@ -39,9 +39,11 @@
                     vm.noFawsAccounts = false;
                     var modalDisplayStatus = dataStoreService.getDontShowStatus() ; //check for flag status created for intorduction Modal.
                     var prePageName = dataStoreService.getPageName() || $window.localStorage.pageName;
-                    dataStoreService.getFawsAccounts()
+                    vm.fawsAccountDetails = JSON.parse($window.localStorage.getItem("fawsAccounts"));
+                    if (vm.fawsAccountDetails === null){
+                        dataStoreService.getFawsAccounts()
                         .then(function (result) {
-                            if((result == null || result.awsAccounts.length == 0)){
+                            if(result == null){
                                 vm.noFawsAccounts = true;
                                 var tenant_id = authservice.getAuth().tenant_id;
                                 vm.fawsLink = "https://mycloud.rackspace.com/cloud/"+tenant_id+"/tickets#new";
@@ -52,6 +54,12 @@
                             }
                             vm.introModalLoading = false;
                         });
+                    }
+                    else{
+                        vm.introModalLoading = false;
+                        vm.noFawsAccounts = false;
+                        vm.fawsAccType = vm.fawsAccountDetails.mode;
+                    }
                     if((modalDisplayStatus == false || $window.localStorage.dontShowStatus === false)  && (prePageName == "MigrationStatus" || prePageName == "MigrationResourceList" || prePageName == undefined)){
                         $('#intro_modal').modal('show');
                         dataStoreService.setDontShowStatus(true);//set introduction modal flag to true after first time display.
@@ -304,7 +312,12 @@
                  * @description
                  * Assign Migration considering current Timestamp and continue to next step: **Recommendations**
                  */
-                vm.savencontinue = function() { 
+                vm.savencontinue = function() {
+                    if(vm.noFawsAccounts){
+                        $('#aws_check').modal('show');
+                        return;
+                    } 
+                    //if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 ){//|| dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 -- Previous Code
                     if($window.localStorage.selectedServers !== undefined || $window.localStorage.selectedLoadBalancers !== undefined){
                         vm.continuing = true;
                         var items = JSON.parse($window.localStorage.selectedServers);

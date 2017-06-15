@@ -90,7 +90,19 @@
       </div>
 </div>
 
-<div id="intro_modal" class="modal hide animated fadeIn details" data-backdrop="static" data-keyboard="false" role="dialog">
+<div id="aws_check" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSelect" aria-hidden="true">
+     <div class="modal-header">
+         <h3><i class="fa fa-warning"></i> Cannot continue </h3>
+     </div>
+     <div class="modal-body">
+        <p><big>Since there is no destination AWS account created yet, we cannot schedule a migration for now.</big></p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="rs-btn" data-dismiss="modal">Ok</button>
+      </div>
+</div>
+
+<div id="intro_modal" class="modal hide animated fadeIn details" data-keyboard="false" role="dialog">
     <br>
     <div class="modal-body">
         <h1 class="rs-page-title">Welcome to the Rackspace Migration Manager!</h1>

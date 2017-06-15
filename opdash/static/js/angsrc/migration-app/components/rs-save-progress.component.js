@@ -37,7 +37,7 @@
                     };
                     vm.saveProgress = 'yes';
                     vm.displayMigName = false;
-                    vm.migrationName =  $window.localStorage.migrationName || 'MyMigration';
+                    vm.migrationName =  $window.localStorage.migrationName || 'My Migration';
                     vm.stepname = dataStoreService.getPageName() || $window.localStorage.pageName;
                 };
        
@@ -57,7 +57,7 @@
                     }else{
                         selectedItems = JSON.parse($window.localStorage.selectedServers);
                         $('#cancel_modal').modal('show');
-                         vm.migrationName = 'MyMigration' || $window.localStorage.migrationName;
+                         vm.migrationName = $window.localStorage.migrationName || 'My Migration';
                     }
                 };
 
