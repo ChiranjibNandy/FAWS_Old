@@ -88,7 +88,7 @@
                 vm.fetchFawsAccounts = function() {
                     dataStoreService.getFawsAccounts() ///make api call to retrieve list of FAWS account for this tenant ID
                         .then(function (result) {
-                            if(result == null){     //if there are no accounts array will be empty
+                            if(!result || (result.awsAccounts == 'undefined')){     //if there are no accounts array will be empty
                                 vm.awsAccountsDetails = [];
                                 vm.fawsAcctStatus = false;
                             }
