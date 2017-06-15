@@ -352,7 +352,7 @@
                 }
                 
                 if(dt){
-                     return dt;
+                    return dt;
                 }
             };
 
@@ -366,7 +366,7 @@
             self.getMigrationTime = function() {
                 var tm = moment(self.selectedTime.time).format("h:mm:ss a"); //3:25:50 pm"
                 if(tm){
-                     return tm;
+                    return tm;
                 }
             };
 
