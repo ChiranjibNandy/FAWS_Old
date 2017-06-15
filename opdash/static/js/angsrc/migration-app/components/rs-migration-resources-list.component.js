@@ -43,7 +43,7 @@
                     if (vm.fawsAccountDetails === null){
                         dataStoreService.getFawsAccounts()
                         .then(function (result) {
-                            if(result == null){
+                            if(!result || (result.awsAccounts == 'undefined')){
                                 vm.noFawsAccounts = true;
                                 var tenant_id = authservice.getAuth().tenant_id;
                                 vm.fawsLink = "https://mycloud.rackspace.com/cloud/"+tenant_id+"/tickets#new";

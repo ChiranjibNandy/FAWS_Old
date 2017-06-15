@@ -186,8 +186,18 @@
              */
             this.getItems = function(type){
                 //return self.selectedItems.filter(function(item){return item.type === type;});
+                var name = 'selectedServers';
                  if(type){
-                    return self.selectedItems[type];
+                    if(self.selectedItems[type].length > 0 ) {
+                        return self.selectedItems[type];
+                    }else{
+                        if(type === 'network'){
+                            name = 'selectedNetworks';
+                        }else if(type === 'LoadBalancers'){
+                            name = 'selectedLoadBalancers';
+                        }
+                        return JSON.parse(localStorage.getItem(name));
+                    } 
                 }
                 else{
                     return self.selectedItems;
@@ -648,7 +658,9 @@
                         self.saveFawsDetails(fawsAccountDetails);
                         return fawsAccountDetails;
                     },function(error) {
-                        return error;
+                        console.log("getFawsAccounts");
+                        console.log(error);
+                        return false;
                     });
             };
 
@@ -665,7 +677,9 @@
                     .then(function(result){
                        return result;
                     },function(error) {
-                       return error;
+                        console.log("create faws account ");
+                        console.log(error);
+                       return false;
                     });
             };
 

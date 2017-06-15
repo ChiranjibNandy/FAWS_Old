@@ -93,8 +93,6 @@
                                 vm.migrating = false; 
                                 $window.localStorage.setItem("migrationScheduled","true");
                                 $rootRouter.navigate(["MigrationStatus"]);
-
-                                
                             }, function (error) {
                                 console.log("Error: Could not trigger migration", error);
                                 vm.migrating = false;
