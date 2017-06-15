@@ -342,13 +342,21 @@
              * Returns migration date based on Epoch timestamp
              */
             self.getMigrationDate = function() {
-                var dt = self.selectedTime.time * 1000;
+                var today=moment().format("MM-DD-YYYY");
+                var selectedValue= moment(self.selectedTime.time).format("MM-DD-YYYY");
+
+                if (today===selectedValue){
+                    var dt = "Today";
+                }else{
+                    var dt = moment(self.selectedTime.time).format("ddd, MMM Do YYYY"); //example- Sat, Jun 17th 2017
+                }
+                
                 if(dt){
-                    return moment(dt).format("M/DD/YYYY");
+                     return dt;
                 }
             };
 
-            /**
+            /**temp2
              * @ngdoc method
              * @name getMigrationDate
              * @methodOf migrationApp.service:datastoreservice
@@ -356,9 +364,9 @@
              * Returns migration date based on Epoch timestamp
              */
             self.getMigrationTime = function() {
-                var dt = self.selectedTime.time * 1000;
-                if(dt){
-                    return moment(dt).format("hh:mm a");
+                var tm = moment(self.selectedTime.time).format("h:mm:ss a"); //3:25:50 pm"
+                if(tm){
+                     return tm;
                 }
             };
 

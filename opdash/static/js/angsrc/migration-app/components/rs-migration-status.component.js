@@ -156,8 +156,8 @@
                  * @description Date and time of when migration is scheduled
                  */
                 vm.schedule = {
-                    time: dataStoreService.getMigrationDate(),
-                    date: dataStoreService.getMigrationTime()
+                    time: dataStoreService.getMigrationTime(),
+                    date: dataStoreService.getMigrationDate()
                 };
 
                 /**
