@@ -109,17 +109,15 @@
                         if(success){
                             buttonDetails.saveInProgress = false;
                             buttonDetails.saveSuccess = true;
-                            //make the popup or alert message disappear after 3 seconds of API response.
-                            $timeout(function () {
-                                buttonDetails.resultMsg = "";
-                                if(buttonDetails.modalName == '#cancel_modal'){
-                                    $('#cancel_modal').modal('hide');
-                                    $rootRouter.navigate(["MigrationStatus"]);
-                                }
-                                else
-                                    $(buttonDetails.modalName).modal('hide');
-                            }, 3000);
-                        }else{
+                            $window.localStorage.setItem("migrationSaved","true");
+                            buttonDetails.resultMsg = "";
+                            if(buttonDetails.modalName == '#cancel_modal'){
+                                $('#cancel_modal').modal('hide');
+                                $rootRouter.navigate(["MigrationStatus"]);
+                            }
+                            else
+                                $(buttonDetails.modalName).modal('hide');
+                           }else{
                             buttonDetails.saveInProgress = false;
                             buttonDetails.saveSuccess = false;
                             buttonDetails.resultMsg = "Error while saving. Please try again after sometime!!";

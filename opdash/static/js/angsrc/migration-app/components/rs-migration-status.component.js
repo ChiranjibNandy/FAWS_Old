@@ -91,6 +91,7 @@
                     $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
                     vm.count = 0;
                     vm.is_racker = authservice.getAuth().is_racker;
+                    vm.afterSavedMigration = $window.localStorage.getItem("migrationSaved");
                     vm.afterNewMigration = false;
                     //getting the migration name.
                     vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
@@ -588,6 +589,12 @@
                         dataStoreService.selectedTime.migrationName = batch.batch_name
                         $rootRouter.navigate(["MigrationResourceList"]);
                     };
+
+                    vm.resetSavedMigrationFlag = function(){
+                        vm.afterSavedMigration = false;
+                        $window.localStorage.setItem("migrationSaved","false");
+                        alert("vm.afterSavedMigration = ",vm.afterSavedMigration);
+                    }
                 }]
             }); // end of comeponent rsmigrationstatus
 })();

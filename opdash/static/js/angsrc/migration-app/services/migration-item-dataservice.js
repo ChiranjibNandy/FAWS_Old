@@ -167,18 +167,16 @@
                     });
                 });
 
-                if (dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < moment().unix()) {
-                    // reqObj.start = moment().unix();
-                    //code for iso conversion           
-                    var isoDate = moment().unix();
-                    reqObj.start = moment().unix(isoDate).toISOString();
+                var currEPOCHTime = moment().unix();
+                var currISOTime = moment().toISOString();
+                if (dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < (currISOTime)) {
+                    reqObj.start = currISOTime;
                     dataStoreService.selectedTime.time = reqObj.start;
                 } else {
                     //code for iso conversion
-                    var isoDate =dataStoreService.selectedTime.time;
-                    reqObj.start = moment.unix(isoDate).toISOString();
+                    var isoDateTime =dataStoreService.selectedTime.time;
+                    reqObj.start = moment.unix(isoDateTime).toISOString();
                     dataStoreService.selectedTime.time = reqObj.start;
-                    // reqObj.start = dataStoreService.selectedTime.time;
                 }
 
                 reqObj.resources.instances = instancesReqList; //add servers to the resources list
