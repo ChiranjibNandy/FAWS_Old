@@ -11,18 +11,25 @@
     var migrationApp = angular.module(
       "migrationApp",
       ["ngComponentRouter","ngMaterial","ngAnimate","ngAria"]).run(
-        function($rootScope, $location) {
-          // GOOGLE ANALYTICS - JB
-          $rootScope.$on("$routeChanged", function(event, data) {
-            console.info("*** ROUTE CHANGE:" + data.path + " COMPONENT:" + data.componentName);
-            dataLayer.push({
-                event: 'VirtualPageview',
-                virtualPageURL: document.location + data.path,
-                virtualPageTitle: document.title,
-                page_name: data.componentName
-            });
-          // END GOOGLE ANALYTICS
-        })
+        function($rootScope, $rootRouter, $routerRootComponent, $location) {
+
+          // FOR GOOGLE ANALYTICS - JB
+          $rootScope.$on("$routeChangeSuccess", function(event) {
+            window.setTimeout(function() {
+              console.info("ROOT ROUTER:", $rootRouter.lastNavigationAttempt);
+              // Update GA Pageview
+              ga('set', 'page', $rootRouter.lastNavigationAttempt);
+              ga('send', 'pageview');
+              // Update TAG Manager View
+              dataLayer.push({
+                  event: 'VirtualPageview',
+                  virtualPageURL: $rootRouter.lastNavigationAttempt,
+                  virtualPageTitle: document.title,
+                  page_name: $rootRouter._childRouter.hostComponent
+              });
+            },0);
+          });
+          // END FOR GOOGLE ANALYTICS - JB
     });
 
 
