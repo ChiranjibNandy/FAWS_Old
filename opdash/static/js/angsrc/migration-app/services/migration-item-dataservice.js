@@ -113,7 +113,8 @@
                     networksReqList = [],
                     reqObj = {
                         metadata: {
-                            batch_name: $window.localStorage.migrationName || dataStoreService.getScheduleMigration().migrationName
+                            batch_name: $window.localStorage.migrationName || dataStoreService.getScheduleMigration().migrationName,
+                            initiated_by: auth.username
                       },
                         names: names,
                         source: {

@@ -156,8 +156,8 @@
                  * @description Date and time of when migration is scheduled
                  */
                 vm.schedule = {
-                    time: dataStoreService.getMigrationDate(),
-                    date: dataStoreService.getMigrationTime()
+                    time: dataStoreService.getMigrationTime(),
+                    date: dataStoreService.getMigrationDate()
                 };
 
                 /**
@@ -220,7 +220,7 @@
                 var auth = authservice.getAuth();
                 vm.userOrTenant = auth.is_racker ? "Tenant" : "User";
                 vm.tenant_id = auth.tenant_id;
-                vm.batchInitiatedBy = auth.username;
+                vm.tempBatchInitiatedBy = auth.username;
                 vm.loading = true;
                 vm.timeSinceLastRefresh = 0;
                 vm.alerts = [];
@@ -273,7 +273,7 @@
                                     console.log("No data recieved");
                                 //else
                                     //console.log("Batch: ", response);
-                                var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled", "paused"];
+                                var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled", "paused","canceled"];
                                 var validCompletedBatchStatus = ["done"];
                                 jobList = response.jobs.job_status_list;
                                 var tempcurrentBatches = [];
@@ -290,7 +290,7 @@
                                         completedBatches.push(job);
                                 });
 
-                                currentBatches = tempcurrentBatches.filter(x=>x.batch_status=='started').concat(tempcurrentBatches.filter(x=>x.batch_status=='in progress')).concat(tempcurrentBatches.filter(x=>x.batch_status=='paused')).concat(tempcurrentBatches.filter(x=>x.batch_status=='scheduled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='error'))
+                                currentBatches = tempcurrentBatches.filter(x=>x.batch_status=='started').concat(tempcurrentBatches.filter(x=>x.batch_status=='in progress')).concat(tempcurrentBatches.filter(x=>x.batch_status=='paused')).concat(tempcurrentBatches.filter(x=>x.batch_status=='scheduled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='canceled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='error'))
 
                                 var tempSavedMigrations = [];
                                 for(var j=0; j<response.savedMigrations.length; j++){
