@@ -71,7 +71,7 @@
                                 <td class="rs-table-link">
                                     <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: vm.initiatedMigration.job_id}]" class="dashBoard"  >{{vm.initiatedMigration.batch_name}}</a>
                                 </td>
-                                <td>{{vm.batchInitiatedBy}}</td>
+                                <td>{{vm.tempBatchInitiatedBy}}</td>
                                 <td class="rs-table-text ng-binding">
                                     <span ng-show="!batch.timestamp">{{(vm.initiatedMigration.timestamp && vm.initiatedMigration.timestamp * 1000) | date : 'M/dd/yyyy hh:mm a'}}</span>
                                 </td>
@@ -93,14 +93,14 @@
                         </tbody>
                         <tbody ng-show="!vm.loading && !vm.currentBatches.loadError && vm.currentBatches.items.length!==0">
                             <tr ng-repeat="batch in vm.currentBatches.items | orderBy: vm.sortBy.current_batch | limitTo : vm.currentBatches.pageSize : (vm.currentBatches.currentPage-1)*vm.currentBatches.pageSize" class="ng-scope">
-                                <td class="rs-table-status tip" ng-class="{'rs-table-status-pending': (batch.batch_status==='not available' || batch.timestamp), 'rs-table-status-warning': batch.batch_status==='scheduled'||'paused', 'rs-table-status-ok rs-table-status-ok-processing rs-table-status-striped': batch.batch_status==='in progress' , 'rs-table-status-error': batch.batch_status==='error'}"></td>
+                                <td class="rs-table-status tip" ng-class="{'rs-table-status-pending': (batch.batch_status==='not available' || batch.timestamp), 'rs-table-status-warning': batch.batch_status==='scheduled'||'paused', 'rs-table-status-ok rs-table-status-ok-processing rs-table-status-striped': batch.batch_status==='in progress' , 'rs-table-status-error': batch.batch_status==='error', 'rs-table-status-error': batch.batch_status==='canceled'}"></td>
                                 <td class="rs-table-link">
                                     <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]">{{batch.batch_name}}</a>
                                     <a ng-show="batch.timestamp" href="javascript:void(0)" ng-click="vm.continueScheduling(batch);">{{batch.batch_name}}</a>
                                 </td>
                                 <td>{{vm.batchInitiatedBy}}</td>
                                 <td class="rs-table-text ng-binding">
-                                    <span ng-show="!batch.timestamp">{{(batch.start && batch.start * 1000) | date : 'M/dd/yyyy hh:mm a'}}</span>
+                                    <span ng-show="!batch.timestamp">{{(batch.created_at)| date : 'M/dd/yyyy hh:mm a' }}</span>
                                 </td>
                                 <td class="rs-table-text" ng-show="batch.showRefreshForApiLoading">
                                     <i class="fa fa-refresh fa-spin"></i> 
@@ -114,6 +114,7 @@
                                     <span class="rs-status-ok" ng-show="batch.batch_status==='done'">Completed</span>
                                     <span class="rs-status-error" ng-show="batch.batch_status==='error'">Error</span>
                                     <span class="rs-status-warning" ng-show="batch.batch_status==='paused'">Paused</span>
+                                    <span class="rs-status-error" ng-show="batch.batch_status==='canceled'">Canceled</span>
                                 </td>
                                 <!--<td class="rs-table-text">
                                     <div ng-show="!batch.timestamp">
@@ -219,7 +220,7 @@
                             <tr ng-repeat="batch in vm.completedBatches.items | orderBy: vm.sortBy.completed_batch | limitTo : vm.completedBatches.pageSize : (vm.completedBatches.currentPage-1)*vm.completedBatches.pageSize" class="ng-scope">
                                 <td class="rs-table-status rs-table-status-ok tip"></td>
                                 <td class="rs-table-link large-col"><a ng-link="['CompletedBatchDetails', {job_id: batch.job_id}]" class="ng-binding">{{batch.batch_name}}</a></td>
-                                <td class="rs-table-text ng-binding">{{(batch.start && batch.start * 1000) | date : 'M/dd/yyyy hh:mm a'}}</td>
+                                <td class="rs-table-text ng-binding">{{(batch.created_at) | date : 'M/dd/yyyy hh:mm a'}}</td>
                                 <td class="rs-table-text ng-binding" colspan="2">{{(batch.end && batch.end * 1000) | date : 'M/dd/yyyy hh:mm a'}}</td>
                                 <!--<td ng-show="vm.is_racker"><a href="" class="rs-btn rs-btn-primary">See Log</a></td>-->
                             </tr>
