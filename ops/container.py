@@ -78,6 +78,17 @@ class Container(object):
 
         return subprocess.call(cmd)
 
+    def retag(self, src_tag, dst_tag):
+        cmd = [
+            'docker', 'tag', src_tag, dst_tag
+        ]
+
+        rc = subprocess.call(cmd)
+        if rc != 0:
+            print("Failed to tag docker image")
+            sys.exit(rc)
+        return rc
+
     def push(self, token, repo, tag):
         print('Pushing: %s' % tag)
         result = self.client.images.push(
@@ -88,6 +99,20 @@ class Container(object):
                 'password': token,
             },
             stream=True
+        )
+
+        for line in result:
+            print(line)
+
+    def pull(self, token, repo, tag):
+        result = self.client.api.pull(
+            repo['repositoryUri'],
+            tag=tag,
+            auth_config={
+                'username': 'AWS',
+                'password': token,
+            },
+            stream=True,
         )
 
         for line in result:
