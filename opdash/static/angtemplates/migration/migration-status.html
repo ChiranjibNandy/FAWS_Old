@@ -100,7 +100,7 @@
                                 </td>
                                 <td>{{vm.batchInitiatedBy}}</td>
                                 <td class="rs-table-text ng-binding">
-                                    <span ng-show="!batch.timestamp">{{(batch.created_at)| date : 'M/dd/yyyy hh:mm a' }}</span>
+                                    <span ng-show="!batch.timestamp">{{(batch.start)| date : 'M/dd/yyyy hh:mm a' }}</span>
                                 </td>
                                 <td class="rs-table-text" ng-show="batch.showRefreshForApiLoading">
                                     <i class="fa fa-refresh fa-spin"></i> 
