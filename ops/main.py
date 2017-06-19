@@ -11,6 +11,9 @@ from ecs_service import EcsService
 from ecs_task import EcsTask
 
 
+LOCAL_PROMOTE_REPONAME = 'opdash-api-ops-promotable'
+
+
 class Operator(object):
 
     def __init__(self):
@@ -54,6 +57,37 @@ class Operator(object):
         cp_arn = cp_task()
         cp_svc = EcsService(self.env, 'opdash-cp', cp_arn, port=5000)
         cp_svc()
+        print('Done')
+
+    def promote_pull(self):
+        container = Container()
+        repo = container.registry()
+        tag = container.tag()
+        token = container.login(repo)
+
+        container.pull(token, repo, tag)
+
+        # retag the image to avoid needing to discover the repositoryUri
+        # of another account during the push
+        src_tag = '%s:%s' % (repo['repositoryUri'], tag)
+        dst_tag = '%s:%s' % (LOCAL_PROMOTE_REPONAME, tag)
+        container.retag(src_tag, dst_tag)
+        print('Tagged %s' % dst_tag)
+        print('Done')
+
+    def promote_push(self):
+        container = Container()
+        repo = container.registry()
+        tag = container.tag()
+        token = container.login(repo)
+
+        # retag the image to match the destination repository
+        src_tag = '%s:%s' % (LOCAL_PROMOTE_REPONAME, tag)
+        dst_tag = '%s:%s' % (repo['repositoryUri'], tag)
+        container.retag(src_tag, dst_tag)
+        print('Tagged %s' % dst_tag)
+
+        container.push(token, repo, tag)
         print('Done')
 
 

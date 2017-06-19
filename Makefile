@@ -111,6 +111,12 @@ setup-ops: ## Create a virtualenv for running ops tasks
 release: require-env ## Tag and push a Docker image to ECR
 	$(OPS_VENV_ACTIVATE); ENV=$(ENV) $(OPDASH_CP_OPS) release
 
+promote-pull: require-env ## Pull an image down for promotion (supports RELEASE=<image_tag>)
+		$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) promote_pull
+
+promote-push: require-env ## Push a image for promotion (supports RELEASE=<image_tag>)
+		$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) promote_push
+
 deploy: require-env ## Create/Update ECS Tasks and Services with current tag
 	$(OPS_VENV_ACTIVATE); ENV=$(ENV) $(OPDASH_CP_OPS) deploy
 
