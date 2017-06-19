@@ -30,6 +30,8 @@
                         </div>
                     </div>
                 </div>
+                
+                <!--headers for current batches grid-->
                 <div class="migration-status-list-container table-justify">
                     <table class="rs-list-table no-truncate-td cell-center">
                         <thead>
@@ -65,6 +67,7 @@
                                 <th class="rs-table-cog rs-center">Actions</th>
                             </tr>
                         </thead>
+                        <!--temporary display of recently initiated migration-->
                         <tbody ng-show="!vm.loading && !vm.currentBatches.loadError && vm.showInitiatedMigration">
                             <tr>
                                 <td class="rs-table-status tip rs-table-status-ok"></td>
@@ -73,7 +76,7 @@
                                 </td>
                                 <td>{{vm.tempBatchInitiatedBy}}</td>
                                 <td class="rs-table-text ng-binding">
-                                    <span ng-show="!batch.timestamp">{{(vm.initiatedMigration.timestamp && vm.initiatedMigration.timestamp * 1000) | date : 'M/dd/yyyy hh:mm a'}}</span>
+                                    <span ng-show="!batch.timestamp">{{(vm.initiatedMigration.timestamp) | date : 'M/dd/yyyy hh:mm a'}}</span>
                                 </td>
                                 <td class="rs-table-text">
                                     <span class="rs-status-ok">Queued</span>                                    
@@ -91,14 +94,15 @@
                                 </td>
                             </tr>
                         </tbody>
+                        <!--display data for current batches in grid-->
                         <tbody ng-show="!vm.loading && !vm.currentBatches.loadError && vm.currentBatches.items.length!==0">
                             <tr ng-repeat="batch in vm.currentBatches.items | orderBy: vm.sortBy.current_batch | limitTo : vm.currentBatches.pageSize : (vm.currentBatches.currentPage-1)*vm.currentBatches.pageSize" class="ng-scope">
                                 <td class="rs-table-status tip" ng-class="{'rs-table-status-pending': (batch.batch_status==='not available' || batch.timestamp), 'rs-table-status-warning': batch.batch_status==='scheduled'||'paused', 'rs-table-status-ok rs-table-status-ok-processing rs-table-status-striped': batch.batch_status==='in progress' , 'rs-table-status-error': batch.batch_status==='error', 'rs-table-status-error': batch.batch_status==='canceled'}"></td>
                                 <td class="rs-table-link">
-                                    <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]">{{batch.batch_name}}</a>
-                                    <a ng-show="batch.timestamp" href="javascript:void(0)" ng-click="vm.continueScheduling(batch);">{{batch.batch_name}}</a>
+                                    <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]">{{batch.metadata.batch_name}}</a>
+                                    <a ng-show="batch.timestamp" href="javascript:void(0)" ng-click="vm.continueScheduling(batch);">{{batch.metadata.batch_name}}</a>
                                 </td>
-                                <td>{{vm.batchInitiatedBy}}</td>
+                                <td>{{batch.metadata.initiated_by}}</td>
                                 <td class="rs-table-text ng-binding">
                                     <span ng-show="!batch.timestamp">{{(batch.start)| date : 'M/dd/yyyy hh:mm a' }}</span>
                                 </td>
@@ -116,18 +120,7 @@
                                     <span class="rs-status-warning" ng-show="batch.batch_status==='paused'">Paused</span>
                                     <span class="rs-status-error" ng-show="batch.batch_status==='canceled'">Canceled</span>
                                 </td>
-                                <!--<td class="rs-table-text">
-                                    <div ng-show="!batch.timestamp">
-                                        <div class="rs-progress rs-progress-medium" style="width: 70%;">
-                                            <div class="rs-progress-inner">
-                                                <div class="rs-segment" style="width: {{['started', 'in progress', 'paused'].indexOf(batch.batch_status)>=0 ? 50 : 0}}%">
-                                                    <div class="rs-bar" ng-class="{'rs-status-ok rs-bar-striped': ['started', 'in progress'].indexOf(batch.batch_status)>=0, 'rs-status-error': batch.batch_status==='error', 'rs-status-warning': batch.batch_status==='paused'}"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <span class="rs-progress-label">{{ ['started', 'in progress', 'paused'].indexOf(batch.batch_status)>=0 ? 50 : 0 }}%</span>
-                                    </div>
-                                </td>-->
+                                <!--cog button menu items-->
                                 <td class="rs-table-input rs-center">
                                     <div class="rs-btn-group">
                                         <div class="rs-dropdown">
@@ -181,6 +174,7 @@
                     </table>
                 </div>
                 <br>
+                <!--pagination for current batches grid-->
                 <div class="pagination pagination-mini" ng-show="!vm.loading && vm.currentBatches.items.length!==0">
                     <ul>
                         <li><span>Showing {{(vm.currentBatches.currentPage == 1 ? vm.currentBatches.currentPage : ((vm.currentBatches.currentPage-1)*5)+1)}}-{{(vm.currentBatches.currentPage == vm.currentBatches.noOfPages ? vm.currentBatches.items.length : vm.currentBatches.currentPage*5)}} of {{vm.currentBatches.items.length}}</span></li>
@@ -189,7 +183,8 @@
                         <li ng-class="{disabled: vm.currentBatches.currentPage == vm.currentBatches.noOfPages}" ng-click="vm.currentBatches.currentPage=vm.currentBatches.currentPage+1"><a href="">Next</a></li>
                     </ul>
                 </div>  
-            
+
+                <!--header for Completed batches-->
                 <div class="migration-status-list-container table-justify">
                     <table class="rs-list-table secondary-table">
                         <thead>
@@ -201,7 +196,7 @@
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
-  <th>                                    <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('completed_batch', 'batch_name')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['completed_batch']==='batch_name', 'custom-table-sort-desc current-sort-param': vm.sortBy['completed_batch']==='-batch_name', 'custom-table-sort-desc': vm.sortBy['completed_batch'].indexOf('batch_name') < 0}">
+                                <th><a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('completed_batch', 'batch_name')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['completed_batch']==='batch_name', 'custom-table-sort-desc current-sort-param': vm.sortBy['completed_batch']==='-batch_name', 'custom-table-sort-desc': vm.sortBy['completed_batch'].indexOf('batch_name') < 0}">
                                         <span class="rs-table-sort-text">Batch Initiated by </span>
                                       <span class="rs-table-sort-indicator"></span>
                                     </a>
@@ -218,16 +213,16 @@
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
-                                <!--<th ng-show="vm.is_racker">Actions</th>-->
                             </tr>
                         </thead>
+                        <!--data display for completed batches grid-->
                         <tbody ng-show="!vm.loading && !vm.completedBatches.loadError && vm.completedBatches.items.length!==0">
                             <tr ng-repeat="batch in vm.completedBatches.items | orderBy: vm.sortBy.completed_batch | limitTo : vm.completedBatches.pageSize : (vm.completedBatches.currentPage-1)*vm.completedBatches.pageSize" class="ng-scope">
                                 <td class="rs-table-status rs-table-status-ok tip"></td>
-                                <td class="rs-table-link large-col"><a ng-link="['CompletedBatchDetails', {job_id: batch.job_id}]" class="ng-binding">{{batch.batch_name}}</a></td>
-                                <td class="rs-table-text ng-binding">{{(batch.created_at) | date : 'M/dd/yyyy hh:mm a'}}</td>
-                                <td class="rs-table-text ng-binding" colspan="2">{{(batch.end && batch.end * 1000) | date : 'M/dd/yyyy hh:mm a'}}</td>
-                                <!--<td ng-show="vm.is_racker"><a href="" class="rs-btn rs-btn-primary">See Log</a></td>-->
+                                <td class="rs-table-link large-col"><a ng-link="['CompletedBatchDetails', {job_id: batch.job_id}]" class="ng-binding">{{batch.metadata.batch_name}}</a></td>
+                                <td>{{batch.metadata.initiated_by}}</td>
+                                <td class="rs-table-text ng-binding">{{(batch.start) | date : 'M/dd/yyyy hh:mm a'}}</td>
+                                <td class="rs-table-text ng-binding" colspan="2">{{(batch.completed_at) | date : 'M/dd/yyyy hh:mm a'}}</td>
                             </tr>
                         </tbody>
                         <tbody ng-show="vm.loading">
@@ -254,6 +249,7 @@
                     </table>
                 </div>
                 <br><br>
+                <!--pagination for completed bacthes-->
                 <div class="pagination pagination-mini" ng-show="!vm.loading && vm.completedBatches.items.length!==0">
                     <ul>
                         <li><span>Showing {{(vm.completedBatches.currentPage == 1 ? vm.completedBatches.currentPage : ((vm.completedBatches.currentPage-1)*5)+1)}}-{{(vm.completedBatches.currentPage == vm.completedBatches.noOfPages ? vm.completedBatches.items.length : vm.completedBatches.currentPage*5)}} of {{vm.completedBatches.items.length}}</span></li>
@@ -261,7 +257,9 @@
                         <li ng-repeat="n in vm.completedBatches.pages track by $index" ng-click="vm.completedBatches.currentPage = $index+1"><a ng-class ="{current: vm.completedBatches.currentPage == $index+1}" ng-style="{'background-color': vm.completedBatches.currentPage == $index+1 ? '#D3D3D3' : 'white'}"href="">{{$index+1}}</a></li>
                         <li ng-class="{disabled: vm.completedBatches.currentPage == vm.completedBatches.noOfPages}" ng-click="vm.completedBatches.currentPage=vm.completedBatches.currentPage+1"><a href="">Next</a></li>
                     </ul>
-                </div>  
+                </div> 
+
+                <!--headers for Errors/alerts grid-->
                 <div class="rs-row">
                     <div class="span-6">
                         <div class="rs-facet-section">
@@ -277,6 +275,7 @@
                                                 <th>Message</th>
                                             </tr>
                                         </thead>
+                                        <!--data display for Errors/Alerts grid-->
                                         <tbody ng-show="!vm.loadingAlerts && vm.errors.items.length>0">
                                             <tr ng-repeat="alert in vm.errors.items | orderBy: '-timestamp'| limitTo : vm.errors.pageSize : (vm.errors.currentPage-1)*vm.errors.pageSize">
                                                 <td class="rs-table-status tip" ng-class="{ 'rs-table-status-warning': alert.type==='warning', 'rs-table-status-error': alert.type==='error'}"></td>
@@ -297,6 +296,7 @@
                                     </table>
                                 </div>
                                 <br>
+                                <!--pagination for Errors/Alerts grid-->
                                 <div class="pagination pagination-mini" ng-show="!vm.loadingAlerts && vm.errors.items.length!==0">
                                     <ul>
                                         <li><span>Showing {{(vm.errors.currentPage == 1 ? vm.errors.currentPage : ((vm.errors.currentPage-1)*vm.errors.pageSize)+1)}}-{{(vm.errors.currentPage == vm.errors.noOfPages ? vm.errors.items.length : vm.errors.currentPage*vm.errors.pageSize)}} of {{vm.errors.items.length}}</span></li>
@@ -308,6 +308,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <!--Headers for Tickets grid-->
                     <div class="span-6">
                         <div class="rs-facet-section">
                             <div class="rs-facet-section-body">
@@ -322,6 +324,7 @@
                                                 <th>Message</th>
                                             </tr>
                                         </thead>
+                                        <!--data display for Tickets grid-->
                                         <tbody ng-show="!vm.loadingTickets && vm.tickets.items.length>0">
                                             <tr ng-repeat="ticket in vm.tickets.items | orderBy: '-created' | limitTo : vm.tickets.pageSize : (vm.tickets.currentPage-1)*vm.tickets.pageSize">
                                                 <td><a href="https://mycloud.rackspace.com/cloud/{{vm.tenant_id}}/tickets#{{ticket.ticket_id}}">{{ticket.ticket_id}}</a></td>
@@ -339,7 +342,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-
+                                <!--pagination for Tickets grid-->
                                 <br>
                                 <div class="pagination pagination-mini" ng-show="!vm.loadingTickets && vm.tickets.items.length!==0">
                                     <ul>
