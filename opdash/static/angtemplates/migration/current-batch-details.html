@@ -59,6 +59,7 @@
                                     <span class="rs-status-warning" ng-show="vm.job.batch_status==='scheduled'">Scheduled</span>
                                     <span class="rs-status-disabled" ng-show="vm.job.batch_status==='not available'">Not Available</span>
                                     <span class="rs-status-warning" ng-show="vm.job.batch_status==='paused'">Paused</span>
+<span class="rs-status-warning" ng-show="vm.job.batch_status==='canceled'">Cancelled</span>
                                 </td>
                                 <td>
                                     <a class="rs-btn" ng-link="['ResourceTaskList', {job_id: vm.job.job_id, resource_type: 'instance', resource_id: instance.id}]">See Tasks</a>
