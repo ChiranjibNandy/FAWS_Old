@@ -56,25 +56,25 @@
             <form class="form-horizontal">
                 <div class="form-group">
                     <div class="row">
-                        <span class="col-sm-2 control-label">Account Name<span class="half-tab"></span><span class="span-2"></span></span>
+                        <span class="col-sm-2 control-label">Account Name</span>
                         <div class="col-sm-10">
                             <input type="text" ng-model="vm.fawsAcctName" class="rs-input-xlarge" placeholder="AWS Account Name" />
                         </div>
                     </div>
                     <div class="row">
-                        <span class="col-sm-2 control-label">Account ID <span class="tab"></span></span>
+                        <span class="col-sm-2 control-label">Account ID</span>
                         <div class="col-sm-10">
                             <input type="text" ng-model="vm.fawsAcctId" class="rs-input-xlarge" placeholder="AWS Account ID" />
                         </div>
                     </div>
                     <div class="row">
-                        <span class="col-sm-2 control-label">{{vm.fawsAccType == 'key-based' ? 'Access Key':'Role ARN'}}<span class="tab"></span></span>
+                        <span class="col-sm-2 control-label">{{vm.fawsAccType == 'key-based' ? 'Access Key':'Role ARN'}}</span>
                         <div class="col-sm-10">
                             <input type="text" ng-model="vm.fawsAccessKey" class="rs-input-xlarge" placeholder="{{vm.fawsAccType == 'key-based' ? 'AWS Access Key':'Role ARN'}}" />
                         </div>
                     </div>
                     <div class="row">
-                        <span class="col-sm-2 control-label">{{vm.fawsAccType == 'key-based' ? 'Secret Key ':'External ID'}}  <span class="tab"></span><span class="span-2"></span></span>
+                        <span class="col-sm-2 control-label">{{vm.fawsAccType == 'key-based' ? 'Secret Key ':'External ID'}}</span>
                         <div class="col-sm-10">
                             <input type="text" ng-model="vm.fawsSecretKey" class="rs-input-xlarge" placeholder="{{vm.fawsAccType == 'key-based' ? 'AWS Secret Key':'External ID'}}" />
                         </div>

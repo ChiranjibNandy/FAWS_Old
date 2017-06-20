@@ -163,7 +163,8 @@
                                                     {field: "ip_address", text: "IP Address"},
                                                     {field: "ram", text: "RAM"},
                                                     {field: "server status", text: "Server Status"},
-                                                    {field:"migration status", text:"Migration Status"}
+                                                    {field:"migration status", text:"Migration Status"},
+                                                    {field:"eligibility test", text:"Eligibility test result"}
                                                 ],
                                         data: response
                                     };

@@ -37,6 +37,7 @@
                     vm.dontshowStatus = true;
                     vm.introModalLoading = true;
                     vm.noFawsAccounts = false;
+                    vm.serviceLevel = "Navigator";
                     var modalDisplayStatus = dataStoreService.getDontShowStatus() ; //check for flag status created for intorduction Modal.
                     var prePageName = dataStoreService.getPageName() || $window.localStorage.pageName;
                     vm.fawsAccountDetails = JSON.parse($window.localStorage.getItem("fawsAccounts"));

@@ -59,13 +59,14 @@
                     angular.forEach(dataList, function (server) {
                         server.canMigrate = true;
                         server.migStatus = 'error';
+                        server.eligible = 'Not Available';
                         //map status of a server received from Batch response with respect to the server id. 
                         angular.forEach(statusList, function (status) {
                             angular.forEach(status.instances, function (instance) {
                                 if(instance['name'] == server.name){
                                     server.migStatusJobId = status.job_id;
                                     //Start--to be removed after demo3
-                                    if(status.batch_status == 'error'){
+                                    if(status.batch_status == 'error' || status.batch_status == 'canceled'){
                                         server.canMigrate = true;
                                         server.migStatus = status.batch_status;
                                     }
@@ -87,20 +88,6 @@
                     });
                     return dataList;
                 };
-
-                /** 
-                var mapNetworkStatus = function(dataList, statusList) {
-                    for(var i=0; i<dataList.length; i++){
-                        //item.id === jobsList[i].resources.networks[0].subnets[0].id
-                        var statusItem = statusList.filter(function(item){ return item.resources.networks[0].subnets[0].id === dataList[i].subnets[0].id })[0];
-                        if(statusItem)
-                            dataList[i].migrationStatus = statusItem.status;
-
-                    }
-                    //dataList[0].migrationStatus = "done";
-                    return dataList;
-                };
-                */
 
                 // Perfoming controller initialization steps
                 vm.$onInit = function() {
@@ -141,7 +128,9 @@
                     vm.filteredArr = [];
                     vm.search = {};
                     vm.loading = true;
+                    vm.checkingEligibility = {};
                     vm.loadError = false;
+                    vm.itemsEligible = false;
                     vm.noData = false;
                     vm.sortingOrder = true;
                     vm.isAllselected = false;
@@ -212,13 +201,20 @@
                                 }
                                 if(item.canMigrate == true && item.status.toLowerCase() == 'active'){ 
                                     vm.activeItemCount++;
-                                    // var activeInstance = {
-                                    //     "id":item.id,
-                                    //     "region":item.region.toUpperCase()
-                                    // }
-                                    // vm.activeItemsArr.push(activeInstance);
+                                    var activeInstance = {
+                                        "id":item.id,
+                                        "region":item.region.toUpperCase()
+                                    }
+                                    vm.activeItemsArr.push(activeInstance);
                                 }
                             });
+
+                            //Dont remove : eligibility precheck API call 
+                            vm.eligibilityCheck(vm.activeItemsArr, true);
+                            
+                            //to be removed once eligibility API works fine.
+                            $window.localStorage.allServers = JSON.stringify(vm.items);
+                            
                             var savedItems = [];
                             if($window.localStorage.selectedServers !== undefined)
                                 savedItems = JSON.parse($window.localStorage.selectedServers);
@@ -253,7 +249,6 @@
                             };
 
                             datastoreservice.storeallItems(vm.items, vm.type);
-                            $window.localStorage.allServers = JSON.stringify(vm.items);
                             // pagination controls
                             vm.currentPage = 1;
                             vm.pageSize = 5; // items to be displayed per page
@@ -271,13 +266,14 @@
                                 vm.search[label.field] = ""; // set search field variables
                             });
                             //to be removed after precheck API works fine
-                            vm.loading = false;
-                            vm.parent.itemsLoadingStatus(false);
+                            // vm.parent.itemsLoadingStatus(false);
+                            // vm.loading = false;
                         }, function(error){
                             vm.loading = false;
                             vm.loadError = true;
                         });
                     } else{
+                        vm.itemsEligible = true;
                         //For repeated fetch of resources after first time loading.
                         vm.items = JSON.parse($window.localStorage.allServers);
                         angular.forEach(vm.items, function (item) {
@@ -481,6 +477,61 @@
                     };    
                 });
 
+                vm.eligibilityCheck = function(item, firstRun){
+                    if(!firstRun){
+                        vm.checkingEligibility[item.id] = true;
+                        var checkEligibilityArr = [
+                            {
+                                "id":item.id,
+                                "region":item.region.toUpperCase()
+                            }
+                        ];
+                    }
+                    else{
+                        checkEligibilityArr = item;
+                    }
+                    ds.eligibilityPrecheck(checkEligibilityArr)
+                        .then(function (result) {
+                            if (result.error < 400){
+                                angular.forEach(result.results.instances, function (descriptions, ID) {
+                                    angular.forEach(descriptions, function (instance) {
+                                        var keepGoing = true;
+                                        angular.forEach(vm.items, function (item) {
+                                            if(keepGoing) {
+                                                if(ID == item.id && instance.type == "success"){ 
+                                                    item.canMigrate = true;
+                                                    keepGoing = false;
+                                                    item.eligible = 'Pass';
+                                                }
+                                                else if(ID == item.id && instance.type != "success"){
+                                                    item.eligible = 'Failed';
+                                                    item.canMigrate = false;
+                                                }
+                                            };
+                                        });
+                                    });
+                                });
+                                $window.localStorage.allServers = JSON.stringify(vm.items);
+                                //to be enabled once precheck call is up
+                                // vm.parent.itemsLoadingStatus(false);
+                                // vm.itemsEligible = true;
+                            } 
+                            else {
+                                // vm.loading = false;
+                                // vm.loadError = true; //to be enabled once precheck call is up.  
+                                // return
+                            }
+                            //to be removed after eligibilty API works
+                            if(firstRun){
+                                vm.loading = false;
+                                vm.parent.itemsLoadingStatus(false);
+                                vm.itemsEligible = true;
+                            }
+                            else{
+                                vm.checkingEligibility[item.id] = false;   
+                            }
+                        });
+                };
                 return vm;
             }]
         }); // end of component definition
