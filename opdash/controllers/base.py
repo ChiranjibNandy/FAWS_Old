@@ -209,7 +209,7 @@ class SecureBlueprint(UnsecureBlueprint):
 
                 if impersonator:
                     user_data["is_impersonator"] = True
-                    user_data["impersonator"] = impersonator
+                    user_data["impersonator"] = impersonator["name"]
 
             return user_data
 
