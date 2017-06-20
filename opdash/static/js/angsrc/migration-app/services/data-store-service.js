@@ -470,7 +470,7 @@
                 var savedetails_json = 
                     [{
                         "instance_name":self.getScheduleMigration().migrationName,
-                        "timestamp":moment().format('MMDYYYYhmmss'), //(so we know when was it saved)
+                        "timestamp":moment().format("M/DD/YYYY HH:MM a"), //(so we know when was it saved)
                         "selected_resources": self.getItems(),
                         "recommendations":saveInstance.recommendations,
                         "scheduling-details":saveInstance.migration_schedule,

@@ -105,7 +105,7 @@
                                 <td>{{batch.metadata.initiated_by}}</td>
                                 <td class="rs-table-text ng-binding">
                                     <span ng-show="!batch.timestamp">{{(batch.start)| date : 'M/dd/yyyy hh:mm a' }}</span>
-                                     <span ng-show="batch.timestamp">{{(batch.timestamp && batch.timestamp*1000)| date : 'm/dd/yyyy hh:mm a' }}</span>
+                                     <span ng-show="batch.timestamp">{{(batch.timestamp)}}</span>
                                 </td>
                                 <td class="rs-table-text" ng-show="batch.showRefreshForApiLoading">
                                     <i class="fa fa-refresh fa-spin"></i> 
@@ -127,7 +127,7 @@
                                         <div class="rs-dropdown">
                                             <div class="rs-cog rs-dropdown-toggle" ng-click="vm.showActionList(batch)" ng-disabled="batch.batch_status==='canceled'" ></div>
                                             <ul class="rs-dropdown-menu visible" ng-show="batch.showSettings" style="right: 0 !important">
-                                                <li><span class="rs-dropdown-category">Manage</span></li>
+                                                <li><span class="rs-dropdown-category" ng-hide="batch.batch_status==='canceled'">Manage</span></li>
                                                 <li ng-show="batch.timestamp"><a href="javascript:void(0)" ng-click="vm.continueScheduling(batch)">Continue Scheduling</a></li>
                                                 <li ng-show="batch.timestamp && !batch.deleting">
                                                     <a ng-show="!batch.deleting" href="javascript:void(0)" ng-click="vm.deleteSavedSchedule(batch)">Delete</a>
