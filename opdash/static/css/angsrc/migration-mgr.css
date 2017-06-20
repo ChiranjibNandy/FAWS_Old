@@ -891,8 +891,13 @@ body .modal.details2 {
 }
 
 .control-label{
+    width: 30%;
     float: left;
-    margin-right: 20px;
+}
+
+.control-label-cust{
+    width: 20%;
+    float: left;
 }
 
 .control-div{
@@ -948,4 +953,16 @@ background-color:#dddddd !important;
 
 .span-2 {
     margin-left:2px;
+}
+
+.service-button {
+    margin-right: -25px;
+}
+
+.service-button-rack{
+    margin-right: -10px;
+}
+
+.nofaws-cancel{
+    margin-right:5px;
 }

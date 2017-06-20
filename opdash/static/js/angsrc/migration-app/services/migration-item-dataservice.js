@@ -352,6 +352,7 @@
                 var tenant_id = authservice.getAuth().tenant_id;
                 var requestObj = {
                     "source":{
+                        "cloud": "rackspace",
                         "tenantid": tenant_id
                     },
                     "resources": {
@@ -363,7 +364,7 @@
                     .then(function(result){
                         return result;
                     },function(error) {
-                       return error;
+                       return false;
                     });
             };
 
