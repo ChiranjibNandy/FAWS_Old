@@ -112,37 +112,25 @@
                             time: moment(moment(vm.date).format("YYYY-MM-DD") + "T" + vm.getTime() + timeZoneDiff).unix(),
                             timezone:vm.timezone1,
                         };
-                        console.log(moment.unix(vm.migrationScheduleDetails.time).toISOString());
-                        var iSOTime = moment.unix(vm.migrationScheduleDetails.time).toISOString();
-
-                        vm.migrationScheduleDetail = {
+                    }else{
+                        vm.showMigrationTime = true;
+                        vm.showTimeForm = false;
+                        vm.selectedDate = moment().format('MM/DD/YYYY ') + ' at ' + moment().format('h:mma') + ' ' + new Date().toTimeString().slice(8, 42);
+                        vm.migrationScheduleDetails = {
                             migrationName: dataStoreService.getScheduleMigration().migrationName,
-                            time: iSOTime,
+                            time: moment().unix(),
                             timezone:new Date().toTimeString().split(" ")[1]+" "+new Date().toTimeString().split(" ")[2],
                         };
-
-                        dataStoreService.setScheduleMigration(vm.migrationScheduleDetail);
-                        }else{
-                            vm.showMigrationTime = true;
-                            vm.showTimeForm = false;
-                            vm.selectedDate = moment().format('MM/DD/YYYY ') + ' at ' + moment().format('h:mma') + ' ' + new Date().toTimeString().slice(8, 42);
-                            vm.migrationScheduleDetails = {
-                                migrationName: dataStoreService.getScheduleMigration().migrationName,
-                                time: moment().unix(),
-                                timezone:new Date().toTimeString().split(" ")[1]+" "+new Date().toTimeString().split(" ")[2],
-                        };
-                        console.log(moment.unix(vm.migrationScheduleDetails.time).toISOString());
-                        var iSOTime = moment.unix(vm.migrationScheduleDetails.time).toISOString();
-
-                        vm.migrationScheduleDetail = {
-                            migrationName: dataStoreService.getScheduleMigration().migrationName,
-                            time: iSOTime,
-                            timezone:new Date().toTimeString().split(" ")[1]+" "+new Date().toTimeString().split(" ")[2],
-                        };
-                        dataStoreService.setScheduleMigration(vm.migrationScheduleDetail);
                     }
+                    var iSOTime = moment.unix(vm.migrationScheduleDetails.time).toISOString();
+                    vm.migrationScheduleDetail = {
+                        migrationName: dataStoreService.getScheduleMigration().migrationName,
+                        time: iSOTime,
+                        timezone:new Date().toTimeString().split(" ")[1]+" "+new Date().toTimeString().split(" ")[2],
+                    };
+                    dataStoreService.setScheduleMigration(vm.migrationScheduleDetail);
                     //migrationItems.date = vm.selectedDate;
-                    $rootScope.$emit("vm.scheduleMigration",true);
+                    $rootScope.$emit("vm.scheduleMigration",{'vm.scheduleMigration':true,'whichTime':whichTime});
                 };
             
                 $scope.$watchGroup(['vm.date', 'vm.timezone1'], function () {

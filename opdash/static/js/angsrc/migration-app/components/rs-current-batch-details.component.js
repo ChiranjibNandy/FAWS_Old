@@ -78,6 +78,7 @@
                     };
                     vm.alerts = [];
                     vm.loadingAlerts = true;
+                    vm.job = [];
                 };
 
                 vm.$routerOnActivate = function(next, previous) {

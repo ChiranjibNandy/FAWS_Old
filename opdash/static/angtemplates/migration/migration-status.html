@@ -119,7 +119,6 @@
                                     <span class="rs-status-ok" ng-show="batch.batch_status==='done'">Completed</span>
                                     <span class="rs-status-error" ng-show="batch.batch_status==='error'">Error</span>
                                     <span class="rs-status-warning" ng-show="batch.batch_status==='paused'">Paused</span>
-                                    <span class="rs-status-error" ng-show="batch.batch_status==='canceled'">Canceled</span>
                                 </td>
                                 <!--cog button menu items-->
                                 <td class="rs-table-input rs-center">
@@ -140,7 +139,7 @@
                                                 </li>
                                                 <li class="disabled" ng-show="batch.deleting"><a href="">Deleting...</a></li>
                                                 <li ng-show="batch.batch_status==='paused'">
-                                                    <a href="javascript:void(0)" ng-click="vm.pauseAndCancelMigration(batch,'cancel',true)">Modify Migration</a>
+                                                    <a href="javascript:void(0)" ng-click="vm.continueScheduling(batch,true)">Modify Migration</a>
                                                 </li>
                                                 <li ng-show="(batch.batch_status==='scheduled' || 'paused') && !batch.timestamp">
                                                     <a href="javascript:void(0)" ng-hide="batch.batch_status==='canceled'" ng-click="vm.pauseAndCancelMigration(batch,'cancel')">Cancel Migration</a>
@@ -193,7 +192,7 @@
                                 <th class="rs-table-status"></th>
                                 <th>
                                     <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('completed_batch', 'batch_name')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['completed_batch']==='batch_name', 'custom-table-sort-desc current-sort-param': vm.sortBy['completed_batch']==='-batch_name', 'custom-table-sort-desc': vm.sortBy['completed_batch'].indexOf('batch_name') < 0}">
-                                        <span class="rs-table-sort-text">Completed Batches</span>
+                                        <span class="rs-table-sort-text">Completed/Cancelled Batches</span>
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
@@ -219,11 +218,11 @@
                         <!--data display for completed batches grid-->
                         <tbody ng-show="!vm.loading && !vm.completedBatches.loadError && vm.completedBatches.items.length!==0">
                             <tr ng-repeat="batch in vm.completedBatches.items | orderBy: vm.sortBy.completed_batch | limitTo : vm.completedBatches.pageSize : (vm.completedBatches.currentPage-1)*vm.completedBatches.pageSize" class="ng-scope">
-                                <td class="rs-table-status rs-table-status-ok tip"></td>
+                                <td class="rs-table-status tip" ng-class="{'rs-table-status-error': batch.batch_status==='canceled','rs-table-status-ok':batch.batch_status!='error'}"></td>
                                 <td class="rs-table-link large-col"><a ng-link="['CompletedBatchDetails', {job_id: batch.job_id}]" class="ng-binding">{{batch.metadata.batch_name}}</a></td>
                                 <td>{{batch.metadata.initiated_by}}</td>
                                 <td class="rs-table-text ng-binding">{{(batch.start) | date : 'M/dd/yyyy hh:mm a'}}</td>
-                                <td class="rs-table-text ng-binding" colspan="2">{{(batch.completed_at) | date : 'M/dd/yyyy hh:mm a'}}</td>
+                                <td class="rs-table-text ng-binding" colspan="2">{{(batch.completed_at) | date : 'M/dd/yyyy hh:mm a' || 'n/a'}}</td>
                             </tr>
                         </tbody>
                         <tbody ng-show="vm.loading">

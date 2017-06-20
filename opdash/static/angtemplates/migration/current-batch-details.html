@@ -17,7 +17,7 @@
                         <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1 ? " mins ": " min ") + "ago"}}</div>
                     </div>
                 </div>
-                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container" ng-show="vm.job.instances.length>0">
+                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
                     <table class="rs-list-table rs-embedded-list-table no-truncate-td" style="overflow: hidden">
                         <thead>
                             <th>
@@ -59,7 +59,7 @@
                                     <span class="rs-status-warning" ng-show="vm.job.batch_status==='scheduled'">Scheduled</span>
                                     <span class="rs-status-disabled" ng-show="vm.job.batch_status==='not available'">Not Available</span>
                                     <span class="rs-status-warning" ng-show="vm.job.batch_status==='paused'">Paused</span>
-<span class="rs-status-warning" ng-show="vm.job.batch_status==='canceled'">Cancelled</span>
+                                    <span class="rs-status-warning" ng-show="vm.job.batch_status==='canceled'">Cancelled</span>
                                 </td>
                                 <td>
                                     <a class="rs-btn" ng-link="['ResourceTaskList', {job_id: vm.job.job_id, resource_type: 'instance', resource_id: instance.id}]">See Tasks</a>
@@ -75,6 +75,11 @@
                                         </div>
                                     </div>
                                 </td>
+                            </tr>
+                        </tbody>
+                         <tbody ng-show="vm.job.length===0">
+                            <tr>
+                                <td colspan="2" class="empty-collection-info">You don't have any instances</td>
                             </tr>
                         </tbody>
                         <tbody ng-show="!vm.loading && vm.loadError">
