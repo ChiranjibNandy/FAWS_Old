@@ -100,9 +100,7 @@ class Container(object):
             },
             stream=True
         )
-
-        for line in result:
-            print(line)
+        self.consume_stream(result)
 
     def pull(self, token, repo, tag):
         result = self.client.api.pull(
@@ -114,9 +112,23 @@ class Container(object):
             },
             stream=True,
         )
+        self.consume_stream(result)
 
-        for line in result:
-            print(line)
+    @classmethod
+    def consume_stream(cls, stream):
+        errors = []
+        for line in stream:
+            print line
+
+            # dockerpy does not raise when there's an error message returned
+            # during a push/pull. this is a workaround to get a non-zero exit
+            # code (on jenkins) if the operation actually failed.
+            if 'error' in line:
+                errors.append(line)
+
+        if errors:
+            msg = "ERROR: docker server returned errors:\n" + "\n".join(errors)
+            raise Exception(msg)
 
     def __call__(self):
         repo = self.registry()
