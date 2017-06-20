@@ -590,3 +590,7 @@ span.fa-angle-left, span.fa-angle-right{
     /*background-color:#eee;
     background-color:inherit;
 }*/
+
+.pagination-mini ul > li > a, .pagination-mini ul > li > span{
+    cursor: pointer;
+}

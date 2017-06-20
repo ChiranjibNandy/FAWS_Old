@@ -90,6 +90,7 @@
                     vm.isRacker = authservice.is_racker;
                     $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
                     vm.count = 0;
+                    vm.savedMigrations = [];
                     vm.is_racker = authservice.getAuth().is_racker;
                     vm.afterSavedMigration = $window.localStorage.getItem("migrationSaved");
                     vm.afterNewMigration = false;
@@ -273,8 +274,8 @@
                                     console.log("No data recieved");
                                 //else
                                     //console.log("Batch: ", response);
-                                var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled", "paused","canceled"];
-                                var validCompletedBatchStatus = ["done"];
+                                var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled", "paused"];
+                                var validCompletedBatchStatus = ["done","canceled"];
                                 jobList = response.jobs.job_status_list;
                                 var tempcurrentBatches = [];
                                 var completedBatches = [];
@@ -293,24 +294,26 @@
                                 currentBatches = tempcurrentBatches.filter(x=>x.batch_status=='started').concat(tempcurrentBatches.filter(x=>x.batch_status=='in progress')).concat(tempcurrentBatches.filter(x=>x.batch_status=='paused')).concat(tempcurrentBatches.filter(x=>x.batch_status=='scheduled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='canceled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='error'))
 
                                 var tempSavedMigrations = [];
+                                vm.savedMigrations = response.savedMigrations;
                                 for(var j=0; j<response.savedMigrations.length; j++){
-                                    var t = {};
-                                    t.batch_name = response.savedMigrations[j].instance_name;
-                                    t.recommendations = response.savedMigrations[j].recommendations;
-                                    t["scheduling-details"] = response.savedMigrations[j]["scheduling-details"];
-                                    t.selected_resources = response.savedMigrations[j].selected_resources;
-                                    t.step_name = response.savedMigrations[j].step_name;
-                                    t.timestamp = response.savedMigrations[j].timestamp;
-                                    t.aws_account = response.savedMigrations[j]["aws-account"] || "";
-                                    
-                                    tempSavedMigrations.push(t);
+                                    if(!response.savedMigrations[j].scheduledItem){
+                                        var t = {};
+                                        t.batch_name = response.savedMigrations[j].instance_name;
+                                        t.recommendations = response.savedMigrations[j].recommendations;
+                                        t["scheduling-details"] = response.savedMigrations[j]["scheduling-details"];
+                                        t.selected_resources = response.savedMigrations[j].selected_resources;
+                                        t.step_name = response.savedMigrations[j].step_name;
+                                        t.timestamp = response.savedMigrations[j].timestamp;
+                                        t.aws_account = response.savedMigrations[j]["aws-account"] || "";
+                                        
+                                        tempSavedMigrations.push(t);
+                                    }
                                 }
 
                                 var savedMigrations = $filter('orderBy')(tempSavedMigrations, '-timestamp');
                                 vm.currentBatches.items = currentBatches.concat(savedMigrations);//$filter('orderBy')(currentBatches, '-start').concat(savedMigrations);
                                 vm.currentBatches.noOfPages = Math.ceil(vm.currentBatches.items.length / vm.currentBatches.pageSize);
                                 vm.currentBatches.pages = new Array(vm.currentBatches.noOfPages);
-                                
                                 vm.completedBatches.items = $filter('orderBy')(completedBatches, '-start');
                                 vm.completedBatches.noOfPages = Math.ceil(completedBatches.length / vm.completedBatches.pageSize);
                                 vm.completedBatches.pages = new Array(vm.completedBatches.noOfPages);
@@ -409,7 +412,7 @@
                  * Resets all previous resource data and helps to starts a new migration
                  */
                 vm.startNewMigration = function () {
-                    dataStoreService.resourceItemsForEditingMigration.shouldTrigger = false;
+                    dataStoreService.setResourceItemsForEditingMigration(false);
                     dataStoreService.resetAll();
                     $window.localStorage.clear();
                     if($window.localStorage.selectedServers !== undefined)
@@ -426,21 +429,33 @@
                  * @description 
                  * Initiates scheduling of migration for a saved migration
                  */
-                vm.continueScheduling = function (batch) {
-                    dataStoreService.resourceItemsForEditingMigration.shouldTrigger = false;
-                    if (!isValidBatch(batch)) {
+                vm.continueScheduling = function (batch,modifyFlag) {
+                    if(modifyFlag){
+                        for(var i = 0; i<vm.savedMigrations.length;i++){
+                            if(batch.metadata.batch_name === vm.savedMigrations[i].instance_name){
+                                dataStoreService.setJobIdForMigration(batch.job_id);
+                                batch = vm.savedMigrations[i];
+                                break;
+                            }
+                        }
+                        dataStoreService.setResourceItemsForEditingMigration(true);
+                    } 
+                    else{
+                        dataStoreService.setResourceItemsForEditingMigration(false);
+                    } 
+                    
+                    if (!modifyFlag && !isValidBatch(batch)) {
                         $('#abort_continue').modal('show');
                         return;
                     }
-                    if(!isValidAccount(batch)) {
+                    if(!modifyFlag && !isValidAccount(batch)) {
                         $('#aws_check').modal('show');
                         return;
                     }
 
                     dataStoreService.setDontShowStatus(true);
-                    dataStoreService.selectedTime.migrationName = batch.batch_name;
-                    $window.localStorage.migrationName = batch.batch_name;
-                    
+                    dataStoreService.selectedTime.migrationName = batch.batch_name || batch.instance_name;
+                    $window.localStorage.migrationName = batch.batch_name || batch.instance_name;
                     if (batch.step_name === "MigrationResourceList") {
                         dataStoreService.setItems(batch.selected_resources);
                         $window.localStorage.setItem('selectedServers',JSON.stringify(batch.selected_resources.server));
@@ -452,7 +467,6 @@
                         $window.localStorage.setItem('selectedServers',JSON.stringify(batch.recommendations));
                         dataStoreService.selectedTime = batch["scheduling-details"];
                     }
-
                     $rootRouter.navigate([batch.step_name]);
                 };
 
@@ -561,8 +575,6 @@
                         migrationService.pauseMigration(batch.job_id,detail).then(function(result){
                             if(result){
                                 vm.getBatches(true);
-                                //going to enable this as soon as cancel works
-                                //if(isModify) vm.modifyMigration(batch);
                             }else{
                                 batch.showRefreshForApiLoading = false;
                                 if(isModify)
@@ -583,12 +595,12 @@
                      * This function will be able to trigger the edit migration by saving the instances details and
                      * navigating to the select resources page
                      */
-                    vm.modifyMigration = function(batch){
-                        dataStoreService.resourceItemsForEditingMigration.server = batch.instances;
-                        dataStoreService.resourceItemsForEditingMigration.shouldTrigger = true;
-                        dataStoreService.selectedTime.migrationName = batch.batch_name
-                        $rootRouter.navigate(["MigrationResourceList"]);
-                    };
+                    // vm.modifyMigration = function(batch){
+                    //     dataStoreService.resourceItemsForEditingMigration.server = batch.instances;
+                    //     dataStoreService.resourceItemsForEditingMigration.shouldTrigger = true;
+                    //     dataStoreService.selectedTime.migrationName = batch.batch_name
+                    //     $rootRouter.navigate(["MigrationResourceList"]);
+                    // };
 
                     vm.resetSavedMigrationFlag = function(){
                         vm.afterSavedMigration = false;

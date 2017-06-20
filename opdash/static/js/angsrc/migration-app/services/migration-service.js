@@ -40,11 +40,11 @@
              * @description 
              * This helps us to modify a migration by using a PUT call.
              */
-            this.modifyMigration = function(job_id){
+            this.modifyMigration = function(job_id,jobRequest){
                var modifyUrl = "api/jobs/"+job_id;
-               return HttpWrapper.send(modifyUrl, {"operation":'PUT'})
+               return HttpWrapper.send(modifyUrl, {"operation":'PUT',"data":jobRequest})
                     .then(function(result){
-                        return true;
+                        return result;
                     },function(error) {
                         return false;
                     });

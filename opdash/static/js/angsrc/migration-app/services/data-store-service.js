@@ -33,10 +33,7 @@
              */
             self.resourceItemsForEditingMigration = {
                 shouldTrigger:false,
-                server:[],
-                network:[],
-                files:[],
-                LoadBalancers:[]
+                jobId:''
             };
             
             /**
@@ -200,7 +197,15 @@
                     } 
                 }
                 else{
-                    return self.selectedItems;
+                    if(self.selectedItems.server.length === 0 && self.selectedItems.network.length === 0 && self.selectedItems.LoadBalancers.length === 0){
+                        return {
+                            server:JSON.parse(localStorage.getItem('selectedServers')) || [],
+                            network:JSON.parse(localStorage.getItem('selectedNetworks')) || [],
+                            LoadBalancers:JSON.parse(localStorage.getItem('selectedLoadBalancers')) || []
+                        }
+                    }else{
+                        return self.selectedItems;
+                    }
                 }
             }
 
@@ -475,6 +480,7 @@
                         "recommendations":saveInstance.recommendations,
                         "scheduling-details":saveInstance.migration_schedule,
                         "step_name":saveInstance.step_name,
+                        "scheduledItem":saveInstance.scheduledItem,
                         "aws-account":JSON.parse($window.localStorage.getItem("fawsAccounts")).selectedFawsAccount
                     }];
                 if(preSavedDetails.length > 0){
@@ -709,6 +715,24 @@
                     },function(error) {
                        return error;
                     });
+            };
+
+            self.setResourceItemsForEditingMigration = function(value){
+                self.resourceItemsForEditingMigration.shouldTrigger = value;
+                $window.localStorage.setItem("shouldTrigger",value);
+            };
+
+            self.setJobIdForMigration = function(value){
+                self.resourceItemsForEditingMigration.jobId = value;
+                $window.localStorage.setItem("jobId",value);
+            };
+
+            self.getJobIdForMigration = function(){
+                return $window.localStorage.getItem("jobId");
+            };
+
+            self.getResourceItemsForEditingMigration = function(){
+                return $window.localStorage.getItem("shouldTrigger");
             };
 
             return self;

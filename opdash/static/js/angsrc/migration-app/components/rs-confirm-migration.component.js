@@ -25,7 +25,7 @@
              * @name migrationApp.controller:rsconfirmmigrationCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsconfirmmigration rsconfirmmigration} component
              */
-            controller: ["$rootRouter", "datastoreservice", "migrationitemdataservice", "$q", "httpwrapper", "authservice", "$timeout", "$rootScope","$scope","$window", function ($rootRouter, dataStoreService, ds, $q, HttpWrapper, authservice, $timeout, $rootScope,$scope,$window) {
+            controller: ["$rootRouter", "datastoreservice", "migrationitemdataservice", "$q", "httpwrapper", "authservice", "$timeout", "$rootScope","$scope","$window","migrationService", function ($rootRouter, dataStoreService, ds, $q, HttpWrapper, authservice, $timeout, $rootScope,$scope,$window,migrationService) {
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
@@ -33,6 +33,7 @@
 
                 vm.$onInit = function () {
                     vm.tenant_id = authservice.getAuth().tenant_id;
+                    vm.saveResources = false;
                     vm.tenant_account_name = authservice.getAuth().account_name;
                     $('title')[0].innerHTML = "Confirm Migration - Rackspace Cloud Migration";
                     var auth = authservice.getAuth();
@@ -59,7 +60,8 @@
                 };
                 
                 $rootScope.$on("vm.scheduleMigration", function (event, value) {
-                    vm.scheduleMigration = value;
+                    vm.scheduleMigration = value['vm.scheduleMigration'];
+                    vm.saveResources = value.whichTime === 'schedule'?true:false;
                 });
                 
                 $scope.$on("ItemRemoved",function(event,item){
@@ -79,32 +81,70 @@
                  * Starts a batch to migrate all resources selected by user
                  */
                 vm.migrate = function () {
-                    var selectedItems = [];
-                    if($window.localStorage.selectedServers !== undefined)
-                        selectedItems = JSON.parse($window.localStorage.selectedServers);//dataStoreService.getItems(); -- Previous Code
-                    if(selectedItems.length > 0){
-                        var requestObj;
-                        vm.migrating = true;
-                        $('#confirm-migration-modal').modal('hide');
-                        requestObj = ds.prepareJobRequest();
-                        vm.acceptTermsAndConditions= true;
-                        console.log(requestObj);
-
+                    var requestObj;
+                    vm.migrating = true;
+                    $('#confirm-migration-modal').modal('hide');
+                    requestObj = ds.prepareJobRequest();
+                    vm.acceptTermsAndConditions= true;
+                    if(dataStoreService.getResourceItemsForEditingMigration()){
+                        migrationService.modifyMigration(dataStoreService.getJobIdForMigration(),requestObj)
+                        .then(function (result) {
+                            vm.migrating = false; 
+                            $window.localStorage.setItem("migrationScheduled","true");
+                            $rootRouter.navigate(["MigrationStatus"]);
+                        }, function (error) {
+                            console.log("Error: Could not trigger migration", error);
+                            vm.migrating = false;
+                            $window.localStorage.setItem("migrationScheduled","false");
+                            vm.errorInMigration = true;
+                            vm.scheduleMigration = true;
+                        });
+                    }else{
                         HttpWrapper.save("/api/jobs", { "operation": 'POST' }, requestObj)
-                            .then(function (result) {
+                        .then(function (result) {
+                            if(vm.saveResources) {
+                                vm.saveResourceDetails();
+                            }else{
                                 vm.migrating = false; 
                                 $window.localStorage.setItem("migrationScheduled","true");
                                 $rootRouter.navigate(["MigrationStatus"]);
-                            }, function (error) {
-                                console.log("Error: Could not trigger migration", error);
-                                vm.migrating = false;
-                                $window.localStorage.setItem("migrationScheduled","false");
-                                vm.errorInMigration = true;
-                                vm.scheduleMigration = true;
-                            });
-                    }else{
-                        $("#no-equipments-modal").modal('show');
-                     }
+                            }
+                        }, function (error) {
+                            console.log("Error: Could not trigger migration", error);
+                            vm.migrating = false;
+                            $window.localStorage.setItem("migrationScheduled","false");
+                            vm.errorInMigration = true;
+                            vm.scheduleMigration = true;
+                        });
+                    }
+                };
+
+                /**
+                 * @ngdoc method
+                 * @name saveResourceDetails
+                 * @methodOf migrationApp.controller:rsconfirmmigrationCtrl
+                 * @description 
+                 * This helps to save the selected resources and this function only be called if we are scheduling for later
+                 */
+                vm.saveResourceDetails = function(){
+                    var saveInstance = {
+                        recommendations : JSON.parse($window.localStorage.selectedServers),
+                        step_name: "MigrationResourceList" ,
+                        scheduledItem:true,
+                        migration_schedule: {
+                            migrationName:$window.localStorage.migrationName,
+                            time:dataStoreService.getScheduleMigration().time,
+                            timezone:dataStoreService.getScheduleMigration().timezone
+                        }
+                    };
+                    dataStoreService.saveItems(saveInstance).then(function(success){
+                        vm.migrating = false; 
+                        $window.localStorage.setItem("migrationScheduled","true");
+                        $rootRouter.navigate(["MigrationStatus"]);
+                    },function(error){
+                        console.log("errored out while saving the resources when scheduling for later")
+                        console.log("do nothing here");
+                    });
                 };
 
                 /**
