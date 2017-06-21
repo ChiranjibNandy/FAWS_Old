@@ -282,8 +282,9 @@
                                 var currentBatches = [];
                                 angular.forEach(jobList, function (job) {
                                     job.showRefreshForApiLoading = false;
-                                    if(job.batch_name == dataStoreService.selectedTime.migrationName)
+                                    if(job.metadata.batch_name == dataStoreService.selectedTime.migrationName){
                                         vm.showInitiatedMigration =  false;
+                                    }
                                     if (validCurrentBatchStatus.indexOf(job.batch_status) >= 0){
                                         tempcurrentBatches.push(job);
                                     }
