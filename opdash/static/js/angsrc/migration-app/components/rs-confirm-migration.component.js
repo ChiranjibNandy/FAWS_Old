@@ -89,9 +89,14 @@
                     if(dataStoreService.getResourceItemsForEditingMigration()){
                         migrationService.modifyMigration(dataStoreService.getJobIdForMigration(),requestObj)
                         .then(function (result) {
-                            vm.migrating = false; 
-                            $window.localStorage.setItem("migrationScheduled","true");
-                            $rootRouter.navigate(["MigrationStatus"]);
+                            if(result){
+                                migrationService.pauseMigration(dataStoreService.getJobIdForMigration(),'unpause').then(function(success){
+                                    $window.localStorage.setItem("migrationScheduled","true");
+                                    $rootRouter.navigate(["MigrationStatus"]);
+                                })
+                            }else{
+                                alert('modifying is failed');
+                            }   
                         }, function (error) {
                             console.log("Error: Could not trigger migration", error);
                             vm.migrating = false;
