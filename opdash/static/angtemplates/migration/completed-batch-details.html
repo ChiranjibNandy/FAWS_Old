@@ -45,7 +45,7 @@
                                     <a href="" ng-click="vm.equipmentDetails('server', instance.id)" role="button" data-toggle="modal">{{instance.name}}</a>
                                 </td>
                                 <td class="rs-table-text">
-                                    {{(vm.job.end) | date : 'M/dd/yyyy hh:mm a'}}
+                                    {{(vm.job.completed_at) | date : 'M/dd/yyyy hh:mm a'}}
                                 </td>
                                 <!--<td class="rs-table-text">
                                     <div class="rs-progress rs-progress-medium" style="width: 50%;">
@@ -111,7 +111,7 @@
                                     <span class="rs-progress-label">100%</span>
                                 </td>-->
                                 <td class="rs-table-text">
-                                    {{(vm.job.end) | date : 'M/dd/yyyy hh:mm a'}}
+                                    {{(vm.job.completed_at) | date : 'M/dd/yyyy hh:mm a'}}
                                 </td>
                                 <td class="rs-table-text">
                                     <span class="rs-status-ok">Completed</span>
