@@ -102,8 +102,9 @@
                                     <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]">{{batch.metadata.batch_name}}</a>
                                     <a ng-show="batch.timestamp" href="javascript:void(0)" ng-click="vm.continueScheduling(batch);">{{batch.batch_name}}</a>
                                 </td>
-                                <td>{{batch.metadata.initiated_by}}</td>
-                                <td class="rs-table-text ng-binding">
+                                <td ng-if="!batch.timestamp">{{batch.metadata.initiated_by}}</td>
+                                <td ng-if="batch.timestamp">{{batch.initiated_by}}</td>
+<td class="rs-table-text ng-binding">
                                     <span ng-show="!batch.timestamp">{{(batch.start)| date : 'M/dd/yyyy hh:mm a' }}</span>
                                      <span ng-show="batch.timestamp">{{(batch.timestamp)}}</span>
                                 </td>
