@@ -140,7 +140,7 @@
                             name: dataStoreService.selectedTime.migrationName,
                             timestamp: dataStoreService.selectedTime.time
                         };
-                        vm.showInitiatedMigration = true;
+                        //vm.showInitiatedMigration = true;
                     } else{
                         vm.afterNewMigration = false;
                     }
