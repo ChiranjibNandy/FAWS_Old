@@ -305,6 +305,7 @@
                                         t.step_name = response.savedMigrations[j].step_name;
                                         t.timestamp = response.savedMigrations[j].timestamp;
                                         t.aws_account = response.savedMigrations[j]["aws-account"] || "";
+                                        t.initiated_by = response.savedMigrations[j].initiated_by;
                                         
                                         tempSavedMigrations.push(t);
                                     }

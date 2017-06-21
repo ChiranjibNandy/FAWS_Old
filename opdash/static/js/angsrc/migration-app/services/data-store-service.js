@@ -481,7 +481,8 @@
                         "scheduling-details":saveInstance.migration_schedule,
                         "step_name":saveInstance.step_name,
                         "scheduledItem":saveInstance.scheduledItem,
-                        "aws-account":JSON.parse($window.localStorage.getItem("fawsAccounts")).selectedFawsAccount
+                        "aws-account":JSON.parse($window.localStorage.getItem("fawsAccounts")).selectedFawsAccount,
+                        "initiated_by":authservice.getAuth().username
                     }];
                 if(preSavedDetails.length > 0){
                     angular.forEach(preSavedDetails, function (instance, key) {
