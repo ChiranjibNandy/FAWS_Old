@@ -112,9 +112,13 @@
         <span class="rs-status-error">Failures</span> - Resources with failure severity cannot be migrated at this time.
         </strong></p>        
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer" ng-show = "vm.failures.length === 0">
         <button class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-show="vm.precheck || vm.precheckSuccess">Go Back</button>
         <a ng-show="(vm.errors.length === 0 && vm.failures.length === 0 && !vm.precheckError && vm.precheck) || vm.precheckSuccess" class="rs-btn rs-btn-primary" ng-click="vm.continueToSchedule()" >Continue</a>
+    </div>
+    <div class="modal-footer" ng-show ="((vm.failures.length !== 0) || (!vm.precheck && vm.precheckError && !vm.precheckSuccess))" >
+        <a class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true">Go Back</a>
+        <button class="rs-btn" ng-click="vm.continueToSchedule()" >Proceed anyway</button>
     </div>
 </div>
 <!--modals End -->
