@@ -55,12 +55,24 @@
                                 var job = response.jobs.job_status_list.find(function(job) {
                                     return job.job_id === job_id;
                                 });
-                                vm.job = job;
-                                vm.loading = false;
-                                vm.manualRefresh = false;
-                                lastRefreshIntervalPromise = $interval(function(){
-                                    vm.timeSinceLastRefresh++;
-                                }, 60000);
+                                //Makes a promise to fetch the progress API details for in progress batches
+                                var promise = HttpWrapper.send('/api/jobs/'+job.job_id+'/progress', { "operation": 'GET' });
+                                //Once the promise is resolved, proceed with rest of the items
+                                $q.all([promise])
+                                .then(function(result) {
+                                    //Create a property that would hold the progress detail for in progress batches
+                                    job.succeeded_time_pct = result[0].succeeded_by_time_pct;
+                                    vm.job = job;
+                                    vm.loading = false;
+                                    vm.manualRefresh = false;
+                                    lastRefreshIntervalPromise = $interval(function(){
+                                        vm.timeSinceLastRefresh++;
+                                    }, 60000);
+                                },function(errorResponse){
+                                    job.succeeded_time_pct = 0;
+                                    //Create a flag that indicates something has gone wrong while fetching progress API details
+                                    job.progressFlag = "NA";
+                                });
                             }, function(errorResponse) {
                                 vm.loading = false;
                                 vm.loadError = true;
