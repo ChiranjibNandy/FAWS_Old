@@ -364,7 +364,7 @@
                     .then(function(result){
                         return result;
                     },function(error) {
-                       return false;
+                       return error;
                     });
             };
 

@@ -688,13 +688,13 @@
             */
             this.createFawsAccount = function(requestObj) {
                 var self = this;
-                return HttpWrapper.save("/api/tenants/create_faws_account", {"operation":'POST'}, requestObj)
+                return HttpWrapper.save("/api/tickets/new_account", {"operation":'POST'}, requestObj)
                     .then(function(result){
                        return result;
                     },function(error) {
                         console.log("create faws account ");
                         console.log(error);
-                       return false;
+                       return error;
                     });
             };
 
