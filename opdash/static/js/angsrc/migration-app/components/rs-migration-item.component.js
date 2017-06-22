@@ -204,13 +204,15 @@
                                     var activeInstance = {
                                         "id":item.id,
                                         "region":item.region.toUpperCase()
-                                    }
-                                    vm.activeItemsArr.push(activeInstance);
+                                    };
+                                    vm.eligibilityCheck(item, false);
+                                    //Dont remove : Async eligibility precheck API call 
+                                    // vm.activeItemsArr.push(activeInstance);
                                 }
                             });
 
-                            //Dont remove : eligibility precheck API call 
-                            vm.eligibilityCheck(vm.activeItemsArr, true);
+                            //Dont remove : Sync eligibility precheck API call 
+                            // vm.eligibilityCheck(vm.activeItemsArr, true);
                             
                             //to be removed once eligibility API works fine.
                             $window.localStorage.allServers = JSON.stringify(vm.items);
@@ -248,8 +250,9 @@
                                 vm.search[label.field] = ""; // set search field variables
                             });
                             //to be removed after precheck API works fine
-                            // vm.parent.itemsLoadingStatus(false);
-                            // vm.loading = false;
+                            vm.parent.itemsLoadingStatus(false);
+                            vm.itemsEligible = true;
+                            vm.loading = false;
                         }, function(error){
                             vm.loading = false;
                             vm.loadError = true;
@@ -474,21 +477,23 @@
                     }
                     ds.eligibilityPrecheck(checkEligibilityArr)
                         .then(function (result) {
-                            if (result.error < 400){
+                            if (!result.error){
                                 angular.forEach(result.results.instances, function (descriptions, ID) {
-                                    angular.forEach(descriptions, function (instance) {
+                                    angular.forEach(vm.items, function (item) {
                                         var keepGoing = true;
-                                        angular.forEach(vm.items, function (item) {
+                                        angular.forEach(descriptions, function (testCase) {
                                             if(keepGoing) {
-                                                if(ID == item.id && instance.type == "success"){ 
+                                                if(ID == item.id && testCase.type == "success"){ 
                                                     item.canMigrate = true;
-                                                    keepGoing = false;
                                                     item.eligible = 'Pass';
                                                 }
-                                                else if(ID == item.id && instance.type != "success"){
+                                                else if(ID == item.id && testCase.type != "success"){
                                                     item.eligible = 'Failed';
-                                                    item.canMigrate = false;
+                                                    keepGoing = false;
+                                                    //enable this once API works fine
+                                                    // item.canMigrate = false;
                                                 }
+
                                             };
                                         });
                                     });
@@ -497,11 +502,6 @@
                                 //to be enabled once precheck call is up
                                 // vm.parent.itemsLoadingStatus(false);
                                 // vm.itemsEligible = true;
-                            } 
-                            else {
-                                // vm.loading = false;
-                                // vm.loadError = true; //to be enabled once precheck call is up.  
-                                // return
                             }
                             //to be removed after eligibilty API works
                             if(firstRun){
@@ -512,7 +512,13 @@
                             else{
                                 vm.checkingEligibility[item.id] = false;   
                             }
+                        },function(error) {
+                            // vm.loading = false;
+                            // vm.loadError = true; //to be enabled once precheck call is up.  
+                            // return
                         });
+                        
+                        // });
                 };
                 return vm;
             }]

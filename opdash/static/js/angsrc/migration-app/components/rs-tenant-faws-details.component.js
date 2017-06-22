@@ -27,7 +27,7 @@
              * @name migrationApp.controller:tenantfawsdetailsCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rstenantfawsdetails rstenantfawsdetails} component
              */
-            controller: ["datastoreservice", "authservice", "$timeout","$window","httpwrapper", function (dataStoreService, authservice, $timeout,$window,HttpWrapper) {
+            controller: ["datastoreservice", "authservice", "$timeout","$window","httpwrapper","$q", function (dataStoreService, authservice, $timeout,$window,HttpWrapper,$q) {
                 var vm = this;
                 vm.fawsAcctStatus = true;
                 vm.tenant_id = '';
@@ -48,12 +48,13 @@
                 vm.fawsDeleteError = false;
                 vm.fawsDeleted = false;
                 vm.newAccountDetails = {};
+                vm.serviceLevel = "navigator";
 
                 vm.tenant_id = authservice.getAuth().tenant_id; //get Tenant ID
-                vm.is_racker =  authservice.getAuth().is_racker;
+                vm.is_racker =  authservice.is_impersonator;
                 vm.fawsLink = "https://mycloud.rackspace.com/cloud/"+vm.tenant_id+"/tickets#new";
 
-                if(authservice.getAuth().is_racker == false){   //get Account Name
+                if(vm.is_racker == false){   //get Account Name
                     var actname = dataStoreService.getAccountName(vm.tenant_id); //this service method is setting the accountname through api
                     actname.then(function() {
                         vm.tenant_account_name = authservice.getAuth().account_name;
@@ -166,44 +167,57 @@
                   * @description 
                   * Makes a call to api/tenants/create_faws_account API to create new FAWS account for a tenant ID.
                 */
-                vm.createFawsAccount = function() {
+                vm.createFawsAccount = function(rack) {
                     vm.fawsCreationProgress = true;
-                                        
-                    //var requestObj = {"test": vm.fawsAcctName}; //for testing FAWS account creation API 
-                    // var requestObj = {"project_name": vm.fawsAcctName}; //for actual creation of a new FAWS account - use only in prod
-                    var requestObj = {
-                        "dest_name":vm.fawsAcctName,
-                        "dest_account": vm.fawsAcctId,
-                        "dest_auth_accesskey": vm.fawsAccessKey,
-                        "dest_auth_secretkey": vm.fawsSecretKey
-                     };
+                    var requestObj = {};
                     // dataStoreService.createFawsAccount(requestObj)
-                    dataStoreService.addCredsForFawsAccount(requestObj)
-                        .then(function (result) {
-                            vm.newAccountDetails = result;
-                            // if (vm.newAccountDetails.error < 400){
-                            if (result == "OK"){
-                                    vm.fawsResponse = true;
-                                    vm.fawsError = false;
-                                    vm.fawsCreated = true;
-                                    vm.fawsCreationProgress = false;
-                                    vm.fetchFawsAccounts();
-                            } 
-                            else {
-                                    vm.fawsError = true;
-                                    vm.fawsResponse = false;
-                                    vm.fawsCreated = false;
-                                    vm.fawsCreationProgress = false;
+                    var promise = {};
+                    if(rack){
+                        requestObj = {
+                            'account_name' : vm.fawsAcctName,
+                            'service_level' : vm.serviceLevel
+                        }
+                        promise = dataStoreService.createFawsAccount(requestObj);
+                    }
+                    else{
+                        requestObj = {
+                            "dest_name":vm.fawsAcctName,
+                            "dest_account": vm.fawsAcctId,
+                            "dest_auth_accesskey": vm.fawsAccessKey,
+                            "dest_auth_secretkey": vm.fawsSecretKey
+                        };
+                        promise = dataStoreService.addCredsForFawsAccount(requestObj);
+                    }
+                    $q.all([promise]).then
+                        (function (result) {
+                            if (result.length > 0 && !result[0].error){
+                                vm.newAccountDetails = result;
+                                vm.fawsResponse = true;
+                                vm.fawsError = false;
+                                vm.fawsCreated = true;
+                                vm.fawsCreationProgress = false;
+                                vm.fetchFawsAccounts();
                             }
-                            vm.fawsAcctName = '';
-                            vm.fawsAcctId = '';
-                            vm.fawsAccessKey = '';
-                            vm.fawsSecretKey = '';
-                            vm.fawsSourceKey = '';
-                            vm.fawsTenantId = '';
-                        });
-                    };
-
+                            else{
+                                vm.fawsError = true;
+                                vm.fawsResponse = false;
+                                vm.fawsCreated = false;
+                                vm.fawsCreationProgress = false;
+                            }
+                    }, function (error) {
+                        vm.fawsError = true;
+                        vm.fawsResponse = false;
+                        vm.fawsCreated = false;
+                        vm.fawsCreationProgress = false;
+                    });
+                    vm.fawsAcctName = '';
+                    vm.fawsAcctId = '';
+                    vm.fawsAccessKey = '';
+                    vm.fawsSecretKey = '';
+                    vm.fawsSourceKey = '';
+                    vm.fawsTenantId = '';
+                };
+                
                 vm.switchUser = function() {
                     vm.is_racker = !vm.is_racker;
                 }

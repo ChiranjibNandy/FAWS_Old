@@ -85,7 +85,7 @@
     </div>
     <div class="modal-footer">
        
-        <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.fawsAccessKey || !vm.fawsSecretKey || !vm.fawsAcctId}" ng-click="vm.createFawsAccount()" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
+        <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.fawsAccessKey || !vm.fawsSecretKey || !vm.fawsAcctId}" ng-click="vm.createFawsAccount(false)" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
         <a class="rs-btn disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
         <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</a>
     </div>
@@ -113,12 +113,12 @@
                         <span class="col-sm-2 control-label">Service Level<span class="space"></span></span>
                         <span>
                             <span>
-                                <input type="radio" ng-model="vm.serviceLevel" value="Navigator">
+                                <input type="radio" ng-model="vm.serviceLevel" value="navigator">
                                 <strong>Navigator</strong>
                             </span>
                             <span class="half-tab"></span>
                             <span>
-                                <input type="radio" ng-model="vm.serviceLevel" value="Aviator">
+                                <input type="radio" ng-model="vm.serviceLevel" value="aviator">
                                 <strong>Aviator</strong>
                             </span>
                         </span>
@@ -129,7 +129,7 @@
     </div>
     <div class="modal-footer">
        
-        <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.serviceLevel}" ng-click="vm.requestFawsAccount()" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
+        <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.serviceLevel}" ng-click="vm.createFawsAccount(true)" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
         <a class="rs-btn disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
         <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</a>
     </div>

@@ -207,12 +207,12 @@
                     <span class="control-label-cust">Service Level  </span><span class="half-tab"></span>
                     <span>
                         <span>
-                            <input type="radio" ng-model="vm.serviceLevel" value="Navigator">
+                            <input type="radio" ng-model="vm.serviceLevel" value="navigator">
                             <strong>Navigator</strong>
                         </span>
                         <span class="half-tab"></span>
                         <span>
-                            <input type="radio" ng-model="vm.serviceLevel" value="Aviator">
+                            <input type="radio" ng-model="vm.serviceLevel" value="aviator">
                             <strong>Aviator</strong>
                         </span>
                     </span>
@@ -232,8 +232,8 @@
                 </label>
         </div>
         <a ng-link="['MigrationStatus']" ng-class="{disabled:vm.introModalLoading}" class="rs-btn">Cancel</a>
-        <a ng-show="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker && !vm.fawsError && !vm.fawsCreationProgress && !vm.fawsCreated" class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.serviceLevel}" ng-click="vm.createFawsAccount()">Submit</a>
-        <a ng-show="vm.noFawsAccounts && !vm.introModalLoading && vm.isRacker && !vm.fawsError && !vm.fawsCreationProgress && !vm.fawsCreated" class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.fawsAccessKey || !vm.fawsSecretKey || !vm.fawsAcctId}" ng-click="vm.createFawsAccount()">Submit</a>
+        <a ng-show="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker && !vm.fawsError && !vm.fawsCreationProgress && !vm.fawsCreated" class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.serviceLevel}" ng-click="vm.createFawsAccount(true)">Submit</a>
+        <a ng-show="vm.noFawsAccounts && !vm.introModalLoading && vm.isRacker && !vm.fawsError && !vm.fawsCreationProgress && !vm.fawsCreated" class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.fawsAccessKey || !vm.fawsSecretKey || !vm.fawsAcctId}" ng-click="vm.createFawsAccount(false)">Submit</a>
         <a ng-show="vm.noFawsAccounts && !vm.introModalLoading  && vm.fawsCreationProgress" class="rs-btn disabled" disabled="disabled">Submitting...</a>
         <a ng-hide="vm.noFawsAccounts && !vm.introModalLoading" class="rs-btn rs-btn-primary" ng-class="{disabled:vm.introModalLoading || vm.noFawsAccounts}" data-dismiss="modal" aria-hidden="true" href="javascript:void(0)">Start a Migration</a>
     </div>

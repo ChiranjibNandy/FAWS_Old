@@ -102,6 +102,7 @@
             self.storeAuth = function(userDetails){
                 var details;
                 self.is_racker = userDetails.is_racker;
+                self.is_impersonator = userDetails.is_impersonator;
 
                 if(self.is_racker){
                     rackerDetails = angular.copy(userDetails);
