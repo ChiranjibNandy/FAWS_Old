@@ -17,7 +17,7 @@
             var t = data.data;
             for(var key in t){
                 // iterate over networks by region
-                if (t.hasOwnProperty(key)) {
+                if (t.hasOwnProperty(key) && t[key] !== null) {
                     // iterate over each network and extract necessary data
                     angular.forEach(t[key].servers, function(server) {
                         serversList.push({
