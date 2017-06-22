@@ -25,7 +25,7 @@
              * @name migrationApp.controller:rsresourcetasklistCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsresourcetasklist rsresourcetasklist} component
              */
-            controller: ["alertsservice", "authservice", "$interval", "$rootRouter", "migrationitemdataservice", function(alertsService, authService, $interval, $rootRouter, ds){
+            controller: ["alertsservice", "authservice", "$interval", "$rootRouter", "migrationitemdataservice","$scope", function(alertsService, authService, $interval, $rootRouter, ds,$scope){
                 var vm = this;
                 var lastRefreshIntervalPromise;
                 var backRoute = null;
@@ -123,6 +123,16 @@
                     else
                         $rootRouter.navigate(['MigrationStatus']);
                 };
+
+
+              //event fired for direct url jumping or hitting...
+                 $scope.$on('$locationChangeStart', function(event, newUrl, oldUrl) {
+                   if((oldUrl != undefined) && ((newUrl.indexOf("migration/recommendation") > -1)) ||(newUrl.indexOf("migration/resources") > -1) || (newUrl.indexOf("migration/confirm") > -1)){
+                        event.preventDefault();
+                          $rootRouter.navigate(["MigrationStatus"]);}
+                              });
+
+
             }
             ]}); // end of component rsbatchtasklist
 })();

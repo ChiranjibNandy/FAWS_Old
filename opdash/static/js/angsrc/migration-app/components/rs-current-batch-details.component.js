@@ -26,7 +26,7 @@
              * @name migrationApp.controller:rscurrentbatchdetailsCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rscurrentbatchdetails rscurrentbatchdetails} component
              */
-            controller: ["$rootRouter", "migrationitemdataservice", "dashboardservice", "authservice", "alertsservice", "$interval", function($rootRouter, ds, dashboardService, authservice, alertsService, $interval){
+            controller: ["$rootRouter", "migrationitemdataservice", "dashboardservice", "authservice", "alertsservice", "$interval","$scope", function($rootRouter, ds, dashboardService, authservice, alertsService, $interval,$scope){
                 var vm = this;
                 var job_id;
                 var lastRefreshIntervalPromise;
@@ -133,7 +133,13 @@
                     else
                         vm.sortBy[resourceType] = sortBy;
                 };
-
+                    
+                     //event fired for direct url jumping or hitting...
+                      $scope.$on('$locationChangeStart', function(event, newUrl, oldUrl) {
+                          if((oldUrl != undefined) && ((newUrl.indexOf("migration/recommendation") > -1)) ||(newUrl.indexOf("migration/resources") > -1) || (newUrl.indexOf("migration/confirm") > -1)){
+                             event.preventDefault();
+                               $rootRouter.navigate(["MigrationStatus"]);}
+                                 });
                 /**
                  * @ngdoc method
                  * @name getAllAlerts

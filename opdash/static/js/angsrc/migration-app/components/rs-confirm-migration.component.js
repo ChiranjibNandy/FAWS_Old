@@ -329,6 +329,11 @@
                         $rootRouter.navigate(["MigrationResourceList"]);
                         //$rootRouter.navigate(["MigrationResourceList"]);
                     }
+                      //condition for direct url jumping or hitting...
+                     if((oldUrl != undefined) && ((newUrl.indexOf("migration/recommendation") > -1)) ||(newUrl.indexOf("migration/resources") > -1)){
+                        event.preventDefault();
+                        $rootRouter.navigate(["MigrationStatus"]);
+                    }
             });
 
             return vm;

@@ -81,7 +81,14 @@
                 vm.goToDashboard = function() {
                     $rootScope.$broadcast("showCancelModal");
                 }
-                
+
+                    //event fired for direct url jumping or hitting...
+                         $scope.$on('$locationChangeStart', function(event, newUrl, oldUrl) {
+                               if((oldUrl != undefined) && ((newUrl.indexOf("migration/confirm") > -1)) ||(newUrl.indexOf("migration/resources") > -1)){
+                                 event.preventDefault();
+                                        $rootRouter.navigate(["MigrationStatus"]);
+                                            }
+                                       });
                 return vm;
             }
         ]}); // end of component definition

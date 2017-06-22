@@ -24,7 +24,7 @@
              * @name migrationApp.controller:rsmigrationresourceslistCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationresourceslist rsmigrationresourceslist} component
              */
-            controller: ["authservice", "$scope", "$rootRouter", "datastoreservice", "migrationitemdataservice", "httpwrapper", "$timeout","$window","$q","$rootScope","DEFAULT_VALUES", function(authservice, $scope, $rootRouter, dataStoreService, ds, HttpWrapper, $timeout,$window,$q, $rootScope,DEFAULT_VALUES) {
+            controller: ["authservice", "$scope", "$rootRouter", "datastoreservice", "migrationitemdataservice", "httpwrapper", "$timeout","$window","$q","$rootScope","DEFAULT_VALUES",function(authservice, $scope, $rootRouter, dataStoreService, ds, HttpWrapper, $timeout,$window,$q, $rootScope,DEFAULT_VALUES) {
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
@@ -385,7 +385,15 @@
                     if((oldUrl.indexOf("migration/resources") > -1) && (newUrl.indexOf("migration/confirm") > -1)){
                         event.preventDefault();
                         $('#cancel_modal').modal('show');
+                    } 
+                   //condition for direct url jumping or hitting...
+                      if((oldUrl != undefined) && (newUrl.indexOf("migration/recommendation") > -1) )
+                            {
+                         event.preventDefault();
+                      $rootRouter.navigate(["MigrationStatus"]);
                     }
+
+
                 });
 
                 /**
@@ -450,6 +458,7 @@
                     var tenant_id = authservice.getAuth().tenant_id;
                     vm.fawsLink = "https://mycloud.rackspace.com/cloud/"+tenant_id+"/tickets#new";
                 }
+
                 return vm;
             }
         ]}); // end of component rsmigrationresourceslist
