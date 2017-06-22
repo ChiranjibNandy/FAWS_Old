@@ -55,6 +55,13 @@
                                     <span class="rs-status-error" ng-show="vm.job.batch_status==='error'">Error</span>
                                     <span class="rs-status-ok" ng-show="vm.job.batch_status==='done'">Completed</span>
                                     <span class="rs-status-ok" ng-show="vm.job.batch_status==='started'">Started</span>
+                                    <div class="rs-progress rs-progress-small" ng-if="vm.job.batch_status==='in progress' && vm.job.progressFlag !== 'NA'">
+                                        <div class="rs-progress-inner">
+                                            <div class="rs-segment" ng-style="{'width': +vm.job.succeeded_time_pct +'%'}">
+                                                <div class="rs-bar rs-status-ok rs-bar-striped"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <span class="rs-status-ok" ng-show="vm.job.batch_status==='in progress'">In Progress</span>
                                     <span class="rs-status-warning" ng-show="vm.job.batch_status==='scheduled'">Scheduled</span>
                                     <span class="rs-status-disabled" ng-show="vm.job.batch_status==='not available'">Not Available</span>

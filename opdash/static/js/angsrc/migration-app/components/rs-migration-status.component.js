@@ -293,65 +293,81 @@
                                 });
 
                                 currentBatches = tempcurrentBatches.filter(x=>x.batch_status=='started').concat(tempcurrentBatches.filter(x=>x.batch_status=='in progress')).concat(tempcurrentBatches.filter(x=>x.batch_status=='paused')).concat(tempcurrentBatches.filter(x=>x.batch_status=='scheduled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='canceled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='error'))
-
-                                var tempSavedMigrations = [];
-                                vm.savedMigrations = response.savedMigrations;
-                                for(var j=0; j<response.savedMigrations.length; j++){
-                                    if(!response.savedMigrations[j].scheduledItem){
-                                        var t = {};
-                                        t.batch_name = response.savedMigrations[j].instance_name;
-                                        t.recommendations = response.savedMigrations[j].recommendations;
-                                        t["scheduling-details"] = response.savedMigrations[j]["scheduling-details"];
-                                        t.selected_resources = response.savedMigrations[j].selected_resources;
-                                        t.step_name = response.savedMigrations[j].step_name;
-                                        t.timestamp = response.savedMigrations[j].timestamp;
-                                        t.aws_account = response.savedMigrations[j]["aws-account"] || "";
-                                        t.initiated_by = response.savedMigrations[j].initiated_by;
-                                        
-                                        tempSavedMigrations.push(t);
-                                    }
-                                }
-
-                                var savedMigrations = $filter('orderBy')(tempSavedMigrations, '-timestamp');
-                                vm.currentBatches.items = currentBatches.concat(savedMigrations);//$filter('orderBy')(currentBatches, '-start').concat(savedMigrations);
-                                vm.currentBatches.noOfPages = Math.ceil(vm.currentBatches.items.length / vm.currentBatches.pageSize);
-                                vm.currentBatches.pages = new Array(vm.currentBatches.noOfPages);
-                                vm.completedBatches.items = $filter('orderBy')(completedBatches, '-start');
-                                vm.completedBatches.noOfPages = Math.ceil(completedBatches.length / vm.completedBatches.pageSize);
-                                vm.completedBatches.pages = new Array(vm.completedBatches.noOfPages);
-
-                                // adjustment to show and queued migrations
-                                if(totalCurrentBatches===null){
-                                    totalCurrentBatches = vm.currentBatches.items.length;
-                                } else if (totalCurrentBatches!==null && totalCurrentBatches < vm.currentBatches.items.length){
-                                    vm.showInitiatedMigration = false;
-                                }
-
-                                // temporary fix to show completed batch date time
-                                var estCompletionTime = 20 * 60; // i.e., 20 mins in milliseconds
-                                var currTime = moment().unix();
-                                var tempEndTime = currTime; // i.e. 5 secs before current time
-                                angular.forEach(vm.completedBatches.items, function (item) {
-                                    if(item.start + estCompletionTime >= currTime) {
-                                        item.end = tempEndTime;
-                                    } else {
-                                        item.end = item.start + estCompletionTime;
-                                    }
-                                });
-                                vm.fawsAccountDetails = JSON.parse($window.localStorage.getItem("fawsAccounts"));
-                                if (vm.fawsAccountDetails === null){
-                                    dataStoreService.getFawsAccounts() ///make api call to retrieve list of FAWS account for this tenant ID
-                                        .then(function (result) {
-                                            vm.loading = false;
+                                //Create an empty array that would hold the current batch details with a few newly assigned properties
+                                var migrationProgress = [];
+                                var promises = currentBatches.map(function(batch){
+                                    return HttpWrapper.send('/api/jobs/'+batch.job_id+'/progress', { "operation": 'GET' })
+                                    .then(function(result) {
+                                        batch.succeeded_time_pct = result.succeeded_by_time_pct;
+                                        migrationProgress.push(batch);
+                                    },function(errorResponse) {
+                                        batch.succeeded_time_pct = 0;
+                                        batch.progressFlag = "NA";
+                                        migrationProgress.push(batch);
                                     });
-                                }
-                                else{
-                                    vm.loading = false;
-                                }
-                                vm.manualRefresh = false;
-                                lastRefreshIntervalPromise = $interval(function(){
-                                    vm.timeSinceLastRefresh++;
-                                }, 60000);
+                                });
+                                //Once the promise is resolved, proceed with rest of the items
+                                $q.all(promises).then(function(){
+                                    currentBatches = migrationProgress;
+                                    var tempSavedMigrations = [];
+                                    vm.savedMigrations = response.savedMigrations;
+                                    for(var j=0; j<response.savedMigrations.length; j++){
+                                        if(!response.savedMigrations[j].scheduledItem){
+                                            var t = {};
+                                            t.batch_name = response.savedMigrations[j].instance_name;
+                                            t.recommendations = response.savedMigrations[j].recommendations;
+                                            t["scheduling-details"] = response.savedMigrations[j]["scheduling-details"];
+                                            t.selected_resources = response.savedMigrations[j].selected_resources;
+                                            t.step_name = response.savedMigrations[j].step_name;
+                                            t.timestamp = response.savedMigrations[j].timestamp;
+                                            t.aws_account = response.savedMigrations[j]["aws-account"] || "";
+                                            t.initiated_by = response.savedMigrations[j].initiated_by;
+                                            
+                                            tempSavedMigrations.push(t);
+                                        }
+                                    }
+
+                                    var savedMigrations = $filter('orderBy')(tempSavedMigrations, '-timestamp');
+                                    vm.currentBatches.items = currentBatches.concat(savedMigrations);//$filter('orderBy')(currentBatches, '-start').concat(savedMigrations);
+                                    vm.currentBatches.noOfPages = Math.ceil(vm.currentBatches.items.length / vm.currentBatches.pageSize);
+                                    vm.currentBatches.pages = new Array(vm.currentBatches.noOfPages);
+                                    vm.completedBatches.items = $filter('orderBy')(completedBatches, '-start');
+                                    vm.completedBatches.noOfPages = Math.ceil(completedBatches.length / vm.completedBatches.pageSize);
+                                    vm.completedBatches.pages = new Array(vm.completedBatches.noOfPages);
+
+                                    // adjustment to show and queued migrations
+                                    if(totalCurrentBatches===null){
+                                        totalCurrentBatches = vm.currentBatches.items.length;
+                                    } else if (totalCurrentBatches!==null && totalCurrentBatches < vm.currentBatches.items.length){
+                                        vm.showInitiatedMigration = false;
+                                    }
+
+                                    // temporary fix to show completed batch date time
+                                    var estCompletionTime = 20 * 60; // i.e., 20 mins in milliseconds
+                                    var currTime = moment().unix();
+                                    var tempEndTime = currTime; // i.e. 5 secs before current time
+                                    angular.forEach(vm.completedBatches.items, function (item) {
+                                        if(item.start + estCompletionTime >= currTime) {
+                                            item.end = tempEndTime;
+                                        } else {
+                                            item.end = item.start + estCompletionTime;
+                                        }
+                                    });
+                                    vm.fawsAccountDetails = JSON.parse($window.localStorage.getItem("fawsAccounts"));
+                                    if (vm.fawsAccountDetails === null){
+                                        dataStoreService.getFawsAccounts() ///make api call to retrieve list of FAWS account for this tenant ID
+                                            .then(function (result) {
+                                                vm.loading = false;
+                                        });
+                                    }
+                                    else{
+                                        vm.loading = false;
+                                    }
+                                    vm.manualRefresh = false;
+                                    lastRefreshIntervalPromise = $interval(function(){
+                                        vm.timeSinceLastRefresh++;
+                                    }, 60000);
+                                });
                             }, function (errorResponse) {
                                 vm.loading = false;
                                 vm.currentBatches.loadError = true;

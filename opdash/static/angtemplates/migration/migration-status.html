@@ -115,7 +115,14 @@
                                     <span class="rs-status-disabled" ng-show="batch.timestamp">Not Scheduled</span>
                                     <span class="rs-status-disabled" ng-show="batch.batch_status==='not available'">Not Available</span>
                                     <span class="rs-status-warning" ng-show="batch.batch_status==='scheduled'">Scheduled</span>
-                                    <span class="rs-status-ok" ng-show="batch.batch_status==='in progress'">In Progress</span>
+                                    <div class="rs-progress rs-progress-small" ng-if="batch.batch_status==='in progress' && batch.progressFlag !== 'NA'">
+                                        <div class="rs-progress-inner">
+                                            <div class="rs-segment" ng-style="{'width': +batch.succeeded_time_pct +'%'}">
+                                                <div class="rs-bar rs-status-ok rs-bar-striped"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="rs-progress-label rs-status-ok" ng-show="batch.batch_status==='in progress' && batch.progressFlag !== 'NA'">In Progress</span>                                    
                                     <span class="rs-status-ok" ng-show="batch.batch_status==='started'">Started</span>
                                     <span class="rs-status-ok" ng-show="batch.batch_status==='done'">Completed</span>
                                     <span class="rs-status-error" ng-show="batch.batch_status==='error'">Error</span>
