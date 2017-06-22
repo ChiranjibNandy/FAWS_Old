@@ -579,10 +579,7 @@
                                 vm.getBatches(true);
                             }else{
                                 batch.showRefreshForApiLoading = false;
-                                if(isModify)
-                                    vm.message = "We are facing some issues to cancel and modify your migration. Please try again after some time."
-                                else
-                                    vm.message = "We are facing some issues to "+detail+" your migration. Please try again after some time."
+                                vm.message = "We encountered some issues to "+detail+" your migration. Please try again after some time."
                                 $('#error_modal').modal('show');
                             }
                         });

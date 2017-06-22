@@ -91,11 +91,17 @@
                         .then(function (result) {
                             if(result){
                                 migrationService.pauseMigration(dataStoreService.getJobIdForMigration(),'unpause').then(function(success){
-                                    $window.localStorage.setItem("migrationScheduled","true");
-                                    $rootRouter.navigate(["MigrationStatus"]);
+                                    if(success){
+                                        $window.localStorage.setItem("migrationScheduled","true");
+                                        $rootRouter.navigate(["MigrationStatus"]);
+                                    }else{
+                                        $('#modify-modal').modal('show');
+                                        vm.message = "We have successfully modified your migration but couldn't unpause the migation. You may have to un pause it manually in dashboard page."
+                                    }
                                 })
                             }else{
-                                alert('modifying is failed');
+                                $('#modify-modal').modal('show');
+                                vm.message = "There was a problem modifying this migration. Please try again after some time."
                             }   
                         }, function (error) {
                             console.log("Error: Could not trigger migration", error);
