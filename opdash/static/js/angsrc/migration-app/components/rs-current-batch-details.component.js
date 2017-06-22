@@ -26,7 +26,7 @@
              * @name migrationApp.controller:rscurrentbatchdetailsCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rscurrentbatchdetails rscurrentbatchdetails} component
              */
-            controller: ["$rootRouter", "migrationitemdataservice", "dashboardservice", "authservice", "alertsservice", "$interval","$scope", function($rootRouter, ds, dashboardService, authservice, alertsService, $interval,$scope){
+            controller: ["$rootRouter", "migrationitemdataservice", "dashboardservice", "authservice", "alertsservice", "$interval","$scope","httpwrapper","$q", function($rootRouter, ds, dashboardService, authservice, alertsService, $interval,$scope,HttpWrapper,$q){
                 var vm = this;
                 var job_id;
                 var lastRefreshIntervalPromise;
