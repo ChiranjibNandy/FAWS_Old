@@ -68,15 +68,15 @@
                         </div>
                     </div>
                     <div class="row">
-                        <span class="col-sm-2 control-label">{{vm.fawsAccType == 'key-based' ? 'Access Key':'Role ARN'}}</span>
+                        <span class="col-sm-2 control-label">Role ARN</span>
                         <div class="col-sm-10">
-                            <input type="text" ng-model="vm.fawsAccessKey" class="rs-input-xlarge" placeholder="{{vm.fawsAccType == 'key-based' ? 'AWS Access Key':'Role ARN'}}" />
+                            <input type="text" ng-model="vm.fawsKeyValue1" class="rs-input-xlarge" placeholder="Role ARN" />
                         </div>
                     </div>
                     <div class="row">
-                        <span class="col-sm-2 control-label">{{vm.fawsAccType == 'key-based' ? 'Secret Key ':'External ID'}}</span>
+                        <span class="col-sm-2 control-label">External ID</span>
                         <div class="col-sm-10">
-                            <input type="text" ng-model="vm.fawsSecretKey" class="rs-input-xlarge" placeholder="{{vm.fawsAccType == 'key-based' ? 'AWS Secret Key':'External ID'}}" />
+                            <input type="text" ng-model="vm.fawsKeyValue2" class="rs-input-xlarge" placeholder="External ID" />
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
     </div>
     <div class="modal-footer">
        
-        <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.fawsAccessKey || !vm.fawsSecretKey || !vm.fawsAcctId}" ng-click="vm.createFawsAccount(false)" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
+        <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.fawsKeyValue1 || !vm.fawsKeyValue2 || !vm.fawsAcctId}" ng-click="vm.createFawsAccount(false)" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
         <a class="rs-btn disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
         <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</a>
     </div>

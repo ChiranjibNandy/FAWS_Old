@@ -205,7 +205,7 @@
                                         "id":item.id,
                                         "region":item.region.toUpperCase()
                                     };
-                                    vm.eligibilityCheck(item, false);
+                                    // vm.eligibilityCheck(item, false); //disabled multiple calls together.
                                     //Dont remove : Async eligibility precheck API call 
                                     // vm.activeItemsArr.push(activeInstance);
                                 }
