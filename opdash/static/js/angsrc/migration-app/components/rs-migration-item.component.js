@@ -485,7 +485,7 @@
                                             if(keepGoing) {
                                                 if(ID == item.id && testCase.type == "success"){ 
                                                     item.canMigrate = true;
-                                                    item.eligible = 'Pass';
+                                                    item.eligible = 'Passed';
                                                 }
                                                 else if(ID == item.id && testCase.type != "success"){
                                                     item.eligible = 'Failed';
