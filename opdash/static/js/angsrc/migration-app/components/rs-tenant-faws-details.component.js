@@ -34,8 +34,8 @@
                 vm.tenant_account_name = '';
                 vm.fawsAcctName = '';
                 vm.fawsAcctId = '';
-                vm.fawsAccessKey = '';
-                vm.fawsSecretKey = '';
+                vm.fawsKeyValue1 = '';
+                vm.fawsKeyValue2 = '';
                 vm.fawsSourceKey = '';
                 vm.fawsTenantId = '';
                 vm.fawsCreated = false;
@@ -183,8 +183,8 @@
                         requestObj = {
                             "dest_name":vm.fawsAcctName,
                             "dest_account": vm.fawsAcctId,
-                            "dest_auth_accesskey": vm.fawsAccessKey,
-                            "dest_auth_secretkey": vm.fawsSecretKey
+                            "dest_role_arn": vm.fawsKeyValue1,
+                            "dest_external_id": vm.fawsKeyValue2
                         };
                         promise = dataStoreService.addCredsForFawsAccount(requestObj);
                     }
@@ -212,8 +212,8 @@
                     });
                     vm.fawsAcctName = '';
                     vm.fawsAcctId = '';
-                    vm.fawsAccessKey = '';
-                    vm.fawsSecretKey = '';
+                    vm.fawsKeyValue1 = '';
+                    vm.fawsKeyValue2 = '';
                     vm.fawsSourceKey = '';
                     vm.fawsTenantId = '';
                 };
