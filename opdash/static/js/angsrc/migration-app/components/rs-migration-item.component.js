@@ -207,12 +207,22 @@
                                     };
                                     // vm.eligibilityCheck(item, false); //disabled multiple calls together.
                                     //Dont remove : Async eligibility precheck API call 
-                                    // vm.activeItemsArr.push(activeInstance);
+                                    vm.activeItemsArr.push(activeInstance);
                                 }
                             });
+                            
+                            /*
+                            var tempItemsArr = [];
+                            for(i=0;i<vm.activeItemsArr.length;i+=5){
+                                tempItemsArr = vm.activeItemsArr.slice(i, i+5);
+                                if(tempItemsArr.length>0)
+                                    vm.eligibilityCheck(tempItemsArr, true);
+                            }
+                            */
+                            
 
                             //Dont remove : Sync eligibility precheck API call 
-                            // vm.eligibilityCheck(vm.activeItemsArr, true);
+                            vm.eligibilityCheck(vm.activeItemsArr, true);
                             
                             //to be removed once eligibility API works fine.
                             $window.localStorage.allServers = JSON.stringify(vm.items);
@@ -250,7 +260,7 @@
                                 vm.search[label.field] = ""; // set search field variables
                             });
                             //to be removed after precheck API works fine
-                            vm.parent.itemsLoadingStatus(false);
+                            // vm.parent.itemsLoadingStatus(false);
                             vm.itemsEligible = true;
                             vm.loading = false;
                         }, function(error){
@@ -473,6 +483,9 @@
                         ];
                     }
                     else{
+                        angular.forEach(item, function(server){
+                            vm.checkingEligibility[server.id] = true;
+                        });
                         checkEligibilityArr = item;
                     }
                     ds.eligibilityPrecheck(checkEligibilityArr)
@@ -491,7 +504,7 @@
                                                     item.eligible = 'Failed';
                                                     keepGoing = false;
                                                     //enable this once API works fine
-                                                    // item.canMigrate = false;
+                                                    item.canMigrate = false;
                                                 }
 
                                             };
@@ -500,11 +513,14 @@
                                 });
                                 $window.localStorage.allServers = JSON.stringify(vm.items);
                                 //to be enabled once precheck call is up
-                                // vm.parent.itemsLoadingStatus(false);
-                                // vm.itemsEligible = true;
+                                vm.parent.itemsLoadingStatus(false);
+                                vm.itemsEligible = true;
                             }
                             //to be removed after eligibilty API works
                             if(firstRun){
+                                angular.forEach(item, function(server){
+                                    vm.checkingEligibility[server.id] = false;
+                                });
                                 vm.loading = false;
                                 vm.parent.itemsLoadingStatus(false);
                                 vm.itemsEligible = true;
