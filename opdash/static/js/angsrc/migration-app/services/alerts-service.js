@@ -53,11 +53,8 @@
                                                 tempAlerts = tempAlerts.concat(msgs);
                                             }
                                             alerts = tempAlerts;
-                                            //console.log("Alerts: ", alerts);
-                                            return alerts;
+                                             return alerts;
                                         }, function(errorResponse) {
-                                            console.log("alerts-service");
-                                            console.log(errorResponse);
                                             return [];
                                         });
                 } else {
@@ -86,7 +83,6 @@
                                             currentResourceID = params.resource_id;
                                             taskList = result.resources[0].tasks;
                                             batchName = result["batch-name"];
-                                            //console.log("Task List: ", result);
                                             return { batchName: batchName, tasks: taskList };
                                         }, function(errorResponse) {
                                             return errorResponse;

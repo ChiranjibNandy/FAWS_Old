@@ -75,7 +75,6 @@
                             vm.loading = false;
                             vm.manualRefresh = false;
                             vm.loadError = true;
-                            //console.log("Task List Error: ", errorResponse);
                         });
                 };
 

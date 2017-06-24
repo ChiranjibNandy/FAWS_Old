@@ -32,7 +32,6 @@ describe('Service: datastoreservice', function() {
             .success(function(data, status) {
                 $scope.valid = true;
                 $scope.response = data;
-                console.log("response is :" + JSON.stringify($scope.response));
             })
             .error(function(data, status, headers, config) {
                 $scope.valid = false;

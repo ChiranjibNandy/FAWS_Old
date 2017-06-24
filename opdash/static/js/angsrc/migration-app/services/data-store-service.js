@@ -673,8 +673,6 @@
                         self.saveFawsDetails(fawsAccountDetails);
                         return fawsAccountDetails;
                     },function(error) {
-                        console.log("getFawsAccounts");
-                        console.log(error);
                         return false;
                     });
             };
@@ -692,9 +690,7 @@
                     .then(function(result){
                        return result;
                     },function(error) {
-                        console.log("create faws account ");
-                        console.log(error);
-                       return error;
+                      return error;
                     });
             };
 

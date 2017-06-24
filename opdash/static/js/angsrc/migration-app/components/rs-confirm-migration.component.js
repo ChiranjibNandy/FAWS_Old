@@ -109,7 +109,6 @@
                                 vm.message = "There was a problem modifying this migration. Please try again after some time."
                             }   
                         }, function (error) {
-                            console.log("Error: Could not trigger migration", error);
                             vm.migrating = false;
                             $window.localStorage.setItem("migrationScheduled","false");
                             vm.errorInMigration = true;
@@ -126,7 +125,6 @@
                                 $rootRouter.navigate(["MigrationStatus"]);
                             }
                         }, function (error) {
-                            console.log("Error: Could not trigger migration", error);
                             vm.migrating = false;
                             $window.localStorage.setItem("migrationScheduled","false");
                             vm.errorInMigration = true;
@@ -158,9 +156,7 @@
                         $window.localStorage.setItem("migrationScheduled","true");
                         $rootRouter.navigate(["MigrationStatus"]);
                     },function(error){
-                        console.log("errored out while saving the resources when scheduling for later")
-                        console.log("do nothing here");
-                    });
+                     });
                 };
 
                 /**
@@ -185,7 +181,6 @@
                             vm.migrating = false;
                             $rootRouter.navigate(["MigrationStatus"]);
                         }, function (error) {
-                            console.log("Error: Could not trigger migration", error);
                             vm.migrating = false;
                             vm.errorInMigration = true;
                             vm.scheduleMigration = true;
@@ -341,7 +336,6 @@
                         //$rootRouter.navigate(["MigrationResourceList"]);
                     }
                       //condition for direct url jumping or hitting...
-                      debugger;
                      if((oldUrl.indexOf("/migration/confirm") == -1) && ((newUrl.indexOf("migration/recommendation") > -1))){
                         event.preventDefault();
                         $rootRouter.navigate(["MigrationStatus"]);

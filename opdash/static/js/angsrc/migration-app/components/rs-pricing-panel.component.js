@@ -140,8 +140,6 @@
                         }, function (error) {
                             vm.precheck = false;
                             vm.precheckError = true;
-                            console.log("error");
-                            console.log(error);
                         });
                     }
                 };
