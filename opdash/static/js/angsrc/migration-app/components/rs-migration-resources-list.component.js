@@ -26,7 +26,7 @@
              */
             controller: ["authservice", "$scope", "$rootRouter", "datastoreservice", "migrationitemdataservice", "httpwrapper", "$timeout","$window","$q","$rootScope","DEFAULT_VALUES",function(authservice, $scope, $rootRouter, dataStoreService, ds, HttpWrapper, $timeout,$window,$q, $rootScope,DEFAULT_VALUES) {
                 var vm = this;
-                vm.tenant_id = '';
+                vm.tenant_id = authservice.getAuth().tenant_id; //get Tenant ID
                 vm.tenant_account_name = '';
                 vm.saveClicked = false;
 
@@ -432,9 +432,6 @@
                                 vm.fawsError = false;
                                 vm.fawsCreated = true;
                                 vm.fawsCreationProgress = false;
-                                $timeout(function () {
-                                    location.reload();
-                                },2000);
                             }
                             else{
                                 vm.fawsError = true;

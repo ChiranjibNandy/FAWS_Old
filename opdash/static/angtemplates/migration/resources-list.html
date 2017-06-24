@@ -219,7 +219,7 @@
                 </span>
             </div>   
             <div class="row service-button">
-                <div class="intro-modal-nofaws rs-success" ng-show="vm.fawsCreated">Request for new AWS account creation is successfull.</div>
+                <div class="intro-modal-nofaws rs-success" ng-show="vm.fawsCreated">Request for new AWS account creation is successfull.We will let you know when the account is created. You can follow the request <a href="https://mycloud.rackspace.com/cloud/{{vm.tenant_id}}/tickets" target="_blank"> here</a></div>
                 <div class="intro-modal-nofaws" style="color: #c40022" ng-show="vm.fawsError">Uh oh! Something went wrong while submitting request. Please try again after sometime...</div>
             </div>
         </div>
@@ -231,7 +231,7 @@
                     Don't show this again
                 </label>
         </div>
-        <a ng-link="['MigrationStatus']" ng-class="{disabled:vm.introModalLoading}" class="rs-btn">Cancel</a>
+        <a ng-link="['MigrationStatus']" ng-class="{disabled:vm.introModalLoading || vm.fawsCreationProgress}" class="rs-btn">Cancel</a>
         <a ng-show="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker && !vm.fawsError && !vm.fawsCreationProgress && !vm.fawsCreated" class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.serviceLevel}" ng-click="vm.createFawsAccount(true)">Submit</a>
         <a ng-show="vm.noFawsAccounts && !vm.introModalLoading && vm.isRacker && !vm.fawsError && !vm.fawsCreationProgress && !vm.fawsCreated" class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.fawsKeyValue1 || !vm.fawsKeyValue2 || !vm.fawsAcctId}" ng-click="vm.createFawsAccount(false)">Submit</a>
         <a ng-show="vm.noFawsAccounts && !vm.introModalLoading  && vm.fawsCreationProgress" class="rs-btn disabled" disabled="disabled">Submitting...</a>

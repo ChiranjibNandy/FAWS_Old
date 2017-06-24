@@ -97,7 +97,7 @@
     </div>
     <div class="modal-body">
         <div ng-show="vm.fawsCreated">
-            <big>Thank you. A request for creating a new AWS account was successfully created. We will let you know when the account is created </big><br>
+            <big>Thank you. A request for creating a new AWS account was successfully created. We will let you know when the account is created. You can follow the request <a href="https://mycloud.rackspace.com/cloud/{{vm.tenant_id}}/tickets" target="_blank"> here</a> </big><br>
         </div>   
        <span ng-show="vm.fawsError" style="color: #c40022">Uh oh! Something went wrong while submitting request. Please try again after sometime...</span>
         <div ng-hide= "vm.fawsCreated || vm.fawsError">
@@ -131,7 +131,7 @@
        
         <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.serviceLevel}" ng-click="vm.createFawsAccount(true)" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
         <a class="rs-btn disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
-        <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</a>
+        <a class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.fawsCreationProgress}">Close</a>
     </div>
 </div>
 <div id="delete-faws-account-modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -162,7 +162,7 @@
        
         <a class="rs-btn rs-btn-primary" ng-click="vm.deleteAWSAccount()" ng-hide="vm.fawsDeleteError || vm.fawsDeleteProgress || vm.fawsDeleted">Delete</a>
         <a class="rs-btn disabled" disabled="disabled" ng-show="vm.fawsDeleteProgress">Deleting...</a>
-        <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</a>
+        <a class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.fawsDeleteProgress}">Close</a>
     </div>
 </div>
 
