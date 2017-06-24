@@ -292,23 +292,23 @@
                                         completedBatches.push(job);
                                 });
 
-                                currentBatches = tempcurrentBatches.filter(x=>x.batch_status=='started').concat(tempcurrentBatches.filter(x=>x.batch_status=='in progress')).concat(tempcurrentBatches.filter(x=>x.batch_status=='paused')).concat(tempcurrentBatches.filter(x=>x.batch_status=='scheduled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='canceled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='error'))
-                                //Create an empty array that would hold the current batch details with a few newly assigned properties
-                                var migrationProgress = [];
-                                var promises = currentBatches.map(function(batch){
+                                //currentBatches = tempcurrentBatches.filter(x=>x.batch_status=='started').concat(tempcurrentBatches.filter(x=>x.batch_status=='in progress')).concat(tempcurrentBatches.filter(x=>x.batch_status=='paused')).concat(tempcurrentBatches.filter(x=>x.batch_status=='scheduled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='canceled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='error'))
+                                
+                                //Create an empty array that would hold the current batch details with a few newly assigned properties for paused and in progress batches
+                                var migrationProgress = tempcurrentBatches.filter(x=>x.batch_status=='started').concat(tempcurrentBatches.filter(x=>x.batch_status=='in progress')).concat(tempcurrentBatches.filter(x=>x.batch_status=='paused'));
+                                var promises = migrationProgress.map(function(batch){
                                     return HttpWrapper.send('/api/jobs/'+batch.job_id+'/progress', { "operation": 'GET' })
                                     .then(function(result) {
                                         batch.succeeded_time_pct = result.succeeded_by_time_pct;
-                                        migrationProgress.push(batch);
                                     },function(errorResponse) {
                                         batch.succeeded_time_pct = 0;
                                         batch.progressFlag = "NA";
-                                        migrationProgress.push(batch);
                                     });
                                 });
                                 //Once the promise is resolved, proceed with rest of the items
                                 $q.all(promises).then(function(){
-                                    currentBatches = migrationProgress;
+                                    //Restructure the array so that the custom sorting order is maintained while displaying the batches on page load
+                                    currentBatches = migrationProgress.concat(tempcurrentBatches.filter(x=>x.batch_status=='scheduled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='canceled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='error'));
                                     var tempSavedMigrations = [];
                                     vm.savedMigrations = response.savedMigrations;
                                     for(var j=0; j<response.savedMigrations.length; j++){

@@ -61,9 +61,11 @@
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
-                                <!--<th>
-                                    <span class="rs-table-sort-text">Progress</span>
-                                </th>-->
+                                <th>
+                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a">
+                                        <span class="rs-table-sort-text">Progress</span>
+                                    </a>
+                                </th>
                                 <th class="rs-table-cog rs-center">Actions</th>
                             </tr>
                         </thead>
@@ -116,6 +118,13 @@
                                     <span class="rs-status-disabled" ng-show="batch.timestamp">Not Scheduled</span>
                                     <span class="rs-status-disabled" ng-show="batch.batch_status==='not available'">Not Available</span>
                                     <span class="rs-status-warning" ng-show="batch.batch_status==='scheduled'">Scheduled</span>
+                                    <span class="rs-progress-label rs-status-ok" ng-show="batch.batch_status==='in progress' && batch.progressFlag !== 'NA'">In Progress</span>                                    
+                                    <span class="rs-status-ok" ng-show="batch.batch_status==='started'">Started</span>
+                                    <span class="rs-status-ok" ng-show="batch.batch_status==='done'">Completed</span>
+                                    <span class="rs-status-error" ng-show="batch.batch_status==='error'">Error</span>
+                                    <span class="rs-status-warning" ng-show="batch.batch_status==='paused'">Paused</span>
+                                </td>
+                                <td class="rs-table-text" ng-show="!batch.showRefreshForApiLoading">
                                     <div class="rs-progress rs-progress-small" ng-if="batch.batch_status==='in progress' && batch.progressFlag !== 'NA'">
                                         <div class="rs-progress-inner">
                                             <div class="rs-segment" ng-style="{'width': +batch.succeeded_time_pct +'%'}">
@@ -123,11 +132,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <span class="rs-progress-label rs-status-ok" ng-show="batch.batch_status==='in progress' && batch.progressFlag !== 'NA'">In Progress</span>                                    
-                                    <span class="rs-status-ok" ng-show="batch.batch_status==='started'">Started</span>
-                                    <span class="rs-status-ok" ng-show="batch.batch_status==='done'">Completed</span>
-                                    <span class="rs-status-error" ng-show="batch.batch_status==='error'">Error</span>
-                                    <span class="rs-status-warning" ng-show="batch.batch_status==='paused'">Paused</span>
+                                    <span ng-if="batch.batch_status === 'paused'"><i class="fa fa-pause" aria-hidden="true"></i></span>
+                                    <span ng-if="batch.batch_status === 'scheduled'"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                                    <span ng-if="batch.batch_status === 'error'"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                    <span ng-if="batch.timestamp"><i class="fa fa-ban" aria-hidden="true"></i></span>
                                 </td>
                                 <!--cog button menu items-->
                                 <td class="rs-table-input rs-center">
