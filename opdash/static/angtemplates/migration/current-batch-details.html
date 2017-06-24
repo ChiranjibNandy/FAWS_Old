@@ -6,7 +6,7 @@
                 <div class="rs-row">
                     <div class="span-10">
                         <div class="migr-ddi-name">{{vm.currentUser}} ( #{{vm.tenant_id}} )</div>
-                        <div class="migr-name">{{vm.job.batch_name}} / Active Migrations</div>
+                        <div class="migr-name">{{vm.job.metadata.batch_name}} / Active Migrations</div>
                     </div>
                     <div class="span-2">
                         <button class="rs-btn" ng-click="vm.getBatchDetails(true)">
@@ -84,7 +84,7 @@
                                 </td>
                             </tr>
                         </tbody>
-                         <tbody ng-show="vm.job.length===0">
+                         <tbody ng-show="!vm.loading && vm.job.length===0">
                             <tr>
                                 <td colspan="2" class="empty-collection-info">You don't have any instances</td>
                             </tr>
@@ -146,7 +146,7 @@
                                 </td>
                             </tr>
                         </tbody>
-                        <tbody ng-show="vm.loading && !vm.manualRefresh">
+                        <tbody ng-show="vm.loading">
                             <tr>
                                 <td colspan="3">
                                     <div class="rs-table-overlay rs-table-overlay-loading">

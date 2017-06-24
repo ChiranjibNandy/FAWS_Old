@@ -16,7 +16,7 @@
           // FOR GOOGLE ANALYTICS - JB
           $rootScope.$on("$routeChangeSuccess", function(event) {
             window.setTimeout(function() {
-              console.info("ROOT ROUTER:", $rootRouter.lastNavigationAttempt);
+            //   console.info("ROOT ROUTER:", $rootRouter.lastNavigationAttempt);
               // Update GA Pageview
               ga('set', 'page', $rootRouter.lastNavigationAttempt);
               ga('send', 'pageview');

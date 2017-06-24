@@ -48,6 +48,7 @@
                         $interval.cancel(lastRefreshIntervalPromise);
                     }else{
                         vm.loading = true;
+                        vm.manualRefresh = false;
                     }
 
                     dashboardService.getBatches(refresh)
@@ -55,6 +56,7 @@
                                 var job = response.jobs.job_status_list.find(function(job) {
                                     return job.job_id === job_id;
                                 });
+                                vm.job = job;
                                 //Makes a promise to fetch the progress API details for in progress batches
                                 var promise = HttpWrapper.send('/api/jobs/'+job.job_id+'/progress', { "operation": 'GET' });
                                 //Once the promise is resolved, proceed with rest of the items
@@ -91,11 +93,13 @@
                     vm.alerts = [];
                     vm.loadingAlerts = true;
                     vm.job = [];
+                    vm.loading = true;
+                    vm.manualRefresh = false;
                 };
 
                 vm.$routerOnActivate = function(next, previous) {
                     job_id = next.params.job_id;
-                    vm.getBatchDetails(true);
+                    vm.getBatchDetails();
                     vm.getAllAlerts();
                 };
 
