@@ -57,6 +57,7 @@
                             if(response.error)
                                 vm.tasks = [];
                             else
+                                vm.batch_name = response.batchName;
                                 vm.tasks = response.tasks;
                             ds.getTrimmedAllItems(params.resource_type==="instance" ? "server" : params.resource_type)
                                 .then(function (response) {

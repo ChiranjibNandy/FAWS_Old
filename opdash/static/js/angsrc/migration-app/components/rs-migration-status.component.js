@@ -270,7 +270,7 @@
 
                         dashboardService.getBatches(refresh)
                             .then(function (response) {
-                                if (response && response.error)
+                                if (response && response.error == undefined){
                                 var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled", "paused"];
                                 var validCompletedBatchStatus = ["done","canceled"];
                                 jobList = response.jobs.job_status_list;
@@ -365,7 +365,7 @@
                                         vm.timeSinceLastRefresh++;
                                     }, 60000);
                                 });
-                            }, function (errorResponse) {
+                            }}, function (errorResponse) {
                                 vm.loading = false;
                                 vm.currentBatches.loadError = true;
                                 vm.completedBatches.loadError = true;
