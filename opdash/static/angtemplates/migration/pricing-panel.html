@@ -20,7 +20,8 @@
     <div class="info-panel">
         <h3 id="basePrice">Current Cost</h3>
         <p>
-            <big><b>${{vm.invoiceTotal}}</b>/month</big>
+            <big ng-if="vm.invoiceTotal !== 'NaN'"><b>${{vm.invoiceTotal}}</b>/month</big>
+            <big ng-if="vm.invoiceTotal === 'NaN'"><b>N/A</b></big>
             <small>
                 <a href role="button" data-toggle="modal" ng-click="vm.openUsageCostsModal()">See Details</a>
             </small>
@@ -152,14 +153,16 @@
                     <td class="rs-table-text" ng-if="item.rax_bandwidth_cost !== 'NA'">${{item.rax_bandwidth_cost + " (" + item.rax_bandwidth + " GB)"}}</td>
                     <td class="rs-table-text" ng-if="item.rax_bandwidth_cost === 'NA'">New Server</td>
                     <td class="rs-table-text">{{item.storage}}</td>
-                    <td class="rs-table-text">${{item.rax_total_cost}}</td>
+                    <td class="rs-table-text" ng-if="item.rax_total_cost !== undefined">${{item.rax_total_cost}}</td>
+                    <td class="rs-table-text" ng-if="item.rax_total_cost === undefined">New Server</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td style="text-align:right;"><b>Grand Total </b></td>
-                    <td style="text-align:left;"><b>${{vm.totalOfCostCalculationItems.toFixed(2)}}<b></td>
+                    <td style="text-align:left;" ng-show="!vm.isNaN(vm.totalOfCostCalculationItems)"><b>${{vm.totalOfCostCalculationItems.toFixed(2)}}<b></td>
+                    <td style="text-align:left;" ng-show="vm.isNaN(vm.totalOfCostCalculationItems)"><b>---<b></td>
                 </tr>
             </tbody>
         </table>

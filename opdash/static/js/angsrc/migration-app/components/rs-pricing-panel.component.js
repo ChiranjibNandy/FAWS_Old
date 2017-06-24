@@ -46,6 +46,10 @@
                     var currentPricingDetails = vm.getCurrentPricingDetails();
                     var projectedPricingDetails = vm.getProjectedPricing();
 
+                    // make isNaN available in your view via component as syntax
+                    vm.isNaN = function(value) {
+                        return isNaN(value);
+                    }
                     //Waits till all the promises are resolved , then only loads the pricing details
                     $q.all([currentPricingDetails,projectedPricingDetails]).then(function(results) {
                         vm.loading = false;
