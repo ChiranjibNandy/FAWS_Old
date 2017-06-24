@@ -64,7 +64,6 @@
                             vm.disable = true;
                             $('#rs-main-panel').css('height','310px');
                         },function(error){
-                            console.log('Error in getting regions :', error);
                             vm.errorInApi = true;
                         });
                         //vm.data = dataStoreService.getItems(vm.type); -- Previous Code
@@ -214,7 +213,6 @@
                     },function(error){
                         vm.loadingZone = false;
                         vm.errorInApi = true;
-                        console.log("Error in getting zones: ",error);
                    });
                 };
 
@@ -239,7 +237,6 @@
                     },function(error){
                         vm.loadingPrice = false;
                         vm.errorInApi = true;
-                        console.log("Error in pricing details "+error);
                     });
                 }
  

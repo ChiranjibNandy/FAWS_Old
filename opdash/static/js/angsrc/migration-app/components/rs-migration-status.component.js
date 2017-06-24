@@ -271,9 +271,6 @@
                         dashboardService.getBatches(refresh)
                             .then(function (response) {
                                 if (response && response.error)
-                                    console.log("No data recieved");
-                                //else
-                                    //console.log("Batch: ", response);
                                 var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled", "paused"];
                                 var validCompletedBatchStatus = ["done","canceled"];
                                 jobList = response.jobs.job_status_list;
@@ -372,7 +369,6 @@
                                 vm.loading = false;
                                 vm.currentBatches.loadError = true;
                                 vm.completedBatches.loadError = true;
-                                console.log("Dashboard Error: ", errorResponse);
                             });
                     }, 3000);
                 };

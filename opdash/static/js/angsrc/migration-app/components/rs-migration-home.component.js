@@ -55,7 +55,6 @@
                         else{
                             $rootRouter.navigate(["MigrationStatus"]);
                         }
-                        console.log("In Migration Home");
                         });  
                     }
                 }

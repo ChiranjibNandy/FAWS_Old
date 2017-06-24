@@ -65,7 +65,6 @@
                     }).catch(function(error) {
                         vm.loading = false;
                         vm.loadError = true;
-                        console.log("Error: Could not fetch tenant", error);
                     });
 
                 }
@@ -286,7 +285,6 @@
                         
                         vm.showFetch = false;
                         vm.fetchResponse = "";
-                        console.log("Error in removing tenant id");
                     });
 
                 }
@@ -370,7 +368,6 @@
                         vm.showFetch = false;
                         vm.fetchResponse = "";                       
                         vm.saveInProgress = false;  
-                        console.log("Error in saving tenant id");
                     });
 
                     $('#save_for_later').modal('show');
