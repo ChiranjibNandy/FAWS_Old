@@ -41,7 +41,7 @@
                             batches = { savedMigrations: savedMigrations, jobs: results[1] };
                             return batches;
                         }, function(errorResponse) {
-                            return errorResponse;
+                            return false;
                         });
                 } else {
                     return $q.when(batches);

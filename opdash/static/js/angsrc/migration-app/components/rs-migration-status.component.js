@@ -270,7 +270,7 @@
 
                         dashboardService.getBatches(refresh)
                             .then(function (response) {
-                                if (response.error)
+                                if (response && response.error)
                                     console.log("No data recieved");
                                 //else
                                     //console.log("Batch: ", response);
