@@ -26,9 +26,10 @@
     width: 192px;
     height: 57px;
     display: inline-block;
-    float: left;
-    margin-top: 95px;
+/*    float: left; */
+    margin-top: 110px;
     padding: 40px 49px;
+    vertical-align: top;
 }
 
 .welcome_message {
@@ -45,10 +46,12 @@
 }
 
 .login-block {
-    float: left;
+/*    float: left; */
+    display:inline-block;
     margin: 20px 0;
     border-left: 1px solid #ddd;
     font-size: 13px;
+    width:300px;
 }
 
 .login-action {

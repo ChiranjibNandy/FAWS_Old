@@ -139,7 +139,7 @@
       "account_name":null,
       "is_racker": {!'true' if g.user_data.is_racker else 'false'!},
       "is_impersonator": {!'true' if g.user_data.is_impersonator else 'false'!},
-      "impersonator": "{!g.user_data.impersonator if g.user_data.is_impersonator else 'null'!}"||null
+      "impersonator": "{!g.user_data.impersonator if g.user_data.is_impersonator else ''!}"||null
     {% else %}
       "username": null,
       "authtoken": null,

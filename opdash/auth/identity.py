@@ -49,6 +49,31 @@ class Identity(object):
 
         return service_catalog
 
+    def get_tenants_for_token(self, token):
+        """
+            Gets tenants for this authtoken
+        """
+        response = requests.get(
+            "{identity_url}/tenants".format(
+                identity_url=self._identity_url),
+            headers={
+                "Content-Type": "application/json",
+                "X-Auth-Token": token
+            }
+        )
+
+        response_text = None
+
+        if response.status_code == requests.codes.ok:
+            response_text = response.text
+        else:
+            self.logger.error(
+                "get_tenant_id - " +
+                "identity returned:{status}".format(
+                    status=response.status_code))
+
+        return response_text
+
     def auth_tenant_id_and_token(self, tenant_id, token):
         """
             Authenticates the user using the tenant_id and authtoken.
@@ -166,7 +191,8 @@ class Identity(object):
             service_catalog = response.text
         else:
             self.logger.error(
-                "auth_username_and_apikey - identity returned:{status}".format(
+                "auth_racker_username_and_token - "
+                " identity returned:{status}".format(
                     status=response.status_code))
 
         return service_catalog

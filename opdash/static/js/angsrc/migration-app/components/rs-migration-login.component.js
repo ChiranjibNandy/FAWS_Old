@@ -8,9 +8,9 @@
      * @param {String} [rsa_token] RSA Token of the user trying to login
      * @param {String} [errorMessage] Error message to be displayed
      * @description
-     * Component to display the login page.  
-     *   
-     * This component uses the template: **angtemplates/migration/login.html**. It uses the controller {@link migrationApp.controller:rsmigrationloginCtrl rsmigrationloginCtrl}.  
+     * Component to display the login page.
+     *
+     * This component uses the template: **angtemplates/migration/login.html**. It uses the controller {@link migrationApp.controller:rsmigrationloginCtrl rsmigrationloginCtrl}.
      * @example
      * <example module="migrationApp">
      *   <file name="index.html">
@@ -22,9 +22,13 @@
         .component("rsmigrationlogin", {
             templateUrl: "/static/angtemplates/migration/login.html",
             bindings: {
+              errorMessage: "@",
               username: "@",
               rsa_token: "@",
-              errorMessage: "@"
+              password: "@",
+              sso_username: "@",
+              sso_pin: "@",
+              tenant_id: "@"
             },
             controllerAs: "vm",
             /**
@@ -39,19 +43,26 @@
                 // This sets the default values
                 this.username = '';
                 this.rsa_token = '';
-                this.user_type = "customer";
+                this.password = '';
+                this.user_type = 'customer';
+
+                // Impersonation Login
+                this.sso_username = '';
+                this.sso_pin = '';
               };
 
               /**
                * @ngdoc method
                * @name onSubmit
                * @methodOf migrationApp.controller:rsmigrationloginCtrl
-               * @description 
+               * @description
                * Called to submit the login form
                */
               vm.onSubmit = function(loginForm) {
                 vm.submitted = true;
-                if(this.username && this.rsa_token){
+                if((this.user_type === 'customer' && this.username && this.password) ||
+                   (this.user_type === 'racker' && this.username && this.rsa_token) ||
+                   (this.user_type === 'impersonate' && this.username && this.sso_username && this.sso_pin)){
                     document.getElementById("loginForm").submit();
                 }
               }

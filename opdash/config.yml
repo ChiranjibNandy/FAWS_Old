@@ -13,7 +13,7 @@
     PROXY_TIMEOUT: 15
 
 #- IDENTITY_URL: https://identity-internal.api.rackspacecloud.com/v2.0
-- IDENTITY_URL: https://identity.api.rackspacecloud.com/v2.0
+- IDENTITY_URL: https://identity-internal.api.rackspacecloud.com/v2.0
 
 - SAML:
     CONFIG_PATH: ./opdash/saml_config.json

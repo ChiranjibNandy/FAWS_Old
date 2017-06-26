@@ -1,5 +1,5 @@
 <div id="content" class="clearfix center-login-form with-banner">
-    <div id="login_wrapper" class="clearfix">
+    <div id="login_wrapper">
         <div id="rackspace_logo_container"></div>
 
         <div class="login-block" id="auth_login_block">
@@ -7,37 +7,77 @@
             <form name="loginForm" id="loginForm" method="POST" class="rs-form-small" ng-submit="vm.onSubmit()" novalidate>
                 <fieldset>
 
-                  <div style="display:inline-block; background-color:#ffgg55; width:150px;">
+                  <div style="display:inline-block; background-color:#ffgg55; width:200px;">
                     <div class="rs-controls-group">
                       <label>Type</label>
-                      <label class="rs-radio rs-pull-left">
-                        <input name="user_type" type="radio" ng-model="vm.user_type" value="racker" disabled>Racker
+                      <label class="rs-radio">
+                        <input name="user_type" type="radio" ng-model="vm.user_type" value="racker">Racker
                       </label>
-                      <label class="rs-radio rs-pull-right">
+                      <label class="rs-radio">
                         <input name="user_type" type="radio" ng-model="vm.user_type" value="customer">Customer
+                      </label>
+                      <label class="rs-radio">
+                        <input name="user_type" type="radio" ng-model="vm.user_type" value="impersonate">Impersonate
                       </label>
                     </div>
                   </div>
 
-                    <div class="rs-control-group" ng-class="{'error': loginForm.username.$invalid && (vm.submitted || loginForm.username.$touched)}">
-                        <label for="username">Username</label>
+                  <div class="rs-control-group" ng-class="{'error': loginForm.username.$invalid && (vm.submitted || loginForm.username.$touched)}">
+                      <label for="username">Username</label>
+                      <div class="rs-controls">
+                          <input class="rs-input-large" id="username" name="username" type="text" value="" ng-model="vm.username" required><br>
+                          <span ng-show="loginForm.username.$invalid && (vm.submitted || loginForm.username.$touched)" class="error-text">
+                              <i class="rs-validation-indicator"></i> Username is required.
+                          </span>
+                      </div>
+                  </div>
+
+                  <div ng-show="vm.user_type == 'customer'">
+                    <div class="rs-control-group" ng-class="{'error': loginForm.password.$invalid && (vm.submitted || loginForm.password.$touched)}">
+                        <label for="password">Password</label>
                         <div class="rs-controls">
-                            <input autofocus="" class="rs-input-large" id="username" name="username" type="text" value="" ng-model="vm.username" required><br>
-                            <span ng-show="loginForm.username.$invalid && (vm.submitted || loginForm.username.$touched)" class="error-text">
-                                <i class="rs-validation-indicator"></i> Username is required.
+                            <input autocomplete="off" class="rs-input-large" id="password" name="password" type="password" value="" ng-model="vm.password"
+                                required><br>
+                            <span ng-show="loginForm.password.$invalid && (vm.submitted || loginForm.password.$touched)" class="error-text">
+                                <i class="rs-validation-indicator"></i> Password is required.
                             </span>
                         </div>
                     </div>
-
+                  </div>
+                  <div ng-show="vm.user_type == 'racker'">
                     <div class="rs-control-group" ng-class="{'error': loginForm.rsa_token.$invalid && (vm.submitted || loginForm.rsa_token.$touched)}">
-                        <label for="rsa_token">{{vm.user_type == 'racker' ? 'RSA Token':'Password'}}</label>
+                        <label for="rsa_token">RSA Token</label>
                         <div class="rs-controls">
                             <input autocomplete="off" class="rs-input-large" id="rsa_token" name="rsa_token" type="password" value="" ng-model="vm.rsa_token"
                                 required><br>
                             <span ng-show="loginForm.rsa_token.$invalid && (vm.submitted || loginForm.rsa_token.$touched)" class="error-text">
-                                <i class="rs-validation-indicator"></i> {{vm.user_type == 'racker' ? 'RSA token':'Password'}} is required.
+                                <i class="rs-validation-indicator"></i> {{vm.user_type == 'racker' ? 'RSA token' : (vm.user_type == 'customer' ? 'Password':'Authtoken') }} is required.
                             </span>
                         </div>
+                    </div>
+                  </div>
+                  <div ng-show="vm.user_type == 'impersonate'">
+
+                      <div class="rs-control-group" ng-class="{'error': loginForm.sso_username.$invalid && (vm.submitted || loginForm.sso_username.$touched)}">
+                          <label for="sso_username">SSO Username</label>
+                          <div class="rs-controls">
+                              <input class="rs-input-large" id="sso_username" name="sso_username" type="text" value="" ng-model="vm.sso_username" required><br>
+                              <span ng-show="loginForm.sso_username.$invalid && (vm.submitted || loginForm.sso_username.$touched)" class="error-text">
+                                  <i class="rs-validation-indicator"></i> SSO Username is required.
+                              </span>
+                          </div>
+                      </div>
+
+                      <div class="rs-control-group" ng-class="{'error': loginForm.sso_pin.$invalid && (vm.submitted || loginForm.sso_pin.$touched)}">
+                          <label for="sso_pin">SSO Pin + Token</label>
+                          <div class="rs-controls">
+                              <input autocomplete="off" class="rs-input-large" id="sso_pin" name="sso_pin" type="password" value="" ng-model="vm.sso_pin" required><br>
+                              <span ng-show="loginForm.sso_pin.$invalid && (vm.submitted || loginForm.sso_pin.$touched)" class="error-text">
+                                  <i class="rs-validation-indicator"></i> SSO Pin is required.
+                              </span>
+                          </div>
+                      </div>
+
                     </div>
 
                     <div id="login-status" ng-show="vm.errorMessage">
