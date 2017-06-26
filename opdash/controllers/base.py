@@ -252,8 +252,10 @@ class LoginBlueprint(SecureBlueprint):
         super(LoginBlueprint, self).on_before_request()
 
         if g.user_data:
-            # User is authenticated so go to index page
-            return redirect(self.get_base_url(request, remove_path=False))
+            # User is authenticated so log them out first
+            return redirect(
+                self.get_base_url(request, remove_path=True) + "/logout")
+
         else:
             # User is NOT Authenticated so continue to login page
             return
