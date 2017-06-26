@@ -594,3 +594,7 @@ span.fa-angle-left, span.fa-angle-right{
 .pagination-mini ul > li > a, .pagination-mini ul > li > span{
     cursor: pointer;
 }
+
+.paddingLeft{
+    padding-left: 34px;
+}

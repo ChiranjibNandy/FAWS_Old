@@ -58,7 +58,8 @@
                                     <span class="rs-progress-label">100%</span>
                                 </td>-->
                                 <td class="rs-table-text">
-                                    <span class="rs-status-ok">Completed</span>
+                                    <span class="rs-status-error" ng-show="instance.status==='error'">Error</span>
+                                    <span class="rs-status-ok" ng-show="instance.status!='error'">Completed</span>
                                 </td>
                                 <td>
                                     <a class="rs-btn" ng-link="['ResourceTaskList', {job_id: vm.job.job_id, resource_type: 'instance', resource_id: instance.id}]">See Tasks</a>
@@ -114,7 +115,8 @@
                                     {{(vm.job.completed_at) | date : 'M/dd/yyyy hh:mm a'}}
                                 </td>
                                 <td class="rs-table-text">
-                                    <span class="rs-status-ok">Completed</span>
+                                    <span class="rs-status-error" ng-show="network.status==='error'">Error</span>
+                                    <span class="rs-status-ok" ng-show="network.status!=='error'">Completed</span>
                                 </td>
                                 <td>
                                     <a class="rs-btn" ng-link="['ResourceTaskList', {job_id: vm.job.job_id, resource_type: 'network', resource_id: network.id}]">See Tasks</a>

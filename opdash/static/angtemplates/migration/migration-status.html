@@ -124,7 +124,7 @@
                                     <span class="rs-status-error" ng-show="batch.batch_status==='error'">Error</span>
                                     <span class="rs-status-warning" ng-show="batch.batch_status==='paused'">Paused</span>
                                 </td>
-                                <td class="rs-table-text" ng-show="!batch.showRefreshForApiLoading">
+                                <td class="rs-table-text" ng-show="!batch.showRefreshForApiLoading" ng-class="{'paddingLeft':batch.batch_status!=='in progress'}">
                                     <div class="rs-progress rs-progress-small" ng-if="batch.batch_status==='in progress' && batch.progressFlag !== 'NA'">
                                         <div class="rs-progress-inner">
                                             <div class="rs-segment" ng-style="{'width': +batch.succeeded_time_pct +'%'}">
@@ -224,10 +224,15 @@
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
-                                <th colspan="2">
+                                <th>
                                     <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('completed_batch', 'end')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['completed_batch']==='end', 'custom-table-sort-desc current-sort-param': vm.sortBy['completed_batch']==='-end', 'custom-table-sort-desc': vm.sortBy['completed_batch'].indexOf('end') < 0}">
                                         <span class="rs-table-sort-text">Completed Date/Time</span>
                                         <span class="rs-table-sort-indicator"></span>
+                                    </a>
+                                </th>
+                                <th>
+                                    <a href="javascript:void(0);" class="rs-table-sort">
+                                        <span>Status</span>
                                     </a>
                                 </th>
                             </tr>
@@ -239,7 +244,8 @@
                                 <td class="rs-table-link large-col"><a ng-link="['CompletedBatchDetails', {job_id: batch.job_id}]" class="ng-binding">{{batch.metadata.batch_name}}</a></td>
                                 <td>{{batch.metadata.initiated_by}}</td>
                                 <td class="rs-table-text ng-binding">{{(batch.start.substr(0,batch.start.indexOf('+')))  | date : 'M/dd/yyyy hh:mm a'}}</td>
-                                <td class="rs-table-text ng-binding" colspan="2">{{(batch.completed_at) | date : 'M/dd/yyyy hh:mm a' || 'n/a'}}</td>
+                                <td class="rs-table-text ng-binding">{{batch.batch_status === 'canceled' ? 'N/A' : (batch.completed_at) | date : 'M/dd/yyyy hh:mm a'}}</td>
+                                <td class="rs-table-text ng-binding" >{{batch.batch_status === 'canceled' ? 'Cancelled' : batch.batch_status}}</td>
                             </tr>
                         </tbody>
                         <tbody ng-show="vm.loading">
