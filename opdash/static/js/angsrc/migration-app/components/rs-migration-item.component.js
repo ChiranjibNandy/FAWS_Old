@@ -138,6 +138,7 @@
                     vm.reverse = false;
                     vm.propertyName = "name";
                     vm.activeItemCount = 0;
+                    vm.eligCallInProgress = true;
                     /**
                      * @ngdoc property
                      * @name tenant_id
@@ -255,6 +256,7 @@
                         });
                     } else{
                         vm.itemsEligible = true;
+                        vm.eligCallInProgress = false;
                         //For repeated fetch of resources after first time loading.
                         vm.items = JSON.parse($window.localStorage.allServers);
                         angular.forEach(vm.items, function (item) {
@@ -503,13 +505,22 @@
                                 vm.itemsEligible = true;
                             }
                             else{
-                                angular.forEach(item, function(server){
+                                if(firstRun){
+                                    angular.forEach(item, function(server){
+                                        vm.items.filter(function(data){
+                                            if(server.id == data.id){
+                                                data.canMigrate = false;
+                                            }
+                                        });
+                                    });
+                                }
+                                else{
                                     vm.items.filter(function(data){
-                                        if(server.id == data.id){
+                                        if(item.id == data.id){
                                             data.canMigrate = false;
                                         }
                                     });
-                                });
+                                }
                                 $window.localStorage.allServers = JSON.stringify(vm.items);
                             }
                             //to be removed after eligibilty API works
@@ -524,6 +535,7 @@
                             else{
                                 vm.checkingEligibility[item.id] = false;   
                             }
+                            vm.eligCallInProgress = false;
                         },function(error) {
                             // vm.loading = false;
                             // vm.loadError = true; //to be enabled once precheck call is up.  

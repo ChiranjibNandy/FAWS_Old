@@ -130,7 +130,7 @@
                 <br>
                 <a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">Pricing and Support Levels</a>
             </div>
-            <div class="span-7" ng-show="vm.noFawsAccounts && !vm.introModalLoading && vm.isRacker">
+            <div class="span-7" ng-class="{disabled:vm.fawsCreationProgress}" ng-show="vm.noFawsAccounts && !vm.introModalLoading && vm.isRacker">
                 <br><br>
                 <h3>Please provide credentials below to add a new AWS account.</h3>
                 <form class="form-horizontal">
@@ -193,7 +193,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" ng-show="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker">
+        <div class="row" ng-class="{disabled:vm.fawsCreationProgress}" ng-show="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker">
             <h3>Create new AWS account now:</h3>
             <div class="row">
                 <span>
