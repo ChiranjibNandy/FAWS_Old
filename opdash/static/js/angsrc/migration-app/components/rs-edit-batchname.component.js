@@ -67,8 +67,8 @@
                     if(vm.changedMigrationName){
                         vm.selectedTime = {
                             migrationName:vm.changedMigrationName,
-                            time:'',
-                            timezone:''
+                            time:dataStoreService.getScheduleMigration().time,
+                            timezone:dataStoreService.getScheduleMigration().timezone
                         };
                         vm.migrationName = vm.changedMigrationName;
                         dataStoreService.setScheduleMigration(vm.selectedTime);
