@@ -54,7 +54,7 @@
        <span ng-show="vm.fawsError" style="color: #c40022">Uh oh! Something went wrong while adding credentials. Please try again after sometime...</span>
         <div ng-hide= "vm.fawsCreated || vm.fawsError">
             <form class="form-horizontal">
-                <div class="form-group">
+                <div class="form-group" ng-class="{disabled:vm.fawsCreationProgress}">
                     <div class="row">
                         <span class="col-sm-2 control-label">Account Name</span>
                         <div class="col-sm-10">
@@ -102,7 +102,7 @@
        <span ng-show="vm.fawsError" style="color: #c40022">Uh oh! Something went wrong while submitting request. Please try again after sometime...</span>
         <div ng-hide= "vm.fawsCreated || vm.fawsError">
             <form class="form-horizontal">
-                <div class="form-group">
+                <div class="form-group" ng-class="{disabled:vm.fawsCreationProgress}">
                     <div class="row">
                         <span class="col-sm-2 control-label">Account Name </span>
                         <div class="col-sm-10">
@@ -146,7 +146,7 @@
        <span ng-show="vm.fawsDeleteError" style="color: #c40022">Uh oh! Something went wrong while deleting the account. Please try again after sometime...</span>
         <div ng-hide= "vm.fawsDeleted || vm.fawsDeleteError">
             <form class="form-horizontal">
-                <div class="form-group">
+                <div class="form-group" ng-class="{disabled:vm.fawsDeleteProgress}">
                     <div class="row">
                         <select ng-model="vm.deleteFaws" class="ng-pristine ng-valid ng-not-empty ng-touched" aria-invalid="false">
                             <!-- ngRepeat: account in vm.awsAccountsDetails -->
