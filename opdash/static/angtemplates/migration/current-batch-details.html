@@ -52,21 +52,21 @@
                                     <span class="rs-progress-label">{{ instance.status === 'done' ? 100 : ['started', 'in progress', 'paused'].indexOf(instance.status)>=0 ? 50 : 0 }}%</span>
                                 </td>-->
                                 <td class="rs-table-text" style="width: 40%;">
-                                    <span class="rs-status-error" ng-show="vm.job.batch_status==='error'">Error</span>
-                                    <span class="rs-status-ok" ng-show="vm.job.batch_status==='done'">Completed</span>
-                                    <span class="rs-status-ok" ng-show="vm.job.batch_status==='started'">Started</span>
-                                    <div class="rs-progress rs-progress-small" ng-if="vm.job.batch_status==='in progress' && vm.job.progressFlag !== 'NA'">
+                                    <span class="rs-status-error" ng-show="instance.status==='error'">Error</span>
+                                    <span class="rs-status-ok" ng-show="instance.status==='done'">Completed</span>
+                                    <span class="rs-status-ok" ng-show="instance.status==='started'">Started</span>
+                                    <div class="rs-progress rs-progress-small" ng-if="instance.status==='in progress' && vm.job.progressFlag !== 'NA'">
                                         <div class="rs-progress-inner">
                                             <div class="rs-segment" ng-style="{'width': +vm.job.succeeded_time_pct +'%'}">
                                                 <div class="rs-bar rs-status-ok rs-bar-striped"></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <span class="rs-status-ok" ng-show="vm.job.batch_status==='in progress'">In Progress</span>
-                                    <span class="rs-status-warning" ng-show="vm.job.batch_status==='scheduled'">Scheduled</span>
-                                    <span class="rs-status-disabled" ng-show="vm.job.batch_status==='not available'">Not Available</span>
-                                    <span class="rs-status-warning" ng-show="vm.job.batch_status==='paused'">Paused</span>
-                                    <span class="rs-status-warning" ng-show="vm.job.batch_status==='canceled'">Cancelled</span>
+                                    <span class="rs-status-ok" ng-show="instance.status==='in progress'">In Progress</span>
+                                    <span class="rs-status-warning" ng-show="instance.status==='scheduled'">Scheduled</span>
+                                    <span class="rs-status-disabled" ng-show="instance.status==='not available'">Not Available</span>
+                                    <span class="rs-status-warning" ng-show="instance.status==='paused'">Paused</span>
+                                    <span class="rs-status-warning" ng-show="instance.status==='canceled'">Cancelled</span>
                                 </td>
                                 <td>
                                     <a class="rs-btn" ng-link="['ResourceTaskList', {job_id: vm.job.job_id, resource_type: 'instance', resource_id: instance.id}]">See Tasks</a>

@@ -241,7 +241,7 @@
                         <tbody ng-show="!vm.loading && !vm.completedBatches.loadError && vm.completedBatches.items.length!==0">
                             <tr ng-repeat="batch in vm.completedBatches.items | orderBy: vm.sortBy.completed_batch | limitTo : vm.completedBatches.pageSize : (vm.completedBatches.currentPage-1)*vm.completedBatches.pageSize" class="ng-scope">
                                 <td class="rs-table-status tip" ng-class="{'rs-table-status-error': batch.batch_status==='canceled','rs-table-status-ok':batch.batch_status!='error'}"></td>
-                                <td class="rs-table-link large-col"><a ng-link="['CompletedBatchDetails', {job_id: batch.job_id}]" class="ng-binding">{{batch.metadata.batch_name}}</a></td>
+                                <td class="rs-table-link large-col"><a ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]" class="ng-binding">{{batch.metadata.batch_name}}</a></td>
                                 <td>{{batch.metadata.initiated_by}}</td>
                                 <td class="rs-table-text ng-binding">{{(batch.start.substr(0,batch.start.indexOf('+')))  | date : 'M/dd/yyyy hh:mm a'}}</td>
                                 <td class="rs-table-text ng-binding">{{batch.batch_status === 'canceled' ? 'N/A' : (batch.completed_at) | date : 'M/dd/yyyy hh:mm a'}}</td>
