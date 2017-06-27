@@ -596,5 +596,9 @@ span.fa-angle-left, span.fa-angle-right{
 }
 
 .paddingLeft{
-    padding-left: 34px;
+    padding-left: 28px;
+}
+
+.font-size-progress-icons{
+    font-size: 1.3em !important;
 }
