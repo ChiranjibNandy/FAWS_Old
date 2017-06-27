@@ -60,13 +60,13 @@
                                     <span class="rs-status-error" ng-show="instance.status==='error'">Error</span>
                                     <span class="rs-status-ok" ng-show="instance.status==='done'">Completed</span>
                                     <span class="rs-status-ok" ng-show="instance.status==='started'">Started</span>
-                                    <div class="rs-progress rs-progress-small" ng-if="instance.status==='in progress' && vm.job.progressFlag !== 'NA'">
+                                    <!--<div class="rs-progress rs-progress-small" ng-if="instance.status==='in progress' && vm.job.progressFlag !== 'NA'">
                                         <div class="rs-progress-inner">
                                             <div class="rs-segment" ng-style="{'width': +vm.job.succeeded_time_pct +'%'}">
                                                 <div class="rs-bar rs-status-ok rs-bar-striped"></div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <span class="rs-status-ok" ng-show="instance.status==='in progress'">In Progress</span>
                                     <span class="rs-status-warning" ng-show="instance.status==='scheduled'">Scheduled</span>
                                     <span class="rs-status-disabled" ng-show="instance.status==='not available'">Not Available</span>
@@ -80,7 +80,7 @@
                                                 <div class="rs-bar rs-status-ok rs-bar-striped"></div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div><span class="rs-status-ok" ng-if="vm.job.batch_status==='in progress' && vm.job.progressFlag !== 'NA'"><em>  {{vm.job.succeeded_time_pct}}%</em></span>
                                 <span ng-if="vm.job.batch_status === 'paused'"><i class="fa fa-pause" aria-hidden="true" ></i></span>
                                 <span ng-if="vm.job.batch_status === 'scheduled'"><i class="fa fa-clock-o font-size-progress-icons" aria-hidden="true"></i></span>
                                 <span ng-if="vm.job.batch_status === 'error' || vm.job.batch_status === 'canceled'"><i class="fa fa-times font-size-progress-icons" aria-hidden="true"></i></span>
