@@ -16,6 +16,7 @@
 - IDENTITY_URL: https://identity-internal.api.rackspacecloud.com/v2.0
 
 - SAML:
+    ENABLED: False
     CONFIG_PATH: ./opdash/saml_config.json
 
 - PILOT:
