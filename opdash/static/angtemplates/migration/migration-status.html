@@ -124,7 +124,7 @@
                                     <span class="rs-status-error" ng-show="batch.batch_status==='error'">Error</span>
                                     <span class="rs-status-warning" ng-show="batch.batch_status==='paused'">Paused</span>
                                 </td>
-                                <td class="rs-table-text" ng-show="!batch.showRefreshForApiLoading" ng-class="{'paddingLeft':batch.batch_status!=='in progress'}">
+                                <td class="rs-table-text" ng-class="{'paddingLeft':batch.batch_status!=='in progress'}">
                                     <div class="rs-progress rs-progress-small" ng-if="batch.batch_status==='in progress' && batch.progressFlag !== 'NA'">
                                         <div class="rs-progress-inner">
                                             <div class="rs-segment" ng-style="{'width': +batch.succeeded_time_pct +'%'}">
