@@ -234,6 +234,16 @@ class SecureBlueprint(UnsecureBlueprint):
             # Delete Session from Cache
             current_app.cache.delete(session_id)
 
+    def login_redirect(self):
+        if current_app.config.get("SAML_ENABLED", False):
+            current_app.logger.debug("REDIRECT TO SAML LOGIN")
+            return redirect(self.saml_auth.login(
+                self.get_base_url(request, remove_path=False)))
+        else:
+            current_app.logger.debug("REDIRECT TO LOCAL LOGIN")
+            return redirect(self.get_base_url(
+                request, remove_path=True) + "/login")
+
 
 class LoginBlueprint(SecureBlueprint):
     '''
@@ -281,8 +291,7 @@ class CustomerBlueprint(SecureBlueprint):
             return
         else:
             current_app.logger.debug("CUSTOMER IS NOT AUTHENTICATED REDIRECT")
-            return redirect(self.saml_auth.login(
-                self.get_base_url(request, remove_path=False)))
+            return self.login_redirect()
 
 
 class RackerBlueprint(SecureBlueprint):
@@ -309,8 +318,8 @@ class RackerBlueprint(SecureBlueprint):
         else:
             current_app.logger.debug(
                 'NO CURRENT USER - URL IS:{0}'.format(request.url))
-            return redirect(self.saml_auth.login(
-                self.get_base_url(request, remove_path=False)))
+
+        return self.login_redirect()
 
 
 class ProxyBlueprint(SecureBlueprint):
