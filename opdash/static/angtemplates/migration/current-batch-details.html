@@ -62,7 +62,7 @@
                                     <span class="rs-status-ok" ng-show="instance.status==='started'">Started</span>
                                     <span class="rs-status-ok" ng-show="instance.status==='in progress'">In Progress</span>
                                     <span class="rs-status-warning" ng-show="instance.status==='scheduled'">Scheduled</span>
-                                    <span class="rs-status-disabled" ng-show="instance.status==='not available'">Not Available</span>
+                                    <span class="rs-status-disabled capitalize" ng-show="instance.status==='not available'">{{vm.job.batch_status}}</span>
                                     <span class="rs-status-warning" ng-show="instance.status==='paused'">Paused</span>
                                     <span class="rs-status-warning" ng-show="instance.status==='canceled'">Cancelled</span>
                                 </td>
@@ -198,7 +198,7 @@
                                         <span class="rs-status-ok" ng-show="task.status==='started'">Started</span>
                                         <span class="rs-status-ok" ng-show="task.status==='in progress'">In Progress</span>
                                         <span class="rs-status-warning" ng-show="task.status==='scheduled'">Scheduled</span>
-                                        <span class="rs-status-disabled" ng-show="task.status==='not available'">Not Available</span>
+                                        <span class="rs-status-disabled capitalize" ng-show="task.status==='not available'">{{vm.job.batch_status}}</span>
                                         <span class="rs-status-warning" ng-show="task.status==='paused'">Paused</span>
                                     </td>
                                     <td colspan="2">{{task.details}}</td>
