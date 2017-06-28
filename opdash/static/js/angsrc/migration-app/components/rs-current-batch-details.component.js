@@ -92,6 +92,8 @@
                     };
                     vm.alerts = [];
                     vm.loadingAlerts = true;
+                    vm.batchTasks = [];
+                    vm.loadingBatchTasks = true;
                     vm.job = [];
                     vm.loading = true;
                     vm.manualRefresh = false;
@@ -101,6 +103,23 @@
                     job_id = next.params.job_id;
                     vm.getBatchDetails();
                     vm.getAllAlerts();
+                    vm.getAllBatchTasks(job_id);
+                };
+
+                vm.getAllBatchTasks = function(job_id){
+                    dashboardService.getBatchTasks(job_id).then(function(result){
+                       if(result){
+                           vm.loadingBatchTasks = false;
+                           for(var i = 0;i<result["job-tasks"].length;i++){
+                                if(result["job-tasks"][i].section === "start_workflow"){
+                                    vm.batchTasks = result["job-tasks"][i].tasks;
+                                    break;
+                                }
+                           }
+                       }else{
+                           vm.loadingBatchTasks = true;
+                       } 
+                    });
                 };
 
                 /**
