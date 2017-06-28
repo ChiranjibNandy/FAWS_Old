@@ -238,6 +238,41 @@
         <a ng-hide="vm.noFawsAccounts && !vm.introModalLoading" class="rs-btn rs-btn-primary" ng-class="{disabled:vm.introModalLoading || vm.noFawsAccounts}" data-dismiss="modal" aria-hidden="true" href="javascript:void(0)">Start a Migration</a>
     </div>
 </div>
+<!-- eligibility MODAL -->
+<div id="eligibility_modal" class="modal modal-warning hide animated fadeIn details" role="dialog">
+    <div class="modal-header">
+        <br>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <h3 class="rs-page-title" style="color : #333">Eligibility Tests</h3>
+    </div>
+    <div class="modal-body" ng-show="!vm.eligTestDetails.length">
+        <p>
+            Eligibility tests not found.
+        </p>
+    </div>
+    <div class="modal-body" ng-show="vm.eligTestDetails.length">
+        <table class="rs-list-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th style="width:60%">Description</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat = "test in vm.eligTestDetails" class="">
+                    <td style="width:136px">{{test.name}}</td>
+                    <td class="rs-status-error">{{test.description}}</td>
+                    <td>{{test.type}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <a class="rs-btn rs-btn-primary" data-dismiss="modal" aria-hidden="true">Close</a>
+    </div>
+</div>
+<!--modals End -->
 
 <div ng-include="'/static/angtemplates/migration/equipment-details.html'"></div>
 <script type="text/javascript">
