@@ -97,8 +97,12 @@
                             if(result){
                                 migrationService.pauseMigration(dataStoreService.getJobIdForMigration(),'unpause').then(function(success){
                                     if(success){
-                                        $window.localStorage.setItem("migrationScheduled","true");
-                                        $rootRouter.navigate(["MigrationStatus"]);
+                                        if(vm.saveResources) {
+                                            vm.deleteExistingSavedMigration();
+                                        }else{
+                                            $window.localStorage.setItem("migrationScheduled","true");
+                                            $rootRouter.navigate(["MigrationStatus"]);
+                                        }
                                     }else{
                                         $('#modify-modal').modal('show');
                                         vm.message = "We have successfully modified your migration but couldn't unpause the migation. You may have to un pause it manually in dashboard page."
@@ -135,6 +139,35 @@
 
                 /**
                  * @ngdoc method
+                 * @name deleteExistingSavedMigration
+                 * @methodOf migrationApp.controller:rsconfirmmigrationCtrl
+                 * @description 
+                 * This will delete the existing saved migration and update it with the new one
+                 */
+                vm.deleteExistingSavedMigration = function(){
+                    dataStoreService.getSavedItems()
+                        .then(function (result) {
+                            var savedMigrations = JSON.parse(result.savedDetails || '[]');
+                            
+                            // remove from server
+                            var index = -1;
+                            for(var i=0; i<savedMigrations.length; i++){
+                                if($window.localStorage.migrationName === savedMigrations[i].instance_name){
+                                    index = i;
+                                    break;
+                                }
+                            }
+                            index!==-1 && savedMigrations.splice(index, 1);
+                            result.savedDetails = JSON.stringify(savedMigrations);
+                            
+                            if(dataStoreService.postSavedInstances(result)){
+                                vm.saveResourceDetails();
+                            }
+                        })
+                };
+
+                /**
+                 * @ngdoc method
                  * @name saveResourceDetails
                  * @methodOf migrationApp.controller:rsconfirmmigrationCtrl
                  * @description 
@@ -156,7 +189,8 @@
                         $window.localStorage.setItem("migrationScheduled","true");
                         $rootRouter.navigate(["MigrationStatus"]);
                     },function(error){
-                     });
+                     
+                    });
                 };
 
                 /**
