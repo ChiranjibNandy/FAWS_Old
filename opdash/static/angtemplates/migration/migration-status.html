@@ -44,7 +44,7 @@
                                     </a>
                                 </th>
                                 <th>
-                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a">
+                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a" ng-click="vm.setSortBy('current_batch', 'metadata.initiated_by')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['current_batch']==='metadata.initiated_by', 'custom-table-sort-desc current-sort-param': vm.sortBy['current_batch']==='-metadata.initiated_by', 'custom-table-sort-desc': vm.sortBy['current_batch'].indexOf('metadata.initiated_by') < 0}">
                                         <span class="rs-table-sort-text">Batch Initiated by</span>
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
@@ -208,30 +208,30 @@
                             <tr>
                                 <th class="rs-table-status"></th>
                                 <th>
-                                    <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('completed_batch', 'batch_name')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['completed_batch']==='batch_name', 'custom-table-sort-desc current-sort-param': vm.sortBy['completed_batch']==='-batch_name', 'custom-table-sort-desc': vm.sortBy['completed_batch'].indexOf('batch_name') < 0}">
+                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a" ng-click="vm.setSortBy('completed_batch', 'metadata.batch_name')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['completed_batch']==='metadata.batch_name', 'custom-table-sort-desc current-sort-param': vm.sortBy['completed_batch']==='-metadata.batch_name', 'custom-table-sort-desc': vm.sortBy['completed_batch'].indexOf('metadata.batch_name') < 0}">
                                         <span class="rs-table-sort-text">Completed/Cancelled Batches</span>
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
-                                <th><a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('completed_batch', 'batch_name')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['completed_batch']==='batch_name', 'custom-table-sort-desc current-sort-param': vm.sortBy['completed_batch']==='-batch_name', 'custom-table-sort-desc': vm.sortBy['completed_batch'].indexOf('batch_name') < 0}">
+                                <th><a href="javascript:void(0);" class="rs-table-sort custom-sort-a" ng-click="vm.setSortBy('completed_batch', 'metadata.initiated_by')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['completed_batch']==='metadata.initiated_by', 'custom-table-sort-desc current-sort-param': vm.sortBy['completed_batch']==='-metadata.initiated_by', 'custom-table-sort-desc': vm.sortBy['completed_batch'].indexOf('metadata.initiated_by') < 0}">
                                         <span class="rs-table-sort-text">Batch Initiated by </span>
                                       <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
                                 <th>
-                                    <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('completed_batch', 'start')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['completed_batch']==='start', 'custom-table-sort-desc current-sort-param': vm.sortBy['completed_batch']==='-start', 'custom-table-sort-desc': vm.sortBy['completed_batch'].indexOf('start') < 0}">
+                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a" ng-click="vm.setSortBy('completed_batch', 'start')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['completed_batch']==='start', 'custom-table-sort-desc current-sort-param': vm.sortBy['completed_batch']==='-start', 'custom-table-sort-desc': vm.sortBy['completed_batch'].indexOf('start') < 0}">
                                         <span class="rs-table-sort-text">Start Date/Time</span>
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
                                 <th>
-                                    <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('completed_batch', 'end')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['completed_batch']==='end', 'custom-table-sort-desc current-sort-param': vm.sortBy['completed_batch']==='-end', 'custom-table-sort-desc': vm.sortBy['completed_batch'].indexOf('end') < 0}">
+                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a" ng-click="vm.setSortBy('completed_batch', 'end')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['completed_batch']==='end', 'custom-table-sort-desc current-sort-param': vm.sortBy['completed_batch']==='-end', 'custom-table-sort-desc': vm.sortBy['completed_batch'].indexOf('end') < 0}">
                                         <span class="rs-table-sort-text">Completed Date/Time</span>
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
                                 <th>
-                                    <a href="javascript:void(0);" class="rs-table-sort">
+                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a">
                                         <span>Status</span>
                                     </a>
                                 </th>
@@ -245,7 +245,7 @@
                                 <td>{{batch.metadata.initiated_by}}</td>
                                 <td class="rs-table-text ng-binding">{{(batch.start.substr(0,batch.start.indexOf('+')))  | date : 'M/dd/yyyy hh:mm a'}}</td>
                                 <td class="rs-table-text ng-binding">{{batch.batch_status === 'canceled' ? 'N/A' : (batch.completed_at) | date : 'M/dd/yyyy hh:mm a'}}</td>
-                                <td class="rs-table-text ng-binding" >{{batch.batch_status === 'canceled' ? 'Cancelled' : batch.batch_status}}</td>
+                                <td class="rs-table-text ng-binding capitalize" >{{batch.batch_status === 'canceled' ? 'Cancelled' : batch.batch_status}}</td>
                             </tr>
                         </tbody>
                         <tbody ng-show="vm.loading">
