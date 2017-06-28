@@ -179,6 +179,42 @@
                 <br>
 
                 <div class="rs-facet-section-body">
+                    <h3>Batch-Tasks</h3>
+                    <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
+                        <table class=" rs-embedded-list-table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Name</th>
+                                    <th>Status</th>
+                                    <th colspan="2">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-show="!vm.loadingBatchTasks && vm.batchTasks.length>0">
+                                <tr ng-repeat="task in vm.batchTasks">
+                                    <td colspan="2">{{task.name}}</td>
+                                    <td>
+                                        <span class="rs-status-error" ng-show="task.status==='error'">Error</span>
+                                        <span class="rs-status-ok" ng-show="task.status==='done'">Completed</span>
+                                        <span class="rs-status-ok" ng-show="task.status==='started'">Started</span>
+                                        <span class="rs-status-ok" ng-show="task.status==='in progress'">In Progress</span>
+                                        <span class="rs-status-warning" ng-show="task.status==='scheduled'">Scheduled</span>
+                                        <span class="rs-status-disabled" ng-show="task.status==='not available'">Not Available</span>
+                                        <span class="rs-status-warning" ng-show="task.status==='paused'">Paused</span>
+                                    </td>
+                                    <td colspan="2">{{task.details}}</td>
+                                </tr>
+                            </tbody>
+                            <tbody ng-show="!vm.loadingBatchTasks && vm.batchTasks.length===0">
+                                <tr>
+                                    <td colspan="3" class="empty-collection-info">You don't have any Tasks</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br>
+                
+                <div class="rs-facet-section-body">
                     <h3>Alerts <span class="rs-quiet">({{vm.alerts.length}})</span></h3>
                     <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
                         <table class=" rs-embedded-list-table">

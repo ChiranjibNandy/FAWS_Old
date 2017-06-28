@@ -48,6 +48,16 @@
                 }
             };
 
+            self.getBatchTasks = function(jobId) {
+                var url = "api/tasks/"+jobId;
+                return HttpWrapper.send(url, { "operation": 'GET' })
+                .then(function(result){
+                    return result;
+                },function(error){
+                    return false;
+                });
+            };
+
             return self;
         }]); // end of service definition
 })();
