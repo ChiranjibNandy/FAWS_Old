@@ -63,7 +63,10 @@
                                 $q.all([promise])
                                 .then(function(result) {
                                     //Create a property that would hold the progress detail for in progress batches
-                                    job.succeeded_time_pct = result[0].succeeded_by_time_pct;
+                                    if(result[0].succeeded_by_time_pct !== undefined)
+                                        job.succeeded_time_pct = result[0].succeeded_by_time_pct;
+                                    else if(result[0].succeeded_by_time_pct === undefined)
+                                        job.succeeded_time_pct = 0;
                                     vm.job = job;
                                     vm.loading = false;
                                     vm.manualRefresh = false;
