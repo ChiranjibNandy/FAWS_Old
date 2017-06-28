@@ -374,6 +374,11 @@
                     }
                 };
 
+                vm.eligibilityDetailsModal = function(itemdetails) {
+                    vm.eligTestDetails = itemdetails;
+                    $('#eligibility_modal').modal('show');
+                }
+
                 vm.equipmentDetailsModal = function(type, itemdetails) {
                     vm.itemType = type;
                     vm.itemDetails = itemdetails;

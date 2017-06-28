@@ -60,6 +60,7 @@
                         server.canMigrate = true;
                         server.migStatus = 'error';
                         server.eligible = 'Not Available';
+                        server.eligibiltyTests = {};
                         //map status of a server received from Batch response with respect to the server id. 
                         angular.forEach(statusList, function (status) {
                             angular.forEach(status.instances, function (instance) {
@@ -487,12 +488,14 @@
                                                 if(ID == item.id && testCase.type == "success"){ 
                                                     item.canMigrate = true;
                                                     item.eligible = 'Passed';
+                                                    item.eligibiltyTests = descriptions;
                                                 }
                                                 else if(ID == item.id && testCase.type != "success"){
                                                     item.eligible = 'Failed';
                                                     keepGoing = false;
                                                     //enable this once API works fine
                                                     item.canMigrate = false;
+                                                    item.eligibiltyTests = descriptions;
                                                 }
 
                                             };
@@ -544,6 +547,18 @@
                         
                         // });
                 };
+
+                /**
+                 * @ngdoc method
+                 * @name eligibilityDetails
+                 * @methodOf migrationApp.controller:rsmigrationitemCtrl
+                 * @description 
+                 * display eligibility tests for a perticular resource.
+                 */
+                vm.eligibilityDetails = function(itemdetails) {
+                    vm.parent.eligibilityDetailsModal(itemdetails);
+                }
+
                 return vm;
             }]
         }); // end of component definition
