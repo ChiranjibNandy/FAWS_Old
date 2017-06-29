@@ -26,7 +26,7 @@
              * @name migrationApp.controller:rscurrentbatchdetailsCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rscurrentbatchdetails rscurrentbatchdetails} component
              */
-            controller: ["$rootRouter", "migrationitemdataservice", "dashboardservice", "authservice", "alertsservice", "$interval","$scope","httpwrapper","$q", function($rootRouter, ds, dashboardService, authservice, alertsService, $interval,$scope,HttpWrapper,$q){
+            controller: ["$rootRouter", "migrationitemdataservice", "dashboardservice", "authservice", "alertsservice", "$interval","$scope","httpwrapper","$q","$window", function($rootRouter, ds, dashboardService, authservice, alertsService, $interval,$scope,HttpWrapper,$q,$window){
                 var vm = this;
                 var job_id;
                 var lastRefreshIntervalPromise;
@@ -57,22 +57,27 @@
                                     return job.job_id === job_id;
                                 });
                                 vm.job = job;
-                                //Makes a promise to fetch the progress API details for in progress batches
-                                var promise = HttpWrapper.send('/api/jobs/'+job.job_id+'/progress', { "operation": 'GET' });
+                                if(job.batch_status === 'in progress')
+                                    //Makes a promise to fetch the progress API details for in progress batches
+                                    var promise = HttpWrapper.send('/api/jobs/'+job.job_id+'/progress', { "operation": 'GET' });
                                 //Once the promise is resolved, proceed with rest of the items
                                 $q.all([promise])
                                 .then(function(result) {
-                                    //Create a property that would hold the progress detail for in progress batches
-                                    if(result[0].succeeded_by_time_pct !== undefined)
-                                        job.succeeded_time_pct = result[0].succeeded_by_time_pct;
-                                    else if(result[0].succeeded_by_time_pct === undefined)
-                                        job.succeeded_time_pct = 0;
+                                    //If the job status is not in progress, promise resolves to undefined
+                                    if(result[0] !== undefined){
+                                        //Create a property that would hold the progress detail for in progress batches
+                                        if(result[0].succeeded_by_time_pct !== undefined)
+                                            job.succeeded_time_pct = result[0].succeeded_by_time_pct;
+                                        else if(result[0].succeeded_by_time_pct === undefined)
+                                            job.succeeded_time_pct = 0;
+                                    }
                                     vm.job = job;
+                                    $window.localStorage.setItem('batch_job_status',job.batch_status);
                                     vm.loading = false;
                                     vm.manualRefresh = false;
                                     lastRefreshIntervalPromise = $interval(function(){
                                         vm.timeSinceLastRefresh++;
-                                    }, 60000);
+                                    }, 60000);                                    
                                 },function(errorResponse){
                                     job.succeeded_time_pct = 0;
                                     //Create a flag that indicates something has gone wrong while fetching progress API details
