@@ -25,11 +25,13 @@
              * @name migrationApp.controller:rsconfirmmigrationCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsconfirmmigration rsconfirmmigration} component
              */
-            controller: ["$rootRouter", "datastoreservice", "migrationitemdataservice", "$q", "httpwrapper", "authservice", "$timeout", "$rootScope","$scope","$window","migrationService", function ($rootRouter, dataStoreService, ds, $q, HttpWrapper, authservice, $timeout, $rootScope,$scope,$window,migrationService) {
+            controller: ["$rootRouter", "datastoreservice", "migrationitemdataservice", "$q", "httpwrapper", "authservice", "$timeout", "$rootScope","$scope","$window","migrationService","dashboardservice", function ($rootRouter, dataStoreService, ds, $q, HttpWrapper, authservice, $timeout, $rootScope,$scope,$window,migrationService,dashboardService) {
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
                 vm.cost = '';
+                vm.goodToGo = true;
+                vm.checking = false;
 
                 // make isNaN available in your view via component as syntax
                 vm.isNaN = function(value) {
@@ -77,6 +79,81 @@
                     vm.cost = dataStoreService.getProjectedPricing();
                     $window.localStorage.projectedPricing = JSON.stringify(vm.cost);
                 });
+
+
+                /**
+                 * @ngdoc method
+                 * @name checkStatus
+                 * @methodOf migrationApp.controller:rsconfirmmigrationCtrl
+                 * @description 
+                 * Checks whether the selected server(s) have already been migrated/scheduled, if yes, then rejects the migration, otherwise triggers the migration.
+                 */
+                vm.checkStatus = function(){
+                    
+                    dashboardService.getCurrentBatches() //fetch the batch list by making the job_status api call in dashbaord service
+                            .then(function (response) {
+                                if (response && response.error == undefined){
+                                    vm.checking = true;
+                                    var jobList = response.job_status_list;
+                                
+                                //get status of all the migrations in an array - to check if these resoruces have been scheduled in any migrations earlier 
+                                    var statusList=[];
+                                    for(var i=0;i<jobList.length;i++)
+                                            for(var j=0;j<jobList[i].instances.length;j++)
+                                                statusList.push(jobList[i].instances[j]);
+                                    
+                                //get list of selected resources from local storage, in an array
+                                    var equipments = {
+                                            instances: JSON.parse($window.localStorage.selectedServers),
+                                            networks: dataStoreService.getDistinctNetworks()
+                                    };
+                                    var selectedResources = [];
+                                    for(var i=0;i<equipments.instances.length;i++){
+                                      var obj = {
+                                                name : equipments.instances[i].name,
+                                                id : equipments.instances[i].rrn
+                                        }
+                                        selectedResources.push(obj);
+                                    }
+                                    
+                                //compare two lists to find out if selected resources have been migrated already or scheduled in other batches.
+                                    vm.goodToGo = true;
+
+                                    for(i=0;i<selectedResources.length;i++){ //check for each server in the selected list
+                                        var x1=selectedResources[i].name;
+                                        var y1=selectedResources[i].id;
+
+                                        for(j=0;j<statusList.length;j++){ //check for each server in the status list
+                                            var x2=statusList[j].name;
+                                            var y2=statusList[j].id;
+                                            var z2=statusList[j].status;
+
+                                            if(x1 === x2 && y1 === y2){ //if the server name and id match
+                                                if(z2 !== "error" && z2 !== "canceled"){ //if status is error or canceled, migration will be allowed, otherwise not
+                                                    vm.goodToGo = false;
+                                                    vm.checking = false;
+                                                    break;
+                                                }
+                                            }//endif
+                                        }//end of inner for-loop
+                                    }//end of outer for-loop
+                                    
+                                //finally - if none of the resources have been migrated or scheduled to be migrated in other batch (goodToGo === true), trigger migration
+                                    if(vm.goodToGo){ 
+                                        // console.log("Migration Good to go")
+                                        vm.migrate();
+                                    }else{//otherwise error message will be displayed on the screen since goodToGo===false.
+                                            vm.checking = false;
+                                    }//end if
+                            }else{ //if the job_status call in dashbaord service fails
+                                    vm.checking = false;
+                                    vm.errorInMigration = true; //error message will be disaplyed on the screen.
+                        }
+                    
+                })//end of dashboardService.getCurrentBatches()
+                        
+                };
+
 
                 /**
                  * @ngdoc method
