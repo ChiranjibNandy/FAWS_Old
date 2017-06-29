@@ -8,9 +8,16 @@
                         <div class="migr-ddi-name">
                             {{vm.currentUser}} ( #{{vm.tenant_id}} )
                         </div>
-                        <div class="migr-name">
+                        <div class="migr-name" style="display: inline-block;">
                            {{vm.batch_name}} / {{vm.resourceName}} / Tasks
                         </div>
+                        <div class="rs-progress rs-progress-small" ng-if="vm.progressFlag !== false" style="display: inline-block;">
+                            <div class="rs-progress-inner">
+                                <div class="rs-segment" ng-style="{'width': +vm.succeeded_time_pct +'%'}">
+                                    <div class="rs-bar rs-status-ok rs-bar-striped"></div>
+                                </div>
+                            </div>
+                        </div><span class="rs-status-ok" ng-if="vm.progressFlag !== false"><em> {{vm.succeeded_time_pct}}%</em></span>
                     </div>
                     <div class="span-2">
                         <button class="rs-btn" ng-click="vm.getResourceTasks(true)">

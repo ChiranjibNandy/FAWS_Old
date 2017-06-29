@@ -25,11 +25,15 @@
              * @name migrationApp.controller:rsresourcetasklistCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsresourcetasklist rsresourcetasklist} component
              */
-            controller: ["alertsservice", "authservice", "$interval", "$rootRouter", "migrationitemdataservice","$scope", function(alertsService, authService, $interval, $rootRouter, ds,$scope){
+            controller: ["alertsservice", "authservice", "$interval", "$rootRouter", "migrationitemdataservice","$scope","httpwrapper","$window","$q", function(alertsService, authService, $interval, $rootRouter, ds,$scope,HttpWrapper,$window,$q){
                 var vm = this;
                 var lastRefreshIntervalPromise;
                 var backRoute = null;
                 var backRouteParams = {};
+
+                //Initiate some flags to show progress bars
+                vm.progressFlag = false; 
+                vm.succeeded_time_pct = 0;
 
                 /**
                  * @ngdoc method
@@ -59,19 +63,36 @@
                             else
                                 vm.batch_name = response.batchName;
                                 vm.tasks = response.tasks;
-                            ds.getTrimmedAllItems(params.resource_type==="instance" ? "server" : params.resource_type)
+                            if($window.localStorage.batch_job_status === 'in progress' || $window.localStorage.batch_job_status === 'done'){
+                                var promise = HttpWrapper.send('/api/jobs/'+params.job_id+'/progress', { "operation": 'GET' });
+                            }
+                            $q.all([promise]).then(function(response){
+                                if(response[0] !== undefined)
+                                    if(response[0].succeeded_by_time_pct !== undefined){
+                                        //If it is not undefined, hold the completion percentage 
+                                        vm.succeeded_time_pct = response[0].succeeded_by_time_pct;
+                                        //Set the flag to true
+                                        vm.progressFlag = true;
+                                    }
+                                ds.getTrimmedAllItems(params.resource_type==="instance" ? "server" : params.resource_type)
                                 .then(function (response) {
                                     var details = response.data.filter(function (item) { return item.id == params.resource_id })[0];
                                     vm.resourceName = details.name;
                                 });
 
-                            vm.loading = false;
-                            vm.manualRefresh = false;
-                            vm.loadError = false;
+                                vm.loading = false;
+                                vm.manualRefresh = false;
+                                vm.loadError = false;
 
-                            lastRefreshIntervalPromise = $interval(function(){
-                                vm.timeSinceLastRefresh++;
-                            }, 60000);
+                                lastRefreshIntervalPromise = $interval(function(){
+                                    vm.timeSinceLastRefresh++;
+                                }, 60000);
+                            },function(errorResponse){
+                                //If the API call errors out, set the completion percentage to 0
+                                vm.succeeded_time_pct = response.succeeded_by_time_pct;
+                                //Set the flag to true
+                                vm.progressFlag = false;
+                            });
                         }, function (errorResponse) {
                             vm.loading = false;
                             vm.manualRefresh = false;

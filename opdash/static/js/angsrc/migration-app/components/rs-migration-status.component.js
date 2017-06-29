@@ -625,7 +625,7 @@ $rootRouter.navigate(["MigrationStatus"]);
                     vm.resetSavedMigrationFlag = function(){
                         vm.afterSavedMigration = false;
                         $window.localStorage.setItem("migrationSaved","false");
-                        alert("vm.afterSavedMigration = ",vm.afterSavedMigration);
+                        //alert("vm.afterSavedMigration = ",vm.afterSavedMigration);
                     }
                 }]
             }); // end of comeponent rsmigrationstatus
