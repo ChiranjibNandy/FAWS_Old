@@ -80,7 +80,7 @@ class Container(object):
 
     def retag(self, src_tag, dst_tag):
         cmd = [
-            'docker', 'tag', src_tag, dst_tag
+            'docker', 'tag', '-f', src_tag, dst_tag
         ]
 
         rc = subprocess.call(cmd)
