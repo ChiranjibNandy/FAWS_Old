@@ -9,45 +9,64 @@
   # Location where the migrator service is running
 - API:
     BASE_URL: http://opdash-api-dev.us-east-1.elasticbeanstalk.com
-    # Timeout length for calls to the API (in seconds)
-    PROXY_TIMEOUT: 15
 
-#- IDENTITY_URL: https://identity-internal.api.rackspacecloud.com/v2.0
+    # Timeout length for calls to the API (in seconds)
+    PROXY_TIMEOUT: 60
+
 - IDENTITY_URL: https://identity-internal.api.rackspacecloud.com/v2.0
 
 - SAML:
+    # SAML enablement. Disabled by default
     ENABLED: False
+
     CONFIG_PATH: ./opdash/saml_config.json
 
 - PILOT:
+    # The URL to the pilot API for this environment (prod / staging)
     URL: https://prod.pilot.api.rackspacecloud.com/v1/
+
+    # The product name for this application in PILOT
     PRODUCT: ''  # we don't have a product in the menu yet
+
     MYCLOUD_URL: https://mycloud.rackspace.com
+
+    # The path Pilot sends the user to for log out in this application
     LOGOUT_URL: /logout
 
 - AWS:
-    # AWS Credentials
+    # AWS credentials with which to connect to resources
     # ACCESS_KEY_ID:
     # SECRET_ACCESS_KEY:
 
 - CACHE:
-    # Cache types available: filesystem, redis
+    # Type of cache to use. Available: filesystem, redis
     TYPE: filesystem
 
-    # If using filesystem:
+    # Directory to store filesystem cache. Ignored when type is "redis"
     DIR: ./session
 
-    # If using Redis for Caching:
+    # Host where redis server is listening. Ignored when type is "filesystem"
     # REDIS_HOST: 0.0.0.0
+
+    # Prefix for values stored in redis. Ignored when type is "filesystem"
     # KEY_PREFIX: opdash-session
 
-# Flask specific configuration items.
-# For more information see:
+# Collection of flask specific configuration items. For more information see:
 # http://flask.pocoo.org/docs/0.12/config/#builtin-configuration-values
 - FLASK:
+
+    # What address to listen to for incoming traffic
     HOST: 0.0.0.0
+
+    # The port to listen to for incoming traffic
     PORT: 8000
+
+    # Run the server in debug mode or not
+    # False - Runs the application using a production level waitress WSGI server.
+    # True - Runs the application using a non-production level werkzeug server which supports auto-reloading.
     DEBUG: True
+
+    # When DEBUG is true, should werkzeug detect py file changes and reload them.
     USE_RELOADER: True
 
 # If you want to encrypt your config file:
