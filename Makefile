@@ -111,6 +111,9 @@ setup-ops: ## Create a virtualenv for running ops tasks
 release: require-env ## Tag and push a Docker image to ECR
 	$(OPS_VENV_ACTIVATE); ENV=$(ENV) $(OPDASH_CP_OPS) release
 
+show-latest-release: ## Print the tag of the latest released image
+	@$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) show_latest_release
+
 promote-pull: require-env ## Pull an image down for promotion (supports RELEASE=<image_tag>)
 		$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) promote_pull
 
