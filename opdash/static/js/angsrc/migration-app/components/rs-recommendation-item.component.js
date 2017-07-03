@@ -132,7 +132,7 @@
                   */
                 vm.disableConfirm = function(index){
                     vm.disable = false;
-                    if(index){
+                    if(index !== undefined){
                         vm.selectedConfiguration = index;
                     }
                 }
