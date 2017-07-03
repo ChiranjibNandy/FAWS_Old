@@ -34,7 +34,7 @@
             <button class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.cancelnSaveObj.saveInProgress || vm.cancelnSaveObj.saveSuccess}">Close</button>
             <button class="rs-btn rs-btn-primary " ng-class="{disabled: vm.saveProgress=='yes' && !vm.migrationName || vm.cancelnSaveObj.saveSuccess}"
                 ng-click="vm.submitCancel()" ng-hide="vm.cancelnSaveObj.saveInProgress">Submit</button>
-            <a class="rs-btn disabled" disabled="disabled" ng-show="vm.cancelnSaveObj.saveInProgress">Submitting...</a>
+            <a class="rs-btn rs-btn-primary disabled" disabled="disabled" ng-show="vm.cancelnSaveObj.saveInProgress">Submitting...</a>
             <i class="rs-processing-indicator" ng-show="vm.cancelnSaveObj.saveInProgress"></i>
             <br>
             <div ng-show="vm.cancelnSaveObj.resultMsg" ng-style="vm.cancelnSaveObj.saveSuccess == true ? {color:'green'} : {color:'red'}">{{vm.cancelnSaveObj.resultMsg}}</div>
