@@ -66,10 +66,19 @@
                                     //If the job status is not in progress, promise resolves to undefined
                                     if(result[0] !== undefined){
                                         //Create a property that would hold the progress detail for in progress batches
-                                        if(result[0].succeeded_by_time_pct !== undefined)
-                                            job.succeeded_time_pct = result[0].succeeded_by_time_pct;
+                                        if(result[0].succeeded_by_time_pct !== undefined){
+                                            for(let key in result[0].instances.resources){
+                                                angular.forEach(job.instances,function(instance){
+                                                    if(instance.id === key){
+                                                        instance.instance_succeeded_time_pct = result[0].instances.resources[key].succeeded_by_time_pct;
+                                                    }
+                                                });
+                                            }
+                                        }
                                         else if(result[0].succeeded_by_time_pct === undefined)
                                             job.succeeded_time_pct = 0;
+                                    }else{
+                                            job.succeeded_time_pct = 0;                                                                               
                                     }
                                     vm.job = job;
                                     $window.localStorage.setItem('batch_job_status',job.batch_status);

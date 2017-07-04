@@ -14,7 +14,7 @@
                         <div class="rs-progress rs-progress-small" ng-if="vm.progressFlag !== false" style="display: inline-block;">
                             <div class="rs-progress-inner">
                                 <div class="rs-segment" ng-style="{'width': +vm.succeeded_time_pct +'%'}">
-                                    <div class="rs-bar rs-status-ok rs-bar-striped"></div>
+                                    <div ng-class="{'rs-bar rs-status-ok rs-bar-striped': vm.succeeded_time_pct != '100' , 'rs-bar rs-status-ok': vm.succeeded_time_pct == '100'}"></div>
                                 </div>
                             </div>
                         </div><span class="rs-status-ok" ng-if="vm.progressFlag !== false"><em> {{vm.succeeded_time_pct}}%</em></span>
