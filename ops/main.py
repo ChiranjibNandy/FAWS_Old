@@ -3,8 +3,6 @@ import os
 import sys
 import subprocess
 
-import boto3
-
 # from migrator_common.ops.container import Container
 # from migrator_common.ops.ecs_task import EcsTask
 # from migrator_common.ops.ecs_service import EcsService
@@ -94,40 +92,6 @@ class Operator(object):
 
     def show_latest_release(self):
         ecs = boto3.client('ecs')
-
-        # Find the 'migrator-api-${ENV}' task definition family name.
-        # (all migrator-* task def families run the same image).
-        resp = ecs.list_task_definition_families()
-        for tf in resp['families']:
-            if 'opdash-cp' in tf:
-                task_family = tf
-                break
-        else:
-            print 'ERROR: Failed to find task family name in ECS: %s' % resp
-            return 1
-
-        # Find the newest task definition ARN
-        resp = ecs.list_task_definitions(
-            sort='DESC',
-            familyPrefix=task_family,
-        )
-        if not resp['taskDefinitionArns']:
-            print 'ERROR: Task family %r has no task definitions' % task_family
-            return 1
-        task_def_arn = resp['taskDefinitionArns'][0]
-
-        # Grab the image from the task definition
-        resp = ecs.describe_task_definition(taskDefinition=task_def_arn)
-        for item in resp['taskDefinition']['containerDefinitions']:
-            image = item['image']
-            break
-        else:
-            print 'ERROR: Failed to find image in task definition: %s' % resp
-            return 1
-
-        _, tag = image.split(':', 1)
-        print tag
-        return 0
 
 def get_args():
     parser = argparse.ArgumentParser()
