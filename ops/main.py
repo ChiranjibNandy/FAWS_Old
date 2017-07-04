@@ -90,6 +90,7 @@ class Operator(object):
         container.push(token, repo, tag)
         print('Done')
 
+
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('action')
