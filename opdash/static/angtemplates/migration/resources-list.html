@@ -171,16 +171,16 @@
                 <h3>Benefits:</h3>
                 <big>
                     <ul>
-                        <li><b>Increase infratructure efficiency</b></li>
-                        <li><b>Explore the newest Rackspace offerings</b></li>
-                        <li><b>May be even save some money!</b></li>
+                        <li><b>Increase infratructure efficiency.</b></li>
+                        <li><b>Explore the newest Rackspace offerings.</b></li>
+                        <li><b>Maybe even save some money!</b></li>
                     </ul>
                 </big>
                 <h3>What to expect:</h3>
                 <big>
                     <ol class="rs-custom-counter">
-                        <li><b>Fill out the form below</b></li>
-                        <li><b>We will create new AWS account for you and notify <span class="tab"></span>you when you can start migrating</b></li>
+                        <li><b>Fill out the form below.</b></li>
+                        <li><b>We will create a new AWS account for you and notify you when you can start migrating. <span class="tab"></span></b></li>
                     </ul>
                 </big>
                 <!--<br>-->
@@ -194,17 +194,17 @@
             </div>
         </div>
         <div class="row" ng-class="{disabled:vm.fawsCreationProgress}" ng-show="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker">
-            <h3>Create new AWS account now:</h3>
+            <h3><strong style="color:#c40022;">Step 1: </strong> Create new AWS account now-<span class="half-tab"></h3>
             <div class="row">
                 <span>
-                    <span class="control-label-cust">Account Name </span><span class="half-tab"></span>
-                    <input type="text" ng-model="vm.fawsAcctName" class="rs-input-xlarge" placeholder="AWS Account Name" />
+                    <span class="control-label-cust" ng-hide = "vm.fawsCreated">Account Name </span><span class="half-tab"></span>
+                    <input type="text" ng-model="vm.fawsAcctName" ng-hide = "vm.fawsCreated" class="rs-input-xlarge" placeholder="AWS Account Name" />
                 </span>
             </div>
-            <div class="row">
+            <div class="row" ng-hide = "vm.fawsCreated">
                 <!--<span class="tab"></span><span class="tab"></span><span class="half-tab"></span>-->
                 <span>
-                    <span class="control-label-cust">Service Level  </span><span class="half-tab"></span>
+                    <span class="control-label-cust" >Service Level  </span><span class="half-tab"></span>
                     <span>
                         <span>
                             <input type="radio" ng-model="vm.serviceLevel" value="navigator">
@@ -215,11 +215,18 @@
                             <input type="radio" ng-model="vm.serviceLevel" value="aviator">
                             <strong>Aviator</strong>
                         </span>
+                        <span class="half-tab" ng-hide = "vm.fawsCreated"></span>
+                         <span>
+                         <a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank" style="font-style: italic;">(Learn More)</a>
+                        </span>
                     </span>
-                </span>
+                </span>    
             </div>   
+            <div class="row" style ="padding-top: 8px;" ng-hide = "vm.fawsCreated">
+                        <input  type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required"><Strong class="ng-binding">Terms & Conditions (language TBD, awaiting legal response on Gavel ticket: GVL0066254).</Strong>
+                    </div>
             <div class="row service-button">
-                <div class="intro-modal-nofaws rs-success" ng-show="vm.fawsCreated">Request for new AWS account creation is successfull.We will let you know when the account is created. You can follow the request <a href="https://mycloud.rackspace.com/cloud/{{vm.tenant_id}}/tickets" target="_blank"> here</a></div>
+                <div class="intro-modal-nofaws rs-success" ng-show="vm.fawsCreated">Thank you. A request for creating a new AWS account was successfully created. We will let you know when the account is created. You can follow the request  <a href="https://mycloud.rackspace.com/cloud/{{vm.tenant_id}}/tickets" target="_blank"> here</a>.</div>
                 <div class="intro-modal-nofaws" style="color: #c40022" ng-show="vm.fawsError">Uh oh! Something went wrong while submitting request. Please try again after sometime...</div>
             </div>
         </div>
@@ -231,8 +238,9 @@
                     Don't show this again
                 </label>
         </div>
-        <a ng-link="['MigrationStatus']" ng-class="{disabled:vm.introModalLoading || vm.fawsCreationProgress}" class="rs-btn">Cancel</a>
-        <a ng-show="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker && !vm.fawsError && !vm.fawsCreationProgress && !vm.fawsCreated" class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.serviceLevel}" ng-click="vm.createFawsAccount(true)">Submit</a>
+        <a ng-link="['MigrationStatus']" ng-hide = "vm.fawsCreated" ng-class="{disabled:vm.introModalLoading || vm.fawsCreationProgress}" class="rs-btn">Cancel</a>
+        <a ng-link="['MigrationStatus']" ng-show="vm.fawsCreated" class="rs-btn">Exit</a>
+        <a ng-show="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker && !vm.fawsError && !vm.fawsCreationProgress && !vm.fawsCreated" class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.serviceLevel || !vm.acceptTermsAndConditions}" ng-click="vm.createFawsAccount(true)">Submit</a>
         <a ng-show="vm.noFawsAccounts && !vm.introModalLoading && vm.isRacker && !vm.fawsError && !vm.fawsCreationProgress && !vm.fawsCreated" class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.fawsKeyValue1 || !vm.fawsKeyValue2 || !vm.fawsAcctId}" ng-click="vm.createFawsAccount(false)">Submit</a>
         <a ng-show="vm.noFawsAccounts && !vm.introModalLoading  && vm.fawsCreationProgress" class="rs-btn disabled" disabled="disabled">Submitting...</a>
         <a ng-hide="vm.noFawsAccounts && !vm.introModalLoading" class="rs-btn rs-btn-primary" ng-class="{disabled:vm.introModalLoading || vm.noFawsAccounts}" data-dismiss="modal" aria-hidden="true" href="javascript:void(0)">Start a Migration</a>
