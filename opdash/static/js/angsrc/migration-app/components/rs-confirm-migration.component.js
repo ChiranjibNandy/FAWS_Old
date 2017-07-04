@@ -100,7 +100,7 @@
                                     var statusList=[];
                                     for(var i=0;i<jobList.length;i++){
                                         for(var j=0;j<jobList[i].instances.length;j++){
-                                            if(jobList[i].batch_status === "scheduled" && jobList[i].batch_status === "done"){
+                                            if(jobList[i].batch_status !== "error" && jobList[i].batch_status !== "canceled"){
                                                 statusList.push(jobList[i].instances[j]);
                                             }
                                         }
