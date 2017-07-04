@@ -68,17 +68,12 @@
                                 angular.forEach(status.instances, function (instance) {
                                     if(instance['name'] == server.name){
                                         server.migStatusJobId = status.job_id;
-                                        if(instance['status'] == 'error' || instance['status'] == 'canceled'){
-                                            server.canMigrate = true;
-                                            server.migStatus = instance['status'];
-                                        }
-                                        else{
-                                            //set status of a server to false if batch migration response is other than 'error'
+                                        if(status.batch_status != 'error' || status.batch_status != 'canceled'){
                                             server.canMigrate = false;
+                                            server.migStatus = status.batch_status;
                                             keepGoing = false;
-                                            server.migStatus = instance['status'];
                                         }
-                                    }
+                                    };
                                 });
                             };
                         });
@@ -203,6 +198,7 @@
                                 }
                             });
 
+                            //On page load, make eligibility call for first few available servers that are in first page of select resources page.
                             vm.pageChangeEvent();
                             
                             $window.localStorage.allServers = JSON.stringify(vm.items);
