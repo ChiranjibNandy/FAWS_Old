@@ -89,18 +89,25 @@
                  * Checks whether the selected server(s) have already been migrated/scheduled, if yes, then rejects the migration, otherwise triggers the migration.
                  */
                 vm.checkStatus = function(){
-                    
+                    if(dataStoreService.getResourceItemsForEditingMigration()){
+                        vm.migrate();
+                        return;
+                    }
                     dashboardService.getCurrentBatches() //fetch the batch list by making the job_status api call in dashbaord service
                             .then(function (response) {
                                 if (response && response.error == undefined){
+                                    vm.migrating = true;
                                     vm.checking = true;
                                     var jobList = response.job_status_list;
-                                
                                 //get status of all the migrations in an array - to check if these resoruces have been scheduled in any migrations earlier 
                                     var statusList=[];
-                                    for(var i=0;i<jobList.length;i++)
-                                            for(var j=0;j<jobList[i].instances.length;j++)
+                                    for(var i=0;i<jobList.length;i++){
+                                        for(var j=0;j<jobList[i].instances.length;j++){
+                                            if(jobList[i].batch_status !== "error" && jobList[i].batch_status !== "canceled"){
                                                 statusList.push(jobList[i].instances[j]);
+                                            }
+                                        }
+                                    }       
                                     
                                 //get list of selected resources from local storage, in an array
                                     var equipments = {
@@ -140,10 +147,10 @@
                                     
                                 //finally - if none of the resources have been migrated or scheduled to be migrated in other batch (goodToGo === true), trigger migration
                                     if(vm.goodToGo){ 
-                                        // console.log("Migration Good to go")
                                         vm.migrate();
                                     }else{//otherwise error message will be displayed on the screen since goodToGo===false.
-                                            vm.checking = false;
+                                        vm.checking = false;
+                                        $('#duplicate-instance').modal('show');
                                     }//end if
                             }else{ //if the job_status call in dashbaord service fails
                                     vm.checking = false;
@@ -152,8 +159,23 @@
                     
                 })//end of dashboardService.getCurrentBatches()
                         
+            };
+            
+                /**
+                 * @ngdoc method
+                 * @name goToStep1
+                 * @methodOf migrationApp.controller:rsconfirmmigrationCtrl
+                 * @description 
+                 * Resets all previous resource data and helps to starts a new migration
+                 */
+                vm.goToStep1 = function () {
+                    dataStoreService.setResourceItemsForEditingMigration(false);
+                    dataStoreService.resetAll();
+                    $window.localStorage.clear();
+                    if($window.localStorage.selectedServers !== undefined)
+                        $window.localStorage.removeItem('selectedServers');
+                    $rootRouter.navigate(["MigrationResourceList"]);
                 };
-
 
                 /**
                  * @ngdoc method

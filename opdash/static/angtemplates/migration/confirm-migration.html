@@ -62,8 +62,6 @@
 
                 <!--<div style="margin-top: 10px; text-align: right;" ng-show="vm.migrating" >Preparing and sending migration request...<i class="fa fa-refresh fa-spin" style="font-size:16px"></i></div>-->
                 <div style="color: red; text-align: right;" ng-show="vm.errorInMigration">Error while trying to migrate</div>
-                <div style="color: red; text-align: right;" ng-show="!vm.goodToGo">Cannot continue. One or more resources already scheduled / migrated.</div>
-                <div style="color: red; text-align: right;" ng-show="!vm.goodToGo">Please go to step1 to re-select resources.</div>
                 <br>
             </div>
         </div>
@@ -86,6 +84,23 @@
             </div>
         </div>
         <div class="modal-footer">
+        </div>
+    </div>
+    <!-- duplicate-instance modal -->
+    <div id="duplicate-instance" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-header">
+            <h3>Cannot continue !</h3>
+        </div>
+        <div class="modal-body">
+            <p>
+                <div>One or more resources in your selection have already been scheduled / migrated in another batch.</div>
+                <div>Please go to step1 to re-select resources.</div>
+            </p>
+        </div>
+        <div class="modal-footer">
+            <a ng-click="vm.goToStep1()" class="rs-btn rs-btn-primary">Go to Step-1</a>
+            <a class="rs-btn" data-dismiss="modal" aria-hidden="true">No, Go back</a>
         </div>
     </div>
     <!-- modify migration modal -->
