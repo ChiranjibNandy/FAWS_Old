@@ -2,10 +2,10 @@
     <div class="migr-ddi-name">{{vm.tenant_account_name}} #{{vm.tenant_id}}
         <span class="migr-ddi-name"><i class="fa fa-arrow-right fa-fw"></i>
             <div class="rs-dropdown rs-primary-dropdown" ng-class="{'disabled': !vm.displayFawsDropdown}">
-                <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.fawsAcctStatus && !vm.displayFawsDropdown"> <div>{{vm.selectedFaws}}</div></a>
-                <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.fawsAcctStatus && vm.displayFawsDropdown"> <div class="faws-name">{{vm.selectedFawsName}}</div><div class="faws-account"> &nbsp;({{vm.selectedFawsNum}})</div> <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span></a>
+                <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.selectedFaws && vm.fawsAcctStatus && !vm.displayFawsDropdown"> <div>{{vm.selectedFaws}}</div></a>
+                <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.selectedFawsName && vm.fawsAcctStatus && vm.displayFawsDropdown"> <div class="faws-name">{{vm.selectedFawsName}}</div><div class="faws-account"> &nbsp;({{vm.selectedFawsNum}})</div> <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span></a>
                 <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="!vm.fawsAcctStatus"> No AWS Accounts Found <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span></a>
-                <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.displayFawsDropdown"><i class="rs-caret"></i></a>
+                <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.displayFawsDropdown && vm.selectedFaws"><i class="rs-caret"></i></a>
                 <ul class="rs-dropdown-menu hidden">
                     <li class="rs-dropdown-item" ng-show="vm.showCreateAccount">
                         <span class="rs-dropdown-category">You may create a new Account for this migration:
