@@ -204,18 +204,18 @@
                                 vm.fawsCreated = false;
                                 vm.fawsCreationProgress = false;
                             }
+                            vm.fawsAcctName = '';
+                            vm.fawsAcctId = '';
+                            vm.fawsKeyValue1 = '';
+                            vm.fawsKeyValue2 = '';
+                            vm.fawsSourceKey = '';
+                            vm.fawsTenantId = '';
                     }, function (error) {
                         vm.fawsError = true;
                         vm.fawsResponse = false;
                         vm.fawsCreated = false;
                         vm.fawsCreationProgress = false;
                     });
-                    vm.fawsAcctName = '';
-                    vm.fawsAcctId = '';
-                    vm.fawsKeyValue1 = '';
-                    vm.fawsKeyValue2 = '';
-                    vm.fawsSourceKey = '';
-                    vm.fawsTenantId = '';
                 };
                 
                 vm.switchUser = function() {

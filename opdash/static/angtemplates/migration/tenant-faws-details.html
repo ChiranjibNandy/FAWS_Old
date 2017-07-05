@@ -86,7 +86,8 @@
     <div class="modal-footer">
        
         <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.fawsKeyValue1 || !vm.fawsKeyValue2 || !vm.fawsAcctId}" ng-click="vm.createFawsAccount(false)" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
-        <a class="rs-btn disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
+        <a class="rs-btn rs-btn-primary disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
+        <i class="rs-processing-indicator" ng-show="vm.fawsCreationProgress"></i>
         <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</a>
     </div>
 </div>
@@ -130,7 +131,8 @@
     <div class="modal-footer">
        
         <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.serviceLevel}" ng-click="vm.createFawsAccount(true)" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
-        <a class="rs-btn disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
+        <a class="rs-btn rs-btn-primary disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
+        <i class="rs-processing-indicator" ng-show="vm.fawsCreationProgress"></i>
         <a class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.fawsCreationProgress}">Close</a>
     </div>
 </div>
@@ -161,7 +163,8 @@
     <div class="modal-footer">
        
         <a class="rs-btn rs-btn-primary" ng-click="vm.deleteAWSAccount()" ng-hide="vm.fawsDeleteError || vm.fawsDeleteProgress || vm.fawsDeleted">Delete</a>
-        <a class="rs-btn disabled" disabled="disabled" ng-show="vm.fawsDeleteProgress">Deleting...</a>
+        <a class="rs-btn rs-btn-primary disabled" disabled="disabled" ng-show="vm.fawsDeleteProgress">Deleting...</a>
+        <i class="rs-processing-indicator" ng-show="vm.fawsDeleteProgress"></i>
         <a class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.fawsDeleteProgress}">Close</a>
     </div>
 </div>

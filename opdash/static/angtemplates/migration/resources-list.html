@@ -38,7 +38,7 @@
                     <div class="rs-pull-right allign-buttons" ng-hide="vm.itemsLoading">
                         <rssaveprogress stepname="MigrationResourceList" type="button" ></rssaveprogress>
                         <a class="rs-btn rs-btn-primary " ng-hide="vm.continuing" ng-click="vm.savencontinue()">Continue</a>
-                        <a class="rs-btn disabled" disabled="disabled" ng-show="vm.continuing">Continuing...</a>
+                        <a class="rs-btn rs-btn-primary disabled" disabled="disabled" ng-show="vm.continuing">Continuing...</a>
                         <i class="rs-processing-indicator" ng-show="vm.continuing"></i>
                     </div>
                 </rs-tabs>
@@ -234,7 +234,8 @@
         <a ng-link="['MigrationStatus']" ng-class="{disabled:vm.introModalLoading || vm.fawsCreationProgress}" class="rs-btn">Cancel</a>
         <a ng-show="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker && !vm.fawsError && !vm.fawsCreationProgress && !vm.fawsCreated" class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.serviceLevel}" ng-click="vm.createFawsAccount(true)">Submit</a>
         <a ng-show="vm.noFawsAccounts && !vm.introModalLoading && vm.isRacker && !vm.fawsError && !vm.fawsCreationProgress && !vm.fawsCreated" class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.fawsKeyValue1 || !vm.fawsKeyValue2 || !vm.fawsAcctId}" ng-click="vm.createFawsAccount(false)">Submit</a>
-        <a ng-show="vm.noFawsAccounts && !vm.introModalLoading  && vm.fawsCreationProgress" class="rs-btn disabled" disabled="disabled">Submitting...</a>
+        <a ng-show="vm.noFawsAccounts && !vm.introModalLoading  && vm.fawsCreationProgress" class="rs-btn rs-btn-primary disabled" disabled="disabled">Submitting...</a>
+        <i class="rs-processing-indicator" ng-show="vm.noFawsAccounts && !vm.introModalLoading  && vm.fawsCreationProgress"></i>
         <a ng-hide="vm.noFawsAccounts && !vm.introModalLoading" class="rs-btn rs-btn-primary" ng-class="{disabled:vm.introModalLoading || vm.noFawsAccounts}" data-dismiss="modal" aria-hidden="true" href="javascript:void(0)">Start a Migration</a>
     </div>
 </div>

@@ -43,7 +43,7 @@
              * @name migrationApp.controller:rsmigrationitemCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationitem rsmigrationitem} component
              */
-            controller: ["migrationitemdataservice", "datastoreservice", "serverservice", "httpwrapper", "$rootRouter", "authservice", "$q", "$scope","$window", "$filter", function (ds, datastoreservice, ss, HttpWrapper, $rootRouter, authservice, $q, $scope,$window, $filter) {
+            controller: ["migrationitemdataservice", "datastoreservice", "serverservice", "httpwrapper", "$rootRouter", "authservice", "$q", "$scope","$window", "$filter","$timeout", function (ds, datastoreservice, ss, HttpWrapper, $rootRouter, authservice, $q, $scope,$window, $filter, $timeout) {
                 var vm = this;
 
                 /**
@@ -57,34 +57,25 @@
                  */
                 var mapServerStatus = function(dataList, statusList) {
                     angular.forEach(dataList, function (server) {
+                        var keepGoing = true;
                         server.canMigrate = true;
                         server.migStatus = 'error';
                         server.eligible = 'Not Available';
                         server.eligibiltyTests = {};
                         //map status of a server received from Batch response with respect to the server id. 
                         angular.forEach(statusList, function (status) {
-                            angular.forEach(status.instances, function (instance) {
-                                if(instance['name'] == server.name){
-                                    server.migStatusJobId = status.job_id;
-                                    //Start--to be removed after demo3
-                                    if(status.batch_status == 'error' || status.batch_status == 'canceled'){
-                                        server.canMigrate = true;
-                                        server.migStatus = status.batch_status;
-                                    }
-                                    else{
-                                    //End--to be removed after demo3
-                                        if(instance['status'] != 'error'){
-                                            //set status of a server to false if batch migration response is other than 'error'
+                            if(keepGoing) {
+                                angular.forEach(status.instances, function (instance) {
+                                    if(instance['name'] == server.name){
+                                        server.migStatusJobId = status.job_id;
+                                        if(status.batch_status != 'error' || status.batch_status != 'canceled'){
                                             server.canMigrate = false;
-                                            server.migStatus = instance['status'];
-                                        }
-                                        else{
-                                            server.canMigrate = true;
-                                            server.migStatus = instance['status'];
+                                            server.migStatus = status.batch_status;
+                                            keepGoing = false;
                                         }
                                     };
-                                }
-                            });
+                                });
+                            };
                         });
                     });
                     return dataList;
@@ -140,6 +131,7 @@
                     vm.propertyName = "name";
                     vm.activeItemCount = 0;
                     vm.eligCallInProgress = true;
+                    vm.pageSize = 5; // items to be displayed per page
                     /**
                      * @ngdoc property
                      * @name tenant_id
@@ -203,16 +195,11 @@
                                 }
                                 if(item.canMigrate == true && item.status.toLowerCase() == 'active'){ 
                                     vm.activeItemCount++;
-                                    var activeInstance = {
-                                        "id":item.id,
-                                        "region":item.region.toUpperCase()
-                                    }; 
-                                    vm.activeItemsArr.push(activeInstance);
                                 }
                             });
-                            
-                            //Sync eligibility precheck API call for all available servers
-                            vm.eligibilityCheck(vm.activeItemsArr, true);
+
+                            //On page load, make eligibility call for first few available servers that are in first page of select resources page.
+                            vm.pageChangeEvent();
                             
                             $window.localStorage.allServers = JSON.stringify(vm.items);
                             
@@ -234,7 +221,6 @@
                             datastoreservice.storeallItems(vm.items, vm.type);
                             // pagination controls
                             vm.currentPage = 1;
-                            vm.pageSize = 5; // items to be displayed per page
                             vm.totalItems = vm.items.length; // number of items received.
                             vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
                             for(var i=1;i<=vm.noOfPages;i++){
@@ -303,7 +289,9 @@
                             count++;
                             vm.parent.addItem(item_selected, vm.type);
                         });
-                        vm.isAllSelected = count === vm.activeItemCount;
+                        if(count){
+                            vm.isAllSelected = count === vm.activeItemCount;
+                        }
                     }
 
                     // Setup status filters
@@ -363,7 +351,7 @@
                  */
                 vm.changeItemSelection = function () {
                     angular.forEach(vm.items, function (item) {
-                        if(item.canMigrate == true && item.status.toLowerCase() == 'active') { 
+                        if(item.canMigrate == true && item.status.toLowerCase() == 'active' && item.eligibiltyTests.length) { 
                             item.selected = vm.isAllSelected;
                             vm.changeSelectAll(item, true);
                         }
@@ -396,6 +384,7 @@
                         vm.sortingOrder = true;
                     }
                     vm.items = items;
+                    vm.pageChangeEvent();
                 };
 
                 //store slog status
@@ -447,7 +436,7 @@
                 vm.equipmentDetails = function(type, itemdetails) {
                     vm.parent.equipmentDetailsModal(type, itemdetails);
                 }
-
+                var timeout = null;
                 $scope.$watch('vm.filtervalue', function (query) {
                     vm.filteredArr = $filter("filter")(vm.items, query);
                     // pagination controls
@@ -458,7 +447,12 @@
                     vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
                     for(var i=1;i<=vm.noOfPages;i++){
                         vm.pageArray.push(i);
-                    };    
+                    };
+                    clearTimeout(timeout);
+                    // Wait for user to stop typing
+                    timeout = setTimeout(function () {
+                        if(query && vm.filteredArr.length) vm.pageChangeEvent(vm.filteredArr); 
+                    }, 2500);   
                 });
 
                 vm.eligibilityCheck = function(item, firstRun){
@@ -557,6 +551,31 @@
                  */
                 vm.eligibilityDetails = function(itemdetails) {
                     vm.parent.eligibilityDetailsModal(itemdetails);
+                }
+
+                //Look for page change event. 
+                vm.pageChangeEvent = function(filterInput){
+                    var arrForEligibilityTest = [];
+                    if(!vm.filtervalue){
+                        var items = vm.items.slice((vm.currentPage-1)*vm.pageSize, ((vm.currentPage-1)*vm.pageSize)+vm.pageSize)
+                    }
+                    else{
+                        if(filterInput)
+                            vm.tempfilteredArr = angular.copy(filterInput);
+                        var items = vm.tempfilteredArr.slice((vm.currentPage-1)*vm.pageSize, ((vm.currentPage-1)*vm.pageSize)+vm.pageSize);
+                        
+                    }
+                    angular.forEach(items, function(item){
+                        if(item.canMigrate == true && item.status.toLowerCase() == 'active' && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]){
+                            var activeInstance = {
+                                "id":item.id,
+                                "region":item.region.toUpperCase()
+                            }; 
+                            arrForEligibilityTest.push(activeInstance);
+                        }
+                    });
+                    if(arrForEligibilityTest.length)
+                        vm.eligibilityCheck(arrForEligibilityTest, true);
                 }
 
                 return vm;

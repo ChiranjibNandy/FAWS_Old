@@ -447,6 +447,12 @@
                                     vm.fawsError = false;
                                 },3000);
                             }
+                            vm.fawsAcctName = '';
+                            vm.fawsAcctId = '';
+                            vm.fawsKeyValue1 = '';
+                            vm.fawsKeyValue2 = '';
+                            vm.fawsSourceKey = '';
+                            vm.fawsTenantId = '';
                     }, function (error) {
                         vm.fawsError = true;
                         vm.fawsResponse = false;
@@ -456,12 +462,6 @@
                             vm.fawsError = false;
                         },3000);
                     });
-                    vm.fawsAcctName = '';
-                    vm.fawsAcctId = '';
-                    vm.fawsKeyValue1 = '';
-                    vm.fawsKeyValue2 = '';
-                    vm.fawsSourceKey = '';
-                    vm.fawsTenantId = '';
                 }
                  
                 vm.itemsLoadingStatus = function(status){
