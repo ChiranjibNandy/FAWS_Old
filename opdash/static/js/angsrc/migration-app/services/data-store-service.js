@@ -574,14 +574,10 @@
              * Gets projected cost based on selected migrations
             */
             self.getProjectedPricing = function() {
-                //var instances = self.getItems('server');
                 var instances = [];
-                if(self.getItems('server') === undefined)
+                //Check if the selected servers are alreday there in localStorage
+                if($window.localStorage.selectedServers !== undefined)
                     instances = JSON.parse($window.localStorage.selectedServers);
-	            else if(self.getItems('server').length === 0)
-	                instances = JSON.parse($window.localStorage.selectedServers);
-	            else
-	                instances = self.getItems('server');
                 var totalProjectedPricing = 0;
                 instances.forEach(function(item){
                     
