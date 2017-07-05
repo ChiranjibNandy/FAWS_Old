@@ -191,10 +191,10 @@
                     requestObj = ds.prepareJobRequest();
                     vm.acceptTermsAndConditions= true;
                     if(dataStoreService.getResourceItemsForEditingMigration()){
-                        migrationService.modifyMigration(dataStoreService.getJobIdForMigration(),requestObj)
+                        migrationService.modifyMigration(dataStoreService.getJobIdForMigration('jobId'),requestObj)
                         .then(function (result) {
                             if(result){
-                                migrationService.pauseMigration(dataStoreService.getJobIdForMigration(),'unpause').then(function(success){
+                                migrationService.pauseMigration(dataStoreService.getJobIdForMigration('jobId'),'unpause').then(function(success){
                                     if(success){
                                         if(vm.saveResources) {
                                             vm.deleteExistingSavedMigration();
@@ -244,25 +244,12 @@
                  * This will delete the existing saved migration and update it with the new one
                  */
                 vm.deleteExistingSavedMigration = function(){
-                    dataStoreService.getSavedItems()
-                        .then(function (result) {
-                            var savedMigrations = JSON.parse(result.savedDetails || '[]');
-                            
-                            // remove from server
-                            var index = -1;
-                            for(var i=0; i<savedMigrations.length; i++){
-                                if($window.localStorage.migrationName === savedMigrations[i].instance_name){
-                                    index = i;
-                                    break;
-                                }
-                            }
-                            index!==-1 && savedMigrations.splice(index, 1);
-                            result.savedDetails = JSON.stringify(savedMigrations);
-                            
-                            if(dataStoreService.postSavedInstances(result)){
+                    dataStoreService.deleteSavedInstances(dataStoreService.getJobIdForMigration('saveId'))
+                        .then(function(result){
+                            if(result){
                                 vm.saveResourceDetails();
                             }
-                        })
+                        });
                 };
 
                 /**

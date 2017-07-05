@@ -33,7 +33,8 @@
              */
             self.resourceItemsForEditingMigration = {
                 shouldTrigger:false,
-                jobId:''
+                jobId:'',
+                saveId:''
             };
             
             /**
@@ -410,7 +411,7 @@
              * Invokes "/api/users/uidata/" API call for fetching exisitng saved instances. 
             */
             this.getSavedItems = function() {
-                var getSavedInstancesUrl = "/api/users/uidata/Saved_Migrations";
+                var getSavedInstancesUrl = "/api/jobs/saved";
                 return HttpWrapper.send(getSavedInstancesUrl, {"operation":'GET'})
                                   .then(function(result){
                                       if(result == null){
@@ -444,12 +445,30 @@
                  * @name postSavedInstances
                  * @methodOf migrationApp.service:datastoreservice
                  * @description 
-                 * Invokes "/api/users/uidata/add" API call for posting saved instance.
+                 * Invokes "/api/jobs/saved" API call for posting saved instance.
             */
             this.postSavedInstances = function(requestObj) {
                 var self = this;
                 //var requestObj = self.objForSaveLater(response, saveInstance);
-                return HttpWrapper.save("/api/users/uidata/add", {"operation":'POST'}, requestObj)
+                return HttpWrapper.save("/api/jobs/saved", {"operation":'POST'}, requestObj)
+                    .then(function(result){
+                        return true;
+                    },function(error) {
+                        return false;
+                    });
+            };
+
+            /**
+                 * @ngdoc method
+                 * @name deleteSavedInstances
+                 * @methodOf migrationApp.service:datastoreservice
+                 * @description 
+                 * Invokes "/api/jobs/saved/"+id API call for posting saved instance.
+            */
+            this.deleteSavedInstances = function(id) {
+                var self = this;
+                //var requestObj = self.objForSaveLater(response, saveInstance);
+                return HttpWrapper.delete("/api/jobs/saved/"+id)
                     .then(function(result){
                         return true;
                     },function(error) {
@@ -480,7 +499,7 @@
                         "recommendations":saveInstance.recommendations,
                         "scheduling-details":saveInstance.migration_schedule,
                         "step_name":saveInstance.step_name,
-                        "scheduledItem":saveInstance.scheduledItem,
+                        "scheduledItem":saveInstance.scheduledItem || false,
                         "aws-account":JSON.parse($window.localStorage.getItem("fawsAccounts")).selectedFawsAccount,
                         "initiated_by":authservice.getAuth().username
                     }];
@@ -716,12 +735,15 @@
             };
 
             self.setJobIdForMigration = function(value){
-                self.resourceItemsForEditingMigration.jobId = value;
-                $window.localStorage.setItem("jobId",value);
+                self.resourceItemsForEditingMigration.jobId = value.jobId;
+                self.resourceItemsForEditingMigration.saveId = value.saveId;
+                $window.localStorage.setItem("resourceItemsForEditingMigration",JSON.stringify(self.resourceItemsForEditingMigration));
             };
 
-            self.getJobIdForMigration = function(){
-                return $window.localStorage.getItem("jobId");
+            self.getJobIdForMigration = function(value){
+                var resourceItems = JSON.parse($window.localStorage.getItem("resourceItemsForEditingMigration"));
+                console.log(value);
+                return resourceItems[value];
             };
 
             self.getResourceItemsForEditingMigration = function(){

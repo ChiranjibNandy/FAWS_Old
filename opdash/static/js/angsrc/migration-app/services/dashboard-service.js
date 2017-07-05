@@ -37,7 +37,7 @@
                             loaded = true;
                             currentTenant = tenant_id;
                             var savedMigrations = [];
-                            savedMigrations = JSON.parse(results[0].savedDetails || '[]');
+                            savedMigrations = results[0] || '[]';
                             batches = { savedMigrations: savedMigrations, jobs: results[1] };
                             return batches;
                         }, function(errorResponse) {
