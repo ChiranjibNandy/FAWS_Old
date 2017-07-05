@@ -566,7 +566,7 @@
                         
                     }
                     angular.forEach(items, function(item){
-                        if(item.canMigrate == true && item.status.toLowerCase() == 'active' && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]){
+                        if((item.canMigrate == true && item.status.toLowerCase() == 'active' && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]) || (item.status.toLowerCase() == 'active' && (item.migStatus == 'error' || item.migStatus == 'canceled') && !vm.checkingEligibility[item.id]) && !item.eligibiltyTests.length){
                             var activeInstance = {
                                 "id":item.id,
                                 "region":item.region.toUpperCase()
