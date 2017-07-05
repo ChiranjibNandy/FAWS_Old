@@ -275,6 +275,7 @@
                                 var validCompletedBatchStatus = ["done","canceled"];
                                 jobList = response.jobs.job_status_list;
                                 var tempcurrentBatches = [];
+                                vm.nonSavedMigrations = [];
                                 var completedBatches = [];
                                 var currentBatches = [];
                                 angular.forEach(jobList, function (job) {
@@ -312,21 +313,17 @@
                                     var tempSavedMigrations = [];
                                     vm.savedMigrations = response.savedMigrations;
                                     for(var j=0; j<response.savedMigrations.length; j++){
-                                        if(!response.savedMigrations[j].scheduledItem){
-                                            var t = {};
-                                            t.batch_name = response.savedMigrations[j].instance_name;
-                                            t.recommendations = response.savedMigrations[j].recommendations;
-                                            t["scheduling-details"] = response.savedMigrations[j]["scheduling-details"];
-                                            t.selected_resources = response.savedMigrations[j].selected_resources;
-                                            t.step_name = response.savedMigrations[j].step_name;
-                                            t.timestamp = response.savedMigrations[j].timestamp;
-                                            t.aws_account = response.savedMigrations[j]["aws-account"] || "";
-                                            t.initiated_by = response.savedMigrations[j].initiated_by;
-                                            
-                                            tempSavedMigrations.push(t);
+                                        var details = JSON.parse(response.savedMigrations[j].savedDetails);
+                                        if(!details[0].scheduledItem){
+                                            for(var k=0; k<details.length; k++){
+                                                tempSavedMigrations.push(vm.prepareObjForSaved(details[k],response.savedMigrations[j].save_id));
+                                            }
+                                        }else{
+                                            for(var k=0; k<details.length; k++){
+                                                vm.nonSavedMigrations.push(vm.prepareObjForSaved(details[k],response.savedMigrations[j].save_id));
+                                            }
                                         }
                                     }
-
                                     var savedMigrations = $filter('orderBy')(tempSavedMigrations, '-timestamp');
                                     vm.currentBatches.items = currentBatches.concat(savedMigrations);//$filter('orderBy')(currentBatches, '-start').concat(savedMigrations);
                                     vm.currentBatches.noOfPages = Math.ceil(vm.currentBatches.items.length / vm.currentBatches.pageSize);
@@ -375,6 +372,30 @@
                             });
                     }, 3000);
                 };
+
+                /**
+                 * @ngdoc method
+                 * @name prepareObjForSaved
+                 * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                 * @param {Boolean} refresh True if the alerts list needs to be refreshed
+                 * @description 
+                 * It prepares the object for saved instance . 
+                 */
+                vm.prepareObjForSaved = function(details,save_id){
+                    var t = {};
+                    t.save_id = save_id;
+                    t.batch_name = details.instance_name;
+                    t.recommendations = details.recommendations;
+                    t["scheduling-details"] = details["scheduling-details"];
+                    t.selected_resources = details.selected_resources;
+                    t.step_name = details.step_name;
+                    t.timestamp = details.timestamp;
+                    t.aws_account = details["aws-account"] || "";
+                    t.initiated_by = details.initiated_by;
+                    t.scheduledItem = details.scheduledItem || false;
+                        
+                    return t;
+                }
 
                 /**
                  * @ngdoc method
@@ -448,10 +469,11 @@
                  */
                 vm.continueScheduling = function (batch,modifyFlag) {
                     if(modifyFlag){
-                        for(var i = 0; i<vm.savedMigrations.length;i++){
-                            if(batch.metadata.batch_name === vm.savedMigrations[i].instance_name){
-                                dataStoreService.setJobIdForMigration(batch.job_id);
-                                batch = vm.savedMigrations[i];
+                        for(var i = 0; i<vm.nonSavedMigrations.length;i++){
+                            var details = vm.nonSavedMigrations[i];
+                            if(batch.metadata.batch_name === details.batch_name && details.scheduledItem){
+                                dataStoreService.setJobIdForMigration({jobId:batch.job_id,saveId:vm.nonSavedMigrations[i].save_id});
+                                batch = details;
                                 break;
                             }
                         }
@@ -497,38 +519,10 @@
                  */
                 vm.deleteSavedSchedule = function (batch) {
                     batch.deleting = true;
-                    dataStoreService.getSavedItems()
-                        .then(function (result) {
-                            var savedMigrations = JSON.parse(result.savedDetails || '[]');
-                            
-                            // remove from server
-                            var index = -1;
-                            for(var i=0; i<savedMigrations.length; i++){
-                                if(batch.timestamp === savedMigrations[i].timestamp && batch.batch_name === savedMigrations[i].instance_name){
-                                    index = i;
-                                    break;
-                                }
-                            }
-                            index!==-1 && savedMigrations.splice(index, 1);
-                            result.savedDetails = JSON.stringify(savedMigrations);
-                            
-                            if(dataStoreService.postSavedInstances(result)){
-                                // remove from local
-                                index = -1;
-                                for(var i=0; i<vm.currentBatches.items.length; i++){
-                                    if(batch.batch_name === vm.currentBatches.items[i].batch_name){
-                                        index = i;
-                                        break;
-                                    }
-                                }
-                                if(index!==-1){
-                                    vm.currentBatches.items.splice(index, 1);
-                                    vm.currentBatches.noOfPages = Math.ceil(vm.currentBatches.items.length / vm.currentBatches.pageSize);
-                                    vm.currentBatches.pages = new Array(vm.currentBatches.noOfPages);
-                                    
-                                    if(vm.currentBatches.currentPage > vm.currentBatches.pages.length)
-                                        vm.currentBatches.currentPage--;
-                                }
+                    dataStoreService.deleteSavedInstances(batch.save_id)
+                        .then(function(result){
+                            if(result){
+                                vm.getBatches(true);
                             }else{
                                 batch.deleting = false;
                             }
@@ -605,22 +599,6 @@ $rootRouter.navigate(["MigrationStatus"]);
                             }
                         });
                     };
-
-                    /**
-                     * @ngdoc method
-                     * @name modifyMigration
-                     * @methodOf migrationApp.controller:rsmigrationstatusCtrl
-                     * @param {Object} batch The batch object for which the menu is to be displayed
-                     * @description 
-                     * This function will be able to trigger the edit migration by saving the instances details and
-                     * navigating to the select resources page
-                     */
-                    // vm.modifyMigration = function(batch){
-                    //     dataStoreService.resourceItemsForEditingMigration.server = batch.instances;
-                    //     dataStoreService.resourceItemsForEditingMigration.shouldTrigger = true;
-                    //     dataStoreService.selectedTime.migrationName = batch.batch_name
-                    //     $rootRouter.navigate(["MigrationResourceList"]);
-                    // };
 
                     vm.resetSavedMigrationFlag = function(){
                         vm.afterSavedMigration = false;
