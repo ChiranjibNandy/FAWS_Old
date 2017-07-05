@@ -136,7 +136,7 @@
                             <td class="rs-table-text">{{server.vcpu || 2}}</td>
                             <td class="rs-table-text">{{server.memory || '2 GB'}}</td>
                             <td class="rs-table-text">{{server.storage || 'EBS-Only'}}</td>
-                            <td class="rs-table-text">{{server.cost * (server.details.rax_uptime || 720) + (server.cost * (server.details.rax_bandwidth || 0)) + (item.details.rax_storage_size * server.storage_rate) | currency}}</td>
+                            <td class="rs-table-text">{{vm.getTotalInstanceCost(server,item) | currency}}</td>
                         </tr>
                     </tbody>
                 </table>
