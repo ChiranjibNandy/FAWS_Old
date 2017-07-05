@@ -360,6 +360,11 @@
                     $('#calculator_modal').modal('show');
                 };
 
+                //Disable the button immediately on click so that multiple clicks get prevented
+                vm.disableButton = function($event) {
+                    $event.currentTarget.disabled = true;
+                };
+
                 /**
                  * @ngdoc method
                  * @name openUsageCostsModal
