@@ -89,7 +89,10 @@
                  * Checks whether the selected server(s) have already been migrated/scheduled, if yes, then rejects the migration, otherwise triggers the migration.
                  */
                 vm.checkStatus = function(){
-                    
+                    if(dataStoreService.getResourceItemsForEditingMigration()){
+                        vm.migrate();
+                        return;
+                    }
                     dashboardService.getCurrentBatches() //fetch the batch list by making the job_status api call in dashbaord service
                             .then(function (response) {
                                 if (response && response.error == undefined){
@@ -100,7 +103,7 @@
                                     var statusList=[];
                                     for(var i=0;i<jobList.length;i++){
                                         for(var j=0;j<jobList[i].instances.length;j++){
-                                            if(jobList[i].batch_status !== "error" || jobList[i].batch_status !== "canceled"){
+                                            if(jobList[i].batch_status !== "error" && jobList[i].batch_status !== "canceled"){
                                                 statusList.push(jobList[i].instances[j]);
                                             }
                                         }
@@ -156,10 +159,21 @@
                     
                 })//end of dashboardService.getCurrentBatches()
                         
-                };
-
-                vm.goToStep1 = function(){
-                    $("#duplicate-instance").modal('hide');
+            };
+            
+                /**
+                 * @ngdoc method
+                 * @name goToStep1
+                 * @methodOf migrationApp.controller:rsconfirmmigrationCtrl
+                 * @description 
+                 * Resets all previous resource data and helps to starts a new migration
+                 */
+                vm.goToStep1 = function () {
+                    dataStoreService.setResourceItemsForEditingMigration(false);
+                    dataStoreService.resetAll();
+                    $window.localStorage.clear();
+                    if($window.localStorage.selectedServers !== undefined)
+                        $window.localStorage.removeItem('selectedServers');
                     $rootRouter.navigate(["MigrationResourceList"]);
                 };
 
