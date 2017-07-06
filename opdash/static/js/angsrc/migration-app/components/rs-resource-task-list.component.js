@@ -55,14 +55,16 @@
                         resource_type: vm.resource_type,
                         resource_id: vm.resource_id
                     };
-
                     alertsService.getResourceTasks(params, refresh)
                         .then(function(response) {
-                            if(response.error)
+                            if(response.error){
                                 vm.tasks = [];
-                            else
+                                vm.loading = false;
+                            }
+                            else{
                                 vm.batch_name = response.batchName;
                                 vm.tasks = response.tasks;
+                            }
                             if($window.localStorage.batch_job_status === 'in progress' || $window.localStorage.batch_job_status === 'done'){
                                 var promise = HttpWrapper.send('/api/jobs/'+params.job_id+'/progress', { "operation": 'GET' });
                             }
@@ -74,12 +76,6 @@
                                         //Set the flag to true
                                         vm.progressFlag = true;
                                     }
-                                ds.getTrimmedAllItems(params.resource_type==="instance" ? "server" : params.resource_type)
-                                .then(function (response) {
-                                    var details = response.data.filter(function (item) { return item.id == params.resource_id })[0];
-                                    vm.resourceName = details.name;
-                                });
-
                                 vm.loading = false;
                                 vm.manualRefresh = false;
                                 vm.loadError = false;
@@ -107,7 +103,7 @@
                     vm.currentUser = auth.account_name;
                     vm.tasks = [];
 
-                    vm.loading = true;
+                    vm.loading = false;
                     vm.loadError = false;
                     vm.manualRefresh = false;
                     vm.timeSinceLastRefresh = 0;
@@ -122,10 +118,15 @@
                         backRoute = "CompletedBatchDetails";
                         backRouteParams.job_id = previous.params.job_id;
                     }
-
+                    var separatorPosition = [];
+                    for(var i=0; i<next.params.resource_id.length;i++){
+                        if(next.params.resource_id[i] == '+') separatorPosition.push(i);
+                    }
                     vm.job_id = next.params.job_id;
                     vm.resource_type = next.params.resource_type;
-                    vm.resource_id = next.params.resource_id;
+                    vm.resource_id = next.params.resource_id.substr(0,separatorPosition[0]);
+                    vm.resourceName = next.params.resource_id.substr(separatorPosition[1]+1,next.params.resource_id.length);
+                    vm.batch_name = decodeURI(next.params.resource_id.substring(separatorPosition[0]+1,separatorPosition[1]));
                     vm.getResourceTasks(true);
                 };
 
