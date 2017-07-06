@@ -124,13 +124,17 @@
                             </span>
                         </span>
                     </div>
+                     </br> </br>
+                     <div class="row" style ="padding-top: 8px;" >
+                        <input  type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required">&nbsp &nbsp<Strong class="ng-binding">I acknowledge that I have read and accept the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a> and the <a href="https://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Terms and Conditions</a>.</Strong>
+                    </div>
                 </div>
             </form>
         </div>    
     </div>
     <div class="modal-footer">
        
-        <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.serviceLevel}" ng-click="vm.createFawsAccount(true)" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
+        <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.serviceLevel || !vm.acceptTermsAndConditions}" ng-click="vm.createFawsAccount(true)" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
         <a class="rs-btn rs-btn-primary disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
         <i class="rs-processing-indicator" ng-show="vm.fawsCreationProgress"></i>
         <a class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.fawsCreationProgress}">Close</a>

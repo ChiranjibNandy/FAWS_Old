@@ -49,6 +49,7 @@
                 vm.fawsDeleted = false;
                 vm.newAccountDetails = {};
                 vm.serviceLevel = "navigator";
+                vm.acceptTermsAndConditions= false;
 
                 vm.tenant_id = authservice.getAuth().tenant_id; //get Tenant ID
                 vm.is_racker =  authservice.is_impersonator;
