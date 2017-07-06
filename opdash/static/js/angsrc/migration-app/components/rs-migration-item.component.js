@@ -68,7 +68,7 @@
                                 angular.forEach(status.instances, function (instance) {
                                     if(instance['name'] == server.name){
                                         server.migStatusJobId = status.job_id;
-                                        if(status.batch_status != 'error' || status.batch_status != 'canceled'){
+                                        if(!(status.batch_status == 'error' || status.batch_status == 'canceled')){
                                             server.canMigrate = false;
                                             server.migStatus = status.batch_status;
                                             keepGoing = false;
