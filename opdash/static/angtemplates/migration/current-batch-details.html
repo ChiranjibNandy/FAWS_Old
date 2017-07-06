@@ -92,7 +92,7 @@
                                     <span ng-if="instance.status === 'not available'"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>
                                 </td>
                                 <td>
-                                    <a class="rs-btn" ng-link="['ResourceTaskList', {job_id: vm.job.job_id, resource_type: 'instance', resource_id: instance.id}]">See Tasks</a>
+                                    <a class="rs-btn" ng-link="['ResourceTaskList', {job_id: vm.job.job_id, resource_type: 'instance', resource_id: instance.id+'+'+vm.job.metadata.batch_name+'+'+instance.name}]">See Tasks</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -243,7 +243,7 @@
                             </tbody>
                             <tbody ng-show="!vm.loadingBatchTasks && vm.batchTasks.length===0">
                                 <tr>
-                                    <td colspan="3" class="empty-collection-info">You don't have any Tasks</td>
+                                    <td colspan="4" class="empty-collection-info">You don't have any Tasks</td>
                                 </tr>
                             </tbody>
                         </table>

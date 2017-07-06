@@ -29,16 +29,13 @@
                     </div>
                 </div>
                 <div class="migration-status-list-container">
-                    <div ng-show="!vm.loading && vm.tasks.length === 0">
-                        No individual tasks found for this resource
-                    </div>
-                    <table class="rs-list-table no-truncate-td cell-center" ng-show="!vm.loading && vm.tasks.length > 0">
+                    <table class="rs-list-table no-truncate-td cell-center">
                         <thead>
                             <th>Task</th>
                             <th>Status</th>
                             <th>Description</th>
                         </thead>
-                        <tbody>
+                        <tbody ng-show="!vm.loading && vm.tasks.length > 0">
                             <tr ng-repeat="task in vm.tasks">
                                 <td class="rs-table-text">
                                     {{task.name}}
@@ -54,6 +51,13 @@
                                 </td>
                                 <td class="rs-table-text">
                                     {{task.details}}
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody ng-show="!vm.loading && vm.tasks.length === 0">
+                            <tr>
+                                <td class="rs-table-text" colspan="3">
+                                    No individual tasks found for this resource
                                 </td>
                             </tr>
                         </tbody>
