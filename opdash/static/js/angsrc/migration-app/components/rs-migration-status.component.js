@@ -44,7 +44,7 @@
                                 angular.forEach(jobList, function (status) {
                                     angular.forEach(status.instances, function (instance) {
                                         if (instance['name'] == type.name) {
-                                            if(status.batch_status != 'error' || status.batch_status != 'canceled'){
+                                            if(!(status.batch_status == 'error' || status.batch_status == 'canceled')){
                                                 valid = false;
                                             }
                                         }
