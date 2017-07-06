@@ -272,9 +272,9 @@
             </thead>
             <tbody>
                 <tr ng-repeat = "test in vm.eligTestDetails" class="">
-                    <td style="width:136px">{{test.name}}</td>
-                    <td ng-class="{'rs-status-error': test.type == 'failure'}">{{test.description}}</td>
-                    <td ng-class="{'rs-status-ok': test.type == 'success', 'rs-status-error': test.type == 'failure'}" >{{test.type}}</td>
+                    <td class="capitalize" style="width:136px">{{test.name}}</td>
+                    <td class="capitalize" ng-class="{'rs-status-error': test.type == 'failure'}">{{test.description}}</td>
+                    <td class="capitalize" ng-class="{'rs-status-ok': test.type == 'success', 'rs-status-error': test.type == 'failure'}" >{{test.type}}</td>
                 </tr>
             </tbody>
         </table>
