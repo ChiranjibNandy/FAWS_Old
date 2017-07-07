@@ -478,15 +478,7 @@
                     var tenant_id = authservice.getAuth().tenant_id;
                     vm.fawsLink = "https://mycloud.rackspace.com/cloud/"+tenant_id+"/tickets#new";
                 }
-
-                vm.callTemp= function(){
-                    // var url = "/api/cdn/services";
-                    var url = "/api/cbs/volumes";
-                    HttpWrapper.send(url, { "operation": 'GET' })
-                    .then(function (response) {
-                        console.log(response);
-                    });
-                };
+                
                 return vm;
             }
         ]}); // end of component rsmigrationresourceslist
