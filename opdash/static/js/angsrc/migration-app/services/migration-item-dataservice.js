@@ -136,8 +136,7 @@
                         },
                         destination: {
                             region: instance.selectedMapping.region, //.toUpperCase(),
-                            zone: default_zone,
-                            // zone:instance.selectedMapping.zone,
+                            zone: instance.selectedMapping.zone,
                             type: instance.selectedMapping.instance_type
                         }
                     });

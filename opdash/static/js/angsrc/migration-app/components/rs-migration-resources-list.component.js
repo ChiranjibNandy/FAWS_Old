@@ -478,7 +478,7 @@
                     var tenant_id = authservice.getAuth().tenant_id;
                     vm.fawsLink = "https://mycloud.rackspace.com/cloud/"+tenant_id+"/tickets#new";
                 }
-
+                
                 return vm;
             }
         ]}); // end of component rsmigrationresourceslist

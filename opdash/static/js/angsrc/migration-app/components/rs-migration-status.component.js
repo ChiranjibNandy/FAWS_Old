@@ -261,7 +261,7 @@
 
                     var intervalPromise = $interval(function () {
                         vm.count++;
-                        if (vm.count > 4) {
+                        if (vm.count > 2) {
                             $interval.cancel(intervalPromise);
                             vm.refreshFlag = false;
                         }
