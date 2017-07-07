@@ -452,7 +452,9 @@
                 vm.startNewMigration = function () {
                     dataStoreService.setResourceItemsForEditingMigration(false);
                     dataStoreService.resetAll();
+                    dataStoreService.storeEligibilityResults($window.localStorage.eligibilityResults);
                     $window.localStorage.clear();
+                    $window.localStorage.eligibilityResults = dataStoreService.retrieveEligibilityResults();
                     if($window.localStorage.selectedServers !== undefined)
                         $window.localStorage.removeItem('selectedServers');
                     // dataStoreService.setDontShowStatus(!(dataStoreService.getShowWelcomeModal()));

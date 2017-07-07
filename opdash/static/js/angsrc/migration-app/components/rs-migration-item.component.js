@@ -496,6 +496,8 @@
                                         });
                                     });
                                 });
+                                //store eligibility test results for servers with test result as 'success'
+                                $window.localStorage.eligibilityResults = JSON.stringify(vm.items.filter(item => item.eligible == 'Passed'))
                                 $window.localStorage.allServers = JSON.stringify(vm.items);
                                 //to be enabled once precheck call is up
                                 vm.parent.itemsLoadingStatus(false);
@@ -567,11 +569,24 @@
                     }
                     angular.forEach(items, function(item){
                         if((item.canMigrate == true && item.status.toLowerCase() == 'active' && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]) || (item.status.toLowerCase() == 'active' && (item.migStatus == 'error' || item.migStatus == 'canceled') && !vm.checkingEligibility[item.id]) && !item.eligibiltyTests.length){
-                            var activeInstance = {
-                                "id":item.id,
-                                "region":item.region.toUpperCase()
-                            }; 
-                            arrForEligibilityTest.push(activeInstance);
+                            var storedEligibilityResults = [];
+                            //Check for eligibility results stored during the current session.
+                            if(!($window.localStorage.eligibilityResults == undefined || $window.localStorage.eligibilityResults == "undefined")){
+                                var storedEligibilityResults = JSON.parse($window.localStorage.eligibilityResults).filter(val => val.id == item.id);
+                            }
+                            if(storedEligibilityResults.length){
+                                item.canMigrate = true;
+                                item.eligible = 'Passed';
+                                item.eligibiltyTests = storedEligibilityResults[0].eligibiltyTests;
+                                vm.parent.itemsLoadingStatus(false);
+                            }
+                            else{
+                                var activeInstance = {
+                                    "id":item.id,
+                                    "region":item.region.toUpperCase()
+                                }; 
+                                arrForEligibilityTest.push(activeInstance);
+                            }
                         }
                     });
                     if(arrForEligibilityTest.length)
