@@ -136,7 +136,7 @@
                         },
                         destination: {
                             region: instance.selectedMapping.region, //.toUpperCase(),
-                            zone: instance.selectedMapping.zone,
+                            zone: instance.selectedMapping.zone || default_zone,
                             type: instance.selectedMapping.instance_type
                         }
                     });
@@ -151,7 +151,7 @@
                         },
                         destination: {
                             region: network.destRegion, //.toUpperCase(),
-                            default_zone: default_zone
+                            default_zone: network.destZone || default_zone
                         },
                         subnets: [
                             {
@@ -226,8 +226,7 @@
                         },
                         destination: {
                             region: instance.selectedMapping.region, 
-                            zone: default_zone,
-                            // zone:instance.selectedMapping.zone,
+                            zone:instance.selectedMapping.zone || default_zone,
                             type: instance.selectedMapping.instance_type
                         }
                     });
@@ -241,7 +240,7 @@
                         },
                         destination: {
                             region: network.destRegion, 
-                            default_zone: default_zone
+                            default_zone: network.destZone || default_zone
                         },
                         subnets: [
                             {
