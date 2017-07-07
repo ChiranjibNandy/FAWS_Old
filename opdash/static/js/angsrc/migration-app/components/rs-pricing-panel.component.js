@@ -123,7 +123,7 @@
                                         });
                                     });
                                 }
-                                var networks = result.results.network;
+                                var networks = result.results.networks;
                                 if(networks){
                                     vm.warningMappingsOfEquipments(networks);
                                 }

@@ -51,11 +51,8 @@
                         vm.manualRefresh = false;
                     }
 
-                    dashboardService.getBatches(refresh)
-                            .then(function(response) {
-                                var job = response.jobs.job_status_list.find(function(job) {
-                                    return job.job_id === job_id;
-                                });
+                    dashboardService.getCurrentBatcheForJobId(vm.job_id)
+                            .then(function(job) {
                                 vm.job = job;
                                 if(job.batch_status === 'in progress')
                                     //Makes a promise to fetch the progress API details for in progress batches
@@ -114,13 +111,14 @@
                     vm.job = [];
                     vm.loading = true;
                     vm.manualRefresh = false;
+                    vm.job_id = '';
                 };
 
                 vm.$routerOnActivate = function(next, previous) {
-                    job_id = next.params.job_id;
+                    vm.job_id = next.params.job_id;
                     vm.getBatchDetails();
                     vm.getAllAlerts();
-                    vm.getAllBatchTasks(job_id);
+                    vm.getAllBatchTasks(vm.job_id);
                 };
 
                 vm.getAllBatchTasks = function(job_id){
