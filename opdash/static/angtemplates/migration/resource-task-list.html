@@ -60,6 +60,17 @@
                                 </td>
                             </tr>
                         </tbody>
+                        <tbody ng-show="vm.loading">
+                            <tr>
+                                <td colspan="3">
+                                    <div class="rs-table-overlay rs-table-overlay-loading">
+                                        <div class="rs-table-overlay-content">
+                                            <div class="rs-table-overlay-message">Loading&hellip;</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
                 <br>

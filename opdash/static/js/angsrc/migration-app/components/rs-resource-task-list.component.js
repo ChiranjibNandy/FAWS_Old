@@ -54,7 +54,7 @@
                         job_id: vm.job_id,
                         resource_type: vm.resource_type,
                         resource_id: vm.resource_id
-                    };
+                    }; 
                     alertsService.getResourceTasks(params, refresh)
                         .then(function(response) {
                             if(response.error){
@@ -103,21 +103,15 @@
                     vm.currentUser = auth.account_name;
                     vm.tasks = [];
 
-                    vm.loading = false;
+                    vm.loading = true;
                     vm.loadError = false;
                     vm.manualRefresh = false;
                     vm.timeSinceLastRefresh = 0;
                 };
 
                 vm.$routerOnActivate = function(next, previous){
-                    if(previous && previous.componentType.indexOf("current")>=0){
-                        backRoute = "CurrentBatchDetails";
-                        backRouteParams.job_id = previous.params.job_id;
-                    }
-                    else if(previous && previous.componentType.indexOf("completed")>=0){
-                        backRoute = "CompletedBatchDetails";
-                        backRouteParams.job_id = previous.params.job_id;
-                    }
+                    backRoute = "CurrentBatchDetails";
+                    backRouteParams.job_id = next.params.job_id;
                     var separatorPosition = [];
                     for(var i=0; i<next.params.resource_id.length;i++){
                         if(next.params.resource_id[i] == '+') separatorPosition.push(i);
