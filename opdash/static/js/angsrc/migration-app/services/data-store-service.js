@@ -751,6 +751,14 @@
                 return $window.localStorage.getItem("shouldTrigger");
             };
 
+            self.storeEligibilityResults = function(value){
+                self.eligibilityResults = value;
+            };
+
+            self.retrieveEligibilityResults = function(){
+                return self.eligibilityResults;
+            };
+
             return self;
         }]); // end of service definition
 })();
