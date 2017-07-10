@@ -102,6 +102,7 @@
              */
             this.prepareJobRequest = function (batchName) {
                 var destaccount = JSON.parse($window.localStorage.getItem("fawsAccounts"));
+
                 var equipments = {
                         instances: JSON.parse($window.localStorage.selectedServers),//dataStoreService.getItems("server")
                         networks: dataStoreService.getDistinctNetworks()
@@ -111,10 +112,11 @@
                     names = prepareNames(),
                     instancesReqList = [],
                     networksReqList = [],
+                    
                     reqObj = {
                         metadata: {
                             batch_name: $window.localStorage.migrationName || dataStoreService.getScheduleMigration().migrationName,
-                            initiated_by: auth.username
+                            initiated_by: auth.impersonator || auth.username
                       },
                         names: names,
                         source: {
