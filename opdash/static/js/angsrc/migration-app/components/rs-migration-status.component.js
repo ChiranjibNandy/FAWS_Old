@@ -96,6 +96,7 @@
                     vm.afterNewMigration = false;
                     //getting the migration name.
                     vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
+                    dataStoreService.getScheduleMigration().migrationName = "";
                     dataStoreService.setPageName("MigrationStatus");
                     $window.localStorage.setItem('pageName',"MigrationStatus");
 
