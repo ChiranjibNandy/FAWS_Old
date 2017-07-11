@@ -151,7 +151,7 @@ class Operator(object):
         # delete all but the five most recent tags for this environment
         if 'prod' != env:
             tags = sorted(subprocess.check_output([
-                'git', 'tag', '--list', env + '-*']).split(),
+                'git', 'tag', '-l', env + '-*']).split(),
                 reverse=True)
 
             for t in tags[5:]:
