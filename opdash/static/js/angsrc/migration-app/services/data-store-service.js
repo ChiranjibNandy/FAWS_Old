@@ -576,6 +576,7 @@
                             networkIdList.push(network.rrn);
                             network.region = region;
                             network.destRegion = server.selectedMapping.region;
+                            network.destZone = server.selectedMapping.zone;
                             network.instanceRrn = instanceRrn;
                             networksList.push(network);
                         };
@@ -748,6 +749,14 @@
 
             self.getResourceItemsForEditingMigration = function(){
                 return $window.localStorage.getItem("shouldTrigger");
+            };
+
+            self.storeEligibilityResults = function(value){
+                self.eligibilityResults = value;
+            };
+
+            self.retrieveEligibilityResults = function(){
+                return self.eligibilityResults;
             };
 
             return self;
