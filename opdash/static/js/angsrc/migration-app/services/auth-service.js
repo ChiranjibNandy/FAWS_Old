@@ -25,6 +25,22 @@
 
             /**
              * @ngdoc property
+             * @name is_impersonator
+             * @propertyOf migrationApp.service:authservice
+             * @description Boolean to determine if the logged in user is an impersonator or a customer
+             */
+            self.is_impersonator = null;
+
+            /**
+             * @ngdoc property
+             * @name impersonator
+             * @propertyOf migrationApp.service:authservice
+             * @description Username of the logged in impersonator
+             */
+            self.type.impersonator = null;
+
+            /**
+             * @ngdoc property
              * @name username
              * @propertyOf migrationApp.service:authservice
              * @description Username of the logged in rackspace user
@@ -103,11 +119,13 @@
                 var details;
                 self.is_racker = userDetails.is_racker;
                 self.is_impersonator = userDetails.is_impersonator;
-
+                
+                if(self.is_impersonator)
+                    self.impersonator = userDetails.impersonator;
+                
                 if(self.is_racker){
                     rackerDetails = angular.copy(userDetails);
                     details = rackerDetails;
-
                 }
                 else{
                     customerDetails = angular.copy(userDetails);
