@@ -102,6 +102,7 @@
              */
             this.prepareJobRequest = function (batchName) {
                 var destaccount = JSON.parse($window.localStorage.getItem("fawsAccounts"));
+
                 var equipments = {
                         instances: JSON.parse($window.localStorage.selectedServers),//dataStoreService.getItems("server")
                         networks: dataStoreService.getDistinctNetworks()
@@ -111,10 +112,11 @@
                     names = prepareNames(),
                     instancesReqList = [],
                     networksReqList = [],
+                    
                     reqObj = {
                         metadata: {
                             batch_name: $window.localStorage.migrationName || dataStoreService.getScheduleMigration().migrationName,
-                            initiated_by: auth.username
+                            initiated_by: auth.impersonator || auth.username
                       },
                         names: names,
                         source: {
@@ -136,7 +138,7 @@
                         },
                         destination: {
                             region: instance.selectedMapping.region, //.toUpperCase(),
-                            zone: instance.selectedMapping.zone,
+                            zone: instance.selectedMapping.zone || default_zone,
                             type: instance.selectedMapping.instance_type
                         }
                     });
@@ -151,7 +153,7 @@
                         },
                         destination: {
                             region: network.destRegion, //.toUpperCase(),
-                            default_zone: default_zone
+                            default_zone: network.destZone || default_zone
                         },
                         subnets: [
                             {
@@ -226,8 +228,7 @@
                         },
                         destination: {
                             region: instance.selectedMapping.region, 
-                            zone: default_zone,
-                            // zone:instance.selectedMapping.zone,
+                            zone:instance.selectedMapping.zone || default_zone,
                             type: instance.selectedMapping.instance_type
                         }
                     });
@@ -241,7 +242,7 @@
                         },
                         destination: {
                             region: network.destRegion, 
-                            default_zone: default_zone
+                            default_zone: network.destZone || default_zone
                         },
                         subnets: [
                             {
