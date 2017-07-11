@@ -115,10 +115,13 @@ show-latest-release: ## Print the tag of the latest released image
 	@$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) show_latest_release
 
 promote-pull: require-env ## Pull an image down for promotion (supports RELEASE=<image_tag>)
-		$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) promote_pull
+	$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) promote_pull
 
 promote-push: require-env ## Push a image for promotion (supports RELEASE=<image_tag>)
-		$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) promote_push
+	$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) promote_push
+
+update-git-tags: require-env ## Update Git tags
+	$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) update_git_tags
 
 deploy: require-env ## Create/Update ECS Tasks and Services with current tag
 	$(OPS_VENV_ACTIVATE); ENV=$(ENV) $(OPDASH_CP_OPS) deploy

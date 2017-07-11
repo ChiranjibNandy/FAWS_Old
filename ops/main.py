@@ -2,6 +2,7 @@ import argparse
 import os
 import sys
 import subprocess
+import datetime
 
 import boto3
 
@@ -128,6 +129,44 @@ class Operator(object):
         _, tag = image.split(':', 1)
         print tag
         return 0
+
+    def update_git_tags(self):
+        # Generate the tag string
+        iso8601 = datetime.datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
+        env = os.getenv('ENV', 'undefined')
+        tag = env + '-' + iso8601
+
+        # We will send stderr to /dev/null
+        FNULL = open(os.devnull, 'w')
+
+        # Tag the repo: working copy and origin
+        ignore = subprocess.check_output([
+            'git', 'tag', tag],
+            stderr=FNULL)
+        ignore = subprocess.check_output([
+            'git', 'push', 'origin', 'refs/tags/' + tag],
+            stderr=FNULL)
+
+        # Unless it is production,
+        # delete all but the five most recent tags for this environment
+        if 'prod' != env:
+            tags = sorted(subprocess.check_output([
+                'git', 'tag', '--list', env + '-*']).split(),
+                reverse=True)
+
+            for t in tags[5:]:
+                # Delete a tag: working copy and origin
+                ignore = subprocess.check_output([
+                    'git', 'tag', '-d', t],
+                    stderr=FNULL)
+                ignore = subprocess.check_output([
+                    'git', 'push', 'origin', ':refs/tags/' + t],
+                    stderr=FNULL)
+                ignore = ignore
+
+        FNULL.close()
+        return 0
+
 
 def get_args():
     parser = argparse.ArgumentParser()
