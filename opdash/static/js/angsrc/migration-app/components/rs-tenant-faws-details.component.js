@@ -136,6 +136,7 @@
                     vm.selectedFawsName = tempName; //local component vars
                     vm.selectedFawsNum = tempNum;                          
 
+                    vm.fawsAccountDetails = JSON.parse($window.localStorage.getItem("fawsAccounts"));
                     vm.fawsAccountDetails.selectedFawsAccount = tempName; //for localstorage save
                     vm.fawsAccountDetails.selectedFawsAccountNumber = tempNum;
                     
