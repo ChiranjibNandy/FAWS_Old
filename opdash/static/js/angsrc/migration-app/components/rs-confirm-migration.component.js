@@ -103,7 +103,7 @@
                                     var statusList=[];
                                     for(var i=0;i<jobList.length;i++){
                                         for(var j=0;j<jobList[i].instances.length;j++){
-                                            if(jobList[i].batch_status !== "error" && jobList[i].batch_status !== "canceled"){
+                                            if(jobList[i].batch_status !== "error" && jobList[i].batch_status !== "canceled" && jobList[i].batch_status !== "done"){
                                                 statusList.push(jobList[i].instances[j]);
                                             }
                                         }
@@ -136,7 +136,7 @@
                                             var z2=statusList[j].status;
 
                                             if(x1 === x2 && y1 === y2){ //if the server name and id match
-                                                if(z2 !== "error" && z2 !== "canceled"){ //if status is error or canceled, migration will be allowed, otherwise not
+                                                if(z2 !== "error" && z2 !== "canceled" && z2 !== "done"){ //if status is error/canceled or done, migration will be allowed, otherwise not
                                                     vm.goodToGo = false;
                                                     vm.checking = false;
                                                     break;

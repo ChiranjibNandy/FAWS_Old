@@ -68,7 +68,7 @@
                                 angular.forEach(status.instances, function (instance) {
                                     if(instance['name'] == server.name){
                                         server.migStatusJobId = status.job_id;
-                                        if(!(status.batch_status == 'error' || status.batch_status == 'canceled')){
+                                        if(!(status.batch_status == 'error' || status.batch_status == 'canceled' || status.batch_status == 'done')){
                                             server.canMigrate = false;
                                             server.migStatus = status.batch_status;
                                             keepGoing = false;
@@ -568,7 +568,7 @@
                         
                     }
                     angular.forEach(items, function(item){
-                        if((item.canMigrate == true && item.status.toLowerCase() == 'active' && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]) || (item.status.toLowerCase() == 'active' && (item.migStatus == 'error' || item.migStatus == 'canceled') && !vm.checkingEligibility[item.id]) && !item.eligibiltyTests.length){
+                        if((item.canMigrate == true && item.status.toLowerCase() == 'active' && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]) || (item.status.toLowerCase() == 'active' && (item.migStatus == 'error' || item.migStatus == 'canceled' || item.migStatus == 'done') && !vm.checkingEligibility[item.id]) && !item.eligibiltyTests.length){
                             var storedEligibilityResults = [];
                             //Check for eligibility results stored during the current session.
                             if(!($window.localStorage.eligibilityResults == undefined || $window.localStorage.eligibilityResults == "undefined")){
