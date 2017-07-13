@@ -71,8 +71,8 @@
                  * @description
                  * Cancel Migration of resources and go back to migration dashboard page.
                  */
-                vm.submitCancel = function() {
-                    if(vm.saveProgress == 'yes'){
+                vm.submitCancel = function(value) {
+                    if(value == 'yes'){
                         vm.saveItems(vm.cancelnSaveObj);
                         vm.displayMigName = false;
                     }

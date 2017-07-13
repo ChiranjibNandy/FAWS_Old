@@ -196,7 +196,7 @@ th{
     margin: 10px 0;
 }
 
-.batch-details-header .buttons{
+.batch-details-header .buttons, .leftMargin{
     margin-left: 6px;
 }
 
@@ -601,4 +601,8 @@ span.fa-angle-left, span.fa-angle-right{
 
 .font-size-progress-icons{
     font-size: 1.3em !important;
+}
+
+.topMargin{
+    margin-top:6px;
 }
