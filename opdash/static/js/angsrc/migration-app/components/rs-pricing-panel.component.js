@@ -26,7 +26,7 @@
              * @name migrationApp.controller:rspricingCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rspricingpanel rspricingpanel} component
              */
-            controller:["datastoreservice","$rootRouter","httpwrapper","$filter","$timeout","$q","$rootScope","httpwrapper","migrationitemdataservice","$window",function(dataStoreService,$rootRouter,HttpWrapper,$filter,$timeout,$q,$rootScope,httpwrapper,ds,$window){
+            controller:["datastoreservice","$rootRouter","httpwrapper","$filter","$timeout","$q","$rootScope","httpwrapper","migrationitemdataservice","$window","$scope",function(dataStoreService,$rootRouter,HttpWrapper,$filter,$timeout,$q,$rootScope,httpwrapper,ds,$window,$scope){
                 var vm = this;
                 vm.invoiceTotal = '';
                 vm.totalProjectedPricingSum = 0;
@@ -256,93 +256,8 @@
                     },1000);                                 
                 }
 
-                /**
-                 * @ngdoc method
-                 * @name openUsageCostsModal
-                 * @methodOf migrationApp.controller:rspricingCtrl
-                 * @description 
-                 * function to open the modal that displays the current and projected pricing calculations for the selected servers.
-                 */                               
-                vm.openUsageCostsModal = function(){
-                    vm.costCalculationItems =[];
-                    vm.projectedCostCalculationItems = [];
-                    vm.totalOfCostCalculationItems = 0;
-                    vm.totalOfProjectedCostCalculationItems = 0;
-                    vm.showCalculatedCostDialog = false;
-                    var selectedPricingMappingObj = [];
-                    //var selectedPricingMappingObj = dataStoreService.getItems('server');
-                    if($window.localStorage.selectedServers !== undefined)
-                        selectedPricingMappingObj = JSON.parse($window.localStorage.selectedServers);
-                    else
-                        selectedPricingMappingObj = dataStoreService.getItems('server');
-                    selectedPricingMappingObj.forEach(function(server){
-                        var selectedFlavor = server.selectedMapping.instance_type;
-                        if(server.details.hasOwnProperty('rax_bandwidth')){
-                            vm.costCalculationItems.push({
-                                "resourceName" : server.details.name,
-                                "rax_uptime_cost":server.details.rax_uptime_cost.toFixed(2),
-                                "rax_bandwidth_cost":parseFloat(server.details.rax_bandwidth_cost).toFixed(2),
-                                "rax_bandwidth":server.details.rax_bandwidth.toFixed(2),
-                                "rax_uptime":server.details.rax_uptime.toFixed(2),
-                                "rax_total_cost":parseFloat(parseFloat(server.details.rax_uptime_cost) + parseFloat(server.details.rax_bandwidth_cost)).toFixed(2),
-                                "storage":server.details.rax_storage_size
-                            });
-                            vm.totalOfCostCalculationItems += (parseFloat(parseFloat(server.details.rax_uptime_cost) + parseFloat(server.details.rax_bandwidth_cost)));
-                        }
-
-                        if(!server.details.hasOwnProperty('rax_bandwidth')){
-                            vm.costCalculationItems.push({
-                                "resourceName" : server.details.name,
-                                "rax_uptime_cost":"NA",
-                                "rax_bandwidth_cost":"NA",
-                                "rax_bandwidth":"NA",
-                                "rax_uptime":"NA",
-                                "rax_total_cost":server.details.rax_price,
-                                "storage":server.details.rax_storage_size
-                            });
-                            vm.totalOfCostCalculationItems += server.details.rax_price;
-                        }
-
-                        if(server.details.hasOwnProperty('rax_bandwidth')){
-                            var storage_rate = parseFloat(parseFloat(server.details.rax_storage_size) * parseFloat(server.selectedMapping.storage_rate)).toFixed(2);
-                            var aws_bandwidth_cost = parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(server.details.rax_bandwidth)).toFixed(2);
-                            var aws_uptime_cost = parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(server.details.rax_uptime)).toFixed(2);
-                            vm.projectedCostCalculationItems.push({
-                                "resourceName" : server.details.name,
-                                "aws_uptime_cost":aws_uptime_cost,
-                                "aws_bandwidth_cost":aws_bandwidth_cost,
-                                "aws_bandwidth":server.details.rax_bandwidth.toFixed(2),
-                                "aws_uptime":server.details.rax_uptime.toFixed(2),
-                                "aws_total_cost":parseFloat(parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost) + parseFloat(storage_rate)).toFixed(2),
-                                "rax_bandwidth":server.details.rax_bandwidth.toFixed(2),
-                                "rax_uptime":server.details.rax_uptime.toFixed(2),
-                                "storage_rate":storage_rate ,
-                                "rax_storage":server.details.rax_storage_size                       
-                            });
-                            vm.totalOfProjectedCostCalculationItems += (parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost)+ parseFloat(storage_rate));
-                        }
-
-                        if(!server.details.hasOwnProperty('rax_bandwidth')){
-                            //Checks whether the showCalculatedCostDialog flag was set in the loop before
-                            if(vm.showCalculatedCostDialog === false)
-                                vm.showCalculatedCostDialog = true;
-
-                            var storage_rate = parseFloat(parseFloat(server.details.rax_storage_size) * parseFloat(server.selectedMapping.storage_rate)).toFixed(2);
-                            vm.projectedCostCalculationItems.push({
-                                "calculated_cost_resourcename" : server.details.name,
-                                "aws_uptime_cost":parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(24 * 30)).toFixed(2),
-                                "aws_bandwidth":"NA",
-                                "aws_uptime":"NA",
-                                "aws_total_cost":parseFloat((parseFloat(server.selectedMapping.cost) * parseFloat(24*30)) + parseFloat(storage_rate)).toFixed(2),
-                                "rax_bandwidth":"NA",
-                                "rax_uptime":"720.00",
-                                "storage_rate":storage_rate,
-                                "rax_storage":server.details.rax_storage_size  
-                            });
-                        vm.totalOfProjectedCostCalculationItems += (parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(24*30))+parseFloat(storage_rate));
-                    }
-                });
-                $('#calculator_modal').modal('show');
+                vm.openUsageCostsModalInChild = function(){
+                    $scope.$broadcast("openUsageCostsModal");
                 }
                 return vm;             
             }]

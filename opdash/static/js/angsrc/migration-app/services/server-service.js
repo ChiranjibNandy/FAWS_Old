@@ -151,11 +151,10 @@
             var url = "/api/compute/us-instances";
             var tenant_id = authservice.getAuth().tenant_id;
 
-            if (!loaded || (currentTenant !== tenant_id)) {
+            // if ((currentTenant !== tenant_id)) {
 
                 return HttpWrapper.send(url,{"operation":'GET'})
                                 .then(function(response){
-                                    loaded = true;
                                     currentTenant = tenant_id;
                                     servers = {
                                         labels: [
@@ -173,9 +172,9 @@
                                     return errorResponse;
                                 });
 
-            } else {
-                return $q.when(servers);
-            }
+            // } else {
+            //     return $q.when(servers);
+            // }
         };
 
         /**
