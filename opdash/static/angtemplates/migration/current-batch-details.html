@@ -150,41 +150,41 @@
                                     <a href="" ng-click="vm.equipmentDetails('network', network.id)" role="button" data-toggle="modal">{{network.name}}</a>
                                 </td>
                                 <td class="rs-table-text" style="width: 30%;">
-                                    <span class="rs-status-error" ng-show="network.status==='error'">Error</span>
-                                    <span class="rs-status-ok" ng-show="network.status==='Existing'">Existing</span>
-                                    <span class="rs-status-ok" ng-show="network.status==='done'">Completed</span>
-                                    <span class="rs-status-ok" ng-show="network.status==='started'">Started</span>
-                                    <span class="rs-status-ok" ng-show="network.status==='in progress'">In Progress</span>
-                                    <span class="rs-status-warning" ng-show="network.status==='scheduled'">Scheduled</span>
-                                    <span class="rs-status-disabled" ng-show="network.status==='not available' || !network.status">Not Available</span>
-                                    <span class="rs-status-warning" ng-show="network.status==='paused'">Paused</span>
+                                    <span class="rs-status-error" ng-show="network.status==='error' || network.status.state ==='error'">Error</span>
+                                    <span class="rs-status-ok" ng-show="network.status ==='Existing' || network.status.state ==='Existing'">Existing</span>
+                                    <span class="rs-status-ok" ng-show="network.status ==='done' || network.status.state ==='done'">Completed</span>
+                                    <span class="rs-status-ok" ng-show="network.status ==='started' || network.status.state ==='started'">Started</span>
+                                    <span class="rs-status-ok" ng-show="network.status ==='in progress' || network.status.state ==='in progress'">In Progress</span>
+                                    <span class="rs-status-warning" ng-show="network.status ==='scheduled' || network.status.state ==='scheduled'">Scheduled</span>
+                                    <span class="rs-status-disabled" ng-show="network.status ==='not available' || network.status.state ==='not available' || !network.status.state || !network.status">Not Available</span>
+                                    <span class="rs-status-warning" ng-show="network.status ==='paused' || network.status.state ==='paused'">Paused</span>
                                 </td>
-                                <td class="rs-table-text" ng-class="{'paddingLeft':network.status!=='in progress' && network.status!=='done'}" style="width: 30%;">
-                                    <div class="rs-progress rs-progress-small" ng-if="network.status==='in progress' && vm.job.progressFlag !== 'NA'">
+                                <td class="rs-table-text" ng-class="{'paddingLeft':network.status.state !=='in progress' && network.status.state !=='done' && network.status.state !=='Existing' && network.status !=='in progress' && network.status !=='done' && network.status !=='Existing'}" style="width: 30%;">
+                                    <div class="rs-progress rs-progress-small" ng-if="network.status.state ==='in progress' || network.status ==='in progress'">
                                         <div class="rs-progress-inner">
-                                            <div class="rs-segment" ng-style="{'width': +vm.job.succeeded_time_pct +'%'}">
+                                            <div class="rs-segment" ng-style="{'width': +vm.job.network_succeeded_by_time_pct +'%'}">
                                                 <div class="rs-bar rs-status-ok rs-bar-striped"></div>
                                             </div>
                                         </div>
-                                    </div><span class="rs-status-ok" ng-if="network.status==='in progress' && vm.job.progressFlag !== 'NA'"><em>  {{vm.job.succeeded_time_pct}}%</em></span>
-                                    <div class="rs-progress rs-progress-small" ng-if="network.status ==='done' || network.status === 'Existing'">
-                                    <div class="rs-progress-inner">
-                                        <div class="rs-segment" style="width: 100%">
-                                            <div class="rs-bar rs-status-ok"></div>
+                                    </div><span class="rs-status-ok" ng-if="network.status.state ==='in progress' || network.status ==='in progress'"><em> {{vm.job.network_succeeded_by_time_pct}}%</em></span>
+                                    <div class="rs-progress rs-progress-small" ng-if="network.status.state ==='done' || network.status.state === 'Existing' || network.status ==='done' || network.status === 'Existing'">
+                                        <div class="rs-progress-inner">
+                                            <div class="rs-segment" style="width: 100%">
+                                                <div class="rs-bar rs-status-ok"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    </div><span class="rs-status-ok" ng-if="network.status ==='done' || network.status === 'Existing'"><em> 100%</em></span>                                
-                                    <span ng-if="network.status === 'paused'"><i class="fa fa-pause" aria-hidden="true" ></i></span>
-                                    <span ng-if="network.status === 'scheduled'"><i class="fa fa-clock-o font-size-progress-icons" aria-hidden="true"></i></span>
-                                    <span ng-if="network.status === 'error' || network.status === 'canceled'"><i class="fa fa-times font-size-progress-icons" aria-hidden="true"></i></span>
-                                    <span ng-if="!network.status"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>
+                                    </div><span class="rs-status-ok" ng-if="network.status.state ==='done' || network.status.state === 'Existing' || network.status ==='done' || network.status === 'Existing'"><em> 100%</em></span>
+                                    <span ng-if="network.status.state === 'paused' || network.status === 'paused'"><i class="fa fa-pause" aria-hidden="true" ></i></span>
+                                    <span ng-if="network.status.state === 'scheduled' || network.status === 'scheduled'"><i class="fa fa-clock-o font-size-progress-icons" aria-hidden="true"></i></span>
+                                    <span ng-if="network.status.state === 'error' || network.status.state === 'canceled' || network.status === 'error' || network.status === 'canceled'"><i class="fa fa-times font-size-progress-icons" aria-hidden="true"></i></span>
+                                    <span ng-if="!network.status.state || network.status.state === 'not available' || !network.status || network.status === 'not available'"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>
                                     <span ng-if="vm.job.timestamp"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>
                                 </td>
                                 <td>
                                     <a class="rs-btn" ng-link="['ResourceTaskList', {job_id: vm.job.job_id, resource_type: 'network', resource_id: network.id}]">See Tasks</a>
                                 </td>
                             </tr>
-                        </tbody>
+                        </tbody>                        
                         <tbody ng-show="vm.loading">
                             <tr>
                                 <td colspan="3">
