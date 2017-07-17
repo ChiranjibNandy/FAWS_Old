@@ -242,7 +242,7 @@
                                 <td class="rs-table-status tip" ng-class="{'rs-table-status-error': batch.batch_status==='canceled','rs-table-status-ok':batch.batch_status!='error'}"></td>
                                 <td class="rs-table-link large-col"><a ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]" class="ng-binding">{{batch.metadata.batch_name}}</a></td>
                                 <td>{{batch.metadata.initiated_by}}</td>
-                                <td class="rs-table-text ng-binding">{{(batch.start.substr(0,batch.start.indexOf('+')))  | date : 'M/dd/yyyy hh:mm a'}}</td>
+                                <td class="rs-table-text ng-binding">{{(batch.start)| date : 'M/dd/yyyy hh:mm a'}}</td>
                                 <td class="rs-table-text ng-binding">{{batch.batch_status === 'canceled' ? 'N/A' : (batch.completed_at) | date : 'M/dd/yyyy hh:mm a'}}</td>
                                 <td class="rs-table-text ng-binding capitalize" >{{batch.batch_status === 'canceled' ? 'Cancelled' : batch.batch_status}}</td>
                             </tr>
