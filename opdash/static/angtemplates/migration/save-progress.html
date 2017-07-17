@@ -14,30 +14,23 @@
         <form class=" ">
             <div class="rs-control-group">
                 <div class="rs-controls">
-                    <label class="rs-radio">
-                        <input type="radio" ng-model="vm.saveProgress" value="yes" ng-checked="vm.saveProgress">
-                        <strong>Yes</strong><br>
-                        <span class="rs-help-block">Name this migration and click <b>'Submit'</b> to save this migration for later</span>
-                    </label>
-                    <label class="rs-radio" >
-                        <div class="rs-controls">
-                            <input ng-class="{disabled:vm.cancelnSaveObj.saveInProgress}" type="text" ng-model="vm.migrationName" placeholder="{{vm.migrationName}}">
-                        </div>
-                    </label>
-                    <label class="rs-radio">
-                        <input type="radio" ng-model="vm.saveProgress" value="no">
-                        <strong>No</strong>
-                        <span class="rs-help-block">Cancel and move on</span>
-                      </label>
+                    <span class="rs-help-block">Name this migration and click <b>'Save Migration'</b> to save this migration for later</span>
+                    
+                    <div class="rs-controls">
+                        <input ng-class="{disabled:vm.cancelnSaveObj.saveInProgress}" type="text" ng-model="vm.migrationName" placeholder="{{vm.migrationName}}">
+                    </div>
                 </div>
             </div>
-            <button class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.cancelnSaveObj.saveInProgress || vm.cancelnSaveObj.saveSuccess}">Close</button>
-            <button class="rs-btn rs-btn-primary " ng-class="{disabled: vm.saveProgress=='yes' && !vm.migrationName || vm.cancelnSaveObj.saveSuccess}"
-                ng-click="vm.submitCancel()" ng-hide="vm.cancelnSaveObj.saveInProgress">Submit</button>
-            <a class="rs-btn rs-btn-primary disabled" disabled="disabled" ng-show="vm.cancelnSaveObj.saveInProgress">Submitting...</a>
-            <i class="rs-processing-indicator" ng-show="vm.cancelnSaveObj.saveInProgress"></i>
-            <br>
-            <div ng-show="vm.cancelnSaveObj.resultMsg" ng-style="vm.cancelnSaveObj.saveSuccess == true ? {color:'green'} : {color:'red'}">{{vm.cancelnSaveObj.resultMsg}}</div>
         </form>
+    </div>
+    <div class="modal-footer">
+        <button class="rs-btn pull-left" ng-click="vm.submitCancel('no')">Don't save</button>
+        <button class="rs-btn rs-btn-primary pull-left leftMargin" ng-class="{disabled: vm.saveProgress=='yes' && !vm.migrationName || vm.cancelnSaveObj.saveSuccess}"
+            ng-click="vm.submitCancel('yes')" ng-hide="vm.cancelnSaveObj.saveInProgress">Save Migration</button>
+        <button class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.cancelnSaveObj.saveInProgress || vm.cancelnSaveObj.saveSuccess}">Close</button>
+        <a class="rs-btn rs-btn-primary disabled pull-left leftMargin" disabled="disabled" ng-show="vm.cancelnSaveObj.saveInProgress">Submitting...</a>
+        <i class="rs-processing-indicator pull-left topMargin" ng-show="vm.cancelnSaveObj.saveInProgress"></i>
+        <br>
+        <div ng-show="vm.cancelnSaveObj.resultMsg" ng-style="vm.cancelnSaveObj.saveSuccess == true ? {color:'green'} : {color:'red'}">{{vm.cancelnSaveObj.resultMsg}}</div>
     </div>
 </div>
