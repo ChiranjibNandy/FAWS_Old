@@ -71,6 +71,8 @@
                                                     }
                                                 });
                                             }
+                                            if(result[0].networks)
+                                                job.network_succeeded_by_time_pct = result[0].networks.succeeded_by_time_pct;
                                         }
                                         else if(result[0].succeeded_by_time_pct === undefined)
                                             job.succeeded_time_pct = 0;
