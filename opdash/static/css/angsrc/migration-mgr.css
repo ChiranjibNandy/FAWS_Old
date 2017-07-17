@@ -874,6 +874,11 @@ body .modal.details2 {
     margin-top: -150px;
 }
 
+.pricing-panel .pricing-calculation-modals{
+    left:-115% !important;   
+}
+
+
 .pricing-modals {
     left:-115% !important;
 }

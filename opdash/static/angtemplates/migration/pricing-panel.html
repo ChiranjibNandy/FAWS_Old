@@ -23,7 +23,7 @@
             <big ng-if="vm.invoiceTotal !== 'NaN'"><b>${{vm.invoiceTotal}}</b>/month</big>
             <big ng-if="vm.invoiceTotal === 'NaN'"><b>N/A</b></big>
             <small>
-                <a href role="button" data-toggle="modal" ng-click="vm.openUsageCostsModal()">See Details</a>
+                <a href role="button" data-toggle="modal" ng-click="vm.openUsageCostsModalInChild()">See Details</a>
             </small>
             <br>
             <small>* For selected resources from <b>step 1</b></small>
@@ -33,7 +33,7 @@
         <h3>Projected Cost<a href="" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="The projected pricing consist of infrastructure costs only, and support costs are not included in the provided price."><sup><i class="fa fa-info-circle rs-quiet"></i></sup></a></h3>
         <p>
             <big><b>${{vm.totalProjectedPricingSum}}</b>/month</big><br>
-            <a href role="button" data-toggle="modal" ng-click="vm.openUsageCostsModal()"><small>See Details</small></a> 
+            <a href role="button" data-toggle="modal" ng-click="vm.openUsageCostsModalInChild()"><small>See Details</small></a> 
         </p>
         <hr class="dash">
         <big><b>Support Level</b> </big>
@@ -123,81 +123,6 @@
 </div>
 <!--modals End -->
 
-<!-- CALCULATOR MODAL -->
-<div id="calculator_modal" class="modal modal-warning hide animated fadeIn details pricing-modals" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-        <br>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-        <h3 class="rs-page-title" style="color : #333">Pricing Calculations</h3>
-    </div>
-    <div class="modal-body">
-        <big><b>Current Costs - Rackspace</b></big>
-        <br>
-        <br>
-        <table class="rs-list-table">
-            <thead>
-                <tr>
-                    <th>Resource</th>
-                    <th>Uptime Cost (Hrs)</th>
-                    <th>Bandwidth Out Cost (Used)</th>
-                    <th>Rackspace Storage (GB)</th>
-                    <th>Total Cost</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="" ng-repeat="item in vm.costCalculationItems">
-                    <td class="rs-table-text">{{item.resourceName}}</td>
-                    <td class="rs-table-text" ng-if="item.rax_uptime_cost !== 'NA'">${{item.rax_uptime_cost + " (" + item.rax_uptime + ")"}}</td>
-                    <td class="rs-table-text" ng-if="item.rax_uptime_cost === 'NA'">New Server</td>
-                    <td class="rs-table-text" ng-if="item.rax_bandwidth_cost !== 'NA'">${{item.rax_bandwidth_cost + " (" + item.rax_bandwidth + " GB)"}}</td>
-                    <td class="rs-table-text" ng-if="item.rax_bandwidth_cost === 'NA'">New Server</td>
-                    <td class="rs-table-text">{{item.storage}}</td>
-                    <td class="rs-table-text" ng-if="item.rax_total_cost !== undefined">${{item.rax_total_cost}}</td>
-                    <td class="rs-table-text" ng-if="item.rax_total_cost === undefined">New Server</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td style="text-align:right;"><b>Grand Total </b></td>
-                    <td style="text-align:left;" ng-show="!vm.isNaN(vm.totalOfCostCalculationItems)"><b>${{vm.totalOfCostCalculationItems.toFixed(2)}}<b></td>
-                    <td style="text-align:left;" ng-show="vm.isNaN(vm.totalOfCostCalculationItems)"><b>---<b></td>
-                </tr>
-            </tbody>
-        </table>
-        <br>
-        <big><b>Projected Costs - AWS (excludes FAWS support)</b></big>
-        <br>
-        <br>
-        <table class="rs-list-table">
-            <thead>
-                <tr>
-                    <th>Resource</th>
-                    <th>Uptime Cost (Hrs)</th>
-                    <th>Bandwidth Out Cost (Used)</th>
-                    <th>AWS Storage Cost (GB)</th>
-                    <th>Total Cost</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="pricing" ng-repeat="item in vm.projectedCostCalculationItems">
-                    <td class="rs-table-text" ng-if="item.aws_bandwidth !== 'NA'">{{item.resourceName}}</td>
-                    <td class="rs-table-text" ng-if="item.aws_bandwidth === 'NA'"><span style="color: red;"><b>*</b></span>{{item.calculated_cost_resourcename}}</td>
-                    <td class="rs-table-text">${{item.aws_uptime_cost + " (" + item.rax_uptime + ")"}}</td>
-                    <td class="rs-table-text" ng-if="item.aws_bandwidth !== 'NA'">${{item.aws_bandwidth_cost + " (" + item.rax_bandwidth + " GB)"}}</td>
-                    <td class="rs-table-text" ng-if="item.aws_bandwidth === 'NA'">N/A</td>
-                    <td class="rs-table-text">${{item.storage_rate + " (" + item.rax_storage + ")"}}</td>
-                    <td class="rs-table-text">${{item.aws_total_cost}}</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td style="text-align:right;"><b>Grand Total  </b></td>
-                    <td style="text-align:left;"><b>${{vm.totalOfProjectedCostCalculationItems.toFixed(2)}}<b></td>
-                </tr>
-            </tbody>
-        </table>
-        <p ng-if="vm.showCalculatedCostDialog === true" style="text-align: left;"><span style="color: red;"><b>*</b></span><b>This is a calculated cost assuming an uptime of 24 hrs. and 30 days</b></p>
-    </div>
+<div class="pricing-panel">
+    <rsmigrationpricingcalculation></rsmigrationpricingcalculation>
 </div>
