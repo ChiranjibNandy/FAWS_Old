@@ -230,8 +230,9 @@
                                     </a>
                                 </th>
                                 <th>
-                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a">
-                                        <span>Status</span>
+                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a"  ng-click="vm.setSortBy('completed_batch', 'batch_status')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['completed_batch']==='batch_status', 'custom-table-sort-desc current-sort-param': vm.sortBy['completed_batch']==='-batch_status', 'custom-table-sort-desc': vm.sortBy['completed_batch'].indexOf('batch_status') < 0}">
+                                        <span class="rs-table-sort-text">Status</span>
+                                        <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
                             </tr>
@@ -239,12 +240,12 @@
                         <!--data display for completed batches grid-->
                         <tbody ng-show="!vm.loading && !vm.completedBatches.loadError && vm.completedBatches.items.length!==0">
                             <tr ng-repeat="batch in vm.completedBatches.items | orderBy: vm.sortBy.completed_batch | limitTo : vm.completedBatches.pageSize : (vm.completedBatches.currentPage-1)*vm.completedBatches.pageSize" class="ng-scope">
-                                <td class="rs-table-status tip" ng-class="{'rs-table-status-error': batch.batch_status==='canceled','rs-table-status-ok':batch.batch_status!='error'}"></td>
+                                <td class="rs-table-status tip" ng-class="{'rs-table-status-warning': batch.batch_status==='canceled','rs-table-status-ok':batch.batch_status!='error'}"></td>
                                 <td class="rs-table-link large-col"><a ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]" class="ng-binding">{{batch.metadata.batch_name}}</a></td>
                                 <td>{{batch.metadata.initiated_by}}</td>
                                 <td class="rs-table-text ng-binding">{{(batch.start.substr(0,batch.start.indexOf('+')))  | date : 'M/dd/yyyy hh:mm a'}}</td>
                                 <td class="rs-table-text ng-binding">{{batch.batch_status === 'canceled' ? 'N/A' : (batch.completed_at) | date : 'M/dd/yyyy hh:mm a'}}</td>
-                                <td class="rs-table-text ng-binding capitalize" >{{batch.batch_status === 'canceled' ? 'Cancelled' : batch.batch_status}}</td>
+                                <td ng-class="{'rs-status-warning': batch.batch_status==='canceled','rs-status-ok':batch.batch_status!='error'}" class="rs-table-text ng-binding capitalize" >{{batch.batch_status === 'canceled' ? 'Cancelled' : batch.batch_status}}</td>
                             </tr>
                         </tbody>
                         <tbody ng-show="vm.loading">
