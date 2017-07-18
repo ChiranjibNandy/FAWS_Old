@@ -200,6 +200,7 @@
                 <span>
                     <span class="control-label-cust" >Service Level  </span><span class="half-tab"></span>
                     <span>
+                        <span >
                         <span>
                             <input type="radio" ng-model="vm.serviceLevel" value="navigator">
                             <strong>Navigator</strong>
@@ -214,13 +215,16 @@
                          <a href="" target="_blank" style="font-style: italic;text-decoration: underline;">Learn More</a> &nbsp<a class="fa fa-external-link" href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank"></a>
                         </span>
                     </span>
+                </span>
                 </span>    
-            </div>  
+                <span  class="control-label-cust" style ="float: right; width: 40%;" ng-hide = "vm.fawsCreated">
+                        <input  type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required">&nbsp &nbsp<Strong class="ng-binding">Check here to indicate that you have read and agree to the terms of the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a>, <a href="https://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Product Terms</a>,&nbsp and<a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank"> Rackspace Migration Manager Terms</a>.</Strong>
+                     </span>
+            </div> 
+            
             </br> </br>
             
-            <div class="row" style ="padding-top: 8px;" ng-hide = "vm.fawsCreated">
-                        <input  type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required">&nbsp &nbsp<Strong class="ng-binding">Check here to indicate that you have read and agree to the terms of the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a>, <a href="https://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Product Terms</a>,&nbsp<a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">and Rackspace Migration Manager Terms</a>.</Strong>
-                    </div>
+            
             <div class="row service-button">
                 <div class="intro-modal-nofaws rs-success" ng-show="vm.fawsCreated">Thank you. A request for creating a new AWS account was successfully created. We will let you know when the account is created. You can follow the request  <a href="https://mycloud.rackspace.com/cloud/{{vm.tenant_id}}/tickets" target="_blank"> here</a>.</div>
                 <div class="intro-modal-nofaws" style="color: #c40022" ng-show="vm.fawsError">Uh oh! Something went wrong while submitting request. Please try again after sometime...</div>
