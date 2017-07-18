@@ -118,6 +118,7 @@
                             batch_name: $window.localStorage.migrationName || dataStoreService.getScheduleMigration().migrationName,
                             initiated_by: auth.impersonator || auth.username
                       },
+                        create_ticket: true,
                         names: names,
                         source: {
                             tenantid: auth.tenant_id
