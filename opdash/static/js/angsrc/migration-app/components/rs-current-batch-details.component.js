@@ -50,7 +50,8 @@
                         vm.loading = true;
                         vm.manualRefresh = false;
                     }
-
+                    vm.getAllAlerts(true);
+                    vm.getAllBatchTasks(vm.job_id);
                     dashboardService.getCurrentBatcheForJobId(vm.job_id)
                             .then(function(job) {
                                 vm.job = job;
@@ -119,8 +120,6 @@
                 vm.$routerOnActivate = function(next, previous) {
                     vm.job_id = next.params.job_id;
                     vm.getBatchDetails();
-                    vm.getAllAlerts();
-                    vm.getAllBatchTasks(vm.job_id);
                 };
 
                 vm.getAllBatchTasks = function(job_id){
@@ -176,10 +175,11 @@
                     
                      //event fired for direct url jumping or hitting...
                       $scope.$on('$locationChangeStart', function(event, newUrl, oldUrl) {
-                          if((oldUrl != undefined) && ((newUrl.indexOf("migration/recommendation") > -1)) ||(newUrl.indexOf("migration/resources") > -1) || (newUrl.indexOf("migration/confirm") > -1)){
-                             event.preventDefault();
-                               $rootRouter.navigate(["MigrationStatus"]);}
-                                 });
+                        if((oldUrl != undefined) && ((newUrl.indexOf("migration/recommendation") > -1)) ||(newUrl.indexOf("migration/resources") > -1) || (newUrl.indexOf("migration/confirm") > -1)){
+                            event.preventDefault();
+                            $rootRouter.navigate(["MigrationStatus"]);
+                        }
+                    });
                 /**
                  * @ngdoc method
                  * @name getAllAlerts
