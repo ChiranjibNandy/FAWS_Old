@@ -162,12 +162,12 @@
             </div>
             <div class="span-7" ng-show="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker">
                 <!--<h3>Migrating to Fanatical Support for AWS</h3>-->
-                <h3>Benefits:</h3>
+                <h3>Benefits:</h3> 
                 <big>
                     <ul>
                         <li><b>Increase infratructure efficiency.</b></li>
                         <li><b>Explore the newest Rackspace offerings.</b></li>
-                        <li><b>Maybe even save some money!</b></li>
+                        <li><b>Recognize potential cost savings.</b></li>
                     </ul>
                 </big>
                 <h3>What to expect:</h3>
@@ -188,7 +188,7 @@
             </div>
         </div>
         <div class="row" ng-class="{disabled:vm.fawsCreationProgress}" ng-show="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker">
-            <h3><strong style="color:#c40022;">Step 1: </strong> Create new AWS account now-</h3>
+            <h3><strong style="color:#c40022;">Step 1: </strong> Create new AWS account now:</h3>
             <div class="row">
                 <span>
                     <span class="control-label-cust" ng-hide = "vm.fawsCreated">Account Name </span><span class="half-tab"></span>
@@ -211,7 +211,7 @@
                         </span>
                         <span class="half-tab" ng-hide = "vm.fawsCreated"></span>
                          <span>
-                         <a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank" style="font-style: italic;">(Learn More)</a>
+                         <a href="" target="_blank" style="font-style: italic;text-decoration: underline;">Learn More</a> &nbsp<a class="fa fa-external-link" href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank"></a>
                         </span>
                     </span>
                 </span>    
@@ -219,7 +219,7 @@
             </br> </br>
             
             <div class="row" style ="padding-top: 8px;" ng-hide = "vm.fawsCreated">
-                        <input  type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required">&nbsp &nbsp<Strong class="ng-binding">I acknowledge that I have read and accept the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a> and the <a href="https://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Terms and Conditions</a>.</Strong>
+                        <input  type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required">&nbsp &nbsp<Strong class="ng-binding">Check here to indicate that you have read and agree to the terms of the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a>, <a href="https://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Product Terms</a>,&nbsp<a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">and Rackspace Migration Manager Terms</a>.</Strong>
                     </div>
             <div class="row service-button">
                 <div class="intro-modal-nofaws rs-success" ng-show="vm.fawsCreated">Thank you. A request for creating a new AWS account was successfully created. We will let you know when the account is created. You can follow the request  <a href="https://mycloud.rackspace.com/cloud/{{vm.tenant_id}}/tickets" target="_blank"> here</a>.</div>
