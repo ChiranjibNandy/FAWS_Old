@@ -278,7 +278,7 @@
                             server.selectedMapping.zone = vm.awsZone || server.selectedMapping.zone;
                         }    
                     });
-                    //dataStoreService.setItems({server:vm.data,network:[],LoadBalancers:dataStoreService.getItems('LoadBalancers')});
+                    vm.selectedConfiguration = 0;
                     if(vm.data.length !== 0)
                         $window.localStorage.setItem('selectedServers',JSON.stringify(vm.data));
                     $rootScope.$emit("pricingChanged");
