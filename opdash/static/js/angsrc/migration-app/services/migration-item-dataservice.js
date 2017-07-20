@@ -8,7 +8,7 @@
      * This service acts as a facade which handles calling the specific service implementation for each resoource type (server, network etc).
      */
     angular.module("migrationApp")
-        .service("migrationitemdataservice", ["serverservice", "networkservice", "contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q","$window", function (serverService, networkService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q,$window) {
+        .service("migrationitemdataservice", ["serverservice", "networkservice", "contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q", "$window", function (serverService, networkService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q, $window) {
             var loaded, loadbalancers, self = this, currentTenant = null, default_zone = 'us-east-1a';
             //the above default_zone is needed to get the default values.
             var prepareNames = function () {
@@ -43,8 +43,8 @@
                     return serverService.getTrimmedList();
                 } else if (type === "network") {
                     return networkService.getTrimmedList();
-                // } else if (type === "files") {
-                //     return networkService.getTrimmedList();
+                    // } else if (type === "files") {
+                    //     return networkService.getTrimmedList();
                 } else if (type === "LoadBalancers") {
                     return self.getLoadBalancers();
                 }
@@ -104,15 +104,15 @@
                 var destaccount = JSON.parse($window.localStorage.getItem("fawsAccounts"));
 
                 var equipments = {
-                        instances: JSON.parse($window.localStorage.selectedServers),//dataStoreService.getItems("server")
-                        networks: dataStoreService.getDistinctNetworks()
-                    },
+                    instances: JSON.parse($window.localStorage.selectedServers),//dataStoreService.getItems("server")
+                    networks: dataStoreService.getDistinctNetworks()
+                },
 
                     auth = authservice.getAuth(),
                     names = prepareNames(),
                     instancesReqList = [],
                     networksReqList = [],
-                    
+
                     reqObj = {
                         metadata: {
                             batch_name: $window.localStorage.migrationName || dataStoreService.getScheduleMigration().migrationName,
@@ -131,45 +131,11 @@
                     };
 
                 // prepare servers/instances request object
-                equipments.instances.map(function (instance) {
-                    instancesReqList.push({
-                        source: {
-                            id: instance.rrn,
-                            region: instance.region.toUpperCase(),
-                        },
-                        destination: {
-                            region: instance.selectedMapping.region, //.toUpperCase(),
-                            zone: instance.selectedMapping.zone || default_zone,
-                            type: instance.selectedMapping.instance_type
-                        }
-                    });
-                });
+                serverService.prepareServerInstance();
 
                 // prepare networks request object
                 // TODO(Team): After rrn changes in migrator, update id prop.
-                equipments.networks.map(function (network) {
-                    networksReqList.push({
-                        source: {
-                            region: network.region.toUpperCase()
-                        },
-                        destination: {
-                            region: network.destRegion, //.toUpperCase(),
-                            default_zone: network.destZone || default_zone
-                        },
-                        subnets: [
-                            {
-                                id : network.rrn
-                            }
-                        ],
-                        instances: [
-                            {
-                                id : network.instanceRrn
-                            }
-                        ],
-                        security_groups: "All"
-                    });
-                });
-
+                networkService.prepareNetworkInstance();
                 var currEPOCHTime = moment().unix();
                 var currISOTime = moment().toISOString();
                 if (dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < (currISOTime)) {
@@ -177,14 +143,14 @@
                     dataStoreService.selectedTime.time = reqObj.start;
                 } else {
                     //code for iso conversion
-                    var isoDateTime =dataStoreService.selectedTime.time;
+                    var isoDateTime = dataStoreService.selectedTime.time;
                     reqObj.start = moment.unix(isoDateTime).toISOString();
                     dataStoreService.selectedTime.time = reqObj.start;
                 }
 
-                reqObj.resources.instances = instancesReqList; //add servers to the resources list
-                if (networksReqList[0] != null) { //add networks to the resources list iff there are any networks
-                    reqObj.resources.networks = networksReqList;
+                reqObj.resources.instances = serverService.prepareServerInstance(); //add servers to the resources list
+                if (networkService.prepareNetworkInstance().length !=0) { //add networks to the resources list iff there are any networks
+                    reqObj.resources.networks = networkService.prepareNetworkInstance();
                 }
 
                 return reqObj;
@@ -203,12 +169,10 @@
             this.preparePrereqRequest = function (batchName) {
                 var destaccount = JSON.parse($window.localStorage.getItem("fawsAccounts"));
                 var equipments = {
-                        instances: JSON.parse($window.localStorage.selectedServers),
-                        networks: dataStoreService.getDistinctNetworks()
-                    },
+                    instances: JSON.parse($window.localStorage.selectedServers),
+                    networks: dataStoreService.getDistinctNetworks()
+                },
                     auth = authservice.getAuth(),
-                    instancesReqList = [],
-                    networksReqList = [],
                     reqObj = {
                         source: {
                             tenantid: auth.tenant_id
@@ -219,49 +183,14 @@
                         resources: {},
                         version: "v1"
                     };
-                
+
                 // prepare servers/instances request object
-                equipments.instances.map(function (instance) {
-                    instancesReqList.push({
-                        source: {
-                            id: instance.id,
-                            region: instance.region.toUpperCase(),
-                        },
-                        destination: {
-                            region: instance.selectedMapping.region, 
-                            zone:instance.selectedMapping.zone || default_zone,
-                            type: instance.selectedMapping.instance_type
-                        }
-                    });
-                });
-
+                serverService.prepareServerInstance();
                 // prepare networks request object
-                equipments.networks.map(function (network) {
-                    networksReqList.push({
-                        source: {
-                            region: network.region.toUpperCase()
-                        },
-                        destination: {
-                            region: network.destRegion, 
-                            default_zone: network.destZone || default_zone
-                        },
-                        subnets: [
-                            {
-                                id : network.rrn
-                            }
-                        ],
-                        instances: [
-                            {
-                                id : network.instanceRrn
-                            }
-                        ],
-                        security_groups: "All"
-                    });
-                });
-
-                reqObj.resources.instances = instancesReqList; //add servers to the resources list
-                if (networksReqList[0] != null) { //add networks to the resources list iff there are any networks
-                    reqObj.resources.networks = networksReqList;
+                networkService.prepareNetworkInstance();
+                reqObj.resources.instances = serverService.prepareServerInstance(); //add servers to the resources list
+                if (networkService.prepareNetworkInstance().length != 0) { //add networks to the resources list iff there are any networks
+                    reqObj.resources.networks = networkService.prepareNetworkInstance();
                 }
                 return reqObj;
             }//end of preparePrereqRequest method.
@@ -270,8 +199,8 @@
             this.getServerMigrationStatus = function (tenant_id) {
                 var url = "/api/server_status/" + tenant_id;
                 return HttpWrapper.send(url, {
-                        "operation": 'GET'
-                    })
+                    "operation": 'GET'
+                })
                     .then(function (response) {
                         var status = {
                             server_status: response.server_status,
@@ -284,8 +213,8 @@
             this.getResourceMigrationStatus = function (tenant_id) {
                 var url = "/api/jobs/all";
                 return HttpWrapper.send(url, {
-                        "operation": 'GET'
-                    })
+                    "operation": 'GET'
+                })
                     .then(function (response) {
                         return response;
                     });
@@ -307,28 +236,28 @@
                 if (!loaded || (currentTenant !== tenant_id)) {
 
                     return HttpWrapper.send(url, {
-                            "operation": 'GET'
-                        })
+                        "operation": 'GET'
+                    })
                         .then(function (response) {
                             loaded = true;
                             currentTenant = tenant_id;
                             loadbalancers = {
                                 labels: [{
-                                        field: "name",
-                                        text: "CLB Name"
-                                    },
-                                    {
-                                        field: "clb status",
-                                        text: "CLB Status"
-                                    },
-                                    {
-                                        field: "id",
-                                        text: "CLB ID"
-                                    },
-                                    {
-                                        field: "migration status",
-                                        text: "Migration Status"
-                                    }
+                                    field: "name",
+                                    text: "CLB Name"
+                                },
+                                {
+                                    field: "clb status",
+                                    text: "CLB Status"
+                                },
+                                {
+                                    field: "id",
+                                    text: "CLB ID"
+                                },
+                                {
+                                    field: "migration status",
+                                    text: "Migration Status"
+                                }
                                 ],
                                 data: response
                             };
@@ -349,23 +278,23 @@
                  * @description 
                  * Invokes "/api/eligibility" API call for checking eligibility of servers to migrate.
             */
-            this.eligibilityPrecheck = function(itemsArr) {
+            this.eligibilityPrecheck = function (itemsArr) {
                 var tenant_id = authservice.getAuth().tenant_id;
                 var requestObj = {
-                    "source":{
+                    "source": {
                         "cloud": "rackspace",
                         "tenantid": tenant_id
                     },
                     "resources": {
-                        "instances":itemsArr
+                        "instances": itemsArr
                     },
                     "version": "v1"
                 };
-                return HttpWrapper.save("/api/eligibility", {"operation":'POST'}, requestObj)
-                    .then(function(result){
+                return HttpWrapper.save("/api/eligibility", { "operation": 'POST' }, requestObj)
+                    .then(function (result) {
                         return result;
-                    },function(error) {
-                       return error;
+                    }, function (error) {
+                        return error;
                     });
             };
 

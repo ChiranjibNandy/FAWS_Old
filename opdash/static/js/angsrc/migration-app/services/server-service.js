@@ -7,19 +7,19 @@
      * @description
      * Service to retrieve all data for server resources
      */
-    angular.module("migrationApp").factory("serverservice", ["httpwrapper", "$q", "authservice", function (HttpWrapper, $q, authservice) {
+    angular.module("migrationApp").factory("serverservice", ["httpwrapper", "$q", "authservice", "$window", "datastoreservice", function (HttpWrapper, $q, authservice, $window, datastoreservice) {
         // local variables to help cache data
-        var loaded, servers, self = this, currentTenant = null;
+        var loaded, servers, self = this, currentTenant = null, default_zone = 'us-east-1a';
 
         // function to transform the data from api call for overview display
-        function trimTransform (data) {
+        function trimTransform(data) {
             var serversList = [];
             var t = data.data;
-            for(var key in t){
+            for (var key in t) {
                 // iterate over networks by region
                 if (t.hasOwnProperty(key) && t[key] !== null) {
                     // iterate over each network and extract necessary data
-                    angular.forEach(t[key].servers, function(server) {
+                    angular.forEach(t[key].servers, function (server) {
                         serversList.push({
                             id: server.id,
                             rrn: server.rrn,
@@ -43,16 +43,16 @@
         }
 
         // function to transform the data from api call for details display
-        function detailsTransform (data) {
+        function detailsTransform(data) {
             var serversList = [];
             var t = data.data;
 
-            for(var key in t){
+            for (var key in t) {
                 // iterate over networks by region
                 if (t.hasOwnProperty(key)) {
                     // iterate over each network and extract necessary data
 
-                    angular.forEach(t[key].servers, function(server) {
+                    angular.forEach(t[key].servers, function (server) {
                         serversList.push({
                             id: server.id,
                             rrn: server.rrn,
@@ -65,7 +65,7 @@
                             OS_EXT_STS_task_state: server["OS-EXT-STS:task_state"],
                             OS_EXT_STS_vm_state: server["OS-EXT-STS:vm_state"],
                             created: server.created,
-                            updated:server.updated
+                            updated: server.updated
                         });
                     });
                 }
@@ -78,24 +78,24 @@
         }
 
         // get the region of a server based on its id
-        var getRegionById = function(id){
+        var getRegionById = function (id) {
             var t = servers.data;
-            for(var key in t){
-                if(t.hasOwnProperty(key)){
-                    for(var i=0; i<t[key].servers.length; i++){
-                        if(t[key].servers[i].id === id)
+            for (var key in t) {
+                if (t.hasOwnProperty(key)) {
+                    for (var i = 0; i < t[key].servers.length; i++) {
+                        if (t[key].servers[i].id === id)
                             return key;
                     }
                 }
             }
         };
 
-        self.getRegionById = function(id){
+        self.getRegionById = function (id) {
             var t = servers.data;
-            for(var key in t){
-                if(t.hasOwnProperty(key)){
-                    for(var i=0; i<t[key].servers.length; i++){
-                        if(t[key].servers[i].id === id)
+            for (var key in t) {
+                if (t.hasOwnProperty(key)) {
+                    for (var i = 0; i < t[key].servers.length; i++) {
+                        if (t[key].servers[i].id === id)
                             return key;
                     }
                 }
@@ -110,10 +110,10 @@
          * @description 
          * Get a list of servers for a tenant. It returns only a definite set of properties of a server for its representation.
          */
-        self.getTrimmedList = function() {
+        self.getTrimmedList = function () {
             var deferred = $q.defer();
-            self.getAll().then(function(response) {
-                if(response.error)
+            self.getAll().then(function (response) {
+                if (response.error)
                     return deferred.resolve(response);
                 return deferred.resolve(trimTransform(response));
             });
@@ -128,10 +128,10 @@
          * @description 
          * Get detailed info on all the servers of a tenant as a list
          */
-        self.getDetailedList = function() {
+        self.getDetailedList = function () {
             var deferred = $q.defer();
-            self.getAll().then(function(response) {
-                if(response.error)
+            self.getAll().then(function (response) {
+                if (response.error)
                     return deferred.resolve(response);
                 return deferred.resolve(detailsTransform(response));
             });
@@ -153,24 +153,24 @@
 
             // if ((currentTenant !== tenant_id)) {
 
-                return HttpWrapper.send(url,{"operation":'GET'})
-                                .then(function(response){
-                                    currentTenant = tenant_id;
-                                    servers = {
-                                        labels: [
-                                                    {field: "name", text: "Server Name"},
-                                                    {field: "ip_address", text: "IP Address"},
-                                                    {field: "ram", text: "RAM"},
-                                                    {field: "server status", text: "Server Status"},
-                                                    {field:"migration status", text:"Migration Status"},
-                                                    {field:"eligibility test", text:"Eligibility test result"}
-                                                ],
-                                        data: response
-                                    };
-                                    return servers;
-                                }, function(errorResponse) {
-                                    return errorResponse;
-                                });
+            return HttpWrapper.send(url, { "operation": 'GET' })
+                .then(function (response) {
+                    currentTenant = tenant_id;
+                    servers = {
+                        labels: [
+                            { field: "name", text: "Server Name" },
+                            { field: "ip_address", text: "IP Address" },
+                            { field: "ram", text: "RAM" },
+                            { field: "server status", text: "Server Status" },
+                            { field: "migration status", text: "Migration Status" },
+                            { field: "eligibility test", text: "Eligibility test result" }
+                        ],
+                        data: response
+                    };
+                    return servers;
+                }, function (errorResponse) {
+                    return errorResponse;
+                });
 
             // } else {
             //     return $q.when(servers);
@@ -187,15 +187,15 @@
          * @description 
          * Get pricing details of a server based on its flavor and the aws region to which it needs to be migrated
          */
-        self.getPricingDetails = function(rs_flavor_id, aws_region){
-            var url = "/api/compute/mappings_and_prices/"+rs_flavor_id+"/"+aws_region;
+        self.getPricingDetails = function (rs_flavor_id, aws_region) {
+            var url = "/api/compute/mappings_and_prices/" + rs_flavor_id + "/" + aws_region;
             //var url = "/static/angassets/pricing-details.json";
-            return HttpWrapper.send(url,{"operation":'GET'})
-                    .then(function (response) {
-                        return {
-                            data: response
-                        };
-                    });
+            return HttpWrapper.send(url, { "operation": 'GET' })
+                .then(function (response) {
+                    return {
+                        data: response
+                    };
+                });
         };
 
         /**
@@ -207,15 +207,48 @@
          * @description
          * Get the list of all tasks involved in migration of a server
          */
-        self.getJobTasks = function(jobId){
-            var url = "/api/jobs/"+jobId;
-            return HttpWrapper.send(url,{"operation":'GET'})
-                    .then(function (response) {
-                        return {
-                            data: response
-                        };
-                    });
+        self.getJobTasks = function (jobId) {
+            var url = "/api/jobs/" + jobId;
+            return HttpWrapper.send(url, { "operation": 'GET' })
+                .then(function (response) {
+                    return {
+                        data: response
+                    };
+                });
         };
+
+        /**
+                * @ngdoc method
+                * @name prepareServerInstance
+                * @methodOf migrationApp.service:serverservice
+                * @returns server instance request object.
+                * @description
+                * prepare server instance request object
+                */
+        var instancesReqList = [];
+        self.prepareServerInstance = function () {
+            if ($window.localStorage.selectedServers !== undefined) {
+                var equipments = {
+                    instances: JSON.parse($window.localStorage.selectedServers),//dataStoreService.getItems("server")
+                    networks: datastoreservice.getDistinctNetworks()
+                }
+            }
+            instancesReqList = equipments.instances.map(function (instance) {
+                return {
+                    source: {
+                        id: instance.rrn,
+                        region: instance.region.toUpperCase(),
+                    },
+                    destination: {
+                        region: instance.selectedMapping.region, //.toUpperCase(),
+                        zone: instance.selectedMapping.zone || default_zone,
+                        type: instance.selectedMapping.instance_type
+                    }
+                }
+            });
+
+            return instancesReqList;
+        }
 
         return self;
     }]);
