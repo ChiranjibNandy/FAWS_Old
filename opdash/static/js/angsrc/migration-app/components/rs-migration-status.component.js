@@ -289,7 +289,19 @@
                                     }
                                     if (validCompletedBatchStatus.indexOf(job.batch_status) >= 0)
                                         completedBatches.push(job);
+                                        job.completed_at =convertUTCDateToLocalDate(new Date(job.completed_at));
                                 });
+                              //function to convert utc date time to local date time and will be used for converting completed batches time.
+                                function convertUTCDateToLocalDate(date) {
+                                       var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
+
+                                             var offset = date.getTimezoneOffset() / 60;
+                                                     var hours = date.getHours();
+
+                                                       newDate.setHours(hours - offset);
+
+                                                         return newDate;   
+                                                        }
 
                                 //currentBatches = tempcurrentBatches.filter(x=>x.batch_status=='started').concat(tempcurrentBatches.filter(x=>x.batch_status=='in progress')).concat(tempcurrentBatches.filter(x=>x.batch_status=='paused')).concat(tempcurrentBatches.filter(x=>x.batch_status=='scheduled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='canceled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='error'))
                                 
