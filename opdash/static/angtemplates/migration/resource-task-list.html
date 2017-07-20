@@ -5,28 +5,31 @@
             <div class="rs-inner">
                 <div class="rs-row">
                     <div class="span-10">
-                        <div class="migr-ddi-name">
-                            {{vm.currentUser}} ( #{{vm.tenant_id}} )
+                        <div class="migr-name">
+                            <b>{{vm.batch_name}} / {{vm.resourceName}} / Tasks</b>
                         </div>
-                        <div class="migr-name" style="display: inline-block;">
-                           {{vm.batch_name}} / {{vm.resourceName}} / Tasks
+                        <div class="migr-name inline-block-elements">
+                            Migration Progress:
                         </div>
-                        <div class="rs-progress rs-progress-small" ng-if="vm.progressFlag !== false" style="display: inline-block;">
+                        <div class="rs-progress rs-progress-small inline-block-elements instance-progress-bar" ng-if="vm.progressFlag !== false">
                             <div class="rs-progress-inner">
-                                <div class="rs-segment" ng-style="{'width': +vm.succeeded_time_pct +'%'}">
-                                    <div ng-class="{'rs-bar rs-status-ok rs-bar-striped': vm.succeeded_time_pct != '100' , 'rs-bar rs-status-ok': vm.succeeded_time_pct == '100'}"></div>
+                                <div class="rs-segment" ng-style="{'width': + vm.batch_progress +'%'}">
+                                    <div ng-class="{'rs-bar rs-status-ok rs-bar-striped': vm.batch_progress != '100' , 'rs-bar rs-status-ok': vm.batch_progress == '100'}"></div>
                                 </div>
                             </div>
-                        </div><span class="rs-status-ok" ng-if="vm.progressFlag !== false"><em> {{vm.succeeded_time_pct}}%</em></span>
+                        </div><span class="rs-status-ok" ng-if="vm.batch_progress !== undefined"><em> {{vm.batch_progress}}%</em></span>
+                        <span class="migr-name capitalize instance-progress-bar" ng-if="vm.progressFlag === false">{{vm.instance_status}}</span>
                     </div>
                     <div class="span-2">
                         <button class="rs-btn" ng-click="vm.getResourceTasks(true)">
-                            <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i> Refresh
-                        </button>
+<i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i> Refresh
+</button>
                         <a class="rs-btn" ng-click="vm.back()" style="width: 60px">Back</a>
-                        <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1 ? " mins ": " min ") + "ago"}}</div>
+                        <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1
+                            ? " mins ": " min ") + "ago"}}</div>
                     </div>
                 </div>
+                <br>
                 <div class="migration-status-list-container">
                     <table class="rs-list-table no-truncate-td cell-center">
                         <thead>
