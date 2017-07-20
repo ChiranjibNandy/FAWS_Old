@@ -112,7 +112,7 @@
                     vm.sortBy = {
                         //current_batch: '-start',
                         completed_batch: '-start'
-                    };
+                    };                 
 
                     document.addEventListener("click", function() {
                         vm.showQueuedBatchMenu = false;
@@ -542,6 +542,11 @@
                      * Sets the sort parameter for current and completed batch list
                      */
                     vm.setSortBy = function(batch, sortBy) {
+                        //Loop through the jQuery Elements array and then unbnd the hover function call from the completed batch headers once they get clicked
+                        $('.secondary-table > thead > tr > th').each(function(i, obj) {
+                            $(this).unbind('mouseenter').unbind('mouseleave')
+                        });
+                        
                         var element = document.getElementsByClassName('custom-sort-a');
                         for(var i = 0; i < element.length; i++)
                         {
