@@ -178,8 +178,38 @@
                   * This function assists us with the sorting of columns in all the tabs.
                   */
                 vm.sortBy = function(propertyName) {
-                    vm.reverse = (vm.propertyName === propertyName) ? !vm.reverse : false;
+                    // vm.reverse = (vm.propertyName === propertyName) ? !vm.reverse : false;
+                    // vm.propertyName = propertyName;
                     vm.propertyName = propertyName;
+                    var items = vm.data;
+                    if(vm.sortingOrder){
+                        items.sort(function(a,b){
+                            if(["region", "zone", "cost", "instance_type"].indexOf(propertyName) > -1){
+                                if(a.selectedMapping[propertyName] < b.selectedMapping[propertyName]) return -1;
+                                if(a.selectedMapping[propertyName] > b.selectedMapping[propertyName]) return 1;
+                            }
+                            else{
+                                if(a[propertyName] < b[propertyName]) return -1;
+                                if(a[propertyName] > b[propertyName]) return 1;
+                            }
+                            return 0;
+                        });
+                        vm.sortingOrder = false;
+                    }else{
+                        items.sort(function(a,b){
+                            if(["region", "zone", "cost", "instance_type"].indexOf(propertyName) > -1){
+                                if(a.selectedMapping[propertyName] > b.selectedMapping[propertyName]) return -1;
+                                if(a.selectedMapping[propertyName] < b.selectedMapping[propertyName]) return 1;
+                            }
+                            else{
+                                if(a[propertyName] > b[propertyName]) return -1;
+                                if(a[propertyName] < b[propertyName]) return 1;
+                            }
+                            return 0;
+                        });
+                        vm.sortingOrder = true;
+                    }
+                    vm.data = items;
                 };
 
                 //to update the networks when we remove an server.
@@ -323,7 +353,7 @@
                 };
 
                 $scope.$watch('vm.filtervalue', function (query) {
-                    vm.filteredArr = $filter("filter")(vm.data, query);
+                    vm.filteredArr = vm.data.filter(item => item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || (item.ip_address || '').indexOf(vm.filtervalue)!=-1 || ((item.selectedMapping && item.selectedMapping.region) || '').toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || ((item.selectedMapping && item.selectedMapping.zone) || 'us-east-1a').toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || ((item.selectedMapping && item.selectedMapping.instance_type) || '').toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || ((item.selectedMapping && vm.totalCost(item)) || 0) == vm.filtervalue);
                     // pagination controls
                     vm.currentPage = 1;
                     vm.pageArray = [];
@@ -334,6 +364,22 @@
                         vm.pageArray.push(i);
                     };    
                 });
+                
+                /**
+                 * @ngdoc method
+                 * @name filterCustomSearch
+                 * @methodOf migrationApp.controller:rsrecommendationitemCtrl
+                 * @description 
+                 * This function helps us customize the filter 
+                 * inorder to search for resources depending on the column headers shown in the resource tabs
+                 */
+                vm.filterCustomSearch = function (item){
+                    if (vm.filtervalue === undefined || vm.filtervalue == "") return true;
+                    if (item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.ip_address.indexOf(vm.filtervalue)!=-1 || item.selectedMapping.region.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || (item.selectedMapping.zone || 'us-east-1a').toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.selectedMapping.instance_type.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || vm.totalCost(item) == vm.filtervalue) {
+                        return true;
+                    }
+                    return false;
+                };
                 
                 return vm;
             }]

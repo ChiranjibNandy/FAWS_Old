@@ -33,6 +33,7 @@
                     vm.migrationName = datastoreservice.getScheduleMigration().migrationName;
                     //var servers = datastoreservice.getItems('server'); -- Previous Code
                     var servers = [];
+                    vm.filteredValue = "";
                     if($window.localStorage.selectedServers !== undefined)
                         servers = JSON.parse($window.localStorage.selectedServers);
                     //datastoreservice.getItems('server');

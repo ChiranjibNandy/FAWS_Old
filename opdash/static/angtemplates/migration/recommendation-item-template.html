@@ -18,9 +18,11 @@
               <thead>
                   <tr>
                       <th class="rs-table-status"></th>
-                      <th ng-repeat="item in vm.labels">
-                          <span ng-show='item.sortingNeeded' class="rs-table-sort-text" ng-click="vm.sortBy(item.field)">{{item.text}}</span>
-                          <span ng-show='!item.sortingNeeded'>{{item.text}}</span>
+                      <th ng-repeat="label in vm.labels" ng-init="label.reverse = false" ng-click="vm.sortBy(label.field); label.reverse = !label.reverse">
+                        <a href="javascript:void(0)" class="rs-table-sort" ng-class=" {'custom-table-sort-asc current-sort-param': (label.reverse && vm.propertyName == label.field), 'custom-table-sort-desc current-sort-param': (!label.reverse && vm.propertyName == label.field), 'custom-table-sort-desc': vm.propertyName != label.field}">
+                            <span>{{label.text}}</span>
+                            <span ng-show="label.field != 'action'" class="rs-table-sort-indicator"></span>
+                        </a>
                       </th>
                       <th ng-show="vm.type === 'server'"></th>
                   </tr>

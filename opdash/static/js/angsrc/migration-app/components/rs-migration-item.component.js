@@ -131,6 +131,7 @@
                     vm.propertyName = "name";
                     vm.activeItemCount = 0;
                     vm.eligCallInProgress = true;
+                    vm.currentPage = 1;
                     vm.pageSize = 5; // items to be displayed per page
                     /**
                      * @ngdoc property
@@ -190,6 +191,18 @@
                             vm.items = mapServerStatus(dataList, results[1].job_status_list);
                             //check if all the servers can be migrated else disable checkbox(to select all items) at the header of item selection table.
                             angular.forEach(vm.items, function (item) {
+                                if(item.migStatus == 'started' || item.migStatus == 'in progress' || item.migStatus == 'scheduled'|| item.migStatus == 'paused'){
+                                    item.migStatus = "Migration "+item.migStatus;
+                                }
+                                else if(item.migStatus == 'not available'){
+                                    item.migStatus = "Migration Scheduled";
+                                }
+                                else if((item.migStatus == 'error' || item.migStatus == 'canceled' || item.migStatus == 'done') && (item.canMigrate == true && item.status == 'active')){
+                                    item.migStatus = "Available to Migrate";
+                                }
+                                else if((item.migStatus == 'error' || item.migStatus == 'canceled' || item.migStatus == 'done') && !(item.canMigrate == true && item.status == 'active')){
+                                    item.migStatus = "Not Available to Migrate";
+                                }
                                 if(item.selected == true){
                                     item.selected = false;
                                 }
@@ -473,7 +486,8 @@
                 }
                 var timeout = null;
                 $scope.$watch('vm.filtervalue', function (query) {
-                    vm.filteredArr = $filter("filter")(vm.items, query);
+                    // vm.filteredArr = $filter("filter")(vm.items, vm.filtervalue);
+                    vm.filteredArr = vm.items.filter(item => item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.ip_address.indexOf(vm.filtervalue)!=-1 || item.ram == vm.filtervalue || item.status.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.eligible.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.migStatus.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1);
                     // pagination controls
                     vm.currentPage = 1;
                     vm.pageArray = [];
@@ -517,6 +531,7 @@
                                                 if(ID == item.id && testCase.type == "success"){ 
                                                     item.canMigrate = true;
                                                     item.eligible = 'Passed';
+                                                    item.migStatus = "Available to Migrate";
                                                     item.eligibiltyTests = descriptions;
                                                 }
                                                 else if(ID == item.id && testCase.type != "success"){
@@ -524,6 +539,7 @@
                                                     keepGoing = false;
                                                     //enable this once API works fine
                                                     item.canMigrate = false;
+                                                    item.migStatus = "Not Available to Migrate";
                                                     item.eligibiltyTests = descriptions;
                                                 }
 
@@ -544,6 +560,7 @@
                                         vm.items.filter(function(data){
                                             if(server.id == data.id){
                                                 data.canMigrate = false;
+                                                data.migStatus = "Not Available to Migrate";
                                             }
                                         });
                                     });
@@ -552,6 +569,7 @@
                                     vm.items.filter(function(data){
                                         if(item.id == data.id){
                                             data.canMigrate = false;
+                                            data.migStatus = "Not Available to Migrate";
                                         }
                                     });
                                 }
@@ -603,7 +621,7 @@
                         
                     }
                     angular.forEach(items, function(item){
-                        if((item.canMigrate == true && item.status.toLowerCase() == 'active' && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]) || (item.status.toLowerCase() == 'active' && (item.migStatus == 'error' || item.migStatus == 'canceled' || item.migStatus == 'done') && !vm.checkingEligibility[item.id]) && !item.eligibiltyTests.length){
+                        if((item.canMigrate == true && item.status.toLowerCase() == 'active' && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]) || (item.status.toLowerCase() == 'active' && item.migStatus == 'Available to Migrate' && !vm.checkingEligibility[item.id]) && !item.eligibiltyTests.length){
                             var storedEligibilityResults = [];
                             //Check for eligibility results stored during the current session.
                             if(!($window.localStorage.eligibilityResults == undefined || $window.localStorage.eligibilityResults == "undefined")){
@@ -612,6 +630,7 @@
                             if(storedEligibilityResults.length){
                                 item.canMigrate = true;
                                 item.eligible = 'Passed';
+                                item.migStatus = "Available to Migrate";
                                 item.eligibiltyTests = storedEligibilityResults[0].eligibiltyTests;
                                 vm.parent.itemsLoadingStatus(false);
                             }
@@ -626,7 +645,25 @@
                     });
                     if(arrForEligibilityTest.length)
                         vm.eligibilityCheck(arrForEligibilityTest, true);
-                }
+                };
+
+                var timeout = null;
+
+                /**
+                 * @ngdoc method
+                 * @name filterCustomSearch
+                 * @methodOf migrationApp.controller:rsmigrationitemCtrl
+                 * @description 
+                 * This function helps us customize the filter 
+                 * inorder to search for resources depending on the column headers shown in the resource tabs
+                 */
+                vm.filterCustomSearch = function (item){
+                    if (vm.filtervalue === undefined || vm.filtervalue == "") return true;
+                    if (item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.ip_address.indexOf(vm.filtervalue)!=-1 || item.ram == vm.filtervalue || item.status.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.eligible.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.migStatus.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1) {
+                        return true;
+                    }
+                    return false;
+                };
 
                 return vm;
             }]
