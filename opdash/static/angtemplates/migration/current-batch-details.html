@@ -16,8 +16,8 @@
                         <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1 ? " mins ": " min ") + "ago"}}</div>
                     </div>
                 </div>
-                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
-                    <table class="rs-list-table rs-embedded-list-table no-truncate-td" style="overflow: hidden">
+                <div class="migration-status-list-container table-justify">
+                    <table class="rs-list-table no-truncate-td cell-center" style="overflow: hidden">
                         <thead>
                             <th>
                                 <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('server', 'name')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['server']==='name', 'custom-table-sort-desc current-sort-param': vm.sortBy['server']==='-name', 'custom-table-sort-desc': vm.sortBy['server'].indexOf('name') < 0}">
@@ -119,9 +119,8 @@
                     </table>
                 </div>
                 <br>
-
-                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container" ng-show="vm.job.networks.length>0">
-                    <table class="rs-list-table rs-embedded-list-table no-truncate-td" style="overflow: hidden">
+                <div class="migration-status-list-container table-justify" ng-show="vm.job.networks.length>0">
+                    <table class="rs-list-table no-truncate-td cell-center" style="overflow: hidden">
                         <thead>
                             <th>
                                 <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('network', 'name')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['network']==='name', 'custom-table-sort-desc current-sort-param': vm.sortBy['network']==='-name', 'custom-table-sort-desc': vm.sortBy['network'].indexOf('name') < 0}">
@@ -207,8 +206,8 @@
 
                 <div class="rs-facet-section-body">
                     <h3>Batch-Tasks</h3>
-                    <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
-                        <table class=" rs-embedded-list-table">
+                    <div class="migration-status-list-container table-justify">
+                        <table class="rs-list-table no-truncate-td cell-center">
                             <thead>
                                 <tr>
                                     <th colspan="2">Name</th>
@@ -243,8 +242,8 @@
                 
                 <div class="rs-facet-section-body">
                     <h3>Alerts <span class="rs-quiet">({{vm.alerts.length}})</span></h3>
-                    <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container">
-                        <table class=" rs-embedded-list-table">
+                    <div class="migration-status-list-container table-justify">
+                        <table class="rs-list-table no-truncate-td cell-center">
                             <thead>
                                 <tr>
                                     <th class="rs-table-status"></th>
