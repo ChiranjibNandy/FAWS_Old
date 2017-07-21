@@ -8,20 +8,20 @@
      * Service to retrieve all data for network resources
      */
     angular.module("migrationApp")
-        .factory("networkservice", ["httpwrapper", "$q", "authservice", "serverservice", function (HttpWrapper, $q, authservice, serverService) {
+        .factory("networkservice", ["httpwrapper", "$q", "authservice", "serverservice", "$window", "datastoreservice", function (HttpWrapper, $q, authservice, serverService, $window, datastoreservice) {
             // local variables to help cache data
-            var loaded, networks, self = this;
+            var loaded, networks, self = this, default_zone = 'us-east-1a';
 
             // function to transform the data from api call
-            function trimTransform (data) {
+            function trimTransform(data) {
                 var networksList = [];
                 var t = data.data;
-                for(var key in t){
+                for (var key in t) {
                     // iterate over networks by region
-                    if (t.hasOwnProperty(key)) { 
+                    if (t.hasOwnProperty(key)) {
                         // iterate over each network and extract necessary data
                         //ip_address is id 
-                        angular.forEach(t[key].networks, function(network) { 
+                        angular.forEach(t[key].networks, function (network) {
                             networksList.push({
                                 id: network.id,
                                 rrn: network.rrn,
@@ -42,16 +42,16 @@
             }
 
             // function to transform the data from api call for details display
-            function detailsTransform (data) {
+            function detailsTransform(data) {
                 var networksList = [];
                 var t = data.data;
 
-                for(var key in t){
+                for (var key in t) {
                     // iterate over networks by region
                     if (t.hasOwnProperty(key)) {
                         // iterate over each network and extract necessary data
-                        
-                        angular.forEach(t[key].networks, function(network) { 
+
+                        angular.forEach(t[key].networks, function (network) {
                             networksList.push({
                                 id: network.id,
                                 rrn: network.rrn,
@@ -73,17 +73,17 @@
             }
 
             // function to get specific details of a network based on its id
-            var getNetworkDetails = function(id){
+            var getNetworkDetails = function (id) {
                 var t = networks.data;
-                for(var key in t){
-                    if(t.hasOwnProperty(key)){
-                        for(var i=0; i<t[key].networks.length; i++){
-                            if(t[key].networks[i].id === id){
+                for (var key in t) {
+                    if (t.hasOwnProperty(key)) {
+                        for (var i = 0; i < t[key].networks.length; i++) {
+                            if (t[key].networks[i].id === id) {
                                 var network = t[key].networks[i];
 
                                 return {
                                     region: key,
-                                    subnets: network.subnets.map(function(subnetId){ return {id: subnetId}; })
+                                    subnets: network.subnets.map(function (subnetId) { return { id: subnetId }; })
                                 }
                             }
                         }
@@ -91,17 +91,17 @@
                 }
             }
 
-            self.getNetworkDetails = function(id){
+            self.getNetworkDetails = function (id) {
                 var t = networks.data;
-                for(var key in t){
-                    if(t.hasOwnProperty(key)){
-                        for(var i=0; i<t[key].networks.length; i++){
-                            if(t[key].networks[i].id === id){
+                for (var key in t) {
+                    if (t.hasOwnProperty(key)) {
+                        for (var i = 0; i < t[key].networks.length; i++) {
+                            if (t[key].networks[i].id === id) {
                                 var network = t[key].networks[i];
 
                                 return {
                                     region: key,
-                                    subnets: network.subnets.map(function(subnetId){ return {id: subnetId}; })
+                                    subnets: network.subnets.map(function (subnetId) { return { id: subnetId }; })
                                 }
                             }
                         }
@@ -117,27 +117,27 @@
              * @description 
              * Get a list of networks for a tenant. It returns only a definite set of properties of a network for its representation.
              */
-            self.getTrimmedList = function() {
+            self.getTrimmedList = function () {
                 var deferred = $q.defer();
-                serverService.getTrimmedList().then(function(response) {
-                    if(response.error)
+                serverService.getTrimmedList().then(function (response) {
+                    if (response.error)
                         return deferred.resolve(response);
-                    else{
+                    else {
                         var networkList = [];
                         angular.forEach(response.data, function (server) {
                             angular.forEach(server.details.networks, function (network) {
-                                if(networkList.filter(function(listItem) { return listItem.id === network.id }).length === 0) {
+                                if (networkList.filter(function (listItem) { return listItem.id === network.id }).length === 0) {
                                     networkList.push(network);
                                 };
                             });
                         });
-                        
-                        return deferred.resolve({data: networkList});
+
+                        return deferred.resolve({ data: networkList });
                     }
                 });
                 return deferred.promise;
             };
-        
+
             /**
              * @ngdoc method
              * @name getDetailedList
@@ -146,14 +146,14 @@
              * @description 
              * Get detailed info on all the networks of a tenant as a list
              */
-            self.getDetailedList = function() {
-                       var deferred = $q.defer();
-                       self.getAll().then(function(response) {
-                        if(response.error)
-                                return deferred.resolve(response);
-                           return deferred.resolve(detailsTransform(response));
-                       });
-                       return deferred.promise;
+            self.getDetailedList = function () {
+                var deferred = $q.defer();
+                self.getAll().then(function (response) {
+                    if (response.error)
+                        return deferred.resolve(response);
+                    return deferred.resolve(detailsTransform(response));
+                });
+                return deferred.promise;
             };
 
             /**
@@ -165,31 +165,71 @@
              * Gets the entire list of networks in its raw JSON form, from the api.
              */
             self.getAll = function () {
-                
+
                 var url = "/api/us-networks";
 
                 if (!loaded) {
 
-                    return HttpWrapper.send(url,{"operation":'GET'})
-                                .then(function(response){
-                                    loaded = true;
-                                    networks = {
-                                        labels: [
-                                            {field: "name", text: "Network Name"},
-                                            {field: "shared", text: "Shared"},
-                                            {field: "status", text: "Status"}
-                                        ],
-                                        data: response
-                                    };
-                                    return networks;
-                                }, function(errorResponse) {
-                                    return errorResponse;
-                                });
+                    return HttpWrapper.send(url, { "operation": 'GET' })
+                        .then(function (response) {
+                            loaded = true;
+                            networks = {
+                                labels: [
+                                    { field: "name", text: "Network Name" },
+                                    { field: "shared", text: "Shared" },
+                                    { field: "status", text: "Status" }
+                                ],
+                                data: response
+                            };
+                            return networks;
+                        }, function (errorResponse) {
+                            return errorResponse;
+                        });
                 } else {
                     return $q.when(networks);
                 }
             };
 
+            /**
+            * @ngdoc method
+            * @name prepareNetworkInstance
+            * @methodOf migrationApp.service:networkservice
+            * @returns network instance request object.
+            * @description
+            * prepare network instance request object
+            */
+            self.prepareNetworkInstance = function (networksReqList) {
+                if ($window.localStorage.selectedServers !== undefined) {
+                    var equipments = {
+                        instances: JSON.parse($window.localStorage.selectedServers),//dataStoreService.getItems("server")
+                        networks: datastoreservice.getDistinctNetworks()
+                    }
+                }
+                var networksReqList = [];
+                networksReqList = equipments.networks.map(function (network) {
+                    return {
+                        source: {
+                            region: network.region.toUpperCase()
+                        },
+                        destination: {
+                            region: network.destRegion, //.toUpperCase(),
+                            default_zone: network.destZone || default_zone
+                        },
+                        subnets: [
+                            {
+                                id: network.rrn
+                            }
+                        ],
+                        instances: [
+                            {
+                                id: network.instanceRrn
+                            }
+                        ],
+                        security_groups: "All"
+                    };
+                });
+                return networksReqList;
+            }
             return self;
         }]); // end of service definition
 })();

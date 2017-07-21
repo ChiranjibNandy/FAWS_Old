@@ -93,11 +93,10 @@ class Operator(object):
         container.push(token, repo, tag)
         print('Done')
 
-    def show_latest_release(self):
+    def _get_latest_release(self):
         ecs = boto3.client('ecs')
 
-        # Find the 'migrator-api-${ENV}' task definition family name.
-        # (all migrator-* task def families run the same image).
+        # Find the 'opdash-cp-${ENV}' task definition family name.
         resp = ecs.list_task_definition_families()
         for tf in resp['families']:
             if 'opdash-cp' in tf:
@@ -127,10 +126,15 @@ class Operator(object):
             return 1
 
         _, tag = image.split(':', 1)
+        return tag
+
+    def show_latest_release(self):
+        tag = self._get_latest_release()
         print tag
         return 0
 
     def update_git_tags(self):
+        commit = self._get_latest_release()
         # Generate the tag string
         iso8601 = datetime.datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
         env = os.getenv('ENV', 'undefined')
@@ -141,7 +145,7 @@ class Operator(object):
 
         # Tag the repo: working copy and origin
         ignore = subprocess.check_output([
-            'git', 'tag', tag],
+            'git', 'tag', tag, commit],
             stderr=FNULL)
         ignore = subprocess.check_output([
             'git', 'push', 'origin', 'refs/tags/' + tag],

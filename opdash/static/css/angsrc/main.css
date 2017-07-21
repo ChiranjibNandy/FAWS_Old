@@ -606,3 +606,11 @@ span.fa-angle-left, span.fa-angle-right{
 .topMargin{
     margin-top:6px;
 }
+
+.inline-block-elements{
+display: inline-block;
+}
+
+.instance-progress-bar{
+margin-left:5px;
+}

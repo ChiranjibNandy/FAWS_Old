@@ -445,5 +445,12 @@
             document.getElementById("racker-migration-mgr").style.visibility = "visible";
             document.getElementById("racker-migration-mgr").className += " racker-nav-item active";
         }
+
+        //On hover in, on the completed batch names remove and then on hover out, add the class back
+        $('.secondary-table > thead > tr > th').hover(function() {
+            $(this)[0].firstElementChild.classList.remove('custom-table-sort-desc');
+        },function(){
+            $(this)[0].firstElementChild.classList.add('custom-table-sort-desc');
+        });   
     });
 </script>
