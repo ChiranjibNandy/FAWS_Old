@@ -154,23 +154,23 @@
             // if ((currentTenant !== tenant_id)) {
 
             return HttpWrapper.send(url,{"operation":'GET'})
-                .then(function(response){
-                    currentTenant = tenant_id;
-                    servers = {
-                        labels: [
-                                    {field: "name", text: "Server Name"},
-                                    {field: "ip_address", text: "IP Address"},
-                                    {field: "ram", text: "RAM"},
-                                    {field: "status", text: "Server Status"},
-                                    {field:"migStatus", text:"Migration Status"},
-                                    {field:"eligible", text:"Eligibility test result"}
-                                ],
-                        data: response
-                    };
-                    return servers;
-                }, function(errorResponse) {
-                    return errorResponse;
-                });
+                    .then(function(response){
+                        currentTenant = tenant_id;
+                        servers = {
+                            labels: [
+                                        {field: "name", text: "Server Name"},
+                                        {field: "ip_address", text: "IP Address"},
+                                        {field: "ram", text: "RAM"},
+                                        {field: "status", text: "Server Status"},
+                                        {field:"migStatus", text:"Migration Status"},
+                                        {field:"eligible", text:"Eligibility test result"}
+                                    ],
+                            data: response
+                        };
+                        return servers;
+                    }, function(errorResponse) {
+                        return errorResponse;
+                    });
 
             // } else {
             //     return $q.when(servers);
