@@ -68,8 +68,12 @@
                             vm.errorInApi = true;
                         });
                         //vm.data = dataStoreService.getItems(vm.type); -- Previous Code
-                        if($window.localStorage.selectedServers !== undefined)
+                        if($window.localStorage.selectedServers !== undefined){
                             vm.data = JSON.parse($window.localStorage.selectedServers);
+                            angular.forEach(vm.data, function (item) {
+                                vm.totalCost(item);
+                            });
+                        }
                         else
                            vm.data = [];//dataStoreService.getItems(vm.type); 
                         //$window.localStorage.selectedServers = JSON.stringify(vm.data);
@@ -79,7 +83,7 @@
                                         {field: "region", text: "AWS Region", sortingNeeded:true},
                                         {field: "zone", text: "AWS Zone", sortingNeeded:true},
                                         {field: "instance_type", text: "AWS instance", sortingNeeded:true},
-                                        {field: "cost", text: "Cost/Month", sortingNeeded:true},
+                                        {field: "totalCost", text: "Cost/Month", sortingNeeded:true},
                                         {field: "action", text: "Actions", sortingNeeded:false}
                                     ];
                     }else if (vm.type === "network"){
@@ -184,7 +188,7 @@
                     var items = vm.data;
                     if(vm.sortingOrder){
                         items.sort(function(a,b){
-                            if(["region", "zone", "cost", "instance_type"].indexOf(propertyName) > -1){
+                            if(["region", "totalCost", "zone", "instance_type"].indexOf(propertyName) > -1){
                                 if(a.selectedMapping[propertyName] < b.selectedMapping[propertyName]) return -1;
                                 if(a.selectedMapping[propertyName] > b.selectedMapping[propertyName]) return 1;
                             }
@@ -197,7 +201,7 @@
                         vm.sortingOrder = false;
                     }else{
                         items.sort(function(a,b){
-                            if(["region", "zone", "cost", "instance_type"].indexOf(propertyName) > -1){
+                            if(["region", "totalCost", "zone", "instance_type"].indexOf(propertyName) > -1){
                                 if(a.selectedMapping[propertyName] > b.selectedMapping[propertyName]) return -1;
                                 if(a.selectedMapping[propertyName] < b.selectedMapping[propertyName]) return 1;
                             }
@@ -306,6 +310,7 @@
                             var selectedConfiguration = parseInt(vm.selectedConfiguration) || 0;
                             server.selectedMapping = server.pricingOptions[selectedConfiguration];
                             server.selectedMapping.zone = vm.awsZone || server.selectedMapping.zone;
+                            vm.totalCost(server);
                         }    
                     });
                     vm.selectedConfiguration = 0;
@@ -323,8 +328,8 @@
                     else
                         aws_bandwidth_cost = parseFloat(parseFloat(item.selectedMapping.cost) * 0).toFixed(2);
                     var aws_uptime_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_uptime || 720)).toFixed(2);
-
-                    return (parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost)+ parseFloat(storage_rate)).toFixed(2);
+                    item.selectedMapping.totalCost = (parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost)+ parseFloat(storage_rate)).toFixed(2);
+                    // return item.selectedMapping.totalCost;
                 }
 
                 //Get Instance Wise Total Cost at the modify configuration page
@@ -353,7 +358,7 @@
                 };
 
                 $scope.$watch('vm.filtervalue', function (query) {
-                    vm.filteredArr = vm.data.filter(item => item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || (item.ip_address || '').indexOf(vm.filtervalue)!=-1 || ((item.selectedMapping && item.selectedMapping.region) || '').toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || ((item.selectedMapping && item.selectedMapping.zone) || 'us-east-1a').toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || ((item.selectedMapping && item.selectedMapping.instance_type) || '').toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || ((item.selectedMapping && vm.totalCost(item)) || 0) == vm.filtervalue);
+                    vm.filteredArr = vm.data.filter(item => item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || (item.ip_address || '').indexOf(vm.filtervalue)!=-1 || ((item.selectedMapping && item.selectedMapping.region) || '').toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || ((item.selectedMapping && item.selectedMapping.zone) || 'us-east-1a').toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || ((item.selectedMapping && item.selectedMapping.instance_type) || '').toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || ((item.selectedMapping && item.selectedMapping.totalCost) || 0) == vm.filtervalue);
                     // pagination controls
                     vm.currentPage = 1;
                     vm.pageArray = [];
@@ -375,7 +380,7 @@
                  */
                 vm.filterCustomSearch = function (item){
                     if (vm.filtervalue === undefined || vm.filtervalue == "") return true;
-                    if (item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.ip_address.indexOf(vm.filtervalue)!=-1 || item.selectedMapping.region.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || (item.selectedMapping.zone || 'us-east-1a').toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.selectedMapping.instance_type.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || vm.totalCost(item) == vm.filtervalue) {
+                    if (item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.ip_address.indexOf(vm.filtervalue)!=-1 || item.selectedMapping.region.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || (item.selectedMapping.zone || 'us-east-1a').toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.selectedMapping.instance_type.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.selectedMapping.totalCost == vm.filtervalue) {
                         return true;
                     }
                     return false;
