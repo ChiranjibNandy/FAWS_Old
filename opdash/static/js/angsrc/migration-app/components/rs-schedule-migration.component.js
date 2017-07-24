@@ -63,6 +63,18 @@
                     vm.date = m.format("YYYY-MM-DD");
                     $('#datetimepickerAdd').val(vm.date);
                     vm.selectedDate = moment().format('MMMM Do YYYY ') + ' at ' + moment().format('h:mma') + ' ' + new Date().toTimeString().slice(8, 42);
+                    if(dataStoreService.returnDate()!== null && dataStoreService.returnDate() !== {} && dataStoreService.returnDate().date !== ""){
+                        vm.showTimeForm = true;
+                        vm.date = dataStoreService.returnDate().date !== "Invalid date"?dataStoreService.returnDate().date:m.format("YYYY-MM-DD");
+                        $('#datetimepickerAdd').val(vm.date);
+                        vm.timezone1 = dataStoreService.returnDate().timezone;
+                        vm.time = dataStoreService.returnDate().time;
+                        vm.showTime('schedule');
+                    }else{
+                        dataStoreService.storeDate('date',moment().format('MMMM Do YYYY '));
+                        dataStoreService.storeDate('time',moment().format('h:mma'));
+                        dataStoreService.storeDate('timezone','IST');
+                    }
                     vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
                 };
 
@@ -156,14 +168,25 @@
                         var timeIndex = (Number(moment().tz(tz_country).format('HH:mm').split(" ", 1)[0].split(":",2)[0])*4) + Math.round(Number(moment().tz(tz_country).format('HH:mm').split(" ", 1)[0].split(":",2)[1])/15);
                         vm.timeIntervals = vm.timeItems.slice(timeIndex+1, vm.timeItems.length+1);
                     };
-                    vm.time = vm.timeIntervals[0];
+                    if(dataStoreService.returnDate().time === vm.timeIntervals[0])
+                        vm.time = vm.timeIntervals[0];
+                    else
+                        vm.time = dataStoreService.returnDate().time;
                     vm.migrationScheduleDetails = {
                             migrationName: dataStoreService.getScheduleMigration().migrationName,
                             time: moment(moment(vm.modifiedDate).format("YYYY-MM-DD") + "T" + vm.getTime() + vm.timeZoneDiff).unix(),
                             timezone:vm.timezone1,
                         };
+                    dataStoreService.storeDate('timezone',vm.timezone1);
+                    if(vm.modifiedDate){
+                        dataStoreService.storeDate('date',moment(vm.modifiedDate).format('MMMM Do YYYY '));    
+                    }else{
+                        if(dataStoreService.returnDate().date)
+                            dataStoreService.storeDate('date',moment(dataStoreService.returnDate().date).format('MMMM Do YYYY '));    
+                        else
+                            dataStoreService.storeDate('date',moment().format('MMMM Do YYYY '));    
+                    }
                     dataStoreService.setScheduleMigration(vm.migrationScheduleDetails);
-
                 });
 
                 $scope.$watch('vm.time', function () {
@@ -172,6 +195,10 @@
                             time: moment(moment(vm.modifiedDate).format("YYYY-MM-DD") + "T" + vm.getTime() + vm.timeZoneDiff).unix(),
                             timezone:vm.timezone1,
                         };
+                    if(dataStoreService.returnDate().time && dataStoreService.returnDate().time === vm.time)
+                        dataStoreService.storeDate('time',dataStoreService.returnDate().time);
+                    else
+                        dataStoreService.storeDate('time',vm.time);
                     dataStoreService.setScheduleMigration(vm.migrationScheduleDetails);
                 });
 

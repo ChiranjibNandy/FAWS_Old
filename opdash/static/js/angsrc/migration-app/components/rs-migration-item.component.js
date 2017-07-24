@@ -203,7 +203,7 @@
                             
                             $window.localStorage.allServers = JSON.stringify(vm.items);
                             
-                            var savedItems = [];
+                            var savedItems = [],savedServers = [];
                             if($window.localStorage.selectedServers !== undefined)
                                 savedItems = JSON.parse($window.localStorage.selectedServers);
 
@@ -211,8 +211,25 @@
                                 angular.forEach(vm.items, function (item) {
                                     for(var i=0;i<savedItems.length;i++){
                                         item.selected = false;
-                                        if(savedItems[i].name == item.name){
+                                        if(savedItems[i].rrn == item.rrn){
                                             item.selected = true;
+                                            break
+                                        };
+                                    };
+                                });
+                            };
+
+                            if($window.localStorage.savedServers !== undefined)
+                                savedServers = JSON.parse($window.localStorage.savedServers);
+                            
+                            if(savedServers.length != 0){
+                                angular.forEach(vm.items, function (item) {
+                                    for(var i=0;i<savedServers.length;i++){
+                                        item.selected = false;
+                                        if(savedServers[i].rrn == item.rrn){
+                                            item.selected = true;
+                                            item.selectedMapping = savedServers[i].selectedMapping;
+                                            vm.parent.addItem(item, vm.type);
                                             break
                                         };
                                     };
@@ -269,7 +286,7 @@
                         vm.loading = false;
                         vm.parent.itemsLoadingStatus(false);
                         
-                        var servers_selected = [];
+                        var servers_selected = [],savedServers = [];
                         if($window.localStorage.selectedServers !== undefined)
                             servers_selected = JSON.parse($window.localStorage.selectedServers);
                         
@@ -277,8 +294,26 @@
                             angular.forEach(vm.items, function (item) {
                                 for(var i=0;i<servers_selected.length;i++){
                                     item.selected = false;
-                                    if(servers_selected[i].name == item.name){
+                                    if(servers_selected[i].rrn == item.rrn){
                                         item.selected = true;
+                                        break
+                                    };
+                                };
+                            });
+                        };
+
+                        if($window.localStorage.savedServers !== undefined){
+                            savedServers = JSON.parse($window.localStorage.savedServers);
+                        }
+                            
+                        if(savedServers.length != 0){
+                            angular.forEach(vm.items, function (item) {
+                                for(var i=0;i<savedServers.length;i++){
+                                    item.selected = false;
+                                    if(savedServers[i].rrn == item.rrn){
+                                        item.selected = true;
+                                        item.selectedMapping = savedServers[i].selectedMapping;
+                                        vm.parent.addItem(item, vm.type);
                                         break
                                     };
                                 };
@@ -308,7 +343,7 @@
                 $scope.$on("ItemRemovedForChild", function(event, item){
                         if(item.type === vm.type){
                             for(var i=0; i<vm.items.length; i++) {
-                                if(vm.items[i].name === item.name) vm.items[i].selected = false;
+                                if(vm.items[i].rrn === item.rrn) vm.items[i].selected = false;
                             }
                             //item.selected = false;
                             vm.isAllSelected = false;
