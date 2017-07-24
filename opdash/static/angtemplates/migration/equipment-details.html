@@ -166,6 +166,117 @@
             </div>
         </div>
     </div>
+    <div class="rs-content rs-panel rs-detail-xlarge" ng-if="vm.itemType == 'volume'">
+        <div class="rs-detail-header">
+            <div class="rs-detail-header-subtitle">CBS Name</div>
+            <div class="rs-detail-header-title">{{vm.itemDetails.name}}</div>
+        </div>
+        <div class="rs-detail-section">
+            <div class="rs-detail-section-header">
+                <div class="rs-detail-section-title">CBS Details</div>
+            </div>
+            <div class="rs-detail-section-body">
+                <ul class="rs-detail-list">
+                    <li class="rs-detail-item">
+                        <div class="rs-detail-key">CBS Status</div>
+                        <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.status}}</span></div>
+                    </li>
+                    <li class="rs-detail-item">
+                        <div class="rs-detail-key">ID</div>
+                        <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
+                    </li>
+                    <li class="rs-detail-item">
+                        <div class="rs-detail-key">Size</div>
+                        <div class="rs-detail-value">{{vm.itemDetails.size}}</div>
+                    </li>
+                    <li class="rs-detail-item">
+                        <div class="rs-detail-key" id="size-key">Created on</div>
+                        <div class="rs-detail-value">{{vm.itemDetails.created_at}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="rs-detail-section">
+            <div class="rs-detail-section-header">
+                <div class="rs-detail-section-title">Attachments</div>
+            </div>
+            <div class="rs-detail-section-body">
+                <div class="rs-embedded-list-table-wrapper rs-embedded-small">
+                    <h4 class="equipment-err" ng-show="!vm.itemDetails.attachments.length">No attachment available with this volume.</h4>
+                    <table ng-show="vm.itemDetails.attachments.length" class="rs-list-table rs-embedded-list-table">
+                        <thead>
+                            <tr>
+                                <th>Device</th>
+                                <th>ID</th>
+                                <th>Server ID</th>
+                                <th style="text-align: justify !important">Host Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="attachment in vm.itemDetails.attachments">
+                                <td class="rs-table-text">{{attachment.device}}</td>
+                                <td class="rs-table-text">{{attachment.attachment_id}}</td>
+                                <td class="rs-table-text">{{attachment.server_id}}</td>
+                                <td class="rs-table-text">{{attachment.host_name || "Not Available"}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rs-content rs-panel rs-detail-xlarge" ng-if="vm.itemType == 'service'">
+        <div class="rs-detail-header">
+            <div class="rs-detail-header-subtitle">CDN Name</div>
+            <div class="rs-detail-header-title">{{vm.itemDetails.name}}</div>
+        </div>
+        <div class="rs-detail-section">
+            <div class="rs-detail-section-header">
+                <div class="rs-detail-section-title">CDN Details</div>
+            </div>
+            <div class="rs-detail-section-body">
+                <ul class="rs-detail-list">
+                    <li class="rs-detail-item">
+                        <div class="rs-detail-key">CDN Status</div>
+                        <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.status}}</span></div>
+                    </li>
+                    <li class="rs-detail-item">
+                        <div class="rs-detail-key">ID</div>
+                        <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+         <div class="rs-detail-section">
+            <div class="rs-detail-section-header">
+                <div class="rs-detail-section-title">Domains</div>
+            </div>
+            <div class="rs-detail-section-body">
+                <div class="rs-embedded-list-table-wrapper rs-embedded-small">
+                    <h4 class="equipment-err" ng-show="!vm.itemDetails.domains.length">No domains available with this volume.</h4>
+                    <table ng-show="vm.itemDetails.domains.length" class="rs-list-table rs-embedded-list-table">
+                        <thead>
+                            <tr>
+                                <th>Domain</th>
+                                <th>Protocol</th>
+                                <th>Certificate</th>
+                                <th style="text-align: justify !important">Certificate Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="domains in vm.itemDetails.domains">
+                                <td class="rs-table-text">{{domains.domain}}</td>
+                                <td class="rs-table-text">{{domains.protocol}}</td>
+                                <td class="rs-table-text">{{domains.certificate}}</td>
+                                <td class="rs-table-text">{{domains.certificate_status}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> 
+    </div>
     <div class="rs-content rs-panel rs-detail-xlarge" ng-if="vm.itemType == 'network'">
         <div class="rs-detail-header">
             <div class="rs-detail-header-subtitle">Network Name</div>

@@ -31,9 +31,11 @@
                 var vm = this;
                 vm.$onInit = function () {
                     vm.selectedItems = {
-                        server: [],
-                        network: [],
-                        LoadBalancers: []
+                        server:[],
+                        network:[],
+                        LoadBalancers:[],
+                        volume:[],
+                        service:[]
                     };
                     /**
                      * @ngdoc property
@@ -60,12 +62,16 @@
                         vm.showMessageForSelectedServer = true;
                     }
                     //Fetch items selected from local storage.
-                    if ($window.localStorage.selectedServers !== undefined)
-                        vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
+                    if($window.localStorage.selectedResources !== undefined){
+                        angular.forEach(JSON.parse($window.localStorage.selectedResources), function(item, type){
+                            vm.selectedItems[type] = item;
+                        });
+                    }
 
-                    //Fetch load balancers selected from local storage.
-                    if ($window.localStorage.selectedLoadBalancers !== undefined)
-                        vm.selectedItems.LoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers);
+                    // Fetch load balancers selected from local storage.
+                    // if($window.localStorage.selectedLoadBalancers !== undefined)
+                    //     vm.selectedItems.LoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers); 
+                    
 
                     $("#accordion2").delegate('.accordion-heading a', "click", function () {
                         $('.plain-panel').find('.collapse.in').prev().find("i").removeClass("fa-chevron-up").addClass(
@@ -82,16 +88,17 @@
 
                     vm.selectedItems = [];
                     //Checks whether servers selected are already there in local storage
-                    if ($window.localStorage.selectedServers !== undefined)
-                        vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
-                    else
-                        vm.selectedItems.server = [];//dataStoreService.getItems('server');
-
-                    //Checks whether load balancers selected are already there in local storage
-                    if ($window.localStorage.selectedLoadBalancers !== undefined)
-                        vm.selectedItems.LoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers);
-                    else
-                        vm.selectedItems.LoadBalancers = [];
+                    if($window.localStorage.selectedResources !== undefined){
+                        angular.forEach(JSON.parse($window.localStorage.selectedResources), function(item, type){
+                            vm.selectedItems[type] = item;
+                        });
+                    }
+                    
+                    // Checks whether load balancers selected are already there in local storage
+                    // if($window.localStorage.selectedLoadBalancers !== undefined)
+                    //     vm.selectedItems.LoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers);
+                    // else
+                    //     vm.selectedItems.LoadBalancers = [];
                 });
 
                 /**
@@ -135,23 +142,25 @@
                  * @description
                  * Remove an item from list of items selected.
                  */
-                vm.removeItem = function (item, type) {
-                    if (vm.selectedItems[type].indexOf(item) >= 0) {
-                        vm.selectedItems[type].splice(vm.selectedItems[type].indexOf(item), 1);
-                        dataStoreService.setItems(vm.selectedItems);
+                vm.removeItem = function(item, type) {
+                    if(vm.selectedItems[type].indexOf(item)>=0){
+                       vm.selectedItems[type].splice(vm.selectedItems[type].indexOf(item), 1);
+                        dataStoreService.setItems(vm.selectedItems[type], type);
 
                         //If not the last item, set the selected servers into local storage.
-                        if (vm.selectedItems.server.length >= 1)
-                            $window.localStorage.setItem('selectedServers', JSON.stringify(vm.selectedItems.server));
+                        if(vm.selectedItems[type].length >= 1)
+                            dataStoreService.setItems(vm.selectedItems[type], type)
                         else {//If is the the last item in localstorage , remove the key value pair altogether
-                            $window.localStorage.removeItem('selectedServers');
-                            if (document.getElementsByClassName("fa fa-chevron-up")[0]) {
+                            // $window.localStorage.removeItem('selectedServers');
+                            dataStoreService.setItems([], type);
+                        // };
+                            if(document.getElementsByClassName("fa fa-chevron-up")[0]){
                                 var element = document.getElementsByClassName("fa fa-chevron-up")[0];
                                 element.classList.remove("fa-chevron-up");
                                 element.classList.add("fa-chevron-down");
                             }
-                        }
-                        item.selected = false;
+                        };
+                        item.selected = false;  
                         $scope.$emit("ItemRemoved", item); // broadcast event to all child components 
                     }
                 }

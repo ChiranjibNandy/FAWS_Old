@@ -25,9 +25,13 @@
                     <rs-tab tabtitle="Servers" showtab="true">
                         <rsmigrationitem type="server" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
-                    <rs-tab tabtitle="Files" ng-show="vm.isRacker" class="disabled" showtab="false">
-                        <!--Files-->
-                        <rsmigrationitem type="Files" filtervalue="vm.filterSearch"></rsmigrationitem>
+                    <rs-tab tabtitle="Storage" showtab="true">
+                        <!--Volumes-->
+                        <rsmigrationitem type="volume" filtervalue="vm.filterSearch"></rsmigrationitem>
+                    </rs-tab>
+                    <rs-tab tabtitle="Services" showtab="true">
+                        <!--Services-->
+                        <rsmigrationitem type="service" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
                     <div class="rs-pull-right allign-buttons" ng-hide="vm.itemsLoading">
                         <rssaveprogress stepname="MigrationResourceList" type="button" ></rssaveprogress>

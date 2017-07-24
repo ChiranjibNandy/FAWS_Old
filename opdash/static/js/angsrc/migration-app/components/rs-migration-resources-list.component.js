@@ -90,7 +90,9 @@
                     vm.selectedItems = {
                         server:[],
                         network:[],
-                        LoadBalancers:[]
+                        LoadBalancers:[],
+                        volume:[],
+                        service:[]
                     };
                     vm.filterSearch = "";
                     vm.saveProgress = "";
@@ -143,53 +145,36 @@
                      //vm.selectedItems[type] = dataStoreService.getItems(type); -- Previous Code
                     var itemExists = false;
                     //Checks to see if the item is already selected and placed in the local storage
-                    if($window.localStorage.selectedServers !== undefined){
-                        vm.selectedItems[type] = JSON.parse($window.localStorage.selectedServers);
-                        var servers = JSON.parse($window.localStorage.selectedServers);
-                        for(var i =0;i < servers.length;i++){
-                            if(servers[i].rrn  === item.rrn){
+                    if($window.localStorage.selectedResources !== undefined && JSON.parse($window.localStorage.selectedResources)[type].length){
+                        vm.selectedItems[type] = JSON.parse($window.localStorage.selectedResources)[type];
+                        // var items = JSON.parse($window.localStorage.selectedServers);
+                        for(var i =0;i < vm.selectedItems[type].length;i++){
+                            if(vm.selectedItems[type][i].rrn  === item.rrn){
                                 itemExists = true;
                             }
                         }
                     }
                     if(!itemExists){ //If not, add the item to the local storage
                         vm.selectedItems[type].push(item);
-                        if(type === 'server'){
-                            var old = $window.localStorage.getItem('selectedServers');
-                            if(old === null){
-                                var arr = [item];
-                                localStorage.setItem('selectedServers', JSON.stringify(arr));
-                            }
-                            else{
-                                old = JSON.parse(old);
-                                localStorage.setItem('selectedServers', JSON.stringify(old.concat(item)));
-                            }
+                        // if(type === 'server'){
+                            // var old = $window.localStorage.getItem('selectedServers');
+                        var selectedItems = [];
+                        if($window.localStorage.selectedResources !== undefined && JSON.parse($window.localStorage.selectedResources)[type].length)
+                            selectedItems = JSON.parse($window.localStorage.selectedResources)
+                        if(!selectedItems[type]){
+                            var arr = [item];
+                            dataStoreService.setItems(arr, type)
+                            // localStorage.setItem('selectedServers', JSON.stringify(arr));
                         }
-                        else if(type === 'network'){
-                            var old = $window.localStorage.getItem('selectedNetworks');
-                            if(old === null){
-                                var arr = [item];
-                                localStorage.setItem('selectedNetworks', JSON.stringify(arr));
-                            }
-                            else{
-                                old = JSON.parse(old);
-                                localStorage.setItem('selectedNetworks', JSON.stringify(old.concat(item)));
-                            }
+                        else{
+                            // var arr = JSON.parse(selectedItems[type]);
+                            dataStoreService.setItems(selectedItems[type].concat(item), type)
+                            // localStorage.setItem('selectedServers', JSON.stringify(old.concat(item)));
                         }
-                        else if(type === 'LoadBalancers'){
-                            var old = $window.localStorage.getItem('selectedLoadBalancers');
-                            if(old === null){
-                                var arr = [item];
-                                localStorage.setItem('selectedLoadBalancers', JSON.stringify(arr));
-                            }
-                            else{
-                                old = JSON.parse(old);
-                                localStorage.setItem('selectedLoadBalancers', JSON.stringify(old.concat(item)));
-                            }
-                        }
-                        if($window.localStorage.selectedServers !== undefined)
-                            vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
-                        dataStoreService.setItems(vm.selectedItems);//save items selected for migration in service.
+                        
+                        // if($window.localStorage.selectedResources !== undefined)
+                        //     vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
+                        // dataStoreService.setItems(vm.selectedItems);//save items selected for migration in service.
                         $scope.$broadcast("ItemsModified");//make a function call to child component to enable checkobox for selected items.
                     };
                 }
@@ -203,57 +188,34 @@
                  * Called by child component when an item is removed by user
                  */
                 vm.removeItem = function(item, type) {
-                    if($window.localStorage.selectedServers !== undefined)
-                        vm.selectedItems[type] = JSON.parse($window.localStorage.selectedServers);
+                    if($window.localStorage.selectedResources !== undefined && JSON.parse($window.localStorage.selectedResources)[type].length)
+                        vm.selectedItems[type] = JSON.parse($window.localStorage.selectedResources)[type];
                     else
                         vm.selectedItems[type] = []; //dataStoreService.getItems(type); -- Previous Code
                     //look for item to be removed in array of selected items and splice it from the array.
                     angular.forEach(vm.selectedItems[type], function (item_selected, key) {
                         if(item_selected.id == item.id){
                             vm.selectedItems[type].splice(key, 1);
-                            dataStoreService.setItems(vm.selectedItems);
-                            if(type === 'server'){
-                                var old = $window.localStorage.getItem('selectedServers');
-                                if(old !== null)
-                                    old = JSON.parse(old);
-                                angular.forEach(old,function(item_selected,key){
-                                    if(item_selected.id == item.id){
-                                        old.splice(key,1);
-                                        if(old.length >= 1) //If not the last item, set the selected servers into local storage.
-                                            $window.localStorage.setItem('selectedServers', JSON.stringify(old));
-                                        else{ //If is the the last item in localstorage , remove the key value pair altogether
-                                            $window.localStorage.removeItem('selectedServers');
-                                            if(document.getElementsByClassName("fa fa-chevron-up")[0]){
-                                                var element = document.getElementsByClassName("fa fa-chevron-up")[0];
-                                                element.classList.remove("fa-chevron-up");
-                                                element.classList.add("fa-chevron-down");
-                                            }
+                            dataStoreService.setItems(vm.selectedItems[type], type);
+                            // if(type === 'server'){
+                            var old = $window.localStorage.getItem('selectedResources');
+                            if(old !== undefined)
+                                old = JSON.parse(old)[type];
+                            angular.forEach(old,function(item_selected,key){
+                                if(item_selected.id == item.id){
+                                    old.splice(key,1);
+                                    if(old.length >= 1) //If not the last item, set the selected servers into local storage.
+                                        dataStoreService.setItems(old, type)
+                                    else{ //If is the the last item in localstorage , remove the key value pair altogether
+                                        dataStoreService.setItems([], type);
+                                        if(document.getElementsByClassName("fa fa-chevron-up")[0]){
+                                            var element = document.getElementsByClassName("fa fa-chevron-up")[0];
+                                            element.classList.remove("fa-chevron-up");
+                                            element.classList.add("fa-chevron-down");
                                         }
                                     }
-                                });                              
-                            }
-                            else if(type === 'network'){
-                                var old = $window.localStorage.getItem('selectedNetworks');
-                                if(old !== null)
-                                    old = JSON.parse(old);
-                                angular.forEach(old,function(item_selected,key){
-                                    if(item_selected.id == item.id){
-                                        old.splice(key,1);
-                                        localStorage.setItem('selectedNetworks', JSON.stringify(old));
-                                    }
-                                }); 
-                            }
-                            else if(type === 'LoadBalancers'){
-                                var old = $window.localStorage.getItem('selectedLoadBalancers');
-                                if(old !== null)
-                                    old = JSON.parse(old);
-                                angular.forEach(old,function(item_selected,key){
-                                    if(item_selected.id == item.id){
-                                        old.splice(key,1);
-                                        localStorage.setItem('selectedLoadBalancers', JSON.stringify(old));
-                                    }
-                                }); 
-                            }
+                                }
+                            });
                             $scope.$broadcast("ItemRemovedForChild", item); // broadcast event to all child components
                             $scope.$broadcast("ItemsModified");
                             return;
@@ -320,9 +282,9 @@
                         return;
                     } 
                     //if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 ){//|| dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 -- Previous Code
-                    if($window.localStorage.selectedServers !== undefined || $window.localStorage.selectedLoadBalancers !== undefined){
+                    if($window.localStorage.selectedResources !== undefined && (JSON.parse($window.localStorage.selectedResources)['server'].length || JSON.parse($window.localStorage.selectedResources)['volume'].length || JSON.parse($window.localStorage.selectedResources)['service'].length)){
                         vm.continuing = true;
-                        var items = JSON.parse($window.localStorage.selectedServers);
+                        var items = JSON.parse($window.localStorage.selectedResources)['server'];
 
                         var arr = [];
                         var promises = items.map(function(item) {
@@ -340,8 +302,8 @@
                         });
                         $q.all(promises).then(function(result) {
                             vm.selectedItems.server = arr;
-                            dataStoreService.setItems(vm.selectedItems);
-                            $window.localStorage.setItem('selectedServers', JSON.stringify(arr));
+                            dataStoreService.setItems(vm.selectedItems.server, 'server');
+                            // $window.localStorage.setItem('selectedServers', JSON.stringify(arr));
                             vm.continuing = false;
                             dataStoreService.setDontShowNameModal(true);
                         

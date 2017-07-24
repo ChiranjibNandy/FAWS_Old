@@ -53,12 +53,12 @@
                  */
                 vm.cancelMigration = function() {
                     //var selectedItems = dataStoreService.getItems();
-                    var selectedItems = [];
-                    if($window.localStorage.selectedServers == undefined || $window.localStorage.selectedServers == "[]"){
+                    var selectedItems = [];//$window.localStorage.selectedResources !== undefined && (JSON.parse($window.localStorage.selectedResources)['server'].length || JSON.parse($window.localStorage.selectedResources)['volume'].length)
+                    if($window.localStorage.selectedResources === undefined || (!(JSON.parse($window.localStorage.selectedResources)['server'].length) && !(JSON.parse($window.localStorage.selectedResources)['volume'].length) && !(JSON.parse($window.localStorage.selectedResources)['service'].length))){
                         dataStoreService.resetAll();
                         $rootRouter.navigate(["MigrationStatus"]);
                     }else{
-                        selectedItems = JSON.parse($window.localStorage.selectedServers);
+                        selectedItems = JSON.parse($window.localStorage.selectedResources);
                         $('#cancel_modal').modal('show');
                          vm.migrationName = $window.localStorage.migrationName || 'My Migration';
                     }
@@ -78,8 +78,8 @@
                     }
                     else{
                         dataStoreService.resetAll();
-                        if($window.localStorage.selectedServers !== undefined)
-                            $window.localStorage.removeItem('selectedServers');
+                        if($window.localStorage.selectedResources !== undefined)
+                            $window.localStorage.removeItem('selectedResources');
                         dataStoreService.resetAll();
                         $rootRouter.navigate(["MigrationStatus"]);
                         $('#cancel_modal').modal('hide');
@@ -96,8 +96,9 @@
                  */
                 vm.saveItems = function(buttonDetails) {
                     var saveInstance = {
-                        recommendations : vm.stepname !== "MigrationResourceList"?JSON.parse($window.localStorage.selectedServers):{},
-                        step_name: "MigrationResourceList" ,
+                        recommendations : vm.stepname !== "MigrationResourceList"?JSON.parse($window.localStorage.selectedResources)['server']:{},
+                        // scheduling_details : vm.stepname === "ConfirmMigration"?dataStoreService.getScheduleMigration():{},
+                        step_name: vm.stepname ,
                         migration_schedule: {
                             migrationName:vm.migrationName,
                             time:vm.stepname === "ConfirmMigration"?dataStoreService.getScheduleMigration().time:'',

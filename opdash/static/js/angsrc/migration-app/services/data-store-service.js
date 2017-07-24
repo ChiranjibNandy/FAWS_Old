@@ -20,8 +20,9 @@
             self.resourceItems = {
                 server:[],
                 network:[],
-                files:[],
-                LoadBalancers:[]
+                volume:[],
+                LoadBalancers:[],
+                service:[]
             };
 
             /**
@@ -59,7 +60,9 @@
             self.selectedItems = {
                 server:[],
                 network:[],
-                LoadBalancers:[]
+                LoadBalancers:[],
+                volume:[],
+                service:[]
             };
 
             self.saveItems = {
@@ -123,8 +126,9 @@
              * @description 
              * Saves list of resources the user wants to migrate.
              */
-            this.setItems = function(items){
-                self.selectedItems = items;
+            this.setItems = function(items, type){
+                self.selectedItems[type] = items;
+                $window.localStorage.selectedResources = JSON.stringify(self.selectedItems);
             }
 
             /**
@@ -165,6 +169,7 @@
              */
             this.storeallItems = function(items, type){
                 self.resourceItems[type] = items;
+                $window.localStorage.allResources = JSON.stringify(self.resourceItems);
             }
 
             /**
@@ -422,11 +427,11 @@
              */
             self.getMigrationResourceCount = function() {
                 // initialize with server count
-                if($window.localStorage.selectedServers != undefined){
-                    var migrationResourceCount = JSON.parse($window.localStorage.selectedServers).length;//self.selectedItems.server.length + self.selectedItems.LoadBalancers.length;
+                if($window.localStorage.selectedResources != undefined){
+                    var migrationResourceCount = JSON.parse($window.localStorage.selectedResources)['server'].length;//self.selectedItems.server.length + self.selectedItems.LoadBalancers.length;
                     var resourcesCountArray = [];
                     //loop through all the servers selected and networks associated with the servers.
-                    var servers = JSON.parse($window.localStorage.selectedServers);
+                    var servers = JSON.parse($window.localStorage.selectedResources)['server'];
                     angular.forEach(servers, function (item) {
                         angular.forEach(item.details.networks, function (network) {
                             //making separate list of networks associated with servers.
@@ -613,7 +618,7 @@
             self.getDistinctNetworks = function() {
                 var networksList = [];
                 var networkIdList = [];
-                var servers = JSON.parse($window.localStorage.selectedServers);//self.getItems('server') 
+                var servers = JSON.parse($window.localStorage.selectedResources)['server'];//self.getItems('server') 
                 angular.forEach(servers, function (server) {
                     var region = server.region;
                     var instanceRrn = server.rrn;
@@ -643,8 +648,8 @@
             self.getProjectedPricing = function() {
                 var instances = [];
                 //Check if the selected servers are alreday there in localStorage
-                if($window.localStorage.selectedServers !== undefined)
-                    instances = JSON.parse($window.localStorage.selectedServers);
+                if($window.localStorage.selectedResources !== undefined)
+                    instances = JSON.parse($window.localStorage.selectedResources)['server'];
                 var totalProjectedPricing = 0;
                 instances.forEach(function(item){
                     
