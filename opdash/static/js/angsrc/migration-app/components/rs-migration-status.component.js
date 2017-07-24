@@ -133,6 +133,8 @@
         
 
                 vm.$routerOnActivate = function(next, previous) {
+                    if($window.localStorage.migrationName !== undefined)
+                        dataStoreService.selectedTime.migrationName = $window.localStorage.migrationName;
                     if(previous && previous.urlPath.indexOf("confirm") > -1 && dataStoreService.selectedTime.migrationName && $window.localStorage.migrationScheduled === "true"){
                         vm.refreshFlag=true;
                         vm.afterNewMigration = true;
