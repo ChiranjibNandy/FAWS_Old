@@ -89,7 +89,7 @@
                  * Checks whether the selected server(s) have already been migrated/scheduled, if yes, then rejects the migration, otherwise triggers the migration.
                  */
                 vm.checkStatus = function(){
-                    if(dataStoreService.getResourceItemsForEditingMigration()){
+                    if(JSON.parse(dataStoreService.getResourceItemsForEditingMigration())){
                         vm.migrate();
                         return;
                     }
@@ -192,7 +192,7 @@
                     $('#confirm-migration-modal').modal('hide');
                     requestObj = ds.prepareJobRequest();
                     vm.acceptTermsAndConditions= true;
-                    if(dataStoreService.getResourceItemsForEditingMigration()){
+                    if(JSON.parse(dataStoreService.getResourceItemsForEditingMigration())){
                         migrationService.modifyMigration(dataStoreService.getJobIdForMigration('jobId'),requestObj)
                         .then(function (result) {
                             if(result){

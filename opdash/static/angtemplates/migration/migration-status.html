@@ -288,19 +288,29 @@
                         <div class="rs-facet-section">
                             <div class="rs-facet-section-body">
                                 <h3>Errors/Warnings <span class="rs-quiet">({{vm.errors.items.length}})</span></h3>
-                                <div class="rs-embedded-list-table-wrapper rs-embedded-medium migration-status-list-container" style="margin-top: 0;">
-                                    <table class="rs-list-table rs-embedded-list-table">
+                                <div class="migration-status-list-container table-justify">
+                                    <table class="rs-list-table no-truncate-td cell-center">
                                         <thead>
                                             <tr>
                                                 <th class="rs-table-status"></th>
-                                                <th>Batch Name</th>
-                                                <th>Date</th>
+                                                <th>
+                                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a" ng-click="vm.setSortBy('error_batch', 'batch_name')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['error_batch']==='batch_name', 'custom-table-sort-desc current-sort-param': vm.sortBy['error_batch']==='-batch_name', 'custom-table-sort-desc': vm.sortBy['error_batch'].indexOf('batch_name') < 0}">
+                                                        <span class="rs-table-sort-text">Batch Name</span>
+                                                        <span class="rs-table-sort-indicator"></span>
+                                                    </a>
+                                                </th>
+                                                <th>
+                                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a" ng-click="vm.setSortBy('error_batch', 'timestamp')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['error_batch']==='timestamp', 'custom-table-sort-desc current-sort-param': vm.sortBy['error_batch']==='-timestamp', 'custom-table-sort-desc': vm.sortBy['error_batch'].indexOf('timestamp') < 0}">
+                                                        <span class="rs-table-sort-text">Date</span>
+                                                        <span class="rs-table-sort-indicator"></span>
+                                                    </a>
+                                                </th>
                                                 <th>Message</th>
                                             </tr>
                                         </thead>
                                         <!--data display for Errors/Alerts grid-->
                                         <tbody ng-show="!vm.loadingAlerts && vm.errors.items.length>0">
-                                            <tr ng-repeat="alert in vm.errors.items | orderBy: '-timestamp'| limitTo : vm.errors.pageSize : (vm.errors.currentPage-1)*vm.errors.pageSize">
+                                            <tr ng-repeat="alert in vm.errors.items | orderBy: vm.sortBy.error_batch | limitTo : vm.errors.pageSize : (vm.errors.currentPage-1)*vm.errors.pageSize">
                                                 <td class="rs-table-status tip" ng-class="{ 'rs-table-status-warning': alert.type==='warning', 'rs-table-status-error': alert.type==='error'}"></td>
                                                 <td><a ng-link="['CurrentBatchDetails', {job_id: alert.job_id}]">{{alert.batch_name}}</a></td>
                                                 <td class="rs-table-text ng-binding">{{alert.timestamp | date : 'M/dd/yyyy'}}</td>
@@ -313,7 +323,7 @@
                                         </tbody>
                                         <tbody ng-show="!vm.loadingAlerts && vm.errors.items.length===0">
                                             <tr>
-                                                <td colspan="3" class="empty-collection-info">Hooray! You don't have any errors or warnings.</td>
+                                                <td colspan="4" class="empty-collection-info">Hooray! You don't have any errors or warnings.</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -338,18 +348,28 @@
                             <div class="rs-facet-section-body">
                                 <a href="https://mycloud.rackspace.com/cloud/{{vm.tenant_id}}/tickets"  ng-show="!vm.loadingTickets && vm.tickets.items.length>0" class="rs-btn rs-btn-link rs-pull-right" target="_blank" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="Got to tickets in Rackspace Reach">See All <i class="fa fa-angle-double-right"></i></a>
                                 <h3>Tickets <span class="rs-quiet">({{vm.tickets.items.length}})</span></h3>
-                                <div class="">
-                                    <table class="rs-list-table rs-embedded-list-table-wrapper">
+                                <div class="migration-status-list-container table-justify">
+                                    <table class="rs-list-table no-truncate-td cell-center">
                                         <thead>
                                             <tr>
-                                                <th>Ticket Number</th>
-                                                <th>Date/Time</th>
+                                                <th>
+                                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a" ng-click="vm.setSortBy('ticket_batch', 'ticket_id')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['ticket_batch']==='ticket_id', 'custom-table-sort-desc current-sort-param': vm.sortBy['ticket_batch']==='-ticket_id', 'custom-table-sort-desc': vm.sortBy['ticket_batch'].indexOf('ticket_id') < 0}">
+                                                        <span class="rs-table-sort-text">Ticket Number</span>
+                                                        <span class="rs-table-sort-indicator"></span>
+                                                    </a>
+                                                </th>
+                                                <th>
+                                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a" ng-click="vm.setSortBy('ticket_batch', 'created')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['ticket_batch']==='created', 'custom-table-sort-desc current-sort-param': vm.sortBy['ticket_batch']==='-created', 'custom-table-sort-desc': vm.sortBy['ticket_batch'].indexOf('created') < 0}">
+                                                        <span class="rs-table-sort-text">Date/Time</span>
+                                                        <span class="rs-table-sort-indicator"></span>
+                                                    </a>
+                                                </th>
                                                 <th>Message</th>
                                             </tr>
                                         </thead>
                                         <!--data display for Tickets grid-->
                                         <tbody ng-show="!vm.loadingTickets && vm.tickets.items.length>0">
-                                            <tr ng-repeat="ticket in vm.tickets.items | orderBy: '-created' | limitTo : vm.tickets.pageSize : (vm.tickets.currentPage-1)*vm.tickets.pageSize">
+                                            <tr ng-repeat="ticket in vm.tickets.items | orderBy: vm.sortBy.ticket_batch | limitTo : vm.tickets.pageSize : (vm.tickets.currentPage-1)*vm.tickets.pageSize">
                                                 <td><a href="https://mycloud.rackspace.com/cloud/{{vm.tenant_id}}/tickets#{{ticket.ticket_id}}">{{ticket.ticket_id}}</a></td>
                                                 <td class="rs-table-text ng-binding">{{ticket.created | date : 'M/dd/yyyy hh:mm a'}}</td>
                                                 <td>

@@ -8,7 +8,7 @@
      * This service is used to store data. This helps in accessing user data across pages.
      */
     angular.module("migrationApp")
-        .service("datastoreservice", ["httpwrapper","authservice","$q","$window", function (HttpWrapper, authservice,$q,$window) {
+        .service("datastoreservice", ["httpwrapper","authservice","$q","$window","DEFAULT_VALUES", function (HttpWrapper, authservice,$q,$window,DEFAULT_VALUES) {
             var loaded, fawsAccounts, self = this, currentTenant = null;
              /**
               * @ngdoc property
@@ -61,6 +61,13 @@
                 network:[],
                 LoadBalancers:[]
             };
+
+            self.saveItems = {
+                server:[],
+                network:[],
+                LoadBalancers:[]
+            };
+
             self.selectedRecommendedItems = [];
             self.selectedDate = {
                 date:'',
@@ -107,6 +114,7 @@
                 selectedFawsAccountNumber:'',
                 totalAccounts: 0
             };
+
             /**
              * @ngdoc method
              * @name setItems
@@ -117,6 +125,34 @@
              */
             this.setItems = function(items){
                 self.selectedItems = items;
+            }
+
+            /**
+             * @ngdoc method
+             * @name setSaveItems
+             * @methodOf migrationApp.service:datastoreservice
+             * @param {Array} items The list of resources to be saved for further processing
+             * @description 
+             * Saves list of resources the user wants to continue with the migration.
+             */
+            this.setSaveItems = function(items){
+                this.saveItems = items;
+            }
+
+            /**
+             * @ngdoc method
+             * @name getSaveItems
+             * @methodOf migrationApp.service:datastoreservice
+             * @param {Array} items The list of resources to be saved for further processing
+             * @description 
+             * Returns list of resources the user wants to continue with the migration.
+             */
+            this.getSaveItems = function(){
+               if(this.saveItems.server.length === 0 && this.saveItems.network.length === 0 && this.saveItems.LoadBalancers.length === 0){
+                   return $window.localStorage.getItem('savedServers');
+               }else{
+                   return this.saveItems;
+               } 
             }
 
             /**
@@ -159,6 +195,7 @@
              */
             this.storeDate = function(type,item){
                 self.selectedDate[type] = item;
+                $window.localStorage.setItem("selectedDate",JSON.stringify(self.selectedDate));
             }
 
             /**
@@ -170,7 +207,7 @@
              * Returns the stored datetime and timezone of the migration to be scheduled
              */
             this.returnDate = function(){
-                return self.selectedDate;
+                return JSON.parse($window.localStorage.getItem("selectedDate"));
             }
 
             /**
@@ -433,11 +470,8 @@
              * Saves migration resources and schedules to be used for later reference
             */
             this.saveItems = function(saveInstance) {
-                return self.getSavedItems()
-                           .then(function(result){
-                               var requestObj = self.objForSaveLater(JSON.parse(result.savedDetails || '[]'), saveInstance);
-                               return !result ? result : self.postSavedInstances(requestObj);
-                           });
+                var requestObj = self.objForSaveLater(saveInstance);
+                return self.postSavedInstances(requestObj);
             };
 
             /**
@@ -476,6 +510,29 @@
                     });
             };
 
+            this.getModifiedItems = function(resources){
+                var equipments = {
+                                    server:[],
+                                    network:[],
+                                    files:[],
+                                    LoadBalancers:[]
+                                };
+                for(var equ in resources){
+                    angular.forEach(resources[equ],function(item){
+                        equipments[equ].push({
+                            'rrn':item.rrn,
+                            'name':item.name,
+                            'selectedMapping':{
+                                'region':item.selectedMapping.region || DEFAULT_VALUES.REGION,
+                                'zone':item.selectedMapping.zone || '',
+                                'instance_type':item.selectedMapping.instance_type || ''   
+                            }
+                        });
+                    });
+                };
+                return equipments;
+            };
+
             /**
              * @ngdoc method
              * @name objForSaveLater
@@ -488,34 +545,24 @@
              * @description 
              * This service method returns an object that will be posted to /api/users/uidata/add API.
              */
-            this.objForSaveLater = function(preSavedDetails, saveInstance){
+            this.objForSaveLater = function(saveInstance){
                 var self = this;
-                self.setScheduleMigration(saveInstance.migration_schedule)
+                self.setScheduleMigration(saveInstance.migration_schedule);
                 var savedetails_json = 
                     [{
                         "instance_name":self.getScheduleMigration().migrationName,
                         "timestamp":moment().format("M/DD/YYYY HH:MM a"), //(so we know when was it saved)
-                        "selected_resources": self.getItems(),
+                        "selected_resources": self.getModifiedItems(self.getItems()),//(populating only what we need)
                         "recommendations":saveInstance.recommendations,
                         "scheduling-details":saveInstance.migration_schedule,
                         "step_name":saveInstance.step_name,
                         "scheduledItem":saveInstance.scheduledItem || false,
                         "aws-account":JSON.parse($window.localStorage.getItem("fawsAccounts")).selectedFawsAccount,
-                        "initiated_by":authservice.getAuth().username
+                        "initiated_by":authservice.getAuth().username,
+                        "schedulingTimeDate":self.returnDate()
                     }];
-                if(preSavedDetails.length > 0){
-                    angular.forEach(preSavedDetails, function (instance, key) {
-                        if(instance.instance_name == self.getScheduleMigration().migrationName) {
-                            preSavedDetails.splice(key, 1);
-                            return;
-                        };
-                    });
-                    preSavedDetails.push(savedetails_json[0]);
-                    savedetails_json = preSavedDetails;
-                }
                 var reqObj = {
                                 "tenant_id": authservice.getAuth().tenant_id.toString(),
-                                "context": "Saved_Migrations",
                                 "savedDetails": JSON.stringify(savedetails_json)
                 }
                 return reqObj;

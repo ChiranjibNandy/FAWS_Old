@@ -147,7 +147,7 @@
                         vm.selectedItems[type] = JSON.parse($window.localStorage.selectedServers);
                         var servers = JSON.parse($window.localStorage.selectedServers);
                         for(var i =0;i < servers.length;i++){
-                            if(servers[i].name  === item.name){
+                            if(servers[i].rrn  === item.rrn){
                                 itemExists = true;
                             }
                         }
@@ -326,8 +326,9 @@
 
                         var arr = [];
                         var promises = items.map(function(item) {
-                            if(item.selectedMapping == undefined){
-                                var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+DEFAULT_VALUES.REGION;
+                            if(item.selectedMapping == undefined || item.selectedMapping.cost == undefined){
+                                var reg = item.selectedMapping ? item.selectedMapping.region : DEFAULT_VALUES.REGION;
+                                var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+reg;
                                 return HttpWrapper.send(url, {"operation": 'GET'}).then(function(pricingOptions) {
                                     item.selectedMapping = pricingOptions[0]; 
                                     arr.push(item);
