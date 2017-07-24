@@ -53,18 +53,8 @@
                         <tbody ng-show="!vm.loading && !vm.loadError">
                             <tr ng-repeat="instance in vm.job.instances | orderBy: vm.sortBy.server">
                                 <td class="rs-table-link" style="width:25%">
-                                    <a href="" ng-click="vm.equipmentDetails('server', instance.id)" role="button" data-toggle="modal">{{instance.name}}</a>
+                                    <a href="" ng-click="vm.equipmentDetails('server', instance)" role="button" data-toggle="modal">{{instance.name}}</a>
                                 </td>
-                                <!--<td class="rs-table-text">
-<div class="rs-progress rs-progress-medium" style="width: 50%;">
-<div class="rs-progress-inner">
-<div class="rs-segment" style="width: {{vm.job.batch_status==='done' ? 100 : (vm.job.batch_status==='error' ? 0 : ['started', 'in progress', 'paused'].indexOf(vm.job.batch_status)>=0 ? 50 : 0)}}%">
-<div class="rs-bar" ng-class="{'rs-status-ok': vm.job.batch_status==='done', 'rs-status-ok rs-bar-striped': ['started', 'in progress'].indexOf(vm.job.batch_status)>=0, 'rs-status-error': vm.job.batch_status==='error', 'rs-status-warning':vm.job.batch_status ==='paused'}"></div>
-</div>
-</div>
-</div>
-<span class="rs-progress-label">{{ instance.status === 'done' ? 100 : ['started', 'in progress', 'paused'].indexOf(instance.status)>=0 ? 50 : 0 }}%</span>
-</td>-->
                                 <td class="rs-table-text" style="width: 30%;">
                                     <span class="rs-status-error" ng-show="instance.status==='error'">Error</span>
                                     <span class="rs-status-ok" ng-show="instance.status==='done'">Completed</span>

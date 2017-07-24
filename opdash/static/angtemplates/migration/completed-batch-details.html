@@ -47,7 +47,7 @@
                         <tbody>
                             <tr ng-repeat="instance in vm.job.instances | orderBy: vm.sortBy.server">
                                 <td class="rs-table-link">
-                                    <a href="" ng-click="vm.equipmentDetails('server', instance.id)" role="button" data-toggle="modal">{{instance.name}}</a>
+                                    <a href="" ng-click="vm.equipmentDetails('server', instance)" role="button" data-toggle="modal">{{instance.name}}</a>
                                 </td>
                                 <td class="rs-table-text">
                                     {{(vm.job.completed_at) | date : 'M/dd/yyyy hh:mm a'}}
