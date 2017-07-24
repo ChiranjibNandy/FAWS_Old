@@ -27,13 +27,13 @@
              * @name migrationApp.controller:rsselecteditemspanelCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsselecteditemspanel rsselecteditemspanel} component
              */
-            controller: ["datastoreservice", "$scope", "authservice","$window","$rootRouter", function (dataStoreService, $scope, authservice,$window,$rootRouter) {
+            controller: ["datastoreservice", "$scope", "authservice", "$window", "$rootRouter", function (dataStoreService, $scope, authservice, $window, $rootRouter) {
                 var vm = this;
-                vm.$onInit = function() {
+                vm.$onInit = function () {
                     vm.selectedItems = {
-                        server:[],
-                        network:[],
-                        LoadBalancers:[]
+                        server: [],
+                        network: [],
+                        LoadBalancers: []
                     };
                     /**
                      * @ngdoc property
@@ -54,14 +54,19 @@
                     vm.networksForServer = {};
                     vm.cbsForServer = {};
                     vm.isRacker = authservice.is_racker;
+                    //added text under the selected resources in the confirmation page
+                    vm.showMessageForSelectedServer = false;
+                    if ($window.localStorage.pageName == "ConfirmMigration") {
+                        vm.showMessageForSelectedServer = true;
+                    }
                     //Fetch items selected from local storage.
-                    if($window.localStorage.selectedServers !== undefined)
+                    if ($window.localStorage.selectedServers !== undefined)
                         vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
 
                     //Fetch load balancers selected from local storage.
-                    if($window.localStorage.selectedLoadBalancers !== undefined)
-                        vm.selectedItems.LoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers); 
-                    
+                    if ($window.localStorage.selectedLoadBalancers !== undefined)
+                        vm.selectedItems.LoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers);
+
                     $("#accordion2").delegate('.accordion-heading a', "click", function () {
                         $('.plain-panel').find('.collapse.in').prev().find("i").removeClass("fa-chevron-up").addClass(
                             "fa-chevron-down");
@@ -73,22 +78,22 @@
                 };
 
                 //Catch broadcast requests from parent(rsmigrationresourcelist) component.
-                $scope.$on("ItemsModified", function(event){
+                $scope.$on("ItemsModified", function (event) {
 
                     vm.selectedItems = [];
                     //Checks whether servers selected are already there in local storage
-                    if($window.localStorage.selectedServers !== undefined)
+                    if ($window.localStorage.selectedServers !== undefined)
                         vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
                     else
                         vm.selectedItems.server = [];//dataStoreService.getItems('server');
-                    
+
                     //Checks whether load balancers selected are already there in local storage
-                    if($window.localStorage.selectedLoadBalancers !== undefined)
+                    if ($window.localStorage.selectedLoadBalancers !== undefined)
                         vm.selectedItems.LoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers);
                     else
                         vm.selectedItems.LoadBalancers = [];
                 });
-                
+
                 /**
                  * @ngdoc method
                  * @name networksToServer
@@ -97,7 +102,7 @@
                  * @description
                  * Fetch networks associated with server.
                  */
-                vm.networksToServer = function(item) {
+                vm.networksToServer = function (item) {
                     vm.networksForServer[item.name] = [];
                     angular.forEach(item.details.networks, function (network) {
                         vm.networksForServer[item.name].push(network.name);
@@ -113,7 +118,7 @@
                  * @description
                  * Fetch networks associated with server.
                  */
-                vm.cbsToServer = function(item) {
+                vm.cbsToServer = function (item) {
                     vm.cbsForServer[item.name] = [];
                     angular.forEach(item.details.cbs_volumes, function (cbs) {
                         vm.cbsForServer[item.name].push(cbs.display_name);
@@ -130,26 +135,28 @@
                  * @description
                  * Remove an item from list of items selected.
                  */
-                vm.removeItem = function(item, type) {
-                    if(vm.selectedItems[type].indexOf(item)>=0){
-                       vm.selectedItems[type].splice(vm.selectedItems[type].indexOf(item), 1);
+                vm.removeItem = function (item, type) {
+                    if (vm.selectedItems[type].indexOf(item) >= 0) {
+                        vm.selectedItems[type].splice(vm.selectedItems[type].indexOf(item), 1);
                         dataStoreService.setItems(vm.selectedItems);
 
                         //If not the last item, set the selected servers into local storage.
-                        if(vm.selectedItems.server.length >= 1)
-                            $window.localStorage.setItem('selectedServers',JSON.stringify(vm.selectedItems.server));
+                        if (vm.selectedItems.server.length >= 1)
+                            $window.localStorage.setItem('selectedServers', JSON.stringify(vm.selectedItems.server));
                         else {//If is the the last item in localstorage , remove the key value pair altogether
                             $window.localStorage.removeItem('selectedServers');
-                            if(document.getElementsByClassName("fa fa-chevron-up")[0]){
+                            if (document.getElementsByClassName("fa fa-chevron-up")[0]) {
                                 var element = document.getElementsByClassName("fa fa-chevron-up")[0];
                                 element.classList.remove("fa-chevron-up");
                                 element.classList.add("fa-chevron-down");
                             }
                         }
-                        item.selected = false;  
+                        item.selected = false;
                         $scope.$emit("ItemRemoved", item); // broadcast event to all child components 
                     }
                 }
+
+
 
                 return vm;
             }]
