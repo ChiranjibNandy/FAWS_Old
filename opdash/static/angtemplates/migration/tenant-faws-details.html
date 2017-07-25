@@ -25,17 +25,12 @@
                     </li>
                     <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus">
                         <select ng-model="vm.selectedFaws" class="ng-pristine ng-valid ng-not-empty ng-touched" aria-invalid="false" ng-change="vm.fawsAccountchanged()">
-                            <!-- ngRepeat: account in vm.awsAccountsDetails -->
                             <option ng-repeat="account in vm.awsAccountsDetails" class="ng-binding ng-scope" value="{{account.name}} (#{{account.awsAccountNumber}})">{{account.name}} (#{{account.awsAccountNumber}})</option>
-                            <!--  end ngRepeat: account in vm.awsAccountsDetails -->
                         </select>
                     </li>
                 </ul>
             </div>
         </span>
-        <!--<span>
-            <button ng-show="vm.showCreateAccount" class="rs-btn pull-right" ng-click="vm.switchUser()">Switch to {{vm.is_racker ? 'Customer' : 'Racker'}}</button>
-        </span>-->
     </div>
 </div>
 <div class="migr-name" ng-show="vm.editmigration === 'true'">
@@ -126,7 +121,7 @@
                     </div>
                      </br> </br>
                      <div class="row" style ="padding-top: 8px;" >
-                        <input  type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required">&nbsp &nbsp<Strong class="ng-binding">Check here to indicate that you have read and agree to the terms of the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a>, <a href="https://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Product Terms</a>,&nbsp<a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank">and Rackspace Migration Manager Terms</a>.</Strong>
+                        <input  type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required">&nbsp &nbsp<Strong class="ng-binding">Check here to indicate that you have read and agree to the terms of the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a>, <a href="https://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Product Terms</a>,&nbsp and<a href="https://Rackspace.com/information/legal/migrationmanagertool" target="_blank"> Rackspace Migration Manager Terms</a>.</Strong>
                     </div>
                 </div>
             </form>
@@ -155,9 +150,7 @@
                 <div class="form-group" ng-class="{disabled:vm.fawsDeleteProgress}">
                     <div class="row">
                         <select ng-model="vm.deleteFaws" class="ng-pristine ng-valid ng-not-empty ng-touched" aria-invalid="false">
-                            <!-- ngRepeat: account in vm.awsAccountsDetails -->
                             <option ng-repeat="account in vm.awsAccountsDetails" class="ng-binding ng-scope" value="{{account.name}} (#{{account.awsAccountNumber}})">{{account.name}} (#{{account.awsAccountNumber}})</option>
-                            <!-- end ngRepeat: account in vm.awsAccountsDetails -->
                         </select>
                     </div>
                 </div>

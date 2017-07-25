@@ -111,8 +111,10 @@
                     } //end of if condition
                     vm.sortBy = {
                         //current_batch: '-start',
-                        completed_batch: '-start'
-                    };                 
+                        completed_batch: '-start',
+                        error_batch:'-timestamp',
+                        ticket_batch:'-created'
+                    };
 
                     document.addEventListener("click", function() {
                         vm.showQueuedBatchMenu = false;
@@ -130,9 +132,9 @@
                     }
                 };
 
-        
-
                 vm.$routerOnActivate = function(next, previous) {
+                    if($window.localStorage.migrationName !== undefined)
+                        dataStoreService.selectedTime.migrationName = $window.localStorage.migrationName;
                     if(previous && previous.urlPath.indexOf("confirm") > -1 && dataStoreService.selectedTime.migrationName && $window.localStorage.migrationScheduled === "true"){
                         vm.refreshFlag=true;
                         vm.afterNewMigration = true;
@@ -406,6 +408,7 @@
                     t.aws_account = details["aws-account"] || "";
                     t.initiated_by = details.initiated_by;
                     t.scheduledItem = details.scheduledItem || false;
+                    t.schedulingTimeDate = details.schedulingTimeDate;
                         
                     return t;
                 }
@@ -506,21 +509,14 @@
                         $('#aws_check').modal('show');
                         return;
                     }
-
+                    dataStoreService.storeDate('date',batch.schedulingTimeDate.date);
+                    dataStoreService.storeDate('time',batch.schedulingTimeDate.time);
+                    dataStoreService.storeDate('timezone',batch.schedulingTimeDate.timezone);
                     dataStoreService.setDontShowStatus(true);
                     dataStoreService.selectedTime.migrationName = batch.batch_name || batch.instance_name;
                     $window.localStorage.migrationName = batch.batch_name || batch.instance_name;
-                    if (batch.step_name === "MigrationResourceList") {
-                        dataStoreService.setItems(batch.selected_resources);
-                        $window.localStorage.setItem('selectedServers',JSON.stringify(batch.selected_resources.server));
-                    } else if (batch.step_name === "MigrationRecommendation") {
-                        dataStoreService.setItems(batch.recommendations);
-                        $window.localStorage.setItem('selectedServers',JSON.stringify(batch.recommendations));
-                    } else if (batch.step_name === "ScheduleMigration" || batch.step_name === "ConfirmMigration") {
-                        dataStoreService.setItems(batch.recommendations);
-                        $window.localStorage.setItem('selectedServers',JSON.stringify(batch.recommendations));
-                        dataStoreService.selectedTime = batch["scheduling-details"];
-                    }
+                    dataStoreService.setSaveItems(batch.selected_resources);
+                    $window.localStorage.setItem('savedServers',JSON.stringify(batch.selected_resources.server));
                     $rootRouter.navigate([batch.step_name]);
                 };
 
@@ -591,11 +587,11 @@
                             event.preventDefault();
                             $('#browser_back').modal('show');
                         };
- //condition for direct url jumping or hitting...
-if((oldUrl != undefined) && ((newUrl.indexOf("migration/resources") > -1)) || (newUrl.indexOf("migration/recommendation") > -1)){
-                        event.preventDefault();
-$rootRouter.navigate(["MigrationStatus"]);
-                    }
+                        //condition for direct url jumping or hitting...
+                        if((oldUrl != undefined) && ((newUrl.indexOf("migration/resources") > -1)) || (newUrl.indexOf("migration/recommendation") > -1)){
+                            event.preventDefault();
+                            $rootRouter.navigate(["MigrationStatus"]);
+                        }
 
                     });
 
