@@ -115,7 +115,7 @@
                      * @type {String}
                      * @description Create Migration considering Timestamp.
                      */
-                    vm.migrationName = $window.localStorage.migrationName || 'My Migration';
+                    vm.migrationName = dataStoreService.getScheduleMigration().migrationName || 'My Migration';
                     //$window.localStorage.migrationName = vm.migrationName;
                     vm.noName = false;
                     vm.continuing = false;
@@ -308,12 +308,12 @@
                             vm.continuing = false;
                             dataStoreService.setDontShowNameModal(true);
                         
-                            if($window.localStorage.migrationName != undefined){
-                                vm.migrationName = $window.localStorage.migrationName;
-                            }
-                            else{
-                                $window.localStorage.migrationName = vm.migrationName;
-                            }
+                            // if($window.localStorage.migrationName != undefined){
+                            //     vm.migrationName = $window.localStorage.migrationName;
+                            // }
+                            // else{
+                            //     $window.localStorage.migrationName = vm.migrationName;
+                            // }
                             vm.selectedTime = {
                                     migrationName:vm.migrationName,
                                     time:'',

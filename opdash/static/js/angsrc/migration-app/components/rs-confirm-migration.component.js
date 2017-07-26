@@ -267,7 +267,7 @@
                         step_name: "MigrationResourceList" ,
                         scheduledItem:true,
                         migration_schedule: {
-                            migrationName:$window.localStorage.migrationName,
+                            migrationName:dataStoreService.getScheduleMigration().migrationName,//$window.localStorage.migrationName,
                             time:dataStoreService.getScheduleMigration().time,
                             timezone:dataStoreService.getScheduleMigration().timezone
                         }

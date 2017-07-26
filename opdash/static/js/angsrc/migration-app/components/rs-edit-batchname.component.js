@@ -36,8 +36,8 @@
                 var vm = this;
                 vm.$onInit = function() {
                     vm.editName = false;
-                    //vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
-                    vm.migrationName = $window.localStorage.migrationName;
+                    vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
+                    //vm.migrationName = $window.localStorage.migrationName;
                   $rootScope.$emit("vm.migrationName", dataStoreService.selectedTime.migrationName); 
 
                 };
@@ -72,7 +72,7 @@
                         };
                         vm.migrationName = vm.changedMigrationName;
                         dataStoreService.setScheduleMigration(vm.selectedTime);
-                        $window.localStorage.migrationName = vm.changedMigrationName;
+                        //$window.localStorage.migrationName = vm.changedMigrationName;
                       $rootScope.$emit("vm.changedMigrationName", dataStoreService.selectedTime.migrationName);
                     }
                     vm.editName = false;
