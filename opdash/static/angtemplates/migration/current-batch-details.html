@@ -53,7 +53,7 @@
                         <tbody ng-show="!vm.loading && !vm.loadError">
                             <tr ng-repeat="instance in vm.job.instances | orderBy: vm.sortBy.server">
                                 <td class="rs-table-link" style="width:25%">
-                                    <a href="" ng-click="vm.equipmentDetails('server', instance.id)" role="button" data-toggle="modal">{{instance.name}}</a>
+                                    <a href="" ng-click="vm.equipmentDetails('server', instance)" role="button" data-toggle="modal">{{instance.name}}</a>
                                 </td>
                                 <td class="rs-table-text" style="width: 30%;">
                                     <span class="rs-status-error" ng-show="instance.status==='error'">Error</span>
