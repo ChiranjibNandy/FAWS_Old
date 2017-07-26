@@ -16,22 +16,26 @@
                 <span class="rs-dropdown-category">or Delete an Account:
                             <a href="" role="button" data-toggle="modal" aria-invalid="false" ng-click="vm.displayDeleteFawsModal()">Delete an existing account</a>
                         </span>
-                    </li>
-                    <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && vm.showCreateAccount">
-                        <span class="rs-dropdown-category">or Select an existing account:</span>
-                    </li>
-                    <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && !vm.showCreateAccount">
-                        <span class="rs-dropdown-category">Select another AWS account:</span>
-                    </li>
-                    <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus">
-                        <select ng-model="vm.selectedFaws" class="ng-pristine ng-valid ng-not-empty ng-touched" aria-invalid="false" ng-change="vm.fawsAccountchanged()">
+            </li>
+            <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && vm.showCreateAccount">
+                <span class="rs-dropdown-category">or Select an existing account:</span>
+            </li>
+            <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && !vm.showCreateAccount">
+                <span class="rs-dropdown-category">Select another AWS account:</span>
+            </li>
+            <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus">
+                <select ng-model="vm.selectedFaws" class="ng-pristine ng-valid ng-not-empty ng-touched" aria-invalid="false" ng-change="vm.fawsAccountchanged()">
+                            <!--for loop for account in vm.awsAccountsDetails -->
                             <option ng-repeat="account in vm.awsAccountsDetails" class="ng-binding ng-scope" value="{{account.name}} (#{{account.awsAccountNumber}})">{{account.name}} (#{{account.awsAccountNumber}})</option>
+                            <!--  end of for loop account in vm.awsAccountsDetails -->
                         </select>
                     </li>
                 </ul>
             </div>
         </span>
     </div>
+    </span>
+</div>
 </div>
 <div class="migr-name" ng-show="vm.editmigration === 'true'">
     <rseditbatchname></rseditbatchname>
@@ -80,7 +84,6 @@
         </div>
     </div>
     <div class="modal-footer">
-
         <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.fawsKeyValue1 || !vm.fawsKeyValue2 || !vm.fawsAcctId}"
             ng-click="vm.createFawsAccount(false)" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
         <a class="rs-btn rs-btn-primary disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
@@ -135,7 +138,6 @@
         </div>
     </div>
     <div class="modal-footer">
-
         <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.serviceLevel || !vm.acceptTermsAndConditions}"
             ng-click="vm.createFawsAccount(true)" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
         <a class="rs-btn rs-btn-primary disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
@@ -159,7 +161,9 @@
                 <div class="form-group" ng-class="{disabled:vm.fawsDeleteProgress}">
                     <div class="row">
                         <select ng-model="vm.deleteFaws" class="ng-pristine ng-valid ng-not-empty ng-touched" aria-invalid="false">
+                            <!-- for loop for account in vm.awsAccountsDetails -->
                             <option ng-repeat="account in vm.awsAccountsDetails" class="ng-binding ng-scope" value="{{account.name}} (#{{account.awsAccountNumber}})">{{account.name}} (#{{account.awsAccountNumber}})</option>
+                            <!-- end of for loop for account in vm.awsAccountsDetails -->
                         </select>
                     </div>
                 </div>
@@ -167,7 +171,6 @@
         </div>
     </div>
     <div class="modal-footer">
-
         <a class="rs-btn rs-btn-primary" ng-click="vm.deleteAWSAccount()" ng-hide="vm.fawsDeleteError || vm.fawsDeleteProgress || vm.fawsDeleted">Delete</a>
         <a class="rs-btn rs-btn-primary disabled" disabled="disabled" ng-show="vm.fawsDeleteProgress">Deleting...</a>
         <i class="rs-processing-indicator" ng-show="vm.fawsDeleteProgress"></i>
