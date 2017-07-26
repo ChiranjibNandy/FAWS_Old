@@ -38,8 +38,11 @@
                     <rs-tab tabtitle="Storage ({{vm.dataVolume}})" showtab="{{vm.dataVolume != 0}}">
                         <rsrecommendationitem type="volume" filtervalue="vm.filteredValue"></rsrecommendationitem>
                     </rs-tab>
-                    <rs-tab tabtitle="Services ({{vm.dataService}})" showtab="{{vm.dataService != 0}}">
+                    <rs-tab tabtitle="CDN ({{vm.dataService}})" showtab="{{vm.dataService != 0}}">
                         <rsrecommendationitem type="service" filtervalue="vm.filteredValue"></rsrecommendationitem>
+                    </rs-tab>
+                    <rs-tab tabtitle="Files ({{vm.dataFile}})" showtab="{{vm.dataFile != 0}}">
+                        <rsrecommendationitem type="file" filtervalue="vm.filteredValue"></rsrecommendationitem>
                     </rs-tab>
                 </rs-tabs>
             </div>

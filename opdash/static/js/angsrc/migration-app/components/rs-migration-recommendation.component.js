@@ -33,11 +33,17 @@
                     vm.migrationName = datastoreservice.getScheduleMigration().migrationName;
                     //var servers = datastoreservice.getItems('server'); -- Previous Code
                     var servers = [];
-                    if($window.localStorage.selectedResources !== undefined)
+                    if($window.localStorage.selectedResources !== undefined){
+                        // angular.forEach(JSON.parse($window.localStorage.selectedResources), function(item, type){
+                        //     // vm.selectedItems[type] = item;
+                        //     vm.data[type] = item.length;
+                        // });
                         servers = JSON.parse($window.localStorage.selectedResources)['server'];
                         vm.dataLoadBalancers = JSON.parse($window.localStorage.selectedResources)['LoadBalancers'].length;
                         vm.dataVolume = JSON.parse($window.localStorage.selectedResources)['volume'].length;
                         vm.dataService = JSON.parse($window.localStorage.selectedResources)['service'].length;
+                        vm.dataFile = JSON.parse($window.localStorage.selectedResources)['file'].length;
+                    }
                     //datastoreservice.getItems('server');
                     vm.dataServer = servers.length;
                     var networkNames = [];

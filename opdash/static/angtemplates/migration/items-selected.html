@@ -58,7 +58,23 @@
                 </div>
             </div>
         </div>
+        <div class="accordion-group" ng-class="{disabled:vm.selectedItems.file.length == 0}" ng-hide="vm.selectedItems.file.length == 0">
+            <div class="accordion-heading ">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#file-name">
+                    <b class=""> Files ({{vm.selectedItems.file.length}})</b>
+                    <i class='fa fa-chevron-down'></i>
+                </a>
+            </div>
+            <div id="file-name" class="accordion-body collapse " ng-if="vm.selectedItems.file.length > 0">
+                <div class="accordion-inner">
+                    <div class="selected-items" ng-repeat="item in vm.selectedItems.file">
+                        <div><a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'file')" ng-show="vm.showrec == 'false'"><i class="fa fa-times-circle"></i></a><b> {{item.name}} </b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div ng-show="vm.selectedItems.server.length == 0 && vm.selectedItems.volume.length == 0 && vm.selectedItems.service.length == 0" style="color:red; text-align: center">No items selected</div>
+    <div ng-show="vm.selectedItems.server.length == 0 && vm.selectedItems.volume.length == 0 && vm.selectedItems.service.length == 0 && vm.selectedItems.file.length == 0" style="color:red; text-align: center">No items selected</div>
     <div ng-if="vm.showMessageForSelectedServer">Once migration has started, resources will be migrated to your destination. You are responsible for any usage costs incurred during the migration process, as well as any resource clean up required following your migration</div>
 </div>

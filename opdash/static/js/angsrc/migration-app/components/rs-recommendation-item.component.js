@@ -94,6 +94,16 @@
                                         {field: "size", text: "Size"},
                                         {field: "volume status", text: "Volume Status"}
                                     ];
+                    }else if (vm.type === "file"){
+                        if($window.localStorage.selectedResources !== undefined)
+                            vm.data = JSON.parse($window.localStorage.selectedResources)['file'];
+                        else
+                            vm.data = []//;dataStoreService.getItems("LoadBalancers");
+                        vm.labels = [
+                                        {field: "name", text: "Region"},
+                                        {field: "size", text: "Size"},
+                                        {field: "File status", text: "Status"}
+                                    ];
                     }else if (vm.type === "service"){
                         if($window.localStorage.selectedResources !== undefined)
                             vm.data = JSON.parse($window.localStorage.selectedResources)['service'];
@@ -101,7 +111,7 @@
                             vm.data = []//;dataStoreService.getItems("LoadBalancers");
                         vm.labels = [
                                         {field: "name", text: "Service Name"},
-                                        {field: "size", text: "Size"},
+                                        {field: "id", text: "ID"},
                                         {field: "service status", text: "Service Status"}
                                     ];
                     }else{

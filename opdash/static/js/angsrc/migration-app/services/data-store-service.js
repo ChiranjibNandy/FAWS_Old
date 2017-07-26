@@ -22,7 +22,8 @@
                 network:[],
                 volume:[],
                 LoadBalancers:[],
-                service:[]
+                service:[],
+                file:[]
             };
 
             /**
@@ -62,7 +63,8 @@
                 network:[],
                 LoadBalancers:[],
                 volume:[],
-                service:[]
+                service:[],
+                file:[]
             };
 
             self.saveItems = {

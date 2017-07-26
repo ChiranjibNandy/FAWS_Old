@@ -8,7 +8,7 @@
      * This service acts as a facade which handles calling the specific service implementation for each resoource type (server, network etc).
      */
     angular.module("migrationApp")
-        .service("migrationitemdataservice", ["serverservice", "networkservice", "volumeservice","contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q","$window", function (serverService, networkService, volumeService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q,$window) {
+        .service("migrationitemdataservice", ["serverservice", "networkservice", "volumeservice", "fileservice", "contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q","$window", function (serverService, networkService, volumeService, fileService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q,$window) {
             var loaded, loadbalancers, services, self = this, currentTenant = null, default_zone = 'us-east-1a';
             //the above default_zone is needed to get the default values.
             var prepareNames = function () {
@@ -43,8 +43,8 @@
                     return serverService.getTrimmedList();
                 } else if (type === "network") {
                     return networkService.getTrimmedList();
-                    // } else if (type === "files") {
-                    //     return networkService.getTrimmedList();
+                } else if (type === "file") {
+                    return fileService.getTrimmedList();
                 } else if (type === "LoadBalancers") {
                     return self.getLoadBalancers();
                 } else if (type === "service") {
@@ -68,8 +68,8 @@
                     return serverService.getDetailedList();
                 } else if (type === "network") {
                     return networkService.getDetailedList();
-                } else if (type === "files") {
-                    return networkService.getTrimmedList();
+                } else if (type === "file") {
+                    return fileService.getTrimmedList();
                 } else if (type === "LoadBalancers") {
                     return networkService.getTrimmedList();
                 } else if (type === "contactNumbers") {
@@ -233,46 +233,35 @@
              * Gets the entire list of CDN Service in its raw JSON form, from the api.
              */
             this.getServices = function () {
-                //var url = "/static/angassets/servers-list.json";
                 var url = "/api/cdn/services";
-                // var tenant_id = authservice.getAuth().tenant_id;
-
-                // if (!loaded || (currentTenant !== tenant_id)) {
-
-                    return HttpWrapper.send(url, {
-                            "operation": 'GET'
-                        })
-                        .then(function (response) {
-                            // loaded = true;
-                            // currentTenant = tenant_id;
-                            services = {
-                                labels: [{
-                                        field: "name",
-                                        text: "name"
-                                    },
-                                    {
-                                        field: "status",
-                                        text: "status"
-                                    },
-                                    // {
-                                    //     field: "id",
-                                    //     text: "id"
-                                    // },
-                                    // {
-                                    //     field: "migration status",
-                                    //     text: "Migration Status"
-                                    // }
-                                ],
-                                data: response
-                            };
-                            return services;
-                        }, function (errorResponse) {
-                            return errorResponse;
-                        });
-
-                // } else {
-                //     return $q.when(loadbalancers);
-                // }
+                return HttpWrapper.send(url, {
+                        "operation": 'GET'
+                    })
+                    .then(function (response) {
+                        services = {
+                            labels: [{
+                                    field: "name",
+                                    text: "name"
+                                },
+                                {
+                                    field: "status",
+                                    text: "status"
+                                },
+                                // {
+                                //     field: "id",
+                                //     text: "id"
+                                // },
+                                {
+                                    field: "migration status",
+                                    text: "Migration Status"
+                                }
+                            ],
+                            data: response
+                        };
+                        return services;
+                    }, function (errorResponse) {
+                        return errorResponse;
+                    });
             };//end of getLoadBalancers method
 
             /**

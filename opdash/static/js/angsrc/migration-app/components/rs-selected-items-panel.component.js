@@ -35,7 +35,8 @@
                         network:[],
                         LoadBalancers:[],
                         volume:[],
-                        service:[]
+                        service:[],
+                        file:[]
                     };
                     /**
                      * @ngdoc property
