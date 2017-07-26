@@ -37,12 +37,12 @@
                     };
                     vm.saveProgress = 'yes';
                     vm.displayMigName = false;
-                    vm.migrationName =  $window.localStorage.migrationName || 'My Migration';
+                    vm.migrationName =  dataStoreService.getScheduleMigration().migrationName || 'My Migration';
                     vm.stepname = dataStoreService.getPageName() || $window.localStorage.pageName;
                 };
                 //event fired on cancel button click, update the migration name.
                 $('#cancel_modal').on('show', function() {
-                    vm.migrationName = $window.localStorage.migrationName || 'My Migration';
+                    vm.migrationName = dataStoreService.getScheduleMigration().migrationName || 'My Migration';
                 });
                 /**
                  * @ngdoc method
@@ -60,7 +60,7 @@
                     }else{
                         selectedItems = JSON.parse($window.localStorage.selectedResources);
                         $('#cancel_modal').modal('show');
-                         vm.migrationName = $window.localStorage.migrationName || 'My Migration';
+                         vm.migrationName = dataStoreService.getScheduleMigration().migrationName || 'My Migration';
                     }
                 };
 

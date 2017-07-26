@@ -300,10 +300,14 @@
              */
             this.setScheduleMigration = function(items){
                 self.selectedTime = items;
-            }
+                $window.localStorage.setItem("selectedTime",JSON.stringify(items));
+            };
+
             this.getScheduleMigration = function(){
+                if($window.localStorage.selectedTime !== undefined)
+                    self.selectedTime = JSON.parse($window.localStorage.selectedTime);                
                 return self.selectedTime;
-            }
+            };
 
             this.setDontShowStatus = function(status){
                self.dontShowStatus = status;

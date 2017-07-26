@@ -133,15 +133,13 @@
                 };
 
                 vm.$routerOnActivate = function(next, previous) {
-                    if($window.localStorage.migrationName !== undefined)
-                        dataStoreService.selectedTime.migrationName = $window.localStorage.migrationName;
-                    if(previous && previous.urlPath.indexOf("confirm") > -1 && dataStoreService.selectedTime.migrationName && $window.localStorage.migrationScheduled === "true"){
+                    if(previous && previous.urlPath.indexOf("confirm") > -1 && dataStoreService.getScheduleMigration().migrationName && $window.localStorage.migrationScheduled === "true"){
                         vm.refreshFlag=true;
                         vm.afterNewMigration = true;
                         vm.resourceCount = dataStoreService.getMigrationResourceCount();
                         vm.initiatedMigration = {
-                            name: dataStoreService.selectedTime.migrationName,
-                            timestamp: dataStoreService.selectedTime.time
+                            name: dataStoreService.getScheduleMigration().migrationName,
+                            timestamp: dataStoreService.getScheduleMigration().time
                         };
                         vm.showInitiatedMigration = true;
                     } else{
@@ -514,7 +512,7 @@
                     dataStoreService.storeDate('timezone',batch.schedulingTimeDate.timezone);
                     dataStoreService.setDontShowStatus(true);
                     dataStoreService.selectedTime.migrationName = batch.batch_name || batch.instance_name;
-                    $window.localStorage.migrationName = batch.batch_name || batch.instance_name;
+                    //$window.localStorage.migrationName = batch.batch_name || batch.instance_name;
                     dataStoreService.setSaveItems(batch.selected_resources);
                     $window.localStorage.setItem('savedServers',JSON.stringify(batch.selected_resources.server));
                     $rootRouter.navigate([batch.step_name]);

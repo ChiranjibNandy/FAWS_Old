@@ -119,7 +119,7 @@
 
                     reqObj = {
                         metadata: {
-                            batch_name: $window.localStorage.migrationName || dataStoreService.getScheduleMigration().migrationName,
+                            batch_name: dataStoreService.getScheduleMigration().migrationName,
                             initiated_by: auth.impersonator || auth.username
                       },
                         create_ticket: true,
