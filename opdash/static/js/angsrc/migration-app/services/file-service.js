@@ -7,7 +7,7 @@
      * @description
      * Service to retrieve all data for file resources
      */
-    angular.module("migrationApp").factory("fileservice", ["httpwrapper", "$q", "authservice", function (HttpWrapper, $q, authservice) {
+    angular.module("migrationApp").factory("fileservice", ["httpwrapper", "$q", "authservice", "$window", function (HttpWrapper, $q, authservice, $window) {
         // local variables to help cache data
         var loaded, files, self = this, currentTenant = null;
 
@@ -61,7 +61,7 @@
          */
         self.getAll = function () {
             //var url = "/static/angassets/files-list.json";
-            var url = "/api/cloud_files/";
+            var url = "/api/cloud_files";
             var tenant_id = authservice.getAuth().tenant_id;
 
             // if (!loaded || (currentTenant !== tenant_id)) {
@@ -112,7 +112,7 @@
         */
         self.prepareFilesList = function () {
             var fileReqList = [];
-            var files = JSON.parse($window.localStorage.selectedResources)["files"];
+            var files = JSON.parse($window.localStorage.selectedResources)["file"];
             angular.forEach(files,function(file){
                 fileReqList.push(
                     {
