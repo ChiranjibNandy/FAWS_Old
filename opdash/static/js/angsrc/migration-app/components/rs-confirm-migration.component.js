@@ -111,7 +111,7 @@
                                     
                                 //get list of selected resources from local storage, in an array
                                     var equipments = {
-                                            instances: JSON.parse($window.localStorage.selectedServers),
+                                            instances: JSON.parse($window.localStorage.selectedResources)['server'],
                                             networks: dataStoreService.getDistinctNetworks()
                                     };
                                     var selectedResources = [];
@@ -174,8 +174,8 @@
                     dataStoreService.storeEligibilityResults($window.localStorage.eligibilityResults);
                     $window.localStorage.clear();
                     $window.localStorage.eligibilityResults = dataStoreService.retrieveEligibilityResults();
-                    if($window.localStorage.selectedServers !== undefined)
-                        $window.localStorage.removeItem('selectedServers');
+                    if($window.localStorage.selectedResources !== undefined)
+                        $window.localStorage.removeItem('selectedResources');
                     $rootRouter.navigate(["MigrationResourceList"]);
                 };
 
@@ -263,7 +263,7 @@
                  */
                 vm.saveResourceDetails = function(){
                     var saveInstance = {
-                        recommendations : JSON.parse($window.localStorage.selectedServers),
+                        recommendations : JSON.parse($window.localStorage.selectedResources)['server'],
                         step_name: "MigrationResourceList" ,
                         scheduledItem:true,
                         migration_schedule: {
@@ -365,23 +365,23 @@
                     $scope.$broadcast("openUsageCostsModal");
                 }
             
-            $scope.$on('$locationChangeStart', function(event, newUrl, oldUrl) {
-                    if((oldUrl.indexOf("migration/confirm") > -1) && (newUrl.indexOf("migration/recommendation") > -1) && $window.localStorage.selectedServers === "[]"){
-                        event.preventDefault();
-                        //$('#cancel_modal').modal('show');
-                        $rootRouter.navigate(["MigrationResourceList"]);
-                        //$rootRouter.navigate(["MigrationResourceList"]);
-                    }
-                      //condition for direct url jumping or hitting...
-                     if((oldUrl.indexOf("/migration/confirm") == -1) && ((newUrl.indexOf("migration/recommendation") > -1))){
-                        event.preventDefault();
-                        $rootRouter.navigate(["MigrationStatus"]);
-                    }
-            });
+                $scope.$on('$locationChangeStart', function(event, newUrl, oldUrl) {
+                        if((oldUrl.indexOf("migration/confirm") > -1) && (newUrl.indexOf("migration/recommendation") > -1) && ($window.localStorage.selectedResources === "[]" || $window.localStorage.selectedResources === undefined)){
+                            event.preventDefault();
+                            //$('#cancel_modal').modal('show');
+                            $rootRouter.navigate(["MigrationResourceList"]);
+                            //$rootRouter.navigate(["MigrationResourceList"]);
+                        }
+                        //condition for direct url jumping or hitting...
+                        if((oldUrl.indexOf("/migration/confirm") == -1) && ((newUrl.indexOf("migration/recommendation") > -1))){
+                            event.preventDefault();
+                            $rootRouter.navigate(["MigrationStatus"]);
+                        }
+                });
 
-            return vm;
+                return vm;
 
-            }
+                }
             ]
         }); // end of component definition
 })();

@@ -62,6 +62,9 @@
                         server.migStatus = 'error';
                         server.eligible = 'Not Available';
                         server.eligibiltyTests = {};
+                        if(server.status == "available" || server.status == "deployed"){
+                            server.status = "active"
+                        }
                         //map status of a server received from Batch response with respect to the server id. 
                         angular.forEach(statusList, function (status) {
                             if(keepGoing) {
@@ -163,7 +166,7 @@
 
                     vm.parent.itemsLoadingStatus(true);
                     //check if resources already retrieved
-                    if($window.localStorage.allServers === undefined){
+                    if($window.localStorage.allResources === undefined){
                         //During first time loading of resources
                         // Retrieve all migration items of a specific type (eg: server, network etc)
                         var list = ds.getTrimmedAllItems(vm.type);
@@ -199,13 +202,13 @@
                             });
 
                             //On page load, make eligibility call for first few available servers that are in first page of select resources page.
-                            vm.pageChangeEvent();
+                            if(vm.type == 'server'){
+                                vm.pageChangeEvent();
+                            }
                             
-                            $window.localStorage.allServers = JSON.stringify(vm.items);
-                            
-                            var savedItems = [],savedServers = [];
-                            if($window.localStorage.selectedServers !== undefined)
-                                savedItems = JSON.parse($window.localStorage.selectedServers);
+                            var savedItems = [], savedServers = [];
+                            if($window.localStorage.selectedResources !== undefined)
+                                savedItems = JSON.parse($window.localStorage.selectedResources)[vm.type];
 
                             if(savedItems.length != 0){
                                 angular.forEach(vm.items, function (item) {
@@ -213,22 +216,7 @@
                                         item.selected = false;
                                         if(savedItems[i].rrn == item.rrn){
                                             item.selected = true;
-                                            break
-                                        };
-                                    };
-                                });
-                            };
-
-                            if($window.localStorage.savedServers !== undefined)
-                                savedServers = JSON.parse($window.localStorage.savedServers);
-                            
-                            if(savedServers.length != 0){
-                                angular.forEach(vm.items, function (item) {
-                                    for(var i=0;i<savedServers.length;i++){
-                                        item.selected = false;
-                                        if(savedServers[i].rrn == item.rrn){
-                                            item.selected = true;
-                                            item.selectedMapping = savedServers[i].selectedMapping;
+                                            item.selectedMapping = savedItems[i].selectedMapping;
                                             vm.parent.addItem(item, vm.type);
                                             break
                                         };
@@ -247,7 +235,6 @@
                             vm.labels = results[0].labels; // set table headers
                             //Store all labels in factory variable
                             datastoreservice.storeallItems(vm.labels, "label"+vm.type);
-                            $window.localStorage.setItem("serverLabels",JSON.stringify(vm.labels));
                             angular.forEach(results[0].labels, function(label){
                                 vm.search[label.field] = ""; // set search field variables
                             });
@@ -262,7 +249,8 @@
                         vm.itemsEligible = true;
                         vm.eligCallInProgress = false;
                         //For repeated fetch of resources after first time loading.
-                        vm.items = JSON.parse($window.localStorage.allServers);
+                        var allResources = JSON.parse($window.localStorage.allResources);
+                        vm.items = allResources[vm.type];
                         angular.forEach(vm.items, function (item) {
                             if(item.canMigrate == true && item.status.toLowerCase() == 'active'){ 
                                 vm.activeItemCount++;
@@ -277,50 +265,37 @@
                             vm.pageArray.push(i);
                         };
 
-                        //vm.labels = datastoreservice.retrieveallItems("label"+vm.type); // set table headers -- Previous Code
-                        if($window.localStorage.serverLabels !== undefined)
-                            vm.labels = JSON.parse($window.localStorage.serverLabels);
+                        if(allResources['label'+vm.type] !== undefined)
+                            vm.labels = allResources['label'+vm.type];
                         else
                             vm.labels = datastoreservice.retrieveallItems("label"+vm.type); // set table headers
 
                         vm.loading = false;
                         vm.parent.itemsLoadingStatus(false);
                         
-                        var servers_selected = [],savedServers = [];
-                        if($window.localStorage.selectedServers !== undefined)
-                            servers_selected = JSON.parse($window.localStorage.selectedServers);
+                        var items_selected = [];
+                        if($window.localStorage.selectedResources !== undefined)
+                            items_selected = JSON.parse($window.localStorage.selectedResources)[vm.type];
                         
-                        if(servers_selected.length != 0){
+                        if(items_selected.length != 0){
                             angular.forEach(vm.items, function (item) {
-                                for(var i=0;i<servers_selected.length;i++){
+                                for(var i=0;i<items_selected.length;i++){
                                     item.selected = false;
-                                    if(servers_selected[i].rrn == item.rrn){
+                                    if((items_selected[i].rrn || items_selected[i].id) == (item.rrn || item.id)){
                                         item.selected = true;
-                                        break
-                                    };
-                                };
-                            });
-                        };
-
-                        if($window.localStorage.savedServers !== undefined){
-                            savedServers = JSON.parse($window.localStorage.savedServers);
-                        }
-                            
-                        if(savedServers.length != 0){
-                            angular.forEach(vm.items, function (item) {
-                                for(var i=0;i<savedServers.length;i++){
-                                    item.selected = false;
-                                    if(savedServers[i].rrn == item.rrn){
-                                        item.selected = true;
-                                        item.selectedMapping = savedServers[i].selectedMapping;
+                                        item.selectedMapping = items_selected[i].selectedMapping;
                                         vm.parent.addItem(item, vm.type);
                                         break
                                     };
                                 };
                             });
-                        };
+                        } else{
+                            angular.forEach(vm.items, function (item) {
+                                item.selected = false;
+                            });
+                        }
                         var count = 0;
-                        angular.forEach(servers_selected, function (item_selected) {
+                        angular.forEach(items_selected, function (item_selected) {
                             count++;
                             vm.parent.addItem(item_selected, vm.type);
                         });
@@ -419,7 +394,9 @@
                         vm.sortingOrder = true;
                     }
                     vm.items = items;
-                    vm.pageChangeEvent();
+                    if(vm.type == 'server'){
+                        vm.pageChangeEvent();
+                    }
                 };
 
                 //store slog status
@@ -534,6 +511,7 @@
                                 //store eligibility test results for servers with test result as 'success'
                                 $window.localStorage.eligibilityResults = JSON.stringify(vm.items.filter(item => item.eligible == 'Passed'))
                                 $window.localStorage.allServers = JSON.stringify(vm.items);
+                                datastoreservice.storeallItems(vm.items, vm.type);
                                 //to be enabled once precheck call is up
                                 vm.parent.itemsLoadingStatus(false);
                                 vm.itemsEligible = true;
@@ -555,7 +533,7 @@
                                         }
                                     });
                                 }
-                                $window.localStorage.allServers = JSON.stringify(vm.items);
+                                datastoreservice.storeallItems(vm.items, vm.type);
                             }
                             //to be removed after eligibilty API works
                             if(firstRun){

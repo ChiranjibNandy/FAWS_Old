@@ -227,9 +227,9 @@
                 */
         var instancesReqList = [];
         self.prepareServerInstance = function () {
-            if ($window.localStorage.selectedServers !== undefined) {
+            if ($window.localStorage.selectedResources !== undefined) {
                 var equipments = {
-                    instances: JSON.parse($window.localStorage.selectedServers),//dataStoreService.getItems("server")
+                    instances: JSON.parse($window.localStorage.selectedResources)['server'],//dataStoreService.getItems("server")
                     networks: datastoreservice.getDistinctNetworks()
                 }
             }

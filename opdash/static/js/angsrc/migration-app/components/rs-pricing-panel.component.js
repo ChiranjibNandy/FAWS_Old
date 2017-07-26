@@ -96,7 +96,7 @@
                         vm.precheckError = false;
                         $("#precheck_modal").modal('show');
                         var requestObj = ds.preparePrereqRequest();
-                        var servers = JSON.parse($window.localStorage.selectedServers);//dataStoreService.getItems("server");
+                        var servers = JSON.parse($window.localStorage.selectedResources)['server'];//dataStoreService.getItems("server");
                         HttpWrapper.save("/api/precheck", { "operation": 'POST' }, requestObj)
                         .then(function (result) {
                             if(Object.keys(result.results).length != 0){
@@ -208,8 +208,8 @@
                     var date = new Date();
                     var selectedServers = [];
                     //var selectedServers = dataStoreService.getItems('server');
-                    if($window.localStorage.selectedServers !== undefined)
-                        selectedServers = JSON.parse($window.localStorage.selectedServers);
+                    if($window.localStorage.selectedResources !== undefined)
+                        selectedServers = JSON.parse($window.localStorage.selectedResources)['server'];
                     else
                         selectedServers = dataStoreService.getItems('server');
                     angular.forEach(selectedServers, function (item) {
@@ -235,8 +235,8 @@
                     return $timeout(function(){
                         var selectedPricingMappingObj = [];
                         //var selectedPricingMappingObj = dataStoreService.getItems('server');
-                        if($window.localStorage.selectedServers !== undefined)
-                            selectedPricingMappingObj = JSON.parse($window.localStorage.selectedServers);
+                        if($window.localStorage.selectedResources !== undefined)
+                            selectedPricingMappingObj = JSON.parse($window.localStorage.selectedResources)['server'];
                         else
                             selectedPricingMappingObj = dataStoreService.getItems('server');                        
                         vm.totalProjectedPricingSum = 0;

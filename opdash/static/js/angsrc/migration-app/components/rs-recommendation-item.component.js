@@ -68,8 +68,8 @@
                             vm.errorInApi = true;
                         });
                         //vm.data = dataStoreService.getItems(vm.type); -- Previous Code
-                        if($window.localStorage.selectedServers !== undefined)
-                            vm.data = JSON.parse($window.localStorage.selectedServers);
+                        if($window.localStorage.selectedResources !== undefined)
+                            vm.data = JSON.parse($window.localStorage.selectedResources)['server'];
                         else
                            vm.data = [];//dataStoreService.getItems(vm.type); 
                         //$window.localStorage.selectedServers = JSON.stringify(vm.data);
@@ -84,10 +84,30 @@
                                     ];
                     }else if (vm.type === "network"){
                         vm.fetchNetworks();
+                    }else if (vm.type === "volume"){
+                        if($window.localStorage.selectedResources !== undefined)
+                            vm.data = JSON.parse($window.localStorage.selectedResources)['volume'];
+                        else
+                            vm.data = []//;dataStoreService.getItems("LoadBalancers");
+                        vm.labels = [
+                                        {field: "name", text: "Volume Name"},
+                                        {field: "size", text: "Size"},
+                                        {field: "volume status", text: "Volume Status"}
+                                    ];
+                    }else if (vm.type === "service"){
+                        if($window.localStorage.selectedResources !== undefined)
+                            vm.data = JSON.parse($window.localStorage.selectedResources)['service'];
+                        else
+                            vm.data = []//;dataStoreService.getItems("LoadBalancers");
+                        vm.labels = [
+                                        {field: "name", text: "Service Name"},
+                                        {field: "size", text: "Size"},
+                                        {field: "service status", text: "Service Status"}
+                                    ];
                     }else{
                         //vm.data = dataStoreService.getItems("LoadBalancers");
-                        if($window.localStorage.selectedLoadBalancers !== undefined)
-                            vm.data = JSON.parse($window.localStorage.selectedLoadBalancers);
+                        if($window.localStorage.selectedResources !== undefined)
+                            vm.data = JSON.parse($window.localStorage.selectedResources)['LoadBalancers'];
                         else
                             vm.data = []//;dataStoreService.getItems("LoadBalancers");
                         vm.labels = [
@@ -149,8 +169,8 @@
                 vm.fetchNetworks = function(){
                     var servers = [];
                     //var servers = dataStoreService.getItems('server');
-                    if($window.localStorage.selectedServers !== undefined)
-                        servers = JSON.parse($window.localStorage.selectedServers);
+                    if($window.localStorage.selectedResources !== undefined)
+                        servers = JSON.parse($window.localStorage.selectedResources)['server'];
                     else
                         servers = dataStoreService.getItems('server');
                     var networkNames = [];

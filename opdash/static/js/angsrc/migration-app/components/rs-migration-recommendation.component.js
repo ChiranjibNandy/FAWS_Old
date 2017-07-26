@@ -33,8 +33,11 @@
                     vm.migrationName = datastoreservice.getScheduleMigration().migrationName;
                     //var servers = datastoreservice.getItems('server'); -- Previous Code
                     var servers = [];
-                    if($window.localStorage.selectedServers !== undefined)
-                        servers = JSON.parse($window.localStorage.selectedServers);
+                    if($window.localStorage.selectedResources !== undefined)
+                        servers = JSON.parse($window.localStorage.selectedResources)['server'];
+                        vm.dataLoadBalancers = JSON.parse($window.localStorage.selectedResources)['LoadBalancers'].length;
+                        vm.dataVolume = JSON.parse($window.localStorage.selectedResources)['volume'].length;
+                        vm.dataService = JSON.parse($window.localStorage.selectedResources)['service'].length;
                     //datastoreservice.getItems('server');
                     vm.dataServer = servers.length;
                     var networkNames = [];
@@ -47,10 +50,10 @@
                     });  
                     vm.dataNetwork = networkNames.length;
                     //vm.dataLoadBalancers = datastoreservice.getItems('LoadBalancers').length; -- Previous Code
-                    if($window.localStorage.selectedLoadBalancers !== undefined)
-                        vm.dataLoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers).length;
-                    else
-                        vm.dataLoadBalancers = [];//datastoreservice.getItems('LoadBalancers').length;
+                    // if($window.localStorage.selectedLoadBalancers !== undefined)
+                    //     vm.dataLoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers).length;
+                    // else
+                    //     vm.dataLoadBalancers = [];//datastoreservice.getItems('LoadBalancers').length;
 
                     vm.editName = false;
 

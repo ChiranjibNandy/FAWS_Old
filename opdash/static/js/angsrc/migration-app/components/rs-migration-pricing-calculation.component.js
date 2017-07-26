@@ -35,8 +35,8 @@
                     vm.showCalculatedCostDialog = false;
                     var selectedPricingMappingObj = [];
 
-                    if ($window.localStorage.selectedServers !== undefined)
-                        selectedPricingMappingObj = JSON.parse($window.localStorage.selectedServers);
+                    if ($window.localStorage.selectedResources !== undefined)
+                        selectedPricingMappingObj = JSON.parse($window.localStorage.selectedResources)['server'];
 
                     selectedPricingMappingObj.forEach(function (server) {
                         var selectedFlavor = server.selectedMapping.instance_type;

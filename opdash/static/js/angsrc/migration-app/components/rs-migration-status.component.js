@@ -471,8 +471,8 @@
                     dataStoreService.storeEligibilityResults($window.localStorage.eligibilityResults);
                     $window.localStorage.clear();
                     $window.localStorage.eligibilityResults = dataStoreService.retrieveEligibilityResults();
-                    if($window.localStorage.selectedServers !== undefined)
-                        $window.localStorage.removeItem('selectedServers');
+                    if($window.localStorage.selectedResources !== undefined)
+                        $window.localStorage.removeItem('selectedResources');
                     // dataStoreService.setDontShowStatus(!(dataStoreService.getShowWelcomeModal()));
                     $rootRouter.navigate(["MigrationResourceList"]);
                 };

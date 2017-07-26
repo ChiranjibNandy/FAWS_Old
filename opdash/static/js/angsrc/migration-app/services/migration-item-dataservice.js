@@ -8,11 +8,11 @@
      * This service acts as a facade which handles calling the specific service implementation for each resoource type (server, network etc).
      */
     angular.module("migrationApp")
-        .service("migrationitemdataservice", ["serverservice", "networkservice", "contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q", "$window", function (serverService, networkService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q, $window) {
-            var loaded, loadbalancers, self = this, currentTenant = null, default_zone = 'us-east-1a';
+        .service("migrationitemdataservice", ["serverservice", "networkservice", "volumeservice","contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q","$window", function (serverService, networkService, volumeService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q,$window) {
+            var loaded, loadbalancers, services, self = this, currentTenant = null, default_zone = 'us-east-1a';
             //the above default_zone is needed to get the default values.
             var prepareNames = function () {
-                var servers = JSON.parse($window.localStorage.selectedServers);//dataStoreService.getItems("server");
+                var servers = JSON.parse($window.localStorage.selectedResources)['server'];//dataStoreService.getItems("server");
                 var names = {};
                 names.instances = {};
                 names.networks = {};
@@ -47,6 +47,10 @@
                     //     return networkService.getTrimmedList();
                 } else if (type === "LoadBalancers") {
                     return self.getLoadBalancers();
+                } else if (type === "service") {
+                    return self.getServices();
+                } else if (type === "volume") {
+                    return volumeService.getTrimmedList();
                 }
             }//end of getTrimmedAllItems method
 
@@ -104,9 +108,9 @@
                 var destaccount = JSON.parse($window.localStorage.getItem("fawsAccounts"));
 
                 var equipments = {
-                    instances: JSON.parse($window.localStorage.selectedServers),//dataStoreService.getItems("server")
-                    networks: dataStoreService.getDistinctNetworks()
-                },
+                        instances: JSON.parse($window.localStorage.selectedResources)['server'],//dataStoreService.getItems("server")
+                        networks: dataStoreService.getDistinctNetworks()
+                    },
 
                     auth = authservice.getAuth(),
                     names = prepareNames(),
@@ -169,9 +173,9 @@
             this.preparePrereqRequest = function (batchName) {
                 var destaccount = JSON.parse($window.localStorage.getItem("fawsAccounts"));
                 var equipments = {
-                    instances: JSON.parse($window.localStorage.selectedServers),
-                    networks: dataStoreService.getDistinctNetworks()
-                },
+                        instances: JSON.parse($window.localStorage.selectedResources)['server'],
+                        networks: dataStoreService.getDistinctNetworks()
+                    },
                     auth = authservice.getAuth(),
                     reqObj = {
                         source: {
@@ -222,11 +226,62 @@
 
             /**
              * @ngdoc method
-             * @name getAll
+             * @name getServices
              * @methodOf migrationApp.service:migrationitemdataservice
              * @returns {Promise} a promise to fetch all servers.
              * @description 
-             * Gets the entire list of servers in its raw JSON form, from the api.
+             * Gets the entire list of CDN Service in its raw JSON form, from the api.
+             */
+            this.getServices = function () {
+                //var url = "/static/angassets/servers-list.json";
+                var url = "/api/cdn/services";
+                // var tenant_id = authservice.getAuth().tenant_id;
+
+                // if (!loaded || (currentTenant !== tenant_id)) {
+
+                    return HttpWrapper.send(url, {
+                            "operation": 'GET'
+                        })
+                        .then(function (response) {
+                            // loaded = true;
+                            // currentTenant = tenant_id;
+                            services = {
+                                labels: [{
+                                        field: "name",
+                                        text: "name"
+                                    },
+                                    {
+                                        field: "status",
+                                        text: "status"
+                                    },
+                                    // {
+                                    //     field: "id",
+                                    //     text: "id"
+                                    // },
+                                    // {
+                                    //     field: "migration status",
+                                    //     text: "Migration Status"
+                                    // }
+                                ],
+                                data: response
+                            };
+                            return services;
+                        }, function (errorResponse) {
+                            return errorResponse;
+                        });
+
+                // } else {
+                //     return $q.when(loadbalancers);
+                // }
+            };//end of getLoadBalancers method
+
+            /**
+             * @ngdoc method
+             * @name getLoadBalancers
+             * @methodOf migrationApp.service:migrationitemdataservice
+             * @returns {Promise} a promise to fetch all servers.
+             * @description 
+             * Gets the entire list of load balancers in its raw JSON form, from the api.
              */
             this.getLoadBalancers = function () {
                 //var url = "/static/angassets/servers-list.json";
