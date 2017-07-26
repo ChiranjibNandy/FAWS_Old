@@ -1,4 +1,4 @@
-<tr ng-repeat="item in vm.data | filter: vm.filtervalue | limitTo : vm.pageSize : (vm.currentPage-1)*vm.pageSize  | orderBy:vm.propertyName:vm.reverse">
+<tr ng-repeat="item in vm.data | filter: vm.filterCustomSearch | limitTo : vm.pageSize : (vm.currentPage-1)*vm.pageSize">
     <td class="rs-table-status"
             ng-class="{'rs-table-status-ok': item.status=='active', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
     </td>
@@ -10,7 +10,7 @@
     <!--Default zone is always going to be us-east-1a, its not available from ec2_pricing kept as a secondary value-->
     <td class="rs-table-text">{{item.selectedMapping.zone || 'us-east-1a' }}</td>
     <td class="rs-table-text">{{item.selectedMapping.instance_type}}</td>
-    <td class="rs-table-text"> ${{vm.totalCost(item)}}</td>
+    <td class="rs-table-text"> ${{item.selectedMapping.totalCost}}</td>
     <td class="rs-table-cog">
         <a href="" ng-click="vm.showModifyModal(item,'#modify_modal'+ item.id)" data-toggle="modal" class="rs-btn-action">
             <i class="rs-edit" title="Modify this"></i>
