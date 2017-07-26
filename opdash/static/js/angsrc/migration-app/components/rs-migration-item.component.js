@@ -206,7 +206,7 @@
                                 vm.pageChangeEvent();
                             }
                             
-                            var savedItems = [];
+                            var savedItems = [], savedServers = [];
                             if($window.localStorage.selectedResources !== undefined)
                                 savedItems = JSON.parse($window.localStorage.selectedResources)[vm.type];
 
@@ -216,22 +216,7 @@
                                         item.selected = false;
                                         if(savedItems[i].rrn == item.rrn){
                                             item.selected = true;
-                                            break
-                                        };
-                                    };
-                                });
-                            };
-
-                            if($window.localStorage.savedServers !== undefined)
-                                savedServers = JSON.parse($window.localStorage.savedServers);
-                            
-                            if(savedServers.length != 0){
-                                angular.forEach(vm.items, function (item) {
-                                    for(var i=0;i<savedServers.length;i++){
-                                        item.selected = false;
-                                        if(savedServers[i].rrn == item.rrn){
-                                            item.selected = true;
-                                            item.selectedMapping = savedServers[i].selectedMapping;
+                                            item.selectedMapping = savedItems[i].selectedMapping;
                                             vm.parent.addItem(item, vm.type);
                                             break
                                         };
@@ -296,31 +281,19 @@
                             angular.forEach(vm.items, function (item) {
                                 for(var i=0;i<items_selected.length;i++){
                                     item.selected = false;
-                                    if(servers_selected[i].rrn == item.rrn){
+                                    if((items_selected[i].rrn || items_selected[i].id) == (item.rrn || item.id)){
                                         item.selected = true;
-                                        break
-                                    };
-                                };
-                            });
-                        };
-
-                        if($window.localStorage.savedServers !== undefined){
-                            savedServers = JSON.parse($window.localStorage.savedServers);
-                        }
-                            
-                        if(savedServers.length != 0){
-                            angular.forEach(vm.items, function (item) {
-                                for(var i=0;i<savedServers.length;i++){
-                                    item.selected = false;
-                                    if(savedServers[i].rrn == item.rrn){
-                                        item.selected = true;
-                                        item.selectedMapping = savedServers[i].selectedMapping;
+                                        item.selectedMapping = items_selected[i].selectedMapping;
                                         vm.parent.addItem(item, vm.type);
                                         break
                                     };
                                 };
                             });
-                        };
+                        } else{
+                            angular.forEach(vm.items, function (item) {
+                                item.selected = false;
+                            });
+                        }
                         var count = 0;
                         angular.forEach(items_selected, function (item_selected) {
                             count++;

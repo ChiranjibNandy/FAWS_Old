@@ -127,6 +127,9 @@
              * Saves list of resources the user wants to migrate.
              */
             this.setItems = function(items, type){
+                if($window.localStorage.selectedResources !== undefined){
+                    self.selectedItems = JSON.parse($window.localStorage.selectedResources);
+                }
                 self.selectedItems[type] = items;
                 $window.localStorage.selectedResources = JSON.stringify(self.selectedItems);
             }
