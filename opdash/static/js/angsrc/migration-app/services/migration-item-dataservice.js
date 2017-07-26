@@ -8,14 +8,18 @@
      * This service acts as a facade which handles calling the specific service implementation for each resoource type (server, network etc).
      */
     angular.module("migrationApp")
-        .service("migrationitemdataservice", ["serverservice", "networkservice", "volumeservice", "fileservice", "contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q","$window", function (serverService, networkService, volumeService, fileService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q,$window) {
+        .service("migrationitemdataservice", ["serverservice", "networkservice", "volumeservice","contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q","$window","cdnservice","fileservice", function (serverService, networkService, volumeService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q,$window,cdnservice,fileservice) {
             var loaded, loadbalancers, services, self = this, currentTenant = null, default_zone = 'us-east-1a';
             //the above default_zone is needed to get the default values.
             var prepareNames = function () {
                 var servers = JSON.parse($window.localStorage.selectedResources)['server'];//dataStoreService.getItems("server");
+                var cdn = JSON.parse($window.localStorage.selectedResources)['service'];
+                var volumes = JSON.parse($window.localStorage.selectedResources)['volume'];
                 var names = {};
                 names.instances = {};
                 names.networks = {};
+                names.cdn = {};
+                names.volumes = {};
 
                 angular.forEach(servers, function (item) {
                     names.instances[item.id] = item.name;
@@ -23,6 +27,12 @@
                     angular.forEach(networks, function (item) {
                         names.networks[item.id] = item.name;
                     });
+                });
+                angular.forEach(cdn, function (resource) {
+                    names.cdn[resource.id] = resource.name;
+                });
+                angular.forEach(volumes, function (resource) {
+                    names.volumes[resource.id] = resource.name;
                 });
 
                 return names;
@@ -44,7 +54,7 @@
                 } else if (type === "network") {
                     return networkService.getTrimmedList();
                 } else if (type === "file") {
-                    return fileService.getTrimmedList();
+                    return fileservice.getTrimmedList();
                 } else if (type === "LoadBalancers") {
                     return self.getLoadBalancers();
                 } else if (type === "service") {
@@ -69,7 +79,7 @@
                 } else if (type === "network") {
                     return networkService.getDetailedList();
                 } else if (type === "file") {
-                    return fileService.getTrimmedList();
+                    return fileservice.getTrimmedList();
                 } else if (type === "LoadBalancers") {
                     return networkService.getTrimmedList();
                 } else if (type === "contactNumbers") {
@@ -106,13 +116,12 @@
              */
             this.prepareJobRequest = function (batchName) {
                 var destaccount = JSON.parse($window.localStorage.getItem("fawsAccounts"));
-
-                var equipments = {
-                        instances: JSON.parse($window.localStorage.selectedResources)['server'],//dataStoreService.getItems("server")
-                        networks: dataStoreService.getDistinctNetworks()
-                    },
-
-                    auth = authservice.getAuth(),
+                var services = cdnservice.prepareCdnList();
+                var volumes = volumeService.prepareVolList();
+                var servers = serverService.prepareServerList();
+                var cloudfiles = fileservice.prepareFilesList();
+                var networks = networkService.prepareNetworkList();
+                var auth = authservice.getAuth(),
                     names = prepareNames(),
                     instancesReqList = [],
                     networksReqList = [],
@@ -133,13 +142,6 @@
                         resources: {},
                         version: "v1"
                     };
-
-                // prepare servers/instances request object
-                serverService.prepareServerInstance();
-
-                // prepare networks request object
-                // TODO(Team): After rrn changes in migrator, update id prop.
-                networkService.prepareNetworkInstance();
                 var currEPOCHTime = moment().unix();
                 var currISOTime = moment().toISOString();
                 if (dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < (currISOTime)) {
@@ -152,11 +154,21 @@
                     dataStoreService.selectedTime.time = reqObj.start;
                 }
 
-                reqObj.resources.instances = serverService.prepareServerInstance(); //add servers to the resources list
-                if (networkService.prepareNetworkInstance().length !=0) { //add networks to the resources list iff there are any networks
-                    reqObj.resources.networks = networkService.prepareNetworkInstance();
+                if(servers.length>0){
+                    reqObj.resources.instances = servers; //add servers to the resources list
                 }
-
+                if (networks.length>0) { //add networks to the resources list iff there are any networks
+                    reqObj.resources.networks = networks;
+                }
+                if(services.length>0){
+                    reqObj.resources.cdn = services;
+                }
+                if(volumes.length>0){
+                    reqObj.resources.volumes = volumes;
+                }
+                if(cloudfiles.length>0){
+                    reqObj.resources.cloudfiles = cloudfiles;
+                }
                 return reqObj;
             }//end of prepareJobRequest method
 
@@ -172,11 +184,7 @@
             */
             this.preparePrereqRequest = function (batchName) {
                 var destaccount = JSON.parse($window.localStorage.getItem("fawsAccounts"));
-                var equipments = {
-                        instances: JSON.parse($window.localStorage.selectedResources)['server'],
-                        networks: dataStoreService.getDistinctNetworks()
-                    },
-                    auth = authservice.getAuth(),
+                var auth = authservice.getAuth(),
                     reqObj = {
                         source: {
                             tenantid: auth.tenant_id
@@ -187,14 +195,25 @@
                         resources: {},
                         version: "v1"
                     };
-
-                // prepare servers/instances request object
-                serverService.prepareServerInstance();
-                // prepare networks request object
-                networkService.prepareNetworkInstance();
-                reqObj.resources.instances = serverService.prepareServerInstance(); //add servers to the resources list
-                if (networkService.prepareNetworkInstance().length != 0) { //add networks to the resources list iff there are any networks
-                    reqObj.resources.networks = networkService.prepareNetworkInstance();
+                var services = cdnservice.prepareCdnList();
+                var volumes = volumeService.prepareVolList();
+                var servers = serverService.prepareServerList();
+                var cloudfiles = fileservice.prepareFilesList();
+                var networks = networkService.prepareNetworkList();
+                if(servers.length>0){
+                    reqObj.resources.instances = servers; //add servers to the resources list
+                }
+                if (networks.length > 0) { //add networks to the resources list iff there are any networks
+                    reqObj.resources.networks = networks;
+                }
+                if(services.length>0){
+                    reqObj.resources.cdn = services;
+                }
+                if(volumes.length>0){
+                    reqObj.resources.volumes = volumes;
+                }
+                if(cloudfiles.length>0){
+                    reqObj.resources.cloudfiles = cloudfiles;
                 }
                 return reqObj;
             }//end of preparePrereqRequest method.
