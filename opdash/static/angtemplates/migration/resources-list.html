@@ -33,6 +33,10 @@
                         <!--Services-->
                         <rsmigrationitem type="service" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
+                    <rs-tab tabtitle="Files" showtab="true">
+                        <!--Files-->
+                        <rsmigrationitem type="file" filtervalue="vm.filterSearch"></rsmigrationitem>
+                    </rs-tab>
                     <div class="rs-pull-right allign-buttons" ng-hide="vm.itemsLoading">
                         <rssaveprogress stepname="MigrationResourceList" type="button" ></rssaveprogress>
                         <a class="rs-btn rs-btn-primary " ng-hide="vm.continuing" ng-click="vm.savencontinue()">Continue</a>

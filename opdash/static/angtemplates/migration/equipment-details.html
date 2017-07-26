@@ -277,6 +277,37 @@
             </div>
         </div> 
     </div>
+    <div class="rs-content rs-panel rs-detail-xlarge" ng-if="vm.itemType == 'file'">
+        <div class="rs-detail-header">
+            <div class="rs-detail-header-subtitle">Region</div>
+            <div class="rs-detail-header-title">{{vm.itemDetails.name}}</div>
+        </div>
+        <div class="rs-detail-section">
+            <div class="rs-detail-section-header">
+                <div class="rs-detail-section-title">File Details</div>
+            </div>
+            <div class="rs-detail-section-body">
+                <ul class="rs-detail-list">
+                    <li class="rs-detail-item">
+                        <div class="rs-detail-key">File Status</div>
+                        <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.status}}</span></div>
+                    </li>
+                    <li class="rs-detail-item">
+                        <div class="rs-detail-key">ID</div>
+                        <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
+                    </li>
+                    <li class="rs-detail-item">
+                        <div class="rs-detail-key">Size</div>
+                        <div class="rs-detail-value">{{vm.itemDetails.size}}</div>
+                    </li>
+                    <li class="rs-detail-item">
+                        <div class="rs-detail-key">Number of containers</div>
+                        <div class="rs-detail-value">{{vm.itemDetails.containerCount}}</div>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+    </div>
     <div class="rs-content rs-panel rs-detail-xlarge" ng-if="vm.itemType == 'network'">
         <div class="rs-detail-header">
             <div class="rs-detail-header-subtitle">Network Name</div>

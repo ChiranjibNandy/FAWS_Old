@@ -614,3 +614,7 @@ display: inline-block;
 .instance-progress-bar{
 margin-left:5px;
 }
+
+.padding100PxLeft{
+    padding-left: 70px;
+}

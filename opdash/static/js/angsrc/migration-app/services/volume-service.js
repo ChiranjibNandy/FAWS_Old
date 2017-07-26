@@ -79,10 +79,9 @@
                                     volumes = {
                                         labels: [
                                                     {field: "name", text: "Volume Name"},
-                                                    // {field: "ip_address", text: "IP Address"},
                                                     {field: "size", text: "Size"},
                                                     {field: "volume status", text: "Volume Status"},
-                                                    // {field:"migration status", text:"Migration Status"},
+                                                    {field:"migration status", text:"Migration Status"},
                                                     // {field:"eligibility test", text:"Eligibility test result"}
                                                 ],
                                         data: response
