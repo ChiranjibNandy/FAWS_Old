@@ -192,13 +192,13 @@
 
             /**
             * @ngdoc method
-            * @name prepareNetworkInstance
+            * @name prepareNetworkList
             * @methodOf migrationApp.service:networkservice
             * @returns network instance request object.
             * @description
             * prepare network instance request object
             */
-            self.prepareNetworkInstance = function (networksReqList) {
+            self.prepareNetworkList = function (networksReqList) {
                 if ($window.localStorage.selectedResources !== undefined) {
                     var equipments = {
                         instances: JSON.parse($window.localStorage.selectedResources)['server'],//dataStoreService.getItems("server")

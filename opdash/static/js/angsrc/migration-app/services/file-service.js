@@ -101,6 +101,32 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
         };
 
+
+        /**
+        * @ngdoc method
+        * @name prepareFilesList
+        * @methodOf migrationApp.service:fileservice
+        * @returns fileservice instance request object.
+        * @description
+        * prepare files instance request object
+        */
+        self.prepareFilesList = function () {
+            var fileReqList = [];
+            var files = JSON.parse($window.localStorage.selectedResources)["files"];
+            angular.forEach(files,function(file){
+                fileReqList.push(
+                    {
+                        "source":{
+                            "region":file.name
+                        },
+                        "destination":{
+                            "region":"us-east-1"
+                        }
+                    }
+                )
+            });
+            return fileReqList;
+        }
         return self;
     }]);
 })();

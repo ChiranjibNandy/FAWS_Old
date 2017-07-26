@@ -218,15 +218,15 @@
         };
 
         /**
-                * @ngdoc method
-                * @name prepareServerInstance
-                * @methodOf migrationApp.service:serverservice
-                * @returns server instance request object.
-                * @description
-                * prepare server instance request object
-                */
+        * @ngdoc method
+        * @name prepareServerList
+        * @methodOf migrationApp.service:serverservice
+        * @returns server instance request object.
+        * @description
+        * prepare server instance request object
+        */
         var instancesReqList = [];
-        self.prepareServerInstance = function () {
+        self.prepareServerList = function () {
             if ($window.localStorage.selectedResources !== undefined) {
                 var equipments = {
                     instances: JSON.parse($window.localStorage.selectedResources)['server'],//dataStoreService.getItems("server")

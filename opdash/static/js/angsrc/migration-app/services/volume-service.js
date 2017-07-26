@@ -7,7 +7,7 @@
      * @description
      * Service to retrieve all data for volume resources
      */
-    angular.module("migrationApp").factory("volumeservice", ["httpwrapper", "$q", "authservice", function (HttpWrapper, $q, authservice) {
+    angular.module("migrationApp").factory("volumeservice", ["httpwrapper", "$q", "authservice","$window", function (HttpWrapper, $q, authservice,$window) {
         // local variables to help cache data
         var loaded, volumes, self = this, currentTenant = null;
 
@@ -95,6 +95,43 @@
                 return $q.when(volumes);
             }
         };
+
+        /**
+        * @ngdoc method
+        * @name prepareVolList
+        * @methodOf migrationApp.service:volumeservice
+        * @returns volumeservice instance request object.
+        * @description
+        * prepare volume instance request object
+        */
+        self.prepareVolList = function () {
+            var volReqList = [];
+            var volumes = JSON.parse($window.localStorage.selectedResources)["volume"];
+            angular.forEach(volumes,function(volume){
+                volReqList.push(
+                    {
+                        "source":{
+                            "id":volume.id,
+                            "region":'IAD',
+                            "type":volume.type
+                        },
+                        "destination":{
+                            "region":"us-east-1",
+                            "aws":{
+                                "volume":{
+                                    "zone":"us-east-1a",
+                                    "ebs_type":"IOL"
+                                },
+                                "s3":{
+                                    "region":"us-east-1"
+                                }
+                            }
+                        }
+                    }
+                )
+            });
+            return volReqList;
+        }
 
         return self;
     }]);
