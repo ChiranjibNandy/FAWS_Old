@@ -437,8 +437,18 @@
             self.getMigrationResourceCount = function() {
                 // initialize with server count
                 if($window.localStorage.selectedResources != undefined){
-                    var migrationResourceCount = JSON.parse($window.localStorage.selectedResources)['server'].length;//self.selectedItems.server.length + self.selectedItems.LoadBalancers.length;
+
+                    var migrationResourceCount = 0;
+                    if(JSON.parse($window.localStorage.selectedResources)['server'].length > 0)
+                        migrationResourceCount = JSON.parse($window.localStorage.selectedResources)['server'].length;//self.selectedItems.server.length + self.selectedItems.LoadBalancers.length;
+                    else if(JSON.parse($window.localStorage.selectedResources)['volume'].length > 0)
+                        migrationResourceCount = JSON.parse($window.localStorage.selectedResources)['volume'].length;
+                    else if(JSON.parse($window.localStorage.selectedResources)['service'].length > 0)
+                        migrationResourceCount = JSON.parse($window.localStorage.selectedResources)['service'].length;
+                    else if(JSON.parse($window.localStorage.selectedResources)['file'].length > 0)
+                        migrationResourceCount = JSON.parse($window.localStorage.selectedResources)['file'].length;
                     var resourcesCountArray = [];
+                    
                     //loop through all the servers selected and networks associated with the servers.
                     var servers = JSON.parse($window.localStorage.selectedResources)['server'];
                     angular.forEach(servers, function (item) {

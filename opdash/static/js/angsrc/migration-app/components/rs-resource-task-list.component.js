@@ -129,9 +129,12 @@
                     }
                     vm.job_id = next.params.job_id;
                     vm.resource_type = next.params.resource_type;
-                    vm.instance_status = next.params.instance_status.split('%20').join(' ');;
+                    vm.instance_status = next.params.instance_status.split('%20').join(' ');
                     vm.resource_id = next.params.resource_id.substr(0, separatorPosition[0]);
                     vm.resourceName = next.params.resource_id.substr(separatorPosition[1] + 1, next.params.resource_id.length);
+                    if(vm.resourceName.indexOf('%20') > -1){
+                        vm.resourceName = vm.resourceName.split('%20').join(' ');
+                    }
                     vm.batch_name = decodeURI(next.params.resource_id.substring(separatorPosition[0] + 1, separatorPosition[1]));
                     vm.getResourceTasks(true);
                 };
