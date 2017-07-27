@@ -69,7 +69,8 @@
                  * @description 
                  * Fetches resource details for a given resource type and id
                  */
-                vm.equipmentDetails = function(type, id) {
+                vm.equipmentDetails = function(type, item) {
+                    var id = item.id;
                     ds.getTrimmedAllItems(type)
                         .then(function (response) {
                             var details = response.data.filter(function (item) { return item.id == id })[0];

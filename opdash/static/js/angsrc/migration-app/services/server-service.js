@@ -20,18 +20,7 @@
                 if (t.hasOwnProperty(key) && t[key] !== null) {
                     // iterate over each network and extract necessary data
                     angular.forEach(t[key].servers, function (server) {
-                        serversList.push({
-                            id: server.id,
-                            rrn: server.rrn,
-                            name: server.name,
-                            tenant_id: server.tenant_id,
-                            ip_address: server.accessIPv4,
-                            status: server["OS-EXT-STS:vm_state"],
-                            ram: server.flavor_details.ram,
-                            mappings: server.mappings,
-                            details: server, // NEED ALL THE DETAILS
-                            region: key
-                        });
+                        serversList.push(transformServer(server));
                     });
                 }
             }
@@ -65,7 +54,8 @@
                             OS_EXT_STS_task_state: server["OS-EXT-STS:task_state"],
                             OS_EXT_STS_vm_state: server["OS-EXT-STS:vm_state"],
                             created: server.created,
-                            updated: server.updated
+                            updated: server.updated,
+                            region: server.source_region
                         });
                     });
                 }
@@ -75,6 +65,21 @@
                 labels: data.labels,
                 data: serversList
             };
+        }
+
+        function transformServer(server){
+            return {
+                id: server.id,
+                rrn: server.rrn,
+                name: server.name,
+                tenant_id: server.tenant_id,
+                ip_address: server.accessIPv4,
+                status: server["OS-EXT-STS:vm_state"],
+                ram: server.flavor_details.ram,
+                mappings: server.mappings,
+                details: server, // NEED ALL THE DETAILS
+                region: server.source_region
+                };
         }
 
         // get the region of a server based on its id
@@ -122,6 +127,26 @@
 
         /**
          * @ngdoc method
+         * @name getTrimmedItem
+         * @methodOf migrationApp.service:serverservice
+         * @param {String} id Resource id
+         * @param {String} region Region at RAX the resource resides in.
+         * @returns {Promise} a promise to fetch the list of servers.
+         * @description
+         * Get a list of servers for a tenant. It returns only a definite set of properties of a server for its representation.
+         */
+        self.getTrimmedItem = function (id, region) {
+            var deferred = $q.defer();
+            self.getById(id, region).then(function (response) {
+                if (response.error)
+                    return deferred.resolve(response);
+                return deferred.resolve(transformServer(response.data));
+            });
+            return deferred.promise;
+        };
+
+        /**
+         * @ngdoc method
          * @name getDetailedList
          * @methodOf migrationApp.service:serverservice
          * @returns {Promise} a promise to fetch the list of servers.
@@ -153,6 +178,44 @@
 
             // if ((currentTenant !== tenant_id)) {
 
+            return HttpWrapper.send(url,{"operation":'GET'})
+                    .then(function(response){
+                        currentTenant = tenant_id;
+                        servers = {
+                            labels: [
+                                        {field: "name", text: "Server Name"},
+                                        {field: "ip_address", text: "IP Address"},
+                                        {field: "ram", text: "RAM"},
+                                        {field: "status", text: "Server Status"},
+                                        {field:"migStatus", text:"Migration Status"},
+                                        {field:"eligible", text:"Eligibility test result"}
+                                    ],
+                            data: response
+                        };
+                        return servers;
+                    }, function(errorResponse) {
+                        return errorResponse;
+                    });
+
+            // } else {
+            //     return $q.when(servers);
+            // }
+        };
+
+        /**
+         * @ngdoc method
+         * @name getById
+         * @methodOf migrationApp.service:serverservice
+         * @param {String} id Resource id
+         * @param {String} region Region at RAX the resource resides in.
+         * @returns {Promise} a promise to fetch all servers.
+         * @description
+         * Gets the entire list of servers in its raw JSON form, from the api.
+         */
+        self.getById = function (id, region) {
+            var url = "/api/compute/instance/" + region + "/" + id;
+            var tenant_id = authservice.getAuth().tenant_id;
+
             return HttpWrapper.send(url, { "operation": 'GET' })
                 .then(function (response) {
                     currentTenant = tenant_id;
@@ -171,10 +234,6 @@
                 }, function (errorResponse) {
                     return errorResponse;
                 });
-
-            // } else {
-            //     return $q.when(servers);
-            // }
         };
 
         /**

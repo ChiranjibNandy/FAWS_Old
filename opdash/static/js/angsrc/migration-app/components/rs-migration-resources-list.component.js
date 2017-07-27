@@ -293,7 +293,8 @@
                                 var reg = item.selectedMapping ? item.selectedMapping.region : DEFAULT_VALUES.REGION;
                                 var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+reg;
                                 return HttpWrapper.send(url, {"operation": 'GET'}).then(function(pricingOptions) {
-                                    item.selectedMapping = pricingOptions[0]; 
+                                    item.selectedMapping = pricingOptions[0];
+                                    item.selectedMapping.zone = 'us-east-1a'; 
                                     arr.push(item);
                                 });
                             }

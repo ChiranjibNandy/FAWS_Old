@@ -150,14 +150,16 @@
                 * @name equipmentDetails
                 * @methodOf migrationApp.controller:rscurrentbatchdetailsCtrl
                 * @param {String} type Resource type
-                * @param {String} id Resource id
+                * @param {Object} item Resource
                 * @description
                 * Fetches resource details for a given resource type and id
                 */
-                vm.equipmentDetails = function (type, id) {
-                    ds.getTrimmedAllItems(type)
+                vm.equipmentDetails = function (type, item) {
+                    var id = item.id;
+                    var region = item.source_region;
+                    ds.getTrimmedItem(type, id, region)
                         .then(function (response) {
-                            var details = response.data.filter(function (item) { return item.id == id })[0];
+                            var details = response;
                             vm.itemType = type;
                             vm.itemDetails = details;
                             $("#resource_info").modal("show");

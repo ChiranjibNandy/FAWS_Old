@@ -66,6 +66,30 @@
 
             /**
              * @ngdoc method
+             * @name getTrimmedItem
+             * @methodOf migrationApp.service:migrationitemdataservice
+             * @param {String} type Resource type (server, network etc)
+             * @param {String} item_id Resource id (server, network etc)
+             * @param {String} item_region Resources region
+             * @returns {Promise} a promise to fetch the list of resources of given _type_.
+             * @description
+             * This service method returns a promise to fetch the list of resources given _type_ for a tenant.
+             * This operation trims the set of properties available with the service call and returns only the specific properties needed for its representation.
+             */
+            this.getTrimmedItem = function (type, item_id, item_region) { // should be moved to dashboard service
+                if (type === "server") {
+                    return serverService.getTrimmedItem(item_id, item_region);
+                } else if (type === "network") {
+                    // return networkService.getTrimmedList();
+                } else if (type === "files") {
+                    //     return networkService.getTrimmedList();
+                } else if (type === "LoadBalancers") {
+                    // return self.getLoadBalancers();
+                }
+            }//end of getTrimmedItem method
+
+            /**
+             * @ngdoc method
              * @name getDetailedList
              * @methodOf migrationApp.service:migrationitemdataservice
              * @param {String} type Resource type (server, network etc)

@@ -4,34 +4,38 @@
             <div class="rs-dropdown rs-primary-dropdown" ng-class="{'disabled': !vm.displayFawsDropdown}">
                 <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.selectedFaws && vm.fawsAcctStatus && !vm.displayFawsDropdown"> <div>{{vm.selectedFaws}}</div></a>
                 <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.selectedFawsName && vm.fawsAcctStatus && vm.displayFawsDropdown"> <div class="faws-name">{{vm.selectedFawsName}}</div><div class="faws-account"> &nbsp;({{vm.selectedFawsNum}})</div> <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span></a>
-                <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="!vm.fawsAcctStatus"> No AWS Accounts Found <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span></a>
-                <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.displayFawsDropdown && vm.selectedFaws"><i class="rs-caret"></i></a>
-                <ul class="rs-dropdown-menu hidden">
-                    <li class="rs-dropdown-item" ng-show="vm.showCreateAccount">
-                        <span class="rs-dropdown-category">You may create a new Account for this migration:
+        <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="!vm.fawsAcctStatus"> No AWS Accounts Found <span class="rs-status" role="button" data-trigger="hover" data-placement="top" data-toggle="popover"></span></a>
+        <a class="rs-dropdown-toggle" href="javascript:void(0);" ng-show="vm.displayFawsDropdown && vm.selectedFaws"><i class="rs-caret"></i></a>
+        <ul class="rs-dropdown-menu hidden">
+            <li class="rs-dropdown-item" ng-show="vm.showCreateAccount">
+                <span class="rs-dropdown-category">You may create a new Account for this migration:
                             <a href="" role="button" ng-click="vm.displayFawsAccounModal()" data-toggle="modal" ng-show="vm.editmigration === 'false'" aria-hidden="false">{{vm.is_racker ? 'Assign new AWS account' : 'Request a new AWS account'}}</a>
                         </span>
-                    </li>
-                    <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && vm.showCreateAccount && vm.is_racker" style="margin-top:5px">
-                        <span class="rs-dropdown-category">or Delete an Account:
+            </li>
+            <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && vm.showCreateAccount && vm.is_racker" style="margin-top:5px">
+                <span class="rs-dropdown-category">or Delete an Account:
                             <a href="" role="button" data-toggle="modal" aria-invalid="false" ng-click="vm.displayDeleteFawsModal()">Delete an existing account</a>
                         </span>
-                    </li>
-                    <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && vm.showCreateAccount">
-                        <span class="rs-dropdown-category">or Select an existing account:</span>
-                    </li>
-                    <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && !vm.showCreateAccount">
-                        <span class="rs-dropdown-category">Select another AWS account:</span>
-                    </li>
-                    <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus">
-                        <select ng-model="vm.selectedFaws" class="ng-pristine ng-valid ng-not-empty ng-touched" aria-invalid="false" ng-change="vm.fawsAccountchanged()">
+            </li>
+            <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && vm.showCreateAccount">
+                <span class="rs-dropdown-category">or Select an existing account:</span>
+            </li>
+            <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && !vm.showCreateAccount">
+                <span class="rs-dropdown-category">Select another AWS account:</span>
+            </li>
+            <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus">
+                <select ng-model="vm.selectedFaws" class="ng-pristine ng-valid ng-not-empty ng-touched" aria-invalid="false" ng-change="vm.fawsAccountchanged()">
+                            <!--for loop for account in vm.awsAccountsDetails -->
                             <option ng-repeat="account in vm.awsAccountsDetails" class="ng-binding ng-scope" value="{{account.name}} (#{{account.awsAccountNumber}})">{{account.name}} (#{{account.awsAccountNumber}})</option>
+                            <!--  end of for loop account in vm.awsAccountsDetails -->
                         </select>
                     </li>
                 </ul>
             </div>
         </span>
     </div>
+    </span>
+</div>
 </div>
 <div class="migr-name" ng-show="vm.editmigration === 'true'">
     <rseditbatchname></rseditbatchname>
@@ -45,9 +49,9 @@
     <div class="modal-body">
         <div ng-show="vm.fawsCreated">
             <big>Successfully added Credentials!</big><br>
-        </div>   
-       <span ng-show="vm.fawsError" style="color: #c40022">Uh oh! Something went wrong while adding credentials. Please try again after sometime...</span>
-        <div ng-hide= "vm.fawsCreated || vm.fawsError">
+        </div>
+        <span ng-show="vm.fawsError" style="color: #c40022">Uh oh! Something went wrong while adding credentials. Please try again after sometime...</span>
+        <div ng-hide="vm.fawsCreated || vm.fawsError">
             <form class="form-horizontal">
                 <div class="form-group" ng-class="{disabled:vm.fawsCreationProgress}">
                     <div class="row">
@@ -76,27 +80,28 @@
                     </div>
                 </div>
             </form>
-        </div>    
+        </div>
     </div>
     <div class="modal-footer">
-       
         <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.fawsKeyValue1 || !vm.fawsKeyValue2 || !vm.fawsAcctId}" ng-click="vm.createFawsAccount(false)" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
         <a class="rs-btn rs-btn-primary disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
         <i class="rs-processing-indicator" ng-show="vm.fawsCreationProgress"></i>
         <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</a>
     </div>
 </div>
-<div id="request-faws-account-modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="request-faws-account-modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-        <big>Please provide following details to request a new AWS account.</big>
+        <big ng-hide="vm.fawsCreated">Please provide following details to request a new AWS account.</big>
+        <big ng-show="vm.fawsCreated">Success !</big>
     </div>
     <div class="modal-body">
         <div ng-show="vm.fawsCreated">
             <big>Thank you. A request for creating a new AWS account was successfully created. We will let you know when the account is created. You can follow the request here <a href="https://mycloud.rackspace.com/cloud/{{vm.tenant_id}}/tickets" target="_blank"> here</a> </big><br>
-        </div>   
-       <span ng-show="vm.fawsError" style="color: #c40022">Uh oh! Something went wrong while submitting request. Please try again after sometime...</span>
-        <div ng-hide= "vm.fawsCreated || vm.fawsError">
+        </div>
+        <span ng-show="vm.fawsError" style="color: #c40022">Uh oh! Something went wrong while submitting request. Please try again after sometime...</span>
+        <div ng-hide="vm.fawsCreated || vm.fawsError">
             <form class="form-horizontal">
                 <div class="form-group" ng-class="{disabled:vm.fawsCreationProgress}">
                     <div class="row">
@@ -112,23 +117,24 @@
                                 <input type="radio" ng-model="vm.serviceLevel" value="navigator">
                                 <strong>Navigator</strong>
                             </span>
-                            <span class="half-tab"></span>
-                            <span>
+                        <span class="half-tab"></span>
+                        <span>
                                 <input type="radio" ng-model="vm.serviceLevel" value="aviator">
                                 <strong>Aviator</strong>
                             </span>
                         </span>
                     </div>
-                     </br> </br>
-                     <div class="row" style ="padding-top: 8px;" >
-                        <input  type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required">&nbsp &nbsp<Strong class="ng-binding">Check here to indicate that you have read and agree to the terms of the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a>, <a href="https://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Product Terms</a>,&nbsp and<a href="https://Rackspace.com/information/legal/migrationmanagertool" target="_blank"> Rackspace Migration Manager Terms</a>.</Strong>
+                    </br>
+                    </br>
+                    <div class="row" style="padding-top: 8px;">
+                        <input type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required">&nbsp &nbsp
+                        <Strong class="ng-binding">Check here to indicate that you have read and agree to the terms of the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a>, <a href="https://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Product Terms</a>,&nbsp and<a href="https://Rackspace.com/information/legal/migrationmanagertool" target="_blank"> Rackspace Migration Manager Terms</a>.</Strong>
                     </div>
                 </div>
             </form>
-        </div>    
+        </div>
     </div>
     <div class="modal-footer">
-       
         <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.serviceLevel || !vm.acceptTermsAndConditions}" ng-click="vm.createFawsAccount(true)" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
         <a class="rs-btn rs-btn-primary disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
         <i class="rs-processing-indicator" ng-show="vm.fawsCreationProgress"></i>
@@ -143,29 +149,29 @@
     <div class="modal-body">
         <div ng-show="vm.fawsDeleted">
             <big>Request for deleting the account is complete.</big><br>
-        </div>   
-       <span ng-show="vm.fawsDeleteError" style="color: #c40022">Uh oh! Something went wrong while deleting the account. Please try again after sometime...</span>
-        <div ng-hide= "vm.fawsDeleted || vm.fawsDeleteError">
+        </div>
+        <span ng-show="vm.fawsDeleteError" style="color: #c40022">Uh oh! Something went wrong while deleting the account. Please try again after sometime...</span>
+        <div ng-hide="vm.fawsDeleted || vm.fawsDeleteError">
             <form class="form-horizontal">
                 <div class="form-group" ng-class="{disabled:vm.fawsDeleteProgress}">
                     <div class="row">
                         <select ng-model="vm.deleteFaws" class="ng-pristine ng-valid ng-not-empty ng-touched" aria-invalid="false">
+                            <!-- for loop for account in vm.awsAccountsDetails -->
                             <option ng-repeat="account in vm.awsAccountsDetails" class="ng-binding ng-scope" value="{{account.name}} (#{{account.awsAccountNumber}})">{{account.name}} (#{{account.awsAccountNumber}})</option>
+                            <!-- end of for loop for account in vm.awsAccountsDetails -->
                         </select>
                     </div>
                 </div>
             </form>
-        </div>    
+        </div>
     </div>
     <div class="modal-footer">
-       
         <a class="rs-btn rs-btn-primary" ng-click="vm.deleteAWSAccount()" ng-hide="vm.fawsDeleteError || vm.fawsDeleteProgress || vm.fawsDeleted">Delete</a>
         <a class="rs-btn rs-btn-primary disabled" disabled="disabled" ng-show="vm.fawsDeleteProgress">Deleting...</a>
         <i class="rs-processing-indicator" ng-show="vm.fawsDeleteProgress"></i>
         <a class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.fawsDeleteProgress}">Close</a>
     </div>
 </div>
-
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -179,4 +185,5 @@
             menu.attach(element);
         });
     });
+
 </script>
