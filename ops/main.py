@@ -1,8 +1,6 @@
 import argparse
 import os
 import sys
-import subprocess
-import datetime
 
 
 from migration_ops.operator import Operator
@@ -22,11 +20,18 @@ class OpdashCPOperator(Operator):
             'OPDASH_CP_CONFIG',
             'https://s3.amazonaws.com/rackspace_faws_mt_%s_configs/'
             'opdash-cp.config.yml' % self.env)
-        cp_task = self._task('opdash-cp', tag, env_vars)
-        cp_arn = cp_task()
-        cp_svc = self._service(self.env, 'opdash-cp', cp_arn, port=5000)
-        cp_svc()
-        print('Done')
+
+        print('Creating OpDash CP Tasks')
+        print('========================')
+        cp_arn = self._task('opdash-cp', tag, env_vars)
+
+        print('\n')
+        print('Updating OpDash CP Services')
+        print('===========================')
+        self._service(self.env, 'opdash-cp', cp_arn, port=5000)
+
+        print('\nDone')
+        return 0
 
 
 def get_args():
