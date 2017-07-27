@@ -68,7 +68,7 @@
                             vm.errorInApi = true;
                         });
                         //vm.data = dataStoreService.getItems(vm.type); -- Previous Code
-                        if($window.localStorage.selectedResources !== undefined)
+                        if($window.localStorage.selectedResources !== undefined){
                             vm.data = JSON.parse($window.localStorage.selectedResources)['server'];
                             angular.forEach(vm.data, function (item) {
                                 vm.totalCost(item);
