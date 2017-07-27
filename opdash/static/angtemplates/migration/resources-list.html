@@ -25,10 +25,6 @@
                     <rs-tab tabtitle="Servers" showtab="true">
                         <rsmigrationitem type="server" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
-                    <rs-tab tabtitle="Files" ng-show="vm.isRacker" class="disabled" showtab="false">
-                        <!--Files-->
-                        <rsmigrationitem type="Files" filtervalue="vm.filterSearch"></rsmigrationitem>
-                    </rs-tab>
                     <div class="rs-pull-right allign-buttons" ng-hide="vm.itemsLoading">
                         <rssaveprogress stepname="MigrationResourceList" type="button" ></rssaveprogress>
                         <a class="rs-btn rs-btn-primary " ng-hide="vm.continuing" ng-click="vm.savencontinue()">Continue</a>
