@@ -50,7 +50,7 @@
                         vm.loading = true;
                         vm.manualRefresh = false;
                     }
-                    vm.getAllAlerts(true);
+                    vm.getAllAlerts(true,vm.job_id);
                     vm.getAllBatchTasks(vm.job_id);
                     dashboardService.getCurrentBatcheForJobId(vm.job_id)
                         .then(function (job) {
@@ -196,10 +196,10 @@
                 * @description
                 * Gets the list of all alerts for all the migrations, if any
                 */
-                vm.getAllAlerts = function (refresh) {
+                vm.getAllAlerts = function (refresh,job_id) {
                     vm.loadingAlerts = true;
                     var tempAlerts = [];
-                    alertsService.getAllAlerts(refresh)
+                    alertsService.getAllAlerts(refresh,job_id)
                         .then(function (result) {
                             if (result.error !== 500) {
                                 for (var i = 0; i < result.length; i++)

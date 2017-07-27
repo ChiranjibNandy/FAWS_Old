@@ -30,10 +30,10 @@
              * @description 
              * This service method returns a promise to fetch an array containing the list of alerts messages
              */
-            self.getAllAlerts = function(refresh) {
+            self.getAllAlerts = function(refresh,job_id) {
                 var tenant_id = authservice.getAuth().tenant_id;
-                var alertsApiUrl = "/api/alerts/all";
-                //var alertsApiUrl = "/api/alerts/job/job-56d50e1a-ce7f-4be8-a1fa-8cdb734cd3d6";
+                //var alertsApiUrl = "/api/alerts/all";
+                var alertsApiUrl = "/api/alerts/job/"+job_id;
                 //var alertsApiUrl = "/static/angassets/alerts.json";
                 if (refresh|| !loaded || (currentTenant !== tenant_id)) {
                     return HttpWrapper.send(alertsApiUrl, { "operation": 'GET' })
