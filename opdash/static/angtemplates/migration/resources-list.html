@@ -22,18 +22,18 @@
                 </div>
                 <br>
                 <rs-tabs alignment="horizontal" ng-if="vm.allowTabs">
-                    <rs-tab tabtitle="Servers" showtab="true">
+                    <rs-tab tabtitle="Servers" showtab="true" name="server">
                         <rsmigrationitem type="server" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
-                    <rs-tab tabtitle="Storage" showtab="{{vm.featureFlags.cbs.enabled}}">
+                    <rs-tab tabtitle="Storage" showtab="{{vm.featureFlags.cbs.enabled}}" name="volume">
                         <!--Volumes-->
                         <rsmigrationitem type="volume" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
-                    <rs-tab tabtitle="CDN" showtab="{{vm.featureFlags.cdn.enabled}}">
+                    <rs-tab tabtitle="CDN" showtab="{{vm.featureFlags.cdn.enabled}}" name="service">
                         <!--Services-->
                         <rsmigrationitem type="service" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
-                    <rs-tab tabtitle="Files" showtab="{{vm.featureFlags.cf.enabled}}">
+                    <rs-tab tabtitle="Files" showtab="{{vm.featureFlags.cf.enabled}}" name="file">
                         <!--Files-->
                         <rsmigrationitem type="file" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>

@@ -36,7 +36,7 @@
              * @name migrationApp.controller:rsTabsCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsTabs rsTabs} component
              */
-            controller: function() {
+            controller: ["$scope",function($scope) {
                 var vm = this;
 
                 /**
@@ -47,6 +47,7 @@
                  * @description Set of tabs in the tab group
                  */
                 vm.tabs = [];
+                vm.currentTab = '';
 
                 /**
                  * @ngdoc method
@@ -61,7 +62,10 @@
 
                     if(vm.tabs.length === 1) {
                         tab.active = true;
+                        vm.currentTab = tab.name;
+                        $scope.$emit("tabChanged",vm.currentTab);
                     }
+
                 };
 
                 /**
@@ -80,7 +84,9 @@
                     });
 
                     selectedTab.active = true;
+                    vm.currentTab = selectedTab.name;
+                    $scope.$emit("tabChanged",vm.currentTab);
                 }
             }
-        }); // end of component rsTabs
+        ]}); // end of component rsTabs
 })();
