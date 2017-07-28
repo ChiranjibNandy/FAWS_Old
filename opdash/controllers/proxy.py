@@ -65,6 +65,10 @@ def api_proxy(path):
         new_path = resp.headers.get('Location')[len(api_host) + 1:]
         return api_proxy(new_path)
     else:
-        response = Response(resp.content, resp.status_code, headers)
+        content = resp.content
+        if 400 <= resp.status_code < 500:
+            print(content)
+            content = 'Please see logs for details of HTTP 400.'
+        response = Response(content, resp.status_code, headers)
 
     return response
