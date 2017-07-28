@@ -157,7 +157,7 @@
                                     <span class="rs-status-warning" ng-show="network.status ==='scheduled' || network.status.state ==='scheduled'">Scheduled</span>
                                     <span class="rs-status-disabled" ng-show="network.status ==='not available' || network.status.state ==='not available' || !network.status.state || !network.status">Not Available</span>
                                     <span class="rs-status-warning" ng-show="network.status ==='paused' || network.status.state ==='paused'">Paused</span>
-                                    <span class="rs-status-warning" ng-show="network.status ==='Created' || network.status.state ==='Created'">Created</span>
+                                    <span class="rs-status-warning" ng-show="network.status.toLowerCase() ==='created' || network.status.state.toLowerCase() ==='created'">Created</span>
                                 </td>
                                 <td class="rs-table-text" ng-class="{'paddingLeft':network.status.state !=='in progress' && network.status.state !=='done' && network.status.state !=='Existing' && network.status !=='in progress' && network.status !=='done' && network.status !=='Existing'}"
                                     style="width: 30%;">
@@ -180,7 +180,7 @@
                                     <span ng-if="network.status.state === 'error' || network.status.state === 'canceled' || network.status === 'error' || network.status === 'canceled'"><i class="fa fa-times font-size-progress-icons" aria-hidden="true"></i></span>
                                     <span ng-if="!network.status.state || network.status.state === 'not available' || !network.status || network.status === 'not available'"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>
                                     <span ng-if="vm.job.timestamp"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>
-                                    <span ng-if="network.status.state === 'Created' || network.status === 'Created'"><i class="fa fa-clock-o font-size-progress-icons" aria-hidden="true"></i></span>
+                                    <span ng-if="network.status.state.toLowerCase() === 'created' || network.status.toLowerCase() === 'created'"><i class="fa fa-clock-o font-size-progress-icons" aria-hidden="true"></i></span>
                                 </td>
                                 <td>
                                     <a class="rs-btn" ng-link="['ResourceTaskList', {job_id: vm.job.job_id, resource_type: 'network', instance_status: network.status.state || network.status, resource_id: network.id}]">See Tasks</a>

@@ -32,8 +32,11 @@
              */
             self.getAllAlerts = function(refresh,job_id) {
                 var tenant_id = authservice.getAuth().tenant_id;
-                //var alertsApiUrl = "/api/alerts/all";
-                var alertsApiUrl = "/api/alerts/job/"+job_id;
+                var alertsApiUrl = "";
+                if(job_id === undefined)
+                    alertsApiUrl = "/api/alerts/all";
+                else
+                    alertsApiUrl = "/api/alerts/job/"+job_id;
                 //var alertsApiUrl = "/static/angassets/alerts.json";
                 if (refresh|| !loaded || (currentTenant !== tenant_id)) {
                     return HttpWrapper.send(alertsApiUrl, { "operation": 'GET' })
