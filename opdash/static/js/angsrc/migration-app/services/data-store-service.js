@@ -434,19 +434,19 @@
              * @description 
              * Get count of migrating resources
              */
-            self.getMigrationResourceCount = function() {
-                // initialize with server count
+            self.getMigrationResourceCount = function() {              
                 if($window.localStorage.selectedResources != undefined){
-
+                    // initialize with resource count
                     var migrationResourceCount = 0;
                     if(JSON.parse($window.localStorage.selectedResources)['server'].length > 0)
-                        migrationResourceCount = JSON.parse($window.localStorage.selectedResources)['server'].length;//self.selectedItems.server.length + self.selectedItems.LoadBalancers.length;
-                    else if(JSON.parse($window.localStorage.selectedResources)['volume'].length > 0)
-                        migrationResourceCount = JSON.parse($window.localStorage.selectedResources)['volume'].length;
-                    else if(JSON.parse($window.localStorage.selectedResources)['service'].length > 0)
-                        migrationResourceCount = JSON.parse($window.localStorage.selectedResources)['service'].length;
-                    else if(JSON.parse($window.localStorage.selectedResources)['file'].length > 0)
-                        migrationResourceCount = JSON.parse($window.localStorage.selectedResources)['file'].length;
+                        migrationResourceCount += JSON.parse($window.localStorage.selectedResources)['server'].length;//self.selectedItems.server.length + self.selectedItems.LoadBalancers.length;
+                    if(JSON.parse($window.localStorage.selectedResources)['volume'].length > 0)
+                        migrationResourceCount += JSON.parse($window.localStorage.selectedResources)['volume'].length;
+                    if(JSON.parse($window.localStorage.selectedResources)['service'].length > 0)
+                        migrationResourceCount += JSON.parse($window.localStorage.selectedResources)['service'].length;
+                    if(JSON.parse($window.localStorage.selectedResources)['file'].length > 0)
+                        migrationResourceCount += JSON.parse($window.localStorage.selectedResources)['file'].length;
+                    
                     var resourcesCountArray = [];
                     
                     //loop through all the servers selected and networks associated with the servers.
