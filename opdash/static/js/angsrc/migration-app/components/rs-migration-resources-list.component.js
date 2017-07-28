@@ -24,7 +24,7 @@
              * @name migrationApp.controller:rsmigrationresourceslistCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationresourceslist rsmigrationresourceslist} component
              */
-            controller: ["authservice", "$scope", "$rootRouter", "datastoreservice", "migrationitemdataservice", "httpwrapper", "$timeout","$window","$q","$rootScope","DEFAULT_VALUES",function(authservice, $scope, $rootRouter, dataStoreService, ds, HttpWrapper, $timeout,$window,$q, $rootScope,DEFAULT_VALUES) {
+            controller: ["authservice", "$scope", "$rootRouter", "datastoreservice", "migrationitemdataservice", "httpwrapper", "$timeout","$window","$q","$rootScope","DEFAULT_VALUES","featureservice",function(authservice, $scope, $rootRouter, dataStoreService, ds, HttpWrapper, $timeout,$window,$q, $rootScope,DEFAULT_VALUES,featureService) {
                 var vm = this;
                 vm.tenant_id = authservice.getAuth().tenant_id; //get Tenant ID
                 vm.tenant_account_name = '';
@@ -34,11 +34,13 @@
                    // If status is true, popup for migration won't be displayed in first step of Migration.
                     $('body').removeClass('modal-open');
                     $('.modal-backdrop').remove();
+                    vm.allowTabs = false;
                     vm.dontshowStatus = true;
                     vm.introModalLoading = true;
                     vm.noFawsAccounts = false;
                     vm.serviceLevel = "navigator";
                     vm.acceptTermsAndConditions= false;
+                    vm.getFeatureFlags();
                     var modalDisplayStatus = dataStoreService.getDontShowStatus() ; //check for flag status created for intorduction Modal.
                     var prePageName = dataStoreService.getPageName() || $window.localStorage.pageName;
                     vm.fawsAccountDetails = JSON.parse($window.localStorage.getItem("fawsAccounts"));
@@ -133,6 +135,15 @@
                     vm.fawsTenantId = '';
                     vm.itemsLoading = true;
                 }
+
+                vm.getFeatureFlags = function(){
+                    featureService.getFeatureFlags().then(function(result){
+                        if(result){
+                            vm.featureFlags = result;
+                        }
+                        vm.allowTabs = true;
+                    });
+                };
 
                 /**
                  * @ngdoc method
