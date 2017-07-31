@@ -69,13 +69,30 @@
                                             //Set the progress flag to true to indicate the batch holds the progress call results
                                             vm.progressFlag = true;
                                             job.batch_succeeded_time_pct = result[0].succeeded_by_time_pct;
-                                            for (let key in result[0].instances.resources) {
-                                                angular.forEach(job.instances, function (instance) {
-                                                    if (instance.id === key) {
-                                                        instance.instance_succeeded_time_pct = result[0].instances.resources[key].succeeded_by_time_pct;
-                                                    }
-                                                });
-                                            }
+                                            if(result[0].instances.resources)
+                                                for (var key in result[0].instances.resources) {
+                                                    angular.forEach(job.instances, function (instance) {
+                                                        if (instance.id === key) {
+                                                            instance.instance_succeeded_time_pct = result[0].instances.resources[key].succeeded_by_time_pct;
+                                                        }
+                                                    });
+                                                }
+                                            if(result[0].volumes)
+                                                for (var key in result[0].volumes.resources) {
+                                                    angular.forEach(job.volumes, function (volume) {
+                                                        if (volume.id === key) {
+                                                            volume.volume_succeeded_time_pct = result[0].volumes.resources[key].succeeded_by_time_pct;
+                                                        }
+                                                    });
+                                                }
+                                            if(result[0].cdn) 
+                                                for (var key in result[0].cdn.resources) {
+                                                    angular.forEach(job.cdn, function (cdn) {
+                                                        if (cdn.id === key) {
+                                                            cdn.cdn_succeeded_time_pct = result[0].cdn.resources[key].succeeded_by_time_pct;
+                                                        }
+                                                    });
+                                                }                                             
                                             if (result[0].networks)
                                                 job.network_succeeded_by_time_pct = result[0].networks.succeeded_by_time_pct;
                                         }
