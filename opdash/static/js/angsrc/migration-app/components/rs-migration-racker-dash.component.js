@@ -388,17 +388,8 @@
                     authservice.getAuth().tenant_id = tenant_id;
                     authservice.getAuth().account_name = item.tenant_account_name;
 
-                    var getSavedInstancesUrl = "/api/users/uidata/Saved_Migrations";
-                    var savedMigrationPromise = HttpWrapper.send(getSavedInstancesUrl, {"operation":'GET'})
-                    .then(function(result){
-                        if(result !== null && result.savedDetails.length !== 0){
-                            doSavedForLaterMigrationsExist = true;
-                        }
-                    },function(error) {
-                        doSavedForLaterMigrationsExist = false;
-                    });
-
-                    $q.all([savedMigrationPromise]).then(function(result){
+                    var savedMigrationPromise = datastoreservice.getSavedItems().then(function(result){
+                        doSavedForLaterMigrationsExist = result.length>0?true:false;
                         if(doSavedForLaterMigrationsExist === false && (item.inProgressBatches + item.completedBatches) === 0){
                             $rootRouter.navigate(["MigrationResourceList"]);                          
                         }

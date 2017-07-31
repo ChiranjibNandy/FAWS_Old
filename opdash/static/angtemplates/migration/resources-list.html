@@ -21,19 +21,19 @@
                     </div>
                 </div>
                 <br>
-                <rs-tabs alignment="horizontal">
+                <rs-tabs alignment="horizontal" ng-if="vm.allowTabs">
                     <rs-tab tabtitle="Servers" showtab="true">
                         <rsmigrationitem type="server" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
-                    <rs-tab tabtitle="Storage" showtab="true">
+                    <rs-tab tabtitle="Storage" showtab="{{vm.featureFlags.cbs.enabled}}">
                         <!--Volumes-->
                         <rsmigrationitem type="volume" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
-                    <rs-tab tabtitle="CDN" showtab="true">
+                    <rs-tab tabtitle="CDN" showtab="{{vm.featureFlags.cdn.enabled}}">
                         <!--Services-->
                         <rsmigrationitem type="service" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
-                    <rs-tab tabtitle="Files" showtab="true">
+                    <rs-tab tabtitle="Files" showtab="{{vm.featureFlags.cf.enabled}}">
                         <!--Files-->
                         <rsmigrationitem type="file" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
