@@ -390,7 +390,7 @@ class SamlBlueprint(SecureBlueprint):
             return abort(400)
 
         settings = OneLogin_Saml2_Settings(
-            custom_base_path=current_app.config["SAML_PATH"])
+            custom_base_path=current_app.config["SAML_CONFIG_PATH"])
 
         logout_request = OneLogin_Saml2_Logout_Request(settings, saml_data)
 
