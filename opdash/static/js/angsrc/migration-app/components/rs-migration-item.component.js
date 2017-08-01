@@ -71,7 +71,7 @@
                         if(resource.rrn == undefined){
                             resource.rrn = resource.id;
                         }
-                        if(resource.status == "available" || resource.status == "deployed" || resource.status.toLowerCase() == "stopped"){
+                        if(resource.status == "available" || resource.status == "deployed"){
                             resource.status = "active"
                         }
                         //map status of a resource received from Batch response with respect to the resource id. 
@@ -209,16 +209,16 @@
                                 else if(item.migStatus == 'not available'){
                                     item.migStatus = "Migration Scheduled";
                                 }
-                                else if((item.migStatus == 'error' || item.migStatus == 'canceled' || item.migStatus == 'done') && (item.canMigrate == true && item.status == 'active')){
+                                else if((item.migStatus == 'error' || item.migStatus == 'canceled' || item.migStatus == 'done') && item.canMigrate){
                                     item.migStatus = "Available to Migrate";
                                 }
-                                else if((item.migStatus == 'error' || item.migStatus == 'canceled' || item.migStatus == 'done') && !(item.canMigrate == true && item.status == 'active')){
+                                else if((item.migStatus == 'error' || item.migStatus == 'canceled' || item.migStatus == 'done') && !item.canMigrate){
                                     item.migStatus = "Not Available to Migrate";
                                 }
                                 if(item.selected == true){
                                     item.selected = false;
                                 }
-                                if(item.canMigrate == true && item.status.toLowerCase() == 'active'){ 
+                                if(item.canMigrate){ 
                                     vm.activeItemCount++;
                                 }
                             });
@@ -289,7 +289,7 @@
                         //For repeated fetch of resources after first time loading.
                         vm.items = JSON.parse($window.localStorage.allServers);
                         angular.forEach(vm.items, function (item) {
-                            if(item.canMigrate == true && item.status.toLowerCase() == 'active'){ 
+                            if(item.canMigrate == true){ 
                                 vm.activeItemCount++;
                             }
                         });
@@ -411,7 +411,7 @@
                  */
                 vm.changeItemSelection = function () {
                     angular.forEach(vm.items, function (item) {
-                        if(item.canMigrate == true && item.status.toLowerCase() == 'active' && item.eligibiltyTests.length) { 
+                        if(item.canMigrate == true && item.eligibiltyTests.length) { 
                             item.selected = vm.isAllSelected;
                             vm.changeSelectAll(item, true);
                         }
@@ -633,7 +633,7 @@
                         
                     }
                     angular.forEach(items, function(item){
-                        if((item.canMigrate == true && item.status.toLowerCase() == 'active' && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]) || (item.status.toLowerCase() == 'active' && item.migStatus == 'Available to Migrate' && !vm.checkingEligibility[item.id]) && !item.eligibiltyTests.length){
+                        if((item.canMigrate == true && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]) || (item.migStatus == 'Available to Migrate' && !vm.checkingEligibility[item.id]) && !item.eligibiltyTests.length){
                             var storedEligibilityResults = [];
                             //Check for eligibility results stored during the current session.
                             if(!($window.localStorage.eligibilityResults == undefined || $window.localStorage.eligibilityResults == "undefined")){
