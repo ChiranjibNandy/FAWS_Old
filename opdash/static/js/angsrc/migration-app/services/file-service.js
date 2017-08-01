@@ -23,7 +23,8 @@
                     size: formatBytes(t[key]["bytes-used"]),
                     status:"available",
                     containerCount:t[key]["container-count"],
-                    objectCount:t[key]["object-count"]
+                    objectCount:t[key]["object-count"],
+                    region: key
                 });
             }
 
@@ -74,10 +75,9 @@
                             labels: [
                                         {field: "name", text: "Region"},
                                         {field: "size", text: "Size"},
-                                        {field: "Number of containers", text: "Number of containers"},
-                                        // {field: "file status", text: "Status"},
-                                        {field:"migration status", text:"Migration Status"},
-                                        // {field:"eligibility test", text:"Eligibility test result"}
+                                        {field: "containerCount", text: "Number of containers"},
+                                        {field:"migStatus", text:"Migration Status"},
+                                        {field:"eligible", text:"Eligibility test result"}
                                     ],
                             data: response
                         };

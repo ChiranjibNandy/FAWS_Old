@@ -175,18 +175,11 @@
                             selectedItems = JSON.parse($window.localStorage.selectedResources)
                         if(!selectedItems[type]){
                             var arr = [item];
-                            dataStoreService.setItems(arr, type)
-                            // localStorage.setItem('selectedServers', JSON.stringify(arr));
+                            dataStoreService.setSelectedItems(arr, type);
                         }
                         else{
-                            // var arr = JSON.parse(selectedItems[type]);
-                            dataStoreService.setItems(selectedItems[type].concat(item), type)
-                            // localStorage.setItem('selectedServers', JSON.stringify(old.concat(item)));
+                            dataStoreService.setSelectedItems(selectedItems[type].concat(item), type)
                         }
-                        
-                        // if($window.localStorage.selectedResources !== undefined)
-                        //     vm.selectedItems.server = JSON.parse($window.localStorage.selectedServers);
-                        // dataStoreService.setItems(vm.selectedItems);//save items selected for migration in service.
                         $scope.$broadcast("ItemsModified");//make a function call to child component to enable checkobox for selected items.
                     };
                 }
@@ -208,7 +201,7 @@
                     angular.forEach(vm.selectedItems[type], function (item_selected, key) {
                         if(item_selected.id == item.id){
                             vm.selectedItems[type].splice(key, 1);
-                            dataStoreService.setItems(vm.selectedItems[type], type);
+                            dataStoreService.setSelectedItems(vm.selectedItems[type], type);
                             // if(type === 'server'){
                             var old = $window.localStorage.getItem('selectedResources');
                             if(old !== undefined)
@@ -217,9 +210,9 @@
                                 if(item_selected.id == item.id){
                                     old.splice(key,1);
                                     if(old.length >= 1) //If not the last item, set the selected servers into local storage.
-                                        dataStoreService.setItems(old, type)
+                                        dataStoreService.setSelectedItems(old, type)
                                     else{ //If is the the last item in localstorage , remove the key value pair altogether
-                                        dataStoreService.setItems([], type);
+                                        dataStoreService.setSelectedItems([], type);
                                         if(document.getElementsByClassName("fa fa-chevron-up")[0]){
                                             var element = document.getElementsByClassName("fa fa-chevron-up")[0];
                                             element.classList.remove("fa-chevron-up");
@@ -315,17 +308,10 @@
                         });
                         $q.all(promises).then(function(result) {
                             vm.selectedItems.server = arr;
-                            dataStoreService.setItems(vm.selectedItems.server, 'server');
+                            dataStoreService.setSelectedItems(vm.selectedItems.server, 'server');
                             // $window.localStorage.setItem('selectedServers', JSON.stringify(arr));
                             vm.continuing = false;
                             dataStoreService.setDontShowNameModal(true);
-                        
-                            // if($window.localStorage.migrationName != undefined){
-                            //     vm.migrationName = $window.localStorage.migrationName;
-                            // }
-                            // else{
-                            //     $window.localStorage.migrationName = vm.migrationName;
-                            // }
                             vm.selectedTime = {
                                     migrationName:vm.migrationName,
                                     time:'',
@@ -454,7 +440,14 @@
                     var tenant_id = authservice.getAuth().tenant_id;
                     vm.fawsLink = "https://mycloud.rackspace.com/cloud/"+tenant_id+"/tickets#new";
                 }
-                
+
+                //look for tab click event and display continue and cancel migration buttons after resources are loaded.
+                $scope.$on("tabChanged", function(event, type){
+                    if(type != 'server'){
+                        vm.itemsLoadingStatus(!(dataStoreService.retrieveallItems(type).length > 0));   
+                    }
+                });
+
                 return vm;
             }
         ]}); // end of component rsmigrationresourceslist

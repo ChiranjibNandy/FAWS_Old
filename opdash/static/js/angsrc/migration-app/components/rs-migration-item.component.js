@@ -72,7 +72,7 @@
                         angular.forEach(statusList, function (status) {
                             if(keepGoing) {
                                 angular.forEach(status.instances, function (instance) {
-                                    if(instance['id'] == resource.id){
+                                    if(instance['rrn'] == resource.rrn){
                                         resource.migStatusJobId = status.job_id;
                                         if(!(status.batch_status == 'error' || status.batch_status == 'canceled' || status.batch_status == 'done')){
                                             resource.canMigrate = false;
@@ -83,6 +83,11 @@
                                 });
                             };
                         });
+                        //disable file regions with container count 0
+                        if(vm.type == 'file' && resource.containerCount == 0){
+                            resource.status = 'inactive';
+                            resource.canMigrate = false;
+                        };
                     });
                     return dataList;
                 };
@@ -155,11 +160,6 @@
                      * @description returns true if user is not customer.
                      */
                     vm.isRacker = authservice.is_racker;
-                    if(vm.type === "Files"){
-                        vm.noData = true;
-                        vm.loading = false;
-                        return;   
-                    };
                     /**
                      * @ngdoc property
                      * @name resources_retrieved
@@ -168,16 +168,15 @@
                      * @description Set of resources retrieved during first time loading of application
                      */
 
-                    vm.parent.itemsLoadingStatus(true);
                     //check if resources already retrieved
-                    if($window.localStorage.allResources === undefined){
+                    if(!datastoreservice.retrieveallItems(vm.type).length){
                         //During first time loading of resources
                         // Retrieve all migration items of a specific type (eg: server, network etc)
                         var list = ds.getTrimmedAllItems(vm.type);
                         
                         // Retrieve migration item status
                         var status = ds.getResourceMigrationStatus(vm.tenant_id);
-
+                        // vm.parent.itemsLoadingStatus(true);
                         // wait for all the promises to resolve
                         $q.all([list, status]).then(function(results) {
                             if(results[0].error|| results[1].error){
@@ -218,12 +217,7 @@
                             });
 
                             //On page load, make eligibility call for first few available servers that are in first page of select resources page.
-                            if(vm.type == 'server'){
-                                vm.pageChangeEvent();
-                            }
-                            else{
-                                vm.eligCallInProgress = false;
-                            }
+                            vm.pageChangeEvent();
                             
                             var savedItems = [], savedServers = [];
                             if($window.localStorage.selectedResources !== undefined)
@@ -268,8 +262,7 @@
                         vm.itemsEligible = true;
                         vm.eligCallInProgress = false;
                         //For repeated fetch of resources after first time loading.
-                        var allResources = JSON.parse($window.localStorage.allResources);
-                        vm.items = allResources[vm.type];
+                        vm.items = datastoreservice.retrieveallItems(vm.type);
                         angular.forEach(vm.items, function (item) {
                             if(item.canMigrate == true && item.status.toLowerCase() == 'active'){ 
                                 vm.activeItemCount++;
@@ -284,10 +277,9 @@
                             vm.pageArray.push(i);
                         };
 
-                        if(allResources['label'+vm.type] !== undefined)
-                            vm.labels = allResources['label'+vm.type];
-                        else
+                        if(datastoreservice.retrieveallItems("label"+vm.type) !== undefined){
                             vm.labels = datastoreservice.retrieveallItems("label"+vm.type); // set table headers
+                        }
 
                         vm.loading = false;
                         vm.parent.itemsLoadingStatus(false);
@@ -413,21 +405,10 @@
                         vm.sortingOrder = true;
                     }
                     vm.items = items;
-                    if(vm.type == 'server'){
+                    // if(vm.type == 'server'){
                         vm.pageChangeEvent();
-                    }
+                    // }
                 };
-
-                //store slog status
-               /* vm.storeStatus = function(type,name){
-                    vl.storeLog(
-                        {'name':name,
-                         'type':type
-                        }
-                        );
-                    $rootRouter.navigate(["MigrationLogDetails", {type: vm.type}])
-                }*/
-
                 // Get count of items by their status type
                 vm.getCountByStatus = function (status) {
                     return vm.loading ? "?" : (status==="" ? vm.items.length : (vm.items ? vm.items.filter(function (item) { return item.status === status }).length : "?"));
@@ -470,7 +451,9 @@
                 var timeout = null;
                 $scope.$watch('vm.filtervalue', function (query) {
                     // vm.filteredArr = $filter("filter")(vm.items, vm.filtervalue);
-                    vm.filteredArr = vm.items.filter(item => item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.ip_address.indexOf(vm.filtervalue)!=-1 || item.ram == vm.filtervalue || item.status.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.eligible.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.migStatus.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1);
+                    vm.filteredArr = vm.items.filter(item => item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || (item.ip_address || '').indexOf(vm.filtervalue)!=-1 || (item.ram || 0) == vm.filtervalue || item.status.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.eligible.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || 
+                                                    item.migStatus.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1
+                                                    || (item.containerCount || 0) == vm.filtervalue || (item.size || 0) == vm.filtervalue);
                     // pagination controls
                     vm.currentPage = 1;
                     vm.pageArray = [];
@@ -493,17 +476,17 @@
                         var checkEligibilityArr = [
                             {
                                 "id":item.id,
-                                "region":item.region.toUpperCase()
+                                "region":(item.region && item.region.toUpperCase()) || ""
                             }
                         ];
                     }
                     else{
-                        angular.forEach(item, function(server){
-                            vm.checkingEligibility[server.id] = true;
+                        angular.forEach(item, function(resource){
+                            vm.checkingEligibility[resource.id] = true;
                         });
                         checkEligibilityArr = item;
                     }
-                    ds.eligibilityPrecheck(checkEligibilityArr)
+                    ds.eligibilityPrecheck(checkEligibilityArr, vm.type)
                         .then(function (result) {
                             if (!result.error){
                                 angular.forEach(result.results.instances, function (descriptions, ID) {
@@ -540,11 +523,17 @@
                             }
                             else{
                                 if(firstRun){
-                                    angular.forEach(item, function(server){
+                                    angular.forEach(item, function(resource){
                                         vm.items.filter(function(data){
-                                            if(server.id == data.id){
-                                                data.canMigrate = false;
-                                                data.migStatus = "Not Available to Migrate";
+                                            if(resource.id == data.id){
+                                                if(vm.type == 'server'){
+                                                    data.canMigrate = false;
+                                                    data.migStatus = "Not Available to Migrate";
+                                                }
+                                                else{
+                                                    data.canMigrate = true;
+                                                    data.migStatus = "Available to Migrate";
+                                                }
                                             }
                                         });
                                     });
@@ -561,8 +550,8 @@
                             }
                             //to be removed after eligibilty API works
                             if(firstRun){
-                                angular.forEach(item, function(server){
-                                    vm.checkingEligibility[server.id] = false;
+                                angular.forEach(item, function(resource){
+                                    vm.checkingEligibility[resource.id] = false;
                                 });
                                 vm.loading = false;
                                 vm.parent.itemsLoadingStatus(false);
@@ -616,12 +605,12 @@
                                 item.eligible = 'Passed';
                                 item.migStatus = "Available to Migrate";
                                 item.eligibiltyTests = storedEligibilityResults[0].eligibiltyTests;
-                                vm.parent.itemsLoadingStatus(false);
+                                // vm.parent.itemsLoadingStatus(false);
                             }
                             else{
                                 var activeInstance = {
                                     "id":item.id,
-                                    "region":item.region.toUpperCase()
+                                    "region":(item.region && item.region.toUpperCase()) || ""
                                 }; 
                                 arrForEligibilityTest.push(activeInstance);
                             }
@@ -643,8 +632,15 @@
                  */
                 vm.filterCustomSearch = function (item){
                     if (vm.filtervalue === undefined || vm.filtervalue == "") return true;
-                    if (item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.ip_address.indexOf(vm.filtervalue)!=-1 || item.ram == vm.filtervalue || item.status.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.eligible.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.migStatus.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1) {
-                        return true;
+                    if(vm.type == 'server'){
+                        if (item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.ip_address.indexOf(vm.filtervalue)!=-1 || item.ram == vm.filtervalue || item.status.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.eligible.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.migStatus.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1) {
+                            return true;
+                        }
+                    }
+                    else{
+                        if (item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.containerCount == vm.filtervalue || item.size == vm.filtervalue || item.status.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.eligible.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.migStatus.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1) {
+                            return true;
+                        }
                     }
                     return false;
                 };

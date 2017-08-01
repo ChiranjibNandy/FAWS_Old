@@ -58,7 +58,7 @@
                 } else if (type === "LoadBalancers") {
                     return self.getLoadBalancers();
                 } else if (type === "service") {
-                    return self.getServices();
+                    return cdnservice.getServices();
                 } else if (type === "volume") {
                     return volumeService.getTrimmedList();
                 }
@@ -269,46 +269,6 @@
 
             /**
              * @ngdoc method
-             * @name getServices
-             * @methodOf migrationApp.service:migrationitemdataservice
-             * @returns {Promise} a promise to fetch all servers.
-             * @description 
-             * Gets the entire list of CDN Service in its raw JSON form, from the api.
-             */
-            this.getServices = function () {
-                var url = "/api/cdn/services";
-                return HttpWrapper.send(url, {
-                        "operation": 'GET'
-                    })
-                    .then(function (response) {
-                        services = {
-                            labels: [{
-                                    field: "name",
-                                    text: "name"
-                                },
-                                {
-                                    field: "status",
-                                    text: "status"
-                                },
-                                // {
-                                //     field: "id",
-                                //     text: "id"
-                                // },
-                                {
-                                    field: "migration status",
-                                    text: "Migration Status"
-                                }
-                            ],
-                            data: response
-                        };
-                        return services;
-                    }, function (errorResponse) {
-                        return errorResponse;
-                    });
-            };//end of getLoadBalancers method
-
-            /**
-             * @ngdoc method
              * @name getLoadBalancers
              * @methodOf migrationApp.service:migrationitemdataservice
              * @returns {Promise} a promise to fetch all servers.
@@ -365,15 +325,16 @@
                  * @description 
                  * Invokes "/api/eligibility" API call for checking eligibility of servers to migrate.
             */
-            this.eligibilityPrecheck = function (itemsArr) {
+            this.eligibilityPrecheck = function (itemsArr, type) {
                 var tenant_id = authservice.getAuth().tenant_id;
+                var instance_type = (type == 'server' && "instances") || (type == 'volume' && "volumes") || (type == 'service' && "cdn") || (type == 'file' && "cloudfiles");
                 var requestObj = {
                     "source": {
                         "cloud": "rackspace",
                         "tenantid": tenant_id
                     },
                     "resources": {
-                        "instances": itemsArr
+                        [instance_type]: itemsArr
                     },
                     "version": "v1"
                 };

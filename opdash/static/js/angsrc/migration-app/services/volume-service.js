@@ -27,7 +27,8 @@
                             description:volume.description,
                             size: volume.size,
                             status:volume.status,
-                            attachments:volume.attachments
+                            attachments:volume.attachments,
+                            region:key
                         });
                     });
                 }
@@ -80,9 +81,9 @@
                                         labels: [
                                                     {field: "name", text: "Volume Name"},
                                                     {field: "size", text: "Size"},
-                                                    {field: "volume status", text: "Volume Status"},
-                                                    {field:"migration status", text:"Migration Status"},
-                                                    // {field:"eligibility test", text:"Eligibility test result"}
+                                                    {field: "status", text: "Volume Status"},
+                                                    {field:"migStatus", text:"Migration Status"},
+                                                    {field:"eligible", text:"Eligibility test result"}
                                                 ],
                                         data: response
                                     };

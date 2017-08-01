@@ -83,7 +83,7 @@
                     //conditions to checkeck on what page the user is and navigate to the following next page.
                     if(vm.page==="resources"){
                         if(vm.selecteditem.length>0){
-                            dataStoreService.setItems(vm.selecteditem);
+                            dataStoreService.setSelectedItems(vm.selecteditem);
                             $rootRouter.navigate(["MigrationRecommendation"]);
                         }
                         else{

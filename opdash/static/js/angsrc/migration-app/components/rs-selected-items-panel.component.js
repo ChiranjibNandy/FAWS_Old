@@ -69,11 +69,6 @@
                         });
                     }
 
-                    // Fetch load balancers selected from local storage.
-                    // if($window.localStorage.selectedLoadBalancers !== undefined)
-                    //     vm.selectedItems.LoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers); 
-                    
-
                     $("#accordion2").delegate('.accordion-heading a', "click", function () {
                         $('.plain-panel').find('.collapse.in').prev().find("i").removeClass("fa-chevron-up").addClass(
                             "fa-chevron-down");
@@ -94,12 +89,6 @@
                             vm.selectedItems[type] = item;
                         });
                     }
-                    
-                    // Checks whether load balancers selected are already there in local storage
-                    // if($window.localStorage.selectedLoadBalancers !== undefined)
-                    //     vm.selectedItems.LoadBalancers = JSON.parse($window.localStorage.selectedLoadBalancers);
-                    // else
-                    //     vm.selectedItems.LoadBalancers = [];
                 });
 
                 /**
@@ -146,14 +135,14 @@
                 vm.removeItem = function(item, type) {
                     if(vm.selectedItems[type].indexOf(item)>=0){
                        vm.selectedItems[type].splice(vm.selectedItems[type].indexOf(item), 1);
-                        dataStoreService.setItems(vm.selectedItems[type], type);
+                        dataStoreService.setSelectedItems(vm.selectedItems[type], type);
 
                         //If not the last item, set the selected servers into local storage.
                         if(vm.selectedItems[type].length >= 1)
-                            dataStoreService.setItems(vm.selectedItems[type], type)
+                            dataStoreService.setSelectedItems(vm.selectedItems[type], type)
                         else {//If is the the last item in localstorage , remove the key value pair altogether
                             // $window.localStorage.removeItem('selectedServers');
-                            dataStoreService.setItems([], type);
+                            dataStoreService.setSelectedItems([], type);
                         // };
                             if(document.getElementsByClassName("fa fa-chevron-up")[0]){
                                 var element = document.getElementsByClassName("fa fa-chevron-up")[0];

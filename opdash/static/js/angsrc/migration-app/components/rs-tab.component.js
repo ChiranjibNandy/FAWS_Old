@@ -30,7 +30,8 @@
             },
             bindings: {
                 tabtitle: "@",
-                showtab: "@"
+                showtab: "@",
+                name: "@"
             },
             template: "<div ng-show='vm.tab.active' ng-transclude></div>",
             controllerAs: "vm",
@@ -52,7 +53,8 @@
                      */
                     vm.tab = {
                         tabtitle: vm.tabtitle,
-                        active: false
+                        active: false,
+                        name: vm.name
                     };
 
                     // add current tab to the group

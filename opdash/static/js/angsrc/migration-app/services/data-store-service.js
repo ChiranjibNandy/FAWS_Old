@@ -122,13 +122,13 @@
 
             /**
              * @ngdoc method
-             * @name setItems
+             * @name setSelectedItems
              * @methodOf migrationApp.service:datastoreservice
              * @param {Array} items The list of resources to be saved for further processing
              * @description 
              * Saves list of resources the user wants to migrate.
              */
-            this.setItems = function(items, type){
+            this.setSelectedItems = function(items, type){
                 if($window.localStorage.selectedResources !== undefined){
                     self.selectedItems = JSON.parse($window.localStorage.selectedResources);
                 }
@@ -187,10 +187,10 @@
              */
             this.retrieveallItems = function(type){
                 if(type){
-                    return self.resourceItems[type];
+                    return ($window.localStorage.allResources !== undefined && JSON.parse($window.localStorage.allResources)[type]) || self.resourceItems[type];
                 }
                 else{
-                    return self.resourceItems;
+                    return ($window.localStorage.allResources !== undefined && JSON.parse($window.localStorage.allResources)) || self.resourceItems;
                 }
             }
 
@@ -363,15 +363,22 @@
                 self.resourceItems = {
                     server:[],
                     network:[],
-                    files:[],
-                    LoadBalancers:[]
+                    volume:[],
+                    LoadBalancers:[],
+                    service:[],
+                    file:[]
                 };
                 self.dontShowNameModal = false;
                 self.labelsServer = [];
                 self.labelsNetwork = [];
-                self.selectedItems.server = [];
-                self.selectedItems.network = [];
-                self.selectedItems.LoadBalancers = [];
+                self.selectedItems = {
+                    server:[],
+                    network:[],
+                    volume:[],
+                    LoadBalancers:[],
+                    service:[],
+                    file:[]
+                }
                 self.labelsServer = [];
                 self.labelsNetwork = [];
                 self.selectedDate = {};
