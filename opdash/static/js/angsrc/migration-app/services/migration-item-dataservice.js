@@ -241,6 +241,8 @@
                 })
                     .then(function (response) {
                         return response;
+                    },function(error) {
+                        return false;
                     });
             }//end of getResourceMigrationStatus method
 
