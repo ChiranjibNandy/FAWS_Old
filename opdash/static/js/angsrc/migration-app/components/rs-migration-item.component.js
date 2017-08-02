@@ -48,29 +48,41 @@
 
                 /**
                  * @ngdoc method
-                 * @name mapServerStatus
+                 * @name mapResourceStatus
                  * @methodOf migrationApp.controller:rsmigrationitemCtrl
                  * @param {Object} dataList _Object_ list of servers to displayed
                  * @param {Object} statusList _Object_ Batch report to fetch migration status of each servers.
                  * @description 
                  * Map each server with its corresponding migration status.
                  */
-                var mapServerStatus = function(dataList, statusList) {
-                    angular.forEach(dataList, function (server) {
+                var mapResourceStatus = function(dataList, statusList) {
+                    angular.forEach(dataList, function (resource) {
                         var keepGoing = true;
-                        server.canMigrate = true;
-                        server.migStatus = 'error';
-                        server.eligible = 'Not Available';
-                        server.eligibiltyTests = {};
-                        //map status of a server received from Batch response with respect to the server id. 
+                        if(statusList === null){
+                            resource.canMigrate = false;
+                            resource.migStatus = 'Status not available';
+                        }
+                        else{
+                            resource.canMigrate = true;
+                            resource.migStatus = 'error';
+                        }
+                        resource.eligible = 'Not Available';
+                        resource.eligibiltyTests = {};
+                        if(resource.rrn == undefined){
+                            resource.rrn = resource.id;
+                        }
+                        if(resource.status == "available" || resource.status == "deployed"){
+                            resource.status = "active"
+                        }
+                        //map status of a resource received from Batch response with respect to the resource id. 
                         angular.forEach(statusList, function (status) {
                             if(keepGoing) {
                                 angular.forEach(status.instances, function (instance) {
-                                    if(instance['id'] == server.id){
-                                        server.migStatusJobId = status.job_id;
+                                    if(instance['id'] == resource.id){
+                                        resource.migStatusJobId = status.job_id;
                                         if(!(status.batch_status == 'error' || status.batch_status == 'canceled' || status.batch_status == 'done')){
-                                            server.canMigrate = false;
-                                            server.migStatus = status.batch_status;
+                                            resource.canMigrate = false;
+                                            resource.migStatus = status.batch_status;
                                             keepGoing = false;
                                         }
                                     };
@@ -174,7 +186,7 @@
 
                         // wait for all the promises to resolve
                         $q.all([list, status]).then(function(results) {
-                            if(results[0].error|| results[1].error){
+                            if(results[0].error){
                                 vm.loading = false;
                                 vm.loadError = true;
                                 return;
@@ -188,7 +200,7 @@
 
                             var dataList = results[0].data;
                             vm.activeItemsArr = [];
-                            vm.items = mapServerStatus(dataList, results[1].job_status_list);
+                            vm.items = mapResourceStatus(dataList, results[1].job_status_list || null);
                             //check if all the servers can be migrated else disable checkbox(to select all items) at the header of item selection table.
                             angular.forEach(vm.items, function (item) {
                                 if(item.migStatus == 'started' || item.migStatus == 'in progress' || item.migStatus == 'scheduled'|| item.migStatus == 'paused'){
@@ -197,16 +209,16 @@
                                 else if(item.migStatus == 'not available'){
                                     item.migStatus = "Migration Scheduled";
                                 }
-                                else if((item.migStatus == 'error' || item.migStatus == 'canceled' || item.migStatus == 'done') && (item.canMigrate == true && item.status == 'active')){
+                                else if((item.migStatus == 'error' || item.migStatus == 'canceled' || item.migStatus == 'done') && item.canMigrate){
                                     item.migStatus = "Available to Migrate";
                                 }
-                                else if((item.migStatus == 'error' || item.migStatus == 'canceled' || item.migStatus == 'done') && !(item.canMigrate == true && item.status == 'active')){
+                                else if((item.migStatus == 'error' || item.migStatus == 'canceled' || item.migStatus == 'done') && !item.canMigrate){
                                     item.migStatus = "Not Available to Migrate";
                                 }
                                 if(item.selected == true){
                                     item.selected = false;
                                 }
-                                if(item.canMigrate == true && item.status.toLowerCase() == 'active'){ 
+                                if(item.canMigrate){ 
                                     vm.activeItemCount++;
                                 }
                             });
@@ -277,7 +289,7 @@
                         //For repeated fetch of resources after first time loading.
                         vm.items = JSON.parse($window.localStorage.allServers);
                         angular.forEach(vm.items, function (item) {
-                            if(item.canMigrate == true && item.status.toLowerCase() == 'active'){ 
+                            if(item.canMigrate == true){ 
                                 vm.activeItemCount++;
                             }
                         });
@@ -399,7 +411,7 @@
                  */
                 vm.changeItemSelection = function () {
                     angular.forEach(vm.items, function (item) {
-                        if(item.canMigrate == true && item.status.toLowerCase() == 'active' && item.eligibiltyTests.length) { 
+                        if(item.canMigrate == true && item.eligibiltyTests.length) { 
                             item.selected = vm.isAllSelected;
                             vm.changeSelectAll(item, true);
                         }
@@ -621,7 +633,7 @@
                         
                     }
                     angular.forEach(items, function(item){
-                        if((item.canMigrate == true && item.status.toLowerCase() == 'active' && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]) || (item.status.toLowerCase() == 'active' && item.migStatus == 'Available to Migrate' && !vm.checkingEligibility[item.id]) && !item.eligibiltyTests.length){
+                        if((item.canMigrate == true && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]) || (item.migStatus == 'Available to Migrate' && !vm.checkingEligibility[item.id]) && !item.eligibiltyTests.length){
                             var storedEligibilityResults = [];
                             //Check for eligibility results stored during the current session.
                             if(!($window.localStorage.eligibilityResults == undefined || $window.localStorage.eligibilityResults == "undefined")){
