@@ -289,8 +289,8 @@
                         //We clear the zones array each time we change the region
                         //If the zones array is empty and typeof vm.awsZone defaults to 'undefined', populate the zones array and item.selectedMapping.zone
                         if(typeof vm.awsZone === 'undefined' && item.selectedMapping.zones.length === 0){
-                            if(item.selectedMapping.zone !== 'us-east-1a')
-                                item.selectedMapping.zone = zones[0];
+                            // if(item.selectedMapping.zone !== 'us-east-1a')
+                            item.selectedMapping.zone = zones[0];
                             item.selectedMapping.zones = zones;
                             vm.setZone(item);
                         }
