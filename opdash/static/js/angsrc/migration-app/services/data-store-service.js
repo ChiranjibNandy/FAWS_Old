@@ -389,7 +389,7 @@
                 var selectedValue= moment(self.selectedTime.time).format("MM-DD-YYYY");
 
                 if (today===selectedValue){
-                    var dt = "Today";
+                    var dt = "today";
                 }else{
                     var dt = moment(self.selectedTime.time).format("ddd, MMM Do YYYY"); //example- Sat, Jun 17th 2017
                 }
