@@ -9,4 +9,14 @@
     <td>
         <span class="rs-status rs-status-ok ng-binding"> {{item.status}} </span>
     </td>
+    <td>
+        <select ng-model="item.selectedMapping.region" style="margin-bottom: 2px;" ng-change="vm.setRegion(item);vm.getZones(item,item.type);">
+            <option ng-repeat="region in vm.regions track by $index" value="{{region}}">{{region | convertCase}}</option>
+        </select>
+    </td>
+    <td>
+        <select ng-model="item.selectedMapping.zone" style="margin-bottom: 2px;" ng-change="vm.setZone(item);">
+            <option ng-repeat="zone in item.selectedMapping.zones track by $index" value="{{zone}}">{{zone | convertCase}}</option>
+        </select>
+    </td>
 </tr>

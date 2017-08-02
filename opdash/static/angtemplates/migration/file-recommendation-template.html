@@ -2,11 +2,16 @@
     <td class="rs-table-status"
             ng-class="{'rs-table-status-ok': item.status.toLowerCase()=='active', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
     </td>
-    <td class="rs-table-link">
-        <a href="" role="button" ng-click="vm.equipmentDetails(vm.type, item)" data-toggle="modal" title="{{item.name}}">{{item.name}}</a>
+    <td class="rs-table-link" style="width:79.33px;">
+        <a href=""  style="width:102px;" role="button" ng-click="vm.equipmentDetails(vm.type, item)" data-toggle="modal" title="{{item.name}}">{{item.name}}</a>
     </td>
-    <td class="rs-table-text">{{item.size}}</td>
-    <td>
+    <td class="rs-table-text" style="width:356px;">{{item.size}}</td>
+    <td style="width:150px">
         <span class="rs-status rs-status-ok ng-binding"> {{item.status}} </span>
+    </td>
+    <td>
+        <select ng-model="item.selectedMapping.region" style="margin-bottom: 2px;" ng-change="vm.setRegion(item)">
+            <option ng-repeat="region in vm.regions track by $index" value="{{region}}">{{region | convertCase}}</option>
+        </select>
     </td>
 </tr>

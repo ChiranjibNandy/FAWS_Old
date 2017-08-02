@@ -57,16 +57,17 @@
                     vm.loadingPrice = false;
                     vm.filteredArr = [];
 
-                    if(vm.type === "server"){
-                        var url = '/api/ec2/regions'; 
-                        HttpWrapper.send(url,{"operation":'GET'}).then(function(result){
-                            vm.regions = result;
-                            // vm.awsRegion = DEFAULT_VALUES.REGION;
-                            vm.disable = true;
-                            $('#rs-main-panel').css('height','310px');
+                    var url = '/api/aws/regions/ec2';
+                    HttpWrapper.send(url,{"operation":'GET'}).then(function(result){
+                        vm.regions = result;
+
+                        vm.disable = true;
+                        $('#rs-main-panel').css('height','310px');
                         },function(error){
-                            vm.errorInApi = true;
-                        });
+                        vm.errorInApi = true;
+                    });
+
+                    if(vm.type === "server"){
                         //vm.data = dataStoreService.getItems(vm.type); -- Previous Code
                         if($window.localStorage.selectedResources !== undefined){
                             vm.data = JSON.parse($window.localStorage.selectedResources)['server'];
@@ -96,8 +97,17 @@
                         vm.labels = [
                                         {field: "name", text: "Volume Name"},
                                         {field: "size", text: "Size"},
-                                        {field: "volume status", text: "Volume Status"}
+                                        {field: "volume status", text: "Volume Status"},
+                                        {field: "destRegion", text: "AWS region"},
+                                        {field: "destZone", text: "AWS zone"}
                                     ];
+                        //For each of the resources in the array, set the default zone to 'us-east-1a'
+                        angular.forEach(vm.data,function(item){
+                            item.selectedMapping.zone = item.selectedMapping.zone || 'us-east-1a';
+                            //Called to prepopulate the zones array on page load for volume resource types
+                            vm.getZones(item,item.type);
+                        });
+
                     }else if (vm.type === "file"){
                         if($window.localStorage.selectedResources !== undefined)
                             vm.data = JSON.parse($window.localStorage.selectedResources)['file'];
@@ -106,7 +116,8 @@
                         vm.labels = [
                                         {field: "name", text: "Region"},
                                         {field: "size", text: "Size"},
-                                        {field: "File status", text: "Status"}
+                                        {field: "File status", text: "File Status"},
+                                        {field: "destRegion", text: "AWS region"}
                                     ];
                     }else if (vm.type === "service"){
                         if($window.localStorage.selectedResources !== undefined)
@@ -116,7 +127,8 @@
                         vm.labels = [
                                         {field: "name", text: "Service Name"},
                                         {field: "id", text: "ID"},
-                                        {field: "service status", text: "Service Status"}
+                                        {field: "service status", text: "Service Status"},
+                                        {field: "destRegion", text: "AWS region"}
                                     ];
                     }else{
                         //vm.data = dataStoreService.getItems("LoadBalancers");
@@ -260,27 +272,46 @@
                  * @description 
                  * This function helps to get the zones based on the region you selected.
                  */
-                vm.getZones = function(region){
+                vm.getZones = function(item,type){
                     vm.disable = true;
                     vm.loadingZone = true;
-                    var url =  '/api/ec2/availability_zones/'+vm.awsRegion; 
+                    var url = '';
+                    //For volume resource types, the typeof vm.awsRegion defaults to undefined, so the region is read from item.selectedMapping.region 
+                    if (typeof vm.awsRegion === 'undefined')
+                        url = '/api/aws/availability_zones/'+item.selectedMapping.region+'/ec2';
+                    else
+                        url = '/api/aws/availability_zones/'+vm.awsRegion+'/ec2';
                     //If this method is called from modify modal, we will have the region , at that
                     //time we have to get pricing details.
-                    if(region) vm.getPricingDetails(region);
+                    if(item && (typeof type === 'undefined')) vm.getPricingDetails(item);
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(zones){
                         vm.loadingZone = false;
-                        vm.awsZone = zones[0];
-                        vm.zones = zones;
-                        if(region){
+                        //We clear the zones array each time we change the region
+                        //If the zones array is empty and typeof vm.awsZone defaults to 'undefined', populate the zones array and item.selectedMapping.zone
+                        if(typeof vm.awsZone === 'undefined' && item.selectedMapping.zones.length === 0){
+                            // if(item.selectedMapping.zone !== 'us-east-1a')
+                            item.selectedMapping.zone = zones[0];
+                            item.selectedMapping.zones = zones;
+                            vm.setZone(item);
+                        }
+                        //If the zones array already holds few of the items, we need not to set th zone explicitly as the first element on the array
+                        //This would not reset the previously selected zone for the item
+                        else if(typeof vm.awsZone === 'undefined' && item.selectedMapping.zones.length > 0){
+                            vm.setZone(item);
+                        }
+                        //If it is called from the modify modal
+                        else{
+                            vm.awsZone = zones[0];
+                            vm.zones = zones;
+                        }
+                        if(item){
                             vm.disableConfirm();
                         }
-                      
                     },function(error){
                         vm.loadingZone = false;
                         vm.errorInApi = true;
-                   });
+                    });
                 };
-
                 /**
                  * @ngdoc method
                  * @name getPricingDetails
@@ -317,7 +348,7 @@
                         vm.disable = true;
                         vm.awsRegion = item.selectedMapping.region;
                         vm.awsZone = item.selectedMapping.zone || 'us-east-1a';
-                        vm.selectedConfigurationType = item.selectedMapping.instance_type
+                        vm.selectedConfigurationType = item.selectedMapping.instance_type;
                         vm.getZones();
                         $(id).modal('show');
                         vm.getPricingDetails(item);
@@ -345,7 +376,8 @@
                     });
                     vm.selectedConfiguration = 0;
                     if(vm.data.length !== 0)
-                        $window.localStorage.setItem('selectedServers',JSON.stringify(vm.data));
+                        //$window.localStorage.setItem('selectedServers',JSON.stringify(vm.data));
+                        dataStoreService.setSelectedItems(vm.data,vm.data[0].type);
                     $rootScope.$emit("pricingChanged");
                     $('#modify_modal'+id).modal('hide');
                 };
@@ -414,6 +446,22 @@
                         return true;
                     }
                     return false;
+                };
+
+                vm.setRegion = function (item){
+                    item.selectedMapping.zones = [];
+                    if(vm.data.length > 0)
+                        dataStoreService.setSelectedItems(vm.data,vm.data[0].type);
+                };
+
+                vm.setZone = function (item){
+                    angular.forEach(vm.data,function(arrayItem){
+                        if(arrayItem.id === item.id){
+                            arrayItem.selectedMapping.zone = item.selectedMapping.zone;
+                        }
+                    });
+                if(vm.data.length > 0)
+                    dataStoreService.setSelectedItems(vm.data,vm.data[0].type);
                 };
                 
                 return vm;
