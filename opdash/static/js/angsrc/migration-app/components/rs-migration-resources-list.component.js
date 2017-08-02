@@ -310,6 +310,29 @@
                             vm.selectedItems.server = arr;
                             dataStoreService.setSelectedItems(vm.selectedItems.server, 'server');
                             // $window.localStorage.setItem('selectedServers', JSON.stringify(arr));
+                            
+                            //Declare a tempItems array that would hold phase 2 resources
+                            var tempItems = [];
+
+                            if(JSON.parse($window.localStorage.selectedResources)['volume'].length > 0){
+                                tempItems = vm.populatePhase2ResourcesArray('volume',items);
+                                items = items.concat(tempItems);
+                                vm.selectedItems.volume = tempItems;
+                                dataStoreService.setSelectedItems(vm.selectedItems.volume,'volume');
+                            }
+                            if(JSON.parse($window.localStorage.selectedResources)['service'].length > 0){
+                                tempItems = vm.populatePhase2ResourcesArray('service',items);
+                                items = items.concat(tempItems);
+                                vm.selectedItems.service = tempItems;
+                                dataStoreService.setSelectedItems(vm.selectedItems.service,'service');
+                            }
+                            if(JSON.parse($window.localStorage.selectedResources)['file'].length > 0){
+                                tempItems = vm.populatePhase2ResourcesArray('file',items);
+                                items = items.concat(tempItems);
+                                vm.selectedItems.file = tempItems;
+                                dataStoreService.setSelectedItems(vm.selectedItems.file,'file');
+                            }
+                            
                             vm.continuing = false;
                             dataStoreService.setDontShowNameModal(true);
                             vm.selectedTime = {
@@ -439,7 +462,28 @@
                     vm.noFawsAccounts = !vm.noFawsAccounts;
                     var tenant_id = authservice.getAuth().tenant_id;
                     vm.fawsLink = "https://mycloud.rackspace.com/cloud/"+tenant_id+"/tickets#new";
-                }
+                };
+
+                /**
+                  * @ngdoc method
+                  * @name createFawsAccount
+                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
+                  * @description 
+                  * Populates phase 2 resources array.
+                */
+                vm.populatePhase2ResourcesArray = function(type,items){
+                    var tempItems = JSON.parse($window.localStorage.selectedResources)[type];
+                    tempItems = tempItems.map(function(item){
+                        item.selectedMapping = {};
+                        item.selectedMapping.region = DEFAULT_VALUES.REGION;
+                        //If the resource type is volume, we need to build the object to hold selected zone and the zones array
+                        if(type === 'volume'){
+                            item.selectedMapping.zones = [];
+                        }
+                        return item;
+                    });
+                    return tempItems;
+                };
 
                 //look for tab click event and display continue and cancel migration buttons after resources are loaded.
                 $scope.$on("tabChanged", function(event, type){

@@ -9,4 +9,9 @@
     <td>
         <span class="rs-status rs-status-ok ng-binding"> {{item.status}} </span>
     </td>
+    <td>
+        <select ng-model="item.selectedMapping.region" style="margin-bottom: 2px;" ng-change="vm.setRegion(item)">
+            <option ng-selected="vm.awsRegion === item.selectedMapping.region" ng-repeat="region in vm.regions track by $index" value="{{region}}">{{region | convertCase}}</option>
+        </select>
+    </td>
 </tr>
