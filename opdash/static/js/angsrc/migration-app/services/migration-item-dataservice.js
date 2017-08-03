@@ -15,11 +15,13 @@
                 var servers = JSON.parse($window.localStorage.selectedResources)['server'];//dataStoreService.getItems("server");
                 var cdn = JSON.parse($window.localStorage.selectedResources)['service'];
                 var volumes = JSON.parse($window.localStorage.selectedResources)['volume'];
+                var file = JSON.parse($window.localStorage.selectedResources)['file'];
                 var names = {};
                 names.instances = {};
                 names.networks = {};
                 names.cdn = {};
                 names.volumes = {};
+                names.file = {};
 
                 angular.forEach(servers, function (item) {
                     names.instances[item.id] = item.name;
@@ -34,7 +36,9 @@
                 angular.forEach(volumes, function (resource) {
                     names.volumes[resource.id] = resource.name;
                 });
-
+                angular.forEach(file, function (resource) {
+                    names.file[resource.id] = resource.name;
+                });
                 return names;
             };// end of prepareNames method
 
@@ -82,7 +86,7 @@
                 } else if (type === "network") {
                     // return networkService.getTrimmedList();
                 } else if (type === "files") {
-                    //     return networkService.getTrimmedList();
+                    // return fileService.getTrimmedList();
                 } else if (type === "LoadBalancers") {
                     // return self.getLoadBalancers();
                 }

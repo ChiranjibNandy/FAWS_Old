@@ -92,7 +92,15 @@
                                                             cdn.cdn_succeeded_time_pct = result[0].cdn.resources[key].succeeded_by_time_pct;
                                                         }
                                                     });
-                                                }                                             
+                                                }  
+                                           if(result[0].file) 
+                                                for (var key in result[0].file.resources) {
+                                                    angular.forEach(job.file, function (file) {
+                                                        if (file.id === key) {
+                                                            file.file_succeeded_time_pct = result[0].file.resources[key].succeeded_by_time_pct;
+                                                        }
+                                                    });
+                                                }                                            
                                             if (result[0].networks)
                                                 job.network_succeeded_by_time_pct = result[0].networks.succeeded_by_time_pct;
                                         }
@@ -174,7 +182,7 @@
                 vm.equipmentDetails = function (type, item) {
                     var id = item.id;
                     var region = item.source_region;
-                    ds.getTrimmedItem(type, id, region)
+                        ds.getTrimmedItem(type, id, region)
                         .then(function (response) {
                             var details = response;
                             vm.itemType = type;
