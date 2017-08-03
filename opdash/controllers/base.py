@@ -389,8 +389,9 @@ class SamlBlueprint(SecureBlueprint):
             current_app.logger.debug('>>>>>>>> SAML REQUEST NOT FOUND')
             return abort(400)
 
+        # this is not a url, it uses the pre-loaded saml json settings
         settings = OneLogin_Saml2_Settings(
-            custom_base_path=current_app.config["SAML_CONFIG_PATH"])
+            current_app.config["saml_settings"])
 
         logout_request = OneLogin_Saml2_Logout_Request(settings, saml_data)
 
