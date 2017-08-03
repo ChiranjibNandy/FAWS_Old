@@ -27,7 +27,7 @@
                     </span>
                 </div>
                 <div class="rs-row">
-                    <select name="time" ng-options="time for time in vm.timeIntervals" ng-model="vm.time" style="width: 113px;" class="ng-pristine ng-untouched ng-valid ng-not-empty span-6" ></select>
+                    <select name="time" ng-model="vm.time" ng-options="timeInterval for timeInterval in vm.timeIntervals"  style="width: 113px;" class="ng-pristine ng-untouched ng-valid ng-not-empty span-6" ></select>
                     <select ng-model="vm.timezone1" style="width: 113px;" class="ng-pristine ng-valid ng-not-empty ng-touched span-6" >
                         <option ng-repeat="x in vm.timeZoneItems" value="{{x.timeZone}}">{{x.timeZoneName}}</option>
                     </select>

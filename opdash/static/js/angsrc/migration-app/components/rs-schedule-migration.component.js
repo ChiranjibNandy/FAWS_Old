@@ -168,10 +168,10 @@
                         var timeIndex = (Number(moment().tz(tz_country).format('HH:mm').split(" ", 1)[0].split(":",2)[0])*4) + Math.round(Number(moment().tz(tz_country).format('HH:mm').split(" ", 1)[0].split(":",2)[1])/15);
                         vm.timeIntervals = vm.timeItems.slice(timeIndex+1, vm.timeItems.length+1);
                     };
-                    if(dataStoreService.returnDate().time === vm.timeIntervals[0])
-                        vm.time = vm.timeIntervals[0];
-                    else
+                    if(dataStoreService.returnDate().time === vm.timeIntervals[0])                    
                         vm.time = dataStoreService.returnDate().time;
+                    else
+                        vm.time = vm.timeIntervals[0] ;
                     vm.migrationScheduleDetails = {
                             migrationName: dataStoreService.getScheduleMigration().migrationName,
                             time: moment(moment(vm.modifiedDate).format("YYYY-MM-DD") + "T" + vm.getTime() + vm.timeZoneDiff).unix(),
@@ -192,7 +192,7 @@
                 $scope.$watch('vm.time', function () {
                     vm.migrationScheduleDetails = {
                             migrationName: dataStoreService.getScheduleMigration().migrationName,
-                            time: moment(moment(vm.modifiedDate).format("YYYY-MM-DD") + "T" + vm.getTime() + vm.timeZoneDiff).unix(),
+                            time: vm.time, //moment(moment(vm.modifiedDate).format("YYYY-MM-DD") + "T" + vm.getTime() + vm.timeZoneDiff).unix(),
                             timezone:vm.timezone1,
                         };
                     if(dataStoreService.returnDate().time && dataStoreService.returnDate().time === vm.time)
