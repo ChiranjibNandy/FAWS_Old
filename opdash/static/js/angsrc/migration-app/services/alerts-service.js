@@ -38,7 +38,6 @@
                 else
                     alertsApiUrl = "/api/alerts/job/"+job_id;
                 //var alertsApiUrl = "/static/angassets/alerts.json";
-                if (refresh|| !loaded || (currentTenant !== tenant_id)) {
                     return HttpWrapper.send(alertsApiUrl, { "operation": 'GET' })
                                       .then(function(result) {
                                             loaded = true;
@@ -60,9 +59,7 @@
                                         }, function(errorResponse) {
                                             return [];
                                         });
-                } else {
-                    return $q.when(alerts);
-                }
+               
             };
 
             /**

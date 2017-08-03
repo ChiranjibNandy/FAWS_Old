@@ -58,8 +58,14 @@
                 var mapResourceStatus = function(dataList, statusList) {
                     angular.forEach(dataList, function (resource) {
                         var keepGoing = true;
-                        resource.canMigrate = true;
-                        resource.migStatus = 'error';
+                        if(statusList === null){
+                            resource.canMigrate = false;
+                            resource.migStatus = 'Status not available';
+                        }
+                        else{
+                            resource.canMigrate = true;
+                            resource.migStatus = 'error';
+                        }
                         resource.eligible = 'Not Available';
                         resource.eligibiltyTests = {};
                         if(resource.rrn == undefined){
@@ -179,7 +185,7 @@
                         // vm.parent.itemsLoadingStatus(true);
                         // wait for all the promises to resolve
                         $q.all([list, status]).then(function(results) {
-                            if(results[0].error|| results[1].error){
+                            if(results[0].error){
                                 vm.loading = false;
                                 vm.loadError = true;
                                 return;
@@ -193,7 +199,7 @@
 
                             var dataList = results[0].data;
                             vm.activeItemsArr = [];
-                            vm.items = mapResourceStatus(dataList, results[1].job_status_list);
+                            vm.items = mapResourceStatus(dataList, results[1].job_status_list || null);
                             //check if all the servers can be migrated else disable checkbox(to select all items) at the header of item selection table.
                             angular.forEach(vm.items, function (item) {
                                 if(item.migStatus == 'started' || item.migStatus == 'in progress' || item.migStatus == 'scheduled'|| item.migStatus == 'paused'){
@@ -202,16 +208,16 @@
                                 else if(item.migStatus == 'not available'){
                                     item.migStatus = "Migration Scheduled";
                                 }
-                                else if((item.migStatus == 'error' || item.migStatus == 'canceled' || item.migStatus == 'done') && (item.canMigrate == true && item.status == 'active')){
+                                else if((item.migStatus == 'error' || item.migStatus == 'canceled' || item.migStatus == 'done') && item.canMigrate){
                                     item.migStatus = "Available to Migrate";
                                 }
-                                else if((item.migStatus == 'error' || item.migStatus == 'canceled' || item.migStatus == 'done') && !(item.canMigrate == true && item.status == 'active')){
+                                else if((item.migStatus == 'error' || item.migStatus == 'canceled' || item.migStatus == 'done') && !item.canMigrate){
                                     item.migStatus = "Not Available to Migrate";
                                 }
                                 if(item.selected == true){
                                     item.selected = false;
                                 }
-                                if(item.canMigrate == true && item.status.toLowerCase() == 'active'){ 
+                                if(item.canMigrate){ 
                                     vm.activeItemCount++;
                                 }
                             });
@@ -264,7 +270,7 @@
                         //For repeated fetch of resources after first time loading.
                         vm.items = datastoreservice.retrieveallItems(vm.type);
                         angular.forEach(vm.items, function (item) {
-                            if(item.canMigrate == true && item.status.toLowerCase() == 'active'){ 
+                            if(item.canMigrate == true){ 
                                 vm.activeItemCount++;
                             }
                         });
@@ -372,7 +378,7 @@
                  */
                 vm.changeItemSelection = function () {
                     angular.forEach(vm.items, function (item) {
-                        if((item.canMigrate == true && item.status.toLowerCase() == 'active' && item.eligibiltyTests.length) || (item.canMigrate == true && item.status.toLowerCase() == 'active' && vm.type != 'server')) { 
+                        if((item.canMigrate == true && item.eligibiltyTests.length && vm.type == 'server') || (item.canMigrate == true && vm.type != 'server')) { 
                             item.selected = vm.isAllSelected;
                             vm.changeSelectAll(item, true);
                         }
@@ -594,7 +600,7 @@
                         
                     }
                     angular.forEach(items, function(item){
-                        if((item.canMigrate == true && item.status.toLowerCase() == 'active' && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]) || (item.status.toLowerCase() == 'active' && item.migStatus == 'Available to Migrate' && !vm.checkingEligibility[item.id]) && !item.eligibiltyTests.length){
+                        if((item.canMigrate == true && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]) || (item.migStatus == 'Available to Migrate' && !vm.checkingEligibility[item.id]) && !item.eligibiltyTests.length){
                             var storedEligibilityResults = [];
                             //Check for eligibility results stored during the current session.
                             if(!($window.localStorage.eligibilityResults == undefined || $window.localStorage.eligibilityResults == "undefined")){
