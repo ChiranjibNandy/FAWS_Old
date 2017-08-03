@@ -57,10 +57,9 @@
                     vm.loadingPrice = false;
                     vm.filteredArr = [];
 
-                    var url = '/api/aws/regions/ec2';
-                    HttpWrapper.send(url,{"operation":'GET'}).then(function(result){
+                    //Get all the regions only once during initialization
+                    ds.getAllEc2Regions().then(function(result){
                         vm.regions = result;
-
                         vm.disable = true;
                         $('#rs-main-panel').css('height','310px');
                         },function(error){
