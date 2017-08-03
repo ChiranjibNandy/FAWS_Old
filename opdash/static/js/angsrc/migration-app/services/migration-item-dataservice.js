@@ -8,11 +8,17 @@
      * This service acts as a facade which handles calling the specific service implementation for each resoource type (server, network etc).
      */
     angular.module("migrationApp")
-        .service("migrationitemdataservice", ["serverservice", "networkservice", "volumeservice","contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q","$window","cdnservice","fileservice", function (serverService, networkService, volumeService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q,$window,cdnservice,fileservice) {
-            var loaded, loadbalancers, services, self = this, currentTenant = null, default_zone = 'us-east-1a', resultsLoaded = null;
+        .service("migrationitemdataservice", ["serverservice", "networkservice", "volumeservice", "contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q", "$window", "cdnservice", "fileservice", function (serverService, networkService, volumeService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q, $window, cdnservice, fileservice) {
+            var loaded, loadbalancers, services, self = this,
+                currentTenant = null,
+                default_zone = 'us-east-1a',
+                callInProgress = false,
+                statusLoaded = false,
+                statusResponse,
+                statusPromise;
             //the above default_zone is needed to get the default values.
             var prepareNames = function () {
-                var servers = JSON.parse($window.localStorage.selectedResources)['server'];//dataStoreService.getItems("server");
+                var servers = JSON.parse($window.localStorage.selectedResources)['server']; //dataStoreService.getItems("server");
                 var cdn = JSON.parse($window.localStorage.selectedResources)['service'];
                 var volumes = JSON.parse($window.localStorage.selectedResources)['volume'];
                 var file = JSON.parse($window.localStorage.selectedResources)['file'];
@@ -40,7 +46,7 @@
                     names.file[resource.id] = resource.name;
                 });
                 return names;
-            };// end of prepareNames method
+            }; // end of prepareNames method
 
             /**
              * @ngdoc method
@@ -66,7 +72,7 @@
                 } else if (type === "volume") {
                     return volumeService.getTrimmedList();
                 }
-            }//end of getTrimmedAllItems method
+            } //end of getTrimmedAllItems method
 
             /**
              * @ngdoc method
@@ -90,7 +96,7 @@
                 } else if (type === "LoadBalancers") {
                     // return self.getLoadBalancers();
                 }
-            }//end of getTrimmedItem method
+            } //end of getTrimmedItem method
 
             /**
              * @ngdoc method
@@ -113,7 +119,7 @@
                 } else if (type === "contactNumbers") {
                     return contactService.getContactNumbers();
                 }
-            }//end of getDetailedList method
+            } //end of getDetailedList method
 
             /**
              * @ngdoc method
@@ -130,7 +136,7 @@
                 if (type === "server") {
                     return serverService.getPricingDetails(flavor, ram);
                 }
-            };//end of getPricingDetails method
+            }; //end of getPricingDetails method
 
             /**
              * @ngdoc method
@@ -158,7 +164,7 @@
                         metadata: {
                             batch_name: dataStoreService.getScheduleMigration().migrationName,
                             initiated_by: auth.impersonator || auth.username
-                      },
+                        },
                         create_ticket: true,
                         names: names,
                         source: {
@@ -182,23 +188,23 @@
                     dataStoreService.selectedTime.time = reqObj.start;
                 }
 
-                if(servers.length>0){
+                if (servers.length > 0) {
                     reqObj.resources.instances = servers; //add servers to the resources list
                 }
-                if (networks.length>0) { //add networks to the resources list iff there are any networks
+                if (networks.length > 0) { //add networks to the resources list iff there are any networks
                     reqObj.resources.networks = networks;
                 }
-                if(services.length>0){
+                if (services.length > 0) {
                     reqObj.resources.cdn = services;
                 }
-                if(volumes.length>0){
+                if (volumes.length > 0) {
                     reqObj.resources.volumes = volumes;
                 }
-                if(cloudfiles.length>0){
+                if (cloudfiles.length > 0) {
                     reqObj.resources.cloudfiles = cloudfiles;
                 }
                 return reqObj;
-            }//end of prepareJobRequest method
+            } //end of prepareJobRequest method
 
             /**
              * @ngdoc method
@@ -209,7 +215,7 @@
              * @returns {Object} A request _object_ for subsequesnt request in migrating a resource.
              * @description 
              * This service method creates and a temporary job-spec _object_ for pre-checks API. This object has to be sent while making an HTTP POST request to Pre-reqs API to determine if the selected resources can be migrated or not.
-            */
+             */
             this.preparePrereqRequest = function (batchName) {
                 var destaccount = JSON.parse($window.localStorage.getItem("fawsAccounts"));
                 var auth = authservice.getAuth(),
@@ -228,30 +234,30 @@
                 var servers = serverService.prepareServerList();
                 var cloudfiles = fileservice.prepareFilesList();
                 var networks = networkService.prepareNetworkList();
-                if(servers.length>0){
+                if (servers.length > 0) {
                     reqObj.resources.instances = servers; //add servers to the resources list
                 }
                 if (networks.length > 0) { //add networks to the resources list iff there are any networks
                     reqObj.resources.networks = networks;
                 }
-                if(services.length>0){
+                if (services.length > 0) {
                     reqObj.resources.cdn = services;
                 }
-                if(volumes.length>0){
+                if (volumes.length > 0) {
                     reqObj.resources.volumes = volumes;
                 }
-                if(cloudfiles.length>0){
+                if (cloudfiles.length > 0) {
                     reqObj.resources.cloudfiles = cloudfiles;
                 }
                 return reqObj;
-            }//end of preparePrereqRequest method.
+            } //end of preparePrereqRequest method.
 
 
             this.getServerMigrationStatus = function (tenant_id) {
                 var url = "/api/server_status/" + tenant_id;
                 return HttpWrapper.send(url, {
-                    "operation": 'GET'
-                })
+                        "operation": 'GET'
+                    })
                     .then(function (response) {
                         var status = {
                             server_status: response.server_status,
@@ -259,19 +265,32 @@
                         };
                         return status;
                     });
-            }//end of getServerMigrationStatus method
+            } //end of getServerMigrationStatus method
 
             this.getResourceMigrationStatus = function (tenant_id) {
                 var url = "/api/jobs/all";
-                return HttpWrapper.send(url, {
-                    "operation": 'GET'
-                })
-                    .then(function (response) {
-                        return response;
-                    },function(error) {
-                        return false;
-                    });
-            }//end of getResourceMigrationStatus method
+                if (callInProgress == false && statusLoaded == false) {
+                    callInProgress = true;
+                    statusPromise = HttpWrapper.send(url, {
+                            "operation": 'GET'
+                        })
+                        .then(function (response) {
+                            statusResponse = response;
+                            callInProgress = false;
+                            statusLoaded = true;
+                            return response;
+                        }, function (error) {
+                            callInProgress = false;
+                            statusLoaded = false;
+                            return false;
+                        });
+                    return statusPromise;
+                } else if (callInProgress) {
+                    return statusPromise;
+                } else if (callInProgress == false && statusLoaded == true) {
+                    return $q.when(statusResponse);
+                }
+            } //end of getResourceMigrationStatus method
 
             this.getAllEc2Regions = function () {
                 if (!resultsLoaded) {
@@ -296,28 +315,28 @@
                 if (!loaded || (currentTenant !== tenant_id)) {
 
                     return HttpWrapper.send(url, {
-                        "operation": 'GET'
-                    })
+                            "operation": 'GET'
+                        })
                         .then(function (response) {
                             loaded = true;
                             currentTenant = tenant_id;
                             loadbalancers = {
                                 labels: [{
-                                    field: "name",
-                                    text: "CLB Name"
-                                },
-                                {
-                                    field: "clb status",
-                                    text: "CLB Status"
-                                },
-                                {
-                                    field: "id",
-                                    text: "CLB ID"
-                                },
-                                {
-                                    field: "migration status",
-                                    text: "Migration Status"
-                                }
+                                        field: "name",
+                                        text: "CLB Name"
+                                    },
+                                    {
+                                        field: "clb status",
+                                        text: "CLB Status"
+                                    },
+                                    {
+                                        field: "id",
+                                        text: "CLB ID"
+                                    },
+                                    {
+                                        field: "migration status",
+                                        text: "Migration Status"
+                                    }
                                 ],
                                 data: response
                             };
@@ -329,15 +348,15 @@
                 } else {
                     return $q.when(loadbalancers);
                 }
-            };//end of getLoadBalancers method
+            }; //end of getLoadBalancers method
 
             /**
-                 * @ngdoc method
-                 * @name eligibilityPrecheck
-                 * @methodOf migrationApp.service:migrationitemdataservice
-                 * @description 
-                 * Invokes "/api/eligibility" API call for checking eligibility of servers to migrate.
-            */
+             * @ngdoc method
+             * @name eligibilityPrecheck
+             * @methodOf migrationApp.service:migrationitemdataservice
+             * @description 
+             * Invokes "/api/eligibility" API call for checking eligibility of servers to migrate.
+             */
             this.eligibilityPrecheck = function (itemsArr, type) {
                 var tenant_id = authservice.getAuth().tenant_id;
                 var instance_type = (type == 'server' && "instances") || (type == 'volume' && "volumes") || (type == 'service' && "cdn") || (type == 'file' && "cloudfiles");
@@ -351,11 +370,13 @@
                     },
                     "version": "v1"
                 };
-                return HttpWrapper.save("/api/eligibility", { "operation": 'POST' }, requestObj)
+                return HttpWrapper.save("/api/eligibility", {
+                        "operation": 'POST'
+                    }, requestObj)
                     .then(function (result) {
                         return result;
                     }, function (error) {
-                        return error;
+                        return false;
                     });
             };
 
