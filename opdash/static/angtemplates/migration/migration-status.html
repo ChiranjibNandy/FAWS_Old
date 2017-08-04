@@ -2,7 +2,7 @@
 <div class="rs-container migrationdashBoard-mgr migration-mgr " ng-style="vm.isRacker == true ? {'margin-top':'30px'} : {'margin-top':'0px'}">
     <div class="alert alert-success animated fadeIn" ng-if="vm.afterNewMigration">
         <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
-        <h3>Success! Migration for {{vm.resourceCount}} resources confirmed for {{vm.schedule.date}} at {{vm.schedule.time}}</h3>
+        <h3>Success! Migration for {{vm.resourceCount}} {{vm.resourceCount === 1 ? 'resource' : 'resources'}} confirmed for {{vm.schedule.date}} at {{vm.schedule.time}}</h3>
     </div>
     <div class="alert alert-success animated fadeIn" ng-if="vm.migrationName && vm.afterSavedMigration">
         <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times" ng-click="vm.resetSavedMigrationFlag()"></i></button>
