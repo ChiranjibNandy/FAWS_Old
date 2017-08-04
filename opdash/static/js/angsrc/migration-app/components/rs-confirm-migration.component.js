@@ -272,7 +272,7 @@
                             timezone:dataStoreService.getScheduleMigration().timezone
                         }
                     };
-                    dataStoreService.saveItems(saveInstance).then(function(success){
+                    dataStoreService.saveItemsForSave(saveInstance).then(function(success){
                         vm.migrating = false; 
                         $window.localStorage.setItem("migrationScheduled","true");
                         $rootRouter.navigate(["MigrationStatus"]);

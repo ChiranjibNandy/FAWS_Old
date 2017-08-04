@@ -510,9 +510,11 @@
                         $('#aws_check').modal('show');
                         return;
                     }
-                    dataStoreService.storeDate('date',batch.schedulingTimeDate.date);
-                    dataStoreService.storeDate('time',batch.schedulingTimeDate.time);
-                    dataStoreService.storeDate('timezone',batch.schedulingTimeDate.timezone);
+                    if(batch.schedulingTimeDate){
+                        dataStoreService.storeDate('date',batch.schedulingTimeDate.date);
+                        dataStoreService.storeDate('time',batch.schedulingTimeDate.time);
+                        dataStoreService.storeDate('timezone',batch.schedulingTimeDate.timezone);
+                    }
                     dataStoreService.setDontShowStatus(true);
                     dataStoreService.selectedTime.migrationName = batch.batch_name || batch.instance_name;
                     $window.localStorage.migrationName = batch.batch_name || batch.instance_name;

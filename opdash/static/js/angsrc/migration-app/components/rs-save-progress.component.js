@@ -107,7 +107,7 @@
                     buttonDetails.saveInProgress = true;
                     
                     //make API call(through service) for saving the instance and wait for its response.
-                    dataStoreService.saveItems(saveInstance).then(function(success){
+                    dataStoreService.saveItemsForSave(saveInstance).then(function(success){
                         if(success){
                             buttonDetails.saveInProgress = false;
                             buttonDetails.saveSuccess = true;
