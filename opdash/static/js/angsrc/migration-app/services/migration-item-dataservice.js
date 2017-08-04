@@ -9,7 +9,7 @@
      */
     angular.module("migrationApp")
         .service("migrationitemdataservice", ["serverservice", "networkservice", "volumeservice","contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q","$window","cdnservice","fileservice", function (serverService, networkService, volumeService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q,$window,cdnservice,fileservice) {
-            var loaded, loadbalancers, services, self = this, currentTenant = null, default_zone = 'us-east-1a';
+            var loaded, loadbalancers, services, self = this, currentTenant = null, default_zone = 'us-east-1a', resultsLoaded = null;
             //the above default_zone is needed to get the default values.
             var prepareNames = function () {
                 var servers = JSON.parse($window.localStorage.selectedResources)['server'];//dataStoreService.getItems("server");
@@ -272,6 +272,13 @@
                         return false;
                     });
             }//end of getResourceMigrationStatus method
+
+            this.getAllEc2Regions = function () {
+                if (!resultsLoaded) {
+                    resultsLoaded = HttpWrapper.send('/api/aws/regions/ec2', {"operation": 'GET'});
+                }
+                return resultsLoaded;
+            }//end of getAllEc2Regions method
 
             /**
              * @ngdoc method
