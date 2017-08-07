@@ -15,7 +15,8 @@
                 callInProgress = false,
                 statusLoaded = false,
                 statusResponse,
-                statusPromise;
+                statusPromise,
+                resultsLoaded;
             //the above default_zone is needed to get the default values.
             var prepareNames = function () {
                 var servers = JSON.parse($window.localStorage.selectedResources)['server']; //dataStoreService.getItems("server");
@@ -268,7 +269,7 @@
             } //end of getServerMigrationStatus method
 
             this.getResourceMigrationStatus = function (tenant_id) {
-                var url = "/api/jobs/all";
+                var url = "/api/jobs/all1";
                 if (callInProgress == false && statusLoaded == false) {
                     callInProgress = true;
                     statusPromise = HttpWrapper.send(url, {
