@@ -269,7 +269,7 @@
             } //end of getServerMigrationStatus method
 
             this.getResourceMigrationStatus = function (tenant_id) {
-                var url = "/api/jobs/all1";
+                var url = "/api/jobs/all";
                 if (callInProgress == false && statusLoaded == false) {
                     callInProgress = true;
                     statusPromise = HttpWrapper.send(url, {
