@@ -469,7 +469,7 @@
              * @description 
              * Saves migration resources and schedules to be used for later reference
             */
-            this.saveItems = function(saveInstance) {
+            this.saveItemsForSave = function(saveInstance) {
                 var requestObj = self.objForSaveLater(saveInstance);
                 return self.postSavedInstances(requestObj);
             };
@@ -523,9 +523,9 @@
                             'rrn':item.rrn,
                             'name':item.name,
                             'selectedMapping':{
-                                'region':item.selectedMapping.region || DEFAULT_VALUES.REGION,
-                                'zone':item.selectedMapping.zone || '',
-                                'instance_type':item.selectedMapping.instance_type || ''   
+                                'region':item.selectedMapping?item.selectedMapping.region : DEFAULT_VALUES.REGION,
+                                'zone':item.selectedMapping?item.selectedMapping.zone : '',
+                                'instance_type':item.selectedMapping?item.selectedMapping.instance_type : ''   
                             }
                         });
                     });
