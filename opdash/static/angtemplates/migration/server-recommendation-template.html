@@ -1,6 +1,6 @@
 <tr ng-repeat="item in vm.data | filter: vm.filterCustomSearch | limitTo : vm.pageSize : (vm.currentPage-1)*vm.pageSize">
     <td class="rs-table-status"
-            ng-class="{'rs-table-status-ok': item.status=='active', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
+            ng-class="{'rs-table-status-ok': item.eligible == 'Passed', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
     </td>
     <td class="rs-table-link">
         <a href="" role="button" ng-click="vm.equipmentDetails(vm.type, item)" data-toggle="modal" title="{{item.name}}">{{item.name}}</a>
