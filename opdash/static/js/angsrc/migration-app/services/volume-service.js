@@ -7,7 +7,7 @@
      * @description
      * Service to retrieve all data for volume resources
      */
-    angular.module("migrationApp").factory("volumeservice", ["httpwrapper", "$q", "authservice","$window", function (HttpWrapper, $q, authservice,$window) {
+    angular.module("migrationApp").factory("volumeservice", ["httpwrapper", "$q", "authservice","$window","DEFAULT_VALUES", function (HttpWrapper, $q, authservice,$window,DEFAULT_VALUES) {
         // local variables to help cache data
         var loaded, volumes, self = this, currentTenant = null;
 
@@ -108,23 +108,24 @@
         self.prepareVolList = function () {
             var volReqList = [];
             var volumes = JSON.parse($window.localStorage.selectedResources)["volume"];
+            console.log(volumes);
             angular.forEach(volumes,function(volume){
                 volReqList.push(
                     {
                         "source":{
                             "id":volume.id,
-                            "region":'IAD',
+                            "region":volume.region.toUpperCase(),
                             "type":volume.type
                         },
                         "destination":{
-                            "region":"us-east-1",
+                            "region":volume.selectedMapping.region || DEFAULT_VALUES.region,
                             "aws":{
                                 "volume":{
-                                    "zone":"us-east-1a",
+                                    "zone":volume.selectedMapping.zone || DEFAULT_VALUES.zone,
                                     "ebs_type":"IOL"
                                 },
                                 "s3":{
-                                    "region":"us-east-1"
+                                    "region":volume.selectedMapping.region || DEFAULT_VALUES.region
                                 }
                             }
                         }
