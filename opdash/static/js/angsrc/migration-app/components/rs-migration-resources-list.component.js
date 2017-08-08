@@ -355,7 +355,8 @@
                             vm.selectedTime = {
                                     migrationName:vm.migrationName,
                                     time:'',
-                                    timezone:''
+                                    timezone:'',
+                                    live_migrate:false,
                                 };
                             dataStoreService.setScheduleMigration(vm.selectedTime);
                             $('#save_for_later').modal('hide');

@@ -54,6 +54,7 @@
                     vm.networksForServer = {};
                     vm.cbsForServer = {};
                     vm.isRacker = authservice.is_racker;
+                    vm.acceptLiveMigrations = dataStoreService.selectedTime. live_migrate;
                     //added text under the selected resources in the confirmation page
                     vm.showMessageForSelectedServer = false;
                     if ($window.localStorage.pageName == "ConfirmMigration") {
@@ -156,7 +157,16 @@
                     }
                 }
 
-
+         vm.selectLiveMigration = function (){
+          var scheduleMigration = {
+               migrationName: dataStoreService.getScheduleMigration().migrationName,
+               time:dataStoreService.getScheduleMigration().time,
+               timezone:dataStoreService.getScheduleMigration().timezone,
+               live_migrate: vm.acceptLiveMigrations
+                  }
+             dataStoreService.setScheduleMigration(scheduleMigration); 
+         }       
+         
 
                 return vm;
             }]

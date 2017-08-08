@@ -145,7 +145,8 @@
                         create_ticket: true,
                         names: names,
                         source: {
-                            tenantid: auth.tenant_id
+                            tenantid: auth.tenant_id,
+                            live_migrate:dataStoreService.getScheduleMigration().live_migrate,
                         },
                         destination: {
                             account: destaccount.selectedFawsAccountNumber
