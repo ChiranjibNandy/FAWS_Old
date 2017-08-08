@@ -72,6 +72,38 @@
                 };
             }
 
+            function transformNetwork(network){
+                return {
+                id: network.id,
+                rrn: network.rrn,
+                name: network.name,
+                };
+            };
+
+            self.getTrimmedItem = function(item_id){
+                var deferred = $q.defer();
+                serverService.getTrimmedList().then(function (response) {
+                if (response.error)
+                    return deferred.resolve(response);
+                else {
+                    var networkList = [];
+                    angular.forEach(response.data, function (server) {
+                        angular.forEach(server.details.networks, function (network) {
+                            if (networkList.filter(function (listItem) { return listItem.id === network.id }).length === 0) {
+                                networkList.push(network);
+                            };
+                        });
+                    });
+                    angular.forEach(networkList,function(network){
+                        if(network.id === item_id){
+                            return deferred.resolve(transformNetwork(network));
+                        }
+                    });
+                }
+                });
+                return deferred.promise;
+            };
+            
             // function to get specific details of a network based on its id
             var getNetworkDetails = function (id) {
                 var t = networks.data;

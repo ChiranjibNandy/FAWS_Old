@@ -409,7 +409,7 @@
                         <tbody ng-show="!vm.loading && !vm.loadError">
                             <tr ng-repeat="network in vm.job.networks | orderBy: vm.sortBy.network">
                                 <td class="rs-table-link" style="width:25%">
-                                    <a href="" ng-click="vm.equipmentDetails('network', network.id)" role="button" data-toggle="modal">{{network.name}}</a>
+                                    <a href="" ng-click="vm.equipmentDetails('network', network)" role="button" data-toggle="modal">{{network.name}}</a>
                                 </td>
                                 <td class="rs-table-text" style="width: 30%;">
                                     <span class="rs-status-error" ng-show="network.status==='error' || network.status.state ==='error'">Error</span>
