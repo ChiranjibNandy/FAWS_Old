@@ -20,6 +20,11 @@
             */
             controller: ["$scope","$window", function ($scope,$window) {
                 var vm = this;
+
+                // make isNaN available in your view via component as syntax
+                vm.isNaN = function(value) {
+                    return isNaN(value);
+                }
                 /**
                 * @ngdoc method
                 * @name openUsageCostsModal
@@ -60,8 +65,8 @@
                                 "rax_bandwidth_cost": "NA",
                                 "rax_bandwidth": "NA",
                                 "rax_uptime": "NA",
-                                "rax_total_cost": server.details.rax_price,
-                                "storage": server.details.rax_storage_size
+                                "rax_total_cost": server.details.rax_price || 0,
+                                "storage": server.details.rax_storage_size || 0
                             });
                             vm.totalOfCostCalculationItems += server.details.rax_price;
                         }
