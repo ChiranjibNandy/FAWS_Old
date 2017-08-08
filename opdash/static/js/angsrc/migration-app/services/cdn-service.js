@@ -9,7 +9,7 @@
      */
     angular.module("migrationApp").factory("cdnservice", ["httpwrapper", "$q", "authservice","$window", function (HttpWrapper, $q, authservice,$window) {
         // local variables to help cache data
-        var self = this, services;
+        var self = this, services,currentTenant = null;
 
         /**
         * @ngdoc method
@@ -63,6 +63,47 @@
                     return errorResponse;
                 });
         };//end of getServices method
+
+        function transformService(service){
+            return {
+                id: service.id,
+                name: service.name,
+                status: service.status,
+                domains: service.domains,
+                };
+        }
+
+        self.getTrimmedItem = function(id){
+            var deferred = $q.defer();
+            self.getById(id).then(function (response) {
+                if (response.error)
+                    return deferred.resolve(response);
+                return deferred.resolve(transformService(response.data));
+            });
+            return deferred.promise;
+        };
+
+        self.getById = function (id) {
+            var url = "/api/cdn/service/" + id;
+            var tenant_id = authservice.getAuth().tenant_id;
+
+            return HttpWrapper.send(url, { "operation": 'GET' })
+                .then(function (response) {
+                    currentTenant = tenant_id;
+                    services = {
+                        labels: [
+                            { field: "name", text: "Service Name" },
+                            { field: "id", text: "id" },
+                            { field: "rrn", text: "rrn" },
+                            { field: "status", text: "Service Status" }
+                        ],
+                        data: response
+                    };
+                    return services;
+                }, function (errorResponse) {
+                    return errorResponse;
+                });
+        };
 
         return self;
     }]);

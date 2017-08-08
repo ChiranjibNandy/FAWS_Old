@@ -97,6 +97,53 @@
             }
         };
 
+        function transformVolume(volume){
+            return {
+                id: volume.id,
+                name: volume.name,
+                size: volume.size,
+                status: volume.status,
+                created_at: moment(volume.created_at).format('DD/MM/YYYY HH:mm:ss'),
+                attachments: volume.attachments
+            };
+        }
+
+        self.getTrimmedItem = function(id,region){
+            var deferred = $q.defer();
+            self.getById(id,region).then(function (response) {
+                if (response.error)
+                    return deferred.resolve(response);
+                return deferred.resolve(transformVolume(response.data));
+            });
+            return deferred.promise;
+        };
+
+        self.getById = function (id,region) {
+            var url = "/api/cbs/volume/"+ region.toLowerCase()+"/"+ id;
+            var tenant_id = authservice.getAuth().tenant_id;
+
+            return HttpWrapper.send(url, { "operation": 'GET' })
+                .then(function (response) {
+                    currentTenant = tenant_id;
+                    volumes = {
+                        labels: [
+                            { field: "name", text: "Volume Name" },
+                            { field: "id", text: "id" },
+                            { field: "size", text: "Size" },
+                            { field: "created_at", text: "Created On" },
+                            { field: "source_region", text: "Source Region" },
+                            { field: "status", text: "Status" },
+                            { field: "rrn", text: "rrn" },
+                            { field: "description", text: "Description" },
+                        ],
+                        data: response
+                    };
+                    return volumes;
+                }, function (errorResponse) {
+                    return errorResponse;
+                });
+        };        
+
         /**
         * @ngdoc method
         * @name prepareVolList

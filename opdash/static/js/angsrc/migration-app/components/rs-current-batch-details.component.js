@@ -69,7 +69,7 @@
                                             //Set the progress flag to true to indicate the batch holds the progress call results
                                             vm.progressFlag = true;
                                             job.batch_succeeded_time_pct = result[0].succeeded_by_time_pct;
-                                            if(result[0].instances.resources)
+                                            if(result[0].instances)
                                                 for (var key in result[0].instances.resources) {
                                                     angular.forEach(job.instances, function (instance) {
                                                         if (instance.id === key) {
@@ -181,7 +181,7 @@
                 */
                 vm.equipmentDetails = function (type, item) {
                     var id = item.id;
-                    var region = item.source_region;
+                    var region = item.source_region || item.name;
                         ds.getTrimmedItem(type, id, region)
                         .then(function (response) {
                             var details = response;
