@@ -141,7 +141,7 @@
       "username": "{!g.user_data.username!}",
       "authtoken": "{!g.user_data.authtoken!}",
       "tenant_id": "{! g.user_data.get('tenant_id', "") !}"||null,
-      "account_name":null,
+      "account_name": "{! g.user_data.get('account_name', "") !}"||null,
       "is_racker": {!'true' if g.user_data.is_racker else 'false'!},
       "is_impersonator": {!'true' if g.user_data.is_impersonator else 'false'!},
       "impersonator": "{!g.user_data.impersonator if g.user_data.is_impersonator else ''!}"||null

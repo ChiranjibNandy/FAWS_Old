@@ -15,6 +15,7 @@ from onelogin.saml2.logout_request import OneLogin_Saml2_Logout_Request
 from onelogin.saml2.logout_response import OneLogin_Saml2_Logout_Response
 
 from opdash.rax.pilot import get_pilot_header
+from opdash.rax.billing import get_account_name
 from opdash.auth.identity import Identity
 
 
@@ -195,6 +196,11 @@ class SecureBlueprint(UnsecureBlueprint):
                                                       ["token"]
                                                       ["tenant"]
                                                       ["id"])
+
+                # Get Account Name
+                user_data["account_name"] = get_account_name(
+                    user_data["authtoken"],
+                    user_data["tenant_id"])
 
                 # Get Pilot Header
                 user_data["pilot_header"] = get_pilot_header(
