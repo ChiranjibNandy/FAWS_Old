@@ -1,4 +1,4 @@
-from flask import current_app, request, Response
+from flask import current_app, request, Response, jsonify
 from opdash.controllers.base import ProxyBlueprint
 import requests
 
@@ -68,7 +68,8 @@ def api_proxy(path):
         content = resp.content
         if 400 <= resp.status_code < 500:
             print(content)
-            content = 'Please see logs for details of HTTP 400.'
+            content = jsonify({
+                'message': 'Please see logs for details of HTTP 400.'})
         response = Response(content, resp.status_code, headers)
 
     return response
