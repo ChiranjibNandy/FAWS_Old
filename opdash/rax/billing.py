@@ -5,11 +5,15 @@ import requests
 def get_account_name(auth_token, tenant_id):
 
     account_name = None
+    billing_ran_id = '020' if int(tenant_id) <= 10000000 else '021'
 
     try:
+
         response = requests.get(
             "https://billingv2.api.rackspacecloud.com/v2"
-            "/accounts/020-{0}/invoices/latest.json".format(tenant_id),
+            "/accounts/{0}-{1}/invoices/latest.json".format(
+                billing_ran_id,
+                tenant_id),
             headers={
                 "X-Auth-Token": auth_token,
                 "Content-Type": "application/json",
