@@ -7,7 +7,7 @@
      * @description
      * Service to retrieve all data for file resources
      */
-    angular.module("migrationApp").factory("fileservice", ["httpwrapper", "$q", "authservice", "$window", function (HttpWrapper, $q, authservice, $window) {
+    angular.module("migrationApp").factory("fileservice", ["httpwrapper", "$q", "authservice", "$window","DEFAULT_VALUES", function (HttpWrapper, $q, authservice, $window,DEFAULT_VALUES) {
         // local variables to help cache data
         var loaded, files, self = this, currentTenant = null;
 
@@ -120,7 +120,7 @@
                             "region":file.name
                         },
                         "destination":{
-                            "region":"us-east-1"
+                            "region":file.selectedMapping.region || DEFAULT_VALUES.region
                         }
                     }
                 )

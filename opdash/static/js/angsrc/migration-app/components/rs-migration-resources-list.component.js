@@ -479,6 +479,7 @@
                         //If the resource type is volume, we need to build the object to hold selected zone and the zones array
                         if(type === 'volume'){
                             item.selectedMapping.zones = [];
+                            item.selectedMapping.zone = DEFAULT_VALUES.ZONE;
                         }
                         return item;
                     });
