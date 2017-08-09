@@ -17,6 +17,14 @@
 
             /**
              * @ngdoc property
+             * @name account_name
+             * @propertyOf migrationApp.service:authservice
+             * @description Account name of the tenant
+             */
+            self.account_name = null;
+
+            /**
+             * @ngdoc property
              * @name is_racker
              * @propertyOf migrationApp.service:authservice
              * @description Boolean to determine if the logged in user is a racker or a customer
@@ -119,6 +127,7 @@
                 var details;
                 self.is_racker = userDetails.is_racker;
                 self.is_impersonator = userDetails.is_impersonator;
+                self.account_name = userDetails.account_name;
                 
                 if(self.is_impersonator)
                     self.impersonator = userDetails.impersonator;
