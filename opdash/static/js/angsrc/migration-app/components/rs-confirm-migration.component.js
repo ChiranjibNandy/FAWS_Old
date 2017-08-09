@@ -32,11 +32,6 @@
                 vm.cost = '';
                 vm.goodToGo = true;
                 vm.checking = false;
-
-                // make isNaN available in your view via component as syntax
-                vm.isNaN = function(value) {
-                    return isNaN(value);
-                }
                 
                 vm.$onInit = function () {
                     vm.tenant_id = authservice.getAuth().tenant_id;
@@ -272,7 +267,7 @@
                             timezone:dataStoreService.getScheduleMigration().timezone
                         }
                     };
-                    dataStoreService.saveItems(saveInstance).then(function(success){
+                    dataStoreService.saveItemsForSave(saveInstance).then(function(success){
                         vm.migrating = false; 
                         $window.localStorage.setItem("migrationScheduled","true");
                         $rootRouter.navigate(["MigrationStatus"]);

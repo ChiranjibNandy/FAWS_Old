@@ -58,7 +58,7 @@
                     vm.timezone1 = vm.timeZoneItems[2].timeZone;
                     var m = moment();
                     var roundUp = m.minute() || m.second() || m.millisecond() ? m.add(1, 'hour').startOf('hour') : m.startOf('hour');
-                    vm.time = roundUp.format('h:mma');
+                    vm.time = roundUp.format('hh:mma');
                     vm.initTime = new Date().toLocaleTimeString();
                     vm.date = m.format("YYYY-MM-DD");
                     $('#datetimepickerAdd').val(vm.date);
@@ -168,10 +168,11 @@
                         var timeIndex = (Number(moment().tz(tz_country).format('HH:mm').split(" ", 1)[0].split(":",2)[0])*4) + Math.round(Number(moment().tz(tz_country).format('HH:mm').split(" ", 1)[0].split(":",2)[1])/15);
                         vm.timeIntervals = vm.timeItems.slice(timeIndex+1, vm.timeItems.length+1);
                     };
-                    if(dataStoreService.returnDate().time === vm.timeIntervals[0])
-                        vm.time = vm.timeIntervals[0];
+                    if(dataStoreService.returnDate().time === vm.timeIntervals[0])                    
+                        vm.time = vm.timeIntervals[0] ;
                     else
                         vm.time = dataStoreService.returnDate().time;
+
                     vm.migrationScheduleDetails = {
                             migrationName: dataStoreService.getScheduleMigration().migrationName,
                             time: moment(moment(vm.modifiedDate).format("YYYY-MM-DD") + "T" + vm.getTime() + vm.timeZoneDiff).unix(),
@@ -192,7 +193,7 @@
                 $scope.$watch('vm.time', function () {
                     vm.migrationScheduleDetails = {
                             migrationName: dataStoreService.getScheduleMigration().migrationName,
-                            time: moment(moment(vm.modifiedDate).format("YYYY-MM-DD") + "T" + vm.getTime() + vm.timeZoneDiff).unix(),
+                            time: moment(moment(vm.modifiedDate).format("YYYY-MM-DD") + "T" + vm.getTime() + vm.timeZoneDiff).unix(),
                             timezone:vm.timezone1,
                         };
                     if(dataStoreService.returnDate().time && dataStoreService.returnDate().time === vm.time)
