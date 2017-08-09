@@ -65,7 +65,7 @@
                                 "rax_bandwidth_cost": "NA",
                                 "rax_bandwidth": "NA",
                                 "rax_uptime": "NA",
-                                "rax_total_cost": server.details.rax_price || 0,
+                                "rax_total_cost": server.details.rax_price.toFixed(2) || 0,
                                 "storage": server.details.rax_storage_size || 0
                             });
                             vm.totalOfCostCalculationItems += server.details.rax_price;
