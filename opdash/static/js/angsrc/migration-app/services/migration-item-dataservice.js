@@ -8,7 +8,7 @@
      * This service acts as a facade which handles calling the specific service implementation for each resoource type (server, network etc).
      */
     angular.module("migrationApp")
-        .service("migrationitemdataservice", ["serverservice", "networkservice", "volumeservice", "contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q", "$window", "cdnservice", "fileservice", function (serverService, networkService, volumeService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q, $window, cdnservice, fileservice) {
+        .service("migrationitemdataservice", ["serverservice", "networkservice", "volumeservice", "contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q", "$window", "cdnservice", "fileservice", function (serverService, networkService, volumeService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q, $window, cdnservice, fileService) {
             var loaded, loadbalancers, services, self = this,
                 currentTenant = null,
                 default_zone = 'us-east-1a',
@@ -17,6 +17,7 @@
                 statusResponse,
                 statusPromise,
                 resultsLoaded;
+
             //the above default_zone is needed to get the default values.
             var prepareNames = function () {
                 var servers = JSON.parse($window.localStorage.selectedResources)['server']; //dataStoreService.getItems("server");
@@ -65,7 +66,7 @@
                 } else if (type === "network") {
                     return networkService.getTrimmedList();
                 } else if (type === "file") {
-                    return fileservice.getTrimmedList();
+                    return fileService.getTrimmedList();
                 } else if (type === "LoadBalancers") {
                     return self.getLoadBalancers();
                 } else if (type === "service") {
@@ -91,11 +92,15 @@
                 if (type === "server") {
                     return serverService.getTrimmedItem(item_id, item_region);
                 } else if (type === "network") {
-                    // return networkService.getTrimmedList();
-                } else if (type === "files") {
-                    // return fileService.getTrimmedList();
+                    return networkService.getTrimmedItem(item_id);
+                } else if (type === "file") {
+                    return fileService.getTrimmedItem(item_id, item_region );
                 } else if (type === "LoadBalancers") {
                     // return self.getLoadBalancers();
+                } else if( type === "service") {
+                    return cdnservice.getTrimmedItem(item_id);
+                } else if( type === "volume") {
+                    return volumeService.getTrimmedItem(item_id, item_region );
                 }
             } //end of getTrimmedItem method
 
@@ -114,7 +119,7 @@
                 } else if (type === "network") {
                     return networkService.getDetailedList();
                 } else if (type === "file") {
-                    return fileservice.getTrimmedList();
+                    return fileService.getTrimmedList();
                 } else if (type === "LoadBalancers") {
                     return networkService.getTrimmedList();
                 } else if (type === "contactNumbers") {
@@ -154,7 +159,7 @@
                 var services = cdnservice.prepareCdnList();
                 var volumes = volumeService.prepareVolList();
                 var servers = serverService.prepareServerList();
-                var cloudfiles = fileservice.prepareFilesList();
+                var cloudfiles = fileService.prepareFilesList();
                 var networks = networkService.prepareNetworkList();
                 var auth = authservice.getAuth(),
                     names = prepareNames(),
@@ -233,7 +238,7 @@
                 var services = cdnservice.prepareCdnList();
                 var volumes = volumeService.prepareVolList();
                 var servers = serverService.prepareServerList();
-                var cloudfiles = fileservice.prepareFilesList();
+                var cloudfiles = fileService.prepareFilesList();
                 var networks = networkService.prepareNetworkList();
                 if (servers.length > 0) {
                     reqObj.resources.instances = servers; //add servers to the resources list

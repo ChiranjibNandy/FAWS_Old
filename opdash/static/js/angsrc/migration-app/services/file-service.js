@@ -52,6 +52,50 @@
             return deferred.promise;
         };
 
+        function transformFile(file){
+            for(var key in file)
+                return {
+                    id: file[key]["trans-id"],
+                    name: key,
+                    size: file[key]["bytes-used"],
+                    containerCount: file[key]["container-count"],
+                    };
+        }
+
+        self.getTrimmedItem = function(id,region){
+            var deferred = $q.defer();
+            self.getById(id, region).then(function (response) {
+                if (response.error)
+                    return deferred.resolve(response);
+                return deferred.resolve(transformFile(response.data));
+            });
+            return deferred.promise;
+        };
+
+        self.getById = function (id, region) {
+            var url = "/api/cloud_files/" + region;
+            var tenant_id = authservice.getAuth().tenant_id;
+
+            return HttpWrapper.send(url, { "operation": 'GET' })
+                .then(function (response) {
+                    currentTenant = tenant_id;
+                    files = {
+                        labels: [
+                            { field: "name", text: "File Name" },
+                            { field: "trans-id", text: "id" },
+                            { field: "bytes-used", text: "Size" },
+                            { field: "container-count", text: "Container Count" },
+                            { field: "object-count", text: "Object Count" }
+                        ],
+                        data: response
+                    };
+                    return files;
+                }, function (errorResponse) {
+                    return errorResponse;
+                });
+        };
+
+
         /**
          * @ngdoc method
          * @name getAll
