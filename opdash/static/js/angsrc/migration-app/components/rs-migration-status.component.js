@@ -100,15 +100,8 @@
                     dataStoreService.setPageName("MigrationStatus");
                     $window.localStorage.setItem('pageName',"MigrationStatus");
 
-                    if(authservice.getAuth().is_racker == false){   //get Account Name
-                        var actname = dataStoreService.getAccountName(vm.tenant_id); //this service method is setting the accountname through api
-                        actname.then(function() {
-                            vm.currentUser = authservice.getAuth().account_name;
-                        }); //waiting api promise to resolve
-                    }
-                    else{  //if logged in as a racker then it was sent by racker-dashboard page
-                         vm.currentUser = authservice.getAuth().account_name;
-                    } //end of if condition
+                    vm.currentUser = authservice.account_name; //get Account Name
+                   
                     vm.sortBy = {
                         //current_batch: '-start',
                         completed_batch: '-start',

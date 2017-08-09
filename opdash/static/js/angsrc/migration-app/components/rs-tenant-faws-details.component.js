@@ -55,15 +55,7 @@
                 vm.is_racker =  authservice.is_impersonator;
                 vm.fawsLink = "https://mycloud.rackspace.com/cloud/"+vm.tenant_id+"/tickets#new";
 
-                if(vm.is_racker == false){   //get Account Name
-                    var actname = dataStoreService.getAccountName(vm.tenant_id); //this service method is setting the accountname through api
-                    actname.then(function() {
-                        vm.tenant_account_name = authservice.getAuth().account_name;
-                    }); //waiting api promise to resolve
-                }
-                else{  //if logged in as a racker then it was sent by racker-dashboard page
-                        vm.tenant_account_name = authservice.getAuth().account_name;
-                } //end of if condition
+                vm.tenant_account_name = authservice.account_name; //get Account Name
 
                 vm.auth = authservice.getAuth();
 
