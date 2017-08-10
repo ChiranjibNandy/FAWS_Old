@@ -182,13 +182,6 @@
                  * Starts a batch to migrate all resources selected by user
                  */
                 vm.migrate = function () {
-var scheduleMigration = {
-               migrationName: dataStoreService.getScheduleMigration().migrationName,
-time:dataStoreService.getScheduleMigration().time,
-timezone:dataStoreService.getScheduleMigration().timezone,
-live_migrate: dataStoreService.getScheduleMigration().live_migrate
-}
-             dataStoreService.setScheduleMigration(scheduleMigration); 
                     var requestObj;
                     vm.migrating = true;
                     $('#confirm-migration-modal').modal('hide');

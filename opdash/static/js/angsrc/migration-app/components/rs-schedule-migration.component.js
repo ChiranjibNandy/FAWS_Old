@@ -123,7 +123,7 @@
                             migrationName: dataStoreService.getScheduleMigration().migrationName,
                             time: moment(moment(vm.date).format("YYYY-MM-DD") + "T" + vm.getTime() + timeZoneDiff).unix(),
                             timezone:vm.timezone1,
-                             live_migrate: dataStoreService.getScheduleMigration().live_migrate
+                            live_migrate: dataStoreService.getScheduleMigration().live_migrate
                         };
                     }else{
                         vm.showMigrationTime = true;
@@ -133,6 +133,7 @@
                             migrationName: dataStoreService.getScheduleMigration().migrationName,
                             time: moment().unix(),
                             timezone:new Date().toTimeString().split(" ")[1]+" "+new Date().toTimeString().split(" ")[2],
+                            live_migrate:dataStoreService.getScheduleMigration().live_migrate,
                         };
                     }
                     var iSOTime = moment.unix(vm.migrationScheduleDetails.time).toISOString();
@@ -140,7 +141,7 @@
                         migrationName: dataStoreService.getScheduleMigration().migrationName,
                         time: iSOTime,
                         timezone:new Date().toTimeString().split(" ")[1]+" "+new Date().toTimeString().split(" ")[2],
-live_migrate:dataStoreService.getScheduleMigration().live_migrate,
+                        live_migrate:dataStoreService.getScheduleMigration().live_migrate,
                     };
                     dataStoreService.setScheduleMigration(vm.migrationScheduleDetail);
                     //migrationItems.date = vm.selectedDate;
@@ -179,7 +180,7 @@ live_migrate:dataStoreService.getScheduleMigration().live_migrate,
                             migrationName: dataStoreService.getScheduleMigration().migrationName,
                             time: moment(moment(vm.modifiedDate).format("YYYY-MM-DD") + "T" + vm.getTime() + vm.timeZoneDiff).unix(),
                             timezone:vm.timezone1,
-live_migrate:dataStoreService.getScheduleMigration().live_migrate,
+                            live_migrate:dataStoreService.getScheduleMigration().live_migrate,
                         };
                     dataStoreService.storeDate('timezone',vm.timezone1);
                     if(vm.modifiedDate){
@@ -198,7 +199,7 @@ live_migrate:dataStoreService.getScheduleMigration().live_migrate,
                             migrationName: dataStoreService.getScheduleMigration().migrationName,
                             time: moment(moment(vm.modifiedDate).format("YYYY-MM-DD") + "T" + vm.getTime() + vm.timeZoneDiff).unix(),
                             timezone:vm.timezone1,
-live_migrate:dataStoreService.getScheduleMigration().live_migrate,
+                            live_migrate:dataStoreService.getScheduleMigration().live_migrate,
                         };
                     if(dataStoreService.returnDate().time && dataStoreService.returnDate().time === vm.time)
                         dataStoreService.storeDate('time',dataStoreService.returnDate().time);
