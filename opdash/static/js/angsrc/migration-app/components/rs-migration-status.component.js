@@ -150,7 +150,6 @@
                     }
                     vm.getBatches(true);
                     vm.getAllAlerts();
-                    //vm.getAllTickets();
                 };
 
                 /**
@@ -452,9 +451,13 @@
                     var statusFlag = true;
                     alertsService.getAllTickets(refresh,statusFlag)
                                     .then(function(result) {
-                                        vm.tickets.items = result || [];
-                                        vm.tickets.noOfPages = Math.ceil(vm.tickets.items.length / vm.tickets.pageSize);
-                                        vm.tickets.pages = new Array(vm.tickets.noOfPages);
+                                        if(result){
+                                            vm.tickets.items = result || [];
+                                            vm.tickets.noOfPages = Math.ceil(vm.tickets.items.length / vm.tickets.pageSize);
+                                            vm.tickets.pages = new Array(vm.tickets.noOfPages);
+                                        }else{
+                                            vm.tickets.items = []
+                                        }
                                         vm.loadingTickets = false;
                                     });
                 };
