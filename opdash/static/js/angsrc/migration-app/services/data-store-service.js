@@ -86,6 +86,7 @@
                migrationName:'',
                 time:'',
                 timezone:'',
+                live_migrate:false,
             };
 
             /**

@@ -28,5 +28,12 @@
         </div>
     </div>
     <div ng-show="vm.selectedItems.server.length == 0 && vm.selectedItems.LoadBalancers.length == 0" style="color:red; text-align: center">No items selected</div>
-    <div ng-if="vm.showMessageForSelectedServer">Once migration has started, resources will be migrated to your destination. You are responsible for any usage costs incurred during the migration process, as well as any resource clean up required following your migration</div>
+    <div ng-if="vm.showMessageForSelectedServer">Once migration has started, resources will be migrated to your destination. You are responsible for any usage costs incurred during the migration process, as well as any resource clean up required following your migration.
+                <div style=" float: left;  padding-top: 20px;">
+                    <div class="faws-legal-txt" >
+                        <input id="accept_terms" name="accept_terms" type="checkbox" ng-model="vm.acceptLiveMigrations"   ng-checked =vm.acceptLiveMigrations required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required" ng-change="vm.selectLiveMigration()">                        <span class="ng-binding">When enabled, the Rackspace Migration Manager will not shut down the instance before migrating the image.  When this option is used, file system integrity on the migrated image cannot be guaranteed. </a>.</span>
+                    </div>
+                    </div>
+                    </div>
 </div>
+   

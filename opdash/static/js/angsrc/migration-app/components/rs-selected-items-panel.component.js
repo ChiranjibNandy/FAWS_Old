@@ -54,6 +54,7 @@
                     vm.networksForServer = {};
                     vm.cbsForServer = {};
                     vm.isRacker = authservice.is_racker;
+                    vm.acceptLiveMigrations = dataStoreService.selectedTime.live_migrate;
                     //added text under the selected resources in the confirmation page
                     vm.showMessageForSelectedServer = false;
                     if ($window.localStorage.pageName == "ConfirmMigration") {
@@ -156,7 +157,16 @@
                     }
                 }
 
+                //setting live migrations flag
 
+                vm.selectLiveMigration = function () {
+                    if (vm.acceptLiveMigrations == true) {
+                        dataStoreService.selectedTime.live_migrate = true;
+                    }
+                    else {
+                        dataStoreService.selectedTime.live_migrate = false;
+                    }
+                }
 
                 return vm;
             }]
