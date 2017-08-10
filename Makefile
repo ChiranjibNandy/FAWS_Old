@@ -114,6 +114,15 @@ release: require-env ## Tag and push a Docker image to ECR
 show-latest-release: ## Print the tag of the latest released image
 	@$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) show_latest_release
 
+show-latest-release-hash: ## Print the commit hash of the latest released image
+	@$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) show_latest_release_hash
+
+show-latest-release-repo: ## Print the repo name of the latest released image
+	@$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) show_latest_release_repo
+
+show-latest-release-branch: ## Print the branch of the latest released image
+	@$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) show_latest_release_branch
+
 promote-pull: require-env ## Pull an image down for promotion (supports RELEASE=<image_tag>)
 	$(OPS_VENV_ACTIVATE) && ENV=$(ENV) $(OPDASH_CP_OPS) promote_pull
 
