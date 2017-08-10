@@ -289,6 +289,9 @@
                         //For repeated fetch of resources after first time loading.
                         vm.items = JSON.parse($window.localStorage.allServers);
                         angular.forEach(vm.items, function (item) {
+                            if(item.selected == true){
+                                item.selected = false;
+                            }
                             if(item.canMigrate == true){ 
                                 vm.activeItemCount++;
                             }
@@ -334,7 +337,6 @@
                         if(savedServers.length != 0){
                             angular.forEach(vm.items, function (item) {
                                 for(var i=0;i<savedServers.length;i++){
-                                    item.selected = false;
                                     if(savedServers[i].rrn == item.rrn){
                                         item.selected = true;
                                         item.selectedMapping = savedServers[i].selectedMapping;

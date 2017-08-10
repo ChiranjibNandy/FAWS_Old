@@ -979,3 +979,8 @@ background-color:#dddddd !important;
 .custom-sort-a{
     color: #666;
 }
+
+#step_aws_done {
+    color:green;
+    font-size: 18px;
+}
