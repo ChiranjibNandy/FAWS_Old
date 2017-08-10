@@ -13,7 +13,8 @@
                 <th class="rs-table-checkbox">
                     <!-- <input type="checkbox" style="font-size: 10px" ng-disabled="vm.eligCallInProgress" ng-model="vm.isAllSelected" ng-change="vm.changeItemSelection()" /> -->
                 </th>
-                <th ng-repeat="label in vm.labels" ng-init="label.reverse = false" ng-click="vm.sort(label.field); label.reverse = !label.reverse" ng-class="{'tab-width':label.field == 'name'}">
+                <th ng-repeat="label in vm.labels" ng-init="label.reverse = false" ng-click="vm.sort(label.field); label.reverse = !label.reverse"
+                    ng-class="{'tab-width':label.field == 'name'}">
                     <a href="javascript:void(0)" class="rs-table-sort" ng-class=" {'custom-table-sort-asc current-sort-param': (label.reverse && vm.propertyName == label.field), 'custom-table-sort-desc current-sort-param': (!label.reverse && vm.propertyName == label.field), 'custom-table-sort-desc': vm.propertyName != label.field}">
                         <span class="rs-table-sort-text">{{label.text}}</span>
                         <span class="rs-table-sort-indicator"></span>
@@ -30,8 +31,7 @@
     </div>
     <div ng-show="vm.loadError" class="rs-table-overlay rs-table-overlay-error">
         <div class="rs-table-overlay-content">
-            <div class="rs-table-overlay-message"><i class="rs-icon-error-indicator"></i>
-                Error encountered. Please try again.
+            <div class="rs-table-overlay-message"><i class="rs-icon-error-indicator"></i> Error encountered. Please try again.
             </div>
         </div>
     </div>
@@ -40,14 +40,15 @@
 <div class="pagination pagination-mini span-4" ng-if="vm.totalItems && vm.itemsEligible">
     <ul>
         <li ng-class="{disabled: vm.currentPage == 1}" ng-click="vm.currentPage=vm.currentPage-1;vm.pageChangeEvent()"><a href="">Prev</a></li>
-        <li ng-repeat="n in vm.pageArray" ng-click="vm.currentPage = $index+1;vm.pageChangeEvent()" ng-class ="{current: vm.currentPage == $index+1}"><a  ng-class ="{current: vm.currentPage == $index+1}" ng-style="{'background-color': vm.currentPage == $index+1 ? '#D3D3D3' : 'white'}" href="">{{n}}</a></li>
+        <li ng-repeat="n in vm.pageArray" ng-click="vm.currentPage = $index+1;vm.pageChangeEvent()" ng-class="{current: vm.currentPage == $index+1}"><a ng-class="{current: vm.currentPage == $index+1}" ng-style="{'background-color': vm.currentPage == $index+1 ? '#D3D3D3' : 'white'}"
+                href="">{{n}}</a></li>
         <li ng-class="{disabled: vm.currentPage == vm.noOfPages}" ng-click="vm.currentPage=vm.currentPage+1; vm.pageChangeEvent()"><a href="">Next</a></li>
         <li><span>Showing {{(vm.currentPage == 1 ? vm.currentPage : ((vm.currentPage-1)*5)+1)}}-{{(vm.currentPage == vm.noOfPages ? vm.totalItems : vm.currentPage*5)}} of {{vm.items.length}}</span></li>
     </ul>
 </div>
 <!--<div static-include="'/static/angtemplates/migration/equipment-details.html'"></div>-->
 <script type="text/javascript">
-    $(function() {
+    $(function () {
         $('.keywords').tablesorter();
     });
 </script>
