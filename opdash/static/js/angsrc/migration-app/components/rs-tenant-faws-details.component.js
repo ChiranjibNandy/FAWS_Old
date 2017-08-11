@@ -248,6 +248,13 @@
                             };
                     });
                 }
+            
+                //function to clear faws account modal
+                vm.clearFawsAccountModal =function(){
+                    vm.fawsAcctName = "";
+                    vm.acceptTermsAndConditions = false;
+                }
+
                 return vm;
             }]
         }); // end of component definition

@@ -92,7 +92,7 @@
 <div id="request-faws-account-modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clearFawsAccountModal()"><i class="fa fa-times"></i></button>
         <big ng-hide="vm.fawsCreated">Please provide following details to request a new AWS account.</big>
         <big ng-show="vm.fawsCreated">Success !</big>
     </div>
@@ -120,8 +120,8 @@
                     </br>
                     </br>
                     <div class="row" style="padding-top: 8px;">
-                        <input type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required">&nbsp &nbsp
-                        <span class="ng-binding">Check here to indicate that you have read and agree to the terms of the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a>, <a href="https://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Product Terms</a>,&nbsp and<a href="https://Rackspace.com/information/legal/migrationmanagertool" target="_blank"> Rackspace Migration Manager Terms</a>.</span>
+                        <input type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required">&nbsp
+                        <span class="ng-binding">Check here to indicate that you have read and agree to the terms of the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a>, <a href="https://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Product Terms</a>,and<a href="https://Rackspace.com/information/legal/migrationmanagertool" target="_blank"> Rackspace Migration Manager Terms</a>.</span>
                     </div>
                 </div>
             </form>
@@ -131,12 +131,12 @@
         <a class="rs-btn rs-btn-primary" ng-class="{disabled:!vm.fawsAcctName || !vm.serviceLevel || !vm.acceptTermsAndConditions}" ng-click="vm.createFawsAccount(true)" ng-hide="vm.fawsError || vm.fawsCreationProgress || vm.fawsCreated">Submit</a>
         <a class="rs-btn rs-btn-primary disabled" disabled="disabled" ng-show="vm.fawsCreationProgress">Submitting...</a>
         <i class="rs-processing-indicator" ng-show="vm.fawsCreationProgress"></i>
-        <a class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.fawsCreationProgress}">Close</a>
+        <a class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.fawsCreationProgress}" ng-click="vm.clearFawsAccountModal()">Close</a>
     </div>
 </div>
 <div id="delete-faws-account-modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ><i class="fa fa-times"></i></button>
         <big>Select one of the account from the dropdown to delete.</big>
     </div>
     <div class="modal-body">

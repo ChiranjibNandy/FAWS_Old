@@ -94,7 +94,7 @@
 
 <div id="intro_modal" class="modal hide animated fadeIn details" data-keyboard="false" role="dialog">
     <br>
-    <div class="modal-body" style="max-height:550px !important">
+    <div class="modal-body" style="max-height:550px !important;overflow-y: visible">
         <h1 ng-hide="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker" class="rs-page-title">Welcome to the Rackspace Migration Manager!</h1>
         <h1 ng-show="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker" class="rs-page-title">Migrating to Fanatical Support for AWS</h1>
         <div class="rs-row">
@@ -209,10 +209,10 @@
                     </span>
                 </span>
                 </span>  
-                  <span  class="control-label-cust" style ="float: initial; margin-left: 95px;margin-right: 212px;" ng-hide = "vm.fawsCreated">
+                  <span  class="control-label-cust" style ="float: initial; margin-left: 132px;margin-right: 212px;" ng-hide = "vm.fawsCreated">
                                         <input  type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required"> </span>
-                <span  class="control-label-cust" style ="float: right; width: 55%;margin-left: 3px; margin-right: -18px;" ng-hide = "vm.fawsCreated">
-&nbsp <span class="ng-binding"><p style="margin-top: -22px;">Check here to indicate that you have read and agree to the terms of the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a>, <a href="https://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Product Terms</a>,&nbsp and<a href="https://Rackspace.com/information/legal/migrationmanagertool" target="_blank"> Rackspace Migration Manager Terms</a>.</p></span>
+                <span  class="control-label-cust" style ="float: right; width: 53%;margin-left:-5px; margin-right:-41px;" ng-hide = "vm.fawsCreated">
+&nbsp <span class="ng-binding"><p style="margin-top: -22px;">Check here to indicate that you have read and agree to the terms of the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a>, <a href="https://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Product Terms</a>,and<a href="https://Rackspace.com/information/legal/migrationmanagertool" target="_blank"> Rackspace Migration Manager Terms</a>.</p></span>
                      </span>
             </div> 
             
