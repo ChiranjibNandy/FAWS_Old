@@ -1,5 +1,5 @@
-<div class="plain-panel" ng-style="{'min-height': vm.showrec === 'true' ? '240px' : 'initial'}">
-     <a ng-link="['MigrationResourceList']" ng-show="vm.showrec === 'true'" class="rs-btn-action rs-pull-right"><i class="rs-edit" title="Modify this"></i> </a>
+<div class="plain-panel" ng-style="{'min-height': vm.showrec === 'true' ? '240px' : 'initial'}" style="overflow: auto; overflow-x: hidden;overflow-y: hidden;">
+    <a ng-link="['MigrationResourceList']" ng-show="vm.showrec === 'true'" class="rs-btn-action rs-pull-right"><i class="rs-edit" title="Modify this"></i> </a>
     <h4 ng-show="vm.showrec === 'false'">Items Selected</h4>
     <h3 ng-show="vm.showrec === 'true'">Resources Selected</h3>
     <hr style="margin-bottom: 10px !important;">
@@ -14,8 +14,10 @@
             <div id="server-name" class="accordion-body collapse " ng-if="vm.selectedItems.server.length > 0">
                 <div class="accordion-inner">
                     <div class="selected-items" ng-repeat="item in vm.selectedItems.server">
-                        <div><a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'server')" ng-show="vm.showrec == 'false'"><i class="fa fa-times-circle"></i></a><b title="({{item.details.networks.length}}) Networks: {{vm.networksToServer(item).toString()}}&#013;({{item.details.cbs_volumes.length}}) CBS: {{vm.cbsToServer(item).toString()}}"> {{item.name}} </b>
-                        <i class="fa fa-arrow-right fa fw" ng-if="vm.showrec == 'true'"></i><span ng-if="vm.showrec == 'true'"> {{item.selectedMapping.region}} - {{item.selectedMapping.instance_type}} </span></div>
+                        <div><a href="javascript:void(0)" target="_self" ng-click="vm.removeItem(item,'server')" ng-show="vm.showrec == 'false'"><i class="fa fa-times-circle"></i></a>
+                            <b title="({{item.details.networks.length}}) Networks: {{vm.networksToServer(item).toString()}}&#013;({{item.details.cbs_volumes.length}}) CBS: {{vm.cbsToServer(item).toString()}}">
+                            {{item.name}} </b>
+                            <i class="fa fa-arrow-right fa fw" ng-if="vm.showrec == 'true'"></i><span ng-if="vm.showrec == 'true'"> {{item.selectedMapping.region}} - {{item.selectedMapping.instance_type}} </span></div>
                         <div ng-repeat="network in item.details.networks">
                             <span class="tab">- (Network) {{network.name}}</span>
                         </div>
@@ -28,12 +30,15 @@
         </div>
     </div>
     <div ng-show="vm.selectedItems.server.length == 0 && vm.selectedItems.LoadBalancers.length == 0" style="color:red; text-align: center">No items selected</div>
-    <div ng-if="vm.showMessageForSelectedServer">Once migration has started, resources will be migrated to your destination. You are responsible for any usage costs incurred during the migration process, as well as any resource clean up required following your migration.
-                <div style=" float: left;  padding-top: 20px;">
-                    <div class="faws-legal-txt" >
-                        <input id="accept_terms" name="accept_terms" type="checkbox" ng-model="vm.acceptLiveMigrations"   ng-checked =vm.acceptLiveMigrations required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required" ng-change="vm.selectLiveMigration()">                        <span class="ng-binding">When enabled, the Rackspace Migration Manager will not shut down the instance before migrating the image.  When this option is used, file system integrity on the migrated image cannot be guaranteed. </a>.</span>
-                    </div>
-                    </div>
-                    </div>
+    <div ng-if="vm.showMessageForSelectedServer" style="line-height:15px; max-width: 489px;">Once migration has started, resources will be migrated to your destination. You are responsible for any usage costs incurred
+        during the migration process, as well as any resource clean up required following your migration.
+        <div style=" float: left;  padding-top: 20px;">
+            <div class="faws-legal-txt">
+                <input id="accept_terms" name="accept_terms" type="checkbox" ng-model="vm.acceptLiveMigrations" ng-checked=vm.acceptLiveMigrations
+                    required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required" ng-change="vm.selectLiveMigration()">                <span style="font-weight: 700;font-size:13px;">Live Migration  </span> </div>
+            <div class="faws-legal-txt" style="font-size:13px; max-width:525px;">
+                <span class="ng-binding">When enabled, the Rackspace Migration Manager will not shut down the instance before migrating the image.  When this option is used, file system integrity on the migrated image cannot be guaranteed. </a></span>
+            </div>
+        </div>
+    </div>
 </div>
-   
