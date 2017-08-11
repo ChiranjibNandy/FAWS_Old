@@ -38,10 +38,6 @@
                                 <br>
                                 <small>* Navigator cost not reflected here.</small>
                                 <br>
-                                <!--<small>Legal <a data-html="true"  data-placement="top" data-toggle="popover" data-content="<b>Please note that we may place a $1 authorization hold to confirm your account.</b> <br>
-                                <small>(Our lawyers make us say this)</small>
-                                <br> Your use of Rackspace websites is subject to the <a href='http://www.rackspace.com/information/legal/websiteterms?_ga=1.254955403.24213883.1488833556' target='_blank'>Website Terms</a>." ><i class="fa fa-info-circle rs-quiet"></i></a>
-                                </small>-->
                             </p>
                         </div>
                     </div>
@@ -50,11 +46,11 @@
                 <br>
                 <div class="rs-pull-right">
                     <div class="faws-legal-txt">
-                        <input id="accept_terms" name="accept_terms" type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required">                        <span class="ng-binding"> I acknowledge that I have read and accept the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a> and the <a href="http://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Terms and Conditions</a>.</span>
+                        <input id="accept_terms" name="accept_terms" type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required"><span class="ng-binding"> I acknowledge that I have read and accept the <a href="https://www.rackspace.com/information/legal/GSA" target="_blank">Rackspace Global Services Agreement</a>, <a href="http://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Product Terms</a>, and the <a href="https://rackspace.com/information/legal/migrationmanagertool" target="_blank">Rackspace Migration Manager Terms.</a></span>
                     </div>
                     <a class="rs-btn " ng-link="['MigrationRecommendation']">Back</a>
                     <rssaveprogress stepname="ConfirmMigration" type="button" class="ng-isolate-scope"></rssaveprogress>
-                    <button class="rs-btn rs-btn-primary " type="submit" ng-hide="vm.migrating" ng-click="vm.disableButton($event);vm.checkStatus()" ng-disabled="(!vm.scheduleMigration || !vm.acceptTermsAndConditions || !vm.emptyEquipments)  ">Confirm & Schedule</button>
+                    <button class="rs-btn rs-btn-primary " type="submit" ng-hide="vm.migrating" ng-click="vm.disableButton($event);vm.checkStatus()" ng-disabled="(!vm.scheduleMigration || !vm.acceptTermsAndConditions || !vm.emptyEquipments)">Confirm & Schedule</button>
                     <a class="rs-btn disabled" disabled="disabled" ng-show="vm.migrating">Scheduling...</a>
                     <i class="rs-processing-indicator" ng-show="vm.migrating"></i>
                 </div>
@@ -69,23 +65,6 @@
     <rsinteractivefooter></rsinteractivefooter>
 
     <!-- modals -->
-    <!-- confrm migration modal -->
-    <div id="confirm-migration-modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true">
-        <div class="modal-header">
-            <h3>You have chosen this time for your migration.</h3>
-        </div>
-        <div class="modal-body">
-            <h3>{{vm.schedule.date}} </h3>
-            <p>Is this correct?</p>
-            <div class="rs-control-group">
-                <a ng-click="vm.migrate()" ng-show="!vm.migrating" class="rs-btn rs-btn-primary">Yes, Continue</a>
-                <a class="rs-btn" data-dismiss="modal" aria-hidden="true">No, Go back</a>
-            </div>
-        </div>
-        <div class="modal-footer">
-        </div>
-    </div>
     <!-- duplicate-instance modal -->
     <div id="duplicate-instance" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
@@ -114,49 +93,6 @@
         </div>
         <div class="modal-footer">
             <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</a>
-        </div>
-    </div>
-    <!-- confrm migration modal faws modal-->
-    <div id="confirm-migration-modalFAWS" class="modal modal-warning modal-success hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true">
-        <div class="modal-header">
-            <h3>Confirm your Migration &amp; FAWS account. </h3>
-        </div>
-        <div class="modal-body">
-            <!-- <div class="rs-row">
-                 <div class="span-5">
-                    <img src="images/FAWS-logo.jpg" alt="FAWS logo" class="FAWS-logo">
-                </div> 
-                <div class="span-7">
-                    <br>
-                    <h3>Confirm your Migration &amp; FAWS account. </h3>
-                </div><br>
-            </div>-->
-            <div class="rs-row">
-                <div class="span-2">
-                    <i class="fa fa-calendar fa-4x fa-fw"></i>
-                </div>
-                <div class="span-10">
-                    <big><b>Migration initiated for:</b><br>
-                    {{vm.schedule.date}}</big>
-                </div>
-            </div>
-
-            <br>
-            <hr>
-            <big>We are creating a new FAWS account for you, <br> what would you like to name it?</big>
-            <br>
-            <br>
-            <input type="text" class="rs-input-xlarge" placeholder="FAWS AccountName" />
-            <br>
-            <b>Please note that we may place a $1 authorization hold to confirm your account.</b> <br>
-            <small>(Our lawyers make us say this)</small>
-            <br> Your use of Rackspace websites is subject to the <a href='http://www.rackspace.com/information/legal/websiteterms?_ga=1.254955403.24213883.1488833556'
-                target='_blank'>Website Terms</a>.</small>
-        </div>
-        <div class="modal-footer">
-            <a ng-click="vm.migrate()" ng-show="!vm.migrating" class="rs-btn rs-btn-primary">Submit &amp; Continue </a>
-            <a class="rs-btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
         </div>
     </div>
     <!-- end modals -->
