@@ -136,8 +136,6 @@
                     vm.itemsEligible = false;
                     vm.noData = false;
                     vm.sortingOrder = true;
-                    vm.isAllselected = false;
-                    // vm.disableSelectAll = false;
                     vm.reverse = false;
                     vm.propertyName = "name";
                     vm.activeItemCount = 0;
@@ -273,7 +271,6 @@
                             angular.forEach(results[0].labels, function (label) {
                                 vm.search[label.field] = ""; // set search field variables
                             });
-                            // vm.parent.itemsLoadingStatus(false);
                             vm.itemsEligible = true;
                             vm.loading = false;
                         }, function (error) {
@@ -302,7 +299,6 @@
                             vm.pageArray.push(i);
                         };
 
-                        //vm.labels = datastoreservice.retrieveallItems("label"+vm.type); // set table headers -- Previous Code
                         if ($window.localStorage.serverLabels !== undefined)
                             vm.labels = JSON.parse($window.localStorage.serverLabels);
                         else
@@ -349,9 +345,6 @@
                             count++;
                             vm.parent.addItem(item_selected, vm.type);
                         });
-                        if (count) {
-                            vm.isAllSelected = count === vm.activeItemCount;
-                        }
                     }
 
                     // Setup status filters
@@ -377,8 +370,6 @@
                         for (var i = 0; i < vm.items.length; i++) {
                             if (vm.items[i].rrn === item.rrn) vm.items[i].selected = false;
                         }
-                        //item.selected = false;
-                        vm.isAllSelected = false;
                     }
                 });
 
@@ -405,24 +396,7 @@
                         for (var i = 0; i < vm.items.length; i++) {
                             if (vm.items[i].selected) count++;
                         }
-                        vm.isAllSelected = count === vm.activeItemCount;
                     }
-                };
-
-                /**
-                 * @ngdoc method
-                 * @name changeItemSelection
-                 * @methodOf migrationApp.controller:rsmigrationitemCtrl
-                 * @description 
-                 * Update item selection based on Select/Deselect all
-                 */
-                vm.changeItemSelection = function () {
-                    angular.forEach(vm.items, function (item) {
-                        if (item.canMigrate == true && item.eligibiltyTests.length) {
-                            item.selected = vm.isAllSelected;
-                            vm.changeSelectAll(item, true);
-                        }
-                    });
                 };
 
                 /**
@@ -453,16 +427,6 @@
                     vm.items = items;
                     vm.pageChangeEvent();
                 };
-
-                //store slog status
-                /* vm.storeStatus = function(type,name){
-                     vl.storeLog(
-                         {'name':name,
-                          'type':type
-                         }
-                         );
-                     $rootRouter.navigate(["MigrationLogDetails", {type: vm.type}])
-                 }*/
 
                 // Get count of items by their status type
                 vm.getCountByStatus = function (status) {
@@ -513,7 +477,6 @@
                 }
                 var timeout = null;
                 $scope.$watch('vm.filtervalue', function (query) {
-                    // vm.filteredArr = $filter("filter")(vm.items, vm.filtervalue);
                     vm.filteredArr = vm.items.filter(item => item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase()) != -1 || item.ip_address.indexOf(vm.filtervalue) != -1 || item.ram == vm.filtervalue || item.status.toLowerCase().indexOf(vm.filtervalue.toLowerCase()) != -1 || item.eligible.toLowerCase().indexOf(vm.filtervalue.toLowerCase()) != -1 || item.migStatus.toLowerCase().indexOf(vm.filtervalue.toLowerCase()) != -1);
                     // pagination controls
                     vm.currentPage = 1;
@@ -560,7 +523,6 @@
                                                 } else if (ID == item.id && testCase.type != "success") {
                                                     item.eligible = 'Failed';
                                                     keepGoing = false;
-                                                    //enable this once API works fine
                                                     item.canMigrate = false;
                                                     item.migStatus = "Not Available to Migrate";
                                                     item.eligibiltyTests = descriptions;
@@ -573,7 +535,6 @@
                                 //store eligibility test results for servers with test result as 'success'
                                 $window.localStorage.eligibilityResults = JSON.stringify(vm.items.filter(item => item.eligible == 'Passed'))
                                 $window.localStorage.allServers = JSON.stringify(vm.items);
-                                //to be enabled once precheck call is up
                                 vm.parent.itemsLoadingStatus(false);
                                 vm.itemsEligible = true;
                             } else {
@@ -596,7 +557,6 @@
                                 }
                                 $window.localStorage.allServers = JSON.stringify(vm.items);
                             }
-                            //to be removed after eligibilty API works
                             if (firstRun) {
                                 angular.forEach(item, function (server) {
                                     vm.checkingEligibility[server.id] = false;
@@ -609,12 +569,7 @@
                             }
                             vm.eligCallInProgress = false;
                         }, function (error) {
-                            // vm.loading = false;
-                            // vm.loadError = true; //to be enabled once precheck call is up.  
-                            // return
-                        });
-
-                    // });
+                    });
                 };
 
                 /**

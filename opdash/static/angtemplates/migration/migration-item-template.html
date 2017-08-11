@@ -11,7 +11,6 @@
             <tr>
                 <th class="rs-table-status"></th>
                 <th class="rs-table-checkbox">
-                    <!-- <input type="checkbox" style="font-size: 10px" ng-disabled="vm.eligCallInProgress" ng-model="vm.isAllSelected" ng-change="vm.changeItemSelection()" /> -->
                 </th>
                 <th ng-repeat="label in vm.labels" ng-init="label.reverse = false" ng-click="vm.sort(label.field); label.reverse = !label.reverse"
                     ng-class="{'tab-width':label.field == 'name'}">
@@ -46,7 +45,6 @@
         <li><span>Showing {{(vm.currentPage == 1 ? vm.currentPage : ((vm.currentPage-1)*5)+1)}}-{{(vm.currentPage == vm.noOfPages ? vm.totalItems : vm.currentPage*5)}} of {{vm.items.length}}</span></li>
     </ul>
 </div>
-<!--<div static-include="'/static/angtemplates/migration/equipment-details.html'"></div>-->
 <script type="text/javascript">
     $(function () {
         $('.keywords').tablesorter();
