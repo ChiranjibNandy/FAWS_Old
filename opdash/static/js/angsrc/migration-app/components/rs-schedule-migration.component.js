@@ -54,7 +54,7 @@
                 var roundUp = m.minute()  ||  m.second()  ||  m.millisecond()  ?  m.add(1,  'hour').startOf('hour')  :  m.startOf('hour');                    
                 vm.time = roundUp.format('hh:mma');                    
                 vm.initTime = new  Date().toLocaleTimeString();                    
-                vm.date = m.format("YYYY-MM-DD");
+                vm.date = moment().format("YYYY-MM-DD");
                 $('#datetimepickerAdd').val(vm.date);                    
                 vm.selectedDate = moment().format('MMMM Do YYYY ')  +  ' at '  +  moment().format('h:mma')  +  ' '  +  new  Date().toTimeString().slice(8,  42);
                 if (dataStoreService.returnDate() !== null && dataStoreService.returnDate() !== {} && dataStoreService.returnDate().date !== "") {
@@ -198,10 +198,12 @@
                         });
                     } else {
                         vm.time = vm.timeIntervals[0];
-                        if (vm.showTimeForm == true && !vm.error) $rootScope.$emit("vm.scheduleMigration", {
-                            'vm.scheduleMigration': true,
-                            'whichTime': "schedule"
-                        });
+                        if (vm.showTimeForm == true && !vm.error) {
+                            $rootScope.$emit("vm.scheduleMigration", {
+                                'vm.scheduleMigration': true,
+                                'whichTime': "schedule"
+                            });
+                        }
                     }
 
                     if (vm.timeIntervals.length && !vm.error) {
