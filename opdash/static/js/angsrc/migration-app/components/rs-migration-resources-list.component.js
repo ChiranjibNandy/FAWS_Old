@@ -420,7 +420,7 @@
                     if(rack){
                         requestObj = {
                             'account_name' : vm.fawsAcctName,
-                            'service_level' : vm.serviceLevel
+                            'service_level' : "navigator"
                         }
                         promise = dataStoreService.createFawsAccount(requestObj);
                     }
