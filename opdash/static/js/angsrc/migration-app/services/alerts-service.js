@@ -110,7 +110,7 @@
                                             tickets = result.tickets;
                                             return result;
                                         }, function(errorResponse) {
-                                            return errorResponse;
+                                            return false;
                                         });
                 } else {
                     return $q.when(tickets);
