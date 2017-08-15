@@ -253,6 +253,7 @@
                  * Gets the list of all batches initiated by the current tenant
                  */
                 vm.getBatches = function (refresh) {
+                    var self = this;
                     if (refresh){
                         vm.manualRefresh = true;
                         vm.timeSinceLastRefresh = 0;
@@ -291,23 +292,8 @@
                                     }
                                     if (validCompletedBatchStatus.indexOf(job.batch_status) >= 0)
                                         completedBatches.push(job);
-                                        job.completed_at =convertUTCDateToLocalDate(new Date(job.completed_at));
+                                        job.completed_at = vm.convertUTCDateToLocalDate(new Date(job.completed_at));
                                 });
-
-                                //--------------WHY FUNCTION convertUTCDateToLocalDate IS IN MIDDLE OF SUCCESS CALL, WE HAVE TO CHANGE IT --------------
-
-
-                                //function to convert utc date time to local date time and will be used for converting completed batches time.
-                                function convertUTCDateToLocalDate(date) {
-                                    var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
-                                    var offset = date.getTimezoneOffset() / 60;
-                                    var hours = date.getHours();
-                                    newDate.setHours(hours - offset);
-                                    return newDate;   
-                                }
-
-                                //currentBatches = tempcurrentBatches.filter(x=>x.batch_status=='started').concat(tempcurrentBatches.filter(x=>x.batch_status=='in progress')).concat(tempcurrentBatches.filter(x=>x.batch_status=='paused')).concat(tempcurrentBatches.filter(x=>x.batch_status=='scheduled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='canceled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='error'))
-                                
                                 //Create an empty array that would hold the current batch details with a few newly assigned properties for paused and in progress batches
                                 var migrationProgress = tempcurrentBatches.filter(x=>x.batch_status=='started').concat(tempcurrentBatches.filter(x=>x.batch_status=='in progress'));//.concat(tempcurrentBatches.filter(x=>x.batch_status=='paused'));
                                 var promises = migrationProgress.map(function(batch){
@@ -388,6 +374,21 @@
                             });
                     }, 3000);
                 };
+
+                /**
+                 * @ngdoc method
+                 * @name convertUTCDateToLocalDate
+                 * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                 * @description 
+                 * This Function helps to convert utc date time to local date time and will be used for converting completed batches time.
+                 */
+                vm.convertUTCDateToLocalDate = function(date) {
+                    var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
+                    var offset = date.getTimezoneOffset() / 60;
+                    var hours = date.getHours();
+                    newDate.setHours(hours - offset);
+                    return newDate;   
+                }
 
                 /**
                  * @ngdoc method
@@ -631,3 +632,4 @@
                 }]
             }); // end of comeponent rsmigrationstatus
 })();
+

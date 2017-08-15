@@ -439,6 +439,9 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        $('[data-toggle="popover"]').popover({
+            html: true
+        });
         var index,elements = $('li[class*=" racker-nav-item active"]');
         if(elements.length != 0){
             for(index =0;index<elements.length;index++){
