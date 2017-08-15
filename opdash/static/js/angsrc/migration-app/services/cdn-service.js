@@ -27,8 +27,7 @@
                     {
                         "source":{
                             "id":service.id
-                        },
-                        "destination":{}
+                        }
                     }
                 )
             });
