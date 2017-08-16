@@ -161,7 +161,7 @@
                     var nd = new Date(utc + (3600000 * Number(calOffset)));
                     vm.modifiedDate = moment(nd.toLocaleDateString('en-US')).format("YYYY-MM-DD");
                     if (vm.date == vm.modifiedDate) {
-                        var currentTime = nd.toLocaleTimeString();
+                        var currentTime = nd.toLocaleTimeString('en-US', { hour12: false });
                         var timeIndex = (Number(currentTime.split(":", 2)[0]) * 4) + Math.round(Number(currentTime.split(":", 2)[1]) / 15);
                         vm.timeIntervals = vm.timeItems.slice(timeIndex + 1, vm.timeItems.length + 1);
                     } else {
