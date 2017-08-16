@@ -134,9 +134,7 @@
 
                     auth = authservice.getAuth(),
                     names = prepareNames(),
-                    instancesReqList = [],
-                    networksReqList = [],
-
+                    
                     reqObj = {
                         metadata: {
                             batch_name: $window.localStorage.migrationName || dataStoreService.getScheduleMigration().migrationName,
@@ -154,13 +152,13 @@
                         resources: {},
                         version: "v1"
                     };
+                
+                reqObj.resources.instances = serverService.prepareServerList(); //add servers to the resources list
+                if (reqObj.resources.instances.length != 0) { //add networks to the resources list iff there are any servers selected
+                    reqObj.resources.networks = networkService.prepareNetworkList();
+                }
 
-                // prepare servers/instances request object
-                serverService.prepareServerInstance();
-
-                // prepare networks request object
-                // TODO(Team): After rrn changes in migrator, update id prop.
-                networkService.prepareNetworkInstance();
+                //add start time in the request object    
                 var currEPOCHTime = moment().unix();
                 var currISOTime = moment().toISOString();
                 if (dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < (currISOTime)) {
@@ -172,13 +170,8 @@
                     reqObj.start = moment.unix(isoDateTime).toISOString();
                     dataStoreService.selectedTime.time = reqObj.start;
                 }
-
-                reqObj.resources.instances = serverService.prepareServerInstance(); //add servers to the resources list
-                if (networkService.prepareNetworkInstance().length !=0) { //add networks to the resources list iff there are any networks
-                    reqObj.resources.networks = networkService.prepareNetworkInstance();
-                }
-
-                return reqObj;
+    
+                return reqObj; //this is the final job-spec object 
             }//end of prepareJobRequest method
 
             /**
@@ -209,13 +202,9 @@
                         version: "v1"
                     };
 
-                // prepare servers/instances request object
-                serverService.prepareServerInstance();
-                // prepare networks request object
-                networkService.prepareNetworkInstance();
-                reqObj.resources.instances = serverService.prepareServerInstance(); //add servers to the resources list
-                if (networkService.prepareNetworkInstance().length != 0) { //add networks to the resources list iff there are any networks
-                    reqObj.resources.networks = networkService.prepareNetworkInstance();
+                reqObj.resources.instances = serverService.prepareServerList(); //add servers to the resources list
+                if (reqObj.resources.instances.length != 0) { //add networks to the resources list iff there are any servers selected
+                    reqObj.resources.networks = networkService.prepareNetworkList();
                 }
                 return reqObj;
             }//end of preparePrereqRequest method.

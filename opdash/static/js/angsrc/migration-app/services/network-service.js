@@ -198,36 +198,65 @@
             * @description
             * prepare network instance request object
             */
-            self.prepareNetworkInstance = function (networksReqList) {
-                if ($window.localStorage.selectedServers !== undefined) {
-                    var equipments = {
-                        instances: JSON.parse($window.localStorage.selectedServers),//dataStoreService.getItems("server")
-                        networks: datastoreservice.getDistinctNetworks()
-                    }
-                }
+            self.prepareNetworkList = function (networksReqList) {
                 var networksReqList = [];
-                networksReqList = equipments.networks.map(function (network) {
-                    return {
-                        source: {
-                            region: network.region.toUpperCase()
-                        },
-                        destination: {
-                            region: network.destRegion, //.toUpperCase(),
-                            default_zone: network.destZone || default_zone
-                        },
-                        subnets: [
-                            {
-                                id: network.rrn
+
+                if ($window.localStorage.selectedServers !== undefined) {
+                    var networks = datastoreservice.getDistinctNetworks();
+                    // var instanceList =[];
+
+                    angular.forEach(networks, function (distinctNetwork) {
+                        var pushed=0;
+                        for(var i=0;i<networksReqList.length;i++){
+                            if(networksReqList[i].destination.region === distinctNetwork.destRegion) { //if the region match add only subnet id and instance id
+                                var subnetList = [];    
+                                for(var j=0; j<networksReqList[i].subnets.length; j++) //fetch list of all subnnet ids of this network
+                                    subnetList[j] = networksReqList[i].subnets[j].id;
+
+                                if(subnetList.indexOf(distinctNetwork.rrn) == -1) { //to avoid multiple entries
+                                    networksReqList[i].subnets.push({id:distinctNetwork.rrn});
+                                    subnetList.push(distinctNetwork.rrn);
+                                }
+
+                                var instanceList =[];
+                                for(var j=0; j<networksReqList[i].instances.length; j++) //fetch list of all instances of this network
+                                    instanceList[j] = networksReqList[i].instances[j].id;
+
+                                if(instanceList.indexOf(distinctNetwork.instanceRrn) == -1) {  //to avoid multiple entries
+                                    networksReqList[i].instances.push({id:distinctNetwork.instanceRrn});
+                                    instanceList.push(distinctNetwork.instanceRrn);
+                                }
+                                pushed=1; //turn the flag on to avoid double entry of the network
                             }
-                        ],
-                        instances: [
-                            {
-                                id: network.instanceRrn
-                            }
-                        ],
-                        security_groups: "All"
-                    };
-                });
+                        }// end of inner for loop
+
+                        if(pushed===0){      //in case the regions didnt match, it is a new entry in the network list
+                            var tempobj = {
+                                source: {
+                                    region: distinctNetwork.region.toUpperCase()
+                                },
+                                destination: {
+                                    region: distinctNetwork.destRegion, //.toUpperCase(),
+                                    default_zone: distinctNetwork.destZone || default_zone
+                                },
+                                subnets: [
+                                    {
+                                        id: distinctNetwork.rrn
+                                    }
+                                ],
+                                instances: [
+                                    {
+                                        id: distinctNetwork.instanceRrn
+                                    }
+                                ],
+                                security_groups: "All"
+                            };
+                            // instanceList.push(distinctNetwork.instanceRrn);  
+                            networksReqList.push(tempobj); //add the new object to the network list
+                        }//end of if condition
+                                            
+                    });//end of outer for loop
+                }        
                 return networksReqList;
             }
             return self;
