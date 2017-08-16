@@ -284,8 +284,9 @@
         * @description
         * prepare server instance request object
         */
+        self.prepareServerList = function () {
         var instancesReqList = [];
-        self.prepareServerInstance = function () {
+            
             if ($window.localStorage.selectedServers !== undefined) {
                 var equipments = {
                     instances: JSON.parse($window.localStorage.selectedServers),//dataStoreService.getItems("server")

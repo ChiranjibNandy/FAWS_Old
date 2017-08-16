@@ -618,23 +618,20 @@
              */
             self.getDistinctNetworks = function () {
                 var networksList = [];
-                var networkIdList = [];
-                var servers = JSON.parse($window.localStorage.selectedServers); //self.getItems('server') 
-                angular.forEach(servers, function (server) {
+                var servers = JSON.parse($window.localStorage.selectedServers); //get list of servers
+                
+                angular.forEach(servers, function (server) { //extract the network details of each server
                     var region = server.region;
                     var instanceRrn = server.rrn;
 
                     angular.forEach(server.details.networks, function (network) {
-                        if (networkIdList.indexOf(network.rrn) === -1) {
-                            networkIdList.push(network.rrn);
                             network.region = region;
                             network.destRegion = server.selectedMapping.region;
                             network.destZone = server.selectedMapping.zone;
                             network.instanceRrn = instanceRrn;
                             networksList.push(network);
-                        };
-                    });
-                });
+                    });//end of inner for loop
+                }); //end of outer for loop
 
                 return networksList;
             };
