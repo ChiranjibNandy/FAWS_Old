@@ -126,20 +126,18 @@
              */
             this.prepareJobRequest = function (batchName) {
                 var destaccount = JSON.parse($window.localStorage.getItem("fawsAccounts"));
-
                 var equipments = {
-                    instances: JSON.parse($window.localStorage.selectedServers),//dataStoreService.getItems("server")
+                    instances: JSON.parse($window.localStorage.selectedServers),
                     networks: dataStoreService.getDistinctNetworks()
-                },
-
-                    auth = authservice.getAuth(),
-                    names = prepareNames(),
+                };
+                var auth = authservice.getAuth();
+                var names = prepareNames();
                     
-                    reqObj = {
+                var reqObj = {
                         metadata: {
                             batch_name: $window.localStorage.migrationName || dataStoreService.getScheduleMigration().migrationName,
                             initiated_by: auth.impersonator || auth.username
-                      },
+                        },
                         create_ticket: true,
                         names: names,
                         source: {
@@ -153,10 +151,10 @@
                         version: "v1"
                     };
                 
-                reqObj.resources.instances = serverService.prepareServerList(); //add servers to the resources list
-                if (reqObj.resources.instances.length != 0) { //add networks to the resources list iff there are any servers selected
-                    reqObj.resources.networks = networkService.prepareNetworkList();
-                }
+                if (equipments.instances.length !=0)
+                    reqObj.resources.instances = serverService.prepareServerList(equipments.instances); //add servers to the resources list
+                if (equipments.networks.length != 0)  
+                    reqObj.resources.networks = networkService.prepareNetworkList(equipments.networks); //add networks to the resources list
 
                 //add start time in the request object    
                 var currEPOCHTime = moment().unix();
@@ -189,9 +187,10 @@
                 var equipments = {
                     instances: JSON.parse($window.localStorage.selectedServers),
                     networks: dataStoreService.getDistinctNetworks()
-                },
-                    auth = authservice.getAuth(),
-                    reqObj = {
+                };
+                var auth = authservice.getAuth();
+                
+                var reqObj = {
                         source: {
                             tenantid: auth.tenant_id
                         },
@@ -202,10 +201,11 @@
                         version: "v1"
                     };
 
-                reqObj.resources.instances = serverService.prepareServerList(); //add servers to the resources list
-                if (reqObj.resources.instances.length != 0) { //add networks to the resources list iff there are any servers selected
-                    reqObj.resources.networks = networkService.prepareNetworkList();
-                }
+                if (equipments.instances.length !=0)
+                    reqObj.resources.instances = serverService.prepareServerList(equipments.instances); //add servers to the resources list
+                if (equipments.networks.length != 0)  
+                    reqObj.resources.networks = networkService.prepareNetworkList(equipments.networks); //add networks to the resources list
+                
                 return reqObj;
             }//end of preparePrereqRequest method.
 

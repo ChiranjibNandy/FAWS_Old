@@ -198,12 +198,8 @@
             * @description
             * prepare network instance request object
             */
-            self.prepareNetworkList = function (networksReqList) {
+            self.prepareNetworkList = function (networks) {
                 var networksReqList = [];
-
-                if ($window.localStorage.selectedServers !== undefined) {
-                    var networks = datastoreservice.getDistinctNetworks();
-                    // var instanceList =[];
 
                     angular.forEach(networks, function (distinctNetwork) {
                         var pushed=0;
@@ -230,7 +226,7 @@
                             }
                         }// end of inner for loop
 
-                        if(pushed===0){      //in case the regions didnt match, it is a new entry in the network list
+                        if(pushed===0){      //in case the regions didn't match, it is a new entry in the network list
                             var tempobj = {
                                 source: {
                                     region: distinctNetwork.region.toUpperCase()
@@ -251,12 +247,10 @@
                                 ],
                                 security_groups: "All"
                             };
-                            // instanceList.push(distinctNetwork.instanceRrn);  
                             networksReqList.push(tempobj); //add the new object to the network list
                         }//end of if condition
                                             
-                    });//end of outer for loop
-                }        
+                    });//end of outer for loop        
                 return networksReqList;
             }
             return self;
