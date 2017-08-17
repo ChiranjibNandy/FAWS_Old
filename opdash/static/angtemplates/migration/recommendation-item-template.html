@@ -69,9 +69,9 @@
                 <tbody>
                     <tr class="">
                         <td class="rs-table-checkbox"><img src="/static/img/rackspace-logo.svg" alt=""></td>
-                        <td class="rs-table-text">{{item.details.flavor_details.name}} (Current)</td>
+                        <td class="rs-table-text">{{item.details.flavor_details.name}}</td>
                         <td class="rs-table-text">{{item.details.flavor_details.vcpus}}</td>
-                        <td class="rs-table-text">{{item.details.flavor_details.ram +' MB'}}</td>
+                        <td class="rs-table-text">{{item.details.flavor_details.ram*0.00093132+    ' GiB'}}</td>
                         <td class="rs-table-text">{{item.details.flavor_details.disk+" GB"}}</td>
                         <td class="rs-table-text">{{item.details.rax_price | currency}}</td>
                     </tr>

@@ -264,16 +264,15 @@
         <table class="rs-list-table">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th style="width:60%">Description</th>
-                    <th>Result</th>
+                    <th style="width:15%">Result</th>
+                    <th>Description</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="test in vm.eligTestDetails" class="">
-                    <td class="capitalize" style="width:136px">{{test.name}}</td>
-                    <td class="capitalize" ng-class="{'rs-status-error': test.type == 'failure'}">{{test.description}}</td>
                     <td class="capitalize" ng-class="{'rs-status-ok': test.type == 'success', 'rs-status-error': test.type == 'failure'}">{{test.type}}</td>
+                    <td class="capitalize" ng-class="{'rs-status-error': test.type == 'failure'}">{{test.description}}</td>
+                    
                 </tr>
             </tbody>
         </table>
