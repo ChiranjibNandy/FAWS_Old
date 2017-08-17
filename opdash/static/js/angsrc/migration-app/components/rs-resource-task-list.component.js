@@ -56,6 +56,7 @@
                     };
                     alertsService.getResourceTasks(params, refresh)
                         .then(function (response) {
+                            var promise = null;
                             if (response.error) {
                                 vm.tasks = [];
                                 vm.loading = false;
@@ -65,7 +66,7 @@
                                 vm.tasks = response.tasks;
                             }
                             if ($window.localStorage.batch_job_status === 'in progress' || $window.localStorage.batch_job_status === 'done') {
-                                var promise = HttpWrapper.send('/api/jobs/' + params.job_id + '/progress', { "operation": 'GET' });
+                                promise = HttpWrapper.send('/api/jobs/' + params.job_id + '/progress', { "operation": 'GET' });
                             }
                             $q.all([promise]).then(function (response) {
                                 if (response[0] !== undefined) {
@@ -73,7 +74,7 @@
                                         //Check to see the instance type
                                         if (vm.resource_type === "instance") {
                                             //Loop through response[0].instances.resources and check whether route param resource_id matches with any of the keys
-                                            for (let instance_key in response[0].instances.resources) {
+                                            for (var instance_key in response[0].instances.resources) {
                                                 if (instance_key === vm.resource_id) {
                                                     vm.batch_progress = response[0].instances.resources[instance_key].succeeded_by_time_pct;
                                                 }
@@ -128,11 +129,11 @@
                         if (next.params.resource_id[i] == '+') separatorPosition.push(i);
                     }
                     vm.job_id = next.params.job_id;
-                    vm.resource_type = next.params.resource_type;
-                    vm.instance_status = next.params.instance_status.split('%20').join(' ');;
+                    vm.resource_type = $window.localStorage.resource_type;//next.params.resource_type;
+                    vm.instance_status = $window.localStorage.resource_status;//next.params.instance_status.split('%20').join(' ');;
                     vm.resource_id = next.params.resource_id.substr(0, separatorPosition[0]);
-                    vm.resourceName = next.params.resource_id.substr(separatorPosition[1] + 1, next.params.resource_id.length);
-                    vm.batch_name = decodeURI(next.params.resource_id.substring(separatorPosition[0] + 1, separatorPosition[1]));
+                    vm.resourceName = $window.localStorage.resource_name;//next.params.resource_id.substr(separatorPosition[1] + 1, next.params.resource_id.length);
+                    vm.batch_name = $window.localStorage.resource_batch_name;//decodeURI(next.params.resource_id.substring(separatorPosition[0] + 1, separatorPosition[1]));
                     vm.getResourceTasks(true);
                 };
 

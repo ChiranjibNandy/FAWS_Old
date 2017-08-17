@@ -124,7 +124,7 @@
                     }, true);
 
                    vm.getAllTickets();
-                   vm.getAllAlerts();
+                   //vm.getAllAlerts();
                    var element = document.getElementsByClassName('custom-sort-a');
                    for(var i = 0; i < element.length; i++)
                     {
