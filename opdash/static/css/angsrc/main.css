@@ -608,9 +608,18 @@ span.fa-angle-left, span.fa-angle-right{
 }
 
 .inline-block-elements{
-display: inline-block;
+    display: inline-block;
 }
 
 .instance-progress-bar{
-margin-left:5px;
+    margin-left:5px;
+}
+
+.autoRefreshMargin{
+    margin-right: 15px;
+    margin-top: 3px;
+}
+
+.autoRefreshColor{
+    color:green;
 }
