@@ -615,11 +615,12 @@ span.fa-angle-left, span.fa-angle-right{
     margin-left:5px;
 }
 
-.autoRefreshMargin{
-    margin-right: 15px;
-    margin-top: 3px;
-}
-
 .autoRefreshColor{
     color:green;
+}
+
+.autoRefresh{
+    margin-top: 8px;
+    cursor: pointer;
+    font-size: 15px;
 }

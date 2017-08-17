@@ -91,6 +91,7 @@
                     $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
                     vm.count = 0;
                     vm.autoRefreshEveryMinute = false;
+                    vm.autoRefreshText = "ON";
                     vm.savedMigrations = [];
                     vm.is_racker = authservice.getAuth().is_racker;
                     vm.afterSavedMigration = $window.localStorage.getItem("migrationSaved");
@@ -255,6 +256,7 @@
                  */
                 vm.getBatches = function (refresh) {
                     var self = this;
+                    vm.loading = true;
                     dashboardService.getBatches(refresh)
                     .then(function (response) {
                     if (response && response.error == undefined){
@@ -357,12 +359,32 @@
                     });
                     if(!vm.autoRefreshEveryMinute){
                         vm.autoRefreshEveryMinute = true;
-                        $interval(function () {   
+                        vm.intervalPromise = $interval(function () {   
                             if(dataStoreService.getPageName() === 'MigrationStatus'){
                                 vm.getBatches(true);
                             }                 
                         }, 60000);
                     }        
+                };
+
+                /**
+                 * @ngdoc property
+                 * @name manageAutoRefresh
+                 * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                 * @description This function helps to enable and disable the auto refresh.
+                 */
+                vm.manageAutoRefresh = function(){
+                    if(vm.autoRefreshText === "ON"){
+                       vm.autoRefreshText = "OFF"; 
+                       vm.autoRefreshEveryMinute = true;
+                       vm.autoRefreshButton = true;
+                       $interval.cancel(vm.intervalPromise);
+                    }else{
+                       vm.autoRefreshText = "ON"; 
+                       vm.autoRefreshEveryMinute = false;
+                       vm.autoRefreshButton = false;
+                       vm.getBatches(true);
+                    }
                 };
 
                 /**
