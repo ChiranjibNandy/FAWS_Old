@@ -615,8 +615,12 @@ span.fa-angle-left, span.fa-angle-right{
     margin-left:5px;
 }
 
-.autoRefreshColor{
+.autoRefreshColorOn{
     color:green;
+}
+
+.autoRefreshColorOff{
+    color:red;
 }
 
 .autoRefresh{
