@@ -71,8 +71,8 @@
                         <td class="rs-table-checkbox"><img src="/static/img/rackspace-logo.svg" alt=""></td>
                         <td class="rs-table-text">{{item.details.flavor_details.name}}</td>
                         <td class="rs-table-text">{{item.details.flavor_details.vcpus}}</td>
-                        <td class="rs-table-text">{{item.details.flavor_details.ram*0.00093132+    ' GiB'}}</td>
-                        <td class="rs-table-text">{{item.details.flavor_details.disk+" GB"}}</td>
+                        <td class="rs-table-text">{{item.details.flavor_details.ram*0.00093132 | number:2}} GiB</td>
+                        <td class="rs-table-text">{{item.details.flavor_details.disk*0.931323 | number:2}} GiB</td>
                         <td class="rs-table-text">{{item.details.rax_price | currency}}</td>
                     </tr>
                 </tbody>
@@ -136,8 +136,8 @@
                             </td>
                             <td class="rs-table-text">{{server.instance_type}}</td>
                             <td class="rs-table-text">{{server.vcpu || 2}}</td>
-                            <td class="rs-table-text">{{server.memory || '2 GB'}}</td>
-                            <td class="rs-table-text">{{server.storage || 'EBS-Only'}}</td>
+                            <td class="rs-table-text">{{server.memory || '1.86 GiB'}}</td>
+                              <td class="rs-table-text">{{server.storage || 'EBS-Only'}}</td>
                             <td class="rs-table-text">{{vm.getTotalInstanceCost(server,item) | currency}}</td>
                         </tr>
                     </tbody>
