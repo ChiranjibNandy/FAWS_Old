@@ -492,6 +492,7 @@
                  * Initiates scheduling of migration for a saved migration
                  */
                 vm.continueScheduling = function (batch,modifyFlag) {
+                    $window.localStorage.clear();
                     if(modifyFlag){
                         for(var i = 0; i<vm.nonSavedMigrations.length;i++){
                             var details = vm.nonSavedMigrations[i];
