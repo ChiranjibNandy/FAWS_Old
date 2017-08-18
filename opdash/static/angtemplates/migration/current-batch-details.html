@@ -65,7 +65,7 @@
                                     <span class="rs-status-warning" ng-show="instance.status==='paused'">Paused</span>
                                     <span class="rs-status-warning" ng-show="instance.status==='canceled'">Cancelled</span>
                                 </td>
-                                <td class="rs-table-text" ng-class="{'paddingLeft' : instance.status !== 'in progress' && instance.status !== 'done'}" style="width: 30%;">
+                                <td class="rs-table-text" ng-class="{'paddingLeft' : (instance.status !== 'in progress' || (instance.status === 'in progress' && vm.progressFlag === false))&& instance.status !== 'done' }" style="width: 30%;">
                                     <div class="rs-progress rs-progress-small" ng-if="instance.status==='in progress' && vm.progressFlag !== false">
                                         <div class="rs-progress-inner">
                                             <div class="rs-segment" ng-if="instance.instance_succeeded_time_pct !== undefined" ng-style="{'width': + instance.instance_succeeded_time_pct +'%'}">
