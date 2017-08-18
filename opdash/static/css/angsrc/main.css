@@ -616,10 +616,12 @@ span.fa-angle-left, span.fa-angle-right{
 }
 
 .autoRefreshColorOn{
+    outline: none;
     color:green;
 }
 
 .autoRefreshColorOff{
+    outline: none;
     color:red;
 }
 
