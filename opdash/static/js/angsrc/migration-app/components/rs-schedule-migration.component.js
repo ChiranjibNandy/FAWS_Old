@@ -195,6 +195,9 @@
                             });
                         }
                     }
+                    if(vm.date !==  moment().format("YYYY-MM-DD")){
+                         vm.modifiedDate = vm.date;
+                    }
                     if (vm.timeIntervals.length && !vm.error) {
                         vm.migrationScheduleDetails = {                        
                             migrationName: dataStoreService.getScheduleMigration().migrationName,
