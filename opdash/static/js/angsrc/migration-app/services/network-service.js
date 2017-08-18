@@ -112,34 +112,32 @@
             function transformNetwork(network){
                 return {
                     id: network.id,
-                    rrn: network.rrn,
+                    status: network.status,
                     name: network.name,
+                    shared: network.shared
                 };
-            };            
+            }
 
-            self.getTrimmedItem = function(item_id){
+            /**
+            * @ngdoc method
+            * @name getTrimmedItem
+            * @methodOf migrationApp.service:networkservice
+            * @param {String} id Resource id
+            * @param {String} region Region at RAX the resource resides in.
+            * @returns {Promise} a promise to fetch a specific netowrk.
+            * @description
+            * Gets a specific network. It returns only a definite set of properties of a network for its representation.
+            */
+            self.getTrimmedItem = function(item_id,region){
                 var deferred = $q.defer();
-                serverService.getTrimmedList().then(function (response) {
+                self.getById(item_id,region).then(function (response) {
                     if (response.error)
                         return deferred.resolve(response);
-                    else {
-                        var networkList = [];
-                        angular.forEach(response.data, function (server) {
-                            angular.forEach(server.details.networks, function (network) {
-                                if (networkList.filter(function (listItem) { return listItem.id === network.id }).length === 0) {
-                                    networkList.push(network);
-                                };
-                            });
-                        });
-                        angular.forEach(networkList,function(network){
-                            if(network.id === item_id){
-                                return deferred.resolve(transformNetwork(network));
-                            }
-                        });
-                    }
+                    return deferred.resolve(transformNetwork(response.data));
                 });
                 return deferred.promise;
             };
+
 
             /**
              * @ngdoc method
@@ -186,6 +184,40 @@
                     return deferred.resolve(detailsTransform(response));
                 });
                 return deferred.promise;
+            };
+
+            /**
+            * @ngdoc method
+            * @name getById
+            * @methodOf migrationApp.service:networkservice
+            * @param {String} id Resource id
+            * @param {String} region Region at RAX the resource resides in.
+            * @returns {Promise} a promise to fetch a specific network by id.
+            * @description
+            * Gets a specific network in its raw JSON form, from the api.
+            */
+            self.getById = function (id, region) {
+                var url = "/api/network/" + region + "/" + id;
+                var tenant_id = authservice.getAuth().tenant_id;
+
+                return HttpWrapper.send(url, { "operation": 'GET' })
+                .then(function (response){
+                    networks = {
+                        labels: [
+                            { field: "name", text: "Network Name" },
+                            { field: "id", text: "id" },
+                            { field: "rrn", text: "rrn" },
+                            { field: "shared", text: "Shared" },
+                            { field: "status", text: "Network Status" },
+                            { field: "source_region", text: "Source Region" },
+                            { field: "admin_state_up", text: "Admin State Up" }
+                        ],
+                    data: response
+                    };
+                    return networks;
+                }, function (errorResponse) {
+                    return errorResponse;
+                });
             };
 
             /**
