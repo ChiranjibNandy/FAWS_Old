@@ -77,6 +77,7 @@
                                         </div>
                                     </div><span class="rs-status-ok" ng-if="instance.status==='in progress' && vm.progressFlag !== false && instance.instance_succeeded_time_pct !== undefined"><em> {{instance.instance_succeeded_time_pct}}%</em></span>
                                     <span class="rs-status-ok" ng-if="instance.status==='in progress' && vm.progressFlag !== false && instance.instance_succeeded_time_pct === undefined"><em> {{vm.job.succeeded_time_pct}}%</em></span>
+                                    <span ng-if="instance.status === 'in progress' && vm.progressFlag === false"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>                                    
                                     <div class="rs-progress rs-progress-small" ng-if="instance.status==='done'">
                                         <div class="rs-progress-inner">
                                             <div class="rs-segment" style="width: 100%">

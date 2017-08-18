@@ -69,7 +69,7 @@
                                 promise = HttpWrapper.send('/api/jobs/' + params.job_id + '/progress', { "operation": 'GET' });
                             }
                             $q.all([promise]).then(function (response) {
-                                if (response[0] !== undefined) {
+                                if (response[0] !== undefined && response[0] !== null) {
                                     if (response[0].succeeded_by_time_pct !== undefined) {
                                         //Check to see the instance type
                                         if (vm.resource_type === "instance") {
@@ -134,6 +134,8 @@
                     vm.resource_id = next.params.resource_id.substr(0, separatorPosition[0]);
                     vm.resourceName = $window.localStorage.resource_name;//next.params.resource_id.substr(separatorPosition[1] + 1, next.params.resource_id.length);
                     vm.batch_name = $window.localStorage.resource_batch_name;//decodeURI(next.params.resource_id.substring(separatorPosition[0] + 1, separatorPosition[1]));
+                    
+                    
                     vm.getResourceTasks(true);
                 };
 
