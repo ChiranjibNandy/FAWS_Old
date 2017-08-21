@@ -217,12 +217,12 @@
 
                 vm.saveResourceDetailsRouteParams = function(resource,type){
                     $window.localStorage.setItem('resource_status',(resource.status.state || resource.status));
-                    $window.localStorage.setItem('resource_type',type);
                     $window.localStorage.setItem('resource_name',resource.name);
                     $window.localStorage.setItem('resource_batch_name',vm.job.batch_name);
                     $rootRouter.navigate(["ResourceTaskList", {
                         job_id: vm.job.job_id,
-                        resource_id:resource.id
+                        resource_id:resource.id,
+                        resource_type:type
                     }]);
                 };
 
