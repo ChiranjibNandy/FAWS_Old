@@ -318,7 +318,11 @@
             }
 
             this.getPageName = function () {
-                return self.pageFlag;
+                if(self.pageFlag === ""){
+                    return $window.localStorage.getItem('pageName');
+                }else{
+                    return self.pageFlag;
+                }
             }
 
             /**
