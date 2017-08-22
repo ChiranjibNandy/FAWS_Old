@@ -113,7 +113,7 @@
                     vm.timezone1  =  vm.timeZoneItems[0].timeZoneName;
                     vm.migrationScheduleDetails  =  {                        
                         migrationName: dataStoreService.getScheduleMigration().migrationName,
-                        time: moment(moment(vm.date).format("YYYY-MM-DD") + "T" + vm.getTime() + timeZoneDiff).unix(),
+                        time: moment(moment(vm.date).format("YYYY-MM-DD") + "T" + vm.getTime().trim() + timeZoneDiff).unix(),
                         timezone: vm.timezone1,
                         live_migrate: dataStoreService.getScheduleMigration().live_migrate                    
                     };                    
@@ -201,7 +201,7 @@
                     if (vm.timeIntervals.length && !vm.error) {
                         vm.migrationScheduleDetails = {                        
                             migrationName: dataStoreService.getScheduleMigration().migrationName,
-                            time: moment(moment(vm.modifiedDate).format("YYYY-MM-DD")  +  "T"  + vm.getTime()  +  vm.timeZoneDiff).unix(),
+                            time: moment(moment(vm.modifiedDate).format("YYYY-MM-DD")  +  "T"  + vm.getTime().trim()  +  vm.timeZoneDiff).unix(),
                             timezone: vm.timezone1,
                         };
                         dataStoreService.storeDate('timezone', vm.timezone1);
@@ -222,7 +222,7 @@
                 if (vm.time) {
                     vm.migrationScheduleDetails = {                        
                         migrationName: dataStoreService.getScheduleMigration().migrationName,
-                        time: moment(moment(vm.modifiedDate).format("YYYY-MM-DD")  +  "T"  + vm.getTime()  +  vm.timeZoneDiff).unix(),
+                        time: moment(moment(vm.modifiedDate).format("YYYY-MM-DD")  +  "T"  + vm.getTime().trim()  +  vm.timeZoneDiff).unix(),
                         timezone: vm.timezone1,
                         live_migrate: dataStoreService.getScheduleMigration().live_migrate,
                     };
