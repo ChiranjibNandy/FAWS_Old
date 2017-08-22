@@ -103,13 +103,9 @@
                                     }
                                 }
 
-                                //get list of selected resources from local storage, in an array
-                                var equipments = {
-                                    instances: JSON.parse($window.localStorage.selectedResources),
-                                    networks: dataStoreService.getDistinctNetworks()
-                                };
+                                //iterate over list of selected resources from local storage and save them in a array.
                                 var selectedResources = [];
-                                angular.forEach(equipments.instances, function (item, type) {
+                                angular.forEach(JSON.parse($window.localStorage.selectedResources), function (item, type) {
                                     for (var i = 0; i < item.length; i++) {
                                         var obj = {
                                             name: item[i].name,
