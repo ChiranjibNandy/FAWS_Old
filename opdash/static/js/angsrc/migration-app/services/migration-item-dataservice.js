@@ -118,13 +118,12 @@
              * @ngdoc method
              * @name prepareJobRequest
              * @methodOf migrationApp.service:migrationitemdataservice
-             * @param {String} type Resource type (server, network etc)
-             * @param {Object} info Object containing the relevant data to prepare the request object
+             * @param {Boolean} precheck is 'true' for precheck job spec and 'false' for migration job sepc
              * @returns {Object} A request _object_ for subsequesnt request in migrating a resource.
              * @description 
              * This service method returns an _object_. This object has to be sent while making an HTTP POST request to migrate the resource.
              */
-            this.prepareJobRequest = function (batchName) {
+            this.prepareJobRequest = function (precheck) {
                 var destaccount = JSON.parse($window.localStorage.getItem("fawsAccounts"));
                 var equipments = {
                     instances: JSON.parse($window.localStorage.selectedServers),
@@ -133,63 +132,6 @@
                 var auth = authservice.getAuth();
                 var names = prepareNames();
                     
-                var reqObj = {
-                        metadata: {
-                            batch_name: $window.localStorage.migrationName || dataStoreService.getScheduleMigration().migrationName,
-                            initiated_by: auth.impersonator || auth.username
-                        },
-                        create_ticket: true,
-                        names: names,
-                        source: {
-                            tenantid: auth.tenant_id,
-                            live_migrate:dataStoreService.getScheduleMigration().live_migrate,
-                        },
-                        destination: {
-                            account: destaccount.selectedFawsAccountNumber
-                        },
-                        resources: {},
-                        version: "v1"
-                    };
-                
-                if (equipments.instances.length !=0)
-                    reqObj.resources.instances = serverService.prepareServerList(equipments.instances); //add servers to the resources list
-                if (equipments.networks.length != 0)  
-                    reqObj.resources.networks = networkService.prepareNetworkList(equipments.networks); //add networks to the resources list
-
-                //add start time in the request object    
-                var currEPOCHTime = moment().unix();
-                var currISOTime = moment().toISOString();
-                if (dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < (currISOTime)) {
-                    reqObj.start = currISOTime;
-                    dataStoreService.selectedTime.time = reqObj.start;
-                } else {
-                    //code for iso conversion
-                    var isoDateTime = dataStoreService.selectedTime.time;
-                    reqObj.start = moment.unix(isoDateTime).toISOString();
-                    dataStoreService.selectedTime.time = reqObj.start;
-                }
-    
-                return reqObj; //this is the final job-spec object 
-            }//end of prepareJobRequest method
-
-            /**
-             * @ngdoc method
-             * @name preparePrereqRequest
-             * @methodOf migrationApp.service:migrationitemdataservice
-             * @param {String} type Resource type (server, network etc)
-             * @param {Object} info Object containing the relevant data to prepare the Pre-req request object
-             * @returns {Object} A request _object_ for subsequesnt request in migrating a resource.
-             * @description 
-             * This service method creates and a temporary job-spec _object_ for pre-checks API. This object has to be sent while making an HTTP POST request to Pre-reqs API to determine if the selected resources can be migrated or not.
-            */
-            this.preparePrereqRequest = function (batchName) {
-                var destaccount = JSON.parse($window.localStorage.getItem("fawsAccounts"));
-                var equipments = {
-                    instances: JSON.parse($window.localStorage.selectedServers),
-                    networks: dataStoreService.getDistinctNetworks()
-                };
-                var auth = authservice.getAuth();
-                
                 var reqObj = {
                         source: {
                             tenantid: auth.tenant_id
@@ -205,10 +147,35 @@
                     reqObj.resources.instances = serverService.prepareServerList(equipments.instances); //add servers to the resources list
                 if (equipments.networks.length != 0)  
                     reqObj.resources.networks = networkService.prepareNetworkList(equipments.networks); //add networks to the resources list
-                
-                return reqObj;
-            }//end of preparePrereqRequest method.
 
+                if (precheck === true){ 
+                    return reqObj;           //Precheck job-spec requires only these items, so exit from method now
+                } //****************END OF PRECHECK JOB-SPEC*************************************************************************
+
+                else if (precheck === false){       //migration job-spec needs following more items so continue configuring job-spec
+                    reqObj.metadata = { 
+                                batch_name: $window.localStorage.migrationName || dataStoreService.getScheduleMigration().migrationName,
+                                initiated_by: auth.impersonator || auth.username
+                            };
+                    reqObj.create_ticket = true;
+                    reqObj.names = names;
+                    reqObj.source.live_migrate = dataStoreService.getScheduleMigration().live_migrate || false;
+
+                    //add start time in the request object    
+                    var currEPOCHTime = moment().unix();
+                    var currISOTime = moment().toISOString();
+                    if (dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < (currISOTime)) {
+                        reqObj.start = currISOTime;
+                        dataStoreService.selectedTime.time = reqObj.start;
+                    } else {
+                        //code for iso conversion
+                        var isoDateTime = dataStoreService.selectedTime.time;
+                        reqObj.start = moment.unix(isoDateTime).toISOString();
+                        dataStoreService.selectedTime.time = reqObj.start;
+                    }
+                    return reqObj; //this is the final job-spec object 
+                } //END OF MIGRATION JOB-SPEC
+            }//end of prepareJobRequest method
 
             this.getServerMigrationStatus = function (tenant_id) {
                 var url = "/api/server_status/" + tenant_id;
