@@ -65,7 +65,7 @@
                         vm.currentTab = tab.name;
                         setTimeout(function() {
                             $rootScope.$broadcast("tabChanged",vm.currentTab);
-                        }, 0);
+                        }, 1000);
                     }
                 };
 
