@@ -530,33 +530,35 @@
                  * @description 
                  * Invokes "/api/jobs/saved/"+id API call for posting saved instance.
             */
-            this.deleteSavedInstances = function(id) {
+            this.deleteSavedInstances = function (id) {
                 var self = this;
                 //var requestObj = self.objForSaveLater(response, saveInstance);
-                return HttpWrapper.delete("/api/jobs/saved/"+id)
-                    .then(function(result){
+                return HttpWrapper.delete("/api/jobs/saved/" + id)
+                    .then(function (result) {
                         return true;
-                    },function(error) {
+                    }, function (error) {
                         return false;
                     });
             };
 
             this.getModifiedItems = function(resources){
                 var equipments = {
-                                    server:[],
-                                    network:[],
-                                    files:[],
-                                    LoadBalancers:[]
-                                };
-                for(var equ in resources){
-                    angular.forEach(resources[equ],function(item){
+                    server: [],
+                    network: [],
+                    file: [],
+                    volume: [],
+                    service: [],
+                    LoadBalancers: []
+                };
+                for (var equ in resources) {
+                    angular.forEach(resources[equ], function (item) {
                         equipments[equ].push({
-                            'rrn':item.rrn,
-                            'name':item.name,
-                            'selectedMapping':{
-                                'region':item.selectedMapping?item.selectedMapping.region : DEFAULT_VALUES.REGION,
-                                'zone':item.selectedMapping?item.selectedMapping.zone : '',
-                                'instance_type':item.selectedMapping?item.selectedMapping.instance_type : ''   
+                            'rrn': item.rrn,
+                            'name': item.name,
+                            'selectedMapping': {
+                                'region': item.selectedMapping ? item.selectedMapping.region : DEFAULT_VALUES.REGION,
+                                'zone': item.selectedMapping ? item.selectedMapping.zone : '',
+                                'instance_type': item.selectedMapping ? item.selectedMapping.instance_type : ''
                             }
                         });
                     });

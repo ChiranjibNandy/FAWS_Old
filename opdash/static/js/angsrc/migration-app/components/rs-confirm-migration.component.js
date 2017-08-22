@@ -25,14 +25,14 @@
              * @name migrationApp.controller:rsconfirmmigrationCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsconfirmmigration rsconfirmmigration} component
              */
-            controller: ["$rootRouter", "datastoreservice", "migrationitemdataservice", "$q", "httpwrapper", "authservice", "$timeout", "$rootScope","$scope","$window","migrationService","dashboardservice", function ($rootRouter, dataStoreService, ds, $q, HttpWrapper, authservice, $timeout, $rootScope,$scope,$window,migrationService,dashboardService) {
+            controller: ["$rootRouter", "datastoreservice", "migrationitemdataservice", "$q", "httpwrapper", "authservice", "$timeout", "$rootScope", "$scope", "$window", "migrationService", "dashboardservice", function ($rootRouter, dataStoreService, ds, $q, HttpWrapper, authservice, $timeout, $rootScope, $scope, $window, migrationService, dashboardService) {
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
                 vm.cost = '';
                 vm.goodToGo = true;
                 vm.checking = false;
-                
+
                 vm.$onInit = function () {
                     vm.tenant_id = authservice.getAuth().tenant_id;
                     vm.saveResources = false;
@@ -49,28 +49,27 @@
                     vm.changedMigrationName = vm.migrationName;
 
                     dataStoreService.setPageName("ConfirmMigration");
-                    $window.localStorage.setItem('pageName',"ConfirmMigration");
+                    $window.localStorage.setItem('pageName', "ConfirmMigration");
                     vm.scheduleMigration = false;
                     vm.cost = dataStoreService.getProjectedPricing();
                     vm.migrating = false;
                     vm.errorInMigration = false;
-                    vm.acceptTermsAndConditions=false;
-                    vm.emptyEquipments=true;
+                    vm.acceptTermsAndConditions = false;
+                    vm.emptyEquipments = true;
                     vm.saveProgress = "";
-                    $window.localStorage.setItem("migrationScheduled","false");
-                    // vm.error = false;
+                    $window.localStorage.setItem("migrationScheduled", "false");
                 };
-                
+
                 $rootScope.$on("vm.scheduleMigration", function (event, value) {
                     vm.scheduleMigration = value['vm.scheduleMigration'];
-                    vm.saveResources = value.whichTime === 'schedule'?true:false;
+                    vm.saveResources = value.whichTime === 'schedule' ? true : false;
                 });
-                
-                $scope.$on("ItemRemoved",function(event,item){
+
+                $scope.$on("ItemRemoved", function (event, item) {
                     var selectedItems = dataStoreService.getItems();
-                    if(selectedItems.server.length > 0 || selectedItems.network.length > 0 || selectedItems.LoadBalancers.length > 0) 
-                        vm.emptyEquipments=true;
-                    else vm.emptyEquipments=false;
+                    if (selectedItems.server.length > 0 || selectedItems.network.length > 0 || selectedItems.LoadBalancers.length > 0)
+                        vm.emptyEquipments = true;
+                    else vm.emptyEquipments = false;
                     vm.cost = dataStoreService.getProjectedPricing();
                     $window.localStorage.projectedPricing = JSON.stringify(vm.cost);
                 });
@@ -83,79 +82,81 @@
                  * @description 
                  * Checks whether the selected server(s) have already been migrated/scheduled, if yes, then rejects the migration, otherwise triggers the migration.
                  */
-                vm.checkStatus = function(){
-                    if(JSON.parse(dataStoreService.getResourceItemsForEditingMigration())){
+                vm.checkStatus = function () {
+                    if (JSON.parse(dataStoreService.getResourceItemsForEditingMigration())) {
                         vm.migrate();
                         return;
                     }
                     dashboardService.getCurrentBatches() //fetch the batch list by making the job_status api call in dashbaord service
-                            .then(function (response) {
-                                if (response && response.error == undefined){
-                                    vm.migrating = true;
-                                    vm.checking = true;
-                                    var jobList = response.job_status_list;
+                        .then(function (response) {
+                            if (response && response.error == undefined) {
+                                vm.migrating = true;
+                                vm.checking = true;
+                                var jobList = response.job_status_list;
                                 //get status of all the migrations in an array - to check if these resoruces have been scheduled in any migrations earlier 
-                                    var statusList=[];
-                                    for(var i=0;i<jobList.length;i++){
-                                        for(var j=0;j<jobList[i].instances.length;j++){
-                                            if(jobList[i].batch_status !== "error" && jobList[i].batch_status !== "canceled" && jobList[i].batch_status !== "done"){
-                                                statusList.push(jobList[i].instances[j]);
-                                            }
+                                var statusList = [];
+                                for (var i = 0; i < jobList.length; i++) {
+                                    for (var j = 0; j < jobList[i].instances.length; j++) {
+                                        if (jobList[i].batch_status !== "error" && jobList[i].batch_status !== "canceled" && jobList[i].batch_status !== "done") {
+                                            statusList.push(jobList[i].instances[j]);
                                         }
-                                    }       
-                                    
+                                    }
+                                }
+
                                 //get list of selected resources from local storage, in an array
-                                    var equipments = {
-                                            instances: JSON.parse($window.localStorage.selectedResources)['server'],
-                                            networks: dataStoreService.getDistinctNetworks()
-                                    };
-                                    var selectedResources = [];
-                                    for(var i=0;i<equipments.instances.length;i++){
-                                      var obj = {
-                                                name : equipments.instances[i].name,
-                                                id : equipments.instances[i].rrn
+                                var equipments = {
+                                    instances: JSON.parse($window.localStorage.selectedResources),
+                                    networks: dataStoreService.getDistinctNetworks()
+                                };
+                                var selectedResources = [];
+                                angular.forEach(equipments.instances, function (item, type) {
+                                    for (var i = 0; i < item.length; i++) {
+                                        var obj = {
+                                            name: item[i].name,
+                                            id: item[i].rrn
                                         }
                                         selectedResources.push(obj);
                                     }
-                                    
+                                });
+
                                 //compare two lists to find out if selected resources have been migrated already or scheduled in other batches.
-                                    vm.goodToGo = true;
+                                vm.goodToGo = true;
 
-                                    for(i=0;i<selectedResources.length;i++){ //check for each server in the selected list
-                                        var x1=selectedResources[i].name;
-                                        var y1=selectedResources[i].id;
+                                for (i = 0; i < selectedResources.length; i++) { //check for each resource in the selected list
+                                    var x1 = selectedResources[i].name;
+                                    var y1 = selectedResources[i].id;
 
-                                        for(j=0;j<statusList.length;j++){ //check for each server in the status list
-                                            var x2=statusList[j].name;
-                                            var y2=statusList[j].id;
-                                            var z2=statusList[j].status;
+                                    for (j = 0; j < statusList.length; j++) { //check for each resource in the status list
+                                        var x2 = statusList[j].name;
+                                        var y2 = statusList[j].id;
+                                        var z2 = statusList[j].status;
 
-                                            if(x1 === x2 && y1 === y2){ //if the server name and id match
-                                                if(z2 !== "error" && z2 !== "canceled" && z2 !== "done"){ //if status is error/canceled or done, migration will be allowed, otherwise not
-                                                    vm.goodToGo = false;
-                                                    vm.checking = false;
-                                                    break;
-                                                }
-                                            }//endif
-                                        }//end of inner for-loop
-                                    }//end of outer for-loop
-                                    
+                                        if (x1 === x2 && y1 === y2) { //if the resource name and id match
+                                            if (z2 !== "error" && z2 !== "canceled" && z2 !== "done") { //if status is error/canceled or done, migration will be allowed, otherwise not
+                                                vm.goodToGo = false;
+                                                vm.checking = false;
+                                                break;
+                                            }
+                                        } //endif
+                                    } //end of inner for-loop
+                                } //end of outer for-loop
+
                                 //finally - if none of the resources have been migrated or scheduled to be migrated in other batch (goodToGo === true), trigger migration
-                                    if(vm.goodToGo){ 
-                                        vm.migrate();
-                                    }else{//otherwise error message will be displayed on the screen since goodToGo===false.
-                                        vm.checking = false;
-                                        $('#duplicate-instance').modal('show');
-                                    }//end if
-                            }else{ //if the job_status call in dashbaord service fails
+                                if (vm.goodToGo) {
+                                    vm.migrate();
+                                } else { //otherwise error message will be displayed on the screen since goodToGo===false.
                                     vm.checking = false;
-                                    vm.errorInMigration = true; //error message will be disaplyed on the screen.
-                        }
-                    
-                })//end of dashboardService.getCurrentBatches()
-                        
-            };
-            
+                                    $('#duplicate-instance').modal('show');
+                                } //end if
+                            } else { //if the job_status call in dashbaord service fails
+                                vm.checking = false;
+                                vm.errorInMigration = true; //error message will be disaplyed on the screen.
+                            }
+
+                        }) //end of dashboardService.getCurrentBatches()
+
+                };
+
                 /**
                  * @ngdoc method
                  * @name goToStep1
@@ -169,7 +170,7 @@
                     dataStoreService.storeEligibilityResults($window.localStorage.eligibilityResults);
                     $window.localStorage.clear();
                     $window.localStorage.eligibilityResults = dataStoreService.retrieveEligibilityResults();
-                    if($window.localStorage.selectedResources !== undefined)
+                    if ($window.localStorage.selectedResources !== undefined)
                         $window.localStorage.removeItem('selectedResources');
                     $rootRouter.navigate(["MigrationResourceList"]);
                 };
@@ -186,50 +187,52 @@
                     vm.migrating = true;
                     $('#confirm-migration-modal').modal('hide');
                     requestObj = ds.prepareJobRequest();
-                    vm.acceptTermsAndConditions= true;
-                    if(JSON.parse(dataStoreService.getResourceItemsForEditingMigration())){
-                        migrationService.modifyMigration(dataStoreService.getJobIdForMigration('jobId'),requestObj)
-                        .then(function (result) {
-                            if(result){
-                                migrationService.pauseMigration(dataStoreService.getJobIdForMigration('jobId'),'unpause').then(function(success){
-                                    if(success){
-                                        if(vm.saveResources) {
-                                            vm.deleteExistingSavedMigration();
-                                        }else{
-                                            $window.localStorage.setItem("migrationScheduled","true");
-                                            $rootRouter.navigate(["MigrationStatus"]);
+                    vm.acceptTermsAndConditions = true;
+                    if (JSON.parse(dataStoreService.getResourceItemsForEditingMigration())) {
+                        migrationService.modifyMigration(dataStoreService.getJobIdForMigration('jobId'), requestObj)
+                            .then(function (result) {
+                                if (result) {
+                                    migrationService.pauseMigration(dataStoreService.getJobIdForMigration('jobId'), 'unpause').then(function (success) {
+                                        if (success) {
+                                            if (vm.saveResources) {
+                                                vm.deleteExistingSavedMigration();
+                                            } else {
+                                                $window.localStorage.setItem("migrationScheduled", "true");
+                                                $rootRouter.navigate(["MigrationStatus"]);
+                                            }
+                                        } else {
+                                            $('#modify-modal').modal('show');
+                                            vm.message = "We have successfully modified your migration but couldn't unpause the migation. You may have to un pause it manually in dashboard page."
                                         }
-                                    }else{
-                                        $('#modify-modal').modal('show');
-                                        vm.message = "We have successfully modified your migration but couldn't unpause the migation. You may have to un pause it manually in dashboard page."
-                                    }
-                                })
-                            }else{
-                                $('#modify-modal').modal('show');
-                                vm.message = "There was a problem modifying this migration. Please try again after some time."
-                            }   
-                        }, function (error) {
-                            vm.migrating = false;
-                            $window.localStorage.setItem("migrationScheduled","false");
-                            vm.errorInMigration = true;
-                            vm.scheduleMigration = true;
-                        });
-                    }else{
-                        HttpWrapper.save("/api/jobs", { "operation": 'POST' }, requestObj)
-                        .then(function (result) {
-                            if(vm.saveResources) {
-                                vm.saveResourceDetails();
-                            }else{
-                                vm.migrating = false; 
-                                $window.localStorage.setItem("migrationScheduled","true");
-                                $rootRouter.navigate(["MigrationStatus"]);
-                            }
-                        }, function (error) {
-                            vm.migrating = false;
-                            $window.localStorage.setItem("migrationScheduled","false");
-                            vm.errorInMigration = true;
-                            vm.scheduleMigration = true;
-                        });
+                                    })
+                                } else {
+                                    $('#modify-modal').modal('show');
+                                    vm.message = "There was a problem modifying this migration. Please try again after some time."
+                                }
+                            }, function (error) {
+                                vm.migrating = false;
+                                $window.localStorage.setItem("migrationScheduled", "false");
+                                vm.errorInMigration = true;
+                                vm.scheduleMigration = true;
+                            });
+                    } else {
+                        HttpWrapper.save("/api/jobs", {
+                                "operation": 'POST'
+                            }, requestObj)
+                            .then(function (result) {
+                                if (vm.saveResources) {
+                                    vm.saveResourceDetails();
+                                } else {
+                                    vm.migrating = false;
+                                    $window.localStorage.setItem("migrationScheduled", "true");
+                                    $rootRouter.navigate(["MigrationStatus"]);
+                                }
+                            }, function (error) {
+                                vm.migrating = false;
+                                $window.localStorage.setItem("migrationScheduled", "false");
+                                vm.errorInMigration = true;
+                                vm.scheduleMigration = true;
+                            });
                     }
                 };
 
@@ -240,10 +243,10 @@
                  * @description 
                  * This will delete the existing saved migration and update it with the new one
                  */
-                vm.deleteExistingSavedMigration = function(){
+                vm.deleteExistingSavedMigration = function () {
                     dataStoreService.deleteSavedInstances(dataStoreService.getJobIdForMigration('saveId'))
-                        .then(function(result){
-                            if(result){
+                        .then(function (result) {
+                            if (result) {
                                 vm.saveResourceDetails();
                             }
                         });
@@ -256,23 +259,23 @@
                  * @description 
                  * This helps to save the selected resources and this function only be called if we are scheduling for later
                  */
-                vm.saveResourceDetails = function(){
+                vm.saveResourceDetails = function () {
                     var saveInstance = {
-                        recommendations : JSON.parse($window.localStorage.selectedResources)['server'],
-                        step_name: "MigrationResourceList" ,
-                        scheduledItem:true,
+                        recommendations: JSON.parse($window.localStorage.selectedResources)['server'],
+                        step_name: "MigrationResourceList",
+                        scheduledItem: true,
                         migration_schedule: {
-                            migrationName:dataStoreService.getScheduleMigration().migrationName,//$window.localStorage.migrationName,
-                            time:dataStoreService.getScheduleMigration().time,
-                            timezone:dataStoreService.getScheduleMigration().timezone
+                            migrationName: dataStoreService.getScheduleMigration().migrationName, //$window.localStorage.migrationName,
+                            time: dataStoreService.getScheduleMigration().time,
+                            timezone: dataStoreService.getScheduleMigration().timezone
                         }
                     };
-                    dataStoreService.saveItemsForSave(saveInstance).then(function(success){
-                        vm.migrating = false; 
-                        $window.localStorage.setItem("migrationScheduled","true");
+                    dataStoreService.saveItemsForSave(saveInstance).then(function (success) {
+                        vm.migrating = false;
+                        $window.localStorage.setItem("migrationScheduled", "true");
                         $rootRouter.navigate(["MigrationStatus"]);
-                    },function(error){
-                     
+                    }, function (error) {
+
                     });
                 };
 
@@ -283,17 +286,19 @@
                  * @description 
                  * Navigates to resources page
                  */
-                vm.selectServers = function(){
+                vm.selectServers = function () {
                     $("#no-equipments-modal").modal('hide');
                     $rootRouter.navigate(["MigrationResourceList"]);
                     var requestObj;
                     vm.migrating = true;
                     $('#confirm-migration-modal').modal('hide');
                     requestObj = ds.prepareJobRequest();
-                    vm.acceptTermsAndConditions= true;
+                    vm.acceptTermsAndConditions = true;
                     $rootScope.$emit("vm.MigrationName", dataStoreService.selectedTime.migrationName);
                     $rootScope.$emit("vm.MigrationTime", dataStoreService.selectedTime.time);
-                    HttpWrapper.save("/api/jobs", { "operation": 'POST' }, requestObj)
+                    HttpWrapper.save("/api/jobs", {
+                            "operation": 'POST'
+                        }, requestObj)
                         .then(function (result) {
                             vm.migrating = false;
                             $rootRouter.navigate(["MigrationStatus"]);
@@ -332,10 +337,9 @@
                 };
 
                 vm.showConfirmMigrateDialog = function (scheduleMigration) {
-                    if(dataStoreService.fetchFawsDetails().totalAccounts === 0){
+                    if (dataStoreService.fetchFawsDetails().totalAccounts === 0) {
                         $('#confirm-migration-modalFAWS').modal('show');
-                     }
-                    else {
+                    } else {
                         $('#confirm-migration-modal').modal('show');
                     }
                 };
@@ -345,7 +349,7 @@
                 };
 
                 //Disable the button immediately on click so that multiple clicks get prevented
-                vm.disableButton = function($event) {
+                vm.disableButton = function ($event) {
                     $event.currentTarget.disabled = true;
                 };
 
@@ -355,28 +359,25 @@
                  * @methodOf migrationApp.controller:rsconfirmmigrationCtrl
                  * @description 
                  * function to open the modal that displays the current and projected pricing calculations for the selected servers.
-                 */ 
-                vm.openUsageCostsModalComponent = function(){
+                 */
+                vm.openUsageCostsModalComponent = function () {
                     $scope.$broadcast("openUsageCostsModal");
                 }
-            
-                $scope.$on('$locationChangeStart', function(event, newUrl, oldUrl) {
-                        if((oldUrl.indexOf("migration/confirm") > -1) && (newUrl.indexOf("migration/recommendation") > -1) && ($window.localStorage.selectedResources === "[]" || $window.localStorage.selectedResources === undefined)){
-                            event.preventDefault();
-                            //$('#cancel_modal').modal('show');
-                            $rootRouter.navigate(["MigrationResourceList"]);
-                            //$rootRouter.navigate(["MigrationResourceList"]);
-                        }
-                        //condition for direct url jumping or hitting...
-                        if((oldUrl.indexOf("/migration/confirm") == -1) && ((newUrl.indexOf("migration/recommendation") > -1))){
-                            event.preventDefault();
-                            $rootRouter.navigate(["MigrationStatus"]);
-                        }
+
+                $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
+                    if ((oldUrl.indexOf("migration/confirm") > -1) && (newUrl.indexOf("migration/recommendation") > -1) && ($window.localStorage.selectedResources === "[]" || $window.localStorage.selectedResources === undefined)) {
+                        event.preventDefault();
+                        $rootRouter.navigate(["MigrationResourceList"]);
+                    }
+                    //condition for direct url jumping or hitting...
+                    if ((oldUrl.indexOf("/migration/confirm") == -1) && ((newUrl.indexOf("migration/recommendation") > -1))) {
+                        event.preventDefault();
+                        $rootRouter.navigate(["MigrationStatus"]);
+                    }
                 });
 
                 return vm;
 
-                }
-            ]
+            }]
         }); // end of component definition
 })();
