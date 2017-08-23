@@ -18,6 +18,29 @@
                 statusPromise,
                 resultsLoaded;
 
+            self.regionFetchedFlags = {
+                server:false,
+                network:false,
+                volume:false,
+                LoadBalancers:false,
+                service:false,
+                file:false
+            };
+
+            self.storeRegionFetchedFlags = function(type,value){
+                self.regionFetchedFlags[type] = value;
+                $window.localStorage.regionFetchedFlags = JSON.stringify(self.regionFetchedFlags);
+            };
+
+            self.retrieveAllRegionFetchedFlags = function(type){
+                if(type){
+                    return ($window.localStorage.regionFetchedFlags !== undefined && JSON.parse($window.localStorage.regionFetchedFlags)[type]) || self.regionFetchedFlags[type];
+                }
+                else{
+                    return ($window.localStorage.regionFetchedFlags !== undefined && JSON.parse($window.localStorage.regionFetchedFlags)) || self.regionFetchedFlags;
+                }
+            };
+
             //the above default_zone is needed to get the default values.
             var prepareNames = function () {
                 var servers = JSON.parse($window.localStorage.selectedResources)['server']; //dataStoreService.getItems("server");
@@ -296,14 +319,13 @@
                 } else if (callInProgress == false && statusLoaded == true) {
                     return $q.when(statusResponse);
                 }
-            } //end of getResourceMigrationStatus method
+            }; //end of getResourceMigrationStatus method
 
-            this.getAllEc2Regions = function () {
-                if (!resultsLoaded) {
-                    resultsLoaded = HttpWrapper.send('/api/aws/regions/ec2', {"operation": 'GET'});
-                }
+            this.getAllEc2Regions = function (type) {
+                resultsLoaded = HttpWrapper.send('/api/aws/regions/ec2', {"operation": 'GET'});
+                self.regionFetchedFlags[type] = true;
                 return resultsLoaded;
-            }//end of getAllEc2Regions method
+            };//end of getAllEc2Regions method
 
             /**
              * @ngdoc method

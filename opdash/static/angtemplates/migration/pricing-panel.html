@@ -48,7 +48,7 @@
     <rssaveprogress stepname="MigrationRecommendation" type="button"></rssaveprogress>
     <div class="rs-row">
         <a class="rs-btn span-6" ng-click="vm.back()">Back</a>
-        <a class="rs-btn rs-btn-primary span-6" ng-click="vm.continue()">Continue</a>
+        <a class="rs-btn rs-btn-primary span-6" ng-click="vm.continue()" ng-disabled="vm.precheckButtonEnabled">Continue</a>
     </div>
     <br>
 </div>
