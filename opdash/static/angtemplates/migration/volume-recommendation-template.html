@@ -10,12 +10,14 @@
         <span class="rs-status rs-status-ok ng-binding"> {{item.status}} </span>
     </td>
     <td>
-        <select ng-model="item.selectedMapping.region" style="margin-bottom: 2px;" ng-change="vm.setRegion(item);vm.getZones(item,item.type);">
-            <option ng-repeat="region in vm.regions track by $index" value="{{region}}">{{region | convertCase}}</option>
+        <select ng-model="item.selectedMapping.region" style="margin-bottom: 2px;" ng-disabled="vm.errorInApi" ng-change="vm.setRegion(item);vm.getZones(item,item.type);">
+            <option ng-show="vm.errorInApi">Not Available</option>
+            <option ng-repeat="region in vm.volumeRegions track by $index" value="{{region}}">{{region | convertCase}}</option>
         </select>
     </td>
     <td>
-        <select ng-model="item.selectedMapping.zone" style="margin-bottom: 2px;" ng-change="vm.setZone(item);">
+        <select ng-model="item.selectedMapping.zone" style="margin-bottom: 2px;" ng-disabled="vm.errorInZoneApi || vm.errorInApi" ng-change="vm.setZone(item);">
+            <option ng-show="vm.errorInZoneApi">Not Available</option>
             <option ng-repeat="zone in item.selectedMapping.zones track by $index" value="{{zone}}">{{zone | convertCase}}</option>
         </select>
     </td>

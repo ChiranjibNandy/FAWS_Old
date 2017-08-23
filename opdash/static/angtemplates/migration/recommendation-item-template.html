@@ -31,9 +31,10 @@
           </table>
       </div>
   </div>
+  <div style="color: red; text-align: right;margin-top:5px;" ng-if="vm.errorInApi || vm.errorInZoneApi">Error: Could not fetch available Regions/Zones. Please try again later.</div>
   <br>
   <!-- ********** PAGINATION GOES HERE... ************* -->
-    <div class="pagination pagination-mini" ng-if="vm.totalItems">
+    <div class="pagination pagination-mini" ng-if="vm.totalItems" ng-class="{'pagination-region-zone-api-failure': (vm.errorInApi === true || vm.errorInZoneApi === true)}">
         <ul>
             <li ng-class="{disabled: vm.currentPage == 1}" ng-click="vm.currentPage=vm.currentPage-1"><a href="">Prev</a></li>
             <li ng-repeat="n in vm.pageArray" ng-click="vm.currentPage = $index+1" ng-class ="{current: vm.currentPage == $index+1}"><a   ng-class ="{current: vm.currentPage == $index+1}" ng-style="{'background-color': vm.currentPage == $index+1 ? '#D3D3D3' : 'white'}"href="">{{n}}</a></li>
@@ -88,7 +89,7 @@
                           <div class="rs-detail-key"><b>AWS Region</b></div>
                           <div class="rs-detail-value">
                             <select ng-model="vm.awsRegion" ng-change="vm.getZones(item)">
-                                <option ng-repeat="region in vm.regions track by $index" value="{{region}}">{{region | convertCase}}</option>
+                                <option ng-repeat="region in vm.serverRegions track by $index" value="{{region}}">{{region | convertCase}}</option>
                             </select>
                             </div>
                         </div>

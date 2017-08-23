@@ -43,6 +43,7 @@
                     vm.loadError = false;
                     vm.precheck = false;
                     vm.precheckError = false;
+                    vm.precheckButtonEnabled = false;
                     var currentPricingDetails = vm.getCurrentPricingDetails();
                     var projectedPricingDetails = vm.getProjectedPricing();
 
@@ -139,6 +140,10 @@
                         });
                     }
                 };
+
+                $scope.$on('enableContinuePrecheck',function(event,args){
+                     vm.precheckButtonEnabled = args.enableStatus;
+                });
 
                 vm.warningMappingsOfEquipments = function(descriptionBlock){
                     for(var key in descriptionBlock){

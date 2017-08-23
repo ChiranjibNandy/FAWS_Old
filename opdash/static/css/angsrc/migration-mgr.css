@@ -455,13 +455,15 @@ a:hover,
     background-repeat: no-repeat;
 }
 
-
 /* bootstrap overrides */
 
 .pagination {
     margin: 0 0 20px;
 }
 
+.pagination-region-zone-api-failure{
+    margin: -20px 0 20px;
+}
 
 /* alerts */
 
@@ -981,6 +983,10 @@ body .modal.details2 {
 
 .custom-sort-a {
     color: #666;
+}
+
+.disabledData{
+    color: darkgray;
 }
 
 #step_aws_done {

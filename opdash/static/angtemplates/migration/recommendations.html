@@ -26,22 +26,22 @@
                     </div>
                 </div>                  
                 <rs-tabs alignment="horizontal">
-                    <rs-tab tabtitle="Servers ({{vm.dataServer}})" showtab="{{vm.dataServer != 0}}">
+                    <rs-tab tabtitle="Servers ({{vm.dataServer}})" showtab="{{vm.dataServer != 0}}" name="server" ng-if="vm.dataServer != 0">
                         <rsrecommendationitem type="server" filtervalue="vm.filteredValue"></rsrecommendationitem>
                     </rs-tab>
-                    <rs-tab tabtitle="Networks ({{vm.dataNetwork}})" showtab="{{vm.dataNetwork != 0}}">
+                    <rs-tab tabtitle="Networks ({{vm.dataNetwork}})" showtab="{{vm.dataNetwork != 0}}"  ng-if="vm.dataNetwork != 0">
                         <rsrecommendationitem type="network" filtervalue="vm.filteredValue"></rsrecommendationitem>
                     </rs-tab>
-                    <rs-tab tabtitle="Load Balancers ({{vm.dataLoadBalancers}})" showtab="{{vm.dataLoadBalancers != 0}}">
+                    <rs-tab tabtitle="Load Balancers ({{vm.dataLoadBalancers}})" showtab="{{vm.dataLoadBalancers != 0}}" ng-if="vm.dataLoadBalancers != 0">
                         <rsrecommendationitem type="loadbalancers" filtervalue="vm.filteredValue"></rsrecommendationitem>
                     </rs-tab>
-                    <rs-tab tabtitle="CBS ({{vm.dataVolume}})" showtab="{{vm.dataVolume != 0}}">
+                    <rs-tab tabtitle="CBS ({{vm.dataVolume}})" showtab="{{vm.dataVolume != 0}}" name="volume" ng-if="vm.dataVolume != 0">                        
                         <rsrecommendationitem type="volume" filtervalue="vm.filteredValue"></rsrecommendationitem>
                     </rs-tab>
-                    <rs-tab tabtitle="CDN ({{vm.dataService}})" showtab="{{vm.dataService != 0}}">
+                    <rs-tab tabtitle="CDN ({{vm.dataService}})" showtab="{{vm.dataService != 0}}" name="service" ng-if="vm.dataService != 0">
                         <rsrecommendationitem type="service" filtervalue="vm.filteredValue"></rsrecommendationitem>
                     </rs-tab>
-                    <rs-tab tabtitle="Files ({{vm.dataFile}})" showtab="{{vm.dataFile != 0}}">
+                    <rs-tab tabtitle="Files ({{vm.dataFile}})" showtab="{{vm.dataFile != 0}}" name="file" ng-if="vm.dataFile != 0">
                         <rsrecommendationitem type="file" filtervalue="vm.filteredValue"></rsrecommendationitem>
                     </rs-tab>
                 </rs-tabs>
