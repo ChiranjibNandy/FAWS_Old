@@ -96,13 +96,16 @@
                                 //get status of all the migrations in an array - to check if these resoruces have been scheduled in any migrations earlier 
                                 var statusList = [];
                                 for (var i = 0; i < jobList.length; i++) {
-                                    for (var j = 0; j < jobList[i].instances.length; j++) {
-                                        if (jobList[i].batch_status !== "error" && jobList[i].batch_status !== "canceled" && jobList[i].batch_status !== "done") {
-                                            statusList.push(jobList[i].instances[j]);
+                                    if (jobList[i].batch_status !== "error" && jobList[i].batch_status !== "canceled" && jobList[i].batch_status !== "done") {
+                                        for (var key in jobList[i]){
+                                            if(typeof(jobList[i][key]) == "object" && jobList[i][key].length && key != "metadata"){
+                                                for (var j = 0; j < jobList[i][key].length; j++) {
+                                                    statusList.push(jobList[i][key][j]);
+                                                };
+                                            }
                                         }
                                     }
                                 }
-
                                 //iterate over list of selected resources from local storage and save them in a array.
                                 var selectedResources = [];
                                 angular.forEach(JSON.parse($window.localStorage.selectedResources), function (item, type) {
