@@ -19,8 +19,8 @@
                     </div>
                     <div class="span-2">
                         <button class="rs-btn" ng-click="vm.getBatchDetails(true)">
-<i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i> Refresh
-</button>
+                            <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i> Refresh
+                        </button>
                         <!--<a href="" class="rs-btn" style="padding-left: 45px; padding-right: 45px;">See Log</a>-->
                         <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1
                             ? " mins ": " min ") + "ago"}}</div>
@@ -32,20 +32,20 @@
                         <thead>
                             <th style="width:25%">
                                 <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('server', 'name')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['server']==='name', 'custom-table-sort-desc current-sort-param': vm.sortBy['server']==='-name', 'custom-table-sort-desc': vm.sortBy['server'].indexOf('name') < 0}">
-<span class="rs-table-sort-text">Server</span>
-<span class="rs-table-sort-indicator"></span>
-</a>
+                                    <span class="rs-table-sort-text">Server</span>
+                                    <span class="rs-table-sort-indicator"></span>
+                                </a>
                             </th>
                             <th style="width:30%">
                                 <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('server', 'status')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['server']==='status', 'custom-table-sort-desc current-sort-param': vm.sortBy['server']==='-status', 'custom-table-sort-desc': vm.sortBy['server'].indexOf('status') < 0}">
-<span class="rs-table-sort-text">Status</span>
-<span class="rs-table-sort-indicator"></span>
-</a>
+                                    <span class="rs-table-sort-text">Status</span>
+                                    <span class="rs-table-sort-indicator"></span>
+                                </a>
                             </th>
                             <th style="width:30%">
                                 <a href="javascript:void(0);" class="rs-table-sort custom-sort-a">
-<span class="rs-table-sort-text">Progress</span>
-</a>
+                                    <span class="rs-table-sort-text">Progress</span>
+                                </a>
                             </th>
                             <th>
                                 Actions
@@ -66,7 +66,7 @@
                                     <span class="rs-status-warning" ng-show="instance.status==='paused'">Paused</span>
                                     <span class="rs-status-warning" ng-show="instance.status==='canceled'">Cancelled</span>
                                 </td>
-                                <td class="rs-table-text" ng-class="{'paddingLeft' : instance.status !== 'in progress' && instance.status !== 'done'}" style="width: 30%;">
+                                <td class="rs-table-text" ng-class="{'paddingLeft' : (instance.status !== 'in progress' || (instance.status === 'in progress' && vm.progressFlag === false))&& instance.status !== 'done' }" style="width: 30%;">
                                     <div class="rs-progress rs-progress-small" ng-if="instance.status==='in progress' && vm.progressFlag !== false">
                                         <div class="rs-progress-inner">
                                             <div class="rs-segment" ng-if="instance.instance_succeeded_time_pct !== undefined" ng-style="{'width': + instance.instance_succeeded_time_pct +'%'}">
@@ -78,6 +78,7 @@
                                         </div>
                                     </div><span class="rs-status-ok" ng-if="instance.status==='in progress' && vm.progressFlag !== false && instance.instance_succeeded_time_pct !== undefined"><em> {{instance.instance_succeeded_time_pct}}%</em></span>
                                     <span class="rs-status-ok" ng-if="instance.status==='in progress' && vm.progressFlag !== false && instance.instance_succeeded_time_pct === undefined"><em> {{vm.job.succeeded_time_pct}}%</em></span>
+                                    <span ng-if="instance.status === 'in progress' && vm.progressFlag === false"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>                                    
                                     <div class="rs-progress rs-progress-small" ng-if="instance.status==='done'">
                                         <div class="rs-progress-inner">
                                             <div class="rs-segment" style="width: 100%">
@@ -92,7 +93,7 @@
                                     <span ng-if="instance.status === 'not available' || instance.status === undefined"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>
                                 </td>
                                 <td>
-                                    <a class="rs-btn" ng-link="['ResourceTaskList', {job_id: vm.job.job_id, resource_type: 'instance', instance_status: instance.status, resource_id: instance.id+'+'+vm.job.batch_name+'+'+instance.name}]">See Tasks</a>
+                                    <a class="rs-btn" ng-click="vm.saveResourceDetailsRouteParams(instance,'instance')">See Tasks</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -387,20 +388,20 @@
                         <thead>
                             <th>
                                 <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('network', 'name')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['network']==='name', 'custom-table-sort-desc current-sort-param': vm.sortBy['network']==='-name', 'custom-table-sort-desc': vm.sortBy['network'].indexOf('name') < 0}">
-<span class="rs-table-sort-text">Network</span>
-<span class="rs-table-sort-indicator"></span>
-</a>
+                                    <span class="rs-table-sort-text">Network</span>
+                                    <span class="rs-table-sort-indicator"></span>
+                                </a>
                             </th>
                             <th>
                                 <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('network', 'status')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['network']==='status', 'custom-table-sort-desc current-sort-param': vm.sortBy['network']==='-status', 'custom-table-sort-desc': vm.sortBy['network'].indexOf('status') < 0}">
-<span class="rs-table-sort-text">Status</span>
-<span class="rs-table-sort-indicator"></span>
-</a>
+                                    <span class="rs-table-sort-text">Status</span>
+                                    <span class="rs-table-sort-indicator"></span>
+                                </a>
                             </th>
                             <th>
                                 <a href="javascript:void(0);" class="rs-table-sort custom-sort-a">
-<span class="rs-table-sort-text">Progress</span>
-</a>
+                                    <span class="rs-table-sort-text">Progress</span>
+                                </a>
                             </th>
                             <th>
                                 Actions
@@ -446,7 +447,7 @@
                                     <span ng-if="network.status.state.toLowerCase() === 'created' || network.status.toLowerCase() === 'created'"><i class="fa fa-clock-o font-size-progress-icons" aria-hidden="true"></i></span>
                                 </td>
                                 <td>
-                                    <a class="rs-btn" ng-link="['ResourceTaskList', {job_id: vm.job.job_id, resource_type: 'network', instance_status: network.status.state || network.status, resource_id: network.id}]">See Tasks</a>
+                                    <a class="rs-btn" ng-click="vm.saveResourceDetailsRouteParams(network,'network')" >See Tasks</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -505,7 +506,7 @@
                 </div>
                 <br>
                 <div class="rs-facet-section-body">
-                    <h3>Alerts <span class="rs-quiet">({{vm.alerts.length}})</span></h3>
+                    <h3>Errors <span class="rs-quiet">({{vm.alerts.length}})</span></h3>
                     <div class="migration-status-list-container table-justify">
                         <table class="rs-list-table no-truncate-td cell-center">
                             <thead>

@@ -4,38 +4,43 @@
         <hr>
         <!-- Shows present time by default -->
         <div class="rs-control-group">
-            <a style=" padding: 5px;display: block;font-size: 14px;text-decoration: none;cursor: pointer;color: #333;font-weight: bold;" id="now" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateNow" ng-click=" vm.showTime('now')">
+            <a style=" padding: 5px;display: block;font-size: 14px;text-decoration: none;cursor: pointer;color: #1e6ec1;font-weight: bold;"
+                id="now" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateNow" ng-click=" vm.showTime('now')">
                 <i class="fa fa-clock-o fa-fw"> </i> Initiate Migration Now <i class="fa fa-angle-double-right"></i>
             </a>
-            <a style=" padding: 5px; display: block;font-size: 14px;text-decoration: none;cursor: pointer;color: #333;font-weight: bold;" id="now" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateLate" ng-click="vm.showTime('schedule')">
+            <a style=" padding: 5px; display: block;font-size: 14px;text-decoration: none;cursor: pointer;color: #1e6ec1;font-weight: bold;"
+                id="now" name="scheduleMigration" ng-model="vm.scheduleMigration" value="migrateLate" ng-click="vm.showTime('schedule')">
                 <i class="fa fa-calendar fa-fw"></i> Schedule for Later <i class="fa fa-angle-double-right"></i>
             </a>
         </div>
-        <div class="animated fadeIn" id="schedule" >
-            <div class="alert alert-warning" ng-show="vm.showMigrationTime"> 
+        <div class="animated fadeIn" id="schedule">
+            <div class="alert alert-warning" ng-show="vm.showMigrationTime">
                 <p>Migration initiated for: <br>
                     <b>{{ vm.selectedDate}}</b>
                 </p>
             </div>
         </div>
-        <div class="animated fadeIn" id="schedule" >
+        <div class="animated fadeIn" id="schedule">
             <form ng-show="vm.showTimeForm">
                 <div class='rs-row input-group actionDt1' datetimepicker ng-model="vm.date">
-                    <input class="input-group-addon" type='text' placeholder="Select Date" class='form-control' id='datetimepickerAdd'/>
+                    <input class="input-group-addon" type='text' placeholder="Select Date" class='form-control' id='datetimepickerAdd' />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
                 <div class="rs-row">
-                    <select name="time" ng-model="vm.time" ng-options="timeInterval for timeInterval in vm.timeIntervals"  style="width: 113px;" class="ng-pristine ng-untouched ng-valid ng-not-empty span-6" ></select>
-                    <select ng-model="vm.timezone1" style="width: 113px;" class="ng-pristine ng-valid ng-not-empty ng-touched span-6" >
-                        <option ng-repeat="x in vm.timeZoneItems" value="{{x.timeZone}}">{{x.timeZoneName}}</option>
+                    <select name="time" class="ng-pristine ng-untouched ng-valid ng-not-empty span-6" style="width: 113px;" ng-model="vm.time"
+                        ng-options="timeInterval for timeInterval in vm.timeIntervals" ng-disabled="vm.error"></select>
+                    <select ng-model="vm.timezone1" style="width: 113px;" class="ng-pristine ng-valid ng-not-empty ng-touched span-6">
+                        <option ng-repeat="x in vm.timeZoneItems.slice(0,10)" value="{{x.timeZoneName}}">{{x.timeZone}}</option>
+                        <option disabled>-----------------------------------------------</option>
+                        <option ng-repeat="x in vm.timeZoneItems.slice(11)" value="{{x.timeZoneName}}">{{x.timeZone}}</option>
                     </select>
                 </div>
                 <div class="rs-control-group">
                     <span style="width: 80px"></span>
                     <div class="rs-controls">
-                        <div ng-show="vm.error" style="color:red;"> Please select future or current Date/Time
+                        <div ng-show="vm.error" style="color:red;"> Please select future date
                         </div>
                     </div>
                 </div>
@@ -47,9 +52,12 @@
 <script>
     var nextDate = new Date();
     $('.actionDt1').datetimepicker({
-        defaultDate:nextDate,
-        format:'YYYY-MM-DD',
+        defaultDate: nextDate,
+        format: 'YYYY-MM-DD',
         minDate: new Date(nextDate.getFullYear(), nextDate.getMonth(), nextDate.getDate()),
-        widgetPositioning:{horizontal: 'auto', vertical:'auto'}
+        widgetPositioning: {
+            horizontal: 'auto',
+            vertical: 'auto'
+        }
     });
 </script>

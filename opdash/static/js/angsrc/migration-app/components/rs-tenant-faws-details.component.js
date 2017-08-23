@@ -169,7 +169,7 @@
                     if(rack){
                         requestObj = {
                             'account_name' : vm.fawsAcctName,
-                            'service_level' : vm.serviceLevel
+                            'service_level' : "navigator"
                         }
                         promise = dataStoreService.createFawsAccount(requestObj);
                     }
@@ -240,6 +240,13 @@
                             };
                     });
                 }
+            
+                //function to clear faws account modal
+                vm.clearFawsAccountModal =function(){
+                    vm.fawsAcctName = "";
+                    vm.acceptTermsAndConditions = false;
+                }
+
                 return vm;
             }]
         }); // end of component definition

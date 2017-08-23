@@ -56,6 +56,7 @@
                     };
                     alertsService.getResourceTasks(params, refresh)
                         .then(function (response) {
+                            var promise = null;
                             if (response.error) {
                                 vm.tasks = [];
                                 vm.loading = false;
@@ -65,15 +66,15 @@
                                 vm.tasks = response.tasks;
                             }
                             if ($window.localStorage.batch_job_status === 'in progress' || $window.localStorage.batch_job_status === 'done') {
-                                var promise = HttpWrapper.send('/api/jobs/' + params.job_id + '/progress', { "operation": 'GET' });
+                                promise = HttpWrapper.send('/api/jobs/' + params.job_id + '/progress', { "operation": 'GET' });
                             }
                             $q.all([promise]).then(function (response) {
-                                if (response[0] !== undefined) {
+                                if (response[0] !== undefined && response[0] !== null) {
                                     if (response[0].succeeded_by_time_pct !== undefined) {
                                         //Check to see the instance type
                                         if (vm.resource_type === "instance") {
                                             //Loop through response[0].instances.resources and check whether route param resource_id matches with any of the keys
-                                            for (let instance_key in response[0].instances.resources) {
+                                            for (var instance_key in response[0].instances.resources) {
                                                 if (instance_key === vm.resource_id) {
                                                     vm.batch_progress = response[0].instances.resources[instance_key].succeeded_by_time_pct;
                                                 }
