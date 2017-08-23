@@ -83,27 +83,23 @@
         <table class="rs-list-table">
             <thead>
                 <tr>
-                    <th style="width:136px">Resource</th>
-                    <th>Severity</th>
+                    <th style="width: 15%;">Severity</th>
                     <th>Summary</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat = "error in vm.errors" class="">
-                    <td style="width:136px">{{error.name}}</td>
+                <tr ng-repeat = "error in vm.errors" class=""> 
                     <td class="rs-status-error">Error</td>
                     <td>{{error.description}}</td>
                 </tr>
                 <tr ng-repeat = "warning in vm.warnings" class="">
-                    <td style="width:136px">{{warning.name}}</td>
                     <td class="rs-status-warning">Warning</td>
                     <td>{{warning.description}}</td>
                 </tr>
                 <tr ng-repeat = "failure in vm.failures" class="">
-                    <td style="width:136px">{{failure.name}}</td>
                     <td class="rs-status-error">Failure</td>
                     <td>{{failure.description}}</td>
-                </tr>
+                </tr>  
             </tbody>
         </table>
         <br>

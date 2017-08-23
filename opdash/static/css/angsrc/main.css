@@ -608,13 +608,29 @@ span.fa-angle-left, span.fa-angle-right{
 }
 
 .inline-block-elements{
-display: inline-block;
+    display: inline-block;
 }
 
 .instance-progress-bar{
-margin-left:5px;
+    margin-left:5px;
 }
 
 .padding100PxLeft{
     padding-left: 70px;
+    margin-left:5px;
+}
+
+.autoRefreshColorOn{
+    outline: none;
+    color:green;
+}
+
+.autoRefreshColorOff{
+    outline: none;
+}
+
+.autoRefresh{
+    margin-top: 8px;
+    cursor: pointer;
+    font-size: 15px;
 }

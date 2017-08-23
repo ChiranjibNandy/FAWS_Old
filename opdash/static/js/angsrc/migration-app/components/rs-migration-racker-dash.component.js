@@ -396,7 +396,7 @@
                         else{
                             $rootRouter.navigate(["MigrationStatus"]);
                         }
-                    });                    
+                    });               
                 } 
 
                 //sets the tenant id and redirects the racker to the MigrationStatus page

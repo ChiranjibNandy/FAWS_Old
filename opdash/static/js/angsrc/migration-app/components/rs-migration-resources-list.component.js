@@ -338,7 +338,8 @@
                             vm.selectedTime = {
                                     migrationName:vm.migrationName,
                                     time:'',
-                                    timezone:''
+                                    timezone:'',
+                                    live_migrate:false,
                                 };
                             dataStoreService.setScheduleMigration(vm.selectedTime);
                             $('#save_for_later').modal('hide');
@@ -408,7 +409,7 @@
                     if(rack){
                         requestObj = {
                             'account_name' : vm.fawsAcctName,
-                            'service_level' : vm.serviceLevel
+                            'service_level' : "navigator"
                         }
                         promise = dataStoreService.createFawsAccount(requestObj);
                     }

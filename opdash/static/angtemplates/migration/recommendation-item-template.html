@@ -53,7 +53,7 @@
             <h3>Modify Configurations </h3>
         </div>
         <div class="modal-body">
-            <big><b>What you have currently</b> <a href="" role="button" data-trigger="hover" data-placement="right" data-toggle="popover" title="This is the current set up you have within Rackspace Cloud Server." data-content="This is the current set up you have within Rackspace Cloud Server. "><sup><i class="fa fa-info-circle rs-quiet"></i></sup></a></big>
+            <big><b>What you have currently</b> <a href="" role="button" data-trigger="hover" data-placement="right" data-toggle="popover" title="This is the current set up you have within Rackspace Cloud Server." data-content="current set up."><sup><i class="fa fa-info-circle rs-quiet"></i></sup></a></big>
             <br>
             <br>
             <table class="rs-list-table">
@@ -70,16 +70,16 @@
                 <tbody>
                     <tr class="">
                         <td class="rs-table-checkbox"><img src="/static/img/rackspace-logo.svg" alt=""></td>
-                        <td class="rs-table-text">{{item.details.flavor_details.name}} (Current)</td>
+                        <td class="rs-table-text">{{item.details.flavor_details.name}}</td>
                         <td class="rs-table-text">{{item.details.flavor_details.vcpus}}</td>
-                        <td class="rs-table-text">{{item.details.flavor_details.ram +' MB'}}</td>
-                        <td class="rs-table-text">{{item.details.flavor_details.disk+" GB"}}</td>
+                         <td class="rs-table-text">{{item.details.flavor_details.ram +' MB'}}</td>
+                         <td class="rs-table-text">{{item.details.flavor_details.disk+" GB"}}</td>
                         <td class="rs-table-text">{{item.details.rax_price | currency}}</td>
                     </tr>
                 </tbody>
             </table>
              <br>
-            <big><b>Choose a new configuration</b> <a href="" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" title="" data-content="Please feel free to choose a different option that will fit your specifications. The pre-selected option is the optimal configuration we recommend based on your current setup. "><sup><i class="fa fa-info-circle rs-quiet"></i></sup></a></big>
+            <big><b>Choose a new configuration</b> <a href="" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" title="Please feel free to choose a different option that will fit your specifications. The pre-selected option is the optimal configuration we recommend based on your current setup." data-content="configuration setup."><sup><i class="fa fa-info-circle rs-quiet"></i></sup></a></big>
             <br>
             <br>
             <form class="rs-form-horizontal rs-form-medium">
@@ -133,12 +133,12 @@
                         </tr>
                         <tr ng-show="!vm.loadingPrice && !vm.loadingZone" ng-repeat="server in item.pricingOptions track by $index" class="">
                             <td class="rs-table-checkbox">    
-                                <input type="radio" name="{{'selection'+item.name }}" ng-model="vm.selectedConfigurationType" ng-value="server.instance_type" ng-click="vm.disableConfirm($index)"/>
+                                <input type="radio" name="{{'selection'+item.rrn }}" ng-model="vm.selectedConfigurationType" ng-value="server.instance_type" ng-click="vm.disableConfirm($index)"/>
                             </td>
                             <td class="rs-table-text">{{server.instance_type}}</td>
                             <td class="rs-table-text">{{server.vcpu || 2}}</td>
                             <td class="rs-table-text">{{server.memory || '2 GB'}}</td>
-                            <td class="rs-table-text">{{server.storage || 'EBS-Only'}}</td>
+                              <td class="rs-table-text">{{server.storage || 'EBS-Only'}}</td>
                             <td class="rs-table-text">{{vm.getTotalInstanceCost(server,item) | currency}}</td>
                         </tr>
                     </tbody>

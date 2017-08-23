@@ -139,7 +139,37 @@
                         }
                     }
                 }
+            };
+
+            function transformNetwork(network){
+                return {
+                    id: network.id,
+                    status: network.status,
+                    name: network.name,
+                    shared: network.shared
+                };
             }
+
+            /**
+            * @ngdoc method
+            * @name getTrimmedItem
+            * @methodOf migrationApp.service:networkservice
+            * @param {String} id Resource id
+            * @param {String} region Region at RAX the resource resides in.
+            * @returns {Promise} a promise to fetch a specific netowrk.
+            * @description
+            * Gets a specific network. It returns only a definite set of properties of a network for its representation.
+            */
+            self.getTrimmedItem = function(item_id,region){
+                var deferred = $q.defer();
+                self.getById(item_id,region).then(function (response) {
+                    if (response.error)
+                        return deferred.resolve(response);
+                    return deferred.resolve(transformNetwork(response.data));
+                });
+                return deferred.promise;
+            };
+
 
             /**
              * @ngdoc method
@@ -189,6 +219,40 @@
             };
 
             /**
+            * @ngdoc method
+            * @name getById
+            * @methodOf migrationApp.service:networkservice
+            * @param {String} id Resource id
+            * @param {String} region Region at RAX the resource resides in.
+            * @returns {Promise} a promise to fetch a specific network by id.
+            * @description
+            * Gets a specific network in its raw JSON form, from the api.
+            */
+            self.getById = function (id, region) {
+                var url = "/api/network/" + region + "/" + id;
+                var tenant_id = authservice.getAuth().tenant_id;
+
+                return HttpWrapper.send(url, { "operation": 'GET' })
+                .then(function (response){
+                    networks = {
+                        labels: [
+                            { field: "name", text: "Network Name" },
+                            { field: "id", text: "id" },
+                            { field: "rrn", text: "rrn" },
+                            { field: "shared", text: "Shared" },
+                            { field: "status", text: "Network Status" },
+                            { field: "source_region", text: "Source Region" },
+                            { field: "admin_state_up", text: "Admin State Up" }
+                        ],
+                    data: response
+                    };
+                    return networks;
+                }, function (errorResponse) {
+                    return errorResponse;
+                });
+            };
+
+            /**
              * @ngdoc method
              * @name getAll
              * @methodOf migrationApp.service:networkservice
@@ -230,36 +294,59 @@
             * @description
             * prepare network instance request object
             */
-            self.prepareNetworkList = function (networksReqList) {
-                if ($window.localStorage.selectedResources !== undefined) {
-                    var equipments = {
-                        instances: JSON.parse($window.localStorage.selectedResources)['server'],//dataStoreService.getItems("server")
-                        networks: datastoreservice.getDistinctNetworks()
-                    }
-                }
+            self.prepareNetworkList = function (networks) {
                 var networksReqList = [];
-                networksReqList = equipments.networks.map(function (network) {
-                    return {
-                        source: {
-                            region: network.region.toUpperCase()
-                        },
-                        destination: {
-                            region: network.destRegion, //.toUpperCase(),
-                            default_zone: network.destZone || default_zone
-                        },
-                        subnets: [
-                            {
-                                id: network.rrn
+
+                    angular.forEach(networks, function (distinctNetwork) {
+                        var pushed=0;
+                        for(var i=0;i<networksReqList.length;i++){
+                            if(networksReqList[i].destination.region === distinctNetwork.destRegion) { //if the region match add only subnet id and instance id
+                                var subnetList = [];    
+                                for(var j=0; j<networksReqList[i].subnets.length; j++) //fetch list of all subnnet ids of this network
+                                    subnetList[j] = networksReqList[i].subnets[j].id;
+
+                                if(subnetList.indexOf(distinctNetwork.rrn) == -1) { //to avoid multiple entries
+                                    networksReqList[i].subnets.push({id:distinctNetwork.rrn});
+                                    subnetList.push(distinctNetwork.rrn);
+                                }
+
+                                var instanceList =[];
+                                for(var j=0; j<networksReqList[i].instances.length; j++) //fetch list of all instances of this network
+                                    instanceList[j] = networksReqList[i].instances[j].id;
+
+                                if(instanceList.indexOf(distinctNetwork.instanceRrn) == -1) {  //to avoid multiple entries
+                                    networksReqList[i].instances.push({id:distinctNetwork.instanceRrn});
+                                    instanceList.push(distinctNetwork.instanceRrn);
+                                }
+                                pushed=1; //turn the flag on to avoid double entry of the network
                             }
-                        ],
-                        instances: [
-                            {
-                                id: network.instanceRrn
-                            }
-                        ],
-                        security_groups: "All"
-                    };
-                });
+                        }// end of inner for loop
+
+                        if(pushed===0){      //in case the regions didn't match, it is a new entry in the network list
+                            var tempobj = {
+                                source: {
+                                    region: distinctNetwork.region.toUpperCase()
+                                },
+                                destination: {
+                                    region: distinctNetwork.destRegion, //.toUpperCase(),
+                                    default_zone: distinctNetwork.destZone || default_zone
+                                },
+                                subnets: [
+                                    {
+                                        id: distinctNetwork.rrn
+                                    }
+                                ],
+                                instances: [
+                                    {
+                                        id: distinctNetwork.instanceRrn
+                                    }
+                                ],
+                                security_groups: "All"
+                            };
+                            networksReqList.push(tempobj); //add the new object to the network list
+                        }//end of if condition
+                                            
+                    });//end of outer for loop        
                 return networksReqList;
             }
             return self;
