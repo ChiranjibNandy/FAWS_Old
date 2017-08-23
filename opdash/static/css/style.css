@@ -53,3 +53,9 @@ body .modal.details {
 .rs-main {
     margin: 10px 0px !important;
 }
+
+.selected-Items b::before {
+    font-family: 'FontAwesome';
+    content: "\f058";
+    margin-left: 5px;
+}
