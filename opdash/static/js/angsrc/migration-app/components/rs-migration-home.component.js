@@ -39,7 +39,7 @@
                             else{
                                 $rootRouter.navigate(["MigrationStatus"]);
                             }
-                        });  
+                        });   
                     }
                 }
                 return vm;

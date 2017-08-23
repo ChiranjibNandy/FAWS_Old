@@ -43,6 +43,7 @@
                     vm.loadError = false;
                     vm.precheck = false;
                     vm.precheckError = false;
+                    vm.precheckButtonEnabled = false;
                     var currentPricingDetails = vm.getCurrentPricingDetails();
                     var projectedPricingDetails = vm.getProjectedPricing();
 
@@ -91,7 +92,7 @@
                         vm.precheck = false;
                         vm.precheckError = false;
                         $("#precheck_modal").modal('show');
-                        var requestObj = ds.preparePrereqRequest();
+                        var requestObj = ds.prepareJobRequest(true); //Send 'true' to generate pre-req job-spec obj
                         var servers = JSON.parse($window.localStorage.selectedResources)['server'];//dataStoreService.getItems("server");
                         HttpWrapper.save("/api/precheck", { "operation": 'POST' }, requestObj)
                         .then(function (result) {
@@ -139,6 +140,10 @@
                         });
                     }
                 };
+
+                $scope.$on('enableContinuePrecheck',function(event,args){
+                     vm.precheckButtonEnabled = args.enableStatus;
+                });
 
                 vm.warningMappingsOfEquipments = function(descriptionBlock){
                     for(var key in descriptionBlock){

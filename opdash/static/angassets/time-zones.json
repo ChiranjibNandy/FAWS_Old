@@ -1,0 +1,281 @@
+{
+  "timezones": [{
+      "timeZoneName": "EST",
+      "timeZone": "GMT-05:00 (Eastern Standard Time)",
+      "offset": "-5"
+    },
+    {
+      "timeZoneName": "EDT",
+      "timeZone": "GMT-04:00 (Eastern Standard Summer Time)",
+      "offset": "-4"
+    },
+    {
+      "timeZoneName": "CST",
+      "timeZone": "GMT-06:00 (Central Standard Time)",
+      "offset": "-6"
+    },
+    {
+      "timeZoneName": "CDT",
+      "timeZone": "GMT-05:00 (Central Standard Summer Time)",
+      "offset": "-5"
+    },
+    {
+      "timeZoneName": "MST",
+      "timeZone": "GMT-07:00 (Mountain Standard Time)",
+      "offset": "-7"
+    },
+    {
+      "timeZoneName": "MDT",
+      "timeZone": "GMT-06:00 (Mountain Standard Summer Time)",
+      "offset": "-6"
+    },
+    {
+      "timeZoneName": "PST",
+      "timeZone": "GMT-08:00 (Pacific Standard Time)",
+      "offset": "-8"
+    },
+    {
+      "timeZoneName": "PDT",
+      "timeZone": "GMT-07:00 (Pacific Standard Summer Time)",
+      "offset": "-7"
+    },
+    {
+      "timeZoneName": "HST",
+      "timeZone": "GMT-10:00 (Hawaiian Standard Time)",
+      "offset": "-10"
+    },
+    {
+      "timeZoneName": "AKST",
+      "timeZone": "GMT-09:00 (Alaskan Standard Time)",
+      "offset": "-9"
+    },
+    {
+      "timeZoneName": "AKDT",
+      "timeZone": "GMT-08:00 (Alaskan Standard Summer Time)",
+      "offset": "-8"
+    },
+    {
+      "timeZoneName": "BIT",
+      "timeZone": "GMT-12:00 (Baker Island Time)",
+      "offset": "-12"
+    },
+    {
+      "timeZoneName": "SST",
+      "timeZone": "GMT-11:00 (Samoa Standard Time)",
+      "offset": "-11"
+    },
+    {
+      "timeZoneName": "VET",
+      "timeZone": "GMT-04:30 (Venezuelan Standard Time)",
+      "offset": "-4.5"
+    },
+    {
+      "timeZoneName": "AST",
+      "timeZone": "GMT-04:00 (Atlantic Island Time)",
+      "offset": "-4"
+    },
+    {
+      "timeZoneName": "NST",
+      "timeZone": "GMT-03:30 (Newfoundland Standard Time)",
+      "offset": "-3.5"
+    },
+    {
+      "timeZoneName": "BRT",
+      "timeZone": "GMT-03:00 (Brasilia Time)",
+      "offset": "-3"
+    },
+    {
+      "timeZoneName": "GST",
+      "timeZone": "GMT-02:00 (South Georgia and the South Sandwich Islands Time)",
+      "offset": "-2"
+    },
+    {
+      "timeZoneName": "CVT",
+      "timeZone": "GMT-01:00 (Cape Verde Time)",
+      "offset": "-1"
+    },
+    {
+      "timeZoneName": "GMT",
+      "timeZone": "GMT+00:00 (Western Europe Time, London, Greenwich)",
+      "offset": "0"
+    },
+    {
+      "timeZoneName": "CET",
+      "timeZone": "GMT+01:00 (Central European Time)",
+      "offset": "+1"
+    },
+    {
+      "timeZoneName": "CAT",
+      "timeZone": "GMT+02:00 (Central African Time)",
+      "offset": "+2"
+    },
+    {
+      "timeZoneName": "AST",
+      "timeZone": "GMT+03:00 (Arab Standard Time)",
+      "offset": "+3"
+    },
+    {
+      "timeZoneName": "IRST",
+      "timeZone": "GMT+03:30 (Iran Standard Time)",
+      "offset": "+3.5"
+    },
+    {
+      "timeZoneName": "MUT",
+      "timeZone": "GMT+04:00 (Mauritius Time)",
+      "offset": "+4"
+    },
+    {
+      "timeZoneName": "AFT",
+      "timeZone": "GMT+04:30 (Afghanistan Time)",
+      "offset": "+4.5"
+    },
+    {
+      "timeZoneName": "PKT",
+      "timeZone": "GMT+05:00 (Pakistan Standard Time)",
+      "offset": "+5"
+    },
+    {
+      "timeZoneName": "IST",
+      "timeZone": "GMT+05:30 (Indian Standard Time)",
+      "offset": "+5.5"
+    },
+    {
+      "timeZoneName": "BDT",
+      "timeZone": "GMT+06:00 (Bangladesh Standard Time)",
+      "offset": "+6"
+    },
+    {
+      "timeZoneName": "ICT",
+      "timeZone": "GMT+07:00 (Indochina Time)",
+      "offset": "+7"
+    },
+    {
+      "timeZoneName": "MYT",
+      "timeZone": "GMT+08:00 (Malaysia Time)",
+      "offset": "+8"
+    },
+    {
+      "timeZoneName": "JST",
+      "timeZone": "GMT+09:00 (Japan Standard Time)",
+      "offset": "+9"
+    },
+    {
+      "timeZoneName": "ACST",
+      "timeZone": "GMT+09:30 (Australian Central Standard Time)",
+      "offset": "+9.5"
+    },
+    {
+      "timeZoneName": "AEST",
+      "timeZone": "GMT+10:00 (Australian Eastern Standard Time)",
+      "offset": "+10"
+    },
+    {
+      "timeZoneName": "NCT",
+      "timeZone": "GMT+11:00 (New Caledonia Standard Time)",
+      "offset": "+11"
+    },
+    {
+      "timeZoneName": "NZST",
+      "timeZone": "GMT+12:00 (New Zealand Standard Time)",
+      "offset": "+12"
+    }
+  ],
+  "timeintervals": [
+    "12:00 am",
+    "12:15 am",
+    "12:30 am",
+    "12:45 am",
+    "01:00 am",
+    "01:15 am",
+    "01:30 am",
+    "01:45 am",
+    "02:00 am",
+    "02:15 am",
+    "02:30 am",
+    "02:45 am",
+    "03:00 am",
+    "03:15 am",
+    "03:30 am",
+    "03:45 am",
+    "04:00 am",
+    "04:15 am",
+    "04:30 am",
+    "04:45 am",
+    "05:00 am",
+    "05:15 am",
+    "05:30 am",
+    "05:45 am",
+    "06:00 am",
+    "06:15 am",
+    "06:30 am",
+    "06:45 am",
+    "07:00 am",
+    "07:15 am",
+    "07:30 am",
+    "07:45 am",
+    "08:00 am",
+    "08:15 am",
+    "08:30 am",
+    "08:45 am",
+    "09:00 am",
+    "09:15 am",
+    "09:30 am",
+    "09:45 am",
+    "10:00 am",
+    "10:15 am",
+    "10:30 am",
+    "10:45 am",
+    "11:00 am",
+    "11:15 am",
+    "11:30 am",
+    "11:45 am",
+    "12:00 pm",
+    "12:15 pm",
+    "12:30 pm",
+    "12:45 pm",
+    "01:00 pm",
+    "01:15 pm",
+    "01:30 pm",
+    "01:45 pm",
+    "02:00 pm",
+    "02:15 pm",
+    "02:30 pm",
+    "02:45 pm",
+    "03:00 pm",
+    "03:15 pm",
+    "03:30 pm",
+    "03:45 pm",
+    "04:00 pm",
+    "04:15 pm",
+    "04:30 pm",
+    "04:45 pm",
+    "05:00 pm",
+    "05:15 pm",
+    "05:30 pm",
+    "05:45 pm",
+    "06:00 pm",
+    "06:15 pm",
+    "06:30 pm",
+    "06:45 pm",
+    "07:00 pm",
+    "07:15 pm",
+    "07:30 pm",
+    "07:45 pm",
+    "08:00 pm",
+    "08:15 pm",
+    "08:30 pm",
+    "08:45 pm",
+    "09:00 pm",
+    "09:15 pm",
+    "09:30 pm",
+    "09:45 pm",
+    "10:00 pm",
+    "10:15 pm",
+    "10:30 pm",
+    "10:45 pm",
+    "11:00 pm",
+    "11:15 pm",
+    "11:30 pm",
+    "11:45 pm"
+  ]
+}

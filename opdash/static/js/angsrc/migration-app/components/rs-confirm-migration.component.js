@@ -185,7 +185,8 @@
                     var requestObj;
                     vm.migrating = true;
                     $('#confirm-migration-modal').modal('hide');
-                    requestObj = ds.prepareJobRequest();
+                  
+                    requestObj = ds.prepareJobRequest(false); //Send 'false' to generate migration job-spec obj
                     vm.acceptTermsAndConditions = true;
                     if (JSON.parse(dataStoreService.getResourceItemsForEditingMigration())) {
                         migrationService.modifyMigration(dataStoreService.getJobIdForMigration('jobId'), requestObj)
@@ -201,7 +202,7 @@
                                             }
                                         } else {
                                             $('#modify-modal').modal('show');
-                                            vm.message = "We have successfully modified your migration but couldn't unpause the migation. You may have to un pause it manually in dashboard page."
+                                            vm.message = "We have successfully modified your migration but couldn't unpause the migation. You may have to un pause it manually in dashboard page.
                                         }
                                     })
                                 } else {
@@ -291,8 +292,9 @@
                     var requestObj;
                     vm.migrating = true;
                     $('#confirm-migration-modal').modal('hide');
-                    requestObj = ds.prepareJobRequest();
-                    vm.acceptTermsAndConditions = true;
+
+                    requestObj = ds.prepareJobRequest(false); //Send 'false' to generate migration job-spec obj
+                    vm.acceptTermsAndConditions= true;
                     $rootScope.$emit("vm.MigrationName", dataStoreService.selectedTime.migrationName);
                     $rootScope.$emit("vm.MigrationTime", dataStoreService.selectedTime.time);
                     HttpWrapper.save("/api/jobs", {

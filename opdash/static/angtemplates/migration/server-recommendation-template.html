@@ -6,9 +6,9 @@
         <a href="" role="button" ng-click="vm.equipmentDetails(vm.type, item)" data-toggle="modal" title="{{item.name}}">{{item.name}}</a>
     </td>
     <td class="rs-table-text">{{item.ip_address}}</td>
-    <td class="rs-table-text"><i class="fa fa-arrow-right rs-status-ok pullLeft"></i>{{item.selectedMapping.region }}</td>
+    <td class="rs-table-text" ng-class="{'disabledData': vm.errorInApi === true || vm.errorInZoneApi === true}"><i class="fa fa-arrow-right rs-status-ok pullLeft"></i>{{item.selectedMapping.region }}</td>
     <!--Default zone is always going to be us-east-1a, its not available from ec2_pricing kept as a secondary value-->
-    <td class="rs-table-text">{{item.selectedMapping.zone || 'us-east-1a' }}</td>
+    <td class="rs-table-text" ng-class="{'disabledData': vm.errorInApi === true || vm.errorInZoneApi === true}">{{item.selectedMapping.zone || 'us-east-1a' }}</td>
     <td class="rs-table-text">{{item.selectedMapping.instance_type}}</td>
     <td class="rs-table-text"> ${{item.selectedMapping.totalCost}}</td>
     <td class="rs-table-cog">

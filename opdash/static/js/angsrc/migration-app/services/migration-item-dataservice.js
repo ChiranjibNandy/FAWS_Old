@@ -18,6 +18,29 @@
                 statusPromise,
                 resultsLoaded;
 
+            self.regionFetchedFlags = {
+                server:false,
+                network:false,
+                volume:false,
+                LoadBalancers:false,
+                service:false,
+                file:false
+            };
+
+            self.storeRegionFetchedFlags = function(type,value){
+                self.regionFetchedFlags[type] = value;
+                $window.localStorage.regionFetchedFlags = JSON.stringify(self.regionFetchedFlags);
+            };
+
+            self.retrieveAllRegionFetchedFlags = function(type){
+                if(type){
+                    return ($window.localStorage.regionFetchedFlags !== undefined && JSON.parse($window.localStorage.regionFetchedFlags)[type]) || self.regionFetchedFlags[type];
+                }
+                else{
+                    return ($window.localStorage.regionFetchedFlags !== undefined && JSON.parse($window.localStorage.regionFetchedFlags)) || self.regionFetchedFlags;
+                }
+            };
+
             //the above default_zone is needed to get the default values.
             var prepareNames = function () {
                 var servers = JSON.parse($window.localStorage.selectedResources)['server']; //dataStoreService.getItems("server");
@@ -92,9 +115,15 @@
                 if (type === "server") {
                     return serverService.getTrimmedItem(item_id, item_region);
                 } else if (type === "network") {
+<<<<<<< HEAD
                     return networkService.getTrimmedItem(item_id);
                 } else if (type === "file") {
                     return fileService.getTrimmedItem(item_id, item_region );
+=======
+                    return networkService.getTrimmedItem(item_id, item_region);
+                } else if (type === "files") {
+                    //     return networkService.getTrimmedList();
+>>>>>>> phase1
                 } else if (type === "LoadBalancers") {
                     // return self.getLoadBalancers();
                 } else if( type === "service") {
@@ -148,14 +177,14 @@
              * @ngdoc method
              * @name prepareJobRequest
              * @methodOf migrationApp.service:migrationitemdataservice
-             * @param {String} type Resource type (server, network etc)
-             * @param {Object} info Object containing the relevant data to prepare the request object
+             * @param {Boolean} precheck is 'true' for precheck job spec and 'false' for migration job sepc
              * @returns {Object} A request _object_ for subsequesnt request in migrating a resource.
              * @description 
              * This service method returns an _object_. This object has to be sent while making an HTTP POST request to migrate the resource.
              */
-            this.prepareJobRequest = function (batchName) {
+            this.prepareJobRequest = function (precheck) {
                 var destaccount = JSON.parse($window.localStorage.getItem("fawsAccounts"));
+<<<<<<< HEAD
                 var services = cdnservice.prepareCdnList();
                 var volumes = volumeService.prepareVolList();
                 var servers = serverService.prepareServerList();
@@ -173,6 +202,16 @@
                         },
                         create_ticket: true,
                         names: names,
+=======
+                var equipments = {
+                    instances: JSON.parse($window.localStorage.selectedServers),
+                    networks: dataStoreService.getDistinctNetworks()
+                };
+                var auth = authservice.getAuth();
+                var names = prepareNames();
+                    
+                var reqObj = {
+>>>>>>> phase1
                         source: {
                             tenantid: auth.tenant_id
                         },
@@ -182,6 +221,7 @@
                         resources: {},
                         version: "v1"
                     };
+<<<<<<< HEAD
                 var currEPOCHTime = moment().unix();
                 var currISOTime = moment().toISOString();
                 if (dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < (currISOTime)) {
@@ -259,6 +299,43 @@
             } //end of preparePrereqRequest method.
 
 
+=======
+
+                if (equipments.instances.length !=0)
+                    reqObj.resources.instances = serverService.prepareServerList(equipments.instances); //add servers to the resources list
+                if (equipments.networks.length != 0)  
+                    reqObj.resources.networks = networkService.prepareNetworkList(equipments.networks); //add networks to the resources list
+
+                if (precheck === true){ 
+                    return reqObj;           //Precheck job-spec requires only these items, so exit from method now
+                } //****************END OF PRECHECK JOB-SPEC*************************************************************************
+
+                else if (precheck === false){       //migration job-spec needs following more items so continue configuring job-spec
+                    reqObj.metadata = { 
+                                batch_name: $window.localStorage.migrationName || dataStoreService.getScheduleMigration().migrationName,
+                                initiated_by: auth.impersonator || auth.username
+                            };
+                    reqObj.create_ticket = true;
+                    reqObj.names = names;
+                    reqObj.source.live_migrate = dataStoreService.getScheduleMigration().live_migrate || false;
+
+                    //add start time in the request object    
+                    var currEPOCHTime = moment().unix();
+                    var currISOTime = moment().toISOString();
+                    if (dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < (currISOTime)) {
+                        reqObj.start = currISOTime;
+                        dataStoreService.selectedTime.time = reqObj.start;
+                    } else {
+                        //code for iso conversion
+                        var isoDateTime = dataStoreService.selectedTime.time;
+                        reqObj.start = moment.unix(isoDateTime).toISOString();
+                        dataStoreService.selectedTime.time = reqObj.start;
+                    }
+                    return reqObj; //this is the final job-spec object 
+                } //END OF MIGRATION JOB-SPEC
+            }//end of prepareJobRequest method
+
+>>>>>>> phase1
             this.getServerMigrationStatus = function (tenant_id) {
                 var url = "/api/server_status/" + tenant_id;
                 return HttpWrapper.send(url, {
@@ -296,14 +373,13 @@
                 } else if (callInProgress == false && statusLoaded == true) {
                     return $q.when(statusResponse);
                 }
-            } //end of getResourceMigrationStatus method
+            }; //end of getResourceMigrationStatus method
 
-            this.getAllEc2Regions = function () {
-                if (!resultsLoaded) {
-                    resultsLoaded = HttpWrapper.send('/api/aws/regions/ec2', {"operation": 'GET'});
-                }
+            this.getAllEc2Regions = function (type) {
+                resultsLoaded = HttpWrapper.send('/api/aws/regions/ec2', {"operation": 'GET'});
+                self.regionFetchedFlags[type] = true;
                 return resultsLoaded;
-            }//end of getAllEc2Regions method
+            };//end of getAllEc2Regions method
 
             /**
              * @ngdoc method

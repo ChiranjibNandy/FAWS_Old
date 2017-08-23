@@ -338,7 +338,8 @@
                             vm.selectedTime = {
                                     migrationName:vm.migrationName,
                                     time:'',
-                                    timezone:''
+                                    timezone:'',
+                                    live_migrate:false,
                                 };
                             dataStoreService.setScheduleMigration(vm.selectedTime);
                             $('#save_for_later').modal('hide');
@@ -346,6 +347,12 @@
                             $('#cancel_modal').modal('hide');
                             $('#intro_modal').modal('hide');
                             $('#no_selection').modal('hide');
+                            //On continuing to the recommendations page, we have to set all the region fetched flags 
+                            //to false so that all the calls can be made afresh
+                            ds.storeRegionFetchedFlags('server',false);
+                            ds.storeRegionFetchedFlags('volume',false);
+                            ds.storeRegionFetchedFlags('service',false);
+                            ds.storeRegionFetchedFlags('file',false);
                             $rootRouter.navigate(["MigrationRecommendation"]);    
                         },function(error){
                             vm.continuing = false;
@@ -402,7 +409,7 @@
                     if(rack){
                         requestObj = {
                             'account_name' : vm.fawsAcctName,
-                            'service_level' : vm.serviceLevel
+                            'service_level' : "navigator"
                         }
                         promise = dataStoreService.createFawsAccount(requestObj);
                     }
@@ -479,7 +486,7 @@
                         //If the resource type is volume, we need to build the object to hold selected zone and the zones array
                         if(type === 'volume'){
                             item.selectedMapping.zones = [];
-                            item.selectedMapping.zone = DEFAULT_VALUES.ZONE;
+                            //item.selectedMapping.zone = DEFAULT_VALUES.ZONE;
                         }
                         return item;
                     });

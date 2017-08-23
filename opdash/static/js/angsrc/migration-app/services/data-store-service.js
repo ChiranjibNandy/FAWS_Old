@@ -8,14 +8,15 @@
      * This service is used to store data. This helps in accessing user data across pages.
      */
     angular.module("migrationApp")
-        .service("datastoreservice", ["httpwrapper","authservice","$q","$window","DEFAULT_VALUES", function (HttpWrapper, authservice,$q,$window,DEFAULT_VALUES) {
-            var loaded, fawsAccounts, self = this, currentTenant = null;
-             /**
-              * @ngdoc property
-              * @name resourceItems
-              * @propertyOf migrationApp.service:datastoreservice
-              * @type {Array}
-              * @description Set of resources received during first time API call
+        .service("datastoreservice", ["httpwrapper", "authservice", "$q", "$window", "DEFAULT_VALUES", function (HttpWrapper, authservice, $q, $window, DEFAULT_VALUES) {
+            var loaded, fawsAccounts, self = this,
+                currentTenant = null;
+            /**
+             * @ngdoc property
+             * @name resourceItems
+             * @propertyOf migrationApp.service:datastoreservice
+             * @type {Array}
+             * @description Set of resources received during first time API call
              */
             self.resourceItems = {
                 server:[],
@@ -27,24 +28,24 @@
             };
 
             /**
-              * @ngdoc property
-              * @name resourceItemsForEditingMigration
-              * @propertyOf migrationApp.service:datastoreservice
-              * @type {Array}
-              * @description Set of resources that helps to retrieve the data when modifying a migration
+             * @ngdoc property
+             * @name resourceItemsForEditingMigration
+             * @propertyOf migrationApp.service:datastoreservice
+             * @type {Array}
+             * @description Set of resources that helps to retrieve the data when modifying a migration
              */
             self.resourceItemsForEditingMigration = {
-                shouldTrigger:false,
-                jobId:'',
-                saveId:''
+                shouldTrigger: false,
+                jobId: '',
+                saveId: ''
             };
-            
+
             /**
-              * @ngdoc property
-              * @name dontShowStatus
-              * @propertyOf migrationApp.service:datastoreservice
-              * @type {Array}
-              * @description Flag to avoid repeated dispaly of sliding window at initial step of migration
+             * @ngdoc property
+             * @name dontShowStatus
+             * @propertyOf migrationApp.service:datastoreservice
+             * @type {Array}
+             * @description Flag to avoid repeated dispaly of sliding window at initial step of migration
              */
             self.dontShowStatus = false;
             self.dontShowNameModal = false;
@@ -52,11 +53,11 @@
             self.labelsServer = [];
             self.labelsNetwork = [];
             /**
-              * @ngdoc property
-              * @name selectedItems
-              * @propertyOf migrationApp.service:datastoreservice
-              * @type {Array}
-              * @description set of resources selected by user.
+             * @ngdoc property
+             * @name selectedItems
+             * @propertyOf migrationApp.service:datastoreservice
+             * @type {Array}
+             * @description set of resources selected by user.
              */
             self.selectedItems = {
                 server:[],
@@ -68,55 +69,56 @@
             };
 
             self.saveItems = {
-                server:[],
-                network:[],
-                LoadBalancers:[]
+                server: [],
+                network: [],
+                LoadBalancers: []
             };
 
             self.selectedRecommendedItems = [];
             self.selectedDate = {
-                date:'',
-                time:'',
-                timezone:''
+                date: '',
+                time: '',
+                timezone: ''
             };
             self.fileItems = [];
             /**
-              * @ngdoc property
-              * @name selectedTime
-              * @propertyOf migrationApp.service:datastoreservice
-              * @type {Array}
-              * @description Set of selectedTime for the scheduled migration page
+             * @ngdoc property
+             * @name selectedTime
+             * @propertyOf migrationApp.service:datastoreservice
+             * @type {Array}
+             * @description Set of selectedTime for the scheduled migration page
              */
             self.selectedTime = {
-               migrationName:'',
-                time:'',
-                timezone:'',
+                migrationName: '',
+                time: '',
+                timezone: '',
+                live_migrate: false,
             };
 
             /**
-              * @ngdoc property
-              * @name userPreferences
-              * @propertyOf migrationApp.service:datastoreservice
-              * @type {Array}
-              * @description Logging user preferences for every migration.
+             * @ngdoc property
+             * @name userPreferences
+             * @propertyOf migrationApp.service:datastoreservice
+             * @type {Array}
+             * @description Logging user preferences for every migration.
              */
             self.userPreferences = {
-                displayIntroModal:false,
-                selectedItems:{},
-                schedulingDetails:{}
+                displayIntroModal: false,
+                selectedItems: {},
+                schedulingDetails: {}
             };
 
             /**
-              * @ngdoc property
-              * @name fawsAccounts
-              * @propertyOf migrationApp.service:datastoreservice
-              * @type {Array}
-              * @description Set of FAWS Accounts associated with a tenant.
+             * @ngdoc property
+             * @name fawsAccounts
+             * @propertyOf migrationApp.service:datastoreservice
+             * @type {Array}
+             * @description Set of FAWS Accounts associated with a tenant.
              */
             self.fawsAccounts = {
-                awsAccounts:[],
-                selectedFawsAccount:'',
-                selectedFawsAccountNumber:'',
+                awsAccounts: [],
+                selectedFawsAccount: '',
+                selectedFawsAccountNumber: '',
                 totalAccounts: 0
             };
 
@@ -144,7 +146,7 @@
              * @description 
              * Saves list of resources the user wants to continue with the migration.
              */
-            this.setSaveItems = function(items){
+            this.setSaveItems = function (items) {
                 this.saveItems = items;
             }
 
@@ -156,12 +158,12 @@
              * @description 
              * Returns list of resources the user wants to continue with the migration.
              */
-            this.getSaveItems = function(){
-               if(this.saveItems.server.length === 0 && this.saveItems.network.length === 0 && this.saveItems.LoadBalancers.length === 0){
-                   return $window.localStorage.getItem('savedServers');
-               }else{
-                   return this.saveItems;
-               } 
+            this.getSaveItems = function () {
+                if (this.saveItems.server.length === 0 && this.saveItems.network.length === 0 && this.saveItems.LoadBalancers.length === 0) {
+                    return $window.localStorage.getItem('savedServers');
+                } else {
+                    return this.saveItems;
+                }
             }
 
             /**
@@ -172,7 +174,7 @@
              * @description 
              * Saves list of all resources once application is loaded.
              */
-            this.storeallItems = function(items, type){
+            this.storeallItems = function (items, type) {
                 self.resourceItems[type] = items;
                 $window.localStorage.allResources = JSON.stringify(self.resourceItems);
             }
@@ -203,9 +205,9 @@
              * @description 
              * Stores datetime and timezone data needed for scheduling migration
              */
-            this.storeDate = function(type,item){
+            this.storeDate = function (type, item) {
                 self.selectedDate[type] = item;
-                $window.localStorage.setItem("selectedDate",JSON.stringify(self.selectedDate));
+                $window.localStorage.setItem("selectedDate", JSON.stringify(self.selectedDate));
             }
 
             /**
@@ -216,7 +218,7 @@
              * @description 
              * Returns the stored datetime and timezone of the migration to be scheduled
              */
-            this.returnDate = function(){
+            this.returnDate = function () {
                 return JSON.parse($window.localStorage.getItem("selectedDate"));
             }
 
@@ -229,29 +231,28 @@
              * @description 
              * Retrieves the saved list of resources of the specified _type_.
              */
-            this.getItems = function(type){
+            this.getItems = function (type) {
                 //return self.selectedItems.filter(function(item){return item.type === type;});
                 var name = 'selectedServers';
-                 if(type){
-                    if(self.selectedItems[type].length > 0 ) {
+                if (type) {
+                    if (self.selectedItems[type].length > 0) {
                         return self.selectedItems[type];
-                    }else{
-                        if(type === 'network'){
+                    } else {
+                        if (type === 'network') {
                             name = 'selectedNetworks';
-                        }else if(type === 'LoadBalancers'){
+                        } else if (type === 'LoadBalancers') {
                             name = 'selectedLoadBalancers';
                         }
                         return JSON.parse(localStorage.getItem(name));
-                    } 
-                }
-                else{
-                    if(self.selectedItems.server.length === 0 && self.selectedItems.network.length === 0 && self.selectedItems.LoadBalancers.length === 0){
+                    }
+                } else {
+                    if (self.selectedItems.server.length === 0 && self.selectedItems.network.length === 0 && self.selectedItems.LoadBalancers.length === 0) {
                         return {
-                            server:JSON.parse(localStorage.getItem('selectedServers')) || [],
-                            network:JSON.parse(localStorage.getItem('selectedNetworks')) || [],
-                            LoadBalancers:JSON.parse(localStorage.getItem('selectedLoadBalancers')) || []
+                            server: JSON.parse(localStorage.getItem('selectedServers')) || [],
+                            network: JSON.parse(localStorage.getItem('selectedNetworks')) || [],
+                            LoadBalancers: JSON.parse(localStorage.getItem('selectedLoadBalancers')) || []
                         }
-                    }else{
+                    } else {
                         return self.selectedItems;
                     }
                 }
@@ -266,7 +267,7 @@
              * @description 
              * Saves list of recommended resources the user wants to migrate.
              */
-            this.setRecommendedItems = function(items){
+            this.setRecommendedItems = function (items) {
                 self.selectedRecommendedItems = items;
             }
 
@@ -280,19 +281,19 @@
              * @description 
              * Retrieves the saved list of recommended resources of the specified _type_.
              */
-            this.getRecommendedItems = function(){
+            this.getRecommendedItems = function () {
                 return self.selectedRecommendedItems;
             }
-            
-            this.getRecommendedTotalCost = function(){
-                 return self.RecommendedTotalCost ;
-            }
-            
-            this.getCurrentPricing = function(){
-               return self.CurrentPricing ;
+
+            this.getRecommendedTotalCost = function () {
+                return self.RecommendedTotalCost;
             }
 
-             /**
+            this.getCurrentPricing = function () {
+                return self.CurrentPricing;
+            }
+
+            /**
              * @ngdoc method
              * @name setScheduleMigration
              * @methodOf migrationApp.service:datastoreservice
@@ -300,7 +301,7 @@
              * @description 
              * Saves list of resources the user wants to migrate.
              */
-            this.setScheduleMigration = function(items){
+            this.setScheduleMigration = function (items) {
                 self.selectedTime = items;
                 $window.localStorage.setItem("selectedTime",JSON.stringify(items));
             };
@@ -311,28 +312,32 @@
                 return self.selectedTime;
             };
 
-            this.setDontShowStatus = function(status){
-               self.dontShowStatus = status;
+            this.setDontShowStatus = function (status) {
+                self.dontShowStatus = status;
             }
 
-            this.getDontShowStatus = function(){
-               return self.dontShowStatus;
+            this.getDontShowStatus = function () {
+                return self.dontShowStatus;
             }
 
-            this.setDontShowNameModal = function(status){
-               self.dontShowNameModal = status;
+            this.setDontShowNameModal = function (status) {
+                self.dontShowNameModal = status;
             }
 
-            this.getdontShowNameModal = function(){
-               return self.dontShowNameModal;
+            this.getdontShowNameModal = function () {
+                return self.dontShowNameModal;
             }
 
-            this.setPageName = function(status){
-               self.pageFlag = status;
+            this.setPageName = function (status) {
+                self.pageFlag = status;
             }
 
-            this.getPageName = function(){
-               return self.pageFlag;
+            this.getPageName = function () {
+                if(self.pageFlag === ""){
+                    return $window.localStorage.getItem('pageName');
+                }else{
+                    return self.pageFlag;
+                }
             }
 
             /**
@@ -343,9 +348,9 @@
              * @description 
              * Saves list of FAWS accounts for a Tenant ID.
              */
-            this.saveFawsDetails = function(items){
+            this.saveFawsDetails = function (items) {
                 self.fawsAccounts = items;
-                $window.localStorage.setItem("fawsAccounts",JSON.stringify(items));
+                $window.localStorage.setItem("fawsAccounts", JSON.stringify(items));
             }
 
             /**
@@ -355,11 +360,11 @@
              * @description 
              * Returns list of FAWS accounts for a Tenant ID.
              */
-            this.fetchFawsDetails = function(){
-               return self.fawsAccounts;
+            this.fetchFawsDetails = function () {
+                return self.fawsAccounts;
             }
 
-            self.resetAll = function(){
+            self.resetAll = function () {
                 self.resourceItems = {
                     server:[],
                     network:[],
@@ -383,17 +388,17 @@
                 self.labelsNetwork = [];
                 self.selectedDate = {};
                 self.selectedTime = {
-                    migrationName:'',
-                    time:'',
-                    timezone:''
+                    migrationName: '',
+                    time: '',
+                    timezone: ''
                 };
                 self.selectedRecommendedItems = [];
                 self.RecommendedTotalCost = null;
                 self.CurrentPricing = null;
                 self.fawsAccounts = {
-                    awsAccounts:[],
-                    selectedFawsAccount:'',
-                    selectedFawsAccountNumber:'',
+                    awsAccounts: [],
+                    selectedFawsAccount: '',
+                    selectedFawsAccountNumber: '',
                     totalAccounts: 0
                 };
             };
@@ -405,17 +410,17 @@
              * @description 
              * Returns migration date based on Epoch timestamp
              */
-            self.getMigrationDate = function() {
-                var today=moment().format("MM-DD-YYYY");
-                var selectedValue= moment(self.selectedTime.time).format("MM-DD-YYYY");
+            self.getMigrationDate = function () {
+                var today = moment().format("MM-DD-YYYY");
+                var selectedValue = moment(self.selectedTime.time).format("MM-DD-YYYY");
 
-                if (today===selectedValue){
+                if (today === selectedValue) {
                     var dt = "today";
-                }else{
+                } else {
                     var dt = moment(self.selectedTime.time).format("ddd, MMM Do YYYY"); //example- Sat, Jun 17th 2017
                 }
-                
-                if(dt){
+
+                if (dt) {
                     return dt;
                 }
             };
@@ -427,9 +432,9 @@
              * @description 
              * Returns migration date based on Epoch timestamp
              */
-            self.getMigrationTime = function() {
+            self.getMigrationTime = function () {
                 var tm = moment(self.selectedTime.time).format("h:mm:ss a"); //3:25:50 pm"
-                if(tm){
+                if (tm) {
                     return tm;
                 }
             };
@@ -461,7 +466,7 @@
                     angular.forEach(servers, function (item) {
                         angular.forEach(item.details.networks, function (network) {
                             //making separate list of networks associated with servers.
-                            if(resourcesCountArray.indexOf(network.name) == -1) {
+                            if (resourcesCountArray.indexOf(network.name) == -1) {
                                 migrationResourceCount += 1;
                                 resourcesCountArray.push(network.name);
                             };
@@ -477,20 +482,22 @@
              * @methodOf migrationApp.service:datastoreservice
              * @description 
              * Invokes "/api/users/uidata/" API call for fetching exisitng saved instances. 
-            */
-            this.getSavedItems = function() {
+             */
+            this.getSavedItems = function () {
                 var getSavedInstancesUrl = "/api/jobs/saved";
-                return HttpWrapper.send(getSavedInstancesUrl, {"operation":'GET'})
-                                  .then(function(result){
-                                      if(result == null){
-                                          result = JSON.stringify({
-                                              'savedDetails': []
-                                          });
-                                      }
-                                      return result;
-                                  },function(error) {
-                                      return false;
-                                  });
+                return HttpWrapper.send(getSavedInstancesUrl, {
+                        "operation": 'GET'
+                    })
+                    .then(function (result) {
+                        if (result == null) {
+                            result = JSON.stringify({
+                                'savedDetails': []
+                            });
+                        }
+                        return result;
+                    }, function (error) {
+                        return false;
+                    });
             }
 
             /**
@@ -499,26 +506,28 @@
              * @methodOf migrationApp.service:datastoreservice
              * @description 
              * Saves migration resources and schedules to be used for later reference
-            */
-            this.saveItemsForSave = function(saveInstance) {
+             */
+            this.saveItemsForSave = function (saveInstance) {
                 var requestObj = self.objForSaveLater(saveInstance);
                 return self.postSavedInstances(requestObj);
             };
 
             /**
-                 * @ngdoc method
-                 * @name postSavedInstances
-                 * @methodOf migrationApp.service:datastoreservice
-                 * @description 
-                 * Invokes "/api/jobs/saved" API call for posting saved instance.
-            */
-            this.postSavedInstances = function(requestObj) {
+             * @ngdoc method
+             * @name postSavedInstances
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Invokes "/api/jobs/saved" API call for posting saved instance.
+             */
+            this.postSavedInstances = function (requestObj) {
                 var self = this;
                 //var requestObj = self.objForSaveLater(response, saveInstance);
-                return HttpWrapper.save("/api/jobs/saved", {"operation":'POST'}, requestObj)
-                    .then(function(result){
+                return HttpWrapper.save("/api/jobs/saved", {
+                        "operation": 'POST'
+                    }, requestObj)
+                    .then(function (result) {
                         return true;
-                    },function(error) {
+                    }, function (error) {
                         return false;
                     });
             };
@@ -541,7 +550,7 @@
                     });
             };
 
-            this.getModifiedItems = function(resources){
+            this.getModifiedItems = function (resources) {
                 var equipments = {
                     server: [],
                     network: [],
@@ -578,25 +587,24 @@
              * @description 
              * This service method returns an object that will be posted to /api/users/uidata/add API.
              */
-            this.objForSaveLater = function(saveInstance){
+            this.objForSaveLater = function (saveInstance) {
                 var self = this;
                 self.setScheduleMigration(saveInstance.migration_schedule);
-                var savedetails_json = 
-                    [{
-                        "instance_name":self.getScheduleMigration().migrationName,
-                        "timestamp":moment().format("M/DD/YYYY HH:MM a"), //(so we know when was it saved)
-                        "selected_resources": self.getModifiedItems(self.getItems()),//(populating only what we need)
-                        "recommendations":saveInstance.recommendations,
-                        "scheduling-details":saveInstance.migration_schedule,
-                        "step_name":saveInstance.step_name,
-                        "scheduledItem":saveInstance.scheduledItem || false,
-                        "aws-account":JSON.parse($window.localStorage.getItem("fawsAccounts")).selectedFawsAccount,
-                        "initiated_by":authservice.getAuth().username,
-                        "schedulingTimeDate":self.returnDate()
-                    }];
+                var savedetails_json = [{
+                    "instance_name": self.getScheduleMigration().migrationName,
+                    "timestamp": moment().format("M/DD/YYYY HH:MM a"), //(so we know when was it saved)
+                    "selected_resources": self.getModifiedItems(self.getItems()), //(populating only what we need)
+                    "recommendations": saveInstance.recommendations,
+                    "scheduling-details": saveInstance.migration_schedule,
+                    "step_name": saveInstance.step_name,
+                    "scheduledItem": saveInstance.scheduledItem || false,
+                    "aws-account": JSON.parse($window.localStorage.getItem("fawsAccounts")).selectedFawsAccount,
+                    "initiated_by": authservice.getAuth().username,
+                    "schedulingTimeDate": self.returnDate()
+                }];
                 var reqObj = {
-                                "tenant_id": authservice.getAuth().tenant_id.toString(),
-                                "savedDetails": JSON.stringify(savedetails_json)
+                    "tenant_id": authservice.getAuth().tenant_id.toString(),
+                    "savedDetails": JSON.stringify(savedetails_json)
                 }
                 return reqObj;
             };
@@ -610,8 +618,10 @@
              */
             self.getAccountTenantid = function () {
                 var urltenid = "/api/tenants/get_tenant_id/" + authservice.getAuth().authtoken;
-                
-                return HttpWrapper.send(urltenid, { "operation": 'GET' })
+
+                return HttpWrapper.send(urltenid, {
+                        "operation": 'GET'
+                    })
                     .then(function (response) {
                         authservice.getAuth().tenant_id = response; //set the tenant_id in authservice
                         // return response.data;
@@ -623,26 +633,22 @@
              * @methodOf migrationApp.service:datastoreservice
              * @description 
              * Gets the list of distinct networks across all selected servers
-            */
-            self.getDistinctNetworks = function() {
+             */
+            self.getDistinctNetworks = function () {
                 var networksList = [];
-                var networkIdList = [];
-                var servers = JSON.parse($window.localStorage.selectedResources)['server'];//self.getItems('server') 
-                angular.forEach(servers, function (server) {
+                var servers = JSON.parse($window.localStorage.selectedResources)['server'];
+                angular.forEach(servers, function (server) { //extract the network details of each server
                     var region = server.region;
                     var instanceRrn = server.rrn;
-                    
+
                     angular.forEach(server.details.networks, function (network) {
-                        if(networkIdList.indexOf(network.rrn) === -1) {
-                            networkIdList.push(network.rrn);
                             network.region = region;
                             network.destRegion = server.selectedMapping.region;
                             network.destZone = server.selectedMapping.zone;
                             network.instanceRrn = instanceRrn;
                             networksList.push(network);
-                        };
-                    });
-                });
+                    });//end of inner for loop
+                }); //end of outer for loop
 
                 return networksList;
             };
@@ -653,70 +659,67 @@
              * @methodOf migrationApp.service:datastoreservice
              * @description 
              * Gets projected cost based on selected migrations
-            */
-            self.getProjectedPricing = function() {
+             */
+            self.getProjectedPricing = function () {
                 var instances = [];
                 //Check if the selected servers are alreday there in localStorage
                 if($window.localStorage.selectedResources !== undefined)
                     instances = JSON.parse($window.localStorage.selectedResources)['server'];
                 var totalProjectedPricing = 0;
-                instances.forEach(function(item){
-                    
-                    if(item.details.hasOwnProperty('rax_uptime')){
+                instances.forEach(function (item) {
+
+                    if (item.details.hasOwnProperty('rax_uptime')) {
                         var aws_uptime_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_uptime)).toFixed(2);
                         var aws_bandwidth_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_bandwidth)).toFixed(2);
                         var storage_rate = parseFloat(parseFloat(item.details.rax_storage_size) * parseFloat(item.selectedMapping.storage_rate)).toFixed(2);
                         totalProjectedPricing += parseFloat(parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost) + parseFloat(storage_rate));
-                    }
-                    else{
+                    } else {
                         var storage_rate = parseFloat(parseFloat(item.details.rax_storage_size) * parseFloat(item.selectedMapping.storage_rate)).toFixed(2);
                         totalProjectedPricing += parseFloat(parseFloat(item.selectedMapping.cost * (720)) + parseFloat(storage_rate));
-                    }                
-            });
+                    }
+                });
 
                 return totalProjectedPricing;
             };
 
             self.getUserProfile = function () {
-                var userLog_json =
-                    {
-                        "Tenantid": authservice.getAuth().tenant_id.toString(),
-                        "Preferences": {
-                            "introModalDisplayStatus": self.showWelcomeModal,
-                            "showMigrationNameWindow": self.dontShowNameModal
-                        },
-                        "UserLog": [
-                            {
-                                "MigrationName": self.getScheduleMigration().migrationName,
-                                "Timestamp": moment().format('MMDYYYYhmmss'),
-                                "Resourceslist": self.getItems(),
-                                "Status": "Saved",
-                                "Triggredby": authservice.getAuth().account_name
-                            }
-                        ]
-                    };
-                var profileObj =
-                    {
-                        "tenant_id": authservice.getAuth().tenant_id.toString(),
-                        "context": "Profile_Logging",
-                        "savedDetails": JSON.stringify(userLog_json)
-                    };
+                var userLog_json = {
+                    "Tenantid": authservice.getAuth().tenant_id.toString(),
+                    "Preferences": {
+                        "introModalDisplayStatus": self.showWelcomeModal,
+                        "showMigrationNameWindow": self.dontShowNameModal
+                    },
+                    "UserLog": [{
+                        "MigrationName": self.getScheduleMigration().migrationName,
+                        "Timestamp": moment().format('MMDYYYYhmmss'),
+                        "Resourceslist": self.getItems(),
+                        "Status": "Saved",
+                        "Triggredby": authservice.getAuth().account_name
+                    }]
+                };
+                var profileObj = {
+                    "tenant_id": authservice.getAuth().tenant_id.toString(),
+                    "context": "Profile_Logging",
+                    "savedDetails": JSON.stringify(userLog_json)
+                };
                 return profileObj;
             };
 
-            this.fetchUserProfile = function() {
+            this.fetchUserProfile = function () {
                 var getSavedInstancesUrl = "/api/users/uidata/Profile_Logging";
-                return HttpWrapper.send(getSavedInstancesUrl, {"operation":'GET'})
-                                  .then(function(result){
-                                      if(result == null){
-                                          result = JSON.stringify({
-                                              'savedDetails': []
-                                          });
-                                      }
-                                      return result;
-                                  },function(error) {
-                                      return false;
-                                  });
+                return HttpWrapper.send(getSavedInstancesUrl, {
+                        "operation": 'GET'
+                    })
+                    .then(function (result) {
+                        if (result == null) {
+                            result = JSON.stringify({
+                                'savedDetails': []
+                            });
+                        }
+                        return result;
+                    }, function (error) {
+                        return false;
+                    });
             };
 
             /**
@@ -725,99 +728,118 @@
              * @methodOf migrationApp.service:datastoreservice
              * @description 
              * Gets FAWS Accounts associated with a tenant.
-            */
-            this.getFawsAccounts = function() {
+             */
+            this.getFawsAccounts = function () {
                 var self = this;
                 var getFawsAccountsUrl = "/api/tenants/get_faws_accounts";
                 var tenant_id = authservice.getAuth().tenant_id;
-                return HttpWrapper.send(getFawsAccountsUrl, {"operation":'GET'})
-                    .then(function(result){
+                return HttpWrapper.send(getFawsAccountsUrl, {
+                        "operation": 'GET'
+                    })
+                    .then(function (result) {
                         currentTenant = tenant_id;
-                        // fawsAccounts = result;
-                        if((result == null || result.awsAccounts.length == 0)){     //if there are no accounts array will be empty
+                        if ((result == null || result.awsAccounts.length == 0)) { //if there are no accounts array will be empty
                             var fawsAccountDetails = null;
-                        }
-                        else{
+                        } else {
                             var awsAccountsDetails = result.awsAccounts;
                             var fawsAccountDetails = {
-                                    awsAccounts:awsAccountsDetails,
-                                    selectedFawsAccount: awsAccountsDetails[0].name,
-                                    selectedFawsAccountNumber:awsAccountsDetails[0].awsAccountNumber,
-                                    totalAccounts: result.awsAccountLimit - result.remainingAccounts,
-                                    mode:result.mode
+                                awsAccounts: awsAccountsDetails,
+                                selectedFawsAccount: awsAccountsDetails[0].name,
+                                selectedFawsAccountNumber: awsAccountsDetails[0].awsAccountNumber,
+                                totalAccounts: result.awsAccountLimit - result.remainingAccounts,
+                                mode: result.mode
                             };
                         }
                         self.saveFawsDetails(fawsAccountDetails);
                         return fawsAccountDetails;
-                    },function(error) {
+                    }, function (error) {
                         return false;
                     });
             };
 
             /**
-                 * @ngdoc method
-                 * @name createFawsAccount
-                 * @methodOf migrationApp.service:datastoreservice
-                 * @description 
-                 * Invokes "/api/tenants/create_faws_account" API call for creating FAWS account.
-            */
-            this.createFawsAccount = function(requestObj) {
+             * @ngdoc method
+             * @name createFawsAccount
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Invokes "/api/tenants/create_faws_account" API call for creating FAWS account.
+             */
+            this.createFawsAccount = function (requestObj) {
                 var self = this;
-                return HttpWrapper.save("/api/tickets/new_account", {"operation":'POST'}, requestObj)
-                    .then(function(result){
-                       return result;
-                    },function(error) {
-                      return error;
+                return HttpWrapper.save("/api/tickets/new_account", {
+                        "operation": 'POST'
+                    }, requestObj)
+                    .then(function (result) {
+                        return result;
+                    }, function (error) {
+                        return error;
                     });
             };
 
-            this.addCredsForFawsAccount = function(requestObj) {
+            this.addCredsForFawsAccount = function (requestObj) {
                 var self = this;
-                return HttpWrapper.save("/api/tenants/credentials", {"operation":'POST'}, requestObj)
-                    .then(function(result){
-                       return result;
-                    },function(error) {
-                       return error;
+                return HttpWrapper.save("/api/tenants/credentials", {
+                        "operation": 'POST'
+                    }, requestObj)
+                    .then(function (result) {
+                        return result;
+                    }, function (error) {
+                        return error;
                     });
             };
 
-            this.deleteAWSAccount = function(accountId) {
+            this.deleteAWSAccount = function (accountId) {
                 var self = this;
-                return HttpWrapper.delete("/api/tenants/credentials/"+accountId, {"operation":'delete'})
-                    .then(function(result){
-                       return result;
-                    },function(error) {
-                       return error;
+                return HttpWrapper.delete("/api/tenants/credentials/" + accountId, {
+                        "operation": 'delete'
+                    })
+                    .then(function (result) {
+                        return result;
+                    }, function (error) {
+                        return error;
                     });
             };
 
-            self.setResourceItemsForEditingMigration = function(value){
+            self.setResourceItemsForEditingMigration = function (value) {
                 self.resourceItemsForEditingMigration.shouldTrigger = value;
-                $window.localStorage.setItem("shouldTrigger",value);
+                $window.localStorage.setItem("shouldTrigger", value);
             };
 
-            self.setJobIdForMigration = function(value){
+            self.setJobIdForMigration = function (value) {
                 self.resourceItemsForEditingMigration.jobId = value.jobId;
                 self.resourceItemsForEditingMigration.saveId = value.saveId;
-                $window.localStorage.setItem("resourceItemsForEditingMigration",JSON.stringify(self.resourceItemsForEditingMigration));
+                $window.localStorage.setItem("resourceItemsForEditingMigration", JSON.stringify(self.resourceItemsForEditingMigration));
             };
 
-            self.getJobIdForMigration = function(value){
+            self.getJobIdForMigration = function (value) {
                 var resourceItems = JSON.parse($window.localStorage.getItem("resourceItemsForEditingMigration"));
                 console.log(value);
                 return resourceItems[value];
             };
 
-            self.getResourceItemsForEditingMigration = function(){
+            self.getResourceItemsForEditingMigration = function () {
                 return $window.localStorage.getItem("shouldTrigger");
             };
 
-            self.storeEligibilityResults = function(value){
+            self.storeEligibilityResults = function (value) {
                 self.eligibilityResults = value;
             };
 
-            self.retrieveEligibilityResults = function(){
+            self.retrieveEligibilityResults = function () {
                 return self.eligibilityResults;
+            };
+
+            this.allTimeZones = function () {
+                var url = "/static/angassets/time-zones.json";
+                return HttpWrapper.send(url, {
+                        "operation": 'GET'
+                    })
+                    .then(function (result) {
+                        $window.localStorage.timeZones = JSON.stringify(result);
+                        return result;
+                    }, function (error) {
+                        return error;
+                    });
             };
 
             return self;
