@@ -202,12 +202,12 @@
                                             }
                                         } else {
                                             $('#modify-modal').modal('show');
-                                            vm.message = "We have successfully modified your migration but couldn't unpause the migation. You may have to un pause it manually in dashboard page.
+                                            vm.message = "We have successfully modified your migration but couldn't unpause the migation. You may have to un pause it manually in dashboard page.";
                                         }
                                     })
                                 } else {
                                     $('#modify-modal').modal('show');
-                                    vm.message = "There was a problem modifying this migration. Please try again after some time."
+                                    vm.message = "There was a problem modifying this migration. Please try again after some time.";
                                 }
                             }, function (error) {
                                 vm.migrating = false;
