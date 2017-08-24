@@ -68,7 +68,14 @@ def api_proxy(path):
     else:
         content = resp.content
         if 400 <= resp.status_code < 500:
-            print(content)
+            debug_message = ('PROXY call failure. HTTP {code} received when '
+                             'requesting {path}. Response: {message}.').format(
+                code=resp.status_code,
+                path=path,
+                message=content
+            )
+            print(debug_message)
+
             content = json.dumps({
                 'message': 'Please see logs for details of HTTP 400.'})
 
