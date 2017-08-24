@@ -302,6 +302,7 @@
 
                         var servers_selected = [];
                         var savedServers = [];
+                        var items_selected = [];
 
                         if($window.localStorage.selectedResources !== undefined)
                             items_selected = JSON.parse($window.localStorage.selectedResources)[vm.type];
