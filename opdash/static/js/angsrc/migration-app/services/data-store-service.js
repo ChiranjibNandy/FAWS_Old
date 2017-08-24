@@ -554,9 +554,9 @@
                 var equipments = {
                     server: [],
                     network: [],
-                    files: [],
-                    volumes : [],
-                    cdn :[],
+                    file: [],
+                    volume : [],
+                    service :[],
                     LoadBalancers: []
                 };
                 for (var equ in resources) {

@@ -243,52 +243,6 @@
                 
             } //end of prepareJobRequest method
 
-            /**
-             * @ngdoc method
-             * @name preparePrereqRequest
-             * @methodOf migrationApp.service:migrationitemdataservice
-             * @param {String} type Resource type (server, network etc)
-             * @param {Object} info Object containing the relevant data to prepare the Pre-req request object
-             * @returns {Object} A request _object_ for subsequesnt request in migrating a resource.
-             * @description 
-             * This service method creates and a temporary job-spec _object_ for pre-checks API. This object has to be sent while making an HTTP POST request to Pre-reqs API to determine if the selected resources can be migrated or not.
-             */
-            this.preparePrereqRequest = function (batchName) {
-                var destaccount = JSON.parse($window.localStorage.getItem("fawsAccounts"));
-                var auth = authservice.getAuth(),
-                    reqObj = {
-                        source: {
-                            tenantid: auth.tenant_id
-                        },
-                        destination: {
-                            account: destaccount.selectedFawsAccountNumber
-                        },
-                        resources: {},
-                        version: "v1"
-                    };
-                var services = cdnservice.prepareCdnList();
-                var volumes = volumeService.prepareVolList();
-                var servers = serverService.prepareServerList();
-                var cloudfiles = fileService.prepareFilesList();
-                var networks = networkService.prepareNetworkList();
-                if (servers.length > 0) {
-                    reqObj.resources.instances = servers; //add servers to the resources list
-                }
-                if (networks.length > 0) { //add networks to the resources list iff there are any networks
-                    reqObj.resources.networks = networks;
-                }
-                if (services.length > 0) {
-                    reqObj.resources.cdn = services;
-                }
-                if (volumes.length > 0) {
-                    reqObj.resources.volumes = volumes;
-                }
-                if (cloudfiles.length > 0) {
-                    reqObj.resources.cloudfiles = cloudfiles;
-                }
-                return reqObj;
-            } //end of preparePrereqRequest method.
-            
             this.getServerMigrationStatus = function (tenant_id) {
                 var url = "/api/server_status/" + tenant_id;
                 return HttpWrapper.send(url, {
