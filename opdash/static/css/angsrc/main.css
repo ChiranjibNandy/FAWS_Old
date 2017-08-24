@@ -612,5 +612,34 @@ display: inline-block;
 }
 
 .instance-progress-bar{
-margin-left:5px;
+    margin-left:5px;
+}
+
+.autoRefreshColorOn{
+    outline: none;
+    color:green;
+}
+
+.autoRefreshColorOff{
+    outline: none;
+}
+
+.autoRefresh{
+    margin-top: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    padding-left: 37px;
+}
+
+.autoRefreshTimer{
+    margin-top: 8px;
+    font-size: 15px;
+}
+
+.colorGreen{
+    color:green;
+}
+
+.autoRefreshAlignment{
+    padding-left: 36px; 
 }

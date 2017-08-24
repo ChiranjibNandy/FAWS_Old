@@ -85,11 +85,14 @@
                 };
 
                 vm.$onInit = function() {
+                    vm.counter = 60;
                     $('body').removeClass('modal-open');
                     $('.modal-backdrop').remove();
                     vm.isRacker = authservice.is_racker;
                     $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
                     vm.count = 0;
+                    vm.autoRefreshEveryMinute = false;
+                    vm.timerOn = false;
                     vm.savedMigrations = [];
                     vm.is_racker = authservice.getAuth().is_racker;
                     vm.afterSavedMigration = $window.localStorage.getItem("migrationSaved");
@@ -99,7 +102,13 @@
                     dataStoreService.getScheduleMigration().migrationName = "";
                     dataStoreService.setPageName("MigrationStatus");
                     $window.localStorage.setItem('pageName',"MigrationStatus");
-
+                    if(dashboardService.getAutoRefreshStatus() === null){
+                        vm.autoRefreshText = "ON" ;
+                        dashboardService.storeAutoRefreshStatus(vm.autoRefreshText);
+                    }else{
+                        vm.autoRefreshText = dashboardService.getAutoRefreshStatus() ;
+                        vm.autoRefreshButton = vm.autoRefreshText === 'ON'?false:true;
+                    }
                     if(authservice.getAuth().is_racker == false){   //get Account Name
                         var actname = dataStoreService.getAccountName(vm.tenant_id); //this service method is setting the accountname through api
                         actname.then(function() {
@@ -149,6 +158,7 @@
                         vm.afterNewMigration = false;
                     }
                     vm.getBatches(true);
+                    vm.onTimeout();
                     vm.getAllAlerts();
                 };
 
@@ -374,6 +384,25 @@
                             });
                     }, 3000);
                 };
+
+                /**
+                 * @ngdoc property
+                 * @name onTimeout
+                 * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                 * @description This function helps to enable and disable the auto refresh.
+                 */
+                vm.onTimeout = function(){
+                    if(vm.mytimeout)
+                        $interval.cancel(vm.mytimeout);
+
+                    if(vm.autoRefreshText === "ON") {
+                        vm.mytimeout = $interval(function() {
+                            if(vm.counter===0)
+                                vm.counter = 59;
+                            vm.counter--;
+                        },1000);
+                    } 
+                }
 
                 /**
                  * @ngdoc method
@@ -616,7 +645,16 @@
                         batch.showRefreshForApiLoading = true;
                         migrationService.pauseMigration(batch.job_id,detail).then(function(result){
                             if(result){
-                                vm.getBatches(true);
+                                if(detail === 'cancel'){
+                                    for(var i = 0;i<vm.currentBatches.items.length;i++){
+                                        if(batch.job_id === vm.currentBatches.items[i].job_id){
+                                            vm.currentBatches.items.splice(i,1);
+                                            return;
+                                        }
+                                    }
+                                }
+                                batch.batch_status = detail==='pause'? 'paused':'scheduled';
+                                batch.showRefreshForApiLoading = false;
                             }else{
                                 batch.showRefreshForApiLoading = false;
                                 vm.message = "We encountered some issues to "+detail+" your migration. Please try again after some time."
@@ -628,7 +666,6 @@
                     vm.resetSavedMigrationFlag = function(){
                         vm.afterSavedMigration = false;
                         $window.localStorage.setItem("migrationSaved","false");
-                        //alert("vm.afterSavedMigration = ",vm.afterSavedMigration);
                     }
                 }]
             }); // end of comeponent rsmigrationstatus

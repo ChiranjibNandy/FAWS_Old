@@ -8,11 +8,13 @@
      * This service helps to fetch and refresh dashboard data
      */
     angular.module("migrationApp")
-        .service("dashboardservice", ["authservice", "httpwrapper", "datastoreservice", "$q", function(authservice, HttpWrapper, dataStoreService, $q) {
+        .service("dashboardservice", ["authservice", "httpwrapper", "datastoreservice", "$q","$window", function(authservice, HttpWrapper, dataStoreService, $q, $window) {
             var self = this,
                 loaded = false,
                 currentTenant = null,
                 batches = {};
+
+            self.autoRefreshStatus = '';
 
             /**
              * @ngdoc method
@@ -95,6 +97,19 @@
                 },function(error){
                     return false;
                 });
+            };
+
+            self.storeAutoRefreshStatus = function(status){
+                self.autoRefreshStatus = status;
+                $window.localStorage.setItem("autoRefreshStatus",status);
+            };
+
+            self.getAutoRefreshStatus = function(){
+                if(self.autoRefreshStatus === ''){
+                    return $window.localStorage.getItem("autoRefreshStatus");
+                }else{
+                    return self.autoRefreshStatus;
+                }
             };
 
             return self;

@@ -796,7 +796,6 @@
 
             self.getJobIdForMigration = function (value) {
                 var resourceItems = JSON.parse($window.localStorage.getItem("resourceItemsForEditingMigration"));
-                console.log(value);
                 return resourceItems[value];
             };
 
