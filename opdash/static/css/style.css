@@ -56,6 +56,6 @@ body .modal.details {
 
 .selected-Items b::before {
     font-family: 'FontAwesome';
-    content: "\f10c";
+    content: "\f101";
     margin-left: 5px;
 }
