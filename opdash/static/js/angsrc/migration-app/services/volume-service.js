@@ -155,7 +155,6 @@
         self.prepareVolList = function () {
             var volReqList = [];
             var volumes = JSON.parse($window.localStorage.selectedResources)["volume"];
-            console.log(volumes);
             angular.forEach(volumes,function(volume){
                 volReqList.push(
                     {
@@ -165,14 +164,14 @@
                             "type":volume.type
                         },
                         "destination":{
-                            "region":volume.selectedMapping.region || DEFAULT_VALUES.region,
+                            "region":volume.selectedMapping.region || DEFAULT_VALUES.REGION,
                             "aws":{
                                 "volume":{
-                                    "zone":volume.selectedMapping.zone || DEFAULT_VALUES.zone,
+                                    "zone":volume.selectedMapping.zone || DEFAULT_VALUES.ZONE,
                                     "ebs_type":"IOL"
                                 },
                                 "s3":{
-                                    "region":volume.selectedMapping.region || DEFAULT_VALUES.region
+                                    "region":volume.selectedMapping.region || DEFAULT_VALUES.REGION
                                 }
                             }
                         }

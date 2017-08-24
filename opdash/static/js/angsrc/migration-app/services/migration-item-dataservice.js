@@ -11,7 +11,6 @@
         .service("migrationitemdataservice", ["serverservice", "networkservice", "volumeservice", "contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q", "$window", "cdnservice", "fileservice", function (serverService, networkService, volumeService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q, $window, cdnservice, fileService) {
             var loaded, loadbalancers, services, self = this,
                 currentTenant = null,
-                default_zone = 'us-east-1a',
                 callInProgress = false,
                 statusLoaded = false,
                 statusResponse,
@@ -41,7 +40,6 @@
                 }
             };
 
-            //the above default_zone is needed to get the default values.
             var prepareNames = function () {
                 var servers = JSON.parse($window.localStorage.selectedResources)['server']; //dataStoreService.getItems("server");
                 var cdn = JSON.parse($window.localStorage.selectedResources)['service'];
@@ -171,56 +169,39 @@
              * @ngdoc method
              * @name prepareJobRequest
              * @methodOf migrationApp.service:migrationitemdataservice
-             * @param {String} type Resource type (server, network etc)
-             * @param {Object} info Object containing the relevant data to prepare the request object
+             * @param {Booelan} type Boolean value to determine whether the method should return pre-req job-spec (true) or migration job-spec (false)
              * @returns {Object} A request _object_ for subsequesnt request in migrating a resource.
              * @description 
              * This service method returns an _object_. This object has to be sent while making an HTTP POST request to migrate the resource.
              */
-            this.prepareJobRequest = function (batchName) {
+            this.prepareJobRequest = function (precheck) {
                 var destaccount = JSON.parse($window.localStorage.getItem("fawsAccounts"));
+                var auth = authservice.getAuth();
+                
+                //initialise job-spec object with common items (precheck and migration)
+                var reqObj = {
+                    source: {
+                        tenantid: auth.tenant_id
+                    },
+                    destination: {
+                        account: destaccount.selectedFawsAccountNumber
+                    },
+                    resources: {},
+                    version: "v1"
+                };
+
+                //prepare the lists of resources
                 var services = cdnservice.prepareCdnList();
                 var volumes = volumeService.prepareVolList();
                 var servers = serverService.prepareServerList();
                 var cloudfiles = fileService.prepareFilesList();
                 var networks = networkService.prepareNetworkList();
-                var auth = authservice.getAuth(),
-                    names = prepareNames(),
-                    instancesReqList = [],
-                    networksReqList = [],
-
-                    reqObj = {
-                        metadata: {
-                            batch_name: dataStoreService.getScheduleMigration().migrationName,
-                            initiated_by: auth.impersonator || auth.username
-                        },
-                        create_ticket: true,
-                        names: names,
-                        source: {
-                            tenantid: auth.tenant_id
-                        },
-                        destination: {
-                            account: destaccount.selectedFawsAccountNumber
-                        },
-                        resources: {},
-                        version: "v1"
-                    };
-                var currEPOCHTime = moment().unix();
-                var currISOTime = moment().toISOString();
-                if (dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < (currISOTime)) {
-                    reqObj.start = currISOTime;
-                    dataStoreService.selectedTime.time = reqObj.start;
-                } else {
-                    //code for iso conversion
-                    var isoDateTime = dataStoreService.selectedTime.time;
-                    reqObj.start = moment.unix(isoDateTime).toISOString();
-                    dataStoreService.selectedTime.time = reqObj.start;
-                }
-
+                
+                //add the resources to the job-spec if the list are not empty
                 if (servers.length > 0) {
-                    reqObj.resources.instances = servers; //add servers to the resources list
+                    reqObj.resources.instances = servers; 
                 }
-                if (networks.length > 0) { //add networks to the resources list iff there are any networks
+                if (networks.length > 0) { 
                     reqObj.resources.networks = networks;
                 }
                 if (services.length > 0) {
@@ -232,7 +213,34 @@
                 if (cloudfiles.length > 0) {
                     reqObj.resources.cloudfiles = cloudfiles;
                 }
-                return reqObj;
+                    
+                if (precheck === true){ //exit now, if the call to this method was made for creating precheck job-spec object
+                    return reqObj;
+
+                } else if (precheck === false){ // otherwise, continue adding more details to the job spec for migration object
+                    reqObj.metadata = {
+                            batch_name: dataStoreService.getScheduleMigration().migrationName,
+                            initiated_by: auth.impersonator || auth.username
+                    };
+                    reqObj.create_ticket= true;
+                    reqObj.names = prepareNames();
+                    reqObj.source.live_migrate = dataStoreService.getScheduleMigration().live_migrate || false;
+
+                    //time calculations for scheduling the migration
+                    var currEPOCHTime = moment().unix();
+                    var currISOTime = moment().toISOString();
+                    if (dataStoreService.selectedTime.time === "" || dataStoreService.selectedTime.time < (currISOTime)) {
+                        reqObj.start = currISOTime;
+                        dataStoreService.selectedTime.time = reqObj.start;
+                    } else {
+                        //code for iso conversion
+                        var isoDateTime = dataStoreService.selectedTime.time;
+                        reqObj.start = moment.unix(isoDateTime).toISOString(); //add time stamp to job-spec
+                        dataStoreService.selectedTime.time = reqObj.start; //reset the time in selected time object
+                    }
+                return reqObj; //this is the final job-spec for migration
+                }
+                
             } //end of prepareJobRequest method
 
             /**

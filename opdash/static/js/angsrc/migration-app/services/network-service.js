@@ -8,9 +8,9 @@
      * Service to retrieve all data for network resources
      */
     angular.module("migrationApp")
-        .factory("networkservice", ["httpwrapper", "$q", "authservice", "serverservice", "$window", "datastoreservice", function (HttpWrapper, $q, authservice, serverService, $window, datastoreservice) {
-            // local variables to help cache data
-            var loaded, networks, self = this, default_zone = 'us-east-1a';
+        .factory("networkservice", ["httpwrapper", "$q", "authservice", "serverservice", "$window", "datastoreservice", "DEFAULT_VALUES", function (HttpWrapper, $q, authservice, serverService, $window, datastoreservice, DEFAULT_VALUES) {
+            // local variables to help cache data 
+            var loaded, networks, self = this;
 
             // function to transform the data from api call
             function trimTransform(data) {
@@ -294,8 +294,9 @@
             * @description
             * prepare network instance request object
             */
-            self.prepareNetworkList = function (networks) {
+            self.prepareNetworkList = function () {
                 var networksReqList = [];
+                var networks = datastoreservice.getDistinctNetworks();
 
                     angular.forEach(networks, function (distinctNetwork) {
                         var pushed=0;
@@ -329,7 +330,7 @@
                                 },
                                 destination: {
                                     region: distinctNetwork.destRegion, //.toUpperCase(),
-                                    default_zone: distinctNetwork.destZone || default_zone
+                                    default_zone: distinctNetwork.destZone || DEFAULT_VALUES.ZONE
                                 },
                                 subnets: [
                                     {
