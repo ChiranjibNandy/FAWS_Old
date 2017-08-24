@@ -284,16 +284,10 @@
         * @description
         * prepare server instance request object
         */
-        self.prepareServerList = function () {
-        var instancesReqList = [];
-            
-            if ($window.localStorage.selectedServers !== undefined) {
-                var equipments = {
-                    instances: JSON.parse($window.localStorage.selectedServers),//dataStoreService.getItems("server")
-                    networks: datastoreservice.getDistinctNetworks()
-                }
-            }
-            instancesReqList = equipments.instances.map(function (instance) {
+        self.prepareServerList = function (servers) {
+            var instancesReqList = [];
+
+            instancesReqList = servers.map(function (instance) {
                 return {
                     source: {
                         id: instance.rrn,
@@ -306,7 +300,6 @@
                     }
                 }
             });
-
             return instancesReqList;
         }
 

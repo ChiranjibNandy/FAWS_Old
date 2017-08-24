@@ -608,7 +608,7 @@ span.fa-angle-left, span.fa-angle-right{
 }
 
 .inline-block-elements{
-display: inline-block;
+    display: inline-block;
 }
 
 .instance-progress-bar{

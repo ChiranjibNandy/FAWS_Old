@@ -65,7 +65,7 @@
                                     <span class="rs-status-warning" ng-show="instance.status==='paused'">Paused</span>
                                     <span class="rs-status-warning" ng-show="instance.status==='canceled'">Cancelled</span>
                                 </td>
-                                <td class="rs-table-text" ng-class="{'paddingLeft' : instance.status !== 'in progress' && instance.status !== 'done'}" style="width: 30%;">
+                                <td class="rs-table-text" ng-class="{'paddingLeft' : (instance.status !== 'in progress' || (instance.status === 'in progress' && vm.progressFlag === false))&& instance.status !== 'done' }" style="width: 30%;">
                                     <div class="rs-progress rs-progress-small" ng-if="instance.status==='in progress' && vm.progressFlag !== false">
                                         <div class="rs-progress-inner">
                                             <div class="rs-segment" ng-if="instance.instance_succeeded_time_pct !== undefined" ng-style="{'width': + instance.instance_succeeded_time_pct +'%'}">
@@ -77,6 +77,7 @@
                                         </div>
                                     </div><span class="rs-status-ok" ng-if="instance.status==='in progress' && vm.progressFlag !== false && instance.instance_succeeded_time_pct !== undefined"><em> {{instance.instance_succeeded_time_pct}}%</em></span>
                                     <span class="rs-status-ok" ng-if="instance.status==='in progress' && vm.progressFlag !== false && instance.instance_succeeded_time_pct === undefined"><em> {{vm.job.succeeded_time_pct}}%</em></span>
+                                    <span ng-if="instance.status === 'in progress' && vm.progressFlag === false"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>                                    
                                     <div class="rs-progress rs-progress-small" ng-if="instance.status==='done'">
                                         <div class="rs-progress-inner">
                                             <div class="rs-segment" style="width: 100%">

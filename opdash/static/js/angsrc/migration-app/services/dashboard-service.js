@@ -39,7 +39,7 @@
                             loaded = true;
                             currentTenant = tenant_id;
                             var savedMigrations = [];
-                            savedMigrations = results[0] || '[]';
+                            savedMigrations = results[0] || [];
                             batches = { savedMigrations: savedMigrations, jobs: results[1] };
                             return batches;
                         }, function(errorResponse) {
