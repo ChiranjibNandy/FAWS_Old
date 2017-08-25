@@ -27,12 +27,14 @@
                             <button class="rs-btn rs-btn-primary" ng-click="vm.startNewMigration()"><i class="fa fa-plus-square fa-fw"></i> Start New Migration</button>
                             <!-- <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1 ? " mins ": " min ") + "ago"}}</div> -->
                         </div>
-                        <div class="rs-row">
-                            <div class="pull-right autoRefresh">
+                            <div class="span-6 autoRefreshTimer">
+                                <span class="pull-right" ng-if="vm.autoRefreshText === 'ON'">Refresh in: <span class="colorGreen">{{vm.counter}}</span></span>
+                            </div>
+                            <div class="span-6 autoRefresh">
                                 <span>
-                                    Auto refresh is {{vm.autoRefreshText}}
+                                    Auto refresh
+                                    <i class="fa fa-lg fa-toggle-on" ng-class="{'fa-toggle-on autoRefreshColorOn': !vm.autoRefreshButton,'fa-toggle-off autoRefreshColorOff': vm.autoRefreshButton}" ng-click="vm.manageAutoRefresh()"></i>
                                 </span>
-                                <i class="fa fa-lg fa-toggle-on" ng-class="{'fa-toggle-on autoRefreshColorOn': !vm.autoRefreshButton,'fa-toggle-off autoRefreshColorOff': vm.autoRefreshButton}" ng-click="vm.manageAutoRefresh()"></i>
                             </div>
                         </div>
                     </div>
