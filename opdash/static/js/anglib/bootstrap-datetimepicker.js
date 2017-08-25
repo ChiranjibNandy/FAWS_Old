@@ -1695,7 +1695,7 @@
             }
             
             	if(input.attr('default-date') != '') {
-            	console.log("Inside Default date functionality");
+            	//console.log("Inside Default date functionality");
             	options.defaultDate = input.attr('default-date');
             	return options.defaultDate;
             	alert(options.defaultDate);

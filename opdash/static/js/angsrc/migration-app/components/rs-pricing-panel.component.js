@@ -92,7 +92,7 @@
                         vm.precheck = false;
                         vm.precheckError = false;
                         $("#precheck_modal").modal('show');
-                        var requestObj = ds.prepareJobRequest(true); //Send 'true' to generate pre-req job-spec obj
+                        var requestObj = ds.prepareJobRequest(true); //Send 'true' to generate job-spec obj for pre-req
                         var servers = JSON.parse($window.localStorage.selectedResources)['server'];//dataStoreService.getItems("server");
                         HttpWrapper.save("/api/precheck", { "operation": 'POST' }, requestObj)
                         .then(function (result) {

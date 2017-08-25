@@ -7,9 +7,9 @@
      * @description
      * Service to retrieve all data for server resources
      */
-    angular.module("migrationApp").factory("serverservice", ["httpwrapper", "$q", "authservice", "$window", "datastoreservice", function (HttpWrapper, $q, authservice, $window, datastoreservice) {
+    angular.module("migrationApp").factory("serverservice", ["httpwrapper", "$q", "authservice", "$window", "datastoreservice", "DEFAULT_VALUES", function (HttpWrapper, $q, authservice, $window, datastoreservice, DEFAULT_VALUES) {
         // local variables to help cache data
-        var loaded, servers, self = this, currentTenant = null, default_zone = 'us-east-1a';
+        var loaded, servers, self = this, currentTenant = null;
 
         // function to transform the data from api call for overview display
         function trimTransform(data) {
@@ -284,8 +284,9 @@
         * @description
         * prepare server instance request object
         */
-        self.prepareServerList = function (servers) {
+        self.prepareServerList = function () {
             var instancesReqList = [];
+            var servers =  JSON.parse($window.localStorage.selectedResources)["server"];
 
             instancesReqList = servers.map(function (instance) {
                 return {
@@ -295,7 +296,7 @@
                     },
                     destination: {
                         region: instance.selectedMapping.region, //.toUpperCase(),
-                        zone: instance.selectedMapping.zone || default_zone,
+                        zone: instance.selectedMapping.zone || DEFAULT_VALUES.REGION,
                         type: instance.selectedMapping.instance_type
                     }
                 }

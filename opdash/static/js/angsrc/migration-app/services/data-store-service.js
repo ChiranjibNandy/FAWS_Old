@@ -554,7 +554,9 @@
                 var equipments = {
                     server: [],
                     network: [],
-                    files: [],
+                    file: [],
+                    volume : [],
+                    service :[],
                     LoadBalancers: []
                 };
                 for (var equ in resources) {
@@ -811,7 +813,6 @@
 
             self.getJobIdForMigration = function (value) {
                 var resourceItems = JSON.parse($window.localStorage.getItem("resourceItemsForEditingMigration"));
-                console.log(value);
                 return resourceItems[value];
             };
 
