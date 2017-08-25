@@ -368,8 +368,9 @@
                     if(!vm.autoRefreshEveryMinute){
                         vm.autoRefreshEveryMinute = true;
                         vm.intervalPromise = $interval(function () {   
-                            if(dataStoreService.getPageName() === 'MigrationStatus'){
+                            if(dataStoreService.getPageName() === 'MigrationStatus' && vm.autoRefreshText === "ON"){
                                 vm.getBatches(true);
+                                vm.onTimeout();
                             }                 
                         }, 60000);
                     }        
@@ -391,6 +392,8 @@
                        vm.autoRefreshText = "ON"; 
                        vm.autoRefreshEveryMinute = false;
                        vm.autoRefreshButton = false;
+                       vm.onTimeout();
+                       vm.counter = 60;
                        vm.getBatches(true);
                     }
                 };
