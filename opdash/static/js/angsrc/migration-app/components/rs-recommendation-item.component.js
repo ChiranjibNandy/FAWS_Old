@@ -556,10 +556,12 @@
                 };
 
                 $scope.$on("tabChanged", function(event, type){
-                    if(!vm.parentTab.tab.active) return;
+                    if(!vm.parentTab.tab.active) return; 
                     if(ds.retrieveAllRegionFetchedFlags(type) === false)
+                        vm.loadingZone = true;
                         //Get all the regions only once during initialization
                         ds.getAllEc2Regions(type).then(function(result){
+                            vm.loadingZone = false;
                             if(!result.length){
                                 vm.errorInApi = true;
                                 //Disable precheck continue button on success of the region API call
@@ -569,6 +571,7 @@
                                 vm.serverRegions = result;
                             else if(type === 'volume'){
                                 vm.volumeRegions = result;
+
                                 if($window.localStorage.selectedResources !== undefined)
                                     vm.data = JSON.parse($window.localStorage.selectedResources)['volume'];
                                 else
@@ -613,6 +616,7 @@
                                 }); 
                             }
                         },function(error){
+                            vm.loadingZone = false;
                             vm.errorInApi = true;
                             //Disable precheck continue button on success of the region API call
                             $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});

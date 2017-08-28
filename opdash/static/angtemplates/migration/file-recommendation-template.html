@@ -1,4 +1,13 @@
-<tr ng-repeat="item in vm.data | filter: vm.filtervalue | limitTo : vm.pageSize : (vm.currentPage-1)*vm.pageSize">
+<tr ng-show="vm.loadingZone">
+    <td colspan="6">
+        <div class="rs-table-overlay rs-table-overlay-loading" style="height:100px !important; margin-bottom:-20px">
+            <div class="rs-table-overlay-content">
+                <div class="rs-table-overlay-message">Fetching Regions&hellip;</div>
+            </div>
+        </div>
+    </td>
+</tr>
+<tr ng-show="!vm.loadingZone" ng-repeat="item in vm.data | filter: vm.filtervalue | limitTo : vm.pageSize : (vm.currentPage-1)*vm.pageSize">
     <td class="rs-table-status"
             ng-class="{'rs-table-status-ok': item.status.toLowerCase()=='active', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
     </td>
