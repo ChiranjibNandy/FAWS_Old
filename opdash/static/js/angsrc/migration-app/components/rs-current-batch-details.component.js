@@ -55,7 +55,6 @@
                     dashboardService.getCurrentBatcheForJobId(vm.job_id)
                         .then(function (job) {
                             vm.job = job;
-
                             if (job.batch_status === 'in progress' || job.batch_status === 'done')
                                 //Makes a promise to fetch the progress API details for in progress and completed batches
                                 var promise = HttpWrapper.send('/api/jobs/' + job.job_id + '/progress', { "operation": 'GET' });
