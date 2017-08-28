@@ -412,16 +412,12 @@
              */
             self.getMigrationDate = function () {
                 var today = moment().format("MM-DD-YYYY");
-                var selectedValue = moment(self.selectedTime.time).format("MM-DD-YYYY");
+                var selectedValue = moment.unix(self.selectedTime.time).format("MM-DD-YYYY");
 
                 if (today === selectedValue) {
-                    var dt = "today";
+                    return "today";
                 } else {
-                    var dt = moment(self.selectedTime.time).format("ddd, MMM Do YYYY"); //example- Sat, Jun 17th 2017
-                }
-
-                if (dt) {
-                    return dt;
+                    return moment.unix(self.selectedTime.time).format("ddd, MMM Do YYYY"); //example- Sat, Jun 17th 2017
                 }
             };
 
@@ -433,7 +429,7 @@
              * Returns migration date based on Epoch timestamp
              */
             self.getMigrationTime = function () {
-                var tm = moment(self.selectedTime.time).format("h:mm:ss a"); //3:25:50 pm"
+                var tm = moment.unix(self.selectedTime.time).format("h:mm:ss a"); //3:25:50 pm"
                 if (tm) {
                     return tm;
                 }
