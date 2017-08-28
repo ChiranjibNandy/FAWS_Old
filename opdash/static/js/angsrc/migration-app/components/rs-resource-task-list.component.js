@@ -82,7 +82,7 @@
                                         }
                                         //If the resource type is network, get the succeeded_by_time_pct from response object
                                         else if (vm.resource_type === "network") {
-                                            vm.batch_progress = response[0].networks.succeeded_by_time_pct;
+                                            vm.batch_progress = response[0].networks.resources[0].succeeded_by_time_pct;
                                         }
                                         //Set the flag to true
                                         vm.progressFlag = true;

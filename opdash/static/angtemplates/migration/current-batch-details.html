@@ -48,6 +48,16 @@
                                 </a>
                             </th>
                             <th>
+                                <a href="javascript:void(0);" class="rs-table-sort custom-sort-a">
+                                    <span class="rs-table-sort-text">Destination Region</span>
+                                </a>
+                            </th>
+                            <th>
+                                <a href="javascript:void(0);" class="rs-table-sort custom-sort-a">
+                                    <span class="rs-table-sort-text">Instance Type</span>
+                                </a>
+                            </th>
+                            <th>
                                 Actions
                             </th>
                         </thead>
@@ -56,7 +66,7 @@
                                 <td class="rs-table-link" style="width:25%">
                                     <a href="" ng-click="vm.equipmentDetails('server', instance)" role="button" data-toggle="modal">{{instance.name}}</a>
                                 </td>
-                                <td class="rs-table-text" style="width: 30%;">
+                                <td class="rs-table-text" style="width: 14%;">
                                     <span class="rs-status-error" ng-show="instance.status==='error'">Error</span>
                                     <span class="rs-status-ok" ng-show="instance.status==='done'">Completed</span>
                                     <span class="rs-status-ok" ng-show="instance.status==='started'">Started</span>
@@ -66,7 +76,7 @@
                                     <span class="rs-status-warning" ng-show="instance.status==='paused'">Paused</span>
                                     <span class="rs-status-warning" ng-show="instance.status==='canceled'">Cancelled</span>
                                 </td>
-                                <td class="rs-table-text" ng-class="{'paddingLeft' : (instance.status !== 'in progress' || (instance.status === 'in progress' && vm.progressFlag === false))&& instance.status !== 'done' }" style="width: 30%;">
+                                <td class="rs-table-text" ng-class="{'paddingLeft' : (instance.status !== 'in progress' || (instance.status === 'in progress' && vm.progressFlag === false))&& instance.status !== 'done' }" style="width: 14%;">
                                     <div class="rs-progress rs-progress-small" ng-if="instance.status==='in progress' && vm.progressFlag !== false">
                                         <div class="rs-progress-inner">
                                             <div class="rs-segment" ng-if="instance.instance_succeeded_time_pct !== undefined" ng-style="{'width': + instance.instance_succeeded_time_pct +'%'}">
@@ -91,6 +101,16 @@
                                     <span ng-if="instance.status === 'error' || instance.status === 'canceled'"><i class="fa fa-times font-size-progress-icons" aria-hidden="true"></i></span>
                                     <span ng-if="instance.timestamp"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>
                                     <span ng-if="instance.status === 'not available' || instance.status === undefined"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>
+                                </td>
+                                <td>
+                                    <span class="capitalize">
+                                        {{instance.destination.region}}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span>
+                                        {{instance.destination.type}}
+                                    </span>
                                 </td>
                                 <td>
                                     <a class="rs-btn" ng-click="vm.saveResourceDetailsRouteParams(instance,'instance')">See Tasks</a>

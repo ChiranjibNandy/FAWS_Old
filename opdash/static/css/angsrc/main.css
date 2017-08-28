@@ -633,4 +633,18 @@ span.fa-angle-left, span.fa-angle-right{
     margin-top: 8px;
     cursor: pointer;
     font-size: 15px;
+    padding-left: 35px;
+}
+
+.autoRefreshTimer{
+    margin-top: 8px;
+    font-size: 15px;
+}
+
+.colorGreen{
+    color:green;
+}
+
+.autoRefreshAlignment{
+    padding-left: 36px; 
 }
