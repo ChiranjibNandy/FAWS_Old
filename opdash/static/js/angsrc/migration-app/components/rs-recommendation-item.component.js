@@ -124,9 +124,11 @@
                         //Checks to see if all the regions for servers are already fetched
                         //If yes, do not further fetch volumes on startup
                         //Or fetch the volumes assuming this is the first page on page load
-                        if(ds.retrieveAllRegionFetchedFlags('volume') === false && ds.retrieveAllRegionFetchedFlags('server') === false)
+                        if(!vm.doesRegionFlagExist()){
+                            vm.loadingZone = true;
                             //Get all the volume regions only once
                             ds.getAllEc2Regions('volume').then(function(result){
+                                vm.loadingZone = false;
                                 //If the returned result is empty we set the flag to true
                                 if(!result.length){
                                     vm.errorInApi = true;
@@ -147,12 +149,12 @@
                                     }
                                 });
                             },function(error){
+                                vm.loadingZone = false;
                                 vm.errorInApi = true;
                                 //Disable precheck continue button on success of the region API call
                                 $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});
                             }); 
-
-
+                        }
                     }else if (vm.type === "file"){
                         if($window.localStorage.selectedResources !== undefined)
                             vm.data = JSON.parse($window.localStorage.selectedResources)['file'];
@@ -167,9 +169,11 @@
                         //Checks to see if all the regions for either of the servers, volumes or services are already fetched
                         //If yes, do not further fetch files on startup
                         //Or fetch the files assuming this is the first page on page load
-                        if(ds.retrieveAllRegionFetchedFlags('file') === false  && ds.retrieveAllRegionFetchedFlags('service') === false && ds.retrieveAllRegionFetchedFlags('server') === false && ds.retrieveAllRegionFetchedFlags('volume') === false )
+                        if(!vm.doesRegionFlagExist()){
+                            vm.loadingZone = true;
                             //Get all the file regions only once
                             ds.getAllEc2Regions('file').then(function(result){
+                                vm.loadingZone = false;
                                 //If the returned result is empty we set the flag to true
                                 if(!result.length){
                                     vm.errorInApi = true;
@@ -184,10 +188,12 @@
                                     }
                                 });
                             },function(error){
+                                vm.loadingZone = false;
                                 vm.errorInApi = true;
                                 //Disable precheck continue button on success of the region API call
                                 $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});
-                            }); 
+                            });
+                        } 
                     }
                     else if (vm.type === "service"){
                         if($window.localStorage.selectedResources !== undefined)
@@ -203,9 +209,11 @@
                         //Checks to see if all the regions for either of the servers or volumes are already fetched
                         //If yes, do not further fetch services on startup
                         //Or fetch the services assuming this is the first page on page load
-                        if(ds.retrieveAllRegionFetchedFlags('service') === false && ds.retrieveAllRegionFetchedFlags('server') === false && ds.retrieveAllRegionFetchedFlags('volume') === false )
+                        if(!vm.doesRegionFlagExist()){
+                            vm.loadingZone = true;
                             //Get all the service regions only once
                             ds.getAllEc2Regions('service').then(function(result){
+                                vm.loadingZone = false;
                                 //If the returned result is empty we set the flag to true
                                 if(!result.length){
                                     vm.errorInApi = true;
@@ -221,10 +229,12 @@
                                     }
                                 });
                             },function(error){
+                                vm.loadingZone = false;
                                 vm.errorInApi = true;
                                 //Disable precheck continue button on success of the region API call
                                 $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});
                             }); 
+                        }
                     }else{
                         if($window.localStorage.selectedResources !== undefined)
                             vm.data = JSON.parse($window.localStorage.selectedResources)['LoadBalancers'];
@@ -557,7 +567,7 @@
 
                 $scope.$on("tabChanged", function(event, type){
                     if(!vm.parentTab.tab.active) return; 
-                    if(ds.retrieveAllRegionFetchedFlags(type) === false)
+                    if(ds.retrieveAllRegionFetchedFlags(type) === false){
                         vm.loadingZone = true;
                         //Get all the regions only once during initialization
                         ds.getAllEc2Regions(type).then(function(result){
@@ -621,6 +631,7 @@
                             //Disable precheck continue button on success of the region API call
                             $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});
                         });  
+                    }
                 });
 
                 vm.setRegion = function (item){
@@ -638,6 +649,14 @@
                 if(vm.data.length > 0)
                     dataStoreService.setSelectedItems(vm.data,vm.data[0].type);
                 };
+
+                //Checks to see the status flags for Region Calls
+                vm.doesRegionFlagExist = function(){
+                    if(Object.values(ds.retrieveAllRegionFetchedFlags()).indexOf(true) > -1)
+                        return true;
+                    else
+                        return false;
+                }
                 
                 return vm;
             }]

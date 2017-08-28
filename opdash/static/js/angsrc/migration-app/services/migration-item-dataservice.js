@@ -28,15 +28,14 @@
 
             self.storeRegionFetchedFlags = function(type,value){
                 self.regionFetchedFlags[type] = value;
-                $window.localStorage.regionFetchedFlags = JSON.stringify(self.regionFetchedFlags);
             };
 
             self.retrieveAllRegionFetchedFlags = function(type){
                 if(type){
-                    return ($window.localStorage.regionFetchedFlags !== undefined && JSON.parse($window.localStorage.regionFetchedFlags)[type]) || self.regionFetchedFlags[type];
+                    return self.regionFetchedFlags[type];
                 }
                 else{
-                    return ($window.localStorage.regionFetchedFlags !== undefined && JSON.parse($window.localStorage.regionFetchedFlags)) || self.regionFetchedFlags;
+                    return self.regionFetchedFlags;
                 }
             };
 
@@ -284,7 +283,7 @@
 
             this.getAllEc2Regions = function (type) {
                 resultsLoaded = HttpWrapper.send('/api/aws/regions/ec2', {"operation": 'GET'});
-                self.regionFetchedFlags[type] = true;
+                self.storeRegionFetchedFlags(type,true);
                 return resultsLoaded;
             };//end of getAllEc2Regions method
 
