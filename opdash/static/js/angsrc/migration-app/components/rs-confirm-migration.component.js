@@ -185,8 +185,7 @@
                     var requestObj;
                     vm.migrating = true;
                     $('#confirm-migration-modal').modal('hide');
-                  
-                    requestObj = ds.prepareJobRequest(false); //Send 'false' to generate migration job-spec obj
+                    requestObj = ds.prepareJobRequest(false); //Send 'false' to generate job-spec obj for migration
                     vm.acceptTermsAndConditions = true;
                     if (JSON.parse(dataStoreService.getResourceItemsForEditingMigration())) {
                         migrationService.modifyMigration(dataStoreService.getJobIdForMigration('jobId'), requestObj)
@@ -292,8 +291,7 @@
                     var requestObj;
                     vm.migrating = true;
                     $('#confirm-migration-modal').modal('hide');
-
-                    requestObj = ds.prepareJobRequest(false); //Send 'false' to generate migration job-spec obj
+                    requestObj = ds.prepareJobRequest(false); //Send 'false' to generate job-spec obj for migration
                     vm.acceptTermsAndConditions= true;
                     $rootScope.$emit("vm.MigrationName", dataStoreService.selectedTime.migrationName);
                     $rootScope.$emit("vm.MigrationTime", dataStoreService.selectedTime.time);

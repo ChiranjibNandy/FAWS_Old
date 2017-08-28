@@ -130,7 +130,7 @@
                     }
                     vm.job_id = next.params.job_id;
                     vm.resource_type = next.params.resource_type;
-                    vm.instance_status = next.params.instance_status.split('%20').join(' ');
+                    vm.instance_status = $window.localStorage.resource_status;
                     vm.resource_id = next.params.resource_id.substr(0, separatorPosition[0]);
                     vm.resourceName = next.params.resource_id.substr(separatorPosition[1] + 1, next.params.resource_id.length);
                     if(vm.resourceName.indexOf('%20') > -1){

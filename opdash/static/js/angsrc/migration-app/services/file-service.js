@@ -14,18 +14,31 @@
         // function to transform the data from api call for overview display
         function trimTransform (data) {
             var filesList = [];
-            var t = data.data;
-            for(var key in t){
+            var apiResponse = data.data;
+            
+            for(var key in apiResponse){
                 // iterate over files by region
-                filesList.push({
-                    id: t[key]["trans-id"],
-                    name: key,
-                    size: formatBytes(t[key]["bytes-used"]),
-                    status:"available",
-                    containerCount:t[key]["container-count"],
-                    objectCount:t[key]["object-count"],
-                    region: key
-                });
+                if (apiResponse[key] === null || apiResponse[key] === 'null') {
+                    filesList.push({
+                        id: '',
+                        name: key,
+                        size: 0,
+                        status:"Not Available",
+                        containerCount:0,
+                        objectCount:0,
+                        region: key
+                    });
+                } else {          
+                    filesList.push({
+                        id: apiResponse[key]["trans-id"],
+                        name: key,
+                        size: formatBytes(apiResponse[key]["bytes-used"]),
+                        status:"available",
+                        containerCount:apiResponse[key]["container-count"],
+                        objectCount:apiResponse[key]["object-count"],
+                        region: key
+                    });
+                }
             }
 
             return {
@@ -164,7 +177,7 @@
                             "region":file.name
                         },
                         "destination":{
-                            "region":file.selectedMapping.region || DEFAULT_VALUES.region
+                            "region":file.selectedMapping.region || DEFAULT_VALUES.REGION
                         }
                     }
                 )
