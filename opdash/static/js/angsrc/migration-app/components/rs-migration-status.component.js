@@ -42,13 +42,17 @@
                         if(item.length != 0){
                             angular.forEach(item, function (type) {
                                 angular.forEach(jobList, function (status) {
-                                    angular.forEach(status.instances, function (instance) {
-                                        if (instance['name'] == type.name) {
-                                            if(!(status.batch_status == 'error' || status.batch_status == 'canceled' || status.batch_status == 'done')){
-                                                valid = false;
-                                            }
-                                        }
-                                    });
+                                    for (var key in status){
+                                        if(typeof(status[key]) == "object" && status[key].length && key != "metadata"){
+                                            angular.forEach(status[key], function (equipment) {
+                                                if (equipment['id'] == type.rrn) {
+                                                    if(!(status.batch_status == 'error' || status.batch_status == 'canceled' || status.batch_status == 'done')){
+                                                        valid = false;
+                                                    }
+                                                }
+                                            });
+                                        };
+                                    };
                                 });
                             });
                         };

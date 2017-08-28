@@ -75,17 +75,22 @@
                         }
                         //map status of a resource received from Batch response with respect to the resource id. 
                         angular.forEach(statusList, function (status) {
-                            if (keepGoing) {
-                                angular.forEach(status.instances, function (instance) {
-                                    if(instance['id'] == resource.rrn){
-                                        resource.migStatusJobId = status.job_id;
-                                        if (!(status.batch_status == 'error' || status.batch_status == 'canceled' || status.batch_status == 'done')) {
-                                            resource.canMigrate = false;
-                                            resource.migStatus = status.batch_status;
-                                            keepGoing = false;
-                                        }
-                                    };
-                                });
+                            if(keepGoing) {
+                                for (var key in status){
+                                    if(typeof(status[key]) == "object" && status[key].length && key != "metadata"){
+                                        angular.forEach(status[key], function (equipment) {
+                                            if(equipment['id'] == resource.rrn){
+                                                resource.migStatusJobId = status.job_id;
+                                                if(!(status.batch_status == 'error' || status.batch_status == 'canceled' || status.batch_status == 'done')){
+                                                    resource.canMigrate = false;
+                                                    resource.migStatus = status.batch_status;
+                                                    keepGoing = false;
+                                                }
+                                            };
+                                        });
+                                    }
+                                }  
+
                             };
                         });
                         //disable file regions with container count 0

@@ -538,7 +538,7 @@
              * @methodOf migrationApp.service:datastoreservice
              * @description 
              * Invokes "/api/jobs/saved/"+id API call for posting saved instance.
-             */
+            */
             this.deleteSavedInstances = function (id) {
                 var self = this;
                 //var requestObj = self.objForSaveLater(response, saveInstance);
@@ -555,8 +555,8 @@
                     server: [],
                     network: [],
                     file: [],
-                    volume : [],
-                    service :[],
+                    volume: [],
+                    service: [],
                     LoadBalancers: []
                 };
                 for (var equ in resources) {
