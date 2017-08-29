@@ -116,7 +116,6 @@
                     vm.currentUser = authservice.account_name; //get Account Name
                    
                     vm.sortBy = {
-                        //current_batch: '-start',
                         completed_batch: '-start',
                         error_batch:'-timestamp',
                         ticket_batch:'-created'
@@ -130,7 +129,6 @@
                     }, true);
 
                    vm.getAllTickets();
-                   //vm.getAllAlerts();
                    var element = document.getElementsByClassName('custom-sort-a');
                    for(var i = 0; i < element.length; i++)
                     {
@@ -391,6 +389,7 @@
                        vm.counter = 60;
                        vm.getBatches(true);
                     }
+                    dashboardService.storeAutoRefreshStatus(vm.autoRefreshText);
                 };
 
                 /**
@@ -512,7 +511,9 @@
                     dataStoreService.setResourceItemsForEditingMigration(false);
                     dataStoreService.resetAll();
                     dataStoreService.storeEligibilityResults($window.localStorage.eligibilityResults);
+                    var autoRefreshButtonStatus = dashboardService.getAutoRefreshStatus();
                     $window.localStorage.clear();
+                    dashboardService.storeAutoRefreshStatus(autoRefreshButtonStatus);
                     $window.localStorage.eligibilityResults = dataStoreService.retrieveEligibilityResults();
                     if($window.localStorage.selectedResources !== undefined)
                         $window.localStorage.removeItem('selectedResources');
@@ -529,7 +530,9 @@
                  * Initiates scheduling of migration for a saved migration
                  */
                 vm.continueScheduling = function (batch,modifyFlag) {
+                    var autoRefreshButtonStatus = dashboardService.getAutoRefreshStatus();
                     $window.localStorage.clear();
+                    dashboardService.storeAutoRefreshStatus(autoRefreshButtonStatus);
                     if(modifyFlag){
                         for(var i = 0; i<vm.nonSavedMigrations.length;i++){
                             var details = vm.nonSavedMigrations[i];

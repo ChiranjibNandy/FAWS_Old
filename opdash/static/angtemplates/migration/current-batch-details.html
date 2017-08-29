@@ -103,7 +103,7 @@
                                     <span ng-if="instance.status === 'not available' || instance.status === undefined"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>
                                 </td>
                                 <td>
-                                    <span class="capitalize">
+                                    <span>
                                         {{instance.destination.region}}
                                     </span>
                                 </td>
@@ -424,15 +424,20 @@
                                 </a>
                             </th>
                             <th>
+                                <a href="javascript:void(0);" class="rs-table-sort custom-sort-a">
+                                    <span class="rs-table-sort-text">Destination Region</span>
+                                </a>
+                            </th>
+                            <th>
                                 Actions
                             </th>
                         </thead>
                         <tbody ng-show="!vm.loading && !vm.loadError">
                             <tr ng-repeat="network in vm.job.networks | orderBy: vm.sortBy.network">
-                                <td class="rs-table-link" style="width:25%">
+                                <td class="rs-table-link" style="width:20%">
                                     <a href="" ng-click="vm.equipmentDetails('network', network)" role="button" data-toggle="modal">{{network.name}}</a>
                                 </td>
-                                <td class="rs-table-text" style="width: 30%;">
+                                <td class="rs-table-text" style="width: 20%;">
                                     <span class="rs-status-error" ng-show="network.status==='error' || network.status.state ==='error'">Error</span>
                                     <span class="rs-status-ok" ng-show="network.status ==='Existing' || network.status.state ==='Existing'">Existing</span>
                                     <span class="rs-status-ok" ng-show="network.status ==='done' || network.status.state ==='done'">Completed</span>
@@ -444,7 +449,7 @@
                                     <span class="rs-status-warning" ng-show="network.status.toLowerCase() ==='created' || network.status.state.toLowerCase() ==='created'">Created</span>
                                 </td>
                                 <td class="rs-table-text" ng-class="{'paddingLeft':network.status.state !=='in progress' && network.status.state !=='done' && network.status.state !=='Existing' && network.status !=='in progress' && network.status !=='done' && network.status !=='Existing'}"
-                                    style="width: 30%;">
+                                    style="width: 22%;">
                                     <div class="rs-progress rs-progress-small" ng-if="network.status.state ==='in progress' || network.status ==='in progress'">
                                         <div class="rs-progress-inner">
                                             <div class="rs-segment" ng-style="{'width': +vm.job.network_succeeded_by_time_pct +'%'}">
@@ -465,6 +470,11 @@
                                     <span ng-if="!network.status.state || network.status.state === 'not available' || !network.status || network.status === 'not available'"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>
                                     <span ng-if="vm.job.timestamp"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>
                                     <span ng-if="network.status.state.toLowerCase() === 'created' || network.status.toLowerCase() === 'created'"><i class="fa fa-clock-o font-size-progress-icons" aria-hidden="true"></i></span>
+                                </td>
+                                <td>
+                                    <span>
+                                        {{network.destination.region}}
+                                    </span>
                                 </td>
                                 <td>
                                     <a class="rs-btn" ng-click="vm.saveResourceDetailsRouteParams(network,'network')" >See Tasks</a>
