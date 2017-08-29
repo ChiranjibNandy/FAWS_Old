@@ -31,7 +31,7 @@
           </table>
       </div>
   </div>
-  <div style="color: red; text-align: right;margin-top:5px;" ng-if="vm.errorInApi || vm.errorInZoneApi">Error: Could not fetch available Regions/Zones. Please try again later.</div>
+  <div style="color: red; text-align: right;margin-top:5px;" ng-if="vm.errorInApi || vm.errorInZoneApi">Error: Could not fetch available Regions/Zones.<span><a href ng-click="vm.recallRegionZone()">Retry.</a><span></div>
   <br>
   <!-- ********** PAGINATION GOES HERE... ************* -->
     <div class="pagination pagination-mini" ng-if="vm.totalItems" ng-class="{'pagination-region-zone-api-failure': (vm.errorInApi === true || vm.errorInZoneApi === true)}">
