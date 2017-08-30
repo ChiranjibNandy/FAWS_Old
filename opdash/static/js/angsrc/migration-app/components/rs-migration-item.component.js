@@ -542,16 +542,16 @@
                                     angular.forEach(item, function (server) {
                                         vm.items.filter(function (data) {
                                             if (server.id == data.id) {
-                                                data.canMigrate = true;
-                                                data.migStatus = "Available to Migrate";
+                                                data.canMigrate = false;
+                                                data.migStatus = "Not Available to Migrate";
                                             }
                                         });
                                     });
                                 } else {
                                     vm.items.filter(function (data) {
                                         if (item.id == data.id) {
-                                            data.canMigrate = true;
-                                            data.migStatus = "Available to Migrate";
+                                            data.canMigrate = false;
+                                            data.migStatus = "Not Available to Migrate";
                                         }
                                     });
                                 }
@@ -595,7 +595,7 @@
 
                     }
                     angular.forEach(items, function (item) {
-                        if ((item.canMigrate == true && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]) || (item.migStatus == 'Available to Migrate' && !vm.checkingEligibility[item.id]) && !item.eligibiltyTests.length) {
+                        if ((item.canMigrate == true && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]) || (item.migStatus == 'Not Available to Migrate' && !vm.checkingEligibility[item.id]) && !item.eligibiltyTests.length) {
                             var storedEligibilityResults = [];
                             //Check for eligibility results stored during the current session.
                             if (!($window.localStorage.eligibilityResults == undefined || $window.localStorage.eligibilityResults == "undefined")) {
