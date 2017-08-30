@@ -155,7 +155,7 @@
                     } else{
                         vm.afterNewMigration = false;
                     }
-                    vm.getBatches(true);
+                    vm.getBatches(!(dataStoreService.getFirstLoginFlag()));
                     vm.onTimeout();
                     vm.getAllAlerts();
                 };
@@ -513,6 +513,7 @@
                  * Resets all previous resource data and helps to starts a new migration
                  */
                 vm.startNewMigration = function () {
+                    vm.firstLogin = true;
                     dataStoreService.setResourceItemsForEditingMigration(false);
                     dataStoreService.resetAll();
                     dataStoreService.storeEligibilityResults($window.localStorage.eligibilityResults);

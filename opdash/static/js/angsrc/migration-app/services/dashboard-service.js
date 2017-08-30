@@ -12,7 +12,9 @@
             var self = this,
                 loaded = false,
                 currentTenant = null,
-                batches = {};
+                batches = {},
+                jobsCallInProgress = false,
+                statusPromise;
 
             self.autoRefreshStatus = '';
 
@@ -30,21 +32,26 @@
                 var currentJobsUrl = "/api/jobs/all";
                 //var currentJobsUrl = "/static/angassets/batch-details.json";
 
-                if (refresh || !loaded || (currentTenant !== tenant_id)) {
+                if ((refresh || !loaded || (currentTenant !== tenant_id)) && jobsCallInProgress == false) {
                     var savedMigrationsTask = dataStoreService.getSavedItems();
                     var currentJobsTask = HttpWrapper.send(currentJobsUrl, { "operation": 'GET' });
-
-                    return $q.all([savedMigrationsTask, currentJobsTask])
+                    jobsCallInProgress = true;
+                    statusPromise =  $q.all([savedMigrationsTask, currentJobsTask])
                         .then(function(results) {
                             loaded = true;
+                            jobsCallInProgress = false;
                             currentTenant = tenant_id;
                             var savedMigrations = [];
                             savedMigrations = results[0] || [];
                             batches = { savedMigrations: savedMigrations, jobs: results[1] };
                             return batches;
                         }, function(errorResponse) {
+                            jobsCallInProgress = false;
                             return false;
                         });
+                    return statusPromise;
+                } else if(jobsCallInProgress == true){
+                    return statusPromise;
                 } else {
                     return $q.when(batches);
                 }
@@ -60,14 +67,14 @@
              */
             self.getCurrentBatches = function(){
             // var currentJobsTask = HttpWrapper.send(currentJobsUrl, { "operation": 'GET' });
-
-                return HttpWrapper.send("/api/jobs/all", {"operation":'GET'})
-                    .then(function(result){
-                       return result;
-                    },function(error) {
-                      return error;
-                    });
                 
+            return HttpWrapper.send("/api/jobs/all", {"operation":'GET'})
+                        .then(function(result){
+                            return result;
+                        },function(error) {
+                            return error;
+                        });
+
             };
 
             /**

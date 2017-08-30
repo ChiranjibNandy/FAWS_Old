@@ -19,7 +19,7 @@
                 // iterate over networks by region
                 if (t.hasOwnProperty(key) && t[key] !== null) {
                     // iterate over each network and extract necessary data
-                    angular.forEach(t[key].servers, function (server) {
+                    angular.forEach(t[key], function (server) {
                         serversList.push(transformServer(server));
                     });
                 }
@@ -173,7 +173,7 @@
          */
         self.getAll = function () {
             //var url = "/static/angassets/servers-list.json";
-            var url = "/api/compute/us-instances";
+            var url = "/api/compute/instances";
             var tenant_id = authservice.getAuth().tenant_id;
 
             // if ((currentTenant !== tenant_id)) {

@@ -28,11 +28,10 @@
                         var doSavedForLaterMigrationsExist = false;
                         var doResourceMigrationsExist = false;
                         var tenant_id = user_data.tenant_id;
-                        var savedMigrationPromise = datastoreservice.getSavedItems();
-                        var resourceMigrationPromise = dashboardservice.getCurrentBatches();
-                        $q.all([savedMigrationPromise,resourceMigrationPromise]).then(function(result){
-                            doSavedForLaterMigrationsExist = result[0].length>0?true:false;
-                            doResourceMigrationsExist = (result[1].job_status_list && result[1].job_status_list.length>0)?true:false;
+                        dashboardservice.getBatches(true).then(function(result){
+                            datastoreservice.setFirstLoginFlag();
+                            doSavedForLaterMigrationsExist = result.savedMigrations.length>0?true:false;
+                            doResourceMigrationsExist = (result.jobs.job_status_list && result.jobs.job_status_list.length>0)?true:false;
                             if(doSavedForLaterMigrationsExist === false && doResourceMigrationsExist === false){
                                 $rootRouter.navigate(["MigrationResourceList"]);                          
                             }
