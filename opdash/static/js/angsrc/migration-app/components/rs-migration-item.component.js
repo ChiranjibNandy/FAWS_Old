@@ -542,16 +542,16 @@
                                     angular.forEach(item, function (server) {
                                         vm.items.filter(function (data) {
                                             if (server.id == data.id) {
-                                                data.canMigrate = false;
-                                                data.migStatus = "Not Available to Migrate";
+                                                data.canMigrate = true;
+                                                data.migStatus = "Available to Migrate";
                                             }
                                         });
                                     });
                                 } else {
                                     vm.items.filter(function (data) {
                                         if (item.id == data.id) {
-                                            data.canMigrate = false;
-                                            data.migStatus = "Not Available to Migrate";
+                                            data.canMigrate = true;
+                                            data.migStatus = "Available to Migrate";
                                         }
                                     });
                                 }

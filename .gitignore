@@ -24,6 +24,7 @@ var/
 .installed.cfg
 *.egg
 .venv
+.idea
 .ops_venv
 .DS_Store
 opdash/.DS_Store
