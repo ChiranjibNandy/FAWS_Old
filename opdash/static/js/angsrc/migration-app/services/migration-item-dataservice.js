@@ -220,7 +220,7 @@
 
                     reqObj.metadata = {
                             batch_name: dataStoreService.getScheduleMigration().migrationName,
-                            initiated_by: auth.username,
+                            initiated_by: auth.username
                     };
                     if (auth.is_impersonator)
                         reqObj.metadata.impersonated_by = auth.impersonator;
