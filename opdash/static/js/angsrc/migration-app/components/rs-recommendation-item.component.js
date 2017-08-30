@@ -55,6 +55,7 @@
                     vm.reverse = false;
                     vm.disable = true;
                     vm.loadingZone = false;
+                    vm.loadingRegion = false;
                     vm.loadingPrice = false;
                     vm.filteredArr = [];
                     vm.serverRegions = [];
@@ -121,14 +122,14 @@
                                         {field: "destRegion", text: "AWS region"},
                                         {field: "destZone", text: "AWS zone"}
                                     ];
-                        //Checks to see if all the regions for servers are already fetched
+                        //Checks to see if all the regions for any one of the resource types are already fetched
                         //If yes, do not further fetch volumes on startup
                         //Or fetch the volumes assuming this is the first page on page load
                         if(!vm.doesRegionFlagExist()){
-                            vm.loadingZone = true;
+                            vm.loadingRegion = true;
                             //Get all the volume regions only once
                             ds.getAllEc2Regions('volume').then(function(result){
-                                vm.loadingZone = false;
+                                vm.loadingRegion = false;
                                 //If the returned result is empty we set the flag to true
                                 if(!result.length){
                                     vm.errorInApi = true;
@@ -149,7 +150,7 @@
                                     }
                                 });
                             },function(error){
-                                vm.loadingZone = false;
+                                vm.loadingRegion = false;
                                 vm.errorInApi = true;
                                 //Disable precheck continue button on success of the region API call
                                 $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});
@@ -166,14 +167,14 @@
                                         {field: "File status", text: "File Status"},
                                         {field: "destRegion", text: "AWS region"}
                                     ];
-                        //Checks to see if all the regions for either of the servers, volumes or services are already fetched
+                        //Checks to see if all the regions for any one of the resource types are already fetched
                         //If yes, do not further fetch files on startup
                         //Or fetch the files assuming this is the first page on page load
                         if(!vm.doesRegionFlagExist()){
-                            vm.loadingZone = true;
+                            vm.loadingRegion = true;
                             //Get all the file regions only once
                             ds.getAllEc2Regions('file').then(function(result){
-                                vm.loadingZone = false;
+                                vm.loadingRegion = false;
                                 //If the returned result is empty we set the flag to true
                                 if(!result.length){
                                     vm.errorInApi = true;
@@ -188,7 +189,7 @@
                                     }
                                 });
                             },function(error){
-                                vm.loadingZone = false;
+                                vm.loadingRegion = false;
                                 vm.errorInApi = true;
                                 //Disable precheck continue button on success of the region API call
                                 $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});
@@ -206,14 +207,14 @@
                                         {field: "service status", text: "Service Status"},
                                         {field: "destRegion", text: "AWS region"}
                                     ];
-                        //Checks to see if all the regions for either of the servers or volumes are already fetched
+                        //Checks to see if all the regions for any one of the resource types are already fetched
                         //If yes, do not further fetch services on startup
                         //Or fetch the services assuming this is the first page on page load
                         if(!vm.doesRegionFlagExist()){
-                            vm.loadingZone = true;
+                            vm.loadingRegion = true;
                             //Get all the service regions only once
                             ds.getAllEc2Regions('service').then(function(result){
-                                vm.loadingZone = false;
+                                vm.loadingRegion = false;
                                 //If the returned result is empty we set the flag to true
                                 if(!result.length){
                                     vm.errorInApi = true;
@@ -229,7 +230,7 @@
                                     }
                                 });
                             },function(error){
-                                vm.loadingZone = false;
+                                vm.loadingRegion = false;
                                 vm.errorInApi = true;
                                 //Disable precheck continue button on success of the region API call
                                 $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});
@@ -389,6 +390,7 @@
                     //time we have to get pricing details.
                     if(item && (typeof type === 'undefined')) vm.getPricingDetails(item);
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(zones){
+                        vm.loadingZone = false;
                         if(!zones.length){
                             vm.errorInZoneApi = true;  
                             //If the falg is set to true, set the default option in HTML select dropdown
@@ -397,7 +399,6 @@
                             $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});                         
                         }
                         else {
-                            vm.loadingZone = false;
                             //We clear the zones array each time we change the region
                             //If the zones array is empty and typeof vm.awsZone defaults to 'undefined', populate the zones array and item.selectedMapping.zone
                             if(typeof vm.awsZone === 'undefined' && item.selectedMapping.zones.length === 0){
@@ -453,7 +454,7 @@
                         vm.loadingPrice = false;
                         vm.errorInApi = true;
                     });
-                }
+                };
  
                 /**
                  * @ngdoc method
@@ -509,7 +510,7 @@
                     var aws_uptime_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_uptime || 720)).toFixed(2);
                     item.selectedMapping.totalCost = (parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost)+ parseFloat(storage_rate)).toFixed(2);
                     // return item.selectedMapping.totalCost;
-                }
+                };
 
                 //Get Instance Wise Total Cost at the modify configuration page
                 vm.getTotalInstanceCost = function(server,item){
@@ -522,7 +523,8 @@
                     var aws_uptime_cost = parseFloat(parseFloat(server.cost) * parseFloat(item.details.rax_uptime || 720)).toFixed(2);
 
                     return (parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost)+ parseFloat(storage_rate)).toFixed(2);
-                }
+                };
+
                 /**
                  * @ngdoc method
                  * @name equipmentDetails
@@ -565,72 +567,12 @@
                     return false;
                 };
 
+                //Execute the API calls on Tab Change
                 $scope.$on("tabChanged", function(event, type){
                     if(!vm.parentTab.tab.active) return; 
+                    //Checks to see if the API call had already been made for the selected resource type
                     if(ds.retrieveAllRegionFetchedFlags(type) === false){
-                        vm.loadingZone = true;
-                        //Get all the regions only once during initialization
-                        ds.getAllEc2Regions(type).then(function(result){
-                            vm.loadingZone = false;
-                            if(!result.length){
-                                vm.errorInApi = true;
-                                //Disable precheck continue button on success of the region API call
-                                $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});
-                            }
-                            if(type === 'server')
-                                vm.serverRegions = result;
-                            else if(type === 'volume'){
-                                vm.volumeRegions = result;
-
-                                if($window.localStorage.selectedResources !== undefined)
-                                    vm.data = JSON.parse($window.localStorage.selectedResources)['volume'];
-                                else
-                                    vm.data = [];
-                                //For each of the resources in the array, set the default zone to 'us-east-1a'
-                                angular.forEach(vm.data,function(item){
-                                    if(!vm.errorInApi){
-                                        item.selectedMapping.zone = item.selectedMapping.zone || 'us-east-1a';
-                                        //Called to prepopulate the zones array on page load for volume resource types
-                                        vm.getZones(item,item.type);
-                                    }
-                                    else{
-                                        item.selectedMapping.region = "Not Available";
-                                        item.selectedMapping.zone = "Not Available";
-                                    }
-                                });
-                            }
-                            else if(type === 'service'){
-                                vm.serviceRegions = result;
-                                if($window.localStorage.selectedResources !== undefined)
-                                    vm.data = JSON.parse($window.localStorage.selectedResources)['service'];
-                                else
-                                    vm.data = [];
-                                //For each of the resources in the array, set the default zone to 'us-east-1a'
-                                angular.forEach(vm.data,function(item){
-                                    if(vm.errorInApi){
-                                        item.selectedMapping.region = "Not Available";
-                                    }
-                                });                            
-                            }
-                            else{
-                                vm.fileRegions = result;
-                                if($window.localStorage.selectedResources !== undefined)
-                                    vm.data = JSON.parse($window.localStorage.selectedResources)['file'];
-                                else
-                                    vm.data = [];
-                                //For each of the resources in the array, set the default zone to 'us-east-1a'
-                                angular.forEach(vm.data,function(item){
-                                    if(vm.errorInApi){
-                                        item.selectedMapping.region = "Not Available";
-                                    }
-                                }); 
-                            }
-                        },function(error){
-                            vm.loadingZone = false;
-                            vm.errorInApi = true;
-                            //Disable precheck continue button on success of the region API call
-                            $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});
-                        });  
+                        vm.callRegionApi(type);
                     }
                 });
 
@@ -656,7 +598,109 @@
                         return true;
                     else
                         return false;
-                }
+                };
+
+                //Remake the failed API calls
+                vm.recallRegionZone = function(){
+                    if(!vm.parentTab.tab.active) return; 
+                    //If the Region Call has failed for the selected grid
+                    if(vm.errorInApi)
+                        vm.callRegionApi(vm.parentTab.tab.name);
+                    //If the Zone Call has failed for the selected grid
+                    if(vm.errorInZoneApi){
+                        if(vm.parentTab.tab.name === 'server'){
+                            if($window.localStorage.selectedResources !== undefined){
+                                vm.data = JSON.parse($window.localStorage.selectedResources)['server'];
+                                angular.forEach(vm.data, function (item) {
+                                    vm.totalCost(item);
+                                });
+                            }
+                            else
+                            vm.data = [];   
+                            angular.forEach(vm.data,function(item){
+                                vm.getZones();
+                            });                       
+                        }
+                        if(vm.parentTab.tab.name === 'volume'){
+                            if($window.localStorage.selectedResources !== undefined){
+                                vm.data = JSON.parse($window.localStorage.selectedResources)['volume'];
+                            }
+                            else
+                            vm.data = [];   
+                            angular.forEach(vm.data,function(item){
+                                vm.getZones(item,item.type);
+                            });                       
+                        }
+                    }
+
+                };
+
+                //Make the Region API call for the selected active tab
+                vm.callRegionApi = function(type){
+                    vm.loadingRegion = true;
+                    //Get all the regions only once during initialization
+                    ds.getAllEc2Regions(type).then(function(result){
+                        vm.loadingRegion = false;
+                        if(!result.length){
+                            vm.errorInApi = true;
+                            //Disable precheck continue button on success of the region API call
+                            $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});
+                        }
+                        if(type === 'server')
+                            vm.serverRegions = result;
+                        else if(type === 'volume'){
+                            vm.volumeRegions = result;
+
+                            if($window.localStorage.selectedResources !== undefined)
+                                vm.data = JSON.parse($window.localStorage.selectedResources)['volume'];
+                            else
+                                vm.data = [];
+                            //For each of the resources in the array, set the default zone to 'us-east-1a'
+                            angular.forEach(vm.data,function(item){
+                                if(!vm.errorInApi){
+                                    item.selectedMapping.zone = item.selectedMapping.zone || 'us-east-1a';
+                                    //Called to prepopulate the zones array on page load for volume resource types
+                                    vm.getZones(item,item.type);
+                                }
+                                else{
+                                    item.selectedMapping.region = "Not Available";
+                                    item.selectedMapping.zone = "Not Available";
+                                }
+                            });
+                        }
+                        else if(type === 'service'){
+                            vm.serviceRegions = result;
+                            if($window.localStorage.selectedResources !== undefined)
+                                vm.data = JSON.parse($window.localStorage.selectedResources)['service'];
+                            else
+                                vm.data = [];
+                            //For each of the resources in the array, set the default zone to 'us-east-1a'
+                            angular.forEach(vm.data,function(item){
+                                if(vm.errorInApi){
+                                    item.selectedMapping.region = "Not Available";
+                                }
+                            });                            
+                        }
+                        else{
+                            vm.fileRegions = result;
+                            if($window.localStorage.selectedResources !== undefined)
+                                vm.data = JSON.parse($window.localStorage.selectedResources)['file'];
+                            else
+                                vm.data = [];
+                            //For each of the resources in the array, set the default zone to 'us-east-1a'
+                            angular.forEach(vm.data,function(item){
+                                if(vm.errorInApi){
+                                    item.selectedMapping.region = "Not Available";
+                                }
+                            }); 
+                        }
+                    },function(error){
+                        vm.loadingRegion = false;
+                        vm.errorInApi = true;
+                        //Disable precheck continue button on success of the region API call
+                        $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});
+                    });  
+                };
                 
                 return vm;
             }]
