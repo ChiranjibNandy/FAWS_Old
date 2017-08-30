@@ -217,13 +217,18 @@
                     return reqObj;
 
                 } else if (precheck === false){ // otherwise, continue adding more details to the job spec for migration object
+
                     reqObj.metadata = {
                             batch_name: dataStoreService.getScheduleMigration().migrationName,
-                            initiated_by: auth.impersonator || auth.username
+                            initiated_by: auth.username,
                     };
+                    if (auth.is_impersonator)
+                        reqObj.metadata.impersonated_by = auth.impersonator;
+
                     reqObj.create_ticket= true;
                     reqObj.names = prepareNames();
                     reqObj.source.live_migrate = dataStoreService.getScheduleMigration().live_migrate || false;
+                    
 
                     //time calculations for scheduling the migration
                     var currEPOCHTime = moment().unix();
