@@ -31,7 +31,7 @@
           </table>
       </div>
   </div>
-  <div style="color: red; text-align: right;margin-top:5px;" ng-if="vm.errorInApi || vm.errorInZoneApi">Error: Could not fetch available Regions/Zones.<span><a href ng-click="vm.recallRegionZone()">Retry.</a><span></div>
+  <div style="color: red; text-align: right;margin-top:5px;" ng-show="vm.errorInApi || vm.errorInZoneApi">Error: Could not fetch available Regions/Zones.<span> <button class="rs-link" ng-click="vm.recallRegionZone()">Retry.</button><span></div>
   <br>
   <!-- ********** PAGINATION GOES HERE... ************* -->
     <div class="pagination pagination-mini" ng-if="vm.totalItems" ng-class="{'pagination-region-zone-api-failure': (vm.errorInApi === true || vm.errorInZoneApi === true)}">
@@ -138,7 +138,7 @@
                             <td class="rs-table-text">{{server.instance_type}}</td>
                             <td class="rs-table-text">{{server.vcpu || 2}}</td>
                             <td class="rs-table-text">{{server.memory || '2 GB'}}</td>
-                              <td class="rs-table-text">{{server.storage || 'EBS-Only'}}</td>
+                            <td class="rs-table-text">{{server.storage || 'EBS-Only'}}</td>
                             <td class="rs-table-text">{{vm.getTotalInstanceCost(server,item) | currency}}</td>
                         </tr>
                     </tbody>

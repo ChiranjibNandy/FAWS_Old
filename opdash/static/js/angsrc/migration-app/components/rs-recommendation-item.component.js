@@ -390,6 +390,7 @@
                     //time we have to get pricing details.
                     if(item && (typeof type === 'undefined')) vm.getPricingDetails(item);
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(zones){
+                        vm.loadingZone = false;
                         if(!zones.length){
                             vm.errorInZoneApi = true;  
                             //If the falg is set to true, set the default option in HTML select dropdown
@@ -398,7 +399,6 @@
                             $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});                         
                         }
                         else {
-                            vm.loadingZone = false;
                             //We clear the zones array each time we change the region
                             //If the zones array is empty and typeof vm.awsZone defaults to 'undefined', populate the zones array and item.selectedMapping.zone
                             if(typeof vm.awsZone === 'undefined' && item.selectedMapping.zones.length === 0){
@@ -454,7 +454,7 @@
                         vm.loadingPrice = false;
                         vm.errorInApi = true;
                     });
-                }
+                };
  
                 /**
                  * @ngdoc method

@@ -10,7 +10,7 @@
         <span class="rs-status rs-status-ok ng-binding"> {{item.status}} </span>
     </td>
     <td>
-        <span ng-show="vm.loadingRegion"><i class="fa fa-spinner fa-spin" style="font-size:24px" aria-hidden="true"></i></span>
+        <span ng-show="vm.loadingRegion"><i class="fa fa-refresh fa-spin" style="font-size:24px" aria-hidden="true"></i></span>
         <select ng-show="!vm.loadingRegion" ng-model="item.selectedMapping.region" style="margin-bottom: 2px;" ng-disabled="vm.errorInApi" ng-change="vm.setRegion(item)">
             <option ng-show="vm.errorInApi">Not Available</option>
             <option ng-repeat="region in vm.serviceRegions track by $index" value="{{region}}">{{region | convertCase}}</option>
