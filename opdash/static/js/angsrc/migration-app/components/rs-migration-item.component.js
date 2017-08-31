@@ -594,7 +594,7 @@
                         var items = vm.tempfilteredArr.slice((vm.currentPage - 1) * vm.pageSize, ((vm.currentPage - 1) * vm.pageSize) + vm.pageSize);
                     }
                     angular.forEach(items, function (item) {
-                        if((item.canMigrate == true && (vm.type == 'server' || (vm.type != 'server' && item.status.toLowerCase() == 'active' )) && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]) || ((vm.type == 'server' || (vm.type != 'server' && item.status.toLowerCase() == 'active' )) && (item.migStatus == 'Available to Migrate' || (item.eligible == 'Not Available' && (item.migStatus != 'Status not available' && item.migStatus == 'Available to Migrate'))) && !vm.checkingEligibility[item.id]) && !item.eligibiltyTests.length){
+                        if((item.canMigrate == true && (vm.type == 'server' || (vm.type != 'server' && item.status.toLowerCase() == 'active' )) && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]) || ((vm.type == 'server' || (vm.type != 'server' && item.status.toLowerCase() == 'active' )) && (item.migStatus == 'Not Available to Migrate' || (item.eligible == 'Not Available' && (item.migStatus != 'Status not available' && item.migStatus == 'Not Available to Migrate'))) && !vm.checkingEligibility[item.id]) && !item.eligibiltyTests.length){
                             var storedEligibilityResults = [];
                             //Check for eligibility results stored during the current session.
                             if (!($window.localStorage.eligibilityResults == undefined || $window.localStorage.eligibilityResults == "undefined")) {

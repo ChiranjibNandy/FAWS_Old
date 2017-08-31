@@ -55,6 +55,8 @@
                     dashboardService.getCurrentBatcheForJobId(vm.job_id)
                         .then(function (job) {
                             vm.job = job;
+                            vm.equipmentContent.tableBody.server = vm.job.instances;
+                            vm.equipmentContent.tableBody.network = vm.job.networks;
                             if (job.batch_status === 'in progress' || job.batch_status === 'done')
                                 //Makes a promise to fetch the progress API details for in progress and completed batches
                                 var promise = HttpWrapper.send('/api/jobs/' + job.job_id + '/progress', { "operation": 'GET' });
@@ -146,6 +148,17 @@
                     vm.loading = true;
                     vm.manualRefresh = false;
                     vm.job_id = '';
+                    vm.equipments = ['server','network'];
+                    vm.equipmentContent = {
+                        tableHeaders:{
+                            server:['Server','Status','Progress','Destination Region','Instance Type','Actions'],
+                            network:['Network','Status','Progress','Destination Region','Actions']
+                        },
+                        tableBody:{
+                            server:[],
+                            network:[]
+                        }
+                    }
                 };
 
                 vm.$routerOnActivate = function (next, previous) {

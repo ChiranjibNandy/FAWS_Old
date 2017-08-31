@@ -430,6 +430,8 @@
                                 vm.fawsError = false;
                                 vm.fawsCreated = true;
                                 vm.fawsCreationProgress = false;
+                                var elem = document.getElementById("welcomeModal");
+                                elem.parentNode.removeChild(elem);
                             }
                             else{
                                 vm.fawsError = true;

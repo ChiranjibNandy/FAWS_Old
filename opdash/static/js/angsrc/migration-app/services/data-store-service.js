@@ -836,6 +836,28 @@
                         return error;
                     });
             };
+            
+            /**
+             * @ngdoc method
+             * @name setFirstLoginFlag
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Set a flag after login(only) which is used to make jobs status API call.
+             */
+            this.setFirstLoginFlag = function() {
+                $window.localStorage.firstLogin = true;
+            }
+
+            /**
+             * @ngdoc method
+             * @name getFirstLoginFlag
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Get first login flag status.
+             */
+            this.getFirstLoginFlag = function() {
+                return ($window.localStorage.firstLogin || false);
+            }
 
             return self;
         }]); // end of service definition

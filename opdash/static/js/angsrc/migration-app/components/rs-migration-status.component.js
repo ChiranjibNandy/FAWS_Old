@@ -150,7 +150,7 @@
                     } else{
                         vm.afterNewMigration = false;
                     }
-                    vm.getBatches(true);
+                    vm.getBatches(!(dataStoreService.getFirstLoginFlag()));
                     vm.onTimeout();
                     vm.getAllAlerts();
                 };
@@ -257,10 +257,11 @@
                  */
                 vm.getBatches = function (refresh) {
                     var self = this;
-                    vm.loading = true;
+                    vm.manualRefresh = true;
                     dashboardService.getBatches(refresh)
                         .then(function (response) {
                             if (response && response.error == undefined){
+                                vm.manuallyLoadingAllBatches(false);
                                 var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled", "paused"];
                                 var validCompletedBatchStatus = ["done","canceled"];
                                 jobList = response.jobs.job_status_list;
@@ -355,6 +356,7 @@
                         });
                     }}, function (errorResponse) {
                         vm.loading = false;
+                        vm.manualRefresh = false;
                         vm.currentBatches.loadError = true;
                         vm.completedBatches.loadError = true;
                     });
@@ -362,11 +364,27 @@
                         vm.autoRefreshEveryMinute = true;
                         vm.intervalPromise = $interval(function () {   
                             if(dataStoreService.getPageName() === 'MigrationStatus' && vm.autoRefreshText === "ON"){
+                                vm.manuallyLoadingAllBatches(true);
                                 vm.getBatches(true);
                                 vm.onTimeout();
                             }                 
                         }, 60000);
                     }        
+                };
+
+                /**
+                 * @ngdoc method
+                 * @name manuallyLoadingAllBatches
+                 * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                 * @param {Boolean} 
+                 * @description 
+                 * This function helps to manually refresh the batches without the concern of API's.
+                 */
+                vm.manuallyLoadingAllBatches = function(flag){
+                    var batches = vm.currentBatches.items;
+                    for(var i = 0;i<vm.currentBatches.items.length;i++){
+                        batches[i].showRefreshForApiLoading = flag;
+                    }
                 };
 
                 /**
@@ -387,6 +405,7 @@
                        vm.autoRefreshButton = false;
                        vm.onTimeout();
                        vm.counter = 60;
+                       vm.manuallyLoadingAllBatches(true);
                        vm.getBatches(true);
                     }
                     dashboardService.storeAutoRefreshStatus(vm.autoRefreshText);
@@ -508,6 +527,7 @@
                  * Resets all previous resource data and helps to starts a new migration
                  */
                 vm.startNewMigration = function () {
+                    vm.firstLogin = true;
                     dataStoreService.setResourceItemsForEditingMigration(false);
                     dataStoreService.resetAll();
                     dataStoreService.storeEligibilityResults($window.localStorage.eligibilityResults);
@@ -659,6 +679,8 @@
                                 if(detail === 'cancel'){
                                     for(var i = 0;i<vm.currentBatches.items.length;i++){
                                         if(batch.job_id === vm.currentBatches.items[i].job_id){
+                                            vm.currentBatches.items[i].batch_status = 'canceled';
+                                            vm.completedBatches.items.push(vm.currentBatches.items[i]);
                                             vm.currentBatches.items.splice(i,1);
                                             return;
                                         }

@@ -21,7 +21,7 @@
                         <button class="rs-btn" ng-click="vm.getBatchDetails(true)">
                             <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i> Refresh
                         </button>
-                        <!--<a href="" class="rs-btn" style="padding-left: 45px; padding-right: 45px;">See Log</a>-->
+                        <a ng-link="['MigrationStatus']" href="" class="rs-btn">Back</a>
                         <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1
                             ? " mins ": " min ") + "ago"}}</div>
                     </div>
@@ -85,14 +85,8 @@
                                             <div class="rs-segment" ng-if="instance.instance_succeeded_time_pct === undefined" ng-style="{'width': + vm.job.succeeded_time_pct +'%'}">
                                                 <div class="rs-bar rs-status-ok rs-bar-striped"></div>
                                             </div>
-                                        </div>
-                                    </div><span class="rs-status-ok" ng-if="instance.status==='in progress' && vm.progressFlag !== false && instance.instance_succeeded_time_pct !== undefined"><em> {{instance.instance_succeeded_time_pct}}%</em></span>
-                                    <span class="rs-status-ok" ng-if="instance.status==='in progress' && vm.progressFlag !== false && instance.instance_succeeded_time_pct === undefined"><em> {{vm.job.succeeded_time_pct}}%</em></span>
-                                    <span ng-if="instance.status === 'in progress' && vm.progressFlag === false"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>                                    
-                                    <div class="rs-progress rs-progress-small" ng-if="instance.status==='done'">
-                                        <div class="rs-progress-inner">
-                                            <div class="rs-segment" style="width: 100%">
-                                                <div class="rs-bar rs-status-ok"></div>
+                                            <div class="rs-segment" ng-if="equipment=== 'network'" ng-style="{'width': +vm.job.network_succeeded_by_time_pct +'%'}">
+                                                <div class="rs-bar rs-status-ok rs-bar-striped"></div>
                                             </div>
                                         </div>
                                     </div><span class="rs-status-ok" ng-if="instance.status==='done'"><em> 100%</em></span>
@@ -463,21 +457,26 @@
                                                 <div class="rs-bar rs-status-ok"></div>
                                             </div>
                                         </div>
-                                    </div><span class="rs-status-ok" ng-if="network.status.state ==='done' || network.status.state === 'Existing' || network.status ==='done' || network.status === 'Existing'"><em> 100%</em></span>
-                                    <span ng-if="network.status.state === 'paused' || network.status === 'paused'"><i class="fa fa-pause" aria-hidden="true" ></i></span>
-                                    <span ng-if="network.status.state === 'scheduled' || network.status === 'scheduled'"><i class="fa fa-clock-o font-size-progress-icons" aria-hidden="true"></i></span>
-                                    <span ng-if="network.status.state === 'error' || network.status.state === 'canceled' || network.status === 'error' || network.status === 'canceled'"><i class="fa fa-times font-size-progress-icons" aria-hidden="true"></i></span>
-                                    <span ng-if="!network.status.state || network.status.state === 'not available' || !network.status || network.status === 'not available'"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>
+                                    </div><span class="rs-status-ok" ng-if="tableContent.status.state ==='done' || tableContent.status.state === 'Existing' || tableContent.status ==='done' || tableContent.status === 'Existing'"><em> 100%</em></span>
+                                    <span ng-if="tableContent.status.state === 'paused' || tableContent.status === 'paused'"><i class="fa fa-pause" aria-hidden="true" ></i></span>
+                                    <span ng-if="tableContent.status.state === 'scheduled' || tableContent.status === 'scheduled'"><i class="fa fa-clock-o font-size-progress-icons" aria-hidden="true"></i></span>
+                                    <span ng-if="tableContent.status.state === 'error' || tableContent.status.state === 'canceled' || tableContent.status === 'error' || tableContent.status === 'canceled'"><i class="fa fa-times font-size-progress-icons" aria-hidden="true"></i></span>
+                                    <span ng-if="tableContent.status.state === 'not available' || tableContent.status === 'not available'"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>
                                     <span ng-if="vm.job.timestamp"><i class="fa fa-ban font-size-progress-icons" aria-hidden="true"></i></span>
-                                    <span ng-if="network.status.state.toLowerCase() === 'created' || network.status.toLowerCase() === 'created'"><i class="fa fa-clock-o font-size-progress-icons" aria-hidden="true"></i></span>
+                                    <span ng-if="tableContent.status.state.toLowerCase() === 'created' || tableContent.status.toLowerCase() === 'created'"><i class="fa fa-clock-o font-size-progress-icons" aria-hidden="true"></i></span>
                                 </td>
                                 <td>
                                     <span>
-                                        {{network.destination.region}}
+                                        {{tableContent.destination.region | convertCase}}
+                                    </span>
+                                </td>
+                                <td ng-if="equipment==='server'">
+                                    <span>
+                                        {{tableContent.destination.type}}
                                     </span>
                                 </td>
                                 <td>
-                                    <a class="rs-btn" ng-click="vm.saveResourceDetailsRouteParams(network,'network')" >See Tasks</a>
+                                    <a class="rs-btn" ng-click="vm.saveResourceDetailsRouteParams(tableContent,equipment)" >See Tasks</a>
                                 </td>
                             </tr>
                         </tbody>

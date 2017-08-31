@@ -648,3 +648,19 @@ span.fa-angle-left, span.fa-angle-right{
 .autoRefreshAlignment{
     padding-left: 36px; 
 }
+
+.currentBatchServerGrid{
+    width: 14%;
+}
+
+.currentBatchServerGridName{
+    width: 25%;
+}
+
+.currentBatchNotServerGrid{
+    width: 20%;
+}
+
+.currentBatchNotServerGridName{
+    width: 22%;
+}
