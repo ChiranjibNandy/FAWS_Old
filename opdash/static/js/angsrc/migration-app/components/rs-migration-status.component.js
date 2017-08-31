@@ -260,9 +260,10 @@
                  * @description 
                  * Gets the list of all batches initiated by the current tenant
                  */
-                vm.getBatches = function (refresh) {
+                vm.getBatches = function (refresh,fromButton) {
                     var self = this;
                     vm.manualRefresh = true;
+                    if(fromButton) vm.manuallyLoadingAllBatches(true);
                     dashboardService.getBatches(refresh)
                     .then(function (response) {
                     if (response && response.error == undefined){
