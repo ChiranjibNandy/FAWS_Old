@@ -58,7 +58,7 @@
                     vm.filteredArr = [];
 
                     if(vm.type === "server"){
-                        var url = '/api/aws/regions/ec2'; 
+                        var url = '/api/ec2/regions'; 
                         HttpWrapper.send(url,{"operation":'GET'}).then(function(result){
                             vm.regions = result;
                             // vm.awsRegion = DEFAULT_VALUES.REGION;
@@ -233,7 +233,7 @@
                 vm.getZones = function(region){
                     vm.disable = true;
                     vm.loadingZone = true;
-                    var url =  '/api/aws/availability_zones/'+vm.awsRegion+'/ec2'; 
+                    var url =  '/api/ec2/availability_zones/'+vm.awsRegion; 
                     //If this method is called from modify modal, we will have the region , at that
                     //time we have to get pricing details.
                     if(region) vm.getPricingDetails(region);
@@ -270,22 +270,16 @@
                         if(pricingOptions.length > 0){
                             angular.forEach(pricingOptions,function(pricingItem){
                                 if(pricingItem.instance_type === vm.selectedConfigurationType){
-                                    //If it is, set the selected config type
-                                    vm.selectedConfigurationType = pricingItem.instance_type;
-                                    //Mark it as checked
+                                    //Flag the variable
                                     pricingContainsItem = true;
-                                    //set the config item value to its index in the array
-                                    vm.disableConfirm(pricingOptions.indexOf(pricingItem));
                                 }
                             });
+                        }else{
+                            vm.selectedConfigurationType = "";
                         }
                         //If no, clear the selected config type
                         if(!pricingContainsItem)
                             vm.selectedConfigurationType = "";
-                        if(item.pricingOptions.length == 0){
-                            vm.selectedConfigurationType = "";
-                        }
-                        //item.pricingOptions.concat(item.details);
                     },function(error){
                         vm.loadingPrice = false;
                         vm.errorInApi = true;
