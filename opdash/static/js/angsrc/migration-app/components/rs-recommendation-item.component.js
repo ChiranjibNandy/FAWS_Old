@@ -58,7 +58,7 @@
                     vm.filteredArr = [];
 
                     if(vm.type === "server"){
-                        var url = '/api/ec2/regions'; 
+                        var url = '/api/aws/regions/ec2'; 
                         HttpWrapper.send(url,{"operation":'GET'}).then(function(result){
                             vm.regions = result;
                             // vm.awsRegion = DEFAULT_VALUES.REGION;
@@ -233,7 +233,7 @@
                 vm.getZones = function(region){
                     vm.disable = true;
                     vm.loadingZone = true;
-                    var url =  '/api/ec2/availability_zones/'+vm.awsRegion; 
+                    var url =  '/api/aws/availability_zones/'+vm.awsRegion+'/ec2'; 
                     //If this method is called from modify modal, we will have the region , at that
                     //time we have to get pricing details.
                     if(region) vm.getPricingDetails(region);
@@ -265,6 +265,23 @@
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
                         vm.loadingPrice = false;
                         item.pricingOptions = pricingOptions;
+                        var pricingContainsItem = false;
+                        //If the array contains instances, check whether the selected config type is alreday a part of the array
+                        if(pricingOptions.length > 0){
+                            angular.forEach(pricingOptions,function(pricingItem){
+                                if(pricingItem.instance_type === vm.selectedConfigurationType){
+                                    //If it is, set the selected config type
+                                    vm.selectedConfigurationType = pricingItem.instance_type;
+                                    //Mark it as checked
+                                    pricingContainsItem = true;
+                                    //set the config item value to its index in the array
+                                    vm.disableConfirm(pricingOptions.indexOf(pricingItem));
+                                }
+                            });
+                        }
+                        //If no, clear the selected config type
+                        if(!pricingContainsItem)
+                            vm.selectedConfigurationType = "";
                         if(item.pricingOptions.length == 0){
                             vm.selectedConfigurationType = "";
                         }
@@ -273,7 +290,7 @@
                         vm.loadingPrice = false;
                         vm.errorInApi = true;
                     });
-                }
+                };
  
                 /**
                  * @ngdoc method
@@ -287,7 +304,7 @@
                         vm.disable = true;
                         vm.awsRegion = item.selectedMapping.region;
                         vm.awsZone = item.selectedMapping.zone || 'us-east-1a';
-                        vm.selectedConfigurationType = item.selectedMapping.instance_type
+                        vm.selectedConfigurationType = item.selectedMapping.instance_type;
                         vm.getZones();
                         $(id).modal('show');
                         vm.getPricingDetails(item);
