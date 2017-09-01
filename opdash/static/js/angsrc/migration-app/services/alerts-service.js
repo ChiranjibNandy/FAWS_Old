@@ -32,33 +32,28 @@
              */
             self.getAllAlerts = function(refresh,job_id) {
                 var tenant_id = authservice.getAuth().tenant_id;
-                var alertsApiUrl = "";
-                if(job_id === undefined)
-                    alertsApiUrl = "/api/alerts/all";
-                else
-                    alertsApiUrl = "/api/alerts/job/"+job_id;
-                //var alertsApiUrl = "/static/angassets/alerts.json";
-                    return HttpWrapper.send(alertsApiUrl, { "operation": 'GET' })
-                                      .then(function(result) {
-                                            loaded = true;
-                                            currentTenant = tenant_id;
-                                            var tempAlerts = [];
-                                            for(var j=0; j<result.length; j++){
-                                                var msgs = angular.copy(result[j].messages);
-                                                for(var k=0; k<msgs.length; k++){
-                                                    msgs[k].job_id = result[j]["job-id"];
-                                                    msgs[k].resource_id = result[j]["resource-id"];
-                                                    msgs[k].resource_name = result[j]["resource-name"];
-                                                    msgs[k].resource_type = result[j]["resource-type"];
-                                                    msgs[k].batch_name = result[j]["batch-name"];
-                                                }
-                                                tempAlerts = tempAlerts.concat(msgs);
+                var alertsApiUrl = "/api/alerts/job/"+job_id;
+                return HttpWrapper.send(alertsApiUrl, { "operation": 'GET' })
+                                    .then(function(result) {
+                                        loaded = true;
+                                        currentTenant = tenant_id;
+                                        var tempAlerts = [];
+                                        for(var j=0; j<result.length; j++){
+                                            var msgs = angular.copy(result[j].messages);
+                                            for(var k=0; k<msgs.length; k++){
+                                                msgs[k].job_id = result[j]["job-id"];
+                                                msgs[k].resource_id = result[j]["resource-id"];
+                                                msgs[k].resource_name = result[j]["resource-name"];
+                                                msgs[k].resource_type = result[j]["resource-type"];
+                                                msgs[k].batch_name = result[j]["batch-name"];
                                             }
-                                            alerts = tempAlerts;
-                                             return alerts;
-                                        }, function(errorResponse) {
-                                            return [];
-                                        });
+                                            tempAlerts = tempAlerts.concat(msgs);
+                                        }
+                                        alerts = tempAlerts;
+                                            return alerts;
+                                    }, function(errorResponse) {
+                                        return [];
+                                    });
                
             };
 

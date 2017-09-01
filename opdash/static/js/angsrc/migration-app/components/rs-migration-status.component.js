@@ -152,7 +152,6 @@
                     }
                     vm.getBatches(!(dataStoreService.getFirstLoginFlag()));
                     vm.onTimeout();
-                    vm.getAllAlerts();
                 };
 
                 /**
@@ -258,6 +257,7 @@
                 vm.getBatches = function (refresh) {
                     var self = this;
                     vm.manualRefresh = true;
+                    vm.loadingAlerts = true;
                     dashboardService.getBatches(refresh)
                         .then(function (response) {
                             if (response && response.error == undefined){
@@ -265,6 +265,7 @@
                                 var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled", "paused"];
                                 var validCompletedBatchStatus = ["done","canceled"];
                                 jobList = response.jobs.job_status_list;
+                                vm.getAllAlerts(response.alerts);
                                 var tempcurrentBatches = [];
                                 vm.nonSavedMigrations = [];
                                 var completedBatches = [];
@@ -359,6 +360,8 @@
                         vm.manualRefresh = false;
                         vm.currentBatches.loadError = true;
                         vm.completedBatches.loadError = true;
+                        vm.errors.items.length=0;
+                        vm.loadingAlerts = false;
                     });
                     if(!vm.autoRefreshEveryMinute){
                         vm.autoRefreshEveryMinute = true;
@@ -478,21 +481,11 @@
                  * @description 
                  * Gets the list of all alerts for all the migrations, if any
                  */
-                vm.getAllAlerts = function(refresh) {
-                    vm.loadingAlerts = true;
-
-                    alertsService.getAllAlerts(refresh)
-                                    .then(function(result) {
-                                        if(result.error !==500){
-                                            vm.errors.items = result || [];
-                                            vm.errors.noOfPages = Math.ceil(vm.errors.items.length / vm.errors.pageSize);
-                                            vm.errors.pages = new Array(vm.errors.noOfPages);
-                                            vm.loadingAlerts = false;
-                                        }else{
-                                            vm.errors.items.length=0;
-                                            vm.loadingAlerts = false;
-                                        }
-                                    });
+                vm.getAllAlerts = function(result) {
+                    vm.errors.items = result || [];
+                    vm.errors.noOfPages = Math.ceil(vm.errors.items.length / vm.errors.pageSize);
+                    vm.errors.pages = new Array(vm.errors.noOfPages);
+                    vm.loadingAlerts = false;
                 };
 
                 /**
