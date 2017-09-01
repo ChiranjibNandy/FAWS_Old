@@ -195,8 +195,11 @@
              * Stores datetime and timezone data needed for scheduling migration
              */
             this.storeDate = function (type, item) {
+                if($window.localStorage.selectedDate !== undefined){
+                   self.selectedDate = JSON.parse($window.localStorage.getItem("selectedDate"));
+                }
                 self.selectedDate[type] = item;
-                $window.localStorage.setItem("selectedDate", JSON.stringify(self.selectedDate));
+                $window.localStorage.selectedDate = JSON.stringify(self.selectedDate)
             }
 
             /**

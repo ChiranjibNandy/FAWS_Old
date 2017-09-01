@@ -217,9 +217,6 @@
                                 }
                             });
 
-                            //On page load, make eligibility call for first few available servers that are in first page of select resources page.
-                            vm.pageChangeEvent();
-
                             $window.localStorage.allServers = JSON.stringify(vm.items);
 
                             var savedItems = [],
@@ -248,6 +245,8 @@
                                         item.selected = false;
                                         if (savedServers[i].rrn == item.rrn) {
                                             item.selected = true;
+                                            item.canMigrate = true;
+                                            item.migStatus = "Available to Migrate";
                                             item.selectedMapping = savedServers[i].selectedMapping;
                                             vm.parent.addItem(item, vm.type);
                                             break
@@ -255,6 +254,10 @@
                                     };
                                 });
                             };
+
+                            //On page load, make eligibility call for first few available servers that are in first page of select resources page.
+                            vm.pageChangeEvent();
+                            
                             datastoreservice.storeallItems(vm.items, vm.type);
                             // pagination controls
                             vm.currentPage = 1;
@@ -332,9 +335,10 @@
                             angular.forEach(vm.items, function (item) {
                                 for (var i = 0; i < savedServers.length; i++) {
                                     if (savedServers[i].rrn == item.rrn) {
-                                        item.selected = true;
-                                        item.selectedMapping = savedServers[i].selectedMapping;
-                                        vm.parent.addItem(item, vm.type);
+                                        if(item.selected){
+                                            item.selectedMapping = savedServers[i].selectedMapping;
+                                            vm.parent.addItem(item, vm.type);
+                                        }
                                         break
                                     };
                                 };
@@ -522,6 +526,10 @@
                                                     item.eligibiltyTests = descriptions;
                                                 } else if (ID == item.id && testCase.type != "success") {
                                                     item.eligible = 'Failed';
+                                                    if(item.selected == true){
+                                                        item.selected = false;
+                                                        vm.changeSelectAll(item,false)
+                                                    }
                                                     keepGoing = false;
                                                     item.canMigrate = false;
                                                     item.migStatus = "Not Available to Migrate";
@@ -544,6 +552,10 @@
                                             if (server.id == data.id) {
                                                 data.canMigrate = false;
                                                 data.migStatus = "Not Available to Migrate";
+                                                if(data.selected == true){
+                                                    data.selected = false;
+                                                    vm.changeSelectAll(data,false)
+                                                }
                                             }
                                         });
                                     });
@@ -552,6 +564,10 @@
                                         if (item.id == data.id) {
                                             data.canMigrate = false;
                                             data.migStatus = "Not Available to Migrate";
+                                            if(data.selected == true){
+                                                data.selected = false;
+                                                vm.changeSelectAll(data,false)
+                                            }
                                         }
                                     });
                                 }
