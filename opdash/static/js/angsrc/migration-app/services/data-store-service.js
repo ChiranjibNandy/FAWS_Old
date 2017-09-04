@@ -69,9 +69,22 @@
             };
 
             self.saveItems = {
-                server: [],
-                network: [],
-                LoadBalancers: []
+                server:[],
+                network:[],
+                LoadBalancers:[],
+                volume:[],
+                service:[],
+                file:[]
+            };
+
+            self.itemLoaded = {
+                server:false,
+                network:false,
+                LoadBalancers:false,
+                volume:false,
+                service:false,
+                file:false,
+                jobStatus: false
             };
 
             self.selectedRecommendedItems = [];
@@ -148,6 +161,7 @@
              */
             this.setSaveItems = function (items) {
                 this.saveItems = items;
+                $window.localStorage.savedResources = JSON.stringify(this.saveItems);
             }
 
             /**
@@ -158,12 +172,8 @@
              * @description 
              * Returns list of resources the user wants to continue with the migration.
              */
-            this.getSaveItems = function () {
-                if (this.saveItems.server.length === 0 && this.saveItems.network.length === 0 && this.saveItems.LoadBalancers.length === 0) {
-                    return $window.localStorage.getItem('savedServers');
-                } else {
-                    return this.saveItems;
-                }
+            this.getSaveItems = function (type) {
+                return ($window.localStorage.savedResources !== undefined && JSON.parse($window.localStorage.savedResources)[type]) || this.saveItems[type];
             }
 
             /**
@@ -232,29 +242,11 @@
              * Retrieves the saved list of resources of the specified _type_.
              */
             this.getItems = function (type) {
-                //return self.selectedItems.filter(function(item){return item.type === type;});
-                var name = 'selectedServers';
-                if (type) {
-                    if (self.selectedItems[type].length > 0) {
-                        return self.selectedItems[type];
-                    } else {
-                        if (type === 'network') {
-                            name = 'selectedNetworks';
-                        } else if (type === 'LoadBalancers') {
-                            name = 'selectedLoadBalancers';
-                        }
-                        return JSON.parse(localStorage.getItem(name));
-                    }
-                } else {
-                    if (self.selectedItems.server.length === 0 && self.selectedItems.network.length === 0 && self.selectedItems.LoadBalancers.length === 0) {
-                        return {
-                            server: JSON.parse(localStorage.getItem('selectedServers')) || [],
-                            network: JSON.parse(localStorage.getItem('selectedNetworks')) || [],
-                            LoadBalancers: JSON.parse(localStorage.getItem('selectedLoadBalancers')) || []
-                        }
-                    } else {
-                        return self.selectedItems;
-                    }
+                if(type){
+                    return ($window.localStorage.selectedResources !== undefined && JSON.parse($window.localStorage.selectedResources)[type]) || self.selectedItems[type];
+                }
+                else{
+                    return ($window.localStorage.selectedResources !== undefined && JSON.parse($window.localStorage.selectedResources)) || self.selectedItems;
                 }
             }
 
@@ -383,7 +375,24 @@
                     LoadBalancers:[],
                     service:[],
                     file:[]
-                }
+                };
+                self.saveItems = {
+                    server:[],
+                    network:[],
+                    LoadBalancers:[],
+                    volume:[],
+                    service:[],
+                    file:[]
+                };
+                self.itemLoaded = {
+                    server:false,
+                    network:false,
+                    LoadBalancers:false,
+                    volume:false,
+                    service:false,
+                    file:false,
+                    jobStatus: false
+                };
                 self.labelsServer = [];
                 self.labelsNetwork = [];
                 self.selectedDate = {};
@@ -857,6 +866,29 @@
              */
             this.getFirstLoginFlag = function() {
                 return ($window.localStorage.firstLogin || false);
+            }
+
+            /**
+             * @ngdoc method
+             * @name setResourceLoadingStatus
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Set status of a flag that keeps track of completion of API calls(API calls for fetching servers, CDN's, CBS, files.
+             */
+            this.setResourceLoadingStatus = function(type, val){
+                self.itemLoaded[type] = val;
+                $window.localStorage.itemLoaded = JSON.stringify(self.itemLoaded);
+            }
+
+            /**
+             * @ngdoc method
+             * @name getResourceLoadingStatus
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Get status of a flag that keeps track of completion of API calls(API calls for fetching servers, CDN's, CBS, files.
+             */
+            this.getResourceLoadingStatus = function(type){
+                return (($window.localStorage.itemLoaded !== undefined && JSON.parse($window.localStorage.itemLoaded)[type]) || self.itemLoaded[type]);
             }
 
             return self;

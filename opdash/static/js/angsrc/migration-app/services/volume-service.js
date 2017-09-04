@@ -7,9 +7,11 @@
      * @description
      * Service to retrieve all data for volume resources
      */
-    angular.module("migrationApp").factory("volumeservice", ["httpwrapper", "$q", "authservice","$window","DEFAULT_VALUES", function (HttpWrapper, $q, authservice,$window,DEFAULT_VALUES) {
+    angular.module("migrationApp").factory("volumeservice", ["httpwrapper", "$q", "authservice","$window","datastoreservice","DEFAULT_VALUES", function (HttpWrapper, $q, authservice,$window,datastoreservice,DEFAULT_VALUES) {
         // local variables to help cache data
-        var loaded, volumes, self = this, currentTenant = null;
+        var loaded, volumes, self = this, currentTenant = null, 
+            callInProgress = false,
+            volumePromise;
 
         // function to transform the data from api call for overview display
         function trimTransform (data) {
@@ -70,31 +72,35 @@
             //var url = "/static/angassets/volumes-list.json";
             var url = "/api/cbs/volumes";
             var tenant_id = authservice.getAuth().tenant_id;
-
-            if (!loaded || (currentTenant !== tenant_id)) {
-
-                return HttpWrapper.send(url,{"operation":'GET'})
-                                .then(function(response){
-                                    loaded = true;
-                                    currentTenant = tenant_id;
-                                    volumes = {
-                                        labels: [
-                                                    {field: "name", text: "Volume Name"},
-                                                    {field: "size", text: "Size"},
-                                                    {field: "status", text: "Volume Status"},
-                                                    {field:"migStatus", text:"Migration Status"},
-                                                    {field:"eligible", text:"Eligibility test result"}
-                                                ],
-                                        data: response
-                                    };
-                                    return volumes;
-                                }, function(errorResponse) {
-                                    return errorResponse;
-                                });
-
-            } else {
+            if (callInProgress == false && datastoreservice.getResourceLoadingStatus("volume") == false) {
+                callInProgress = true;
+                volumePromise = HttpWrapper.send(url,{"operation":'GET'})
+                    .then(function(response){
+                        datastoreservice.setResourceLoadingStatus("volume", true);
+                        currentTenant = tenant_id;
+                        volumes = {
+                            labels: [
+                                        {field: "name", text: "Volume Name"},
+                                        {field: "size", text: "Size"},
+                                        {field: "status", text: "Volume Status"},
+                                        {field:"migStatus", text:"Migration Status"},
+                                        {field:"eligible", text:"Eligibility test result"}
+                                    ],
+                            data: response
+                        };
+                        callInProgress = false;
+                        return volumes;
+                    }, function(errorResponse) {
+                        callInProgress = false;
+                        datastoreservice.setResourceLoadingStatus("volume", false);
+                        return errorResponse;
+                    });
+                return volumePromise;
+            } else if (callInProgress) {
+                return volumePromise;
+            } else if (callInProgress == false && datastoreservice.getResourceLoadingStatus("volume") == true) {
                 return $q.when(volumes);
-            }
+            };
         };
 
         function transformVolume(volume){

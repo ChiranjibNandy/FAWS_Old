@@ -7,9 +7,11 @@
      * @description
      * Service to retrieve all data for volume resources
      */
-    angular.module("migrationApp").factory("cdnservice", ["httpwrapper", "$q", "authservice","$window", function (HttpWrapper, $q, authservice,$window) {
+    angular.module("migrationApp").factory("cdnservice", ["httpwrapper", "$q", "authservice","datastoreservice","$window", function (HttpWrapper, $q, authservice,datastoreservice,$window) {
         // local variables to help cache data
-        var self = this, services,currentTenant = null;
+        var self = this, services,currentTenant = null, 
+            callInProgress = false,
+            cdnPromise;
 
         /**
         * @ngdoc method
@@ -44,23 +46,35 @@
         */
         this.getServices = function () {
             var url = "/api/cdn/services";
-            return HttpWrapper.send(url, {
-                    "operation": 'GET'
-                })
-                .then(function (response) {
-                    services = {
-                        labels: [
-                                    {field: "name", text: "name"},
-                                    {field: "status",text: "status"},
-                                    {field: "migStatus",text: "Migration Status"},
-                                    {field:"eligible", text:"Eligibility test result"}
-                                ],
-                        data: response
-                    };
-                    return services;
-                }, function (errorResponse) {
-                    return errorResponse;
-                });
+            if (callInProgress == false && datastoreservice.getResourceLoadingStatus("service") == false) {
+                callInProgress = true;
+                cdnPromise = HttpWrapper.send(url, {
+                        "operation": 'GET'
+                    })
+                    .then(function (response) {
+                        services = {
+                            labels: [
+                                        {field: "name", text: "name"},
+                                        {field: "status",text: "status"},
+                                        {field: "migStatus",text: "Migration Status"},
+                                        {field:"eligible", text:"Eligibility test result"}
+                                    ],
+                            data: response
+                        };
+                        callInProgress = false;
+                        datastoreservice.setResourceLoadingStatus("service", true);
+                        return services;
+                    }, function (errorResponse) {
+                        callInProgress = false;
+                        datastoreservice.setResourceLoadingStatus("service", false);
+                        return errorResponse;
+                    });
+                return cdnPromise;
+            } else if(callInProgress) {
+                return cdnPromise;
+            } else if (callInProgress == false && datastoreservice.getResourceLoadingStatus("service") == true) {
+                return $q.when(services);
+            };
         };//end of getServices method
 
         function transformService(service){
