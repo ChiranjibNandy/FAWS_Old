@@ -371,7 +371,7 @@
                                 vm.getBatches(true);
                                 vm.onTimeout();
                             }                 
-                        }, 60000);
+                        }, 60001);
                     }        
                 };
 
@@ -427,7 +427,7 @@
                     if(vm.autoRefreshText === "ON") {
                         vm.mytimeout = $interval(function() {
                             if(vm.counter===0)
-                                vm.counter = 59;
+                                vm.counter = 60;
                             vm.counter--;
                         },1000);
                     } 

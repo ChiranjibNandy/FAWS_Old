@@ -98,8 +98,12 @@
     migrationApp.filter('convertCase',function(){
             return function(input){
                 var arrInput =[];
-                arrInput = input.split('-');
-                return arrInput[0].toUpperCase()+'-'+arrInput[1][0].toUpperCase()+arrInput[1].substr(1).toLowerCase()+'-'+arrInput[2].toLowerCase();
+                if(input){
+                    arrInput = input.split('-');
+                    return arrInput[0].toUpperCase()+'-'+arrInput[1][0].toUpperCase()+arrInput[1].substr(1).toLowerCase()+'-'+arrInput[2].toLowerCase();
+                }else{
+                    return '';
+                }
             }
     });
     migrationApp.constant('DEFAULT_VALUES', {

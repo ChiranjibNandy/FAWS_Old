@@ -664,3 +664,15 @@ span.fa-angle-left, span.fa-angle-right{
 .currentBatchNotServerGridName{
     width: 22%;
 }
+
+.currentBatchInstanceWidth{
+    width:16%;
+}
+
+.refreshMarginRight{
+    margin-right: 6px;
+}
+
+.refreshInMarginRight{
+    margin-left: 25px;
+}

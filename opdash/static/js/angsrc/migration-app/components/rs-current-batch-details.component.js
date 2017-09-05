@@ -57,6 +57,9 @@
                             vm.job = job;
                             vm.equipmentContent.tableBody.server = vm.job.instances;
                             vm.equipmentContent.tableBody.network = vm.job.networks;
+                            vm.equipmentContent.tableBody.cdn = vm.job.cdn;
+                            vm.equipmentContent.tableBody.file = vm.job.file;
+                            vm.equipmentContent.tableBody.cbs = vm.job.volumes;
                             if (job.batch_status === 'in progress' || job.batch_status === 'done')
                                 //Makes a promise to fetch the progress API details for in progress and completed batches
                                 var promise = HttpWrapper.send('/api/jobs/' + job.job_id + '/progress', { "operation": 'GET' });
@@ -148,15 +151,21 @@
                     vm.loading = true;
                     vm.manualRefresh = false;
                     vm.job_id = '';
-                    vm.equipments = ['server','network'];
+                    vm.equipments = ['server','network','cdn','cbs','file'];
                     vm.equipmentContent = {
                         tableHeaders:{
                             server:['Server','Status','Progress','Destination Region','Instance Type','Actions'],
-                            network:['Network','Status','Progress','Destination Region','Actions']
+                            network:['Network','Status','Progress','Destination Region','','Actions'],
+                            cdn:['CDN','Status','Progress','Destination Region','','Actions'],
+                            cbs:['CBS','Status','Progress','Destination Region','','Actions'],
+                            file:['FILE','Status','Progress','Destination Region','','Actions']
                         },
                         tableBody:{
                             server:[],
-                            network:[]
+                            network:[],
+                            cdn:[],
+                            cbs:[],
+                            file:[]
                         }
                     }
                 };
