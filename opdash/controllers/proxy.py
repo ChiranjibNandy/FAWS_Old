@@ -8,7 +8,8 @@ mod = ProxyBlueprint('proxy', __name__)
 HANDLED_REDIRECTS = [301]
 
 
-@mod.route('/api/<path:path>', methods=['GET', 'PUT', 'POST', 'DELETE'])
+@mod.route('/api/<path:path>',
+           methods=['DELETE', 'GET', 'PATCH', 'POST', 'PUT'])
 def api_proxy(path):
     """
         Proxy http request from control panel to api
