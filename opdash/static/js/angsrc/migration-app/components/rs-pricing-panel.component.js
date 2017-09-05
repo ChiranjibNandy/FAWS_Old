@@ -103,17 +103,17 @@
                                             if(subObj.type=="error"){
                                                 vm.errors.push({
                                                     name:server.name,
-                                                    description:server.description
+                                                    description:subObj.description
                                                 })
                                             }else if(subObj.type=="warning"){
                                                 vm.warnings.push({
                                                     name:server.name,
-                                                    description:server.description
+                                                    description:subObj.description
                                                 })
                                             }else if(subObj.type=="failure"){
                                                 vm.failures.push({
                                                     name:server.name,
-                                                    description:server.description
+                                                    description:subObj.description
                                                 })
                                             }
                                         });
