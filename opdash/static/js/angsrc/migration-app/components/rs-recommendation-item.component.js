@@ -452,7 +452,9 @@
                         if(item.pricingOptions.length == 0){
                             vm.selectedConfigurationType = "";
                         }
-                        //item.pricingOptions.concat(item.details);
+                        //If no, clear the selected config type
+                        if(!pricingContainsItem)
+                            vm.selectedConfigurationType = "";
                     },function(error){
                         vm.loadingPrice = false;
                         vm.errorInApi = true;

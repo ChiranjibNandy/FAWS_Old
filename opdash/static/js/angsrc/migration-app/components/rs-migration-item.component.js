@@ -274,9 +274,7 @@
                                     });
                                 };
 
-                                //On page load, make eligibility call for first few available servers that are in first page of select resources page.
                                 vm.pageChangeEvent();
-
                                 datastoreservice.storeallItems(vm.items, vm.type);
                                 // pagination controls
                                 vm.currentPage = 1;
