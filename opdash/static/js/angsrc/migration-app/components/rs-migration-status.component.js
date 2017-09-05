@@ -103,7 +103,8 @@
                     dataStoreService.setPageName("MigrationStatus");
                     $window.localStorage.setItem('pageName',"MigrationStatus");
                     if(dashboardService.getAutoRefreshStatus() === null){
-                        vm.autoRefreshText = "ON" ;
+                        vm.autoRefreshText = "OFF" ;
+                        vm.autoRefreshButton = vm.autoRefreshText === 'ON'?false:true;
                         dashboardService.storeAutoRefreshStatus(vm.autoRefreshText);
                     }else{
                         vm.autoRefreshText = dashboardService.getAutoRefreshStatus() ;
@@ -157,6 +158,7 @@
                     }
                     vm.getBatches(!(dataStoreService.getFirstLoginFlag()));
                     vm.onTimeout();
+                    vm.killTimeOut();
                     vm.getAllAlerts();
                 };
 
@@ -401,15 +403,13 @@
                  */
                 vm.manageAutoRefresh = function(){
                     if(vm.autoRefreshText === "ON"){
-                       vm.autoRefreshText = "OFF"; 
-                       vm.autoRefreshEveryMinute = true;
-                       vm.autoRefreshButton = true;
-                       $interval.cancel(vm.intervalPromise);
+                       vm.killAllTimers();
                     }else{
                        vm.autoRefreshText = "ON"; 
                        vm.autoRefreshEveryMinute = false;
                        vm.autoRefreshButton = false;
                        vm.onTimeout();
+                       vm.killTimeOut();
                        vm.counter = 60;
                        vm.manuallyLoadingAllBatches(true);
                        vm.getBatches(true);
@@ -436,6 +436,32 @@
                     } 
                 }
 
+                /**
+                 * @ngdoc property
+                 * @name killTimeOut
+                 * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                 * @description This function has a timeout which kills the main timeout after an hour
+                 */
+                vm.killTimeOut = function(){
+                    vm.maintimeout = $interval(function() {
+                        vm.killAllTimers();
+                    },1000*60*60);
+                }
+
+                /**
+                 * @ngdoc property
+                 * @name killTimeOut
+                 * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                 * @description This function has a timeout which kills the main timeout after an hour
+                 */
+                vm.killAllTimers = function(){
+                    vm.autoRefreshText = "OFF"; 
+                    vm.autoRefreshEveryMinute = true;
+                    vm.autoRefreshButton = true;
+                    $interval.cancel(vm.mytimeout);
+                    $interval.cancel(vm.maintimeout);
+                    $interval.cancel(vm.intervalPromise);
+                }
                 /**
                  * @ngdoc method
                  * @name convertUTCDateToLocalDate
