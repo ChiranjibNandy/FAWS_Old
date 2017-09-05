@@ -107,6 +107,7 @@
                         vm.autoRefreshButton = vm.autoRefreshText === 'ON'?false:true;
                         dashboardService.storeAutoRefreshStatus(vm.autoRefreshText);
                     }else{
+                        vm.autoRefreshEveryMinute = false;
                         vm.autoRefreshText = dashboardService.getAutoRefreshStatus() ;
                         vm.autoRefreshButton = vm.autoRefreshText === 'ON'?false:true;
                     }
