@@ -545,6 +545,7 @@
                 vm.continueScheduling = function (batch,modifyFlag) {
                     var autoRefreshButtonStatus = dashboardService.getAutoRefreshStatus();
                     $window.localStorage.clear();
+                    dataStoreService.resetAll();
                     dashboardService.storeAutoRefreshStatus(autoRefreshButtonStatus);
                     if(modifyFlag){
                         for(var i = 0; i<vm.nonSavedMigrations.length;i++){
@@ -578,7 +579,6 @@
                     dataStoreService.selectedTime.migrationName = batch.batch_name || batch.instance_name;
                     //$window.localStorage.migrationName = batch.batch_name || batch.instance_name;
                     dataStoreService.setSaveItems(batch.selected_resources);
-                    $window.localStorage.setItem('savedServers',JSON.stringify(batch.selected_resources.server));
                     $rootRouter.navigate([batch.step_name]);
                 };
 

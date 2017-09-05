@@ -7,9 +7,11 @@
      * @description
      * Service to retrieve all data for file resources
      */
-    angular.module("migrationApp").factory("fileservice", ["httpwrapper", "$q", "authservice", "$window","DEFAULT_VALUES", function (HttpWrapper, $q, authservice, $window,DEFAULT_VALUES) {
+    angular.module("migrationApp").factory("fileservice", ["httpwrapper", "$q", "authservice", "$window","datastoreservice","DEFAULT_VALUES", function (HttpWrapper, $q, authservice, $window,datastoreservice,DEFAULT_VALUES) {
         // local variables to help cache data
-        var loaded, files, self = this, currentTenant = null;
+        var loaded, files, self = this, currentTenant = null, 
+            callInProgress = false,
+            filePromise;
 
         // function to transform the data from api call for overview display
         function trimTransform (data) {
@@ -20,6 +22,7 @@
                 // iterate over files by region
                 if (apiResponse[key] === null || apiResponse[key] === 'null') {
                     filesList.push({
+                        rrn:'',
                         id: '',
                         name: key,
                         size: 0,
@@ -30,6 +33,7 @@
                     });
                 } else {          
                     filesList.push({
+                        rrn: apiResponse[key]["rrn"],
                         id: apiResponse[key]["trans-id"],
                         name: key,
                         size: formatBytes(apiResponse[key]["bytes-used"]),
@@ -121,13 +125,10 @@
             //var url = "/static/angassets/files-list.json";
             var url = "/api/cloud_files";
             var tenant_id = authservice.getAuth().tenant_id;
-
-            // if (!loaded || (currentTenant !== tenant_id)) {
-
-            return HttpWrapper.send(url,{"operation":'GET'})
+            if (callInProgress == false && datastoreservice.getResourceLoadingStatus("file") == false) {
+                callInProgress = true;
+                filePromise =  HttpWrapper.send(url,{"operation":'GET'})
                     .then(function(response){
-                        // loaded = true;
-                        // currentTenant = tenant_id;
                         files = {
                             labels: [
                                         {field: "name", text: "Region"},
@@ -138,14 +139,20 @@
                                     ],
                             data: response
                         };
+                        callInProgress = false;
+                        datastoreservice.setResourceLoadingStatus("file", true);
                         return files;
                     }, function(errorResponse) {
                         return errorResponse;
+                        callInProgress = false;
+                        datastoreservice.setResourceLoadingStatus("file", false);
                     });
-
-            // } else {
-            //     return $q.when(files);
-            // }
+                return filePromise;
+            } else if(callInProgress) {
+                return filePromise;
+            } else if (callInProgress == false && datastoreservice.getResourceLoadingStatus("file") == true) {
+                return $q.when(files);
+            };
         };
 
         //function to convert to GB
