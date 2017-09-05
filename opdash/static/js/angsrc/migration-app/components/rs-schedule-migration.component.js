@@ -129,7 +129,7 @@
                                             
                     };                    
                 }
-                var iSOTime = moment.unix(vm.migrationScheduleDetails.time).toISOString();
+                var iSOTime = vm.migrationScheduleDetails.time;
                 vm.migrationScheduleDetail = {                        
                     migrationName: dataStoreService.getScheduleMigration().migrationName,
                     time: iSOTime,

@@ -261,7 +261,7 @@
             } //end of getServerMigrationStatus method
 
             this.getResourceMigrationStatus = function (tenant_id) {
-                var url = "/api/jobs/all";
+                var url = "/api/combined/dashboard";
                 if (callInProgress == false && dataStoreService.getResourceLoadingStatus("jobStatus") == false) {
                     callInProgress = true;
                     statusPromise = HttpWrapper.send(url, {
