@@ -24,7 +24,8 @@
                 volume:[],
                 LoadBalancers:[],
                 service:[],
-                file:[]
+                file:[],
+                dns:[]
             };
 
             /**
@@ -65,7 +66,8 @@
                 LoadBalancers:[],
                 volume:[],
                 service:[],
-                file:[]
+                file:[],
+                dns:[]
             };
 
             self.saveItems = {
@@ -74,7 +76,8 @@
                 LoadBalancers:[],
                 volume:[],
                 service:[],
-                file:[]
+                file:[],
+                dns:[]
             };
 
             self.itemLoaded = {
@@ -84,6 +87,7 @@
                 volume:false,
                 service:false,
                 file:false,
+                dns:false,
                 jobStatus: false
             };
 
@@ -94,6 +98,7 @@
                 timezone: ''
             };
             self.fileItems = [];
+            self.dnsItems = [];
             /**
              * @ngdoc property
              * @name selectedTime
@@ -363,7 +368,8 @@
                     volume:[],
                     LoadBalancers:[],
                     service:[],
-                    file:[]
+                    file:[],
+                    dns:[]
                 };
                 self.dontShowNameModal = false;
                 self.labelsServer = [];
@@ -374,7 +380,8 @@
                     volume:[],
                     LoadBalancers:[],
                     service:[],
-                    file:[]
+                    file:[],
+                    dns:[]
                 };
                 self.saveItems = {
                     server:[],
@@ -382,7 +389,8 @@
                     LoadBalancers:[],
                     volume:[],
                     service:[],
-                    file:[]
+                    file:[],
+                    dns:[]
                 };
                 self.itemLoaded = {
                     server:false,
@@ -391,6 +399,7 @@
                     volume:false,
                     service:false,
                     file:false,
+                    dns:false,
                     jobStatus: false
                 };
                 self.labelsServer = [];
@@ -463,6 +472,8 @@
                         migrationResourceCount += JSON.parse($window.localStorage.selectedResources)['service'].length;
                     if(JSON.parse($window.localStorage.selectedResources)['file'].length > 0)
                         migrationResourceCount += JSON.parse($window.localStorage.selectedResources)['file'].length;
+                    if(JSON.parse($window.localStorage.selectedResources)['dns'].length > 0)
+                        migrationResourceCount += JSON.parse($window.localStorage.selectedResources)['dns'].length;
                     
                     var resourcesCountArray = [];
                     
@@ -562,7 +573,8 @@
                     file: [],
                     volume: [],
                     service: [],
-                    LoadBalancers: []
+                    LoadBalancers: [],
+                    dns:[]
                 };
                 for (var equ in resources) {
                     angular.forEach(resources[equ], function (item) {

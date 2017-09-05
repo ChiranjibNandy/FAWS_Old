@@ -70,6 +70,9 @@
                         if (resource.rrn == undefined) {
                             resource.rrn = resource.id;
                         }
+                        if(vm.type == 'dns'){
+                            resource.status = 'active';
+                        }
                         if (resource.status == "available" || resource.status == "deployed") {
                             resource.status = "active"
                         }

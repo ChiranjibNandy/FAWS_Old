@@ -40,6 +40,7 @@
                         vm.dataVolume = JSON.parse($window.localStorage.selectedResources)['volume'].length;
                         vm.dataService = JSON.parse($window.localStorage.selectedResources)['service'].length;
                         vm.dataFile = JSON.parse($window.localStorage.selectedResources)['file'].length;
+                        vm.dataDNS = JSON.parse($window.localStorage.selectedResources)['dns'].length;
                     }
                     //datastoreservice.getItems('server');
                     vm.dataServer = servers.length;
