@@ -107,9 +107,9 @@
                         vm.autoRefreshButton = vm.autoRefreshText === 'ON'?false:true;
                         dashboardService.storeAutoRefreshStatus(vm.autoRefreshText);
                     }else{
-                        vm.autoRefreshEveryMinute = false;
                         vm.autoRefreshText = dashboardService.getAutoRefreshStatus() ;
                         vm.autoRefreshButton = vm.autoRefreshText === 'ON'?false:true;
+                        vm.autoRefreshEveryMinute = vm.autoRefreshText === 'ON'?false:true;
                     }
                     if(authservice.getAuth().is_racker == false){   //get Account Name
                         var actname = dataStoreService.getAccountName(vm.tenant_id); //this service method is setting the accountname through api
