@@ -21,7 +21,7 @@
                         <button class="rs-btn" ng-click="vm.getBatchDetails(true)">
                             <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i> Refresh
                         </button>
-                        <a ng-link="['MigrationStatus']" href="" class="rs-btn">Back</a>
+                        <a class="rs-btn" ng-link="['MigrationStatus']" style="width: 60px">Back</a>
                         <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1
                             ? " mins ": " min ") + "ago"}}</div>
                     </div>
@@ -39,10 +39,10 @@
                         </thead>
                         <tbody ng-show="!vm.loading && !vm.loadError">
                             <tr ng-repeat="tableContent in vm.equipmentContent.tableBody[equipment]">
-                                <td class="rs-table-link" ng-class="{'currentBatchServerGridName':(equipment === 'server'),'currentBatchNotServerGrid':(equipment !== 'server') }">
+                                <td class="rs-table-link currentBatchServerGridName">
                                     <a href="" ng-click="vm.equipmentDetails(equipment, tableContent)" role="button" data-toggle="modal">{{tableContent.name}}</a>
                                 </td>
-                                <td class="rs-table-text" ng-class="{'currentBatchServerGrid':(equipment === 'server'),'currentBatchNotServerGrid':(equipment !== 'server') }">
+                                <td class="rs-table-text currentBatchServerGrid">
                                     <span class="rs-status-error" ng-show="tableContent.status==='error' || tableContent.status.state ==='error'">Error</span>
                                     <span class="rs-status-ok" ng-show="tableContent.status ==='Existing' || tableContent.status.state ==='Existing'">Existing</span>
                                     <span class="rs-status-ok" ng-show="tableContent.status ==='done' || tableContent.status.state ==='done'">Completed</span>
@@ -53,8 +53,8 @@
                                     <span class="rs-status-warning" ng-show="tableContent.status ==='paused' || tableContent.status.state ==='paused'">Paused</span>
                                     <span class="rs-status-warning" ng-show="tableContent.status.toLowerCase() ==='created' || tableContent.status.state.toLowerCase() ==='created'">Created</span>
                                 </td>
-                                <td class="rs-table-text" 
-                                    ng-class="{'paddingLeft':tableContent.status.state !=='in progress' && tableContent.status.state !=='done' && tableContent.status.state !=='Existing' && tableContent.status !=='in progress' && tableContent.status !=='done' && tableContent.status !=='Existing','currentBatchServerGrid':(equipment === 'server'),'currentBatchNotServerGridName':(equipment !== 'server') }">
+                                <td class="rs-table-text currentBatchServerGrid" 
+                                    ng-class="{'paddingLeft':tableContent.status.state !=='in progress' && tableContent.status.state !=='done' && tableContent.status.state !=='Existing' && tableContent.status !=='in progress' && tableContent.status !=='done' && tableContent.status !=='Existing'}">
                                     <div class="rs-progress rs-progress-small" ng-if="tableContent.status.state ==='in progress' || tableContent.status ==='in progress'">
                                         <div class="rs-progress-inner">
                                             <div class="rs-segment" ng-if="equipment=== 'server' && tableContent.instance_succeeded_time_pct !== undefined" ng-style="{'width': + tableContent.instance_succeeded_time_pct +'%'}">
@@ -90,8 +90,8 @@
                                         {{tableContent.destination.region | convertCase}}
                                     </span>
                                 </td>
-                                <td ng-if="equipment==='server'">
-                                    <span>
+                                <td class="currentBatchServerGrid">
+                                    <span ng-if="equipment==='server'">
                                         {{tableContent.destination.type}}
                                     </span>
                                 </td>
@@ -102,7 +102,7 @@
                         </tbody>
                         <tbody ng-show="vm.loading">
                             <tr>
-                                <td colspan="3">
+                                <td colspan="6">
                                     <div class="rs-table-overlay rs-table-overlay-loading">
                                         <div class="rs-table-overlay-content">
                                             <div class="rs-table-overlay-message">Loading&hellip;</div>
@@ -113,7 +113,7 @@
                         </tbody>
                         <tbody ng-show="!vm.loading && vm.loadError">
                             <tr>
-                                <td colspan="3" class="collection-error-msg">Error loading data</td>
+                                <td colspan="6" class="collection-error-msg">Error loading data</td>
                             </tr>
                         </tbody>
                     </table>
