@@ -265,15 +265,26 @@
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
                         vm.loadingPrice = false;
                         item.pricingOptions = pricingOptions;
-                        if(item.pricingOptions.length == 0){
+                        var pricingContainsItem = false;
+                        //If the array contains instances, check whether the selected config type is alreday a part of the array
+                        if(pricingOptions.length > 0){
+                            angular.forEach(pricingOptions,function(pricingItem){
+                                if(pricingItem.instance_type === vm.selectedConfigurationType){
+                                    //Flag the variable
+                                    pricingContainsItem = true;
+                                }
+                            });
+                        }else{
                             vm.selectedConfigurationType = "";
                         }
-                        //item.pricingOptions.concat(item.details);
+                        //If no, clear the selected config type
+                        if(!pricingContainsItem)
+                            vm.selectedConfigurationType = "";
                     },function(error){
                         vm.loadingPrice = false;
                         vm.errorInApi = true;
                     });
-                }
+                };
  
                 /**
                  * @ngdoc method
@@ -287,7 +298,7 @@
                         vm.disable = true;
                         vm.awsRegion = item.selectedMapping.region;
                         vm.awsZone = item.selectedMapping.zone || 'us-east-1a';
-                        vm.selectedConfigurationType = item.selectedMapping.instance_type
+                        vm.selectedConfigurationType = item.selectedMapping.instance_type;
                         vm.getZones();
                         $(id).modal('show');
                         vm.getPricingDetails(item);
