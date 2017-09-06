@@ -9,13 +9,13 @@
         <ul class="rs-dropdown-menu hidden">
             <li class="rs-dropdown-item" ng-show="vm.showCreateAccount">
                 <span class="rs-dropdown-category">You may create a new Account for this migration:
-                            <a href="" role="button" ng-click="vm.displayFawsAccounModal()" data-toggle="modal" ng-show="vm.editmigration === 'false'" aria-hidden="false">{{vm.is_racker ? 'Assign new AWS account' : 'Request a new AWS account'}}</a>
-                        </span>
+                    <a href="" role="button" ng-click="vm.displayFawsAccounModal()" data-toggle="modal" ng-show="vm.editmigration === 'false'" aria-hidden="false">{{vm.is_racker ? 'Assign new AWS account' : 'Request a new AWS account'}}</a>
+                </span>
             </li>
             <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && vm.showCreateAccount && vm.is_racker" style="margin-top:5px">
-                <span class="rs-dropdown-category">or Delete an Account:
-                            <a href="" role="button" data-toggle="modal" aria-invalid="false" ng-click="vm.displayDeleteFawsModal()">Delete an existing account</a>
-                        </span>
+                <span class="rs-dropdown-category">or Unlink account:
+                    <a href="" role="button" data-toggle="modal" aria-invalid="false" ng-click="vm.displayDeleteFawsModal()">Unlink account from migration tool</a>
+                </span>
             </li>
             <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && vm.showCreateAccount">
                 <span class="rs-dropdown-category">or Select an existing account:</span>
