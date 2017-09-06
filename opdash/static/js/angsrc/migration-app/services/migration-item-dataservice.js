@@ -204,7 +204,7 @@
                 var servers = serverService.prepareServerList();
                 var cloudfiles = fileService.prepareFilesList();
                 var networks = networkService.prepareNetworkList();
-                var dns = dnsService.prepareDNSList();
+                //var dns = dnsService.prepareDNSList();
 
                 //add the resources to the job-spec if the list are not empty
                 if (servers.length > 0) {
@@ -222,9 +222,9 @@
                 if (cloudfiles.length > 0) {
                     reqObj.resources.cloudfiles = cloudfiles;
                 }
-                if (dns.length > 0) {
-                    reqObj.resources.dns = dns;
-                }
+                //if (dns.length > 0) {
+                //    reqObj.resources.dns = dns;
+                //}
 
                 if (precheck === true){ //exit now, if the call to this method was made for creating precheck job-spec object
                     return reqObj;
