@@ -12,30 +12,7 @@
         var self = this, dns,currentTenant = null, 
             callInProgress = false,
             dnsPromise;
-
-        /**
-        * @ngdoc method
-        * @name prepareDnsList
-        * @methodOf migrationApp.service:dnsservice
-        * @returns dnsservice instance request object.
-        * @description
-        * prepare dnsservice instance request object
-        */
-        self.prepareDnsList = function () {
-            var dnsReqList = [];
-            var dns = JSON.parse($window.localStorage.selectedResources)["dns"];
-            angular.forEach(dns,function(domain){
-                dnsReqList.push(
-                    {
-                        "source":{
-                            "id":domain.id
-                        }
-                    }
-                )
-            });
-            return dnsReqList;
-        }
-
+        
         /**
          * @ngdoc method
          * @name getDNS
