@@ -81,8 +81,8 @@
              * @methodOf migrationApp.service:migrationitemdataservice
              * @param {String} type Resource type (server, network etc)
              * @returns {Promise} a promise to fetch the list of resources of given _type_.
-             * @description 
-             * This service method returns a promise to fetch the list of resources given _type_ for a tenant.  
+             * @description
+             * This service method returns a promise to fetch the list of resources given _type_ for a tenant.
              * This operation trims the set of properties available with the service call and returns only the specific properties needed for its representation.
              */
             this.getTrimmedAllItems = function (type) { // should be moved to dashboard service
@@ -139,7 +139,7 @@
              * @methodOf migrationApp.service:migrationitemdataservice
              * @param {String} type Resource type (server, network etc)
              * @returns {Promise} a promise to fetch the detailed list of resources of given _type_.
-             * @description 
+             * @description
              * This service method returns a promise to fetch the detailed list of resources of given _type_ for a tenant.
              */
             this.getDetailedList = function (type) {
@@ -164,7 +164,7 @@
              * @param {String} flavor Flavor of the resource to be migrated (this is specific to servers)
              * @param {String} ram Ram config of the resource to be migrated (this is specific to servers)
              * @returns {Promise} a promise to fetch the pricing details to migrate of a resource.
-             * @description 
+             * @description
              * This service method returns a promise to fetch the pricing details to migrate a resource.
              */
             this.getPricingDetails = function (type, flavor, ram) {
@@ -179,13 +179,13 @@
              * @methodOf migrationApp.service:migrationitemdataservice
              * @param {Booelan} type Boolean value to determine whether the method should return pre-req job-spec (true) or migration job-spec (false)
              * @returns {Object} A request _object_ for subsequesnt request in migrating a resource.
-             * @description 
+             * @description
              * This service method returns an _object_. This object has to be sent while making an HTTP POST request to migrate the resource.
              */
             this.prepareJobRequest = function (precheck) {
                 var destaccount = JSON.parse($window.localStorage.getItem("fawsAccounts"));
                 var auth = authservice.getAuth();
-                
+
                 //initialise job-spec object with common items (precheck and migration)
                 var reqObj = {
                     source: {
@@ -204,12 +204,13 @@
                 var servers = serverService.prepareServerList();
                 var cloudfiles = fileService.prepareFilesList();
                 var networks = networkService.prepareNetworkList();
-                
+                //var dns = dnsService.prepareDNSList();
+
                 //add the resources to the job-spec if the list are not empty
                 if (servers.length > 0) {
-                    reqObj.resources.instances = servers; 
+                    reqObj.resources.instances = servers;
                 }
-                if (networks.length > 0) { 
+                if (networks.length > 0) {
                     reqObj.resources.networks = networks;
                 }
                 if (services.length > 0) {
@@ -221,7 +222,10 @@
                 if (cloudfiles.length > 0) {
                     reqObj.resources.cloudfiles = cloudfiles;
                 }
-                    
+                //if (dns.length > 0) {
+                //    reqObj.resources.dns = dns;
+                //}
+
                 if (precheck === true){ //exit now, if the call to this method was made for creating precheck job-spec object
                     return reqObj;
 
@@ -237,7 +241,7 @@
                     reqObj.create_ticket= true;
                     reqObj.names = prepareNames();
                     reqObj.source.live_migrate = dataStoreService.getScheduleMigration().live_migrate || false;
-                    
+
 
                     //time calculations for scheduling the migration
                     var currEPOCHTime = moment().unix();
@@ -253,7 +257,7 @@
                     }
                 return reqObj; //this is the final job-spec for migration
                 }
-                
+
             } //end of prepareJobRequest method
 
             this.getServerMigrationStatus = function (tenant_id) {
@@ -306,7 +310,7 @@
              * @name getLoadBalancers
              * @methodOf migrationApp.service:migrationitemdataservice
              * @returns {Promise} a promise to fetch all servers.
-             * @description 
+             * @description
              * Gets the entire list of load balancers in its raw JSON form, from the api.
              */
             this.getLoadBalancers = function () {
@@ -356,7 +360,7 @@
              * @ngdoc method
              * @name eligibilityPrecheck
              * @methodOf migrationApp.service:migrationitemdataservice
-             * @description 
+             * @description
              * Invokes "/api/eligibility" API call for checking eligibility of servers to migrate.
              */
             this.eligibilityPrecheck = function (itemsArr, type) {

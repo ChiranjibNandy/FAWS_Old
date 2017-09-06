@@ -7,7 +7,7 @@
      * @description
      * Service to retrieve all data for DNS resources
      */
-    angular.module("migrationApp").factory("dnsservice", ["httpwrapper", "$q", "authservice","datastoreservice","$window", function (HttpWrapper, $q, authservice,datastoreservice,$window) {
+    angular.module("migrationApp").factory("dnsservice", ["httpwrapper", "$q", "authservice","datastoreservice","$window", "DEFAULT_VALUES", function (HttpWrapper, $q, authservice,datastoreservice,$window, DEFAULT_VALUES) {
         // local variables to help cache data
         var self = this, dns,currentTenant = null, 
             callInProgress = false,
@@ -94,7 +94,38 @@
                     return errorResponse;
                 });
         };
-
-        return self;
+      
+         /**
+        * @ngdoc method
+        * @name prepareDNSList
+        * @methodOf migrationApp.service:dnsservice
+        * @returns dnsservice instance request object.
+        * @description
+        * prepare dns instance request object
+        */
+        self.prepareDNSList = function () {
+            var dnsReqList = [];
+            var domains = JSON.parse($window.localStorage.selectedResources)["dns"];
+            angular.forEach(domains,function(domain){
+                dnsReqList.push(
+                    {
+                        "source":{
+                            "zone_id":domain.id
+                        },
+                        "destination":{
+                            "region":domain.selectedMapping.region || DEFAULT_VALUES.REGION,
+                            "aws":{
+                                "domain":{
+                                    "zone":domain.selectedMapping.zone || DEFAULT_VALUES.ZONE,
+                                    "ebs_type":"IOL"
+                                }
+                            }
+                        }
+                    }
+                )
+            });
+            return dnsReqList;
+        }
+       return self;
     }]);
 })();
