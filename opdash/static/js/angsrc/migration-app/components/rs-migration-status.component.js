@@ -107,7 +107,8 @@
                     dataStoreService.setPageName("MigrationStatus");
                     $window.localStorage.setItem('pageName',"MigrationStatus");
                     if(dashboardService.getAutoRefreshStatus() === null){
-                        vm.autoRefreshText = "ON" ;
+                        vm.autoRefreshText = "OFF" ;
+                        vm.autoRefreshButton = vm.autoRefreshText === 'ON'?false:true;
                         dashboardService.storeAutoRefreshStatus(vm.autoRefreshText);
                     }else{
                         vm.autoRefreshText = dashboardService.getAutoRefreshStatus() ;
@@ -152,7 +153,7 @@
                     }
                     vm.getBatches(!(dataStoreService.getFirstLoginFlag()));
                     vm.onTimeout();
-                    vm.getAllAlerts();
+                    vm.killTimeOut();
                 };
 
                 /**
@@ -255,9 +256,11 @@
                  * @description 
                  * Gets the list of all batches initiated by the current tenant
                  */
-                vm.getBatches = function (refresh) {
+                vm.getBatches = function (refresh,fromButton) {
                     var self = this;
                     vm.manualRefresh = true;
+                    vm.loadingAlerts = true;
+                    if(fromButton) vm.manuallyLoadingAllBatches(true);
                     dashboardService.getBatches(refresh)
                         .then(function (response) {
                             if (response && response.error == undefined){
@@ -265,6 +268,7 @@
                                 var validCurrentBatchStatus = ["started", "error", "in progress", "scheduled", "paused"];
                                 var validCompletedBatchStatus = ["done","canceled"];
                                 jobList = response.jobs.job_status_list;
+                                vm.getAllAlerts(response.alerts);
                                 var tempcurrentBatches = [];
                                 vm.nonSavedMigrations = [];
                                 var completedBatches = [];
@@ -359,6 +363,8 @@
                         vm.manualRefresh = false;
                         vm.currentBatches.loadError = true;
                         vm.completedBatches.loadError = true;
+                        vm.errors.items.length=0;
+                        vm.loadingAlerts = false;
                     });
                     if(!vm.autoRefreshEveryMinute){
                         vm.autoRefreshEveryMinute = true;
@@ -395,15 +401,13 @@
                  */
                 vm.manageAutoRefresh = function(){
                     if(vm.autoRefreshText === "ON"){
-                       vm.autoRefreshText = "OFF"; 
-                       vm.autoRefreshEveryMinute = true;
-                       vm.autoRefreshButton = true;
-                       $interval.cancel(vm.intervalPromise);
+                       vm.killAllTimers();
                     }else{
                        vm.autoRefreshText = "ON"; 
                        vm.autoRefreshEveryMinute = false;
                        vm.autoRefreshButton = false;
                        vm.onTimeout();
+                       vm.killTimeOut();
                        vm.counter = 60;
                        vm.manuallyLoadingAllBatches(true);
                        vm.getBatches(true);
@@ -430,6 +434,32 @@
                     } 
                 }
 
+                /**
+                 * @ngdoc property
+                 * @name killTimeOut
+                 * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                 * @description This function has a timeout which kills the main timeout after an hour
+                 */
+                vm.killTimeOut = function(){
+                    vm.maintimeout = $interval(function() {
+                        vm.killAllTimers();
+                    },1000*60*60);
+                }
+
+                /**
+                 * @ngdoc property
+                 * @name killTimeOut
+                 * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                 * @description This function has a timeout which kills the main timeout after an hour
+                 */
+                vm.killAllTimers = function(){
+                    vm.autoRefreshText = "OFF"; 
+                    vm.autoRefreshEveryMinute = true;
+                    vm.autoRefreshButton = true;
+                    $interval.cancel(vm.mytimeout);
+                    $interval.cancel(vm.maintimeout);
+                    $interval.cancel(vm.intervalPromise);
+                }
                 /**
                  * @ngdoc method
                  * @name convertUTCDateToLocalDate
@@ -478,21 +508,11 @@
                  * @description 
                  * Gets the list of all alerts for all the migrations, if any
                  */
-                vm.getAllAlerts = function(refresh) {
-                    vm.loadingAlerts = true;
-
-                    alertsService.getAllAlerts(refresh)
-                                    .then(function(result) {
-                                        if(result.error !==500){
-                                            vm.errors.items = result || [];
-                                            vm.errors.noOfPages = Math.ceil(vm.errors.items.length / vm.errors.pageSize);
-                                            vm.errors.pages = new Array(vm.errors.noOfPages);
-                                            vm.loadingAlerts = false;
-                                        }else{
-                                            vm.errors.items.length=0;
-                                            vm.loadingAlerts = false;
-                                        }
-                                    });
+                vm.getAllAlerts = function(result) {
+                    vm.errors.items = result || [];
+                    vm.errors.noOfPages = Math.ceil(vm.errors.items.length / vm.errors.pageSize);
+                    vm.errors.pages = new Array(vm.errors.noOfPages);
+                    vm.loadingAlerts = false;
                 };
 
                 /**
@@ -552,6 +572,7 @@
                 vm.continueScheduling = function (batch,modifyFlag) {
                     var autoRefreshButtonStatus = dashboardService.getAutoRefreshStatus();
                     $window.localStorage.clear();
+                    dataStoreService.resetAll();
                     dashboardService.storeAutoRefreshStatus(autoRefreshButtonStatus);
                     if(modifyFlag){
                         for(var i = 0; i<vm.nonSavedMigrations.length;i++){
@@ -585,7 +606,6 @@
                     dataStoreService.selectedTime.migrationName = batch.batch_name || batch.instance_name;
                     //$window.localStorage.migrationName = batch.batch_name || batch.instance_name;
                     dataStoreService.setSaveItems(batch.selected_resources);
-                    $window.localStorage.setItem('savedServers',JSON.stringify(batch.selected_resources.server));
                     $rootRouter.navigate([batch.step_name]);
                 };
 

@@ -36,6 +36,10 @@
                         <!--Files-->
                         <rsmigrationitem type="file" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
+                    <rs-tab tabtitle="DNS" showtab="true" name="dns">
+                        <!--DNS-->
+                        <rsmigrationitem type="dns" filtervalue="vm.filterSearch"></rsmigrationitem>
+                    </rs-tab>
                     <div class="rs-pull-right allign-buttons" ng-hide="vm.itemsLoading">
                         <rssaveprogress stepname="MigrationResourceList" type="button"></rssaveprogress>
                         <a class="rs-btn rs-btn-primary " ng-hide="vm.continuing" ng-click="vm.savencontinue()">Continue</a>
@@ -107,8 +111,8 @@
 <div id="intro_modal" class="modal hide animated fadeIn details" data-keyboard="false" role="dialog">
     <br>
     <div class="modal-body" style="max-height:550px !important;overflow-y: visible">
-        <h1 ng-hide="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker" class="rs-page-title">Welcome to the Rackspace Migration Manager!</h1>
-        <h1 ng-show="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker" class="rs-page-title">Migrating to Fanatical Support for AWS</h1>
+        <h1 ng-hide="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker " class="rs-page-title">Welcome to the Rackspace Migration Manager!</h1>
+        <h1 ng-show="vm.noFawsAccounts && !vm.introModalLoading && !vm.isRacker " class="rs-page-title">Migrating to Fanatical Support for AWS</h1>
         <div class="rs-row">
             <div class="span-7" ng-show="vm.introModalLoading" class="rs-table-overlay rs-table-overlay-loading">
                 <div class="rs-table-overlay-content">
@@ -202,32 +206,35 @@
                 <input type="text" ng-model="vm.fawsAcctName" ng-hide="vm.fawsCreated" class="rs-input-xlarge" placeholder="AWS Account Name" />
                 </span>
             </div>
-            <div class="row" ng-hide="vm.fawsCreated">
+            <div class="row">
+            <div class="row" ng-hide="vm.fawsCreated" style="width: 322px;">
                 <span>
-                    <span class="control-label-cust" style="width:13%;">Service Level  </span><span class="half-tab"></span>
+                    <span class="control-label-cust" style="width:14%; float: initial;">Service Level  </span><span class="half-tab"></span>
                     <span>
-                        <span  style="margin-left: -21px;">
+                        <span  style="margin-left: 0px;">
                         <span style="width: 10%;">
                             <strong>Navigator</strong>
                         </span>
-        
                         <span class="half-tab" ng-hide = "vm.fawsCreated"></span>
                          <span style="margin-left: -21px;" style="width: 10%;">
                          <a href="https://www.rackspace.com/en-us/managed-aws/features" target="_blank" style="font-style: italic; font-size: 10px; text-decoration: underline;">Learn More</a>&nbsp<a style = "font-size: 10px;" class="fa fa-external-link" href=""></a>
                         </span>
                     </span>
                 </span>
-                </span>  
-                  <span  class="control-label-cust" style ="float: initial; margin-left: 145px;margin-right: 212px;" ng-hide = "vm.fawsCreated">
-                                        <input  type="checkbox" ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required"> </span>
+                </span> 
+                </div> 
+                <div style="width: 790px; position: relative; top: -17px;">
+                  <span  class="control-label-cust" style ="float: initial; margin-left: 385px;;margin-right: 212px;" ng-hide = "vm.fawsCreated">
+                                        <input  type="checkbox" style="position: relative;top: -3px;"  ng-model="vm.acceptTermsAndConditions" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required"> </span>
                 <span  class="control-label-cust" style ="float: right; width: 53%;margin-left:-3px; margin-right:-29px;" ng-hide = "vm.fawsCreated">
                         &nbsp <span class="ng-binding"><p style="margin-top: -22px;">Check here to indicate that you have read and agree to the terms of <a href="https://www.rackspace.com/information/legal/GSA" target="_blank"> Rackspace Global Services Agreement</a>, <a href="https://www.rackspace.com/information/legal/awssupport" target="_blank">Fanatical Support for AWS Product Terms</a>, and<a href="https://Rackspace.com/information/legal/migrationmanagertool" target="_blank"> Rackspace Migration Manager Terms</a>.</p></span>
                 </span>
               </span>
-              <div style="margin-top:10px">
+              </div>
+              <div style="margin-top: -20px;">
                      <span style="font-size:11px;"><b>Please ensure</b> your contact information is up to date <a href ="https://account.rackspace.com/users" target="_blank">here</a>. Rackspace may attempt to contact you while creating your FAWS account.</span>
             </div>
-            </div> 
+            </div>
             </div>
             <div class="row service-button">
                 <div class="intro-modal-nofaws rs-success" ng-show="vm.fawsCreated">Thank you. A request for creating a new AWS account was successfully created. We will let you know when the
@@ -257,7 +264,7 @@
             disabled="disabled">Submitting...</a>
         <i class="rs-processing-indicator" ng-show="vm.noFawsAccounts && !vm.introModalLoading  && vm.fawsCreationProgress"></i>
         <a ng-hide="vm.noFawsAccounts && !vm.introModalLoading" class="rs-btn rs-btn-primary" ng-class="{disabled:vm.introModalLoading || vm.noFawsAccounts}"
-            data-dismiss="modal" aria-hidden="true" href="javascript:void(0)">Start a Migration</a>
+            data-dismiss="modal" aria-hidden="true" href="javascript:void(0)" ng-click="vm.showWelcomeModal()">Start a Migration</a>
     </div>
 </div>
 <!-- Welcome MODAL ends-->

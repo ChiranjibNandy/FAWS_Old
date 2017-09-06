@@ -8,11 +8,10 @@
      * This service acts as a facade which handles calling the specific service implementation for each resoource type (server, network etc).
      */
     angular.module("migrationApp")
-        .service("migrationitemdataservice", ["serverservice", "networkservice", "volumeservice", "contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q", "$window", "cdnservice", "fileservice", function (serverService, networkService, volumeService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q, $window, cdnservice, fileService) {
+        .service("migrationitemdataservice", ["serverservice", "networkservice", "volumeservice", "contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q", "$window", "cdnservice", "fileservice", "dnsservice", function (serverService, networkService, volumeService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q, $window, cdnservice, fileService, dnsService) {
             var loaded, loadbalancers, services, self = this,
                 currentTenant = null,
                 callInProgress = false,
-                statusLoaded = false,
                 statusResponse,
                 statusPromise,
                 resultsLoaded;
@@ -23,7 +22,8 @@
                 volume:false,
                 LoadBalancers:false,
                 service:false,
-                file:false
+                file:false,
+                dns:false
             };
 
             self.storeRegionFetchedFlags = function(type,value){
@@ -44,12 +44,14 @@
                 var cdn = JSON.parse($window.localStorage.selectedResources)['service'];
                 var volumes = JSON.parse($window.localStorage.selectedResources)['volume'];
                 var file = JSON.parse($window.localStorage.selectedResources)['file'];
+                var dns = JSON.parse($window.localStorage.selectedResources)['dns'];
                 var names = {};
                 names.instances = {};
                 names.networks = {};
                 names.cdn = {};
                 names.volumes = {};
                 names.file = {};
+                names.dns = {};
 
                 angular.forEach(servers, function (item) {
                     names.instances[item.id] = item.name;
@@ -66,6 +68,9 @@
                 });
                 angular.forEach(file, function (resource) {
                     names.file[resource.id] = resource.name;
+                });
+                angular.forEach(dns, function (resource) {
+                    names.dns[resource.id] = resource.name;
                 });
                 return names;
             }; // end of prepareNames method
@@ -93,6 +98,8 @@
                     return cdnservice.getServices();
                 } else if (type === "volume") {
                     return volumeService.getTrimmedList();
+                } else if (type === "dns") {
+                    return dnsService.getDNS();
                 }
             } //end of getTrimmedAllItems method
 
@@ -121,6 +128,8 @@
                     return cdnservice.getTrimmedItem(item_id);
                 } else if( type === "volume") {
                     return volumeService.getTrimmedItem(item_id, item_region );
+                } else if( type === "dns") {
+                    return dnsService.getTrimmedItem(item_id);
                 }
             } //end of getTrimmedItem method
 
@@ -266,27 +275,27 @@
             } //end of getServerMigrationStatus method
 
             this.getResourceMigrationStatus = function (tenant_id) {
-                var url = "/api/jobs/all";
-                if (callInProgress == false && statusLoaded == false) {
+                var url = "/api/combined/dashboard";
+                if (callInProgress == false && dataStoreService.getResourceLoadingStatus("jobStatus") == false) {
                     callInProgress = true;
                     statusPromise = HttpWrapper.send(url, {
                             "operation": 'GET'
                         })
                         .then(function (response) {
-                            statusResponse = response;
+                            $window.localStorage.statusResponse = JSON.stringify(response);
                             callInProgress = false;
-                            statusLoaded = true;
+                            dataStoreService.setResourceLoadingStatus("jobStatus", true);
                             return response;
                         }, function (error) {
                             callInProgress = false;
-                            statusLoaded = false;
+                            dataStoreService.setResourceLoadingStatus("jobStatus", false);
                             return false;
                         });
                     return statusPromise;
                 } else if (callInProgress) {
                     return statusPromise;
-                } else if (callInProgress == false && statusLoaded == true) {
-                    return $q.when(statusResponse);
+                } else if (callInProgress == false && dataStoreService.getResourceLoadingStatus("jobStatus") == true) {
+                    return $q.when(JSON.parse($window.localStorage.statusResponse));
                 }
             }; //end of getResourceMigrationStatus method
 
@@ -356,7 +365,7 @@
              */
             this.eligibilityPrecheck = function (itemsArr, type) {
                 var tenant_id = authservice.getAuth().tenant_id;
-                var instance_type = (type == 'server' && "instances") || (type == 'volume' && "volumes") || (type == 'service' && "cdn") || (type == 'file' && "cloudfiles");
+                var instance_type = (type == 'server' && "instances") || (type == 'volume' && "volumes") || (type == 'service' && "cdn") || (type == 'file' && "cloudfiles") || (type == 'dns' && "dns");
                 var requestObj = {
                     "source": {
                         "cloud": "rackspace",

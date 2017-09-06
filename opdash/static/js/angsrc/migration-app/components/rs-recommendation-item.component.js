@@ -62,6 +62,7 @@
                     vm.volumeRegions = [];
                     vm.serviceRegions = [];
                     vm.fileRegions = []; 
+                    vm.dnsRegions = []; 
 
                     if(vm.type === "server"){
                         if($window.localStorage.selectedResources !== undefined){
@@ -222,6 +223,46 @@
                                     $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});
                                 }
                                 vm.serviceRegions = result;
+                                //For each of the resources in the array, set the default zone to 'us-east-1a'
+                                angular.forEach(vm.data,function(item){
+                                    if(vm.errorInApi){
+                                        //If the error flag is set, we set the options to Default texts
+                                        item.selectedMapping.region = "Not Available";
+                                    }
+                                });
+                            },function(error){
+                                vm.loadingRegion = false;
+                                vm.errorInApi = true;
+                                //Disable precheck continue button on success of the region API call
+                                $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});
+                            }); 
+                        }
+                    }else if (vm.type === "dns"){
+                        if($window.localStorage.selectedResources !== undefined)
+                            vm.data = JSON.parse($window.localStorage.selectedResources)['dns'];
+                        else
+                            vm.data = [];
+                        vm.labels = [
+                                        {field: "name", text: "DNS Name"},
+                                        {field: "id", text: "ID"},
+                                        {field: "dns status", text: "DNS Status"},
+                                        {field: "destRegion", text: "AWS region"}
+                                    ];
+                        //Checks to see if all the regions for any one of the resource types are already fetched
+                        //If yes, do not further fetch services on startup
+                        //Or fetch the services assuming this is the first page on page load
+                        if(!vm.doesRegionFlagExist()){
+                            vm.loadingRegion = true;
+                            //Get all the service regions only once
+                            ds.getAllEc2Regions('dns').then(function(result){
+                                vm.loadingRegion = false;
+                                //If the returned result is empty we set the flag to true
+                                if(!result.length){
+                                    vm.errorInApi = true;
+                                    //Disable precheck continue button on success of the region API call
+                                    $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});
+                                }
+                                vm.dnsRegions = result;
                                 //For each of the resources in the array, set the default zone to 'us-east-1a'
                                 angular.forEach(vm.data,function(item){
                                     if(vm.errorInApi){
@@ -445,11 +486,16 @@
                     var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+vm.awsRegion;
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
                         vm.loadingPrice = false;
-                        item.pricingOptions = pricingOptions;
+                        item.pricingOptions = pricingOptions.filter(po => item.details['rax_virtual_interface_count'] <= po['max_enis']);
+                        if(item.pricingOptions.length == 0){
+                            item.pricingOptions = pricingOptions
+                        }
                         if(item.pricingOptions.length == 0){
                             vm.selectedConfigurationType = "";
                         }
-                        //item.pricingOptions.concat(item.details);
+                        //If no, clear the selected config type
+                        if(!pricingContainsItem)
+                            vm.selectedConfigurationType = "";
                     },function(error){
                         vm.loadingPrice = false;
                         vm.errorInApi = true;
@@ -672,6 +718,18 @@
                             vm.serviceRegions = result;
                             if($window.localStorage.selectedResources !== undefined)
                                 vm.data = JSON.parse($window.localStorage.selectedResources)['service'];
+                            else
+                                vm.data = [];
+                            //For each of the resources in the array, set the default zone to 'us-east-1a'
+                            angular.forEach(vm.data,function(item){
+                                if(vm.errorInApi){
+                                    item.selectedMapping.region = "Not Available";
+                                }
+                            });                            
+                        }else if(type === 'dns'){
+                            vm.dnsRegions = result;
+                            if($window.localStorage.selectedResources !== undefined)
+                                vm.data = JSON.parse($window.localStorage.selectedResources)['dns'];
                             else
                                 vm.data = [];
                             //For each of the resources in the array, set the default zone to 'us-east-1a'

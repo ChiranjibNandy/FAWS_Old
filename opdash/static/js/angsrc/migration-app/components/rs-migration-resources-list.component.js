@@ -35,7 +35,7 @@
                     $('body').removeClass('modal-open');
                     $('.modal-backdrop').remove();
                     vm.allowTabs = false;
-                    vm.dontshowStatus = true;
+                    vm.dontshowStatus = false;
                     vm.introModalLoading = true;
                     vm.noFawsAccounts = false;
                     vm.serviceLevel = "navigator";
@@ -64,11 +64,13 @@
                         vm.noFawsAccounts = false;
                         vm.fawsAccType = vm.fawsAccountDetails.mode;
                     }
-                    if((modalDisplayStatus == false || $window.localStorage.dontShowStatus === false)  && (prePageName == "MigrationStatus" || prePageName == "MigrationResourceList" || prePageName == undefined)){
+                    
+                    if((modalDisplayStatus == 'true' )  && (prePageName == "MigrationStatus" || prePageName == "MigrationResourceList" || prePageName == undefined)){
                         $('#intro_modal').modal('show');
                         dataStoreService.setDontShowStatus(true);//set introduction modal flag to true after first time display.
-                        $window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
+                        // $window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
                     }
+                    
                     
                     dataStoreService.setPageName("MigrationResourceList");
                     $window.localStorage.setItem('pageName',"MigrationResourceList");
@@ -95,7 +97,8 @@
                         LoadBalancers:[],
                         volume:[],
                         service:[],
-                        file:[]
+                        file:[],
+                        dns:[]
                     };
                     vm.filterSearch = "";
                     vm.saveProgress = "";
@@ -108,7 +111,7 @@
                         "modalName": '#cancel_modal'
                     };
                     vm.displayMigName = false;
-                    $window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
+                    //$window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
                     var timestmp = moment(d).format("DDMMMYYYY-hhmma");
                     /**
                      * @ngdoc property
@@ -287,7 +290,7 @@
                         return;
                     } 
                     //if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 ){//|| dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 -- Previous Code
-                    if($window.localStorage.selectedResources !== undefined && (JSON.parse($window.localStorage.selectedResources)['server'].length || JSON.parse($window.localStorage.selectedResources)['volume'].length || JSON.parse($window.localStorage.selectedResources)['service'].length || JSON.parse($window.localStorage.selectedResources)['file'].length)){
+                    if($window.localStorage.selectedResources !== undefined && (JSON.parse($window.localStorage.selectedResources)['server'].length || JSON.parse($window.localStorage.selectedResources)['volume'].length || JSON.parse($window.localStorage.selectedResources)['service'].length || JSON.parse($window.localStorage.selectedResources)['file'].length || JSON.parse($window.localStorage.selectedResources)['dns'].length)){
                         vm.continuing = true;
                         var items = JSON.parse($window.localStorage.selectedResources)['server'];
 
@@ -332,6 +335,12 @@
                                 vm.selectedItems.file = tempItems;
                                 dataStoreService.setSelectedItems(vm.selectedItems.file,'file');
                             }
+                            if(JSON.parse($window.localStorage.selectedResources)['dns'].length > 0){
+                                tempItems = vm.populatePhase2ResourcesArray('dns',items);
+                                items = items.concat(tempItems);
+                                vm.selectedItems.dns = tempItems;
+                                dataStoreService.setSelectedItems(vm.selectedItems.dns,'dns');
+                            }
                             
                             vm.continuing = false;
                             dataStoreService.setDontShowNameModal(true);
@@ -353,6 +362,7 @@
                             ds.storeRegionFetchedFlags('volume',false);
                             ds.storeRegionFetchedFlags('service',false);
                             ds.storeRegionFetchedFlags('file',false);
+                            ds.storeRegionFetchedFlags('dns',false);
                             $rootRouter.navigate(["MigrationRecommendation"]);    
                         },function(error){
                             vm.continuing = false;
@@ -501,6 +511,23 @@
                         vm.itemsLoadingStatus(!(dataStoreService.retrieveallItems(type).length > 0));   
                     }
                 });
+
+                vm.showWelcomeModal =function(){
+                    var url = '/api/user/settings';
+                      HttpWrapper.patch("/api/user/settings", {
+                                "operation": 'PATCH'
+                            }, [{
+                                  "key": "show_welcome_modal",
+                                  "action": "save",
+                                  "value": !dataStoreService.getDontShowStatus()
+                             }])
+                            .then(function (result) {
+                                console.log("success");
+                            }, function (error) {
+                                
+                            });
+                                
+                }
 
                 return vm;
             }

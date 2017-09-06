@@ -22,7 +22,7 @@
                     <div class="span-4 ">
                         <div class="rs-row">
                             <div class="pull-right">
-                                <button class="rs-btn" ng-click="vm.getBatches(true)">
+                                <button class="rs-btn" class="refreshMargin" ng-click="vm.getBatches(true,true)">
                                     <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i> Refresh
                                 </button>
                                 <button class="rs-btn rs-btn-primary" ng-click="vm.startNewMigration()"><i class="fa fa-plus-square fa-fw"></i> Start New Migration</button>
@@ -52,6 +52,12 @@
                                 <th>
                                     <a href="javascript:void(0);" class="rs-table-sort custom-sort-a" ng-click="vm.setSortBy('current_batch', 'batch_name')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['current_batch']==='batch_name', 'custom-table-sort-desc current-sort-param': vm.sortBy['current_batch']==='-batch_name', 'custom-table-sort-desc': vm.sortBy['current_batch'].indexOf('batch_name') < 0}">
                                         <span class="rs-table-sort-text">Batch Queue</span>
+                                        <span class="rs-table-sort-indicator"></span>
+                                    </a>
+                                </th>
+                                <th>
+                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a" ng-click="vm.setSortBy('current_batch', 'metadata.initiated_by')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['current_batch']==='metadata.initiated_by', 'custom-table-sort-desc current-sort-param': vm.sortBy['current_batch']==='-metadata.initiated_by', 'custom-table-sort-desc': vm.sortBy['current_batch'].indexOf('metadata.initiated_by') < 0}">
+                                        <span class="rs-table-sort-text">Initiated By</span>
                                         <span class="rs-table-sort-indicator"></span>
                                     </a>
                                 </th>
@@ -109,6 +115,9 @@
                                 <td class="rs-table-link">
                                     <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]">{{batch.metadata.batch_name}}</a>
                                     <a ng-show="batch.timestamp" href="javascript:void(0)" ng-click="vm.continueScheduling(batch);">{{batch.batch_name}}</a>
+                                </td>
+                                <td class="rs-table-text ng-binding">
+                                    <span>{{batch.metadata.impersonated_by || batch.metadata.initiated_by}}</span>
                                 </td>
                                 <td class="rs-table-text ng-binding">
                                     <span ng-show="!batch.timestamp">{{(batch.start)| date : 'M/dd/yyyy hh:mm a' }}</span>
@@ -217,6 +226,12 @@
                                     </a>
                                 </th>
                                 <th>
+                                    <a href="javascript:void(0);" class="rs-table-sort custom-sort-a" ng-click="vm.setSortBy('current_batch', 'metadata.initiated_by')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['current_batch']==='metadata.initiated_by', 'custom-table-sort-desc current-sort-param': vm.sortBy['current_batch']==='-metadata.initiated_by', 'custom-table-sort-desc': vm.sortBy['current_batch'].indexOf('metadata.initiated_by') < 0}">
+                                        <span class="rs-table-sort-text">Initiated By</span>
+                                        <span class="rs-table-sort-indicator"></span>
+                                    </a>
+                                </th>
+                                <th>
                                     <a href="javascript:void(0);" class="rs-table-sort custom-sort-a" ng-click="vm.setSortBy('completed_batch', 'start')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['completed_batch']==='start', 'custom-table-sort-desc current-sort-param': vm.sortBy['completed_batch']==='-start', 'custom-table-sort-desc': vm.sortBy['completed_batch'].indexOf('start') < 0}">
                                         <span class="rs-table-sort-text">Start Date/Time</span>
                                         <span class="rs-table-sort-indicator"></span>
@@ -241,6 +256,7 @@
                             <tr ng-repeat="batch in vm.completedBatches.items | orderBy: vm.sortBy.completed_batch | limitTo : vm.completedBatches.pageSize : (vm.completedBatches.currentPage-1)*vm.completedBatches.pageSize" class="ng-scope">
                                 <td class="rs-table-status tip" ng-class="{'rs-table-status-warning': batch.batch_status==='canceled','rs-table-status-ok':batch.batch_status!='error'}"></td>
                                 <td class="rs-table-link large-col"><a ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]" class="ng-binding">{{batch.metadata.batch_name}}</a></td>
+                                <td class="rs-table-text ng-binding"><span>{{batch.metadata.impersonated_by || batch.metadata.initiated_by}}</span></td>
                                 <td class="rs-table-text ng-binding">{{(batch.start)| date : 'M/dd/yyyy hh:mm a'}}</td>
                                 <td class="rs-table-text ng-binding">{{batch.batch_status === 'canceled' ? 'N/A' : (batch.completed_at) | date : 'M/dd/yyyy hh:mm a'}}</td>
                                 <td ng-class="{'rs-status-warning': batch.batch_status==='canceled','rs-status-ok':batch.batch_status!='error'}" class="rs-table-text ng-binding capitalize" >{{batch.batch_status === 'canceled' ? 'Cancelled' : batch.batch_status}}</td>

@@ -152,7 +152,7 @@
                     vm.equipmentContent = {
                         tableHeaders:{
                             server:['Server','Status','Progress','Destination Region','Instance Type','Actions'],
-                            network:['Network','Status','Progress','Destination Region','Actions']
+                            network:['Network','Status','Progress','Destination Region','','Actions']
                         },
                         tableBody:{
                             server:[],

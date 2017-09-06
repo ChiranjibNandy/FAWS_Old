@@ -30,7 +30,13 @@
                     headers: {
                         "x-auth-token": auth.authtoken,
                         "x-tenant-id": auth.tenant_id,
-                        "Cache-Control": "no-cache"
+                        "Cache-Control": "no-cache",
+                        "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE",
+                        'Content-Type': 'application/json', /*or whatever type is relevant */
+                        'Access-Control-Allow-Origin': '*',
+
+'Access-Control-Allow-Headers': 'Content-Type',
+                        'Accept': 'application/json' 
                     },
                 });
             return method;
@@ -64,7 +70,15 @@
                 data: data
             });
         }
-
+        
+        function patch(url, urlParams, data){
+            return _send(url, {
+                operation: 'PATCH',
+                urlVars: urlParams,
+                data: data,
+                
+            });
+        }
         /**
          * Send the request. This function invokes the http service and returns the promise.
          * @param {String} url - URL where the request has to be sent. URLs can have macros like (":id") which
@@ -150,7 +164,19 @@
              * @description
              * This function invokes the HTTP service and returns the promise. This function is used for sending HTTP POST requests.
              */
-            save: save
+            save: save,
+
+             /**
+             * @ngdoc method
+             * @name patch
+             * @methodOf migrationApp.service:httpwrapper
+             * @param {String} url URL where the request has to be sent.
+             * @param {Object} urlParams Params to specify the type of request
+             * @param {Object} data Data to be sent with the request.
+             * @description
+             * This function invokes the HTTP service and returns the promise. This function is used for sending HTTP POST requests.
+             */
+            patch: patch
         };
     }
 

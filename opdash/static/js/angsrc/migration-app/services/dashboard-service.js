@@ -29,7 +29,7 @@
              */
             self.getBatches = function(refresh) {
                 var tenant_id = authservice.getAuth().tenant_id;
-                var currentJobsUrl = "/api/jobs/all";
+                var currentJobsUrl = "/api/combined/dashboard";
                 //var currentJobsUrl = "/static/angassets/batch-details.json";
 
                 if ((refresh || !loaded || (currentTenant !== tenant_id)) && jobsCallInProgress == false) {
@@ -43,7 +43,8 @@
                             currentTenant = tenant_id;
                             var savedMigrations = [];
                             savedMigrations = results[0] || [];
-                            batches = { savedMigrations: savedMigrations, jobs: results[1] };
+                            batches = { savedMigrations: savedMigrations, jobs: results[1], alerts: self.buildAlerts(results[1].alerts) };
+                            $window.localStorage.setItem("currentBatches",JSON.stringify(results[1]));
                             return batches;
                         }, function(errorResponse) {
                             jobsCallInProgress = false;
@@ -57,6 +58,24 @@
                 }
             };
             
+            self.buildAlerts = function(result){
+                var alerts = [];
+                var tempAlerts = [];
+                for(var j=0; j<result.length; j++){
+                    var msgs = angular.copy(result[j].messages);
+                    for(var k=0; k<msgs.length; k++){
+                        msgs[k].job_id = result[j]["job-id"];
+                        msgs[k].resource_id = result[j]["resource-id"];
+                        msgs[k].resource_name = result[j]["resource-name"];
+                        msgs[k].resource_type = result[j]["resource-type"];
+                        msgs[k].batch_name = result[j]["batch-name"];
+                    }
+                    tempAlerts = tempAlerts.concat(msgs);
+                }
+                alerts = tempAlerts;
+                 return alerts;
+            }
+
             /**
              * @ngdoc method
              * @name getCurrentBatches
@@ -66,15 +85,19 @@
              * This service method returns a promise to fetch an array containing the list of batches for a tenant
              */
             self.getCurrentBatches = function(){
-            // var currentJobsTask = HttpWrapper.send(currentJobsUrl, { "operation": 'GET' });
-                
-            return HttpWrapper.send("/api/jobs/all", {"operation":'GET'})
-                        .then(function(result){
-                            return result;
-                        },function(error) {
-                            return error;
-                        });
-
+                var deferred = $q.defer();
+                var batches  = JSON.parse($window.localStorage.getItem("currentBatches"));
+                if(batches === undefined || batches === null){
+                    return HttpWrapper.send("/api/combined/dashboard", {"operation":'GET'})
+                    .then(function(result){
+                        return result;
+                    },function(error) {
+                        return error;
+                    });
+                }else{
+                    deferred.resolve(JSON.parse($window.localStorage.getItem('featureFlags')));
+                }
+                return deferred.promise;
             };
 
             /**

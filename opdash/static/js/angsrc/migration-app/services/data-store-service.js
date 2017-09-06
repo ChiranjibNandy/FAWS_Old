@@ -24,7 +24,8 @@
                 volume:[],
                 LoadBalancers:[],
                 service:[],
-                file:[]
+                file:[],
+                dns:[]
             };
 
             /**
@@ -65,13 +66,29 @@
                 LoadBalancers:[],
                 volume:[],
                 service:[],
-                file:[]
+                file:[],
+                dns:[]
             };
 
             self.saveItems = {
-                server: [],
-                network: [],
-                LoadBalancers: []
+                server:[],
+                network:[],
+                LoadBalancers:[],
+                volume:[],
+                service:[],
+                file:[],
+                dns:[]
+            };
+
+            self.itemLoaded = {
+                server:false,
+                network:false,
+                LoadBalancers:false,
+                volume:false,
+                service:false,
+                file:false,
+                dns:false,
+                jobStatus: false
             };
 
             self.selectedRecommendedItems = [];
@@ -81,6 +98,7 @@
                 timezone: ''
             };
             self.fileItems = [];
+            self.dnsItems = [];
             /**
              * @ngdoc property
              * @name selectedTime
@@ -148,6 +166,7 @@
              */
             this.setSaveItems = function (items) {
                 this.saveItems = items;
+                $window.localStorage.savedResources = JSON.stringify(this.saveItems);
             }
 
             /**
@@ -158,12 +177,8 @@
              * @description 
              * Returns list of resources the user wants to continue with the migration.
              */
-            this.getSaveItems = function () {
-                if (this.saveItems.server.length === 0 && this.saveItems.network.length === 0 && this.saveItems.LoadBalancers.length === 0) {
-                    return $window.localStorage.getItem('savedServers');
-                } else {
-                    return this.saveItems;
-                }
+            this.getSaveItems = function (type) {
+                return ($window.localStorage.savedResources !== undefined && JSON.parse($window.localStorage.savedResources)[type]) || this.saveItems[type];
             }
 
             /**
@@ -206,8 +221,11 @@
              * Stores datetime and timezone data needed for scheduling migration
              */
             this.storeDate = function (type, item) {
+                if($window.localStorage.selectedDate !== undefined){
+                   self.selectedDate = JSON.parse($window.localStorage.getItem("selectedDate"));
+                }
                 self.selectedDate[type] = item;
-                $window.localStorage.setItem("selectedDate", JSON.stringify(self.selectedDate));
+                $window.localStorage.selectedDate = JSON.stringify(self.selectedDate)
             }
 
             /**
@@ -232,29 +250,11 @@
              * Retrieves the saved list of resources of the specified _type_.
              */
             this.getItems = function (type) {
-                //return self.selectedItems.filter(function(item){return item.type === type;});
-                var name = 'selectedServers';
-                if (type) {
-                    if (self.selectedItems[type].length > 0) {
-                        return self.selectedItems[type];
-                    } else {
-                        if (type === 'network') {
-                            name = 'selectedNetworks';
-                        } else if (type === 'LoadBalancers') {
-                            name = 'selectedLoadBalancers';
-                        }
-                        return JSON.parse(localStorage.getItem(name));
-                    }
-                } else {
-                    if (self.selectedItems.server.length === 0 && self.selectedItems.network.length === 0 && self.selectedItems.LoadBalancers.length === 0) {
-                        return {
-                            server: JSON.parse(localStorage.getItem('selectedServers')) || [],
-                            network: JSON.parse(localStorage.getItem('selectedNetworks')) || [],
-                            LoadBalancers: JSON.parse(localStorage.getItem('selectedLoadBalancers')) || []
-                        }
-                    } else {
-                        return self.selectedItems;
-                    }
+                if(type){
+                    return ($window.localStorage.selectedResources !== undefined && JSON.parse($window.localStorage.selectedResources)[type]) || self.selectedItems[type];
+                }
+                else{
+                    return ($window.localStorage.selectedResources !== undefined && JSON.parse($window.localStorage.selectedResources)) || self.selectedItems;
                 }
             }
 
@@ -314,10 +314,11 @@
 
             this.setDontShowStatus = function (status) {
                 self.dontShowStatus = status;
+                $window.localStorage.dontShowStatus = self.dontShowStatus;
             }
 
             this.getDontShowStatus = function () {
-                return self.dontShowStatus;
+                return $window.localStorage.dontShowStatus || self.dontShowStatus;
             }
 
             this.setDontShowNameModal = function (status) {
@@ -371,7 +372,8 @@
                     volume:[],
                     LoadBalancers:[],
                     service:[],
-                    file:[]
+                    file:[],
+                    dns:[]
                 };
                 self.dontShowNameModal = false;
                 self.labelsServer = [];
@@ -382,8 +384,28 @@
                     volume:[],
                     LoadBalancers:[],
                     service:[],
-                    file:[]
-                }
+                    file:[],
+                    dns:[]
+                };
+                self.saveItems = {
+                    server:[],
+                    network:[],
+                    LoadBalancers:[],
+                    volume:[],
+                    service:[],
+                    file:[],
+                    dns:[]
+                };
+                self.itemLoaded = {
+                    server:false,
+                    network:false,
+                    LoadBalancers:false,
+                    volume:false,
+                    service:false,
+                    file:false,
+                    dns:false,
+                    jobStatus: false
+                };
                 self.labelsServer = [];
                 self.labelsNetwork = [];
                 self.selectedDate = {};
@@ -454,6 +476,8 @@
                         migrationResourceCount += JSON.parse($window.localStorage.selectedResources)['service'].length;
                     if(JSON.parse($window.localStorage.selectedResources)['file'].length > 0)
                         migrationResourceCount += JSON.parse($window.localStorage.selectedResources)['file'].length;
+                    if(JSON.parse($window.localStorage.selectedResources)['dns'].length > 0)
+                        migrationResourceCount += JSON.parse($window.localStorage.selectedResources)['dns'].length;
                     
                     var resourcesCountArray = [];
                     
@@ -553,7 +577,8 @@
                     file: [],
                     volume: [],
                     service: [],
-                    LoadBalancers: []
+                    LoadBalancers: [],
+                    dns:[]
                 };
                 for (var equ in resources) {
                     angular.forEach(resources[equ], function (item) {
@@ -824,6 +849,14 @@
                 return self.eligibilityResults;
             };
 
+            self.setWelcomeModal = function (value) {
+                $window.localStorage.setItem("show_welcome_modal", value);
+            };
+
+            self.getWelcomeModal = function () {
+                return $window.localStorage.getItem("show_welcome_modal");
+            };
+
             this.allTimeZones = function () {
                 var url = "/static/angassets/time-zones.json";
                 return HttpWrapper.send(url, {
@@ -857,6 +890,50 @@
              */
             this.getFirstLoginFlag = function() {
                 return ($window.localStorage.firstLogin || false);
+            }
+
+             /**
+             * @ngdoc method
+             * @name getUserSettings
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Gets welcome Modal associated with a loged in user.
+             */
+            this.getUserSettings = function () {
+                var self = this;
+                var getUserSettingsUrl = "/api/user/settings";
+                return HttpWrapper.send(getUserSettingsUrl, {
+                        "operation": 'GET'
+                    })
+                    .then(function (result) {
+                        self.setDontShowStatus((result.length || result.show_welcome_modal) || true);
+                        return result;
+                    }, function (error) {
+                        return false;
+                    });
+            };
+
+            /**
+             * @ngdoc method
+             * @name setResourceLoadingStatus
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Set status of a flag that keeps track of completion of API calls(API calls for fetching servers, CDN's, CBS, files.
+             */
+            this.setResourceLoadingStatus = function(type, val){
+                self.itemLoaded[type] = val;
+                $window.localStorage.itemLoaded = JSON.stringify(self.itemLoaded);
+            }
+
+            /**
+             * @ngdoc method
+             * @name getResourceLoadingStatus
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Get status of a flag that keeps track of completion of API calls(API calls for fetching servers, CDN's, CBS, files.
+             */
+            this.getResourceLoadingStatus = function(type){
+                return (($window.localStorage.itemLoaded !== undefined && JSON.parse($window.localStorage.itemLoaded)[type]) || self.itemLoaded[type]);
             }
 
             return self;
