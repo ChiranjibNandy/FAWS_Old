@@ -7,7 +7,7 @@
      * @description
      * Service to retrieve all data for DNS resources
      */
-    angular.module("migrationApp").factory("dnsservice", ["httpwrapper", "$q", "authservice","datastoreservice","$window", function (HttpWrapper, $q, authservice,datastoreservice,$window) {
+    angular.module("migrationApp").factory("dnsservice", ["httpwrapper", "$q", "authservice","datastoreservice","$window", "DEFAULT_VALUES", function (HttpWrapper, $q, authservice,datastoreservice,$window, DEFAULT_VALUES) {
         // local variables to help cache data
         var self = this, dns,currentTenant = null, 
             callInProgress = false,
