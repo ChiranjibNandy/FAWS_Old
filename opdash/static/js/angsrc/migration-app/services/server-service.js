@@ -9,7 +9,9 @@
      */
     angular.module("migrationApp").factory("serverservice", ["httpwrapper", "$q", "authservice", "$window", "datastoreservice", "DEFAULT_VALUES", function (HttpWrapper, $q, authservice, $window, datastoreservice, DEFAULT_VALUES) {
         // local variables to help cache data
-        var loaded, servers, self = this, currentTenant = null;
+        var loaded, servers, self = this, currentTenant = null, 
+            callInProgress = false,
+            serverPromise;
 
         // function to transform the data from api call for overview display
         function trimTransform(data) {
@@ -19,7 +21,7 @@
                 // iterate over networks by region
                 if (t.hasOwnProperty(key) && t[key] !== null) {
                     // iterate over each network and extract necessary data
-                    angular.forEach(t[key].servers, function (server) {
+                    angular.forEach(t[key], function (server) {
                         serversList.push(transformServer(server));
                     });
                 }
@@ -173,33 +175,38 @@
          */
         self.getAll = function () {
             //var url = "/static/angassets/servers-list.json";
-            var url = "/api/compute/us-instances";
+            var url = "/api/compute/instances";
             var tenant_id = authservice.getAuth().tenant_id;
-
-            // if ((currentTenant !== tenant_id)) {
-
-            return HttpWrapper.send(url,{"operation":'GET'})
-                    .then(function(response){
+            if (callInProgress == false && datastoreservice.getResourceLoadingStatus("server") == false) {
+                callInProgress = true;
+                serverPromise = HttpWrapper.send(url, { "operation": 'GET' })
+                    .then(function (response) {
                         currentTenant = tenant_id;
                         servers = {
                             labels: [
-                                        {field: "name", text: "Server Name"},
-                                        {field: "ip_address", text: "IP Address"},
-                                        {field: "ram", text: "RAM"},
-                                        {field: "status", text: "Server Status"},
-                                        {field:"migStatus", text:"Migration Status"},
-                                        {field:"eligible", text:"Eligibility test result"}
-                                    ],
+                                { field: "name", text: "Server Name" },
+                                { field: "ip_address", text: "IP Address" },
+                                { field: "ram", text: "RAM" },
+                                { field: "status", text: "Server Status" },
+                                { field: "migStatus", text: "Migration Status" },
+                                { field: "eligible", text: "Eligibility test result" }
+                            ],
                             data: response
                         };
+                        callInProgress = false;
+                        datastoreservice.setResourceLoadingStatus("server", true);
                         return servers;
-                    }, function(errorResponse) {
+                    }, function (errorResponse) {
+                        callInProgress = false;
+                        datastoreservice.setResourceLoadingStatus("server", false);
                         return errorResponse;
                     });
-
-            // } else {
-            //     return $q.when(servers);
-            // }
+                return serverPromise;
+            } else if (callInProgress) {
+                return serverPromise;
+            } else if (callInProgress == false && datastoreservice.getResourceLoadingStatus("server") == true) {
+                return $q.when(servers);
+            };
         };
 
         /**

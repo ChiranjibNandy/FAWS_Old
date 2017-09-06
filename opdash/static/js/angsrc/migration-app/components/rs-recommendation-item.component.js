@@ -445,11 +445,16 @@
                     var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+vm.awsRegion;
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
                         vm.loadingPrice = false;
-                        item.pricingOptions = pricingOptions;
+                        item.pricingOptions = pricingOptions.filter(po => item.details['rax_virtual_interface_count'] <= po['max_enis']);
+                        if(item.pricingOptions.length == 0){
+                            item.pricingOptions = pricingOptions
+                        }
                         if(item.pricingOptions.length == 0){
                             vm.selectedConfigurationType = "";
                         }
-                        //item.pricingOptions.concat(item.details);
+                        //If no, clear the selected config type
+                        if(!pricingContainsItem)
+                            vm.selectedConfigurationType = "";
                     },function(error){
                         vm.loadingPrice = false;
                         vm.errorInApi = true;

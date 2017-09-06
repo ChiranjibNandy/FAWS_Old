@@ -21,7 +21,7 @@
                         <button class="rs-btn" ng-click="vm.getBatchDetails(true)">
                             <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i> Refresh
                         </button>
-                        <a ng-link="['MigrationStatus']" href="" class="rs-btn">Back</a>
+                        <a class="rs-btn" ng-link="['MigrationStatus']" style="width: 60px">Back</a>
                         <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1
                             ? " mins ": " min ") + "ago"}}</div>
                     </div>
@@ -156,10 +156,10 @@
                         </thead>
                         <tbody ng-show="!vm.loading && !vm.loadError">
                             <tr ng-repeat="cdn in vm.job.cdn | orderBy: vm.sortBy.cdn">
-                                <td class="rs-table-link" style="width:25%">
+                                <td class="rs-table-link" ng-class="{'currentBatchServerGridName':(equipment === 'server'),'currentBatchNotServerGrid':(equipment !== 'server') }">
                                     <a href="" ng-click="vm.equipmentDetails('service', cdn)" role="button" data-toggle="modal">{{cdn.name}}</a>
                                 </td>
-
+                                <td class="rs-table-text" ng-class="{'currentBatchServerGrid':(equipment === 'server'),'currentBatchNotServerGrid':(equipment !== 'server') }">
                                 <td class="rs-table-text" style="width: 30%;">
                                     <span class="rs-status-error" ng-show="cdn.status==='error'">Error</span>
                                     <span class="rs-status-ok" ng-show="cdn.status==='done'">Completed</span>
@@ -470,8 +470,8 @@
                                         {{tableContent.destination.region | convertCase}}
                                     </span>
                                 </td>
-                                <td ng-if="equipment==='server'">
-                                    <span>
+                                <td class="currentBatchServerGrid">
+                                    <span ng-if="equipment==='server'">
                                         {{tableContent.destination.type}}
                                     </span>
                                 </td>
@@ -482,7 +482,7 @@
                         </tbody>
                         <tbody ng-show="vm.loading">
                             <tr>
-                                <td colspan="3">
+                                <td colspan="6">
                                     <div class="rs-table-overlay rs-table-overlay-loading">
                                         <div class="rs-table-overlay-content">
                                             <div class="rs-table-overlay-message">Loading&hellip;</div>
@@ -493,7 +493,7 @@
                         </tbody>
                         <tbody ng-show="!vm.loading && vm.loadError">
                             <tr>
-                                <td colspan="3" class="collection-error-msg">Error loading data</td>
+                                <td colspan="6" class="collection-error-msg">Error loading data</td>
                             </tr>
                         </tbody>
                     </table>

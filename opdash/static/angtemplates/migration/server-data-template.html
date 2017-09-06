@@ -16,9 +16,9 @@
                                 <small><em>Test Again</em></small>
                             </a></td>
     <td class="rs-table-text rs-status-processing capitalize" title="{{item.canMigrate ? ' ' : 'This server cannot be migrated'}}" ng-style="item.canMigrate ? {background: 'white'} : {background:'rgba(51, 51, 51, 0.15)'}" ng-show="item.eligible == 'Not Available'">
-        {{vm.checkingEligibility[item.id] ? 'running' : item.eligible }}  <span class="space"></span><a ng-class="{'disabled': vm.checkingEligibility[item.id]}" ng-show ="(item.migStatus == 'Not Available to Migrate' || (item.eligible == 'Not Available' && (item.migStatus != 'Status not available' && item.migStatus == 'Available to Migrate')))" href="" ng-click="vm.eligibilityCheck(item)">
-                                <i style="color: #1e6ec1 !important" class="fa fa-refresh" ng-class="{'fa-spin': vm.checkingEligibility[item.id]}"></i> 
-                                <small><em>Test Again</em></small>
-                            </a>
+        {{vm.checkingEligibility[item.id] ? 'running' : item.eligible }}  <span class="space"></span><i style="color: #1e6ec1 !important" class="fa fa-refresh" ng-show ="item.migStatus == 'Not Available to Migrate' || vm.checkingEligibility[item.id]" ng-class="{'fa-spin': vm.checkingEligibility[item.id]}"></i> 
+        <a ng-class="{'disabled': vm.checkingEligibility[item.id]}" ng-show ="item.migStatus == 'Not Available to Migrate'" href="" ng-click="vm.eligibilityCheck(item)">
+            <small><em>Test Again</em></small>
+        </a>
     </td>
 </tr>

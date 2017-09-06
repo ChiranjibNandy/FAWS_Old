@@ -12,7 +12,6 @@
             var loaded, loadbalancers, services, self = this,
                 currentTenant = null,
                 callInProgress = false,
-                statusLoaded = false,
                 statusResponse,
                 statusPromise,
                 resultsLoaded;
@@ -262,8 +261,8 @@
             } //end of getServerMigrationStatus method
 
             this.getResourceMigrationStatus = function (tenant_id) {
-                var url = "/api/jobs/all";
-                if (callInProgress == false && statusLoaded == false) {
+                var url = "/api/combined/dashboard";
+                if (callInProgress == false && dataStoreService.getResourceLoadingStatus("jobStatus") == false) {
                     callInProgress = true;
                     statusPromise = HttpWrapper.send(url, {
                             "operation": 'GET'
@@ -271,17 +270,17 @@
                         .then(function (response) {
                             statusResponse = response;
                             callInProgress = false;
-                            statusLoaded = true;
+                            dataStoreService.setResourceLoadingStatus("jobStatus", true);
                             return response;
                         }, function (error) {
                             callInProgress = false;
-                            statusLoaded = false;
+                            dataStoreService.setResourceLoadingStatus("jobStatus", false);
                             return false;
                         });
                     return statusPromise;
                 } else if (callInProgress) {
                     return statusPromise;
-                } else if (callInProgress == false && statusLoaded == true) {
+                } else if (callInProgress == false && dataStoreService.getResourceLoadingStatus("jobStatus") == true) {
                     return $q.when(statusResponse);
                 }
             }; //end of getResourceMigrationStatus method
