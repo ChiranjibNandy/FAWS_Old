@@ -309,10 +309,11 @@
 
             this.setDontShowStatus = function (status) {
                 self.dontShowStatus = status;
+                $window.localStorage.dontShowStatus = self.dontShowStatus;
             }
 
             this.getDontShowStatus = function () {
-                return self.dontShowStatus;
+                return $window.localStorage.dontShowStatus || self.dontShowStatus;
             }
 
             this.setDontShowNameModal = function (status) {
@@ -836,6 +837,14 @@
                 return self.eligibilityResults;
             };
 
+            self.setWelcomeModal = function (value) {
+                $window.localStorage.setItem("show_welcome_modal", value);
+            };
+
+            self.getWelcomeModal = function () {
+                return $window.localStorage.getItem("show_welcome_modal");
+            };
+
             this.allTimeZones = function () {
                 var url = "/static/angassets/time-zones.json";
                 return HttpWrapper.send(url, {
@@ -870,6 +879,27 @@
             this.getFirstLoginFlag = function() {
                 return ($window.localStorage.firstLogin || false);
             }
+
+             /**
+             * @ngdoc method
+             * @name getUserSettings
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Gets welcome Modal associated with a loged in user.
+             */
+            this.getUserSettings = function () {
+                var self = this;
+                var getUserSettingsUrl = "/api/user/settings";
+                return HttpWrapper.send(getUserSettingsUrl, {
+                        "operation": 'GET'
+                    })
+                    .then(function (result) {
+                        self.setDontShowStatus((result.length || result.show_welcome_modal) || true);
+                        return result;
+                    }, function (error) {
+                        return false;
+                    });
+            };
 
             /**
              * @ngdoc method

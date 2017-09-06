@@ -35,7 +35,7 @@
                     $('body').removeClass('modal-open');
                     $('.modal-backdrop').remove();
                     vm.allowTabs = false;
-                    vm.dontshowStatus = true;
+                    vm.dontshowStatus = false;
                     vm.introModalLoading = true;
                     vm.noFawsAccounts = false;
                     vm.serviceLevel = "navigator";
@@ -64,11 +64,13 @@
                         vm.noFawsAccounts = false;
                         vm.fawsAccType = vm.fawsAccountDetails.mode;
                     }
-                    if((modalDisplayStatus == false || $window.localStorage.dontShowStatus === false)  && (prePageName == "MigrationStatus" || prePageName == "MigrationResourceList" || prePageName == undefined)){
+                    
+                    if((modalDisplayStatus == 'true' )  && (prePageName == "MigrationStatus" || prePageName == "MigrationResourceList" || prePageName == undefined)){
                         $('#intro_modal').modal('show');
                         dataStoreService.setDontShowStatus(true);//set introduction modal flag to true after first time display.
-                        $window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
+                        // $window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
                     }
+                    
                     
                     dataStoreService.setPageName("MigrationResourceList");
                     $window.localStorage.setItem('pageName',"MigrationResourceList");
@@ -108,7 +110,7 @@
                         "modalName": '#cancel_modal'
                     };
                     vm.displayMigName = false;
-                    $window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
+                    //$window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
                     var timestmp = moment(d).format("DDMMMYYYY-hhmma");
                     /**
                      * @ngdoc property
@@ -501,6 +503,23 @@
                         vm.itemsLoadingStatus(!(dataStoreService.retrieveallItems(type).length > 0));   
                     }
                 });
+
+                vm.showWelcomeModal =function(){
+                    var url = '/api/user/settings';
+                      HttpWrapper.patch("/api/user/settings", {
+                                "operation": 'PATCH'
+                            }, [{
+                                  "key": "show_welcome_modal",
+                                  "action": "save",
+                                  "value": !dataStoreService.getDontShowStatus()
+                             }])
+                            .then(function (result) {
+                                console.log("success");
+                            }, function (error) {
+                                
+                            });
+                                
+                }
 
                 return vm;
             }

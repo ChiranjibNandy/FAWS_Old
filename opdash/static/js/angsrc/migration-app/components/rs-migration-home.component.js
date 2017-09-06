@@ -19,6 +19,9 @@
             controller: ["authservice","$rootRouter","httpwrapper","$q","datastoreservice","dashboardservice", function (authService,$rootRouter,HttpWrapper,$q,datastoreservice,dashboardservice) {
                 var vm = this;
                 vm.$onInit = function(){
+                    //calling get user Settings method to check whether to display welcome modal or not.
+                    datastoreservice.getUserSettings();
+                    
                     if(user_data.is_racker) {
                         $rootRouter.navigate(["RackerDash"]);
                     }
