@@ -65,7 +65,7 @@
                         vm.fawsAccType = vm.fawsAccountDetails.mode;
                     }
                     
-                    if((modalDisplayStatus == false || $window.localStorage.dontShowStatus === false || $window.localStorage.dontShowStatus==="")  && (prePageName == "MigrationStatus" || prePageName == "MigrationResourceList" || prePageName == undefined)){
+                    if((modalDisplayStatus == 'true' )  && (prePageName == "MigrationStatus" || prePageName == "MigrationResourceList" || prePageName == undefined)){
                         $('#intro_modal').modal('show');
                         dataStoreService.setDontShowStatus(true);//set introduction modal flag to true after first time display.
                         // $window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
@@ -110,7 +110,7 @@
                         "modalName": '#cancel_modal'
                     };
                     vm.displayMigName = false;
-                    $window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
+                    //$window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
                     var timestmp = moment(d).format("DDMMMYYYY-hhmma");
                     /**
                      * @ngdoc property

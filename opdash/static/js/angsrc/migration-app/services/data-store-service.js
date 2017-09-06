@@ -882,7 +882,7 @@
                         "operation": 'GET'
                     })
                     .then(function (result) {
-                        self.setDontShowStatus(!result.show_welcome_modal);
+                        self.setDontShowStatus((result.length || result.show_welcome_modal) || true);
                         return result;
                     }, function (error) {
                         return false;
