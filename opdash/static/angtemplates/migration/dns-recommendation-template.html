@@ -1,0 +1,19 @@
+<tr ng-repeat="item in vm.data | filter: vm.filtervalue | limitTo : vm.pageSize : (vm.currentPage-1)*vm.pageSize">
+    <td class="rs-table-status"
+            ng-class="{'rs-table-status-ok': item.status.toLowerCase()=='active', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
+    </td>
+    <td class="rs-table-link">
+        <a href="" role="button" ng-click="vm.equipmentDetails(vm.type, item)" data-toggle="modal" title="{{item.name}}">{{item.name}}</a>
+    </td>
+    <td class="rs-table-text">{{item.id}}</td>
+    <td>
+        <span class="rs-status rs-status-ok ng-binding"> {{item.status}} </span>
+    </td>
+    <td>
+        <span ng-show="vm.loadingRegion"><i class="fa fa-refresh fa-spin" style="font-size:16px" aria-hidden="true"></i></span>
+        <select ng-show="!vm.loadingRegion" ng-model="item.selectedMapping.region" style="margin-bottom: 2px;" ng-disabled="vm.errorInApi" ng-change="vm.setRegion(item)">
+            <option ng-show="vm.errorInApi">Not Available</option>
+            <option ng-repeat="region in vm.serviceRegions track by $index" value="{{region}}">{{region | convertCase}}</option>
+        </select>
+    </td>
+</tr>

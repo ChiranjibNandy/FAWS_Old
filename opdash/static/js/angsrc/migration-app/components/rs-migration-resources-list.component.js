@@ -97,7 +97,8 @@
                         LoadBalancers:[],
                         volume:[],
                         service:[],
-                        file:[]
+                        file:[],
+                        dns:[]
                     };
                     vm.filterSearch = "";
                     vm.saveProgress = "";
@@ -289,7 +290,7 @@
                         return;
                     } 
                     //if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 ){//|| dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 -- Previous Code
-                    if($window.localStorage.selectedResources !== undefined && (JSON.parse($window.localStorage.selectedResources)['server'].length || JSON.parse($window.localStorage.selectedResources)['volume'].length || JSON.parse($window.localStorage.selectedResources)['service'].length || JSON.parse($window.localStorage.selectedResources)['file'].length)){
+                    if($window.localStorage.selectedResources !== undefined && (JSON.parse($window.localStorage.selectedResources)['server'].length || JSON.parse($window.localStorage.selectedResources)['volume'].length || JSON.parse($window.localStorage.selectedResources)['service'].length || JSON.parse($window.localStorage.selectedResources)['file'].length || JSON.parse($window.localStorage.selectedResources)['dns'].length)){
                         vm.continuing = true;
                         var items = JSON.parse($window.localStorage.selectedResources)['server'];
 
@@ -334,6 +335,12 @@
                                 vm.selectedItems.file = tempItems;
                                 dataStoreService.setSelectedItems(vm.selectedItems.file,'file');
                             }
+                            if(JSON.parse($window.localStorage.selectedResources)['dns'].length > 0){
+                                tempItems = vm.populatePhase2ResourcesArray('dns',items);
+                                items = items.concat(tempItems);
+                                vm.selectedItems.dns = tempItems;
+                                dataStoreService.setSelectedItems(vm.selectedItems.dns,'dns');
+                            }
                             
                             vm.continuing = false;
                             dataStoreService.setDontShowNameModal(true);
@@ -355,6 +362,7 @@
                             ds.storeRegionFetchedFlags('volume',false);
                             ds.storeRegionFetchedFlags('service',false);
                             ds.storeRegionFetchedFlags('file',false);
+                            ds.storeRegionFetchedFlags('dns',false);
                             $rootRouter.navigate(["MigrationRecommendation"]);    
                         },function(error){
                             vm.continuing = false;
