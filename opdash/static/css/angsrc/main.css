@@ -660,3 +660,9 @@ span.fa-angle-left, span.fa-angle-right{
 .refreshMargin{
     margin-right: 5px;
 }
+
+.anchorDisabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    color: grey;
+}

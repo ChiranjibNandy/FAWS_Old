@@ -29,7 +29,6 @@
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
-                vm.cost = '';
                 vm.goodToGo = true;
                 vm.checking = false;
 
@@ -51,7 +50,8 @@
                     dataStoreService.setPageName("ConfirmMigration");
                     $window.localStorage.setItem('pageName', "ConfirmMigration");
                     vm.scheduleMigration = false;
-                    vm.cost = dataStoreService.getProjectedPricing();
+                    if(dataStoreService.getItems('server').length > 0)
+                        vm.cost = dataStoreService.getProjectedPricing();
                     vm.migrating = false;
                     vm.errorInMigration = false;
                     vm.acceptTermsAndConditions = false;
@@ -70,8 +70,10 @@
                     if (selectedItems.server.length > 0 || selectedItems.network.length > 0 || selectedItems.LoadBalancers.length > 0)
                         vm.emptyEquipments = true;
                     else vm.emptyEquipments = false;
-                    vm.cost = dataStoreService.getProjectedPricing();
-                    $window.localStorage.projectedPricing = JSON.stringify(vm.cost);
+                    if(dataStoreService.getItems('server').length > 0){
+                        vm.cost = dataStoreService.getProjectedPricing();
+                        $window.localStorage.projectedPricing = JSON.stringify(vm.cost);
+                    }
                 });
 
 

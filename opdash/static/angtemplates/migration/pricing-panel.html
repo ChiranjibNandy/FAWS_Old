@@ -20,10 +20,10 @@
     <div class="info-panel">
         <h3 id="basePrice">Current Cost</h3>
         <p>
-            <big ng-if="vm.invoiceTotal !== 'NaN'"><b>${{vm.invoiceTotal}}</b>/month</big>
-            <big ng-if="vm.invoiceTotal === 'NaN'"><b>N/A</b></big>
+            <big ng-if="vm.invoiceTotal !== 'NaN' && vm.invoiceTotal !== undefined"><b>${{vm.invoiceTotal}}</b>/month</big>
+            <big ng-if="vm.invoiceTotal === 'NaN' || vm.invoiceTotal == undefined"><b>N/A</b></big>
             <small>
-                <a href role="button" data-toggle="modal" ng-click="vm.openUsageCostsModalInChild()">See Details</a>
+                <a href role="button" data-toggle="modal" ng-class="{'anchorDisabled' : vm.invoiceTotal == undefined}" ng-click="vm.openUsageCostsModalInChild()">See Details</a>
             </small>
             <br>
             <small>* For selected resources from <b>step 1</b></small>
@@ -32,8 +32,9 @@
     <div class="white-panel">
         <h3>Projected Cost<a href="" role="button" data-trigger="hover" data-placement="top" data-toggle="popover" data-content="The projected pricing consist of infrastructure costs only, and support costs are not included in the provided price."><sup><i class="fa fa-info-circle rs-quiet"></i></sup></a></h3>
         <p>
-            <big><b>${{vm.totalProjectedPricingSum}}</b>/month</big><br>
-            <a href role="button" data-toggle="modal" ng-click="vm.openUsageCostsModalInChild()"><small>See Details</small></a> 
+            <big ng-if="vm.totalProjectedPricingSum !== undefined"><b>${{vm.totalProjectedPricingSum}}</b>/month</big><br>
+            <big ng-if="vm.totalProjectedPricingSum === undefined"><b>N/A</b></big>
+            <a href role="button" data-toggle="modal"  ng-class="{'anchorDisabled' : vm.totalProjectedPricingSum == undefined}" ng-click="vm.openUsageCostsModalInChild()"><small>See Details</small></a> 
         </p>
         <hr class="dash">
         <big><b>Support Level</b> </big>
