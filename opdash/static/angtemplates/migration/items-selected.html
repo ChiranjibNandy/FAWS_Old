@@ -1,4 +1,4 @@
-<div class="plain-panel" ng-style="{'min-height': vm.showrec === 'true' ? '240px' : 'initial'}" style="overflow: auto; overflow-x: hidden;overflow-y: hidden;">
+<div class="plain-panel" ng-style="{'min-height': vm.showrec === 'true' ? '240px' : 'initial', 'height': vm.showrec === 'true' ? '240px' : 'initial', 'overflow-y': vm.showrec === 'true' ? 'scroll' : 'hidden'}" style="overflow: auto; overflow-x: hidden;overflow-y: hidden;">
     <a ng-link="['MigrationResourceList']" ng-show="vm.showrec === 'true'" class="rs-btn-action rs-pull-right"><i class="rs-edit" title="Modify this"></i> </a>
     <h4 ng-show="vm.showrec === 'false'">Items Selected</h4>
     <h3 ng-show="vm.showrec === 'true'">Resources Selected</h3>
@@ -6,7 +6,7 @@
     <div class="accordion" id="accordion2">
         <div class="accordion-group" ng-class="{disabled:vm.selectedItems.server.length == 0}" ng-hide="vm.selectedItems.server.length == 0">
             <div class="accordion-heading ">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#server-name">
+                <a class="accordion-toggle" data-toggle="collapse"  target="_self" href="#server-name">
                     <b class=""> Servers ({{vm.selectedItems.server.length}})</b>
                     <i class='fa fa-chevron-down'></i>
                 </a>
@@ -30,7 +30,7 @@
         </div>
         <div class="accordion-group" ng-class="{disabled:vm.selectedItems.volume.length == 0}" ng-hide="vm.selectedItems.volume.length == 0">
             <div class="accordion-heading ">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#volume-name">
+                <a class="accordion-toggle" data-toggle="collapse"  target="_self" href="#volume-name">
                     <b class=""> CBS ({{vm.selectedItems.volume.length}})</b>
                     <i class='fa fa-chevron-down'></i>
                 </a>
@@ -46,7 +46,7 @@
         </div>
         <div class="accordion-group" ng-class="{disabled:vm.selectedItems.service.length == 0}" ng-hide="vm.selectedItems.service.length == 0">
             <div class="accordion-heading ">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#service-name">
+                <a class="accordion-toggle" data-toggle="collapse"  target="_self" href="#service-name">
                     <b class=""> CDN ({{vm.selectedItems.service.length}})</b>
                     <i class='fa fa-chevron-down'></i>
                 </a>
@@ -62,7 +62,7 @@
         </div>
         <div class="accordion-group" ng-class="{disabled:vm.selectedItems.file.length == 0}" ng-hide="vm.selectedItems.file.length == 0">
             <div class="accordion-heading ">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#file-name">
+                <a class="accordion-toggle" data-toggle="collapse"  target="_self" href="#file-name">
                     <b class=""> Files ({{vm.selectedItems.file.length}})</b>
                     <i class='fa fa-chevron-down'></i>
                 </a>
@@ -78,7 +78,7 @@
         </div>
         <div class="accordion-group" ng-class="{disabled:vm.selectedItems.dns.length == 0}" ng-hide="vm.selectedItems.dns.length == 0">
             <div class="accordion-heading ">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" target="_self" href="#dns-name">
+                <a class="accordion-toggle" data-toggle="collapse"  target="_self" href="#dns-name">
                     <b class=""> DNS ({{vm.selectedItems.dns.length}})</b>
                     <i class='fa fa-chevron-down'></i>
                 </a>
