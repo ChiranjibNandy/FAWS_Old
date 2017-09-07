@@ -657,6 +657,10 @@ span.fa-angle-left, span.fa-angle-right{
     width: 25%;
 }
 
-.refreshMargin{
-    margin-right: 5px;
+.refreshMarginRight{
+    margin-right: 6px;
+}
+    
+.refreshInMarginRight{
+    margin-left: 23px;
 }
