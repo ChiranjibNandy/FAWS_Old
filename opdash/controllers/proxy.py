@@ -15,8 +15,9 @@ def api_proxy(path):
         Proxy http request from control panel to api
         this allows us to avoid cross-domain requests
     """
-
-    current_app.logger.debug("API Route is:{0}".format(path))
+    msg = 'API Route is: "{0}"'.format(path)
+    current_app.logger.debug(msg)
+    print(msg)
 
     api_host = current_app.config.get('API_BASE_URL')
 
