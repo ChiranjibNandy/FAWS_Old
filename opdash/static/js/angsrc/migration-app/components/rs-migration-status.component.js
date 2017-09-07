@@ -358,14 +358,14 @@
                                 vm.timeSinceLastRefresh++;
                             }, 60000);
                         });
-                    }}, function (errorResponse) {
+                    }else{
                         vm.loading = false;
                         vm.manualRefresh = false;
                         vm.currentBatches.loadError = true;
                         vm.completedBatches.loadError = true;
                         vm.errors.items.length=0;
                         vm.loadingAlerts = false;
-                    });
+                    }});
                     if(!vm.autoRefreshEveryMinute){
                         vm.autoRefreshEveryMinute = true;
                         vm.intervalPromise = $interval(function () {   
