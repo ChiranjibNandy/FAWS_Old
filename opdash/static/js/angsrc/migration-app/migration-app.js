@@ -100,7 +100,7 @@
                 var arrInput =[];
                 if(input){
                     arrInput = input.split('-');
-                    return arrInput[0].toUpperCase()+'-'+arrInput[1][0].toUpperCase()+arrInput[1].substr(1).toLowerCase()+'-'+arrInput[2].toLowerCase();
+                    return arrInput[0].toUpperCase()+'-'+arrInput[1][0].toUpperCase()+arrInput[1].substr(1).toLowerCase()+'-'+arrInput[2].toLowerCase();    
                 }else{
                     return '';
                 }

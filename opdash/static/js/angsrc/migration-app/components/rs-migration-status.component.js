@@ -95,7 +95,7 @@
                     vm.isRacker = authservice.is_racker;
                     $('title')[0].innerHTML =  "Migration Status Dashboard - Rackspace Cloud Migration";
                     vm.count = 0;
-                    vm.autoRefreshEveryMinute = false;
+                    vm.autoRefreshEveryMinute = true;
                     vm.timerOn = false;
                     vm.savedMigrations = [];
                     vm.is_racker = authservice.getAuth().is_racker;
@@ -113,6 +113,7 @@
                     }else{
                         vm.autoRefreshText = dashboardService.getAutoRefreshStatus() ;
                         vm.autoRefreshButton = vm.autoRefreshText === 'ON'?false:true;
+                        vm.autoRefreshEveryMinute = vm.autoRefreshText === 'ON'?false:true;
                     }
                     vm.currentUser = authservice.account_name; //get Account Name
                    
@@ -356,7 +357,7 @@
                             vm.manualRefresh = false;
                             lastRefreshIntervalPromise = $interval(function(){
                                 vm.timeSinceLastRefresh++;
-                            }, 60000);
+                            }, 60001);
                         });
                     }}, function (errorResponse) {
                         vm.loading = false;
@@ -392,6 +393,27 @@
                         batches[i].showRefreshForApiLoading = flag;
                     }
                 };
+
+                /**
+                 * @ngdoc property
+                 * @name manualRefreshGrid
+                 * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                 * @description This function gets triggered when we press the refresh button
+                 * on UI, which actually cleans all the timers and will restart them.
+                 */
+                vm.manualRefreshGrid = function(){
+                    if(vm.autoRefreshText === "ON"){
+                        vm.killAllTimers();
+                        vm.autoRefreshText = "ON"; 
+                        vm.autoRefreshEveryMinute = false;
+                        vm.autoRefreshButton = false;
+                        vm.onTimeout();
+                        vm.killTimeOut();
+                        vm.counter = 60;
+                        vm.manuallyLoadingAllBatches(true);
+                     }
+                     vm.getBatches(true,true);
+                }
 
                 /**
                  * @ngdoc property
