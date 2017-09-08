@@ -26,9 +26,10 @@
                                     data-content="The projected pricing consist of infrastructure costs only, and support costs are not included in the provided price."><sup><i class="fa fa-info-circle rs-quiet"></i></sup></a></h3>
                             <hr>
                             <p>
-                                <big><b>{{vm.cost | currency: '$'}}</b>/month </big>
+                                <big ng-if="vm.cost !== undefined"><b>{{vm.cost | currency: '$'}}</b>/month </big>
+                                <big ng-if="vm.cost === undefined"><b>N/A</b></big>
                                 <br>
-                                <a href role="button" data-toggle="modal" ng-click="vm.openUsageCostsModalComponent()"><small>See Details</small></a>
+                                <a href role="button" data-toggle="modal" ng-class="{'anchorDisabled' : vm.cost == undefined}"  ng-click="vm.openUsageCostsModalComponent()"><small>See Details</small></a>
                             </p>
                             <hr class="dash">
                             <big><b>Support Level</b> </big>

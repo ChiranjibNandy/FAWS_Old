@@ -28,8 +28,6 @@
              */
             controller:["datastoreservice","$rootRouter","httpwrapper","$filter","$timeout","$q","$rootScope","httpwrapper","migrationitemdataservice","$window","$scope",function(dataStoreService,$rootRouter,HttpWrapper,$filter,$timeout,$q,$rootScope,httpwrapper,ds,$window,$scope){
                 var vm = this;
-                vm.invoiceTotal = '';
-                vm.totalProjectedPricingSum = 0;
                 
                 /**
                  * @ngdoc method
@@ -205,19 +203,17 @@
                  * Gets current pricing amount and the billing period
                  */
                 vm.getCurrentPricingDetails = function(){
+                    if(dataStoreService.getItems('server').length == 0) return;                  
                     var invoiceTotal = 0.00;
                     var date = new Date();
                     var selectedServers = [];
-                    //var selectedServers = dataStoreService.getItems('server');
-                    if($window.localStorage.selectedResources !== undefined)
-                        selectedServers = JSON.parse($window.localStorage.selectedResources)['server'];
-                    else
-                        selectedServers = dataStoreService.getItems('server');
+
+                    selectedServers = dataStoreService.getItems('server');
                     angular.forEach(selectedServers, function (item) {
                         invoiceTotal += item.details.rax_price;
                     });
                     vm.invoiceTotal = invoiceTotal.toFixed(2);
-                }
+                };
 
                 //Listener to listen to price change in the recommendations page.
                 $rootScope.$on("pricingChanged",function(){
@@ -233,6 +229,7 @@
                  * Gets a cumulative projected pricing amount
                  */
                 vm.getProjectedPricing = function(){
+                    if(dataStoreService.getItems('server').length == 0)return;
                     return $timeout(function(){
                         var selectedPricingMappingObj = [];
                         //var selectedPricingMappingObj = dataStoreService.getItems('server');

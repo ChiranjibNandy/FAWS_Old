@@ -669,10 +669,11 @@ span.fa-angle-left, span.fa-angle-right{
     width:16%;
 }
 
+.anchorDisabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    color: grey;
+} 
 .refreshMarginRight{
     margin-right: 10px;
-}
-
-.refreshInMarginRight{
-    margin-left: 20px;
 }
