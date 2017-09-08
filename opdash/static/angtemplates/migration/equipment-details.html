@@ -304,6 +304,33 @@
             </div>
         </div> 
     </div>
+    <div class="rs-content rs-panel rs-detail-xlarge" ng-if="vm.itemType == 'dns'">
+        <div class="rs-detail-header">
+            <div class="rs-detail-header-subtitle">DNS Name</div>
+            <div class="rs-detail-header-title">{{vm.itemDetails.name}}</div>
+        </div>
+        <div class="rs-detail-section">
+            <div class="rs-detail-section-header">
+                <div class="rs-detail-section-title">DNS Details</div>
+            </div>
+            <div class="rs-detail-section-body">
+                <ul class="rs-detail-list">
+                    <li class="rs-detail-item">
+                        <div class="rs-detail-key">ID</div>
+                        <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
+                    </li>
+                    <li class="rs-detail-item">
+                        <div class="rs-detail-key">Created:</div>
+                        <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.created}}</span></div>
+                    </li>
+                    <li class="rs-detail-item">
+                        <div class="rs-detail-key">Updated:</div>
+                        <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.updated}}</span></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
     <div class="rs-content rs-panel rs-detail-xlarge" ng-if="vm.itemType == 'network'">
         <div class="rs-detail-header">
             <div class="rs-detail-header-subtitle">Network Name</div>

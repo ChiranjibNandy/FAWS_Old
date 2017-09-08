@@ -24,7 +24,8 @@
                 volume:[],
                 LoadBalancers:[],
                 service:[],
-                file:[]
+                file:[],
+                dns:[]
             };
 
             /**
@@ -65,7 +66,8 @@
                 LoadBalancers:[],
                 volume:[],
                 service:[],
-                file:[]
+                file:[],
+                dns:[]
             };
 
             self.saveItems = {
@@ -74,7 +76,8 @@
                 LoadBalancers:[],
                 volume:[],
                 service:[],
-                file:[]
+                file:[],
+                dns:[]
             };
 
             self.itemLoaded = {
@@ -84,6 +87,7 @@
                 volume:false,
                 service:false,
                 file:false,
+                dns:false,
                 jobStatus: false
             };
 
@@ -94,6 +98,7 @@
                 timezone: ''
             };
             self.fileItems = [];
+            self.dnsItems = [];
             /**
              * @ngdoc property
              * @name selectedTime
@@ -309,10 +314,11 @@
 
             this.setDontShowStatus = function (status) {
                 self.dontShowStatus = status;
+                $window.localStorage.dontShowStatus = self.dontShowStatus;
             }
 
             this.getDontShowStatus = function () {
-                return self.dontShowStatus;
+                return $window.localStorage.dontShowStatus || self.dontShowStatus;
             }
 
             this.setDontShowNameModal = function (status) {
@@ -366,7 +372,8 @@
                     volume:[],
                     LoadBalancers:[],
                     service:[],
-                    file:[]
+                    file:[],
+                    dns:[]
                 };
                 self.dontShowNameModal = false;
                 self.labelsServer = [];
@@ -377,7 +384,8 @@
                     volume:[],
                     LoadBalancers:[],
                     service:[],
-                    file:[]
+                    file:[],
+                    dns:[]
                 };
                 self.saveItems = {
                     server:[],
@@ -385,7 +393,8 @@
                     LoadBalancers:[],
                     volume:[],
                     service:[],
-                    file:[]
+                    file:[],
+                    dns:[]
                 };
                 self.itemLoaded = {
                     server:false,
@@ -394,6 +403,7 @@
                     volume:false,
                     service:false,
                     file:false,
+                    dns:false,
                     jobStatus: false
                 };
                 self.labelsServer = [];
@@ -466,6 +476,8 @@
                         migrationResourceCount += JSON.parse($window.localStorage.selectedResources)['service'].length;
                     if(JSON.parse($window.localStorage.selectedResources)['file'].length > 0)
                         migrationResourceCount += JSON.parse($window.localStorage.selectedResources)['file'].length;
+                    if(JSON.parse($window.localStorage.selectedResources)['dns'].length > 0)
+                        migrationResourceCount += JSON.parse($window.localStorage.selectedResources)['dns'].length;
                     
                     var resourcesCountArray = [];
                     
@@ -565,7 +577,8 @@
                     file: [],
                     volume: [],
                     service: [],
-                    LoadBalancers: []
+                    LoadBalancers: [],
+                    dns:[]
                 };
                 for (var equ in resources) {
                     angular.forEach(resources[equ], function (item) {
@@ -836,6 +849,14 @@
                 return self.eligibilityResults;
             };
 
+            self.setWelcomeModal = function (value) {
+                $window.localStorage.setItem("show_welcome_modal", value);
+            };
+
+            self.getWelcomeModal = function () {
+                return $window.localStorage.getItem("show_welcome_modal");
+            };
+
             this.allTimeZones = function () {
                 var url = "/static/angassets/time-zones.json";
                 return HttpWrapper.send(url, {
@@ -870,6 +891,27 @@
             this.getFirstLoginFlag = function() {
                 return ($window.localStorage.firstLogin || false);
             }
+
+             /**
+             * @ngdoc method
+             * @name getUserSettings
+             * @methodOf migrationApp.service:datastoreservice
+             * @description 
+             * Gets welcome Modal associated with a loged in user.
+             */
+            this.getUserSettings = function () {
+                var self = this;
+                var getUserSettingsUrl = "/api/user/settings";
+                return HttpWrapper.send(getUserSettingsUrl, {
+                        "operation": 'GET'
+                    })
+                    .then(function (result) {
+                        self.setDontShowStatus((result.length || result.show_welcome_modal) || true);
+                        return result;
+                    }, function (error) {
+                        return false;
+                    });
+            };
 
             /**
              * @ngdoc method

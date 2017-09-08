@@ -88,7 +88,7 @@
                 var deferred = $q.defer();
                 var batches  = JSON.parse($window.localStorage.getItem("currentBatches"));
                 if(batches === undefined || batches === null){
-                    return HttpWrapper.send("/api/combined/dashboard", {"operation":'GET'})
+                    return HttpWrapper.send("/api/jobs/all", {"operation":'GET'})
                     .then(function(result){
                         return result;
                     },function(error) {
@@ -102,7 +102,7 @@
 
             /**
              * @ngdoc method
-             * @name getCurrentBatches
+             * @name getCurrentBatcheForJobId
              * @methodOf migrationApp.service:dashboardservice
              * @returns {Promise} A promise to fetch the batch list for a given tenant
              * @description 
