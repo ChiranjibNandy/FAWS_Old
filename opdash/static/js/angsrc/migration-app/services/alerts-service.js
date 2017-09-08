@@ -81,7 +81,10 @@
                                             taskListLoaded = true;
                                             currentJobID = params.job_id;
                                             currentResourceID = params.resource_id;
-                                            taskList = result.resources[0].tasks;
+                                            if(result.resources[0])
+                                                taskList = result.resources[0].tasks;
+                                            else
+                                                taskList = [];
                                             batchName = result["batch-name"];
                                             return { batchName: batchName, tasks: taskList };
                                         }, function(errorResponse) {
