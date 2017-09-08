@@ -36,7 +36,7 @@
                         <!--Files-->
                         <rsmigrationitem type="file" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
-                    <rs-tab tabtitle="DNS" showtab="true" name="dns">
+                    <rs-tab tabtitle="DNS" showtab="{{vm.featureFlags.dns.enabled}}" name="dns">
                         <!--DNS-->
                         <rsmigrationitem type="dns" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
