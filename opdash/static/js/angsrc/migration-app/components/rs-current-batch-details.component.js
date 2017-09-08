@@ -25,7 +25,7 @@
             * @name migrationApp.controller:rscurrentbatchdetailsCtrl
             * @description Controller to handle all view-model interactions of {@link migrationApp.object:rscurrentbatchdetails rscurrentbatchdetails} component
             */
-            controller: ["$rootRouter", "migrationitemdataservice", "dashboardservice", "authservice", "alertsservice", "$interval", "$scope", "httpwrapper", "$q", "$window", function ($rootRouter, ds, dashboardService, authservice, alertsService, $interval, $scope, HttpWrapper, $q, $window) {
+            controller: ["$rootRouter", "migrationitemdataservice", "dashboardservice", "authservice", "alertsservice", "$interval", "$scope", "httpwrapper", "$q", "$window", "datastoreservice", function ($rootRouter, ds, dashboardService, authservice, alertsService, $interval, $scope, HttpWrapper, $q, $window, datastoreservice) {
                 var vm = this;
                 var job_id;
                 var lastRefreshIntervalPromise;
@@ -136,6 +136,7 @@
 
                 vm.$onInit = function () {
                     var auth = authservice.getAuth();
+                    datastoreservice.setPageName("current_batch");
                     vm.isRacker = authservice.is_racker;
                     vm.tenant_id = auth.tenant_id;
                     vm.currentUser = auth.account_name;

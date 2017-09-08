@@ -9,13 +9,13 @@
         <ul class="rs-dropdown-menu hidden">
             <li class="rs-dropdown-item" ng-show="vm.showCreateAccount">
                 <span class="rs-dropdown-category">You may create a new Account for this migration:
-                            <a href="" role="button" ng-click="vm.displayFawsAccounModal()" data-toggle="modal" ng-show="vm.editmigration === 'false'" aria-hidden="false">{{vm.is_racker ? 'Assign new AWS account' : 'Request a new AWS account'}}</a>
-                        </span>
+                    <a href="" role="button" ng-click="vm.displayFawsAccounModal()" data-toggle="modal" ng-show="vm.editmigration === 'false'" aria-hidden="false">{{vm.is_racker ? 'Assign new AWS account' : 'Request a new AWS account'}}</a>
+                </span>
             </li>
             <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && vm.showCreateAccount && vm.is_racker" style="margin-top:5px">
-                <span class="rs-dropdown-category">or Delete an Account:
-                            <a href="" role="button" data-toggle="modal" aria-invalid="false" ng-click="vm.displayDeleteFawsModal()">Delete an existing account</a>
-                        </span>
+                <span class="rs-dropdown-category">or Unlink account:
+                    <a href="" role="button" data-toggle="modal" aria-invalid="false" ng-click="vm.displayDeleteFawsModal()">Unlink account from migration tool</a>
+                </span>
             </li>
             <li class="rs-dropdown-item" ng-show="vm.fawsAcctStatus && vm.showCreateAccount">
                 <span class="rs-dropdown-category">or Select an existing account:</span>
@@ -141,11 +141,11 @@
 <div id="delete-faws-account-modal" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ><i class="fa fa-times"></i></button>
-        <big>Select one of the account from the dropdown to delete.</big>
+        <big>Select one of the account from the dropdown to unlink.</big>
     </div>
     <div class="modal-body">
         <div ng-show="vm.fawsDeleted">
-            <big>Request for deleting the account is complete.</big><br>
+            <big>Request for unlinking the account is complete.</big><br>
         </div>
         <span ng-show="vm.fawsDeleteError" style="color: #c40022">Uh oh! Something went wrong while deleting the account. Please try again after sometime...</span>
         <div ng-hide="vm.fawsDeleted || vm.fawsDeleteError">
@@ -163,8 +163,8 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a class="rs-btn rs-btn-primary" ng-click="vm.deleteAWSAccount()" ng-hide="vm.fawsDeleteError || vm.fawsDeleteProgress || vm.fawsDeleted">Delete</a>
-        <a class="rs-btn rs-btn-primary disabled" disabled="disabled" ng-show="vm.fawsDeleteProgress">Deleting...</a>
+        <a class="rs-btn rs-btn-primary" ng-click="vm.deleteAWSAccount()" ng-hide="vm.fawsDeleteError || vm.fawsDeleteProgress || vm.fawsDeleted">Unlink</a>
+        <a class="rs-btn rs-btn-primary disabled" disabled="disabled" ng-show="vm.fawsDeleteProgress">Unlinking...</a>
         <i class="rs-processing-indicator" ng-show="vm.fawsDeleteProgress"></i>
         <a class="rs-btn" data-dismiss="modal" aria-hidden="true" ng-class="{disabled:vm.fawsDeleteProgress}">Close</a>
     </div>

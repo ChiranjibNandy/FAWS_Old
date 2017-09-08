@@ -78,6 +78,8 @@
                                             currentResourceID = params.resource_id;
                                             if(result.resources[0])
                                                 taskList = result.resources[0].tasks;
+                                            else
+                                                taskList = [];
                                             batchName = result["batch-name"];
                                             return { batchName: batchName, tasks: taskList };
                                         }, function(errorResponse) {

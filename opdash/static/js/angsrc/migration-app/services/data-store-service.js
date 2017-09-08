@@ -329,8 +329,9 @@
                 return self.dontShowNameModal;
             }
 
-            this.setPageName = function (status) {
-                self.pageFlag = status;
+            this.setPageName = function (pageName) {
+                self.pageFlag = pageName;
+                $window.localStorage.setItem('pageName',pageName);
             }
 
             this.getPageName = function () {

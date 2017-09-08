@@ -70,6 +70,26 @@
     }]);
 
     /**
+     * This is a function to handle open in new tab.
+     */
+    window.oncontextmenu = function (event){
+        var firstHalf = '',secondHalf='';
+        if(event.toElement.href.indexOf('#') === -1){
+            if(event.toElement.href.indexOf('8000')>0){
+                firstHalf = event.toElement.href.substr(0,event.toElement.href.indexOf('8000/')+5);
+                secondHalf = "#/"+event.toElement.href.substr(event.toElement.href.indexOf('8000/')+5,event.toElement.href.length);
+            }else if(event.toElement.href.indexOf('net')>0){
+                firstHalf = event.toElement.href.substr(0,event.toElement.href.indexOf('net')+3);
+                secondHalf = "#/"+event.toElement.href.substr(event.toElement.href.indexOf('net')+5,event.toElement.href.length);
+            }else if(event.toElement.href.indexOf('com')>0){
+                firstHalf = event.toElement.href.substr(0,event.toElement.href.indexOf('com')+3);
+                secondHalf = "#/"+event.toElement.href.substr(event.toElement.href.indexOf('com')+5,event.toElement.href.length);
+            }
+            event.srcElement.href = firstHalf+secondHalf;
+        }
+    }
+
+    /**
      * @ngdoc directive
      * @name migrationApp.directive:setFocus
      * @restrict AE

@@ -11,6 +11,7 @@
      */
     angular.module("migrationApp")
         .component("rsmigrationhome", {
+            templateUrl: "/static/angtemplates/migration/migration-home.html",
             controllerAs: "vm",
             /**
              * @ngdoc controller
