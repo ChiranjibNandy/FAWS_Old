@@ -664,3 +664,15 @@ span.fa-angle-left, span.fa-angle-right{
 .refreshInMarginRight{
     margin-left: 23px;
 }
+
+.currentBatchInstanceWidth{
+    width:16%;
+}
+
+.refreshMarginRight{
+    margin-right: 10px;
+}
+
+.refreshInMarginRight{
+    margin-left: 20px;
+}
