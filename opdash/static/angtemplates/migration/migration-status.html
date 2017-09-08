@@ -133,7 +133,7 @@
                                     <span class="rs-progress-label rs-status-ok" ng-show="batch.batch_status==='in progress' && batch.progressFlag !== 'NA'">In Progress</span>                                    
                                     <span class="rs-status-ok" ng-show="batch.batch_status==='started'">Started</span>
                                     <span class="rs-status-ok" ng-show="batch.batch_status==='done'">Completed</span>
-                                    <span class="rs-status-error" ng-show="batch.batch_status==='error'">Error</span>
+                                    <span class="rs-status-error" ng-show="batch.batch_status==='error'">Failed</span>
                                     <span class="rs-status-warning" ng-show="batch.batch_status==='paused'">Paused</span>
                                 </td>
                                 <td class="rs-table-text" ng-class="{'paddingLeft':batch.batch_status!=='in progress'}">
