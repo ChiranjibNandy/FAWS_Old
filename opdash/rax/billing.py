@@ -9,8 +9,10 @@ def get_account_name(auth_token, tenant_id):
 
     try:
 
+        billing_base_url = current_app.config["RAX_BILLING_ENDPOINT"]
+
         response = requests.get(
-            "https://billingv2.api.rackspacecloud.com/v2"
+            billing_base_url +
             "/accounts/{0}-{1}/invoices/latest.json".format(
                 billing_ran_id,
                 tenant_id),
