@@ -34,8 +34,10 @@
                         var tenant_id = user_data.tenant_id;
                         dashboardservice.getBatches(true).then(function(result){
                             datastoreservice.setFirstLoginFlag();
-                            doSavedForLaterMigrationsExist = result.savedMigrations.length>0?true:false;
-                            doResourceMigrationsExist = (result.jobs.job_status_list && result.jobs.job_status_list.length>0)?true:false;
+                            if(result){
+                                doSavedForLaterMigrationsExist = result.savedMigrations.length>0?true:false;
+                                doResourceMigrationsExist = (result.jobs.job_status_list && result.jobs.job_status_list.length>0)?true:false;
+                            }
                             if(doSavedForLaterMigrationsExist === false && doResourceMigrationsExist === false){
                                 $rootRouter.navigate(["MigrationResourceList"]);                          
                             }

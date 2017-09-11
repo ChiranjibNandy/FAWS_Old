@@ -673,7 +673,12 @@ span.fa-angle-left, span.fa-angle-right{
     cursor: not-allowed;
     pointer-events: none;
     color: grey;
-} 
+}
+ 
 .refreshMarginRight{
     margin-right: 10px;
+}
+
+.backButtonWidth{
+    width: 60px;
 }
