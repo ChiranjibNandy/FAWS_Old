@@ -119,7 +119,7 @@
                 if (type === "server") {
                     return serverService.getTrimmedItem(item_id, item_region);
                 } else if (type === "network") {
-                    return networkService.getTrimmedItem(item_id);
+                    return networkService.getTrimmedItem(item_id, item_region);
                 } else if (type === "file") {
                     return fileService.getTrimmedItem(item_id, item_region );
                 } else if (type === "LoadBalancers") {
