@@ -5,7 +5,7 @@
             <div class="rs-detail-header-subtitle">Server Name</div>
             <h3 class="rs-page-title" style="color : #333">{{vm.itemDetails.name}}</h3>
         </div>
-        <div  class="modal-body" ng-show="!vm.loading">        
+        <div  class="modal-body equipment-modal-body" ng-show="!vm.loading">        
             <div class="rs-detail-section">
                 <div class="rs-detail-section-header">
                     <div class="rs-detail-section-title">Server Details</div>
@@ -101,7 +101,7 @@
                 </div>
             </div>
         </div>
-        <div ng-show="vm.loading" class="modal-body rs-table-overlay rs-table-overlay-loading">
+        <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
             <div class="rs-table-overlay-content">
                 <div class="rs-table-overlay-message"><b>Please wait while we are fetching the details&hellip;</b></div>
             </div>
@@ -112,7 +112,7 @@
             <div class="rs-detail-header-subtitle">CLB Name</div>
             <h3 class="rs-page-title" style="color : #333">{{vm.itemDetails.name}}</h3>
         </div>
-        <div  class="modal-body" ng-show="!vm.loading">
+        <div  class="modal-body equipment-modal-body" ng-show="!vm.loading">
             <div class="rs-detail-section">
                 <div class="rs-detail-section-header">
                     <div class="rs-detail-section-title">CLB Details</div>
@@ -173,7 +173,7 @@
                 </div>
             </div>
         </div>
-        <div ng-show="vm.loading" class="modal-body rs-table-overlay rs-table-overlay-loading">
+        <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
             <div class="rs-table-overlay-content">
                 <div class="rs-table-overlay-message"><b>Please wait while we are fetching the details&hellip;</b></div>
             </div>
@@ -184,7 +184,7 @@
             <div class="rs-detail-header-subtitle">CBS Name</div>
             <h3 class="rs-page-title" style="color : #333">{{vm.itemDetails.name}}</h3>
         </div>
-        <div class="modal-body" ng-show="!vm.loading">       
+        <div class="modal-body equipment-modal-body" ng-show="!vm.loading">       
             <div class="rs-detail-section">
                 <div class="rs-detail-section-header">
                     <div class="rs-detail-section-title">CBS Details</div>
@@ -240,7 +240,7 @@
                 </div>
             </div>
         </div>
-        <div ng-show="vm.loading" class="modal-body rs-table-overlay rs-table-overlay-loading">
+        <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
             <div class="rs-table-overlay-content">
                 <div class="rs-table-overlay-message"><b>Please wait while we are fetching the details&hellip;</b></div>
             </div>
@@ -251,7 +251,7 @@
             <div class="rs-detail-header-subtitle">CDN Name</div>
             <h3 class="rs-page-title" style="color : #333">{{vm.itemDetails.name}}</h3>
         </div>
-        <div class="modal-body" ng-show="!vm.loading"> 
+        <div class="modal-body equipment-modal-body" ng-show="!vm.loading"> 
             <div class="rs-detail-section">
                 <div class="rs-detail-section-header">
                     <div class="rs-detail-section-title">CDN Details</div>
@@ -298,7 +298,7 @@
                 </div>
             </div>
         </div>
-        <div ng-show="vm.loading" class="modal-body rs-table-overlay rs-table-overlay-loading">
+        <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
             <div class="rs-table-overlay-content">
                 <div class="rs-table-overlay-message"><b>Please wait while we are fetching the details&hellip;</b></div>
             </div>
@@ -309,7 +309,7 @@
             <div class="rs-detail-header-subtitle">Region</div>
             <h3 class="rs-page-title" style="color : #333">{{vm.itemDetails.name}}</h3>
         </div>
-        <div class="modal-body" ng-show="!vm.loading"> 
+        <div class="modal-body equipment-modal-body" ng-show="!vm.loading"> 
             <div class="rs-detail-section">
                 <div class="rs-detail-section-header">
                     <div class="rs-detail-section-title">File Details</div>
@@ -332,7 +332,7 @@
                 </div>
             </div>
         </div>
-        <div ng-show="vm.loading" class="modal-body rs-table-overlay rs-table-overlay-loading">
+        <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
             <div class="rs-table-overlay-content">
                 <div class="rs-table-overlay-message"><b>Please wait while we are fetching the details&hellip;</b></div>
             </div>
@@ -341,9 +341,9 @@
     <div class="rs-content rs-panel rs-detail-xlarge" ng-if="vm.itemType == 'dns'">
         <div class="modal-header">
             <div class="rs-detail-header-subtitle">DNS Name</div>
-            <h3 class="rs-page-title" style="color : #333">{{vm.itemDetails.name}}</h3div>
+            <h3 class="rs-page-title" style="color : #333">{{vm.itemDetails.name}}</h3>
         </div>
-        <div class="modal-body" ng-show="!vm.loading">
+        <div class="modal-body equipment-modal-body" ng-show="!vm.loading">
             <div class="rs-detail-section">
                 <div class="rs-detail-section-header">
                     <div class="rs-detail-section-title">DNS Details</div>
@@ -366,7 +366,7 @@
                 </div>
             </div>
         </div>
-        <div ng-show="vm.loading" class="modal-body rs-table-overlay rs-table-overlay-loading">
+        <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
             <div class="rs-table-overlay-content">
                 <div class="rs-table-overlay-message"><b>Please wait while we are fetching the details&hellip;</b></div>
             </div>
@@ -377,7 +377,7 @@
             <div class="rs-detail-header-subtitle">Network Name</div>
             <h3 class="rs-page-title" style="color : #333">{{vm.itemDetails.name}}</h3>
         </div>
-        <div class="modal-body" ng-show="!vm.loading">
+        <div class="modal-body equipment-modal-body" ng-show="!vm.loading">
             <div class="rs-detail-section">
                 <div class="rs-detail-section-header">
                     <div class="rs-detail-section-title">Network Details</div>
@@ -401,7 +401,7 @@
                 </div>
             </div>
         </div>
-        <div ng-show="vm.loading" class="modal-body rs-table-overlay rs-table-overlay-loading">
+        <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
             <div class="rs-table-overlay-content">
                 <div class="rs-table-overlay-message"><b>Please wait while we are fetching the details&hellip;</b></div>
             </div>

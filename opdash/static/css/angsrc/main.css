@@ -677,3 +677,7 @@ span.fa-angle-left, span.fa-angle-right{
 .refreshMarginRight{
     margin-right: 10px;
 }
+
+.equipment-modal-body{
+    max-height: 720px !important;
+}
