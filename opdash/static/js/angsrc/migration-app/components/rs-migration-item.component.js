@@ -140,7 +140,15 @@
                      * @type {Array}
                      * @description number of items to be showed per page
                      */
-                    vm.pageArray = [];
+                    vm.pageArray = {
+                        server:[],
+                        network:[],
+                        LoadBalancers:[],
+                        volume:[],
+                        service:[],
+                        file:[],
+                        dns:[]
+                    };
                     vm.filteredArr = [];
                     vm.search = {};
                     vm.loading = true;
@@ -176,15 +184,6 @@
                         vm.loading = false;
                         return;
                     };
-                    /**
-                     * @ngdoc property
-                     * @name resources_retrieved
-                     * @propertyOf migrationApp.controller:rsmigrationitemCtrl
-                     * @type {Array}
-                     * @description Set of resources retrieved during first time loading of application
-                     */
-
-                    vm.parent.itemsLoadingStatus(true);
 
                     //Fetch resources upon click on a resource tab.
                     $scope.$on("tabChanged", function(event, type){
@@ -196,6 +195,8 @@
                     vm.retrieveAllResources = function() {
                         //check if resources already retrieved
                         if (!datastoreservice.retrieveallItems(vm.type).length) {
+                            //Hide cancel and continue migration buttons untill eligibility call completes.
+                            vm.parent.itemsLoadingStatus(true);
                             //During first time loading of resources
                             // Retrieve all migration items of a specific type (eg: server, network etc)
                             var list = ds.getTrimmedAllItems(vm.type);
@@ -240,7 +241,8 @@
                                 });
 
                                 var selectedItems = [];
-                                var savedResources = [];
+                                var savedResources = [],
+                                    eligTestForSavedItems = [];
                                 if($window.localStorage.selectedResources !== undefined)
                                     selectedItems = JSON.parse($window.localStorage.selectedResources)[vm.type];
 
@@ -271,20 +273,31 @@
                                                 item.migStatus = "Available to Migrate";
                                                 item.selectedMapping = savedResources[i].selectedMapping;
                                                 vm.parent.addItem(item, vm.type);
+                                                eligTestForSavedItems.push(item);
                                                 break
                                             };
                                         };
                                     });
-                                };
-
-                                vm.pageChangeEvent();
+                                    //run eligibility tests for resources that were scheduled for migration
+                                    //depending upon eligibility test, enable/disable the resource for migration.
+                                    vm.pageChangeEvent(eligTestForSavedItems, true);
+                                    $timeout(function () {
+                                        vm.pageChangeEvent();
+                                    }, 2000);
+                                } else{
+                                    vm.pageChangeEvent();
+                                }
                                 datastoreservice.storeallItems(vm.items, vm.type);
                                 // pagination controls
                                 vm.currentPage = 1;
                                 vm.totalItems = vm.items.length; // number of items received.
                                 vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
                                 for (var i=1; i<=vm.noOfPages; i++) {
-                                    vm.pageArray.push(i);
+                                    //Check if page number is already appended in the variable mentained for apagination.
+                                    //This check is to avoid duplicate page numbers being added upon multiple clicks on a tab.
+                                    if(!vm.pageArray[vm.type].includes(i)){
+                                        vm.pageArray[vm.type].push(i);
+                                    }
                                 };
                                 vm.searchField = results[0].labels[0].field;
                                 vm.labels = results[0].labels; // set table headers
@@ -326,7 +339,9 @@
                         vm.totalItems = vm.items.length;
                         vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
                         for (var i = 1; i <= vm.noOfPages; i++) {
-                            vm.pageArray.push(i);
+                            if(!vm.pageArray[vm.type].includes(i)){
+                                vm.pageArray[vm.type].push(i);
+                            }
                         };
 
                         if(datastoreservice.retrieveallItems("label"+vm.type) !== undefined){
@@ -517,12 +532,14 @@
                                                     || (item.containerCount || 0) == vm.filtervalue || (item.size || 0) == vm.filtervalue);
                     // pagination controls
                     vm.currentPage = 1;
-                    vm.pageArray = [];
+                    vm.pageArray[vm.type] = [];
                     vm.pageSize = 5; // items to be displayed per page
                     vm.totalItems = vm.filteredArr.length; // number of items received.
                     vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
                     for (var i = 1; i <= vm.noOfPages; i++) {
-                        vm.pageArray.push(i);
+                        if(!vm.pageArray[vm.type].includes(i)){
+                            vm.pageArray[vm.type].push(i);
+                        }
                     };
                     clearTimeout(timeout);
                     // Wait for user to stop typing
@@ -639,14 +656,17 @@
                 }
 
                 //Look for page change event. 
-                vm.pageChangeEvent = function (filterInput) {
+                vm.pageChangeEvent = function (filterInput, modifyMig) {
                     var arrForEligibilityTest = [];
-                    if (!vm.filtervalue) {
+                    if (!vm.filtervalue && !modifyMig) {
                         var items = vm.items.slice((vm.currentPage - 1) * vm.pageSize, ((vm.currentPage - 1) * vm.pageSize) + vm.pageSize)
                     } else {
-                        if (filterInput)
+                        if (filterInput && modifyMig){
+                            var items = filterInput;
+                        } else if(filterInput && !modifyMig){
                             vm.tempfilteredArr = angular.copy(filterInput);
-                        var items = vm.tempfilteredArr.slice((vm.currentPage - 1) * vm.pageSize, ((vm.currentPage - 1) * vm.pageSize) + vm.pageSize);
+                            var items = vm.tempfilteredArr.slice((vm.currentPage - 1) * vm.pageSize, ((vm.currentPage - 1) * vm.pageSize) + vm.pageSize);
+                        }
                     }
                     angular.forEach(items, function (item) {
                         if((item.canMigrate == true && (vm.type == 'server' || (vm.type != 'server' && item.status.toLowerCase() == 'active' )) && !item.eligibiltyTests.length && !vm.checkingEligibility[item.id]) || ((vm.type == 'server' || (vm.type != 'server' && item.status.toLowerCase() == 'active' )) && (item.migStatus == 'Not Available to Migrate' || (item.eligible == 'Not Available' && (item.migStatus != 'Status not available' && item.migStatus == 'Not Available to Migrate'))) && !vm.checkingEligibility[item.id]) && !item.eligibiltyTests.length){
@@ -660,7 +680,7 @@
                                 item.eligible = 'Passed';
                                 item.migStatus = "Available to Migrate";
                                 item.eligibiltyTests = storedEligibilityResults[0].eligibiltyTests;
-                                // vm.parent.itemsLoadingStatus(false);
+                                vm.parent.itemsLoadingStatus(false);
                             } else {
                                 var activeInstance = {
                                     "id": item.id,
