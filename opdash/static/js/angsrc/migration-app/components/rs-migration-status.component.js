@@ -593,8 +593,16 @@
                  */
                 vm.continueScheduling = function (batch,modifyFlag) {
                     var autoRefreshButtonStatus = dashboardService.getAutoRefreshStatus();
+                    //JSON.parse(dataStoreService.getUserSettings());
+                    vm.dontShowStatusFlag = '';
+                    dataStoreService.getUserSettings().then(function(data){
+                        vm.dontShowStatusFlag = data.show_welcome_modal;
+                    })
+                    .then(function(){
                     $window.localStorage.clear();
                     dataStoreService.resetAll();
+                   dataStoreService.setDontShowStatus(vm.dontShowStatusFlag);
+                    })
                     dashboardService.storeAutoRefreshStatus(autoRefreshButtonStatus);
                     if(modifyFlag){
                         for(var i = 0; i<vm.nonSavedMigrations.length;i++){
@@ -624,7 +632,7 @@
                         dataStoreService.storeDate('time',batch.schedulingTimeDate.time);
                         dataStoreService.storeDate('timezone',batch.schedulingTimeDate.timezone);
                     }
-                    dataStoreService.setDontShowStatus(true);
+                    //dataStoreService.setDontShowStatus(true);
                     dataStoreService.selectedTime.migrationName = batch.batch_name || batch.instance_name;
                     //$window.localStorage.migrationName = batch.batch_name || batch.instance_name;
                     dataStoreService.setSaveItems(batch.selected_resources);
