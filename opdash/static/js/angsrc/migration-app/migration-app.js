@@ -74,18 +74,18 @@
      */
     window.oncontextmenu = function (event){
         var firstHalf = '',secondHalf='';
-        if(event.toElement.href.indexOf('#') === -1){
-            if(event.toElement.href.indexOf('8000')>0){
-                firstHalf = event.toElement.href.substr(0,event.toElement.href.indexOf('8000/')+5);
-                secondHalf = "#/"+event.toElement.href.substr(event.toElement.href.indexOf('8000/')+5,event.toElement.href.length);
-            }else if(event.toElement.href.indexOf('net')>0){
-                firstHalf = event.toElement.href.substr(0,event.toElement.href.indexOf('net')+3);
-                secondHalf = "#/"+event.toElement.href.substr(event.toElement.href.indexOf('net')+5,event.toElement.href.length);
-            }else if(event.toElement.href.indexOf('com')>0){
-                firstHalf = event.toElement.href.substr(0,event.toElement.href.indexOf('com')+3);
-                secondHalf = "#/"+event.toElement.href.substr(event.toElement.href.indexOf('com')+5,event.toElement.href.length);
+        if(event.target.href && event.target.href.indexOf('#') === -1){
+            if(event.target.href.indexOf('8000')>0){
+                firstHalf = event.target.href.substr(0,event.target.href.indexOf('8000/')+5);
+                secondHalf = "#/"+event.target.href.substr(event.target.href.indexOf('8000/')+5,event.target.href.length);
+            }else if(event.target.href.indexOf('net')>0){
+                firstHalf = event.target.href.substr(0,event.target.href.indexOf('net')+3);
+                secondHalf = "#/"+event.target.href.substr(event.target.href.indexOf('net')+5,event.target.href.length);
+            }else if(event.target.href.indexOf('com')>0){
+                firstHalf = event.target.href.substr(0,event.target.href.indexOf('com')+3);
+                secondHalf = "#/"+event.target.href.substr(event.target.href.indexOf('com')+5,event.target.href.length);
             }
-            event.srcElement.href = firstHalf+secondHalf;
+            event.target.href = firstHalf+secondHalf;
         }
     }
 

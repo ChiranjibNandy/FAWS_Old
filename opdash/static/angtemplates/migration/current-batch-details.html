@@ -21,7 +21,7 @@
                         <button class="rs-btn" ng-click="vm.getBatchDetails(true)">
                             <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i> Refresh
                         </button>
-                        <a ng-link="['MigrationStatus']" href="" class="rs-btn">Back</a>
+                        <a ng-link="['MigrationStatus']" href="" class="rs-btn backButtonWidth">Back</a>
                         <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1
                             ? " mins ": " min ") + "ago"}}</div>
                     </div>

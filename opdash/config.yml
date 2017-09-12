@@ -38,6 +38,10 @@
     # ACCESS_KEY_ID:
     # SECRET_ACCESS_KEY:
 
+- RAX:
+    BILLING:
+      - ENDPOINT: https://billingv2.api.rackspacecloud.com/v2
+
 - CACHE:
     # Type of cache to use. Available: filesystem, redis
     TYPE: filesystem

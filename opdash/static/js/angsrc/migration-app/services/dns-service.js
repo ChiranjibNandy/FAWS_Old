@@ -22,7 +22,7 @@
          * Gets the entire list of DNS Service in its raw JSON form, from the api.
         */
         this.getDNS = function () {
-            var url = "/api/dns";
+            var url = "/api/dns/";
             if (callInProgress == false && datastoreservice.getResourceLoadingStatus("dns") == false) {
                 callInProgress = true;
                 dnsPromise = HttpWrapper.send(url, {
