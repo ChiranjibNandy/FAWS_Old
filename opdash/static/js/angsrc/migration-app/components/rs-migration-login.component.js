@@ -36,7 +36,7 @@
              * @name migrationApp.controller:rsmigrationloginCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationlogin rsmigrationlogin} component
              */
-            controller: function($scope, $http) {
+            controller: function($scope, $http, $window) {
               var vm = this;
 
               vm.$onInit = function () {
@@ -49,7 +49,24 @@
                 // Impersonation Login
                 this.sso_username = '';
                 this.sso_pin = '';
+                //this is to find out whether brpwser supports local storage or not
+                vm.localStorageSupport = isLocalStorageSupported();
+                if(!isLocalStorageSupported()){
+                  $("#browser_modal").modal('show');
+                }
               };
+
+              function isLocalStorageSupported(){
+                  var testKey = 'test', storage = $window.localStorage;
+                  try {
+                      storage.setItem(testKey, '1');
+                      storage.removeItem(testKey);
+                      return true;
+                  } 
+                  catch (error){
+                      return false;
+                  }
+              }
 
               /**
                * @ngdoc method

@@ -682,3 +682,13 @@ span.fa-angle-left, span.fa-angle-right{
 .backButtonWidth{
     width: 60px;
 }
+
+#browser_modal{
+    margin-top: -20px;
+}
+
+.login_radio_group{
+    display:inline-block; 
+    background-color: ffgg55;
+    width: 200px; 
+}
