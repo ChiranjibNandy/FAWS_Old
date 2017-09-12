@@ -102,7 +102,7 @@
             })
             .error(function(data, status){
                 // User is not authenticated, logout
-                if(status == 403) document.location = "/logout";
+                if(status == 401) document.location = "/logout";
                 deferred.reject({ error: status, data: data });
             });
             return deferred.promise;
