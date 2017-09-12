@@ -191,7 +191,7 @@
                     </li>
                     <li class="rs-detail-item">
                         <div class="rs-detail-key" id="size-key">Created on</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.created_at}}
+                        <div class="rs-detail-value">{{vm.itemDetails.created_at || (vm.itemDetails.created | date : 'M/dd/yyyy hh:mm a')}}
                         </div>
                     </li>
                 </ul>
