@@ -95,7 +95,7 @@
                         return error;
                     });
                 }else{
-                    deferred.resolve(JSON.parse($window.localStorage.getItem('featureFlags')));
+                    deferred.resolve(JSON.parse($window.localStorage.getItem('currentBatches')));
                 }
                 return deferred.promise;
             };
