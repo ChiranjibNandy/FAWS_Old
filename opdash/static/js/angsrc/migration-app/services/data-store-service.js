@@ -622,7 +622,8 @@
                     "scheduledItem": saveInstance.scheduledItem || false,
                     "aws-account": JSON.parse($window.localStorage.getItem("fawsAccounts")).selectedFawsAccount,
                     "initiated_by": authservice.getAuth().username,
-                    "schedulingTimeDate": self.returnDate()
+                    "schedulingTimeDate": self.returnDate(),
+                    "job_id":saveInstance.job_id
                 }];
                 var reqObj = {
                     "tenant_id": authservice.getAuth().tenant_id.toString(),
