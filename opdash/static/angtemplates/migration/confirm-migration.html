@@ -51,14 +51,12 @@
                     </div>
                     <a class="rs-btn " ng-link="['MigrationRecommendation']">Back</a>
                     <rssaveprogress stepname="ConfirmMigration" type="button" class="ng-isolate-scope"></rssaveprogress>
-                    <button class="rs-btn rs-btn-primary " type="submit" ng-hide="vm.migrating" ng-click="vm.disableButton($event);vm.checkStatus()" ng-disabled="(!vm.scheduleMigration || !vm.acceptTermsAndConditions || !vm.emptyEquipments)">Confirm & Schedule</button>
+                    <button class="rs-btn rs-btn-primary " type="submit" ng-hide="vm.migrating" ng-click="vm.checkStatus()" ng-disabled="(!vm.scheduleMigration || !vm.acceptTermsAndConditions || !vm.emptyEquipments)">Confirm & Schedule</button>
                     <a class="rs-btn disabled" disabled="disabled" ng-show="vm.migrating">Scheduling...</a>
                     <i class="rs-processing-indicator" ng-show="vm.migrating"></i>
                 </div>
                 <div class="clear"></div>
-
-                <!--<div style="margin-top: 10px; text-align: right;" ng-show="vm.migrating" >Preparing and sending migration request...<i class="fa fa-refresh fa-spin" style="font-size:16px"></i></div>-->
-                <div style="color: red; text-align: right;" ng-show="vm.errorInMigration">Error while trying to migrate</div>
+                <div style="color: red; text-align: right;" ng-show="vm.errorInMigration">Error while trying to migrate. Please try again.</div>
                 <br>
             </div>
         </div>

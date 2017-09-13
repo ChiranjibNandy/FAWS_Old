@@ -5,7 +5,7 @@
     <td class="rs-table-link" style="width:79.33px;">
         <a href=""  style="width:102px;" role="button" ng-click="vm.equipmentDetails(vm.type, item)" data-toggle="modal" title="{{item.name}}">{{item.name}}</a>
     </td>
-    <td class="rs-table-text" style="width:356px;">{{item.size}}</td>
+    <td class="rs-table-text" style="width:356px;" ng-class="{'column-center': !item.size}">{{item.size || '---'}}</td>
     <td style="width:150px">
         <span class="rs-status rs-status-ok ng-binding"> {{item.status}} </span>
     </td>

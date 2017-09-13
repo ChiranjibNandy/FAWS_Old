@@ -1,15 +1,15 @@
 <tr ng-repeat="item in vm.data | filter: vm.filterCustomSearch | limitTo : vm.pageSize : (vm.currentPage-1)*vm.pageSize">
     <td class="rs-table-status"
-            ng-class="{'rs-table-status-ok': item.eligible == 'Passed', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
+            ng-class="{'rs-table-status-ok': item.status.toLowerCase()=='active', 'rs-table-status-processing rs-table-status-striped': item.status=='WARNING', 'rs-table-status-error': item.status=='ERROR'}">
     </td>
     <td class="rs-table-link">
         <a href="" role="button" ng-click="vm.equipmentDetails(vm.type, item)" data-toggle="modal" title="{{item.name}}">{{item.name}}</a>
     </td>
-    <td class="rs-table-text">{{item.ip_address}}</td>
-    <td class="rs-table-text" ng-class="{'disabledData': vm.errorInApi === true || vm.errorInZoneApi === true}"><i class="fa fa-arrow-right rs-status-ok pullLeft"></i>{{item.selectedMapping.region }}</td>
+    <td class="rs-table-text" ng-class="{'column-center': !item.ip_address}">{{item.ip_address || '---'}}</td>
+    <td class="rs-table-text" ng-class="{'disabledData': vm.errorInApi === true || vm.errorInZoneApi === true}" ng-class="{'column-center': !item.selectedMapping.region}"><i class="fa fa-arrow-right rs-status-ok pullLeft"></i>{{item.selectedMapping.region || '---'}}</td>
     <!--Default zone is always going to be us-east-1a, its not available from ec2_pricing kept as a secondary value-->
     <td class="rs-table-text" ng-class="{'disabledData': vm.errorInApi === true || vm.errorInZoneApi === true}">{{item.selectedMapping.zone || 'us-east-1a' }}</td>
-    <td class="rs-table-text">{{item.selectedMapping.instance_type}}</td>
+    <td class="rs-table-text" ng-class="{'column-center': !item.selectedMapping.instance_type}">{{item.selectedMapping.instance_type|| '---'}}</td>
     <td class="rs-table-text"> ${{item.selectedMapping.totalCost}}</td>
     <td class="rs-table-cog">
         <a href="" ng-click="vm.showModifyModal(item,'#modify_modal'+ item.id)" data-toggle="modal" class="rs-btn-action">
