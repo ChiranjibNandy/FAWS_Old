@@ -222,7 +222,7 @@
                             }, requestObj)
                             .then(function (result) {
                                 if (vm.saveResources) {
-                                    vm.saveResourceDetails();
+                                    vm.saveResourceDetails(result.id);
                                 } else {
                                     vm.migrating = false;
                                     $window.localStorage.setItem("migrationScheduled", "true");
@@ -260,11 +260,12 @@
                  * @description 
                  * This helps to save the selected resources and this function only be called if we are scheduling for later
                  */
-                vm.saveResourceDetails = function () {
+                vm.saveResourceDetails = function (jobId) {
                     var saveInstance = {
                         recommendations: JSON.parse($window.localStorage.selectedResources)['server'],
                         step_name: "MigrationResourceList",
                         scheduledItem: true,
+                        job_id:jobId,
                         migration_schedule: {
                             migrationName: dataStoreService.getScheduleMigration().migrationName, //$window.localStorage.migrationName,
                             time: dataStoreService.getScheduleMigration().time,

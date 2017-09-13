@@ -518,7 +518,7 @@
                     t.initiated_by = details.initiated_by;
                     t.scheduledItem = details.scheduledItem || false;
                     t.schedulingTimeDate = details.schedulingTimeDate;
-                        
+                    t.job_id = details.job_id;
                     return t;
                 }
 
@@ -599,7 +599,7 @@
                     if(modifyFlag){
                         for(var i = 0; i<vm.nonSavedMigrations.length;i++){
                             var details = vm.nonSavedMigrations[i];
-                            if(batch.metadata.batch_name === details.batch_name && details.scheduledItem){
+                            if(batch.job_id === details.job_id && details.scheduledItem){
                                 dataStoreService.setJobIdForMigration({jobId:batch.job_id,saveId:vm.nonSavedMigrations[i].save_id});
                                 batch = details;
                                 break;

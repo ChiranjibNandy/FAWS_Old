@@ -1,363 +1,411 @@
 <div id="resource_info" style="width: 750px !important; overflow-y: auto;" class="modal modal-warning hide fade details"
     tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="rs-content rs-panel rs-detail-xlarge" ng-if="vm.itemType == 'server'">
-        <div class="rs-detail-header">
-
+        <div class="modal-header">
             <div class="rs-detail-header-subtitle">Server Name</div>
-            <div class="rs-detail-header-title">{{vm.itemDetails.name}}</div>
+            <h3 class="rs-page-title" style="color : #333">{{vm.itemDetails.name}}</h3>
         </div>
-        <div class="rs-detail-section">
-            <div class="rs-detail-section-header">
-                <div class="rs-detail-section-title">Server Details</div>
+        <div  class="modal-body equipment-modal-body" ng-show="!vm.loading">        
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">Server Details</div>
+                </div>
+                <div class="rs-detail-section-body">
+                    <ul class="rs-detail-list">
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Server Status</div>
+                            <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.status}}</span></div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">ID</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key" id="size-key">RAM</div>
+                            <div class="rs-detail-value">
+                                <span class="rs-progress-label">{{vm.itemDetails.ram}} MB</span>
+                            </div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key" id="size-key">Disk</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.details.flavor_details.disk}} GB
+                            </div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Region</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.region|uppercase}}</div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Server Type</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.details.flavor_details.name}}</div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Virtual CPUs</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.details.flavor_details.vcpus}}</div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="rs-detail-section-body">
-                <ul class="rs-detail-list">
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">Server Status</div>
-                        <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.status}}</span></div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">ID</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key" id="size-key">RAM</div>
-                        <div class="rs-detail-value">
-                            <span class="rs-progress-label">{{vm.itemDetails.ram}} MB</span>
-                        </div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key" id="size-key">Disk</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.details.flavor_details.disk}} GB
-                        </div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">Region</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.region|uppercase}}</div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">Server Type</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.details.flavor_details.name}}</div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">Virtual CPUs</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.details.flavor_details.vcpus}}</div>
-                    </li>
-                </ul>
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">Networks</div>
+                </div>
+                <div class="rs-detail-section-body">
+                    <div class="rs-embedded-list-table-wrapper rs-embedded-small">
+                        <h4 class="equipment-err" ng-show="!vm.itemDetails.details.networks.length">No networks associated with this server.</h4>
+                        <table ng-show="vm.itemDetails.details.networks.length" class="rs-list-table no-truncate-td cell-center" >
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>ID</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="network in vm.itemDetails.details.networks">
+                                    <td class="rs-table-text">{{network.name}}</td>
+                                    <td class="rs-table-text">{{network.id}}</td>
+                                    <td class="rs-table-text"><span class="rs-status rs-status-ok">{{network.status}}</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="rs-detail-section">
-            <div class="rs-detail-section-header">
-                <div class="rs-detail-section-title">Networks</div>
-            </div>
-            <div class="rs-detail-section-body">
-                <div class="rs-embedded-list-table-wrapper rs-embedded-small">
-                    <h4 class="equipment-err" ng-show="!vm.itemDetails.details.networks.length">No networks associated with this server.</h4>
-                    <table ng-show="vm.itemDetails.details.networks.length" class="rs-list-table no-truncate-td cell-center" >
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>ID</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="network in vm.itemDetails.details.networks">
-                                <td class="rs-table-text">{{network.name}}</td>
-                                <td class="rs-table-text">{{network.id}}</td>
-                                <td class="rs-table-text"><span class="rs-status rs-status-ok">{{network.status}}</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">CBS Volumes</div>
+                </div>
+                <div class="rs-detail-section-body">
+                    <div class="rs-embedded-list-table-wrapper rs-embedded-small">
+                        <h4 class="equipment-err" ng-show="!vm.itemDetails.details.cbs_volumes.length">No CBS volumes associated with this server.</h4>
+                        <table ng-show="vm.itemDetails.details.cbs_volumes.length" class="rs-list-table no-truncate-td cell-center" >
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>ID</th>
+                                    <th>Volume Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="cbs in vm.itemDetails.details.cbs_volumes">
+                                    <td class="rs-table-text">{{cbs.display_name}}</td>
+                                    <td class="rs-table-text">{{cbs.id}}</td>
+                                    <td class="rs-table-text">{{cbs.volume_type}}</td>
+                                    <td class="rs-table-text"><span class="rs-status rs-status-ok">{{cbs.status}}</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="rs-detail-section">
-            <div class="rs-detail-section-header">
-                <div class="rs-detail-section-title">CBS Volumes</div>
-            </div>
-            <div class="rs-detail-section-body">
-                <div class="rs-embedded-list-table-wrapper rs-embedded-small">
-                    <h4 class="equipment-err" ng-show="!vm.itemDetails.details.cbs_volumes.length">No CBS volumes associated with this server.</h4>
-                    <table ng-show="vm.itemDetails.details.cbs_volumes.length" class="rs-list-table no-truncate-td cell-center" >
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>ID</th>
-                                <th>Volume Type</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="cbs in vm.itemDetails.details.cbs_volumes">
-                                <td class="rs-table-text">{{cbs.display_name}}</td>
-                                <td class="rs-table-text">{{cbs.id}}</td>
-                                <td class="rs-table-text">{{cbs.volume_type}}</td>
-                                <td class="rs-table-text"><span class="rs-status rs-status-ok">{{cbs.status}}</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
+            <div class="rs-table-overlay-content">
+                <div class="rs-table-overlay-message"><b>Please wait while we are fetching the details&hellip;</b></div>
             </div>
         </div>
     </div>
     <div class="rs-content rs-panel rs-detail-xlarge" ng-if="vm.itemType == 'LoadBalancers'">
-        <div class="rs-detail-header">
+        <div class="modal-header">
             <div class="rs-detail-header-subtitle">CLB Name</div>
-            <div class="rs-detail-header-title">{{vm.itemDetails.name}}</div>
+            <h3 class="rs-page-title" style="color : #333">{{vm.itemDetails.name}}</h3>
         </div>
-        <div class="rs-detail-section">
-            <div class="rs-detail-section-header">
-                <div class="rs-detail-section-title">CLB Details</div>
-            </div>
-            <div class="rs-detail-section-body">
-                <ul class="rs-detail-list">
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">CLB Status</div>
-                        <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.status}}</span></div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">ID</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key" id="size-key">Algorithm</div>
-                        <div class="rs-detail-value">
-                            <span class="rs-progress-label">{{vm.itemDetails.algorithm}}</span>
-                        </div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key" id="size-key">Created on</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.created.time}}
-                        </div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">Updated on</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.updated.time}}</div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="rs-detail-section">
-            <div class="rs-detail-section-header">
-                <div class="rs-detail-section-title">Virtual IPs</div>
-            </div>
-            <div class="rs-detail-section-body">
-                <div class="rs-embedded-list-table-wrapper rs-embedded-small">
-                    <table class="rs-list-table rs-embedded-list-table">
-                        <thead>
-                            <tr>
-                                <th>address</th>
-                                <th>ID</th>
-                                <th>IP Version</th>
-                                <th style="text-align: justify !important">type</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="virtualIp in vm.itemDetails.virtualIps">
-                                <td class="rs-table-text">{{virtualIp.address}}</td>
-                                <td class="rs-table-text">{{virtualIp.id}}</td>
-                                <td class="rs-table-text">{{virtualIp.ipVersion}}</td>
-                                <td style="text-align: justify !important" class="rs-table-text">{{virtualIp.type}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div  class="modal-body equipment-modal-body" ng-show="!vm.loading">
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">CLB Details</div>
                 </div>
+                <div class="rs-detail-section-body">
+                    <ul class="rs-detail-list">
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">CLB Status</div>
+                            <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.status}}</span></div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">ID</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key" id="size-key">Algorithm</div>
+                            <div class="rs-detail-value">
+                                <span class="rs-progress-label">{{vm.itemDetails.algorithm}}</span>
+                            </div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key" id="size-key">Created on</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.created.time}}
+                            </div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Updated on</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.updated.time}}</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">Virtual IPs</div>
+                </div>
+                <div class="rs-detail-section-body">
+                    <div class="rs-embedded-list-table-wrapper rs-embedded-small">
+                        <table class="rs-list-table rs-embedded-list-table">
+                            <thead>
+                                <tr>
+                                    <th>address</th>
+                                    <th>ID</th>
+                                    <th>IP Version</th>
+                                    <th style="text-align: justify !important">type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="virtualIp in vm.itemDetails.virtualIps">
+                                    <td class="rs-table-text">{{virtualIp.address}}</td>
+                                    <td class="rs-table-text">{{virtualIp.id}}</td>
+                                    <td class="rs-table-text">{{virtualIp.ipVersion}}</td>
+                                    <td style="text-align: justify !important" class="rs-table-text">{{virtualIp.type}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
+            <div class="rs-table-overlay-content">
+                <div class="rs-table-overlay-message"><b>Please wait while we are fetching the details&hellip;</b></div>
             </div>
         </div>
     </div>
     <div class="rs-content rs-panel rs-detail-xlarge" ng-if="vm.itemType == 'volume'">
-        <div class="rs-detail-header">
+        <div class="modal-header">
             <div class="rs-detail-header-subtitle">CBS Name</div>
-            <div class="rs-detail-header-title">{{vm.itemDetails.name}}</div>
+            <h3 class="rs-page-title" style="color : #333">{{vm.itemDetails.name}}</h3>
         </div>
-        <div class="rs-detail-section">
-            <div class="rs-detail-section-header">
-                <div class="rs-detail-section-title">CBS Details</div>
-            </div>
-            <div class="rs-detail-section-body">
-                <ul class="rs-detail-list">
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">CBS Status</div>
-                        <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.status}}</span></div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">ID</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">Size</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.size}}</div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key" id="size-key">Created on</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.created_at || (vm.itemDetails.created | date : 'M/dd/yyyy hh:mm a')}}
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="rs-detail-section">
-            <div class="rs-detail-section-header">
-                <div class="rs-detail-section-title">Attachments</div>
-            </div>
-            <div class="rs-detail-section-body">
-                <div class="rs-embedded-list-table-wrapper rs-embedded-small">
-                    <h4 class="equipment-err" ng-show="!vm.itemDetails.attachments.length">No attachment available with this volume.</h4>
-                    <table ng-show="vm.itemDetails.attachments.length" class="rs-list-table rs-embedded-list-table">
-                        <thead>
-                            <tr>
-                                <th>Device</th>
-                                <th>ID</th>
-                                <th>Server ID</th>
-                                <th style="text-align: justify !important">Host Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="attachment in vm.itemDetails.attachments">
-                                <td class="rs-table-text">{{attachment.device}}</td>
-                                <td class="rs-table-text">{{attachment.attachment_id}}</td>
-                                <td class="rs-table-text">{{attachment.server_id}}</td>
-                                <td class="rs-table-text">{{attachment.host_name || "Not Available"}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div class="modal-body equipment-modal-body" ng-show="!vm.loading">       
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">CBS Details</div>
                 </div>
+                <div class="rs-detail-section-body">
+                    <ul class="rs-detail-list">
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">CBS Status</div>
+                            <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.status}}</span></div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">ID</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Size</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.size}}</div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key" id="size-key">Created on</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.created_at}}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">Attachments</div>
+                </div>
+                <div class="rs-detail-section-body">
+                    <div class="rs-embedded-list-table-wrapper rs-embedded-small">
+                        <h4 class="equipment-err" ng-show="!vm.itemDetails.attachments.length">No attachment available with this volume.</h4>
+                        <table ng-show="vm.itemDetails.attachments.length" class="rs-list-table rs-embedded-list-table">
+                            <thead>
+                                <tr>
+                                    <th>Device</th>
+                                    <th>ID</th>
+                                    <th>Server ID</th>
+                                    <th style="text-align: justify !important">Host Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="attachment in vm.itemDetails.attachments">
+                                    <td class="rs-table-text">{{attachment.device}}</td>
+                                    <td class="rs-table-text">{{attachment.attachment_id}}</td>
+                                    <td class="rs-table-text">{{attachment.server_id}}</td>
+                                    <td class="rs-table-text">{{attachment.host_name || "Not Available"}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
+            <div class="rs-table-overlay-content">
+                <div class="rs-table-overlay-message"><b>Please wait while we are fetching the details&hellip;</b></div>
             </div>
         </div>
     </div>
     <div class="rs-content rs-panel rs-detail-xlarge" ng-if="vm.itemType == 'service'">
-        <div class="rs-detail-header">
+        <div class="modal-header">
             <div class="rs-detail-header-subtitle">CDN Name</div>
-            <div class="rs-detail-header-title">{{vm.itemDetails.name}}</div>
+            <h3 class="rs-page-title" style="color : #333">{{vm.itemDetails.name}}</h3>
         </div>
-        <div class="rs-detail-section">
-            <div class="rs-detail-section-header">
-                <div class="rs-detail-section-title">CDN Details</div>
-            </div>
-            <div class="rs-detail-section-body">
-                <ul class="rs-detail-list">
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">CDN Status</div>
-                        <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.status}}</span></div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">ID</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-         <div class="rs-detail-section">
-            <div class="rs-detail-section-header">
-                <div class="rs-detail-section-title">Domains</div>
-            </div>
-            <div class="rs-detail-section-body">
-                <div class="rs-embedded-list-table-wrapper rs-embedded-small">
-                    <h4 class="equipment-err" ng-show="!vm.itemDetails.domains.length">No domains available with this volume.</h4>
-                    <table ng-show="vm.itemDetails.domains.length" class="rs-list-table rs-embedded-list-table">
-                        <thead>
-                            <tr>
-                                <th>Domain</th>
-                                <th>Protocol</th>
-                                <th>Certificate</th>
-                                <th style="text-align: justify !important">Certificate Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="domains in vm.itemDetails.domains">
-                                <td class="rs-table-text">{{domains.domain}}</td>
-                                <td class="rs-table-text">{{domains.protocol}}</td>
-                                <td class="rs-table-text">{{domains.certificate}}</td>
-                                <td class="rs-table-text">{{domains.certificate_status}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div class="modal-body equipment-modal-body" ng-show="!vm.loading"> 
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">CDN Details</div>
                 </div>
+                <div class="rs-detail-section-body">
+                    <ul class="rs-detail-list">
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">CDN Status</div>
+                            <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.status}}</span></div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">ID</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">Domains</div>
+                </div>
+                <div class="rs-detail-section-body">
+                    <div class="rs-embedded-list-table-wrapper rs-embedded-small">
+                        <h4 class="equipment-err" ng-show="!vm.itemDetails.domains.length">No domains available with this volume.</h4>
+                        <table ng-show="vm.itemDetails.domains.length" class="rs-list-table rs-embedded-list-table">
+                            <thead>
+                                <tr>
+                                    <th>Domain</th>
+                                    <th>Protocol</th>
+                                    <th>Certificate</th>
+                                    <th style="text-align: justify !important">Certificate Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="domains in vm.itemDetails.domains">
+                                    <td class="rs-table-text">{{domains.domain}}</td>
+                                    <td class="rs-table-text">{{domains.protocol}}</td>
+                                    <td class="rs-table-text">{{domains.certificate}}</td>
+                                    <td class="rs-table-text">{{domains.certificate_status}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
+            <div class="rs-table-overlay-content">
+                <div class="rs-table-overlay-message"><b>Please wait while we are fetching the details&hellip;</b></div>
             </div>
         </div> 
     </div>
     <div class="rs-content rs-panel rs-detail-xlarge" ng-if="vm.itemType == 'file'">
-        <div class="rs-detail-header">
+        <div class="modal-header">
             <div class="rs-detail-header-subtitle">Region</div>
-            <div class="rs-detail-header-title">{{vm.itemDetails.name}}</div>
+            <h3 class="rs-page-title" style="color : #333">{{vm.itemDetails.name}}</h3>
         </div>
-        <div class="rs-detail-section">
-            <div class="rs-detail-section-header">
-                <div class="rs-detail-section-title">File Details</div>
+        <div class="modal-body equipment-modal-body" ng-show="!vm.loading"> 
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">File Details</div>
+                </div>
+                <div class="rs-detail-section-body">
+                    <ul class="rs-detail-list">
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">ID</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Size</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.size}}</div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Number of containers</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.containerCount}}</div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="rs-detail-section-body">
-                <ul class="rs-detail-list">
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">ID</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">Size</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.size}}</div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">Number of containers</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.containerCount}}</div>
-                    </li>
-                </ul>
+        </div>
+        <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
+            <div class="rs-table-overlay-content">
+                <div class="rs-table-overlay-message"><b>Please wait while we are fetching the details&hellip;</b></div>
             </div>
         </div> 
     </div>
     <div class="rs-content rs-panel rs-detail-xlarge" ng-if="vm.itemType == 'dns'">
-        <div class="rs-detail-header">
+        <div class="modal-header">
             <div class="rs-detail-header-subtitle">DNS Name</div>
-            <div class="rs-detail-header-title">{{vm.itemDetails.name}}</div>
+            <h3 class="rs-page-title" style="color : #333">{{vm.itemDetails.name}}</h3>
         </div>
-        <div class="rs-detail-section">
-            <div class="rs-detail-section-header">
-                <div class="rs-detail-section-title">DNS Details</div>
-            </div>
-            <div class="rs-detail-section-body">
-                <ul class="rs-detail-list">
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">ID</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">Created:</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.created}}</div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">Updated:</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.updated}}</div>
-                    </li>
-                </ul>
+        <div class="modal-body equipment-modal-body" ng-show="!vm.loading">
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">DNS Details</div>
+                </div>
+                <div class="rs-detail-section-body">
+                    <ul class="rs-detail-list">
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">ID</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Created:</div>
+                            <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.created}}</span></div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Updated:</div>
+                            <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.updated}}</span></div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
+        <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
+            <div class="rs-table-overlay-content">
+                <div class="rs-table-overlay-message"><b>Please wait while we are fetching the details&hellip;</b></div>
+            </div>
+        </div> 
     </div>
     <div class="rs-content rs-panel rs-detail-xlarge" ng-if="vm.itemType == 'network'">
-        <div class="rs-detail-header">
+        <div class="modal-header">
             <div class="rs-detail-header-subtitle">Network Name</div>
-            <div class="rs-detail-header-title">{{vm.itemDetails.name}}</div>
+            <h3 class="rs-page-title" style="color : #333">{{vm.itemDetails.name}}</h3>
         </div>
-        <div class="rs-detail-section">
-            <div class="rs-detail-section-header">
-                <div class="rs-detail-section-title">Network Details</div>
-            </div>
-            <div class="rs-detail-section-body">
-                <ul class="rs-detail-list">
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">Network Status</div>
-                        <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.status}}</span></div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key">ID</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
-                    </li>
-                    <li class="rs-detail-item">
-                        <div class="rs-detail-key" id="size-key">Shared</div>
-                        <div class="rs-detail-value">{{vm.itemDetails.shared}}
-                        </div>
-                    </li>
-                </ul>
+        <div class="modal-body equipment-modal-body" ng-show="!vm.loading">
+            <div class="rs-detail-section">
+                <div class="rs-detail-section-header">
+                    <div class="rs-detail-section-title">Network Details</div>
+                </div>
+                <div class="rs-detail-section-body">
+                    <ul class="rs-detail-list">
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">Network Status</div>
+                            <div class="rs-detail-value"><span class="rs-status rs-status-ok">{{vm.itemDetails.status}}</span></div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key">ID</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.id}}</div>
+                        </li>
+                        <li class="rs-detail-item">
+                            <div class="rs-detail-key" id="size-key">Shared</div>
+                            <div class="rs-detail-value">{{vm.itemDetails.shared}}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
+        <div ng-show="vm.loading" class="rs-table-overlay rs-table-overlay-loading">
+            <div class="rs-table-overlay-content">
+                <div class="rs-table-overlay-message"><b>Please wait while we are fetching the details&hellip;</b></div>
+            </div>
+        </div> 
     </div>
     <div class="modal-footer">
         <button class="rs-btn" data-dismiss="modal" aria-hidden="true">Close</button>

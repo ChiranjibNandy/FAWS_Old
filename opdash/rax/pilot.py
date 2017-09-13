@@ -5,11 +5,15 @@ import json
 
 def get_pilot_header(authtoken, tenant_id):
 
-    # get config
+    # Get Required Pilot Config Settings
     product = current_app.config["PILOT_PRODUCT"]
     pilot_url = current_app.config["PILOT_URL"]
     mycloud_url = current_app.config["PILOT_MYCLOUD_URL"]
     logout_url = current_app.config["PILOT_LOGOUT_URL"]
+
+    # Custom Support Link
+    support_text = current_app.config.get("PILOT_SUPPORT_TEXT", "Get Help")
+    support_url = current_app.config.get("PILOT_SUPPORT_URL", None)
 
     pilot_header = "<h2>Pilot Header Not Loaded</h2>"
 
@@ -23,13 +27,27 @@ def get_pilot_header(authtoken, tenant_id):
         mycloud_url,
     )
 
+    data = {
+        "logout": {
+            "uri": logout_url
+        }
+    }
+
+    # Add Custom Support Link if Configured
+    if support_url is not None:
+        data["utility-nav"] = ({
+            "menus": {
+                "support": {
+                    "label": support_text,
+                    "uri": support_url,
+                    "external": True
+                }
+            }
+        })
+
     response = requests.post(
         url,
-        data=json.dumps({
-            "logout": {
-                "uri": logout_url
-            }
-        }),
+        data=json.dumps(data),
         headers={
             "X-Auth-Token": authtoken
         }

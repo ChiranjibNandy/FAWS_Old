@@ -33,6 +33,10 @@
     # The path Pilot sends the user to for log out in this application
     LOGOUT_URL: /logout
 
+    # Pilot Override Support Text and Support Full URL
+    # SUPPORT_TEXT: Get Help
+    # SUPPORT_URL: http://put-support-url-here.com/support-page
+
 - AWS:
     # AWS credentials with which to connect to resources
     # ACCESS_KEY_ID:

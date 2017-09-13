@@ -650,11 +650,11 @@ span.fa-angle-left, span.fa-angle-right{
 }
 
 .currentBatchServerGrid{
-    width: 14%;
+    width: 15%;
 }
 
 .currentBatchServerGridName{
-    width: 25%;
+    width: 20%;
 }
 
 .refreshMarginRight{
@@ -679,6 +679,20 @@ span.fa-angle-left, span.fa-angle-right{
     margin-right: 10px;
 }
 
+.equipment-modal-body{
+    max-height: 720px !important;
+}
+
 .backButtonWidth{
     width: 60px;
+}
+
+#browser_modal{
+    margin-top: -20px;
+}
+
+.login_radio_group{
+    display:inline-block; 
+    background-color: ffgg55;
+    width: 200px; 
 }

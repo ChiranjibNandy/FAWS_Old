@@ -86,8 +86,11 @@
                                     <span ng-if="tableContent.status.state.toLowerCase() === 'created' || tableContent.status.toLowerCase() === 'created'"><i class="fa fa-clock-o font-size-progress-icons" aria-hidden="true"></i></span>
                                 </td>
                                 <td>
-                                    <span>
+                                    <span ng-if="tableContent.destination.region">
                                         {{tableContent.destination.region | convertCase}}
+                                    </span>
+                                    <span ng-if="!tableContent.destination.region">
+                                        N/A
                                     </span>
                                 </td>
                                 <td class="currentBatchInstanceWidth">

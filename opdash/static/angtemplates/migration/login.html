@@ -7,17 +7,17 @@
             <form name="loginForm" id="loginForm" method="POST" class="rs-form-small" ng-submit="vm.onSubmit()" novalidate>
                 <fieldset>
 
-                  <div style="display:inline-block; background-color:#ffgg55; width:200px;">
+                  <div class="login_radio_group">
                     <div class="rs-controls-group">
                       <label>Type</label>
                       <label class="rs-radio">
-                        <input name="user_type" type="radio" ng-model="vm.user_type" value="racker">Racker
+                        <input name="user_type" type="radio" ng-model="vm.user_type" value="racker" ng-disabled="!vm.localStorageSupport">Racker
                       </label>
                       <label class="rs-radio">
-                        <input name="user_type" type="radio" ng-model="vm.user_type" value="customer">Customer
+                        <input name="user_type" type="radio" ng-model="vm.user_type" value="customer" ng-disabled="!vm.localStorageSupport">Customer
                       </label>
                       <label class="rs-radio">
-                        <input name="user_type" type="radio" ng-model="vm.user_type" value="impersonate">Impersonate
+                        <input name="user_type" type="radio" ng-model="vm.user_type" value="impersonate" ng-disabled="!vm.localStorageSupport">Impersonate
                       </label>
                     </div>
                   </div>
@@ -25,7 +25,7 @@
                   <div class="rs-control-group" ng-class="{'error': loginForm.username.$invalid && (vm.submitted || loginForm.username.$touched)}">
                       <label for="username">Username</label>
                       <div class="rs-controls">
-                          <input class="rs-input-large" id="username" name="username" type="text" value="" ng-model="vm.username" required><br>
+                          <input class="rs-input-large" id="username" name="username" type="text" value="" ng-model="vm.username" required ng-disabled="!vm.localStorageSupport"><br>
                           <span ng-show="loginForm.username.$invalid && (vm.submitted || loginForm.username.$touched)" class="error-text">
                               <i class="rs-validation-indicator"></i> Username is required.
                           </span>
@@ -37,7 +37,7 @@
                         <label for="password">Password</label>
                         <div class="rs-controls">
                             <input autocomplete="off" class="rs-input-large" id="password" name="password" type="password" value="" ng-model="vm.password"
-                                required><br>
+                                required ng-disabled="!vm.localStorageSupport"><br>
                             <span ng-show="loginForm.password.$invalid && (vm.submitted || loginForm.password.$touched)" class="error-text">
                                 <i class="rs-validation-indicator"></i> Password is required.
                             </span>
@@ -88,11 +88,24 @@
                         </div>
                     </div>
                     <div class="login-action">
-                        <button type="submit" class="rs-btn rs-btn-login">Log In</button>
+                        <button type="submit" ng-disabled="!vm.localStorageSupport" class="rs-btn rs-btn-login">Log In</button>
                     </div>
                 </fieldset>
             </form>
         </div>
 
+    </div>
+</div>
+<div id="browser_modal" class="modal modal-warning hide animated fadeIn" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <br>
+        <h3 class="rs-page-title" style="color : #333">Private Browsing</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            <strong>
+                FAWS Migration tool works best in non private browsing on safari. Please switch to non private browsing.
+            </strong>
+        </p>
     </div>
 </div>
