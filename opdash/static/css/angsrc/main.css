@@ -650,11 +650,11 @@ span.fa-angle-left, span.fa-angle-right{
 }
 
 .currentBatchServerGrid{
-    width: 14%;
+    width: 15%;
 }
 
 .currentBatchServerGridName{
-    width: 25%;
+    width: 20%;
 }
 
 .refreshMarginRight{
@@ -677,6 +677,10 @@ span.fa-angle-left, span.fa-angle-right{
  
 .refreshMarginRight{
     margin-right: 10px;
+}
+
+.equipment-modal-body{
+    max-height: 720px !important;
 }
 
 .backButtonWidth{

@@ -57,9 +57,9 @@
                             vm.job = job;
                             vm.equipmentContent.tableBody.server = vm.job.instances;
                             vm.equipmentContent.tableBody.network = vm.job.networks;
-                            vm.equipmentContent.tableBody.cdn = vm.job.cdn;
+                            vm.equipmentContent.tableBody.service = vm.job.cdn;
                             vm.equipmentContent.tableBody.file = vm.job.file;
-                            vm.equipmentContent.tableBody.cbs = vm.job.volumes;
+                            vm.equipmentContent.tableBody.volume = vm.job.volumes;
                             if (job.batch_status === 'in progress' || job.batch_status === 'done')
                                 //Makes a promise to fetch the progress API details for in progress and completed batches
                                 var promise = HttpWrapper.send('/api/jobs/' + job.job_id + '/progress', { "operation": 'GET' });
@@ -152,20 +152,20 @@
                     vm.loading = true;
                     vm.manualRefresh = false;
                     vm.job_id = '';
-                    vm.equipments = ['server','network','cdn','cbs','file'];
+                    vm.equipments = ['server','network','service','volume','file'];
                     vm.equipmentContent = {
                         tableHeaders:{
                             server:['Server','Status','Progress','Destination Region','Instance Type','Actions'],
                             network:['Network','Status','Progress','Destination Region','','Actions'],
-                            cdn:['CDN','Status','Progress','Destination Region','','Actions'],
-                            cbs:['CBS','Status','Progress','Destination Region','','Actions'],
+                            service:['CDN','Status','Progress','Destination Region','','Actions'],
+                            volume:['CBS','Status','Progress','Destination Region','','Actions'],
                             file:['FILE','Status','Progress','Destination Region','','Actions']
                         },
                         tableBody:{
                             server:[],
                             network:[],
-                            cdn:[],
-                            cbs:[],
+                            service:[],
+                            volume:[],
                             file:[]
                         }
                     }
@@ -202,12 +202,18 @@
                 * Fetches resource details for a given resource type and id
                 */
                 vm.equipmentDetails = function (type, item) {
+                    vm.loading = true;
                     var id = item.id;
-                    var region = item.source_region || item.name;
-                        ds.getTrimmedItem(type, id, region)
+                    var region = item.source_region || item.name;	
+                    //Initiate the variables so that headers are even shown before the API gets resolved.
+                    vm.itemType = type;
+                    vm.itemDetails = {};
+                    vm.itemDetails.name = item.name; 
+                    $("#resource_info").modal("show");	                      
+                    ds.getTrimmedItem(type, id, region)
                         .then(function (response) {
+                            vm.loading = false;
                             var details = response;
-                            vm.itemType = type;
                             vm.itemDetails = details;
                             $("#resource_info").modal("show");
                         });
