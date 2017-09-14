@@ -67,7 +67,9 @@
                         valid = false;
                     }
                     else{
-                        var fawsTobeSelected = vm.fawsAccountDetails.awsAccounts.filter(x => x["name"]=== batch.aws_account.trim());
+                        var fawsTobeSelected = vm.fawsAccountDetails.awsAccounts.filter(function(x) {
+                            return x["name"]=== batch.aws_account.trim();
+                        });
                         if(fawsTobeSelected.length > 0){
                             valid = true;
                             vm.fawsAccountDetails.selectedFawsAccount = fawsTobeSelected[0].name;
@@ -287,7 +289,7 @@
                                         job.completed_at = vm.convertUTCDateToLocalDate(new Date(job.completed_at));
                                 });
                         //Create an empty array that would hold the current batch details with a few newly assigned properties for paused and in progress batches
-                        var migrationProgress = tempcurrentBatches.filter(x=>x.batch_status=='started').concat(tempcurrentBatches.filter(x=>x.batch_status=='in progress'));//.concat(tempcurrentBatches.filter(x=>x.batch_status=='paused'));
+                        var migrationProgress = tempcurrentBatches.filter(function(x){return x.batch_status=='started';}).concat(tempcurrentBatches.filter(function(x){return x.batch_status=='in progress';}));
                         var promises = migrationProgress.map(function(batch){
                             return HttpWrapper.send('/api/jobs/'+batch.job_id+'/progress', { "operation": 'GET' })
                             .then(function(result) {
@@ -303,7 +305,7 @@
                         //Once the promise is resolved, proceed with rest of the items
                         $q.all(promises).then(function(){
                             //Restructure the array so that the custom sorting order is maintained while displaying the batches on page load
-                            currentBatches = migrationProgress.concat(tempcurrentBatches.filter(x=>x.batch_status=='paused')).concat(tempcurrentBatches.filter(x=>x.batch_status=='scheduled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='canceled')).concat(tempcurrentBatches.filter(x=>x.batch_status=='error'));
+                            currentBatches = migrationProgress.concat(tempcurrentBatches.filter(function(x){return x.batch_status=='paused';})).concat(tempcurrentBatches.filter(function(x){x.batch_status=='scheduled';})).concat(tempcurrentBatches.filter(function(x){return x.batch_status=='canceled';})).concat(tempcurrentBatches.filter(function(x){return x.batch_status=='error';}));
                             var tempSavedMigrations = [];
                             vm.savedMigrations = response.savedMigrations;
                             for(var j=0; j<response.savedMigrations.length; j++){

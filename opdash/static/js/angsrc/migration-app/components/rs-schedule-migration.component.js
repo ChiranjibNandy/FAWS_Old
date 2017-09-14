@@ -148,7 +148,9 @@
                     vm.error = false;
                     vm.modifiedDate = angular.copy(vm.date);
                     vm.timeIntervals = angular.copy(vm.timeItems);
-                    var timeZoneParam = vm.timeZoneItems.filter(item => item.timeZoneName == vm.timezone1);
+                    var timeZoneParam = vm.timeZoneItems.filter(function(item){
+                        return item.timeZoneName == vm.timezone1;
+                    });
                     vm.timeZoneDiff = timeZoneParam[0].timeZone.slice(3, 9);
                     var d = new Date();
                     localTime = d.getTime();
