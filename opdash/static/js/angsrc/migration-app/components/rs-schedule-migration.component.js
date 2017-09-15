@@ -161,7 +161,7 @@
                     // using supplied offset
                     var calOffset = timeZoneParam[0].offset;
                     var nd = new Date(utc + (3600000 * Number(calOffset)));
-                    vm.modifiedDate = moment(nd.toLocaleDateString('en-US')).format("YYYY-MM-DD");
+                    vm.modifiedDate = moment(nd).format("YYYY-MM-DD");
                     if (vm.date == vm.modifiedDate) {
                         var currentTime = nd.toLocaleTimeString('en-US', { hour12: false });
                         var timeIndex = (Number(currentTime.split(":", 2)[0]) * 4) + Math.round(Number(currentTime.split(":", 2)[1]) / 15);
@@ -232,7 +232,7 @@
                 if (vm.time) {
                     vm.migrationScheduleDetails = {                        
                         migrationName: dataStoreService.getScheduleMigration().migrationName,
-                        time: moment(moment(vm.modifiedDate).format("YYYY-MM-DD")  +  "T"  + vm.getTime().trim()  +  vm.timeZoneDiff).unix(),
+                        time: moment(moment(vm.modifiedDate).format("YYYY-MM-DD")  +  "T"  + vm.getTime().trim()  +  (vm.timeZoneDiff || '')).unix(),
                         timezone: vm.timezone1,
                         live_migrate: dataStoreService.getScheduleMigration().live_migrate,
                     };
