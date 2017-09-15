@@ -110,17 +110,17 @@
                 dnsReqList.push(
                     {
                         "source":{
-                            "zone_id":domain.id
-                        },
-                        "destination":{
-                            "region":domain.selectedMapping.region || DEFAULT_VALUES.REGION,
-                            "aws":{
-                                "domain":{
-                                    "zone":domain.selectedMapping.zone || DEFAULT_VALUES.ZONE,
-                                    "ebs_type":"IOL"
-                                }
-                            }
+                            "zone_id":String(domain.id)
                         }
+                        // "destination":{
+                        //     "region":domain.selectedMapping.region || DEFAULT_VALUES.REGION,
+                        //     "aws":{
+                        //         "domain":{
+                        //             "zone":domain.selectedMapping.zone || DEFAULT_VALUES.ZONE,
+                        //             "ebs_type":"IOL"
+                        //         }
+                        //     }
+                        // }
                     }
                 )
             });
