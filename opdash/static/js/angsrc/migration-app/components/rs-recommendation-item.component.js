@@ -520,11 +520,11 @@
                 vm.totalCost = function(item){
                     var storage_rate = parseFloat(parseFloat(item.details.rax_storage_size) * parseFloat(item.selectedMapping.storage_rate)).toFixed(2);
                     var aws_bandwidth_cost = 0;
-                    if(item.details.rax_bandwidth !== undefined)
-                        aws_bandwidth_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_bandwidth)).toFixed(2);
+                    if(item.rax_bandwidth !== undefined)
+                        aws_bandwidth_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.rax_bandwidth)).toFixed(2);
                     else
                         aws_bandwidth_cost = parseFloat(parseFloat(item.selectedMapping.cost) * 0).toFixed(2);
-                    var aws_uptime_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_uptime || 720)).toFixed(2);
+                    var aws_uptime_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.rax_uptime || 720)).toFixed(2);
                     item.selectedMapping.totalCost = (parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost)+ parseFloat(storage_rate)).toFixed(2);
                     // return item.selectedMapping.totalCost;
                 };
@@ -533,11 +533,11 @@
                 vm.getTotalInstanceCost = function(server,item){
                     var storage_rate = parseFloat(parseFloat(item.details.rax_storage_size) * parseFloat(server.storage_rate)).toFixed(2);
                     var aws_bandwidth_cost = 0;
-                    if(item.details.rax_bandwidth !== undefined)
-                        aws_bandwidth_cost = parseFloat(parseFloat(server.cost) * parseFloat(item.details.rax_bandwidth)).toFixed(2);
+                    if(item.rax_bandwidth !== undefined)
+                        aws_bandwidth_cost = parseFloat(parseFloat(server.cost) * parseFloat(item.rax_bandwidth)).toFixed(2);
                     else
                         aws_bandwidth_cost = parseFloat(parseFloat(server.cost) * 0).toFixed(2);
-                    var aws_uptime_cost = parseFloat(parseFloat(server.cost) * parseFloat(item.details.rax_uptime || 720)).toFixed(2);
+                    var aws_uptime_cost = parseFloat(parseFloat(server.cost) * parseFloat(item.rax_uptime || 720)).toFixed(2);
 
                     return (parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost)+ parseFloat(storage_rate)).toFixed(2);
                 };
@@ -590,7 +590,7 @@
                 $scope.$on("tabChanged", function(event, type){
                     if(!vm.parentTab.tab.active) return; 
                     //Checks to see if the API call had already been made for the selected resource type
-                    if(ds.retrieveAllRegionFetchedFlags(type) === false){
+                    if(type !="dns"  && ds.retrieveAllRegionFetchedFlags(type) === false){
                         vm.callRegionApi(type);
                     }
                 });

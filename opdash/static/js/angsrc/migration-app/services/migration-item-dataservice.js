@@ -22,8 +22,7 @@
                 volume:false,
                 LoadBalancers:false,
                 service:false,
-                file:false,
-                dns:false
+                file:false
             };
 
             self.storeRegionFetchedFlags = function(type,value){
@@ -306,7 +305,7 @@
             };//end of getAllEc2Regions method
 
             this.getBillingInfo = function(billingIdsArray){
-                if(!billingIdsArray.length) return;
+                if(!billingIdsArray.length) return $q.resolve();
                 var segmentUrl = '';
                 for(var i =0;i<billingIdsArray.length;i++){
                     if(i != (billingIdsArray.length-1))

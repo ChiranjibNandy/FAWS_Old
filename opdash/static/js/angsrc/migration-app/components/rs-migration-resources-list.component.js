@@ -294,46 +294,49 @@
                             billingIdsArray.push(item.id);
                         });
 
-                        //Make the billing API call
+                        //Make the billing API call only for servers
                         ds.getBillingInfo(billingIdsArray)
                             .then(function(response){
-                                var serversList = [];
-                                for (var key in response) {
-                                    // iterate over response of the billing call by region
-                                    if (response.hasOwnProperty(key) && response[key] !== null) {
-                                        // iterate over each server and extract necessary data
-                                        angular.forEach(response[key],function(server) {
-                                            serversList.push(server);
+                                var promises = null;
+                                if(response !== undefined){
+                                    var serversList = [];
+                                    for (var key in response) {
+                                        // iterate over response of the billing call by region
+                                        if (response.hasOwnProperty(key) && response[key] !== null) {
+                                            // iterate over each server and extract necessary data
+                                            angular.forEach(response[key],function(server) {
+                                                serversList.push(server);
+                                            });
+                                        }
+                                    }                              
+                                    angular.forEach(serversList,function(res){
+                                        angular.forEach(items, function (item) {
+                                            //Compare the id of the response object and that of the items array
+                                            if(res.id == item.id){
+                                                //If the ids match, merge both the objects properties
+                                                jQuery.extend(item, res);
+                                                //Find the id of the item, inside the items array and replace the item with the merged object 
+                                                var i = items.map(function(x) {return x.id; }).indexOf(res.id);
+                                                items[i] = item;
+                                            }
                                         });
-                                    }
-                                }                              
-                                angular.forEach(serversList,function(res){
-                                    angular.forEach(items, function (item) {
-                                        //Compare the id of the response object and that of the items array
-                                        if(res.id == item.id){
-                                            //If the ids match, merge both the objects properties
-                                            jQuery.extend(item, res);
-                                            //Find the id of the item, inside the items array and replace the item with the merged object 
-                                            var i = items.map(function(x) {return x.id; }).indexOf(res.id);
-                                            items[i] = item;
+                                    });
+                        
+                                    promises = items.map(function(item) {
+                                        if(item.selectedMapping == undefined || item.selectedMapping.cost == undefined){
+                                            var reg = item.selectedMapping ? item.selectedMapping.region : DEFAULT_VALUES.REGION;
+                                            var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+reg;
+                                            return HttpWrapper.send(url, {"operation": 'GET'}).then(function(pricingOptions) {
+                                                item.selectedMapping = pricingOptions[0];
+                                                item.selectedMapping.zone = 'us-east-1a'; 
+                                                arr.push(item);
+                                            });
+                                        }
+                                        else{
+                                            arr.push(item);
                                         }
                                     });
-                                });
-                        
-                                var promises = items.map(function(item) {
-                                    if(item.selectedMapping == undefined || item.selectedMapping.cost == undefined){
-                                        var reg = item.selectedMapping ? item.selectedMapping.region : DEFAULT_VALUES.REGION;
-                                        var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+reg;
-                                        return HttpWrapper.send(url, {"operation": 'GET'}).then(function(pricingOptions) {
-                                            item.selectedMapping = pricingOptions[0];
-                                            item.selectedMapping.zone = 'us-east-1a'; 
-                                            arr.push(item);
-                                        });
-                                    }
-                                    else{
-                                        arr.push(item);
-                                    }
-                                });
+                                }
                                 $q.all(promises).then(function(result) {
                                     vm.selectedItems.server = arr;
                                     dataStoreService.setSelectedItems(vm.selectedItems.server, 'server');                            

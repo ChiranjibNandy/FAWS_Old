@@ -239,9 +239,9 @@
                             selectedPricingMappingObj = dataStoreService.getItems('server');                        
                         vm.totalProjectedPricingSum = 0;
                         selectedPricingMappingObj.forEach(function(item){
-                            if(item.details.hasOwnProperty('rax_bandwidth')){
-                                var aws_uptime_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_uptime)).toFixed(2);
-                                var aws_bandwidth_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_bandwidth)).toFixed(2);
+                            if(item.hasOwnProperty('rax_bandwidth')){
+                                var aws_uptime_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.rax_uptime)).toFixed(2);
+                                var aws_bandwidth_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.rax_bandwidth)).toFixed(2);
                                 var storage_rate = parseFloat(parseFloat(item.details.rax_storage_size) * parseFloat(item.selectedMapping.storage_rate)).toFixed(2);
                                 vm.totalProjectedPricingSum += parseFloat(parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost) + parseFloat(storage_rate));
                             }
