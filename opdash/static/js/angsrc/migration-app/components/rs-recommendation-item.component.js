@@ -349,8 +349,7 @@
                     vm.data = [];
                     vm.labels = [
                                     {field: "name", text: vm.type+" Name"},
-                                    {field: "id", text: "ID"},
-                                    {field: "status", text: "Status"}
+                                    {field: "id", text: "ID"}
                                 ];
                     angular.forEach(servers, function (item) {
                         angular.forEach(item.details.networks, function (network) {
