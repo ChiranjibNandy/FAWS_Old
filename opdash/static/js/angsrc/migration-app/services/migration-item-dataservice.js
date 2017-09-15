@@ -305,6 +305,18 @@
                 return resultsLoaded;
             };//end of getAllEc2Regions method
 
+            this.getBillingInfo = function(billingIdsArray){
+                if(!billingIdsArray.length) return;
+                var segmentUrl = '';
+                for(var i =0;i<billingIdsArray.length;i++){
+                    if(i != (billingIdsArray.length-1))
+                        segmentUrl += 'ids='+billingIdsArray[i]+'&';
+                    else
+                        segmentUrl += 'ids='+billingIdsArray[i];
+                }
+                return HttpWrapper.send('/api/compute/instances?billing=true&'+segmentUrl, {"operation": 'GET'});
+            };//end of the getBillingInfo method
+
             /**
              * @ngdoc method
              * @name getLoadBalancers

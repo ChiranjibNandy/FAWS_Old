@@ -210,7 +210,7 @@
 
                     selectedServers = dataStoreService.getItems('server');
                     angular.forEach(selectedServers, function (item) {
-                        invoiceTotal += item.details.rax_price;
+                        invoiceTotal += item.rax_price;
                     });
                     vm.invoiceTotal = invoiceTotal.toFixed(2);
                 };

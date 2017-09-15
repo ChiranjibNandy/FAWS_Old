@@ -65,10 +65,10 @@
                                 "rax_bandwidth_cost": "NA",
                                 "rax_bandwidth": "NA",
                                 "rax_uptime": "NA",
-                                "rax_total_cost": (server.details.rax_price),
+                                "rax_total_cost": (server.rax_price),
                                 "storage": server.details.rax_storage_size || 0
                             });
-                            vm.totalOfCostCalculationItems += (server.details.rax_price);
+                            vm.totalOfCostCalculationItems += (server.rax_price);
                         }
 
                         if (server.details.hasOwnProperty('rax_bandwidth')) {

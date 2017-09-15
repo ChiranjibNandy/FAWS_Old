@@ -287,77 +287,109 @@
                         var items = JSON.parse($window.localStorage.selectedResources)['server'];
 
                         var arr = [];
-                        var promises = items.map(function(item) {
-                            if(item.selectedMapping == undefined || item.selectedMapping.cost == undefined){
-                                var reg = item.selectedMapping ? item.selectedMapping.region : DEFAULT_VALUES.REGION;
-                                var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+reg;
-                                return HttpWrapper.send(url, {"operation": 'GET'}).then(function(pricingOptions) {
-                                    item.selectedMapping = pricingOptions[0];
-                                    item.selectedMapping.zone = 'us-east-1a'; 
-                                    arr.push(item);
-                                });
-                            }
-                            else{
-                                arr.push(item);
-                            }
-                        });
-                        $q.all(promises).then(function(result) {
-                            vm.selectedItems.server = arr;
-                            dataStoreService.setSelectedItems(vm.selectedItems.server, 'server');
-                            
-                            
-                            //Declare a tempItems array that would hold phase 2 resources
-                            var tempItems = [];
 
-                            if(JSON.parse($window.localStorage.selectedResources)['volume'].length > 0){
-                                tempItems = vm.populatePhase2ResourcesArray('volume',items);
-                                items = items.concat(tempItems);
-                                vm.selectedItems.volume = tempItems;
-                                dataStoreService.setSelectedItems(vm.selectedItems.volume,'volume');
-                            }
-                            if(JSON.parse($window.localStorage.selectedResources)['service'].length > 0){
-                                tempItems = vm.populatePhase2ResourcesArray('service',items);
-                                items = items.concat(tempItems);
-                                vm.selectedItems.service = tempItems;
-                                dataStoreService.setSelectedItems(vm.selectedItems.service,'service');
-                            }
-                            if(JSON.parse($window.localStorage.selectedResources)['file'].length > 0){
-                                tempItems = vm.populatePhase2ResourcesArray('file',items);
-                                items = items.concat(tempItems);
-                                vm.selectedItems.file = tempItems;
-                                dataStoreService.setSelectedItems(vm.selectedItems.file,'file');
-                            }
-                            if(JSON.parse($window.localStorage.selectedResources)['dns'].length > 0){
-                                tempItems = vm.populatePhase2ResourcesArray('dns',items);
-                                items = items.concat(tempItems);
-                                vm.selectedItems.dns = tempItems;
-                                dataStoreService.setSelectedItems(vm.selectedItems.dns,'dns');
-                            }
-                            vm.continuing = false;
-                            dataStoreService.setDontShowNameModal(true);
-                            vm.selectedTime = {
-                                    migrationName:vm.migrationName,
-                                    time:'',
-                                    timezone:'',
-                                    live_migrate:false,
-                                };
-                            dataStoreService.setScheduleMigration(vm.selectedTime);
-                            $('#save_for_later').modal('hide');
-                            $('#name_modal').modal('hide');
-                            $('#cancel_modal').modal('hide');
-                            $('#intro_modal').modal('hide');
-                            $('#no_selection').modal('hide');
-                            //On continuing to the recommendations page, we have to set all the region fetched flags 
-                            //to false so that all the calls can be made afresh
-                            ds.storeRegionFetchedFlags('server',false);
-                            ds.storeRegionFetchedFlags('volume',false);
-                            ds.storeRegionFetchedFlags('service',false);
-                            ds.storeRegionFetchedFlags('file',false);
-                            ds.storeRegionFetchedFlags('dns',false);
-                            $rootRouter.navigate(["MigrationRecommendation"]);    
-                        },function(error){
-                            vm.continuing = false;
-                            vm.errorInContinue = true;
+                        var billingIdsArray = [];
+                        //Iterate through all the items and push the resource ids into an array
+                        angular.forEach(items, function (item) {
+                            billingIdsArray.push(item.id);
+                        });
+
+                        //Make the billing API call
+                        ds.getBillingInfo(billingIdsArray)
+                            .then(function(response){
+                                var serversList = [];
+                                for (var key in response) {
+                                    // iterate over response of the billing call by region
+                                    if (response.hasOwnProperty(key) && response[key] !== null) {
+                                        // iterate over each server and extract necessary data
+                                        angular.forEach(response[key],function(server) {
+                                            serversList.push(server);
+                                        });
+                                    }
+                                }                              
+                                angular.forEach(serversList,function(res){
+                                    angular.forEach(items, function (item) {
+                                        //Compare the id of the response object and that of the items array
+                                        if(res.id == item.id){
+                                            //If the ids match, merge both the objects properties
+                                            jQuery.extend(item, res);
+                                            //Find the id of the item, inside the items array and replace the item with the merged object 
+                                            var i = items.map(function(x) {return x.id; }).indexOf(res.id);
+                                            items[i] = item;
+                                        }
+                                    });
+                                });
+                        
+                                var promises = items.map(function(item) {
+                                    if(item.selectedMapping == undefined || item.selectedMapping.cost == undefined){
+                                        var reg = item.selectedMapping ? item.selectedMapping.region : DEFAULT_VALUES.REGION;
+                                        var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+reg;
+                                        return HttpWrapper.send(url, {"operation": 'GET'}).then(function(pricingOptions) {
+                                            item.selectedMapping = pricingOptions[0];
+                                            item.selectedMapping.zone = 'us-east-1a'; 
+                                            arr.push(item);
+                                        });
+                                    }
+                                    else{
+                                        arr.push(item);
+                                    }
+                                });
+                                $q.all(promises).then(function(result) {
+                                    vm.selectedItems.server = arr;
+                                    dataStoreService.setSelectedItems(vm.selectedItems.server, 'server');                            
+                                    //Declare a tempItems array that would hold phase 2 resources
+                                    var tempItems = [];
+
+                                    if(JSON.parse($window.localStorage.selectedResources)['volume'].length > 0){
+                                        tempItems = vm.populatePhase2ResourcesArray('volume',items);
+                                        items = items.concat(tempItems);
+                                        vm.selectedItems.volume = tempItems;
+                                        dataStoreService.setSelectedItems(vm.selectedItems.volume,'volume');
+                                    }
+                                    if(JSON.parse($window.localStorage.selectedResources)['service'].length > 0){
+                                        tempItems = vm.populatePhase2ResourcesArray('service',items);
+                                        items = items.concat(tempItems);
+                                        vm.selectedItems.service = tempItems;
+                                        dataStoreService.setSelectedItems(vm.selectedItems.service,'service');
+                                    }
+                                    if(JSON.parse($window.localStorage.selectedResources)['file'].length > 0){
+                                        tempItems = vm.populatePhase2ResourcesArray('file',items);
+                                        items = items.concat(tempItems);
+                                        vm.selectedItems.file = tempItems;
+                                        dataStoreService.setSelectedItems(vm.selectedItems.file,'file');
+                                    }
+                                    if(JSON.parse($window.localStorage.selectedResources)['dns'].length > 0){
+                                        tempItems = vm.populatePhase2ResourcesArray('dns',items);
+                                        items = items.concat(tempItems);
+                                        vm.selectedItems.dns = tempItems;
+                                        dataStoreService.setSelectedItems(vm.selectedItems.dns,'dns');
+                                    }
+                                    vm.continuing = false;
+                                    dataStoreService.setDontShowNameModal(true);
+                                    vm.selectedTime = {
+                                            migrationName:vm.migrationName,
+                                            time:'',
+                                            timezone:'',
+                                            live_migrate:false,
+                                        };
+                                    dataStoreService.setScheduleMigration(vm.selectedTime);
+                                    $('#save_for_later').modal('hide');
+                                    $('#name_modal').modal('hide');
+                                    $('#cancel_modal').modal('hide');
+                                    $('#intro_modal').modal('hide');
+                                    $('#no_selection').modal('hide');
+                                    //On continuing to the recommendations page, we have to set all the region fetched flags 
+                                    //to false so that all the calls can be made afresh
+                                    ds.storeRegionFetchedFlags('server',false);
+                                    ds.storeRegionFetchedFlags('volume',false);
+                                    ds.storeRegionFetchedFlags('service',false);
+                                    ds.storeRegionFetchedFlags('file',false);
+                                    ds.storeRegionFetchedFlags('dns',false);
+                                    $rootRouter.navigate(["MigrationRecommendation"]);    
+                                },function(error){
+                                    vm.continuing = false;
+                                    vm.errorInContinue = true;
+                                });
                         });
                     }
                     else{
