@@ -305,7 +305,7 @@
                         //Once the promise is resolved, proceed with rest of the items
                         $q.all(promises).then(function(){
                             //Restructure the array so that the custom sorting order is maintained while displaying the batches on page load
-                            currentBatches = migrationProgress.concat(tempcurrentBatches.filter(function(x){return x.batch_status=='paused';})).concat(tempcurrentBatches.filter(function(x){x.batch_status=='scheduled';})).concat(tempcurrentBatches.filter(function(x){return x.batch_status=='canceled';})).concat(tempcurrentBatches.filter(function(x){return x.batch_status=='error';}));
+                            currentBatches = migrationProgress.concat(tempcurrentBatches.filter(function(x){return x.batch_status=='paused';})).concat(tempcurrentBatches.filter(function(x){return x.batch_status=='scheduled';})).concat(tempcurrentBatches.filter(function(x){return x.batch_status=='canceled';})).concat(tempcurrentBatches.filter(function(x){return x.batch_status=='error';}));
                             var tempSavedMigrations = [];
                             vm.savedMigrations = response.savedMigrations;
                             for(var j=0; j<response.savedMigrations.length; j++){
