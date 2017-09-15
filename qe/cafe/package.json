@@ -1,0 +1,20 @@
+{
+  "name": "faws_automation",
+  "version": "1.0.0",
+  "description": "demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "astrolabe": "^0.3.6",
+    "chai": "^3.4.0",
+    "chai-as-promised": "^6.0.0",
+    "karma-mocha": "^0.1.10",
+    "mocha": "^2.3.4",
+    "mochawesome-screenshots": "^1.5.2",
+    "protractor": "^2.5.1"
+  }
+}
