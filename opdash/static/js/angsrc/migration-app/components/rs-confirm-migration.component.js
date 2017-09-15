@@ -85,14 +85,15 @@
                  * Checks whether the selected server(s) have already been migrated/scheduled, if yes, then rejects the migration, otherwise triggers the migration.
                  */
                 vm.checkStatus = function () {
+                    vm.errorInMigration = false;
+                    vm.migrating = true;
                     if (JSON.parse(dataStoreService.getResourceItemsForEditingMigration())) {
                         vm.migrate();
                         return;
-                    }
+                    };
                     dashboardService.getCurrentBatches() //fetch the batch list by making the job_status api call in dashbaord service
                         .then(function (response) {
                             if (response && response.error == undefined) {
-                                vm.migrating = true;
                                 vm.checking = true;
                                 var jobList = response.job_status_list;
                                 //get status of all the migrations in an array - to check if these resoruces have been scheduled in any migrations earlier 
@@ -147,10 +148,12 @@
                                     vm.migrate();
                                 } else { //otherwise error message will be displayed on the screen since goodToGo===false.
                                     vm.checking = false;
+                                    vm.migrating = false;
                                     $('#duplicate-instance').modal('show');
                                 } //end if
                             } else { //if the job_status call in dashbaord service fails
                                 vm.checking = false;
+                                vm.migrating = false;
                                 vm.errorInMigration = true; //error message will be disaplyed on the screen.
                             }
 

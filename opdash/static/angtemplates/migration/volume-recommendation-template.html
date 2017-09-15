@@ -5,7 +5,7 @@
     <td class="rs-table-link">
         <a href="" role="button" ng-click="vm.equipmentDetails(vm.type, item)" data-toggle="modal" title="{{item.name}}">{{item.name}}</a>
     </td>
-    <td class="rs-table-text">{{item.size}}</td>
+    <td class="rs-table-text" ng-class="{'column-center': !item.size}">{{item.size || '---'}}</td>
     <td>
         <span class="rs-status rs-status-ok ng-binding"> {{item.status}} </span>
     </td>

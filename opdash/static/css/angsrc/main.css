@@ -694,5 +694,10 @@ span.fa-angle-left, span.fa-angle-right{
 .login_radio_group{
     display:inline-block; 
     background-color: ffgg55;
-    width: 200px; 
+    width: 200px;
+}
+
+.column-center {
+    text-align: center!important;
+    padding-right: 30px;
 }
