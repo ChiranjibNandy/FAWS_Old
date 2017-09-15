@@ -29,7 +29,6 @@
                 vm.tenant_id = authservice.getAuth().tenant_id; //get Tenant ID
                 vm.tenant_account_name = '';
                 vm.saveClicked = false;
-
                 vm.$onInit = function() {
                    // If status is true, popup for migration won't be displayed in first step of Migration.
                     $('body').removeClass('modal-open');
@@ -70,8 +69,7 @@
                         dataStoreService.setDontShowStatus(true);//set introduction modal flag to true after first time display.
                         // $window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
                     }
-                    
-                    
+
                     dataStoreService.setPageName("MigrationResourceList");
                     $window.localStorage.setItem('pageName',"MigrationResourceList");
                     $('title')[0].innerHTML =  "Inventory - Rackspace Cloud Migration";
@@ -157,12 +155,10 @@
                  * Called by child component when an item is selected
                  */
                 vm.addItem = function(item, type) {
-                     //vm.selectedItems[type] = dataStoreService.getItems(type); -- Previous Code
                     var itemExists = false;
                     //Checks to see if the item is already selected and placed in the local storage
                     if($window.localStorage.selectedResources !== undefined && JSON.parse($window.localStorage.selectedResources)[type].length){
                         vm.selectedItems[type] = JSON.parse($window.localStorage.selectedResources)[type];
-                        // var items = JSON.parse($window.localStorage.selectedServers);
                         for(var i =0;i < vm.selectedItems[type].length;i++){
                             if(vm.selectedItems[type][i].rrn  === item.rrn){
                                 itemExists = true;
@@ -171,8 +167,6 @@
                     }
                     if(!itemExists){ //If not, add the item to the local storage
                         vm.selectedItems[type].push(item);
-                        // if(type === 'server'){
-                            // var old = $window.localStorage.getItem('selectedServers');
                         var selectedItems = [];
                         if($window.localStorage.selectedResources !== undefined && JSON.parse($window.localStorage.selectedResources)[type].length)
                             selectedItems = JSON.parse($window.localStorage.selectedResources)
@@ -199,13 +193,12 @@
                     if($window.localStorage.selectedResources !== undefined && JSON.parse($window.localStorage.selectedResources)[type].length)
                         vm.selectedItems[type] = JSON.parse($window.localStorage.selectedResources)[type];
                     else
-                        vm.selectedItems[type] = []; //dataStoreService.getItems(type); -- Previous Code
+                        vm.selectedItems[type] = [];
                     //look for item to be removed in array of selected items and splice it from the array.
                     angular.forEach(vm.selectedItems[type], function (item_selected, key) {
                         if(item_selected.id == item.id){
                             vm.selectedItems[type].splice(key, 1);
                             dataStoreService.setSelectedItems(vm.selectedItems[type], type);
-                            // if(type === 'server'){
                             var old = $window.localStorage.getItem('selectedResources');
                             if(old !== undefined)
                                 old = JSON.parse(old)[type];
@@ -289,7 +282,6 @@
                         $('#aws_check').modal('show');
                         return;
                     } 
-                    //if(vm.selectedItems.server.length > 0 || vm.selectedItems.network.length > 0 || vm.selectedItems.LoadBalancers.length > 0 || dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 ){//|| dataStoreService.getItems('server').length > 0 || dataStoreService.getItems('LoadBalancers').length > 0 -- Previous Code
                     if($window.localStorage.selectedResources !== undefined && (JSON.parse($window.localStorage.selectedResources)['server'].length || JSON.parse($window.localStorage.selectedResources)['volume'].length || JSON.parse($window.localStorage.selectedResources)['service'].length || JSON.parse($window.localStorage.selectedResources)['file'].length || JSON.parse($window.localStorage.selectedResources)['dns'].length)){
                         vm.continuing = true;
                         var items = JSON.parse($window.localStorage.selectedResources)['server'];
@@ -312,7 +304,7 @@
                         $q.all(promises).then(function(result) {
                             vm.selectedItems.server = arr;
                             dataStoreService.setSelectedItems(vm.selectedItems.server, 'server');
-                            // $window.localStorage.setItem('selectedServers', JSON.stringify(arr));
+                            
                             
                             //Declare a tempItems array that would hold phase 2 resources
                             var tempItems = [];
@@ -341,7 +333,6 @@
                                 vm.selectedItems.dns = tempItems;
                                 dataStoreService.setSelectedItems(vm.selectedItems.dns,'dns');
                             }
-                            
                             vm.continuing = false;
                             dataStoreService.setDontShowNameModal(true);
                             vm.selectedTime = {
@@ -414,7 +405,6 @@
                 vm.createFawsAccount = function(rack) {
                     vm.fawsCreationProgress = true;
                     var requestObj = {};
-                    // dataStoreService.createFawsAccount(requestObj)
                     var promise = {};
                     if(rack){
                         requestObj = {
@@ -498,7 +488,6 @@
                         //If the resource type is volume, we need to build the object to hold selected zone and the zones array
                         if(type === 'volume'){
                             item.selectedMapping.zones = [];
-                            //item.selectedMapping.zone = DEFAULT_VALUES.ZONE;
                         }
                         return item;
                     });
@@ -522,7 +511,6 @@
                                   "value": !dataStoreService.getDontShowStatus()
                              }])
                             .then(function (result) {
-                                console.log("success");
                             }, function (error) {
                                 
                             });
