@@ -527,9 +527,11 @@
                 }
                 var timeout = null;
                 $scope.$watch('vm.filtervalue', function (query) {
-                    vm.filteredArr = vm.items.filter(item => item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || (item.ip_address || '').indexOf(vm.filtervalue)!=-1 || (item.ram || 0) == vm.filtervalue || item.status.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.eligible.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || 
-                                                    item.migStatus.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1
-                                                    || (item.containerCount || 0) == vm.filtervalue || (item.size || 0) == vm.filtervalue);
+                    vm.filteredArr = vm.items.filter(function(item){
+                        return item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || (item.ip_address || '').indexOf(vm.filtervalue)!=-1 || (item.ram || 0) == vm.filtervalue || item.status.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.eligible.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || 
+                        item.migStatus.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1
+                        || (item.containerCount || 0) == vm.filtervalue || (item.size || 0) == vm.filtervalue;
+                    });
                     // pagination controls
                     vm.currentPage = 1;
                     vm.pageArray[vm.type] = [];
@@ -591,7 +593,9 @@
                                     });
                                 });
                                 //store eligibility test results for servers with test result as 'success'
-                                $window.localStorage.eligibilityResults = JSON.stringify(vm.items.filter(item => item.eligible == 'Passed'))
+                                $window.localStorage.eligibilityResults = JSON.stringify(vm.items.filter(function(item){
+                                    return item.eligible == 'Passed';
+                                }));
                                 datastoreservice.storeallItems(vm.items, vm.type);
                                 vm.parent.itemsLoadingStatus(false);
                                 vm.itemsEligible = true;
@@ -673,7 +677,10 @@
                             var storedEligibilityResults = [];
                             //Check for eligibility results stored during the current session.
                             if (!($window.localStorage.eligibilityResults == undefined || $window.localStorage.eligibilityResults == "undefined")) {
-                                var storedEligibilityResults = JSON.parse($window.localStorage.eligibilityResults).filter(val => val.id == item.id);
+                                var storedEligibilityResults = JSON.parse($window.localStorage.eligibilityResults).filter(
+                                    function(val){ 
+                                        return val.id == item.id
+                                    });
                             }
                             if (storedEligibilityResults.length) {
                                 item.canMigrate = true;

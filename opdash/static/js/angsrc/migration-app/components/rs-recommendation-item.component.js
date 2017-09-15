@@ -486,7 +486,9 @@
                     var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+vm.awsRegion;
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
                         vm.loadingPrice = false;
-                        item.pricingOptions = pricingOptions.filter(po => item.details['rax_virtual_interface_count'] <= po['max_enis']);
+                        item.pricingOptions = pricingOptions.filter(function(po){
+                            return item.details['rax_virtual_interface_count'] <= po['max_enis'];
+                        });
                         if(item.pricingOptions.length == 0){
                             item.pricingOptions = pricingOptions
                         }
@@ -585,7 +587,9 @@
                 };
 
                 $scope.$watch('vm.filtervalue', function (query) {
-                    vm.filteredArr = vm.data.filter(item => item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || (item.ip_address || '').indexOf(vm.filtervalue)!=-1 || ((item.selectedMapping && item.selectedMapping.region) || '').toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || ((item.selectedMapping && item.selectedMapping.zone) || 'us-east-1a').toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || ((item.selectedMapping && item.selectedMapping.instance_type) || '').toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || ((item.selectedMapping && item.selectedMapping.totalCost) || 0) == vm.filtervalue);
+                    vm.filteredArr = vm.data.filter(function(item) {
+                        return item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || (item.ip_address || '').indexOf(vm.filtervalue)!=-1 || ((item.selectedMapping && item.selectedMapping.region) || '').toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || ((item.selectedMapping && item.selectedMapping.zone) || 'us-east-1a').toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || ((item.selectedMapping && item.selectedMapping.instance_type) || '').toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || ((item.selectedMapping && item.selectedMapping.totalCost) || 0) == vm.filtervalue;
+                    });
                     // pagination controls
                     vm.currentPage = 1;
                     vm.pageArray = [];
