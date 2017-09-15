@@ -191,6 +191,13 @@
                  * page.
                  */
                 vm.continueToSchedule = function(){
+                    //Once you move to the third page clear the region fetched flags so that the API gets called once again 
+                    //we land on the page
+                    ds.storeRegionFetchedFlags('server',false);
+                    ds.storeRegionFetchedFlags('volume',false);
+                    ds.storeRegionFetchedFlags('service',false);
+                    ds.storeRegionFetchedFlags('file',false);
+                    ds.storeRegionFetchedFlags('dns',false);                    
                     $('#precheck_modal').modal('hide');
                     $rootRouter.navigate(["ConfirmMigration"]);
                 }
