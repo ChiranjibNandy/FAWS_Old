@@ -20,23 +20,23 @@
             controller: ["authservice","$rootRouter","httpwrapper","$q","datastoreservice","dashboardservice", function (authService,$rootRouter,HttpWrapper,$q,datastoreservice,dashboardservice) {
                 var vm = this;
                 vm.$onInit = function(){
-                    //calling get user Settings method to check whether to display welcome modal or not.
-                    datastoreservice.getUserSettings();
-                    
                     if(user_data.is_racker) {
                         $rootRouter.navigate(["RackerDash"]);
                     }
                     else{
+                        //calling get user Settings method to check whether to display welcome modal or not.
+                        var userSettings = datastoreservice.getUserSettings();
                         authService.getAuth().tenant_id = user_data.tenant_id;
                         authService.getAuth().account_name = this.account_name;
                         var doSavedForLaterMigrationsExist = false;
                         var doResourceMigrationsExist = false;
                         var tenant_id = user_data.tenant_id;
-                        dashboardservice.getBatches(true).then(function(result){
+                        var allBatches = dashboardservice.getBatches(true);
+                        $q.all([userSettings, allBatches]).then(function(result){
                             datastoreservice.setFirstLoginFlag();
-                            if(result){
-                                doSavedForLaterMigrationsExist = result.savedMigrations.length>0?true:false;
-                                doResourceMigrationsExist = (result.jobs.job_status_list && result.jobs.job_status_list.length>0)?true:false;
+                            if(result[1]){
+                                doSavedForLaterMigrationsExist = result[1].savedMigrations.length>0?true:false;
+                                doResourceMigrationsExist = (result[1].jobs.job_status_list && result[1].jobs.job_status_list.length>0)?true:false;
                             }
                             if(doSavedForLaterMigrationsExist === false && doResourceMigrationsExist === false){
                                 $rootRouter.navigate(["MigrationResourceList"]);                          

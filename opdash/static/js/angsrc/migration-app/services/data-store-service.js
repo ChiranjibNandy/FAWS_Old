@@ -318,7 +318,7 @@
             }
 
             this.getDontShowStatus = function () {
-                return $window.localStorage.dontShowStatus || self.dontShowStatus;
+                return ($window.localStorage.dontShowStatus !== undefined && JSON.parse($window.localStorage.dontShowStatus)) || self.dontShowStatus;
             }
 
             this.setDontShowNameModal = function (status) {
@@ -908,7 +908,11 @@
                         "operation": 'GET'
                     })
                     .then(function (result) {
-                        self.setDontShowStatus((result.length || result.show_welcome_modal) || true);
+                        if(result.hasOwnProperty("show_welcome_modal") ) {
+                            self.setDontShowStatus(result.show_welcome_modal);
+                        } else {
+                            self.setDontShowStatus(true);
+                        }
                         return result;
                     }, function (error) {
                         return false;
