@@ -25,7 +25,8 @@
              * @name migrationApp.controller:rssaveprogressCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rssaveprogress rssaveprogress} component
              */
-            controller: ["datastoreservice","$timeout","$rootRouter","$window","$rootScope", function (dataStoreService,$timeout,$rootRouter,$window,$rootScope) {
+            controller: ["$scope","datastoreservice","$timeout","$rootRouter","$window","$rootScope", 
+function ( $scope,dataStoreService,$timeout,$rootRouter,$window,$rootScope) {
                 var vm = this;
 
                 vm.$onInit = function () {
@@ -41,8 +42,8 @@
                     vm.stepname = dataStoreService.getPageName() || $window.localStorage.pageName;
                 };
                 //event fired on cancel button click, update the migration name.
-                $('#cancel_modal').on('show', function() {
-                    vm.migrationName = dataStoreService.getScheduleMigration().migrationName || 'My Migration';
+                 $('#cancel_modal').on('show', function(event) {
+                        vm.migrationName = dataStoreService.getScheduleMigration().migrationName || 'My Migration';
                 });
                 /**
                  * @ngdoc method
@@ -52,15 +53,15 @@
                  * It will open cancel migration popup and go back to migration dashboard page.
                  */
                 vm.cancelMigration = function() {
-                    //var selectedItems = dataStoreService.getItems();
                     var selectedItems = [];//$window.localStorage.selectedResources !== undefined && (JSON.parse($window.localStorage.selectedResources)['server'].length || JSON.parse($window.localStorage.selectedResources)['volume'].length)
                     if($window.localStorage.selectedResources === undefined || (!(JSON.parse($window.localStorage.selectedResources)['server'].length) && !(JSON.parse($window.localStorage.selectedResources)['volume'].length) && !(JSON.parse($window.localStorage.selectedResources)['service'].length) && !(JSON.parse($window.localStorage.selectedResources)['file'].length) && !(JSON.parse($window.localStorage.selectedResources)['dns'].length))){
                         dataStoreService.resetAll();
                         $rootRouter.navigate(["MigrationStatus"]);
                     }else{
                         selectedItems = JSON.parse($window.localStorage.selectedResources);
-                        $('#cancel_modal').modal('show');
-                         vm.migrationName = dataStoreService.getScheduleMigration().migrationName || 'My Migration';
+                        vm.migrationName = dataStoreService.getScheduleMigration().migrationName || 'My Migration';
+                        $("#cancel_modal").find('.modal-body input').val(vm.migrationName);
+                        $('#cancel_modal').modal('show');                         
                     }
                 };
 
