@@ -25,10 +25,8 @@
              * @name migrationApp.controller:rssaveprogressCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rssaveprogress rssaveprogress} component
              */
-            controller: ["$scope","datastoreservice","$timeout","$rootRouter","$window","$rootScope", 
-function ( $scope,dataStoreService,$timeout,$rootRouter,$window,$rootScope) {
+            controller: ["datastoreservice","$timeout","$rootRouter","$window","$rootScope", function (dataStoreService,$timeout,$rootRouter,$window,$rootScope) {
                 var vm = this;
-
                 vm.$onInit = function () {
                     vm.cancelnSaveObj = {
                         "saveSuccess" : false,
@@ -53,7 +51,7 @@ function ( $scope,dataStoreService,$timeout,$rootRouter,$window,$rootScope) {
                  * It will open cancel migration popup and go back to migration dashboard page.
                  */
                 vm.cancelMigration = function() {
-                    var selectedItems = [];//$window.localStorage.selectedResources !== undefined && (JSON.parse($window.localStorage.selectedResources)['server'].length || JSON.parse($window.localStorage.selectedResources)['volume'].length)
+                    var selectedItems = [];
                     if($window.localStorage.selectedResources === undefined || (!(JSON.parse($window.localStorage.selectedResources)['server'].length) && !(JSON.parse($window.localStorage.selectedResources)['volume'].length) && !(JSON.parse($window.localStorage.selectedResources)['service'].length) && !(JSON.parse($window.localStorage.selectedResources)['file'].length) && !(JSON.parse($window.localStorage.selectedResources)['dns'].length))){
                         dataStoreService.resetAll();
                         $rootRouter.navigate(["MigrationStatus"]);
