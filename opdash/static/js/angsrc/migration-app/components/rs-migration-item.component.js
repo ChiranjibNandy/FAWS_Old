@@ -670,6 +670,8 @@
                         } else if(filterInput && !modifyMig){
                             vm.tempfilteredArr = angular.copy(filterInput);
                             var items = vm.tempfilteredArr.slice((vm.currentPage - 1) * vm.pageSize, ((vm.currentPage - 1) * vm.pageSize) + vm.pageSize);
+                        } else if(vm.tempfilteredArr){
+                            var items = vm.tempfilteredArr.slice((vm.currentPage - 1) * vm.pageSize, ((vm.currentPage - 1) * vm.pageSize) + vm.pageSize);
                         }
                     }
                     angular.forEach(items, function (item) {
