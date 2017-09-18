@@ -284,9 +284,10 @@
                                     if (validCurrentBatchStatus.indexOf(job.batch_status) >= 0){
                                         tempcurrentBatches.push(job);
                                     }
-                                    if (validCompletedBatchStatus.indexOf(job.batch_status) >= 0)
+                                    if (validCompletedBatchStatus.indexOf(job.batch_status) >= 0){
                                         completedBatches.push(job);
                                         job.completed_at = vm.convertUTCDateToLocalDate(new Date(job.completed_at));
+                                    }
                                 });
                         //Create an empty array that would hold the current batch details with a few newly assigned properties for paused and in progress batches
                         var migrationProgress = tempcurrentBatches.filter(function(x){return x.batch_status=='started';}).concat(tempcurrentBatches.filter(function(x){return x.batch_status=='in progress';}));
@@ -734,6 +735,19 @@
                                             vm.currentBatches.items[i].batch_status = 'canceled';
                                             vm.completedBatches.items.push(vm.currentBatches.items[i]);
                                             vm.currentBatches.items.splice(i,1);
+                                            // Refresh pagination controls
+                                            vm.currentBatches.items = vm.currentBatches.items;
+                                            vm.currentBatches.currentPage = 1;
+                                            vm.currentBatches.pageSize = 5;
+                                            vm.currentBatches.noOfPages = Math.ceil(vm.currentBatches.items.length / vm.currentBatches.pageSize);
+                                            vm.currentBatches.pages = new Array(vm.currentBatches.noOfPages);
+
+                                            vm.completedBatches.items = vm.completedBatches.items;
+                                            vm.completedBatches.currentPage = 1;
+                                            vm.completedBatches.pageSize = 5;
+                                            vm.completedBatches.noOfPages = Math.ceil(vm.completedBatches.items.length / vm.completedBatches.pageSize);
+                                            vm.completedBatches.pages = new Array(vm.completedBatches.noOfPages);
+
                                             return;
                                         }
                                     }
