@@ -170,10 +170,15 @@ class SecureBlueprint(UnsecureBlueprint):
 
             # Check if user is a Racker
             roles = json_catalog["access"]["user"]["roles"]
-            is_racker = next(
-                (True for role in roles if role['name'] == 'Racker'),
-                False  # Default
-            )
+            is_racker = False
+            has_migration_role = False
+
+            # Loop through roles
+            for role in roles:
+                if role["name"] == "Racker":
+                    is_racker = True
+                if role["name"] == "migrationtooling:migrator":
+                    has_migration_role = True
 
             user_data = {
                 # Get Racker Info
@@ -186,6 +191,7 @@ class SecureBlueprint(UnsecureBlueprint):
                     '%Y-%m-%dT%H:%M:%S.%fZ'),
                 "is_racker": is_racker,
                 "is_impersonator": False,
+                "has_migration_role": has_migration_role,
                 "roles": roles,
             }
 
@@ -294,7 +300,13 @@ class CustomerBlueprint(SecureBlueprint):
 
         if g.user_data:
             current_app.logger.debug('USER IS A CUSTOMER OR RACKER')
+
+            if g.user_data["has_migration_role"] is False:
+                current_app.logger.debug('USER DOES NOT HAVE MIGRATION ROLE')
+                abort(403)
+
             return
+
         else:
             current_app.logger.debug("CUSTOMER IS NOT AUTHENTICATED REDIRECT")
             return self.login_redirect()
