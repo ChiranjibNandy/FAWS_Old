@@ -573,10 +573,12 @@
                 vm.startNewMigration = function () {
                     vm.firstLogin = true;
                     dataStoreService.setResourceItemsForEditingMigration(false);
+                    var userSetValue = dataStoreService.getDontShowStatus();
                     dataStoreService.resetAll();
                     dataStoreService.storeEligibilityResults($window.localStorage.eligibilityResults);
                     var autoRefreshButtonStatus = dashboardService.getAutoRefreshStatus();
                     $window.localStorage.clear();
+                    dataStoreService.setDontShowStatus(userSetValue);
                     dashboardService.storeAutoRefreshStatus(autoRefreshButtonStatus);
                     $window.localStorage.eligibilityResults = dataStoreService.retrieveEligibilityResults();
                     if($window.localStorage.selectedResources !== undefined)
@@ -595,16 +597,10 @@
                  */
                 vm.continueScheduling = function (batch,modifyFlag) {
                     var autoRefreshButtonStatus = dashboardService.getAutoRefreshStatus();
-                    //JSON.parse(dataStoreService.getUserSettings());
-                    vm.dontShowStatusFlag = '';
-                    dataStoreService.getUserSettings().then(function(data){
-                        vm.dontShowStatusFlag = data.show_welcome_modal;
-                    })
-                    .then(function(){
+                    var userSetVal = dataStoreService.getDontShowStatus();
                     $window.localStorage.clear();
                     dataStoreService.resetAll();
-                   dataStoreService.setDontShowStatus(vm.dontShowStatusFlag);
-                    })
+                    dataStoreService.setDontShowStatus(userSetVal);
                     dashboardService.storeAutoRefreshStatus(autoRefreshButtonStatus);
                     if(modifyFlag){
                         for(var i = 0; i<vm.nonSavedMigrations.length;i++){

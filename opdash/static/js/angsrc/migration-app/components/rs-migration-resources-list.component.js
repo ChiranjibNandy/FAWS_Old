@@ -64,10 +64,8 @@
                         vm.fawsAccType = vm.fawsAccountDetails.mode;
                     }
                     
-                    if((modalDisplayStatus == 'true' )  && (prePageName == "MigrationStatus" || prePageName == "MigrationResourceList" || prePageName == undefined)){
+                    if(modalDisplayStatus && (prePageName == "MigrationStatus" || prePageName == "MigrationResourceList" || prePageName == undefined)){
                         $('#intro_modal').modal('show');
-                        dataStoreService.setDontShowStatus(true);//set introduction modal flag to true after first time display.
-                        // $window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
                     }
 
                     dataStoreService.setPageName("MigrationResourceList");
