@@ -62,7 +62,6 @@
                     vm.volumeRegions = [];
                     vm.serviceRegions = [];
                     vm.fileRegions = []; 
-                    vm.dnsRegions = []; 
 
                     if(vm.type === "server"){
                         if($window.localStorage.selectedResources !== undefined){
@@ -245,38 +244,8 @@
                         vm.labels = [
                                         {field: "name", text: "DNS Name"},
                                         {field: "id", text: "ID"},
-                                        {field: "dns status", text: "DNS Status"},
-                                        {field: "destRegion", text: "AWS region"}
+                                        {field: "dns status", text: "DNS Status"}
                                     ];
-                        //Checks to see if all the regions for any one of the resource types are already fetched
-                        //If yes, do not further fetch services on startup
-                        //Or fetch the services assuming this is the first page on page load
-                        if(!vm.doesRegionFlagExist()){
-                            vm.loadingRegion = true;
-                            //Get all the service regions only once
-                            ds.getAllEc2Regions('dns').then(function(result){
-                                vm.loadingRegion = false;
-                                //If the returned result is empty we set the flag to true
-                                if(!result.length){
-                                    vm.errorInApi = true;
-                                    //Disable precheck continue button on success of the region API call
-                                    $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});
-                                }
-                                vm.dnsRegions = result;
-                                //For each of the resources in the array, set the default zone to 'us-east-1a'
-                                angular.forEach(vm.data,function(item){
-                                    if(vm.errorInApi){
-                                        //If the error flag is set, we set the options to Default texts
-                                        item.selectedMapping.region = "Not Available";
-                                    }
-                                });
-                            },function(error){
-                                vm.loadingRegion = false;
-                                vm.errorInApi = true;
-                                //Disable precheck continue button on success of the region API call
-                                $rootScope.$broadcast('enableContinuePrecheck',{enableStatus:true});
-                            }); 
-                        }
                     }else{
                         if($window.localStorage.selectedResources !== undefined)
                             vm.data = JSON.parse($window.localStorage.selectedResources)['LoadBalancers'];
@@ -550,11 +519,11 @@
                 vm.totalCost = function(item){
                     var storage_rate = parseFloat(parseFloat(item.details.rax_storage_size) * parseFloat(item.selectedMapping.storage_rate)).toFixed(2);
                     var aws_bandwidth_cost = 0;
-                    if(item.details.rax_bandwidth !== undefined)
-                        aws_bandwidth_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_bandwidth)).toFixed(2);
+                    if(item.rax_bandwidth !== undefined)
+                        aws_bandwidth_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.rax_bandwidth)).toFixed(2);
                     else
                         aws_bandwidth_cost = parseFloat(parseFloat(item.selectedMapping.cost) * 0).toFixed(2);
-                    var aws_uptime_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.details.rax_uptime || 720)).toFixed(2);
+                    var aws_uptime_cost = parseFloat(parseFloat(item.selectedMapping.cost) * parseFloat(item.rax_uptime || 720)).toFixed(2);
                     item.selectedMapping.totalCost = (parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost)+ parseFloat(storage_rate)).toFixed(2);
                     // return item.selectedMapping.totalCost;
                 };
@@ -563,11 +532,11 @@
                 vm.getTotalInstanceCost = function(server,item){
                     var storage_rate = parseFloat(parseFloat(item.details.rax_storage_size) * parseFloat(server.storage_rate)).toFixed(2);
                     var aws_bandwidth_cost = 0;
-                    if(item.details.rax_bandwidth !== undefined)
-                        aws_bandwidth_cost = parseFloat(parseFloat(server.cost) * parseFloat(item.details.rax_bandwidth)).toFixed(2);
+                    if(item.rax_bandwidth !== undefined)
+                        aws_bandwidth_cost = parseFloat(parseFloat(server.cost) * parseFloat(item.rax_bandwidth)).toFixed(2);
                     else
                         aws_bandwidth_cost = parseFloat(parseFloat(server.cost) * 0).toFixed(2);
-                    var aws_uptime_cost = parseFloat(parseFloat(server.cost) * parseFloat(item.details.rax_uptime || 720)).toFixed(2);
+                    var aws_uptime_cost = parseFloat(parseFloat(server.cost) * parseFloat(item.rax_uptime || 720)).toFixed(2);
 
                     return (parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost)+ parseFloat(storage_rate)).toFixed(2);
                 };
@@ -620,7 +589,7 @@
                 $scope.$on("tabChanged", function(event, type){
                     if(!vm.parentTab.tab.active) return; 
                     //Checks to see if the API call had already been made for the selected resource type
-                    if(ds.retrieveAllRegionFetchedFlags(type) === false){
+                    if(type !="dns"  && ds.retrieveAllRegionFetchedFlags(type) === false){
                         vm.callRegionApi(type);
                     }
                 });
@@ -721,18 +690,6 @@
                             vm.serviceRegions = result;
                             if($window.localStorage.selectedResources !== undefined)
                                 vm.data = JSON.parse($window.localStorage.selectedResources)['service'];
-                            else
-                                vm.data = [];
-                            //For each of the resources in the array, set the default zone to 'us-east-1a'
-                            angular.forEach(vm.data,function(item){
-                                if(vm.errorInApi){
-                                    item.selectedMapping.region = "Not Available";
-                                }
-                            });                            
-                        }else if(type === 'dns'){
-                            vm.dnsRegions = result;
-                            if($window.localStorage.selectedResources !== undefined)
-                                vm.data = JSON.parse($window.localStorage.selectedResources)['dns'];
                             else
                                 vm.data = [];
                             //For each of the resources in the array, set the default zone to 'us-east-1a'

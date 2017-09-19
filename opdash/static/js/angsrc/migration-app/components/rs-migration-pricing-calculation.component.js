@@ -45,52 +45,52 @@
 
                     selectedPricingMappingObj.forEach(function (server) {
                         var selectedFlavor = server.selectedMapping.instance_type;
-                        if (server.details.hasOwnProperty('rax_bandwidth')) {
+                        if (server.hasOwnProperty('rax_bandwidth')) {
                             vm.costCalculationItems.push({
-                                "resourceName": server.details.name,
-                                "rax_uptime_cost": server.details.rax_uptime_cost.toFixed(2),
-                                "rax_bandwidth_cost": parseFloat(server.details.rax_bandwidth_cost).toFixed(2),
-                                "rax_bandwidth": server.details.rax_bandwidth.toFixed(2),
-                                "rax_uptime": server.details.rax_uptime.toFixed(2),
-                                "rax_total_cost": parseFloat(parseFloat(server.details.rax_uptime_cost) + parseFloat(server.details.rax_bandwidth_cost)).toFixed(2),
+                                "resourceName": server.name,
+                                "rax_uptime_cost": server.rax_uptime_cost.toFixed(2),
+                                "rax_bandwidth_cost": parseFloat(server.rax_bandwidth_cost).toFixed(2),
+                                "rax_bandwidth": server.rax_bandwidth.toFixed(2),
+                                "rax_uptime": server.rax_uptime.toFixed(2),
+                                "rax_total_cost": parseFloat(parseFloat(server.rax_uptime_cost) + parseFloat(server.rax_bandwidth_cost)).toFixed(2),
                                 "storage": server.details.rax_storage_size
                             });
-                            vm.totalOfCostCalculationItems += (parseFloat(parseFloat(server.details.rax_uptime_cost) + parseFloat(server.details.rax_bandwidth_cost)));
+                            vm.totalOfCostCalculationItems += (parseFloat(parseFloat(server.rax_uptime_cost) + parseFloat(server.rax_bandwidth_cost)));
                         }
 
-                        if (!server.details.hasOwnProperty('rax_bandwidth')) {
+                        if (!server.hasOwnProperty('rax_bandwidth')) {
                             vm.costCalculationItems.push({
                                 "resourceName": server.details.name,
                                 "rax_uptime_cost": "NA",
                                 "rax_bandwidth_cost": "NA",
                                 "rax_bandwidth": "NA",
                                 "rax_uptime": "NA",
-                                "rax_total_cost": (server.details.rax_price),
+                                "rax_total_cost": (server.rax_price),
                                 "storage": server.details.rax_storage_size || 0
                             });
-                            vm.totalOfCostCalculationItems += (server.details.rax_price);
+                            vm.totalOfCostCalculationItems += (server.rax_price);
                         }
 
-                        if (server.details.hasOwnProperty('rax_bandwidth')) {
+                        if (server.hasOwnProperty('rax_bandwidth')) {
                             var storage_rate = parseFloat(parseFloat(server.details.rax_storage_size) * parseFloat(server.selectedMapping.storage_rate)).toFixed(2);
-                            var aws_bandwidth_cost = parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(server.details.rax_bandwidth)).toFixed(2);
-                            var aws_uptime_cost = parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(server.details.rax_uptime)).toFixed(2);
+                            var aws_bandwidth_cost = parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(server.rax_bandwidth)).toFixed(2);
+                            var aws_uptime_cost = parseFloat(parseFloat(server.selectedMapping.cost) * parseFloat(server.rax_uptime)).toFixed(2);
                             vm.projectedCostCalculationItems.push({
                                 "resourceName": server.details.name,
                                 "aws_uptime_cost": aws_uptime_cost,
                                 "aws_bandwidth_cost": aws_bandwidth_cost,
-                                "aws_bandwidth": server.details.rax_bandwidth.toFixed(2),
-                                "aws_uptime": server.details.rax_uptime.toFixed(2),
+                                "aws_bandwidth": server.rax_bandwidth.toFixed(2),
+                                "aws_uptime": server.rax_uptime.toFixed(2),
                                 "aws_total_cost": parseFloat(parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost) + parseFloat(storage_rate)).toFixed(2),
-                                "rax_bandwidth": server.details.rax_bandwidth.toFixed(2),
-                                "rax_uptime": server.details.rax_uptime.toFixed(2),
+                                "rax_bandwidth": server.rax_bandwidth.toFixed(2),
+                                "rax_uptime": server.rax_uptime.toFixed(2),
                                 "storage_rate": storage_rate,
                                 "rax_storage": server.details.rax_storage_size
                             });
                             vm.totalOfProjectedCostCalculationItems += (parseFloat(aws_uptime_cost) + parseFloat(aws_bandwidth_cost) + parseFloat(storage_rate));
                         }
 
-                        if (!server.details.hasOwnProperty('rax_bandwidth')) {
+                        if (!server.hasOwnProperty('rax_bandwidth')) {
                             //Checks whether the showCalculatedCostDialog flag was set in the loop before
                             if (vm.showCalculatedCostDialog === false)
                                 vm.showCalculatedCostDialog = true;
