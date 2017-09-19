@@ -117,7 +117,7 @@
                                     <a ng-show="batch.timestamp" href="javascript:void(0)" ng-click="vm.continueScheduling(batch);">{{batch.batch_name}}</a>
                                 </td>
                                 <td class="rs-table-text ng-binding">
-                                    <span>{{batch.metadata.impersonated_by || batch.metadata.initiated_by}}</span>
+                                    <span>{{batch.metadata.impersonated_by || batch.metadata.initiated_by || batch.initiated_by}}</span>
                                 </td>
                                 <td class="rs-table-text ng-binding">
                                     <span ng-show="!batch.timestamp">{{(batch.start)| date : 'M/dd/yyyy hh:mm a' }}</span>
