@@ -228,18 +228,6 @@
 
                 /**
                  * @ngdoc method
-                 * @name dontShow
-                 * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
-                 * @description
-                 * Consider Dont show checkbox of introduction Modal if checked.
-                 */
-                vm.dontShow = function() {
-                    dataStoreService.setDontShowStatus(vm.dontshowStatus);
-                    $window.localStorage.setItem('dontShowStatus',JSON.stringify(vm.dontshowStatus));
-                };
-
-                /**
-                 * @ngdoc method
                  * @name dontShowNameModal
                  * @methodOf migrationApp.controller:rsmigrationresourceslistCtrl
                  * @description
@@ -500,18 +488,21 @@
                 });
 
                 vm.showWelcomeModal =function(){
-                    var url = '/api/user/settings';
-                      HttpWrapper.patch("/api/user/settings", {
+                    if(vm.dontshowStatus) {
+                        var url = '/api/user/settings';
+                        HttpWrapper.patch("/api/user/settings", {
                                 "operation": 'PATCH'
                             }, [{
-                                  "key": "show_welcome_modal",
-                                  "action": "save",
-                                  "value": !dataStoreService.getDontShowStatus()
-                             }])
+                                    "key": "show_welcome_modal",
+                                    "action": "save",
+                                    "value": !dataStoreService.getDontShowStatus()
+                                }])
                             .then(function (result) {
+                               dataStoreService.setDontShowStatus(false); 
                             }, function (error) {
-                                
+                                 console.log("error while saving user settings"); 
                             });
+                    }
                                 
                 }
 
