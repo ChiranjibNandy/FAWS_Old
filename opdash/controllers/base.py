@@ -340,7 +340,7 @@ class RackerBlueprint(SecureBlueprint):
         return self.login_redirect()
 
 
-class ProxyBlueprint(SecureBlueprint):
+class ProxyBlueprint(Blueprint):
     '''
         This blueprint is for API proxy requests
     '''
