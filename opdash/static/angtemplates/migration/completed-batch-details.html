@@ -10,7 +10,6 @@
                     </div>
                     <div class="span-4">
                         <div class="pull-right">
-                            <!--<a href="" class="rs-btn rs-pull-right">See Log</a>-->
                         </div>
                     </div>
                 </div>
@@ -52,16 +51,6 @@
                                 <td class="rs-table-text">
                                     {{(vm.job.completed_at) | date : 'M/dd/yyyy hh:mm a'}}
                                 </td>
-                                <!--<td class="rs-table-text">
-                                    <div class="rs-progress rs-progress-medium" style="width: 50%;">
-                                        <div class="rs-progress-inner">
-                                            <div class="rs-segment" style="width: 100%">
-                                                <div class="rs-bar rs-status-ok"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="rs-progress-label">100%</span>
-                                </td>-->
                                 <td class="rs-table-text">
                                     <span class="rs-status-error" ng-show="instance.status==='error'">Error</span>
                                     <span class="rs-status-ok" ng-show="instance.status!='error'">Completed</span>
@@ -88,7 +77,6 @@
                                     <span class="rs-table-sort-indicator"></span>
                                 </a>
                             </th>
-                            <!--<th>Progress</th>-->
                             <th>
                                 <a href="javascript:void(0);" class="rs-table-sort" ng-click="vm.setSortBy('network', 'end')" ng-class="{'custom-table-sort-asc current-sort-param': vm.sortBy['network']==='end', 'custom-table-sort-desc current-sort-param': vm.sortBy['network']==='-end', 'custom-table-sort-desc': vm.sortBy['network'].indexOf('end') < 0}">
                                     <span class="rs-table-sort-text">Completion Time</span>
@@ -110,16 +98,6 @@
                                 <td class="rs-table-link">
                                     <a href="" ng-click="vm.equipmentDetails('network', network.id)" role="button" data-toggle="modal">{{network.name}}</a>
                                 </td>
-                                <!--<td class="rs-table-text">
-                                    <div class="rs-progress rs-progress-medium" style="width: 50%;">
-                                        <div class="rs-progress-inner">
-                                            <div class="rs-segment" style="width: 100%">
-                                                <div class="rs-bar rs-status-ok"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="rs-progress-label">100%</span>
-                                </td>-->
                                 <td class="rs-table-text">
                                     {{(vm.job.completed_at) | date : 'M/dd/yyyy hh:mm a'}}
                                 </td>

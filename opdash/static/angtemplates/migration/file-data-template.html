@@ -10,13 +10,9 @@
     <td class="rs-table-text capitalize" title="{{item.canMigrate ? ' ' : 'This region cannot be migrated'}}" ng-style="(item.canMigrate == true && item.status == 'active') ? {background: 'white'} : {background:'rgba(51, 51, 51, 0.15)'}" ng-show="item.migStatus == 'Available to Migrate' || item.migStatus == 'Not Available to Migrate' || item.migStatus == 'Status not available'">{{item.migStatus}}</td>
     <td class="rs-table-text capitalize" title="{{item.canMigrate ? ' ' : 'This region cannot be migrated'}}" ng-style="(item.canMigrate == true && item.status == 'active') ? {background: 'white'} : {background:'rgba(51, 51, 51, 0.15)'}" ng-show="item.eligible == 'Passed' || item.eligible == 'Failed'"  ng-class="{'rs-status-ok': item.eligible == 'Passed', 'rs-status-error': item.eligible=='Failed'}"><a href="" ng-click="vm.eligibilityDetails(item.eligibiltyTests)">{{item.eligible }}</a>
       <span class="space"></span><a ng-class="{'disabled': vm.checkingEligibility[item.id]}" ng-show="item.eligible == 'Failed'" href="" ng-click="vm.eligibilityCheck(item)">
-        <!-- <i style="color: #1e6ec1 !important" class="fa fa-refresh" ng-class="{'fa-spin': vm.checkingEligibility[item.id]}"></i> 
-         <small><em>Test Again</em></small>  -->
-        </a></td>
+       </a></td>
     <td class="rs-table-text rs-status-processing capitalize" title="{{item.canMigrate ? ' ' : 'This region cannot be migrated'}}" ng-style="(item.canMigrate == true && item.status == 'active') ? {background: 'white'} : {background:'rgba(51, 51, 51, 0.15)'}" ng-show="item.eligible == 'Not Available'">
         {{vm.checkingEligibility[item.id] ? 'running' : item.eligible }}  <span class="space"></span><a ng-class="{'disabled': vm.checkingEligibility[item.id]}" ng-show ="(item.migStatus == 'Available to Migrate' || item.eligible == 'Not Available')" href="" ng-click="vm.eligibilityCheck(item)">
-            <!-- <i style="color: #1e6ec1 !important" class="fa fa-refresh" ng-class="{'fa-spin': vm.checkingEligibility[item.id]}"></i> 
-             <small><em>Test Again</em></small>  -->
         </a>
     </td>
 </tr>
