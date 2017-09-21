@@ -394,11 +394,10 @@
                         "cloud": "rackspace",
                         "tenantid": tenant_id
                     },
-                    "resources": {
-                        [instance_type]: itemsArr
-                    },
                     "version": "v1"
                 };
+                requestObj.resources = {};
+                requestObj.resources[instance_type] = itemsArr;
                 return HttpWrapper.save("/api/eligibility", {
                         "operation": 'POST'
                     }, requestObj)
