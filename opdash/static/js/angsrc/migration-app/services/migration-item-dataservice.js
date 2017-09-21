@@ -22,8 +22,7 @@
                 volume:false,
                 LoadBalancers:false,
                 service:false,
-                file:false,
-                dns:false
+                file:false
             };
 
             self.storeRegionFetchedFlags = function(type,value){
@@ -304,6 +303,30 @@
                 self.storeRegionFetchedFlags(type,true);
                 return resultsLoaded;
             };//end of getAllEc2Regions method
+
+            this.getBillingInfo = function(billingIdsArray){
+                if(!billingIdsArray.length) return $q.resolve();
+                var segmentUrl = '';
+                for(var i =0;i<billingIdsArray.length;i++){
+                    if(i != (billingIdsArray.length-1))
+                        segmentUrl += 'ids='+billingIdsArray[i]+'&';
+                    else
+                        segmentUrl += 'ids='+billingIdsArray[i];
+                }
+                return HttpWrapper.send('/api/compute/instances?billing=true&'+segmentUrl, {"operation": 'GET'});
+            };//end of the getBillingInfo method
+
+            this.getBatchedPricingDetails = function(flavorIdsArray){
+                if(!flavorIdsArray.length) return $q.resolve();
+                var segmentUrl = '';
+                for(var i =0;i<flavorIdsArray.length;i++){
+                    if(i != (flavorIdsArray.length-1))
+                        segmentUrl += 'flavors='+flavorIdsArray[i]+'&';
+                    else
+                        segmentUrl += 'flavors='+flavorIdsArray[i];
+                }
+                return HttpWrapper.send('/api/ec2/get_batched_ec2_prices?region=us-east-1&'+segmentUrl, {"operation": 'GET'});                
+            };//end of the getBatchedPricingDetails method
 
             /**
              * @ngdoc method

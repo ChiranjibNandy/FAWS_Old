@@ -282,23 +282,31 @@
                                     //depending upon eligibility test, enable/disable the resource for migration.
                                     vm.pageChangeEvent(eligTestForSavedItems, true);
                                     $timeout(function () {
-                                        vm.pageChangeEvent();
+                                        if(vm.filtervalue){
+                                            vm.watchFilterFunction();
+                                        } else {
+                                            vm.pageChangeEvent();
+                                        }
                                     }, 2000);
                                 } else{
-                                    vm.pageChangeEvent();
+                                    if(vm.filtervalue){
+                                        vm.watchFilterFunction();
+                                    } else {
+                                        vm.pageChangeEvent();
+                                        // pagination controls
+                                        vm.currentPage = 1;
+                                        vm.totalItems = vm.items.length; // number of items received.
+                                        vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
+                                        for (var i=1; i<=vm.noOfPages; i++) {
+                                            //Check if page number is already appended in the variable mentained for apagination.
+                                            //This check is to avoid duplicate page numbers being added upon multiple clicks on a tab.
+                                            if(!vm.pageArray[vm.type].includes(i)){
+                                                vm.pageArray[vm.type].push(i);
+                                            }
+                                        };
+                                    }
                                 }
                                 datastoreservice.storeallItems(vm.items, vm.type);
-                                // pagination controls
-                                vm.currentPage = 1;
-                                vm.totalItems = vm.items.length; // number of items received.
-                                vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
-                                for (var i=1; i<=vm.noOfPages; i++) {
-                                    //Check if page number is already appended in the variable mentained for apagination.
-                                    //This check is to avoid duplicate page numbers being added upon multiple clicks on a tab.
-                                    if(!vm.pageArray[vm.type].includes(i)){
-                                        vm.pageArray[vm.type].push(i);
-                                    }
-                                };
                                 vm.searchField = results[0].labels[0].field;
                                 vm.labels = results[0].labels; // set table headers
                                 //Store all labels in factory variable
@@ -474,9 +482,7 @@
                         vm.sortingOrder = true;
                     }
                     vm.items = items;
-                    // if(vm.type == 'server'){
-                        vm.pageChangeEvent();
-                    // }
+                    vm.pageChangeEvent();
                 };
                 // Get count of items by their status type
                 vm.getCountByStatus = function (status) {
@@ -526,7 +532,8 @@
                     vm.parent.equipmentDetailsModal(type, itemdetails);
                 }
                 var timeout = null;
-                $scope.$watch('vm.filtervalue', function (query) {
+
+                vm.watchFilterFunction = function() {
                     vm.filteredArr = vm.items.filter(function(item){
                         return item.name.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || (item.ip_address || '').indexOf(vm.filtervalue)!=-1 || (item.ram || 0) == vm.filtervalue || item.status.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || item.eligible.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1 || 
                         item.migStatus.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1
@@ -546,9 +553,10 @@
                     clearTimeout(timeout);
                     // Wait for user to stop typing
                     timeout = setTimeout(function () {
-                        if (query && vm.filteredArr.length) vm.pageChangeEvent(vm.filteredArr);
+                        if (vm.filteredArr.length) vm.pageChangeEvent(vm.filteredArr);
                     }, 2500);
-                });
+                }
+                $scope.$watch('vm.filtervalue', vm.watchFilterFunction);
 
                 vm.eligibilityCheck = function (item, firstRun) {
                     if (!firstRun) {
@@ -669,6 +677,8 @@
                             var items = filterInput;
                         } else if(filterInput && !modifyMig){
                             vm.tempfilteredArr = angular.copy(filterInput);
+                            var items = vm.tempfilteredArr.slice((vm.currentPage - 1) * vm.pageSize, ((vm.currentPage - 1) * vm.pageSize) + vm.pageSize);
+                        } else if(vm.tempfilteredArr){
                             var items = vm.tempfilteredArr.slice((vm.currentPage - 1) * vm.pageSize, ((vm.currentPage - 1) * vm.pageSize) + vm.pageSize);
                         }
                     }
