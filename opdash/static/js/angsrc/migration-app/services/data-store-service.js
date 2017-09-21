@@ -190,6 +190,9 @@
              * Saves list of all resources once application is loaded.
              */
             this.storeallItems = function (items, type) {
+                if($window.localStorage.allResources !== undefined){
+                    self.resourceItems = JSON.parse($window.localStorage.allResources);
+                }
                 self.resourceItems[type] = items;
                 $window.localStorage.allResources = JSON.stringify(self.resourceItems);
             }

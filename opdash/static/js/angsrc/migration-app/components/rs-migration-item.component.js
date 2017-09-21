@@ -286,6 +286,7 @@
                                             vm.watchFilterFunction();
                                         } else {
                                             vm.pageChangeEvent();
+                                            vm.displayPagination(vm.items);
                                         }
                                     }, 2000);
                                 } else{
@@ -293,17 +294,7 @@
                                         vm.watchFilterFunction();
                                     } else {
                                         vm.pageChangeEvent();
-                                        // pagination controls
-                                        vm.currentPage = 1;
-                                        vm.totalItems = vm.items.length; // number of items received.
-                                        vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
-                                        for (var i=1; i<=vm.noOfPages; i++) {
-                                            //Check if page number is already appended in the variable mentained for apagination.
-                                            //This check is to avoid duplicate page numbers being added upon multiple clicks on a tab.
-                                            if(!vm.pageArray[vm.type].includes(i)){
-                                                vm.pageArray[vm.type].push(i);
-                                            }
-                                        };
+                                        vm.displayPagination(vm.items);
                                     }
                                 }
                                 datastoreservice.storeallItems(vm.items, vm.type);
@@ -341,16 +332,7 @@
                                 vm.activeItemCount++;
                             }
                         });
-                        // pagination controls
-                        vm.currentPage = 1;
-                        vm.pageSize = 5; // items per page
-                        vm.totalItems = vm.items.length;
-                        vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
-                        for (var i = 1; i <= vm.noOfPages; i++) {
-                            if(!vm.pageArray[vm.type].includes(i)){
-                                vm.pageArray[vm.type].push(i);
-                            }
-                        };
+                        vm.displayPagination(vm.items);
 
                         if(datastoreservice.retrieveallItems("label"+vm.type) !== undefined){
                             vm.labels = datastoreservice.retrieveallItems("label" + vm.type); // set table headers
@@ -539,17 +521,7 @@
                         item.migStatus.toLowerCase().indexOf(vm.filtervalue.toLowerCase())!=-1
                         || (item.containerCount || 0) == vm.filtervalue || (item.size || 0) == vm.filtervalue;
                     });
-                    // pagination controls
-                    vm.currentPage = 1;
-                    vm.pageArray[vm.type] = [];
-                    vm.pageSize = 5; // items to be displayed per page
-                    vm.totalItems = vm.filteredArr.length; // number of items received.
-                    vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
-                    for (var i = 1; i <= vm.noOfPages; i++) {
-                        if(!vm.pageArray[vm.type].includes(i)){
-                            vm.pageArray[vm.type].push(i);
-                        }
-                    };
+                    vm.displayPagination(vm.filteredArr);
                     clearTimeout(timeout);
                     // Wait for user to stop typing
                     timeout = setTimeout(function () {
@@ -734,6 +706,29 @@
                     }
                     return false;
                 };
+
+                /**
+                 * @ngdoc method
+                 * @name displayPagination
+                 * @methodOf migrationApp.controller:rsmigrationitemCtrl
+                 * @description 
+                 * This function is to display the pagination inorder to view the resources page wise.
+                 */
+                vm.displayPagination = function(itemsList) {
+                    // pagination controls
+                    vm.currentPage = 1;
+                    vm.pageSize = 5;
+                    vm.pageArray[vm.type] = [];
+                    vm.totalItems = itemsList.length; // number of items received.
+                    vm.noOfPages = Math.ceil(vm.totalItems / vm.pageSize);
+                    for (var i=1; i<=vm.noOfPages; i++) {
+                        //Check if page number is already appended in the variable mentained for apagination.
+                        //This check is to avoid duplicate page numbers being added upon multiple clicks on a tab.
+                        if(!vm.pageArray[vm.type].includes(i)){
+                            vm.pageArray[vm.type].push(i);
+                        }
+                    };
+                }
 
                 return vm;
             }]
