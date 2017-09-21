@@ -271,10 +271,11 @@
                     if($window.localStorage.selectedResources !== undefined && (JSON.parse($window.localStorage.selectedResources)['server'].length || JSON.parse($window.localStorage.selectedResources)['volume'].length || JSON.parse($window.localStorage.selectedResources)['service'].length || JSON.parse($window.localStorage.selectedResources)['file'].length || JSON.parse($window.localStorage.selectedResources)['dns'].length)){
                         vm.continuing = true;
                         var items = JSON.parse($window.localStorage.selectedResources)['server'];
-
                         var arr = [];
-
                         var billingIdsArray = [];
+                        var flavorIds = [];
+                        var fetchBatchedBillingInfoFlag = true;
+
                         //Iterate through all the items and push the resource ids into an array
                         angular.forEach(items, function (item) {
                             billingIdsArray.push(item.id);
@@ -283,7 +284,7 @@
                         //Make the billing API call only for servers
                         ds.getBillingInfo(billingIdsArray)
                             .then(function(response){
-                                var promises = null;
+                                //If there is any actual response(it happens only when at least a server is selected for the migration)
                                 if(response !== undefined){
                                     var serversList = [];
                                     for (var key in response) {
@@ -294,7 +295,8 @@
                                                 serversList.push(server);
                                             });
                                         }
-                                    }                              
+                                    }  
+
                                     angular.forEach(serversList,function(res){
                                         angular.forEach(items, function (item) {
                                             //Compare the id of the response object and that of the items array
@@ -308,22 +310,68 @@
                                         });
                                     });
                         
-                                    promises = items.map(function(item) {
-                                        if(item.selectedMapping == undefined || item.selectedMapping.cost == undefined){
-                                            var reg = item.selectedMapping ? item.selectedMapping.region : DEFAULT_VALUES.REGION;
-                                            var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+reg;
-                                            return HttpWrapper.send(url, {"operation": 'GET'}).then(function(pricingOptions) {
-                                                item.selectedMapping = pricingOptions[0];
-                                                item.selectedMapping.zone = 'us-east-1a'; 
-                                                arr.push(item);
-                                            });
-                                        }
-                                        else{
-                                            arr.push(item);
+                                    //Once the billing call is complete, loop through the array to get distinct flavor ids
+                                    angular.forEach(serversList,function(server){
+                                        if(flavorIds.indexOf(server.flavor.id) == -1)
+                                            //push the distinct flavor ids into the array
+                                            flavorIds.push(server.flavor.id);
+                                    });
+
+                                    var keepGoing = true;
+                                    angular.forEach(items,function(item){
+                                        if(keepGoing) {
+                                            //If one of the selected servers, does not have the selectedMapping object populated break the loop and fetch the pricing details 
+                                            //For the entire batch of the selected servers 
+                                            if(item.selectedMapping == undefined || item.selectedMapping.cost == undefined){
+                                                fetchBatchedBillingInfoFlag = false;
+                                                keepGoing = false;
+                                            }
                                         }
                                     });
                                 }
-                                $q.all(promises).then(function(result) {
+
+                                var promise = null;
+                                if(!fetchBatchedBillingInfoFlag){
+                                    promise = ds.getBatchedPricingDetails(flavorIds);
+                                }else {
+                                    //Create an empty promise in case the pricing details for the selected servers
+                                    //Are already fetched
+                                    promise = $q.resolve([]);
+                                    angular.forEach(items,function(item){
+                                        arr.push(item);
+                                    });
+                                }
+
+                                promise.then(function(res){
+                                    var keepGoing = true;
+                                    for(var key in res) {
+                                        if(keepGoing){
+                                            //If the response object has a null value for any of the given keys, we assume the API has failed
+                                            if(res[key] === null)
+                                                keepGoing = false;
+                                        }
+                                    }
+                                    //And we reject the promise
+                                    if(!keepGoing){
+                                        return $q.reject("Bad data");
+                                    }
+
+                                    //Else, we loop through the keys
+                                    if(res.length != 0){
+                                        var keysArray = Object.keys(res);
+                                        angular.forEach(keysArray,function(key){
+                                            angular.forEach(items,function(item){
+                                                //If a key matches any of the flavor ids of the selected servers
+                                                if(item.flavor.id == key && res[key] != null){
+                                                    //We append the pricing details inside the selectedMapping object
+                                                    item.selectedMapping = res[key][0];
+                                                    item.selectedMapping.zone = 'us-east-1a'; 
+                                                    arr.push(item);
+                                                }
+                                            });
+                                        });
+                                    }
+
                                     vm.selectedItems.server = arr;
                                     dataStoreService.setSelectedItems(vm.selectedItems.server, 'server');                            
                                     //Declare a tempItems array that would hold phase 2 resources
@@ -375,11 +423,11 @@
                                     ds.storeRegionFetchedFlags('file',false);
                                     ds.storeRegionFetchedFlags('dns',false);
                                     $rootRouter.navigate(["MigrationRecommendation"]);    
-                                },function(error){
+                                }).catch(function(error){
                                     vm.continuing = false;
                                     vm.errorInContinue = true;
                                 });
-                        });
+                            });                    
                     }
                     else{
                         $('#save_for_later').modal('hide');
