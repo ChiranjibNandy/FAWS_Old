@@ -324,11 +324,12 @@
                         angular.forEach(item.details.networks, function (network) {
                             if(networkNames.indexOf(network.name) == -1) {
                                 networkNames.push(network.name);
+                                network.source_region = item.details.source_region;
                                 vm.data.push(network);
-                            };
+                            }
                         });
                     });
-                }
+                };
                 
                 /**
                   * @ngdoc method
