@@ -218,7 +218,7 @@
                 */
                 vm.equipmentDetails = function (type, item) {
                     vm.loading = true;
-                    var id = item.id || item.rrn;
+                    var id = item.rrn || item.id;
                     var region = type === 'server'?item.source_region:item.name;	
                     //Initiate the variables so that headers are even shown before the API gets resolved.
                     vm.itemType = type;
