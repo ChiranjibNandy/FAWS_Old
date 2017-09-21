@@ -15,7 +15,8 @@ def api_proxy(path):
         Proxy http request from control panel to api
         this allows us to avoid cross-domain requests
     """
-    msg = 'API Route is: "{0}"'.format(path)
+    msg_base = 'API Route (path) is: "{0}" API Route (request.url) is: "{1}"'
+    msg = msg_base.format(path, request.url)
     current_app.logger.debug(msg)
     print(msg)
 
