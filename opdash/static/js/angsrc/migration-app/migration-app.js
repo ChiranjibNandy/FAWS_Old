@@ -80,10 +80,10 @@
                 secondHalf = "#/"+event.target.href.substr(event.target.href.indexOf('8000/')+5,event.target.href.length);
             }else if(event.target.href.indexOf('net')>0){
                 firstHalf = event.target.href.substr(0,event.target.href.indexOf('net')+3);
-                secondHalf = "#/"+event.target.href.substr(event.target.href.indexOf('net')+5,event.target.href.length);
+                secondHalf = "#/"+event.target.href.substr(event.target.href.indexOf('net')+3,event.target.href.length);
             }else if(event.target.href.indexOf('com')>0){
                 firstHalf = event.target.href.substr(0,event.target.href.indexOf('com')+3);
-                secondHalf = "#/"+event.target.href.substr(event.target.href.indexOf('com')+5,event.target.href.length);
+                secondHalf = "#/"+event.target.href.substr(event.target.href.indexOf('com')+3,event.target.href.length);
             }
             event.target.href = firstHalf+secondHalf;
         }
