@@ -114,7 +114,7 @@
                                 <td class="rs-table-status" ng-if="batch.batch_status!=='error'" ng-class="{'rs-table-status-error': batch.batch_status==='error','rs-table-status-pending': (batch.batch_status==='not available' || batch.timestamp), 'rs-table-status-warning': ((batch.batch_status==='scheduled'||'paused') && batch.batch_status!=='in progress'), 'rs-table-status-ok rs-table-status-striped': batch.batch_status==='in progress' , 'rs-table-status-error': batch.batch_status==='canceled'}"></td>
                                 <td class="rs-table-link">
                                     <a ng-show="!batch.timestamp" ng-link="['CurrentBatchDetails', {job_id: batch.job_id}]">{{batch.metadata.batch_name}}</a>
-                                    <a ng-show="batch.timestamp" href="javascript:void(0)" ng-click="vm.continueScheduling(batch);">{{batch.batch_name}}</a>
+                                    <a ng-show="batch.timestamp" href="javascript:void(0)" ng-click="vm.showDetailsOfSavedMigration(batch);">{{batch.batch_name}}</a>
                                 </td>
                                 <td class="rs-table-text ng-binding">
                                     <span>{{batch.metadata.impersonated_by || batch.metadata.initiated_by}}</span>

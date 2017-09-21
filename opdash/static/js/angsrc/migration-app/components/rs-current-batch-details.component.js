@@ -42,96 +42,109 @@
                 * Gets details of a job
                 */
                 vm.getBatchDetails = function (refresh) {
-                    if (refresh) {
-                        vm.manualRefresh = true;
-                        vm.timeSinceLastRefresh = 0;
-                        $interval.cancel(lastRefreshIntervalPromise);
-                    } else {
-                        vm.loading = true;
-                        vm.manualRefresh = false;
-                    }
-                    vm.getAllAlerts(true,vm.job_id);
-                    vm.getAllBatchTasks(vm.job_id);
-                    dashboardService.getCurrentBatcheForJobId(vm.job_id)
-                        .then(function (job) {
-                            vm.job = job;
-                            vm.equipmentContent.tableBody.server = vm.job.instances;
-                            vm.equipmentContent.tableBody.network = vm.job.networks;
-                            vm.equipmentContent.tableBody.service = vm.job.cdn;
-                            vm.equipmentContent.tableBody.file = vm.job.file;
-                            vm.equipmentContent.tableBody.volume = vm.job.volumes;
-                            if (job.batch_status === 'in progress' || job.batch_status === 'done')
-                                //Makes a promise to fetch the progress API details for in progress and completed batches
-                                var promise = HttpWrapper.send('/api/jobs/' + job.job_id + '/progress', { "operation": 'GET' });
-                            //Once the promise is resolved, proceed with rest of the items
-                            $q.all([promise])
-                                .then(function (result) {
-                                    //If the job status is not in progress, promise resolves to undefined
-                                    if (result[0] !== undefined) {
-                                        //Create a property that would hold the progress detail for in progress and completed batches
-                                        if (result[0].succeeded_by_time_pct !== undefined) {
-                                            //Set the progress flag to true to indicate the batch holds the progress call results
-                                            vm.progressFlag = true;
-                                            job.batch_succeeded_time_pct = result[0].succeeded_by_time_pct;
-                                            if(result[0].instances)
-                                                for (var key in result[0].instances.resources) {
-                                                    angular.forEach(job.instances, function (instance) {
-                                                        if (instance.id === key) {
-                                                            instance.instance_succeeded_time_pct = result[0].instances.resources[key].succeeded_by_time_pct;
-                                                        }
-                                                    });
-                                                }
-                                            if(result[0].volumes)
-                                                for (var key in result[0].volumes.resources) {
-                                                    angular.forEach(job.volumes, function (volume) {
-                                                        if (volume.id === key) {
-                                                            volume.volume_succeeded_time_pct = result[0].volumes.resources[key].succeeded_by_time_pct;
-                                                        }
-                                                    });
-                                                }
-                                            if(result[0].cdn) 
-                                                for (var key in result[0].cdn.resources) {
-                                                    angular.forEach(job.cdn, function (cdn) {
-                                                        if (cdn.id === key) {
-                                                            cdn.cdn_succeeded_time_pct = result[0].cdn.resources[key].succeeded_by_time_pct;
-                                                        }
-                                                    });
-                                                }  
-                                           if(result[0].file) 
-                                                for (var key in result[0].file.resources) {
-                                                    angular.forEach(job.file, function (file) {
-                                                        if (file.id === key) {
-                                                            file.file_succeeded_time_pct = result[0].file.resources[key].succeeded_by_time_pct;
-                                                        }
-                                                    });
-                                                }                                            
-                                            if (result[0].networks)
-                                                job.network_succeeded_by_time_pct = result[0].networks.succeeded_by_time_pct;
+                    if(vm.job_id){
+                        if (refresh) {
+                            vm.manualRefresh = true;
+                            vm.timeSinceLastRefresh = 0;
+                            $interval.cancel(lastRefreshIntervalPromise);
+                        } else {
+                            vm.loading = true;
+                            vm.manualRefresh = false;
+                        }
+                        vm.getAllAlerts(true,vm.job_id);
+                        vm.getAllBatchTasks(vm.job_id);
+                        dashboardService.getCurrentBatcheForJobId(vm.job_id)
+                            .then(function (job) {
+                                vm.job = job;
+                                vm.equipmentContent.tableBody.server = vm.job.instances;
+                                vm.equipmentContent.tableBody.network = vm.job.networks;
+                                vm.equipmentContent.tableBody.service = vm.job.cdn;
+                                vm.equipmentContent.tableBody.file = vm.job.file;
+                                vm.equipmentContent.tableBody.volume = vm.job.volumes;
+                                if (job.batch_status === 'in progress' || job.batch_status === 'done')
+                                    //Makes a promise to fetch the progress API details for in progress and completed batches
+                                    var promise = HttpWrapper.send('/api/jobs/' + job.job_id + '/progress', { "operation": 'GET' });
+                                //Once the promise is resolved, proceed with rest of the items
+                                $q.all([promise])
+                                    .then(function (result) {
+                                        //If the job status is not in progress, promise resolves to undefined
+                                        if (result[0] !== undefined) {
+                                            //Create a property that would hold the progress detail for in progress and completed batches
+                                            if (result[0].succeeded_by_time_pct !== undefined) {
+                                                //Set the progress flag to true to indicate the batch holds the progress call results
+                                                vm.progressFlag = true;
+                                                job.batch_succeeded_time_pct = result[0].succeeded_by_time_pct;
+                                                if(result[0].instances)
+                                                    for (var key in result[0].instances.resources) {
+                                                        angular.forEach(job.instances, function (instance) {
+                                                            if (instance.id === key) {
+                                                                instance.instance_succeeded_time_pct = result[0].instances.resources[key].succeeded_by_time_pct;
+                                                            }
+                                                        });
+                                                    }
+                                                if(result[0].volumes)
+                                                    for (var key in result[0].volumes.resources) {
+                                                        angular.forEach(job.volumes, function (volume) {
+                                                            if (volume.id === key) {
+                                                                volume.volume_succeeded_time_pct = result[0].volumes.resources[key].succeeded_by_time_pct;
+                                                            }
+                                                        });
+                                                    }
+                                                if(result[0].cdn) 
+                                                    for (var key in result[0].cdn.resources) {
+                                                        angular.forEach(job.cdn, function (cdn) {
+                                                            if (cdn.id === key) {
+                                                                cdn.cdn_succeeded_time_pct = result[0].cdn.resources[key].succeeded_by_time_pct;
+                                                            }
+                                                        });
+                                                    }  
+                                               if(result[0].file) 
+                                                    for (var key in result[0].file.resources) {
+                                                        angular.forEach(job.file, function (file) {
+                                                            if (file.id === key) {
+                                                                file.file_succeeded_time_pct = result[0].file.resources[key].succeeded_by_time_pct;
+                                                            }
+                                                        });
+                                                    }                                            
+                                                if (result[0].networks)
+                                                    job.network_succeeded_by_time_pct = result[0].networks.succeeded_by_time_pct;
+                                            }
+                                            else if (result[0].succeeded_by_time_pct === undefined) {
+                                                vm.progressFlag = true;
+                                                job.batch_succeeded_time_pct = 0;
+                                            }
+                                        } else {
+                                            //If no progress API call was made for the batch, set the flag to false
+                                            vm.progressFlag = false;
                                         }
-                                        else if (result[0].succeeded_by_time_pct === undefined) {
-                                            vm.progressFlag = true;
-                                            job.batch_succeeded_time_pct = 0;
-                                        }
-                                    } else {
-                                        //If no progress API call was made for the batch, set the flag to false
+                                        vm.job = job;
+                                        $window.localStorage.setItem('batch_job_status', job.batch_status);
+                                        vm.loading = false;
+                                        vm.manualRefresh = false;
+                                        lastRefreshIntervalPromise = $interval(function () {
+                                            vm.timeSinceLastRefresh++;
+                                        }, 60000);
+                                    }, function (errorResponse) {
+                                        //job.succeeded_time_pct = 0;
+                                        //Create a flag that indicates something has gone wrong while fetching progress API details
                                         vm.progressFlag = false;
-                                    }
-                                    vm.job = job;
-                                    $window.localStorage.setItem('batch_job_status', job.batch_status);
-                                    vm.loading = false;
-                                    vm.manualRefresh = false;
-                                    lastRefreshIntervalPromise = $interval(function () {
-                                        vm.timeSinceLastRefresh++;
-                                    }, 60000);
-                                }, function (errorResponse) {
-                                    //job.succeeded_time_pct = 0;
-                                    //Create a flag that indicates something has gone wrong while fetching progress API details
-                                    vm.progressFlag = false;
-                                });
-                        }, function (errorResponse) {
-                            vm.loading = false;
-                            vm.loadError = true;
-                        });
+                                    });
+                            }, function (errorResponse) {
+                                vm.loading = false;
+                                vm.loadError = true;
+                            });
+                    }else{
+                        //this else block helps to populate the details of a saved migration.
+                        vm.loading = false;
+                        vm.loadError = false;
+                        var batch = dashboardService.getSavedBatchDetails();
+                        vm.job.batch_name = batch.batch_name;
+                        vm.equipmentContent.tableBody.server = batch.selected_resources.server;
+                        vm.equipmentContent.tableBody.network = batch.selected_resources.network;
+                        vm.equipmentContent.tableBody.service = batch.selected_resources.service;
+                        vm.equipmentContent.tableBody.file = batch.selected_resources.file;
+                        vm.equipmentContent.tableBody.volume = batch.selected_resources.volume;
+                    }
                 };
 
                 vm.$onInit = function () {
@@ -144,6 +157,7 @@
                         server: 'name',
                         network: 'name'
                     };
+                    vm.isThisSavedMigration = false;
                     vm.alerts = [];
                     vm.loadingAlerts = true;
                     vm.batchTasks = [];
@@ -172,7 +186,8 @@
                 };
 
                 vm.$routerOnActivate = function (next, previous) {
-                    vm.job_id = next.params.job_id;
+                    vm.job_id = next.params.job_id || undefined;
+                    if(!vm.job_id) vm.isThisSavedMigration = true;
                     vm.getBatchDetails();
                 };
 
@@ -203,8 +218,8 @@
                 */
                 vm.equipmentDetails = function (type, item) {
                     vm.loading = true;
-                    var id = item.id;
-                    var region = item.source_region || item.name;	
+                    var id = item.id || item.rrn;
+                    var region = type === 'server'?item.source_region:item.name;	
                     //Initiate the variables so that headers are even shown before the API gets resolved.
                     vm.itemType = type;
                     vm.itemDetails = {};

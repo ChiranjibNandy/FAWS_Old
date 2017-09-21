@@ -5,10 +5,10 @@
             <div class="rs-inner">
                 <div class="rs-row">
                     <div class="span-10">
-                        <!--<div class="migr-ddi-name">{{vm.currentUser}} ( #{{vm.tenant_id}} )</div>-->
-                        <div class="migr-name"><b>{{vm.job.batch_name}} / Active Migrations</b></div>
-                        <div class="migr-name inline-block-elements">Overall Batch Status: </div>
-                        <div class="rs-progress rs-progress-small inline-block-elements instance-progress-bar" ng-if="vm.progressFlag !== false">
+                        <div class="migr-name" ng-if="!vm.isThisSavedMigration"><b>{{vm.job.batch_name}} / Active Migrations</b></div>
+                        <div class="migr-name" ng-if="vm.isThisSavedMigration"><b>{{vm.job.batch_name}} / Saved Migrations</b></div>
+                        <div class="migr-name inline-block-elements" ng-if="!vm.isThisSavedMigration">Overall Batch Status: </div>
+                        <div class="rs-progress rs-progress-small inline-block-elements instance-progress-bar" ng-if="vm.progressFlag !== false && !vm.isThisSavedMigration">
                             <div class="rs-progress-inner">
                                 <div class="rs-segment" ng-style="{'width': +vm.job.batch_succeeded_time_pct +'%'}">
                                     <div ng-class="{'rs-bar rs-status-ok rs-bar-striped': vm.job.batch_succeeded_time_pct != '100' , 'rs-bar rs-status-ok': vm.job.batch_succeeded_time_pct == '100'}"></div>
@@ -18,11 +18,11 @@
                         <span class="migr-name capitalize instance-progress-bar" ng-if="vm.progressFlag === false">{{vm.job.batch_status}}</span>
                     </div>
                     <div class="span-2">
-                        <button class="rs-btn" ng-click="vm.getBatchDetails(true)">
+                        <button class="rs-btn" ng-click="vm.getBatchDetails(true)" ng-if="!vm.isThisSavedMigration">
                             <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i> Refresh
                         </button>
                         <a ng-link="['MigrationStatus']" href="" class="rs-btn backButtonWidth">Back</a>
-                        <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1
+                        <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError" ng-if="!vm.isThisSavedMigration">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1
                             ? " mins ": " min ") + "ago"}}</div>
                     </div>
                 </div>
@@ -52,6 +52,7 @@
                                     <span class="rs-status-disabled" ng-if="tableContent.status ==='not available' || tableContent.status.state ==='not available'">Not Available</span>
                                     <span class="rs-status-warning" ng-show="tableContent.status ==='paused' || tableContent.status.state ==='paused'">Paused</span>
                                     <span class="rs-status-warning" ng-show="tableContent.status.toLowerCase() ==='created' || tableContent.status.state.toLowerCase() ==='created'">Created</span>
+                                    <span class="rs-status-disabled" ng-if="vm.isThisSavedMigration">Not Available</span>
                                 </td>
                                 <td class="rs-table-text currentBatchServerGrid" 
                                     ng-class="{'paddingLeft':tableContent.status.state !=='in progress' && tableContent.status.state !=='done' && tableContent.status.state !=='Existing' && tableContent.status !=='in progress' && tableContent.status !=='done' && tableContent.status !=='Existing'}">
@@ -68,6 +69,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <span ng-if="vm.isThisSavedMigration">N/A</span>
                                     <span class="rs-status-ok" ng-if="equipment=== 'network' && (tableContent.status.state ==='in progress' || tableContent.status ==='in progress')"><em> {{vm.job.network_succeeded_by_time_pct}}%</em></span>
                                     <span class="rs-status-ok" ng-if="equipment=== 'server' && tableContent.status==='in progress' && vm.progressFlag !== false && tableContent.instance_succeeded_time_pct !== undefined"><em> {{tableContent.instance_succeeded_time_pct}}%</em></span>
                                     <span class="rs-status-ok" ng-if="equipment=== 'server' && tableContent.status==='in progress' && vm.progressFlag !== false && tableContent.instance_succeeded_time_pct === undefined"><em> {{vm.job.succeeded_time_pct}}%</em></span>
@@ -97,9 +99,15 @@
                                     <span ng-if="equipment==='server'">
                                         {{tableContent.destination.type}}
                                     </span>
+                                    <span ng-if="vm.isThisSavedMigration">
+                                        N/A
+                                    </span>
                                 </td>
                                 <td>
-                                    <a class="rs-btn" ng-click="vm.saveResourceDetailsRouteParams(tableContent,equipment)" >See Tasks</a>
+                                    <a class="rs-btn" ng-click="vm.saveResourceDetailsRouteParams(tableContent,equipment)" ng-if="!vm.isThisSavedMigration">See Tasks</a>
+                                    <span ng-if="vm.isThisSavedMigration">
+                                        N/A
+                                    </span>
                                 </td>
                             </tr>
                         </tbody>
@@ -123,7 +131,7 @@
                 </div>
                 <br>
 
-                <div class="rs-facet-section-body">
+                <div class="rs-facet-section-body" ng-if="!vm.isThisSavedMigration">
                     <h3>Batch-Tasks</h3>
                     <div class="migration-status-list-container table-justify">
                         <table class="rs-list-table no-truncate-td cell-center">
@@ -158,7 +166,7 @@
                     </div>
                 </div>
                 <br>
-                <div class="rs-facet-section-body">
+                <div class="rs-facet-section-body" ng-if="!vm.isThisSavedMigration">
                     <h3>Errors <span class="rs-quiet">({{vm.alerts.length}})</span></h3>
                     <div class="migration-status-list-container table-justify">
                         <table class="rs-list-table no-truncate-td cell-center">

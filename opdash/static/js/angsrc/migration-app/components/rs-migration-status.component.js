@@ -485,6 +485,7 @@
                     $interval.cancel(vm.maintimeout);
                     $interval.cancel(vm.intervalPromise);
                 }
+                
                 /**
                  * @ngdoc method
                  * @name convertUTCDateToLocalDate
@@ -498,6 +499,19 @@
                     var hours = date.getHours();
                     newDate.setHours(hours - offset);
                     return newDate;   
+                }
+
+                /**
+                 * @ngdoc method
+                 * @name showDetailsOfSavedMigration
+                 * @methodOf migrationApp.controller:rsmigrationstatusCtrl
+                 * @description 
+                 * This Function helps to save the batch details in the dashboard service and then 
+                 * navigating to the current batch details page.
+                 */
+                vm.showDetailsOfSavedMigration = function(batch){
+                    dashboardService.setSavedBatchDetails(batch);
+                    $rootRouter.navigate(["CurrentBatchDetailsForSaved"]);
                 }
 
                 /**

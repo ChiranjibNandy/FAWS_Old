@@ -197,6 +197,7 @@
             { path: "/migration/confirm", component: "rsconfirmmigration", name: "ConfirmMigration" },
             { path: "/migration-status", component: "rsmigrationstatus", name: "MigrationStatus" },
             { path: "/migration/current-batch/:job_id", component: "rscurrentbatchdetails", name: "CurrentBatchDetails" },
+            { path: "/migration/saved-batch", component: "rscurrentbatchdetails", name: "CurrentBatchDetailsForSaved" },
             { path: "/migration/completed-batch/:job_id", component: "rscompletedbatchdetails", name: "CompletedBatchDetails" },
             { path: "/migration/:job_id/:resource_type/:resource_id/tasks", component: "rsresourcetasklist", name: "ResourceTaskList" },
             { path: "/", component: "rsmigrationhome", name: "MigrationHome"}

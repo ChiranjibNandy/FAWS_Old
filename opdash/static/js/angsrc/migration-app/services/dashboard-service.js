@@ -142,6 +142,32 @@
                 }
             };
 
+            /**
+             * @ngdoc method
+             * @name setSavedBatchDetails
+             * @methodOf migrationApp.service:dashboardservice
+             * @description 
+             * This method allows to save the whole batch information of a saved batch when we click on 
+             * saved migration name in the dashboard.
+             */
+            self.setSavedBatchDetails = function(batch){
+                self.savedBatch = batch;
+                $window.localStorage.setItem("savedBatchDetails",JSON.stringify(batch));
+            }
+
+            /**
+             * @ngdoc method
+             * @name setSavedBatchDetails
+             * @methodOf migrationApp.service:dashboardservice
+             * @description 
+             * This method helps to return the saved batch information to current batch details 
+             * page. These details are saved in the dashboard page.
+             */
+            self.getSavedBatchDetails = function(){
+                if(self.savedBatch) return  self.savedBatch;
+                else return JSON.parse($window.localStorage.getItem("savedBatchDetails"));
+            }
+
             return self;
         }]); // end of service definition
 })();
