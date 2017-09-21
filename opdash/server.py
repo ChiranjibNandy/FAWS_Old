@@ -8,6 +8,7 @@ from opdash.config_loader import import_config_to_env_var_defaults
 from opdash.rax.remote_config import RemoteConfig
 import waitress
 import json
+import uuid
 
 
 class FlaskOpdash(Flask):
@@ -65,6 +66,9 @@ def build_app():
     app.config["saml_settings"] = json.loads(
         rc.load(app.config["SAML_CONFIG_PATH"])
     )
+
+    # Ensure Git Hash (Used as Static File Cache Buster) has a value
+    app.config["GIT_HASH"] = app.config.get("GIT_HASH", uuid.uuid4())
 
     # Set up application cache
     app.cache = Cache(config=app.config)
