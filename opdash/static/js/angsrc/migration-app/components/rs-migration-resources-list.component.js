@@ -275,15 +275,28 @@
                         var billingIdsArray = [];
                         var flavorIds = [];
                         var fetchBatchedBillingInfoFlag = true;
-
+                        var billingFetchedFlag = false;
+                        
                         //Iterate through all the items and push the resource ids into an array
                         angular.forEach(items, function (item) {
-                            billingIdsArray.push(item.id);
+                            if(!billingFetchedFlag){
+                                //If the billing call had already been made for the items, they would be having rax_price
+                                if(item.rax_price === undefined)
+                                    billingIdsArray.push(item.id);
+                                else 
+                                    billingFetchedFlag = true;
+                            }
                         });
+                        //Create a billing promise object
+                        var billingPromise = null;
 
-                        //Make the billing API call only for servers
-                        ds.getBillingInfo(billingIdsArray)
-                            .then(function(response){
+                        if(!billingFetchedFlag)
+                            //Make the billing API call only for servers and only if the details are not fetched before
+                            billingPromise = ds.getBillingInfo(billingIdsArray);
+                        else 
+                            billingPromise = $q.resolve();
+
+                        billingPromise.then(function(response){
                                 //If there is any actual response(it happens only when at least a server is selected for the migration)
                                 if(response !== undefined){
                                     var serversList = [];
@@ -328,6 +341,10 @@
                                             }
                                         }
                                     });
+                                }
+                                else {
+                                   //If the billing had been done before, do not even opt for the batched pricing call.
+                                   fetchBatchedBillingInfoFlag = true; 
                                 }
 
                                 var promise = null;
@@ -427,6 +444,9 @@
                                     vm.continuing = false;
                                     vm.errorInContinue = true;
                                 });
+                            }).catch(function(error){//Error handling for instances billing call
+                                    vm.continuing = false;
+                                    vm.errorInContinue = true;
                             });                    
                     }
                     else{
