@@ -701,3 +701,7 @@ span.fa-angle-left, span.fa-angle-right{
     text-align: center!important;
     padding-right: 30px;
 }
+
+.visibilityHidden{
+    visibility: hidden;
+}

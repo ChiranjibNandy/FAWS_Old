@@ -18,11 +18,11 @@
                         <span class="migr-name capitalize instance-progress-bar" ng-if="vm.progressFlag === false">{{vm.job.batch_status}}</span>
                     </div>
                     <div class="span-2">
-                        <button class="rs-btn" ng-click="vm.getBatchDetails(true)" ng-if="!vm.isThisSavedMigration">
+                        <button class="rs-btn" ng-click="vm.getBatchDetails(true)" ng-class="{'visibilityHidden': vm.isThisSavedMigration}">
                             <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading || vm.manualRefresh}"></i> Refresh
                         </button>
                         <a ng-link="['MigrationStatus']" href="" class="rs-btn backButtonWidth">Back</a>
-                        <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError" ng-if="!vm.isThisSavedMigration">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1
+                        <div style="margin-top: 10px;" ng-show="!vm.loading && !vm.manualRefresh && !vm.loadError" ng-class="{'visibilityHidden': vm.isThisSavedMigration}">Last refreshed: {{vm.timeSinceLastRefresh===0 ? " just now" : vm.timeSinceLastRefresh + (vm.timeSinceLastRefresh>1
                             ? " mins ": " min ") + "ago"}}</div>
                     </div>
                 </div>

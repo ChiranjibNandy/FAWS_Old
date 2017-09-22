@@ -101,7 +101,7 @@
                     vm.timerOn = false;
                     vm.savedMigrations = [];
                     vm.is_racker = authservice.getAuth().is_racker;
-                    vm.afterSavedMigration = $window.localStorage.getItem("migrationSaved");
+                    vm.afterSavedMigration = JSON.parse($window.localStorage.getItem("migrationSaved"));
                     vm.afterNewMigration = false;
                     //getting the migration name.
                     vm.migrationName = dataStoreService.getScheduleMigration().migrationName;
@@ -512,6 +512,7 @@
                  * navigating to the current batch details page.
                  */
                 vm.showDetailsOfSavedMigration = function(batch){
+                    vm.resetSavedMigrationFlag();
                     dashboardService.setSavedBatchDetails(batch);
                     $rootRouter.navigate(["CurrentBatchDetailsForSaved"]);
                 }
@@ -776,7 +777,7 @@
 
                     vm.resetSavedMigrationFlag = function(){
                         vm.afterSavedMigration = false;
-                        $window.localStorage.setItem("migrationSaved","false");
+                        $window.localStorage.setItem("migrationSaved",false);
                     }
                 }]
             }); // end of comeponent rsmigrationstatus
