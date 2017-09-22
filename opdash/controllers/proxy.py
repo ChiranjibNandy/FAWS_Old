@@ -8,13 +8,24 @@ mod = ProxyBlueprint('proxy', __name__)
 HANDLED_REDIRECTS = [301]
 
 
-@mod.route('/api/<path:path>',
+@mod.route('/api/<path:_>',
            methods=['DELETE', 'GET', 'PATCH', 'POST', 'PUT'])
-def api_proxy(path):
+def api_proxy(_):
     """
         Proxy http request from control panel to api
         this allows us to avoid cross-domain requests
+
+        NOTE: There appears to be a bug in the "path" type by Flask/Werkzeug
+        where occasionally urls like "/api/cloud_files" yields the parameter to
+        have the value "loud_files/" yet others such as "/api/eligibility"
+        yields the path "eligibility"... In light of this we are parsing out
+        value for the path ourselves from the request.
     """
+
+    prefix = u'/api/'
+    idx = request.url.index(prefix)
+    path = request.url[idx + len(prefix):]
+
     msg_base = 'API Route (path) is: "{0}" API Route (request.url) is: "{1}"'
     msg = msg_base.format(path, request.url)
     current_app.logger.debug(msg)
