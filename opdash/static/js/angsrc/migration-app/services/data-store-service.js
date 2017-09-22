@@ -9,7 +9,8 @@
      */
     angular.module("migrationApp")
         .service("datastoreservice", ["httpwrapper", "authservice", "$q", "$window", "DEFAULT_VALUES", function (HttpWrapper, authservice, $q, $window, DEFAULT_VALUES) {
-            var loaded, fawsAccounts, self = this,
+            var loaded, fawsAccounts, fawsPromise, self = this,
+                awsCallInProgress = false,
                 currentTenant = null;
             /**
              * @ngdoc property
@@ -363,8 +364,8 @@
              * Returns list of FAWS accounts for a Tenant ID.
              */
             this.fetchFawsDetails = function () {
-                return self.fawsAccounts;
-            }
+                return ($window.localStorage.getItem("fawsAccounts") !== undefined && JSON.parse($window.localStorage.getItem("fawsAccounts"))) || undefined;
+            };
 
             self.resetAll = function () {
                 self.resourceItems = {
@@ -756,7 +757,9 @@
                 var self = this;
                 var getFawsAccountsUrl = "/api/tenants/get_faws_accounts";
                 var tenant_id = authservice.getAuth().tenant_id;
-                return HttpWrapper.send(getFawsAccountsUrl, {
+                if (awsCallInProgress == false && self.fetchFawsDetails() === undefined){
+                    awsCallInProgress = true;
+                    fawsPromise = HttpWrapper.send(getFawsAccountsUrl, {
                         "operation": 'GET'
                     })
                     .then(function (result) {
@@ -778,6 +781,13 @@
                     }, function (error) {
                         return false;
                     });
+                    awsCallInProgress = false;
+                    return fawsPromise;
+                } else if (awsCallInProgress) {
+                    return fawsPromise;
+                } else if (awsCallInProgress == false && self.fetchFawsDetails() !== undefined) {
+                    return self.fetchFawsDetails();
+                };
             };
 
             /**

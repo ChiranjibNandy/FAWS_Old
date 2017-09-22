@@ -575,16 +575,17 @@
                     vm.firstLogin = true;
                     dataStoreService.setResourceItemsForEditingMigration(false);
                     var userSetValue = dataStoreService.getDontShowStatus();
+                    var userFawsAccounts = dataStoreService.fetchFawsDetails();
                     dataStoreService.resetAll();
                     dataStoreService.storeEligibilityResults($window.localStorage.eligibilityResults);
                     var autoRefreshButtonStatus = dashboardService.getAutoRefreshStatus();
                     $window.localStorage.clear();
                     dataStoreService.setDontShowStatus(userSetValue);
+                    dataStoreService.saveFawsDetails(userFawsAccounts);
                     dashboardService.storeAutoRefreshStatus(autoRefreshButtonStatus);
                     $window.localStorage.eligibilityResults = dataStoreService.retrieveEligibilityResults();
                     if($window.localStorage.selectedResources !== undefined)
                         $window.localStorage.removeItem('selectedResources');
-                    // dataStoreService.setDontShowStatus(!(dataStoreService.getShowWelcomeModal()));
                     $rootRouter.navigate(["MigrationResourceList"]);
                 };
 
@@ -599,9 +600,11 @@
                 vm.continueScheduling = function (batch,modifyFlag) {
                     var autoRefreshButtonStatus = dashboardService.getAutoRefreshStatus();
                     var userSetVal = dataStoreService.getDontShowStatus();
+                    var userFawsAccts = dataStoreService.fetchFawsDetails();
                     $window.localStorage.clear();
                     dataStoreService.resetAll();
                     dataStoreService.setDontShowStatus(userSetVal);
+                    dataStoreService.saveFawsDetails(userFawsAccts);
                     dashboardService.storeAutoRefreshStatus(autoRefreshButtonStatus);
                     if(modifyFlag){
                         for(var i = 0; i<vm.nonSavedMigrations.length;i++){
