@@ -275,15 +275,28 @@
                         var billingIdsArray = [];
                         var flavorIds = [];
                         var fetchBatchedBillingInfoFlag = true;
-
+                        var billingFetchedFlag = false;
+                        
                         //Iterate through all the items and push the resource ids into an array
                         angular.forEach(items, function (item) {
-                            billingIdsArray.push(item.id);
+                            if(!billingFetchedFlag){
+                                //If the billing call had already been made for the items, they would be having rax_price
+                                if(item.rax_price === undefined)
+                                    billingIdsArray.push(item.id);
+                                else 
+                                    billingFetchedFlag = true;
+                            }
                         });
+                        //Create a billing promise object
+                        var billingPromise = null;
 
-                        //Make the billing API call only for servers
-                        ds.getBillingInfo(billingIdsArray)
-                            .then(function(response){
+                        if(!billingFetchedFlag)
+                            //Make the billing API call only for servers and only if the details are not fetched before
+                            billingPromise = ds.getBillingInfo(billingIdsArray);
+                        else 
+                            billingPromise = $q.resolve();
+
+                        billingPromise.then(function(response){
                                 //If there is any actual response(it happens only when at least a server is selected for the migration)
                                 if(response !== undefined){
                                     var serversList = [];
@@ -329,6 +342,10 @@
                                         }
                                     });
                                 }
+                                else {
+                                   //If the billing had been done before, do not even opt for the batched pricing call.
+                                   fetchBatchedBillingInfoFlag = true; 
+                                }
 
                                 var promise = null;
                                 if(!fetchBatchedBillingInfoFlag){
@@ -342,17 +359,9 @@
                                     });
                                 }
 
-                                promise.then(function(res){
-                                    var keepGoing = true;
-                                    for(var key in res) {
-                                        if(keepGoing){
-                                            //If the response object has a null value for any of the given keys, we assume the API has failed
-                                            if(res[key] === null)
-                                                keepGoing = false;
-                                        }
-                                    }
-                                    //And we reject the promise
-                                    if(!keepGoing){
+                                promise.then(function(res){ 
+                                    //If the response object has null values assigned to all the property keys except for the region key we reject the promise
+                                    if(vm.checkResponseProperties(res)){
                                         return $q.reject("Bad data");
                                     }
 
@@ -427,6 +436,9 @@
                                     vm.continuing = false;
                                     vm.errorInContinue = true;
                                 });
+                            }).catch(function(error){//Error handling for instances billing call
+                                    vm.continuing = false;
+                                    vm.errorInContinue = true;
                             });                    
                     }
                     else{
@@ -440,13 +452,22 @@
                 vm.eligibilityDetailsModal = function(itemdetails) {
                     vm.eligTestDetails = itemdetails;
                     $('#eligibility_modal').modal('show');
-                }
+                };
 
                 vm.equipmentDetailsModal = function(type, itemdetails) {
                     vm.itemType = type;
                     vm.itemDetails = itemdetails;
                     $('#resource_info').modal('show');
-                }
+                };
+
+                vm.checkResponseProperties = function(res){
+                    for (var key in res) {
+                        if (res[key] !== null && res[key] != "" && key !== "region")
+                            return false;
+
+                    }
+                    return true;
+                };
 
                 //to detect browser back click and prevent the functionality for wrong events
                 $scope.$on('$locationChangeStart', function(event, newUrl, oldUrl) {
