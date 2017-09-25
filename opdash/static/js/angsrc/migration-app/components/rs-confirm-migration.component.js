@@ -251,7 +251,7 @@
                     dataStoreService.deleteSavedInstances(dataStoreService.getJobIdForMigration('saveId'))
                         .then(function (result) {
                             if (result) {
-                                vm.saveResourceDetails();
+                                vm.saveResourceDetails(dataStoreService.getJobIdForMigration('jobId'));
                             }
                         });
                 };
