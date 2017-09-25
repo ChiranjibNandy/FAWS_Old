@@ -47,7 +47,7 @@
                         <i class="rs-processing-indicator" ng-show="vm.continuing"></i>
                     </div>
                 </rs-tabs>
-                <div style="color: red; text-align: right;" ng-show="vm.errorInContinue">Error......</div>
+                <div style="color: red; text-align: right;" ng-show="vm.errorInContinue && !vm.continuing ">Error while fetching prices from AWS ....</div>
                 <div class="rs-pull-right" ng-show="vm.saveLaterObj.resultMsg" ng-style="vm.saveLaterObj.saveSuccess == true ? {color:'green'} : {color:'red'}">{{vm.saveLaterObj.resultMsg}}</div>
                 <br>
                 <rsselecteditemspanel showrec="false"></rsselecteditemspanel>
