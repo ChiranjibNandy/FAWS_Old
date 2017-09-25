@@ -359,17 +359,9 @@
                                     });
                                 }
 
-                                promise.then(function(res){
-                                    var keepGoing = true;
-                                    for(var key in res) {
-                                        if(keepGoing){
-                                            //If the response object has a null value for any of the given keys, we assume the API has failed
-                                            if(res[key] === null)
-                                                keepGoing = false;
-                                        }
-                                    }
-                                    //And we reject the promise
-                                    if(!keepGoing){
+                                promise.then(function(res){ 
+                                    //If the response object has null values assigned to all the property keys except for the region key we reject the promise
+                                    if(vm.checkResponseProperties(res)){
                                         return $q.reject("Bad data");
                                     }
 
@@ -460,13 +452,22 @@
                 vm.eligibilityDetailsModal = function(itemdetails) {
                     vm.eligTestDetails = itemdetails;
                     $('#eligibility_modal').modal('show');
-                }
+                };
 
                 vm.equipmentDetailsModal = function(type, itemdetails) {
                     vm.itemType = type;
                     vm.itemDetails = itemdetails;
                     $('#resource_info').modal('show');
-                }
+                };
+
+                vm.checkResponseProperties = function(res){
+                    for (var key in res) {
+                        if (res[key] !== null && res[key] != "" && key !== "region")
+                            return false;
+
+                    }
+                    return true;
+                };
 
                 //to detect browser back click and prevent the functionality for wrong events
                 $scope.$on('$locationChangeStart', function(event, newUrl, oldUrl) {
