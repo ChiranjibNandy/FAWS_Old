@@ -21,7 +21,7 @@
              * @name migrationApp.controller:rsmigrationrecommendationCtrl
              * @description Controller to handle all view-model interactions of {@link migrationApp.object:rsmigrationrecommendation rsmigrationrecommendation} component
              */
-            controller: [ "$rootRouter","datastoreservice","$scope","authservice","$rootScope","$window", function($rootRouter,datastoreservice,$scope,authservice,$rootScope,$window) {
+            controller: [ "$rootRouter","datastoreservice","$scope","authservice","$rootScope","$window","migrationitemdataservice","$q", function($rootRouter,datastoreservice,$scope,authservice,$rootScope,$window,ds,$q) {
                 var vm = this;
                 vm.tenant_id = '';
                 vm.tenant_account_name = '';
@@ -72,10 +72,32 @@
                  * @description 
                  * This method helps to pop the details modal. This method will be triggered from its child.
                  */
-                vm.equipmentDetails = function(type, itemdetails) {
+                vm.equipmentDetails = function(type, itemdetails) {              
                     vm.itemType = type;
-                    vm.itemDetails = itemdetails;
-                    $("#resource_info").modal('show');
+                    if(vm.itemType == 'network'){
+                        vm.loading = true;
+                        var id = itemdetails.id;
+                        var region = itemdetails.source_region || itemdetails.name;	
+                        //Initiate the variables so that headers are even shown before the API gets resolved.
+                        vm.itemDetails = {};
+                        vm.itemDetails.name = itemdetails.name; 
+                        $("#resource_info").modal("show");	                      
+                        ds.getTrimmedItem(type, id, region)
+                            .then(function (response) {
+                                vm.loading = false;
+                                if(response.error !== undefined && response.error == 404)
+                                    return $q.reject("Bad Data");
+                                var details = response;
+                                vm.itemDetails = details;
+                            }).catch(function(error){
+                                vm.itemDetails = itemdetails;
+                                $("#resource_info").modal('show'); 
+                            });
+                    }
+                    else {
+                        vm.itemDetails = itemdetails;
+                        $("#resource_info").modal('show');
+                    }
                 };
 
                 /**
