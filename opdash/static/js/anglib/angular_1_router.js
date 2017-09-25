@@ -75,6 +75,12 @@ function ngOutletDirective($animate, $q, $rootRouter) {
         })(),
         controllerAs: '$$ngOutlet'
     };
+    if (!String.prototype.startsWith) {
+        String.prototype.startsWith = function(str, position) {
+          position = position || 0;
+          return this.indexOf(str, position) === position;
+        };
+    }
     function outletLink(scope, element, attrs, ctrls, $transclude) {
         var Outlet = (function () {
             function Outlet(controller, router) {
