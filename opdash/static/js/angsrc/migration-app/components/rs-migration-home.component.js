@@ -20,19 +20,26 @@
             controller: ["authservice","$rootRouter","httpwrapper","$q","datastoreservice","dashboardservice", function (authService,$rootRouter,HttpWrapper,$q,datastoreservice,dashboardservice) {
                 var vm = this;
                 vm.$onInit = function(){
+                    vm.detailsError = false;
                     if(user_data.is_racker) {
                         $rootRouter.navigate(["RackerDash"]);
                     }
                     else{
                         //calling get user Settings method to check whether to display welcome modal or not.
                         var userSettings = datastoreservice.getUserSettings();
+                        var fawsAccounts = datastoreservice.getFawsAccounts();
                         authService.getAuth().tenant_id = user_data.tenant_id;
                         authService.getAuth().account_name = this.account_name;
                         var doSavedForLaterMigrationsExist = false;
                         var doResourceMigrationsExist = false;
                         var tenant_id = user_data.tenant_id;
                         var allBatches = dashboardservice.getBatches(true);
-                        $q.all([userSettings, allBatches]).then(function(result){
+                        $q.all([userSettings, allBatches, fawsAccounts]).then(function(result){
+                            if(result[2] == false){
+                                vm.detailsError = true;
+                                return;
+                            }
+                            vm.detailsError = false;
                             datastoreservice.setFirstLoginFlag();
                             if(result[1]){
                                 doSavedForLaterMigrationsExist = result[1].savedMigrations.length>0?true:false;
@@ -44,6 +51,8 @@
                             else{
                                 $rootRouter.navigate(["MigrationStatus"]);
                             }
+                        }, function(error){
+                            vm.detailsError = true;
                         });   
                     }
                 }
