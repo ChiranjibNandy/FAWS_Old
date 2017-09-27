@@ -34,7 +34,7 @@
                         "resultMsg" : "",
                         "modalName": '#cancel_modal'
                     };
-                    vm.downloadPath = 'static/angassets/Rackspace-Migration-Manager-User_Guide.pdf';
+                    vm.downloadPath = 'static/Rackspace-Migration-Manager-User_Guide.pdf';
                     vm.saveProgress = 'yes';
                     vm.displayMigName = false;
                     vm.migrationName =  dataStoreService.getScheduleMigration().migrationName || 'My Migration';
