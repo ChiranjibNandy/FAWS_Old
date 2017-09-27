@@ -3,9 +3,15 @@
         <div class="rs-content rs-panel">
             <div class="rs-inner">
                 <br>
-                <div class="rs-table-overlay rs-table-overlay-loading">
+                <div ng-hide="vm.detailsError" class="rs-table-overlay rs-table-overlay-loading">
                     <div class="rs-table-overlay-content">
                         <div class="rs-table-overlay-message"></br><h3>Please wait while we fetch your account details.</h3></div>
+                    </div>
+                </div>
+                <div ng-show="vm.detailsError" class="rs-table-overlay rs-table-overlay-error">
+                    <div class="rs-table-overlay-content">
+                        <div class="rs-table-overlay-message"><i class="rs-icon-error-indicator"></i> Error while fetching your account details. Please try again later.
+                        </div>
                     </div>
                 </div>
             </div>
