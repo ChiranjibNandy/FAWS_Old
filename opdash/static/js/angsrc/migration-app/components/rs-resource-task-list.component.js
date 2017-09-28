@@ -32,6 +32,7 @@
 
                 //Initiate some flags to show progress bars
                 vm.progressFlag = false;
+                vm.downloadPath = 'static/Rackspace-Migration-Manager-User_Guide.pdf';
 
                 /**
                 * @ngdoc method

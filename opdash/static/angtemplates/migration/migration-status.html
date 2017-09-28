@@ -1,5 +1,6 @@
 <br>
 <div class="rs-container migrationdashBoard-mgr migration-mgr " ng-style="vm.isRacker == true ? {'margin-top':'30px'} : {'margin-top':'0px'}">
+      <a href=""  style="float: right; padding-right: 6px;margin-bottom: 15px; margin-top:-25px;" id="migrstionManagerUSerGuide"  ng-href="{{vm.downloadPath}}" download="Rackspace-Migration-Manager-User_Guide.pdf" ><i class="fa fa-download fa-1"></i> Migration Manager User Guide</a>
     <div class="alert alert-success animated fadeIn" ng-if="vm.afterNewMigration">
         <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
         <h3>Success! Migration for {{vm.resourceCount}} {{vm.resourceCount === 1 ? 'resource' : 'resources'}} confirmed for {{vm.schedule.date}} at {{vm.schedule.time}}</h3>
@@ -9,6 +10,7 @@
         <h3>Your Migration was saved successfully with the name {{vm.migrationName}}</h3>
     </div>
 </div>
+
     <div class="rs-main rs-panel">
         <div class="rs-content rs-panel">
             <div class="rs-inner">
