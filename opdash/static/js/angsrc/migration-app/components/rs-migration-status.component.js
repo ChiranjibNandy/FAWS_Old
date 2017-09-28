@@ -35,6 +35,7 @@
                         jobList = [],
                         lastRefreshIntervalPromise,
                         totalCurrentBatches = null;
+                        vm.downloadPath = 'static/Rackspace-Migration-Manager-User_Guide.pdf';
 
                 var isValidBatch = function (batch) {
                     var valid = true;

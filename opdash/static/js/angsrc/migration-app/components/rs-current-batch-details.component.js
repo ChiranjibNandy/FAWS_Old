@@ -32,6 +32,7 @@
 
                 vm.timeSinceLastRefresh = 0;
                 vm.progressFlag = false;
+                vm.downloadPath = 'static/Rackspace-Migration-Manager-User_Guide.pdf';
 
                 /**
                 * @ngdoc method
