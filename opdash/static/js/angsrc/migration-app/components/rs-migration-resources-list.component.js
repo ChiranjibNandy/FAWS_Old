@@ -271,26 +271,20 @@
                     if($window.localStorage.selectedResources !== undefined && (JSON.parse($window.localStorage.selectedResources)['server'].length || JSON.parse($window.localStorage.selectedResources)['volume'].length || JSON.parse($window.localStorage.selectedResources)['service'].length || JSON.parse($window.localStorage.selectedResources)['file'].length || JSON.parse($window.localStorage.selectedResources)['dns'].length)){
                         vm.continuing = true;
                         var items = JSON.parse($window.localStorage.selectedResources)['server'];
-                        var arr = [];
                         var billingIdsArray = [];
                         var flavorIds = [];
                         var fetchBatchedBillingInfoFlag = true;
-                        var billingFetchedFlag = false;
-                        
+
                         //Iterate through all the items and push the resource ids into an array
                         angular.forEach(items, function (item) {
-                            if(!billingFetchedFlag){
-                                //If the billing call had already been made for the items, they would be having rax_price
-                                if(item.rax_price === undefined)
-                                    billingIdsArray.push(item.id);
-                                else 
-                                    billingFetchedFlag = true;
-                            }
+                            //If the billing call had already been made for the items, they would be having rax_price
+                            if(item.rax_price === undefined)
+                                billingIdsArray.push(item.id);
                         });
                         //Create a billing promise object
                         var billingPromise = null;
 
-                        if(!billingFetchedFlag)
+                        if(billingIdsArray.length)
                             //Make the billing API call only for servers and only if the details are not fetched before
                             billingPromise = ds.getBillingInfo(billingIdsArray);
                         else 
@@ -354,9 +348,6 @@
                                     //Create an empty promise in case the pricing details for the selected servers
                                     //Are already fetched
                                     promise = $q.resolve([]);
-                                    angular.forEach(items,function(item){
-                                        arr.push(item);
-                                    });
                                 }
 
                                 promise.then(function(res){ 
@@ -374,14 +365,13 @@
                                                 if(item.flavor.id == key && res[key] != null){
                                                     //We append the pricing details inside the selectedMapping object
                                                     item.selectedMapping = res[key][0];
-                                                    item.selectedMapping.zone = 'us-east-1a'; 
-                                                    arr.push(item);
+                                                    item.selectedMapping.zone = 'us-east-1a';
                                                 }
                                             });
                                         });
                                     }
 
-                                    vm.selectedItems.server = arr;
+                                    vm.selectedItems.server = items;
                                     dataStoreService.setSelectedItems(vm.selectedItems.server, 'server');                            
                                     //Declare a tempItems array that would hold phase 2 resources
                                     var tempItems = [];
@@ -461,6 +451,9 @@
                 };
 
                 vm.checkResponseProperties = function(res){
+                    if(res.length == 0){
+                        return false;
+                    }
                     for (var key in res) {
                         if (res[key] !== null && res[key] != "" && key !== "region")
                             return false;
