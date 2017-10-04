@@ -62,6 +62,7 @@
                                 vm.equipmentContent.tableBody.service = vm.job.cdn;
                                 vm.equipmentContent.tableBody.file = vm.job.file;
                                 vm.equipmentContent.tableBody.volume = vm.job.volumes;
+                                vm.equipmentContent.tableBody.dns = vm.job.dns;
                                 if (job.batch_status === 'in progress' || job.batch_status === 'done')
                                     //Makes a promise to fetch the progress API details for in progress and completed batches
                                     var promise = HttpWrapper.send('/api/jobs/' + job.job_id + '/progress', { "operation": 'GET' });
@@ -167,21 +168,23 @@
                     vm.loading = true;
                     vm.manualRefresh = false;
                     vm.job_id = '';
-                    vm.equipments = ['server','network','service','volume','file'];
+                    vm.equipments = ['server','network','service','volume','file','dns'];
                     vm.equipmentContent = {
                         tableHeaders:{
                             server:['Server','Status','Progress','Destination Region','Instance Type','Actions'],
                             network:['Network','Status','Progress','Destination Region','','Actions'],
                             service:['CDN','Status','Progress','Destination Region','','Actions'],
                             volume:['CBS','Status','Progress','Destination Region','','Actions'],
-                            file:['FILE','Status','Progress','Destination Region','','Actions']
+                            file:['FILE','Status','Progress','Destination Region','','Actions'],
+                            dns:['DNS','Status','Progress','Destination Region','','Actions']
                         },
                         tableBody:{
                             server:[],
                             network:[],
                             service:[],
                             volume:[],
-                            file:[]
+                            file:[],
+                            dns:[]
                         }
                     }
                 };
