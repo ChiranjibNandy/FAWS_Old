@@ -498,9 +498,9 @@
                  */
                 vm.convertUTCDateToLocalDate = function(date) {
                     var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
-                    var offset = date.getTimezoneOffset() / 60;
-                    var hours = date.getHours();
-                    newDate.setHours(hours - offset);
+                    var mins = (date.getHours()*60)+date.getMinutes() - date.getTimezoneOffset();
+                    newDate.setHours(mins/60);
+                    newDate.setMinutes(mins%60);
                     return newDate;   
                 }
 
