@@ -98,7 +98,7 @@
                     var saveInstance = {
                         recommendations : vm.stepname !== "MigrationResourceList"?JSON.parse($window.localStorage.selectedResources)['server']:{},
                         // scheduling_details : vm.stepname === "ConfirmMigration"?dataStoreService.getScheduleMigration():{},
-                        step_name: vm.stepname ,
+                        step_name: "MigrationResourceList" ,
                         migration_schedule: {
                             migrationName:vm.migrationName,
                             time:vm.stepname === "ConfirmMigration"?dataStoreService.getScheduleMigration().time:'',
