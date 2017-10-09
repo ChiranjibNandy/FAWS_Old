@@ -53,7 +53,7 @@
                  */
                 vm.cancelMigration = function() {
                     var selectedItems = [];
-                    if($window.localStorage.selectedResources === undefined || (!(JSON.parse($window.localStorage.selectedResources)['server'].length) && !(JSON.parse($window.localStorage.selectedResources)['volume'].length) && !(JSON.parse($window.localStorage.selectedResources)['service'].length) && !(JSON.parse($window.localStorage.selectedResources)['file'].length) && !(JSON.parse($window.localStorage.selectedResources)['dns'].length))){
+                    if($window.localStorage.selectedResources === undefined || (!(JSON.parse($window.localStorage.selectedResources)['server'].length) && !(JSON.parse($window.localStorage.selectedResources)['volume'].length) && !(JSON.parse($window.localStorage.selectedResources)['service'].length) && !(JSON.parse($window.localStorage.selectedResources)['file'].length) && !(JSON.parse($window.localStorage.selectedResources)['dns'].length) && !(JSON.parse($window.localStorage.selectedResources)['LoadBalancers'].length))){
                         dataStoreService.resetAll();
                         $rootRouter.navigate(["MigrationStatus"]);
                     }else{

@@ -268,7 +268,7 @@
                         $('#aws_check').modal('show');
                         return;
                     } 
-                    if($window.localStorage.selectedResources !== undefined && (JSON.parse($window.localStorage.selectedResources)['server'].length || JSON.parse($window.localStorage.selectedResources)['volume'].length || JSON.parse($window.localStorage.selectedResources)['service'].length || JSON.parse($window.localStorage.selectedResources)['file'].length || JSON.parse($window.localStorage.selectedResources)['dns'].length)){
+                    if($window.localStorage.selectedResources !== undefined && (JSON.parse($window.localStorage.selectedResources)['server'].length || JSON.parse($window.localStorage.selectedResources)['volume'].length || JSON.parse($window.localStorage.selectedResources)['service'].length || JSON.parse($window.localStorage.selectedResources)['file'].length || JSON.parse($window.localStorage.selectedResources)['dns'].length || JSON.parse($window.localStorage.selectedResources)['LoadBalancers'].length)){
                         vm.continuing = true;
                         var items = JSON.parse($window.localStorage.selectedResources)['server'];
                         var billingIdsArray = [];
@@ -375,31 +375,14 @@
                                     dataStoreService.setSelectedItems(vm.selectedItems.server, 'server');                            
                                     //Declare a tempItems array that would hold phase 2 resources
                                     var tempItems = [];
-
-                                    if(JSON.parse($window.localStorage.selectedResources)['volume'].length > 0){
-                                        tempItems = vm.populatePhase2ResourcesArray('volume',items);
-                                        items = items.concat(tempItems);
-                                        vm.selectedItems.volume = tempItems;
-                                        dataStoreService.setSelectedItems(vm.selectedItems.volume,'volume');
-                                    }
-                                    if(JSON.parse($window.localStorage.selectedResources)['service'].length > 0){
-                                        tempItems = vm.populatePhase2ResourcesArray('service',items);
-                                        items = items.concat(tempItems);
-                                        vm.selectedItems.service = tempItems;
-                                        dataStoreService.setSelectedItems(vm.selectedItems.service,'service');
-                                    }
-                                    if(JSON.parse($window.localStorage.selectedResources)['file'].length > 0){
-                                        tempItems = vm.populatePhase2ResourcesArray('file',items);
-                                        items = items.concat(tempItems);
-                                        vm.selectedItems.file = tempItems;
-                                        dataStoreService.setSelectedItems(vm.selectedItems.file,'file');
-                                    }
-                                    if(JSON.parse($window.localStorage.selectedResources)['dns'].length > 0){
-                                        tempItems = vm.populatePhase2ResourcesArray('dns',items);
-                                        items = items.concat(tempItems);
-                                        vm.selectedItems.dns = tempItems;
-                                        dataStoreService.setSelectedItems(vm.selectedItems.dns,'dns');
-                                    }
+                                    angular.forEach(JSON.parse($window.localStorage.selectedResources), function (items, type) {
+                                        if(items.length > 0 && type != 'server'){
+                                            tempItems = vm.populatePhase2ResourcesArray(type,items);
+                                            items = items.concat(tempItems);
+                                            vm.selectedItems[type] = tempItems;
+                                            dataStoreService.setSelectedItems(vm.selectedItems[type],type);
+                                        }
+                                    });
                                     vm.continuing = false;
                                     dataStoreService.setDontShowNameModal(true);
                                     vm.selectedTime = {
@@ -416,11 +399,9 @@
                                     $('#no_selection').modal('hide');
                                     //On continuing to the recommendations page, we have to set all the region fetched flags 
                                     //to false so that all the calls can be made afresh
-                                    ds.storeRegionFetchedFlags('server',false);
-                                    ds.storeRegionFetchedFlags('volume',false);
-                                    ds.storeRegionFetchedFlags('service',false);
-                                    ds.storeRegionFetchedFlags('file',false);
-                                    ds.storeRegionFetchedFlags('dns',false);
+                                    angular.forEach(JSON.parse($window.localStorage.selectedResources), function (items, type) {
+                                        ds.storeRegionFetchedFlags(type,false);
+                                    });
                                     $rootRouter.navigate(["MigrationRecommendation"]);    
                                 }).catch(function(error){
                                     vm.continuing = false;

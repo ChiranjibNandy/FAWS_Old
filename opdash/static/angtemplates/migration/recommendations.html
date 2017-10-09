@@ -32,7 +32,7 @@
                     <rs-tab tabtitle="Networks ({{vm.dataNetwork}})" showtab="{{vm.dataNetwork != 0}}"  ng-if="vm.dataNetwork != 0">
                         <rsrecommendationitem type="network" filtervalue="vm.filteredValue"></rsrecommendationitem>
                     </rs-tab>
-                    <rs-tab tabtitle="Load Balancers ({{vm.dataLoadBalancers}})" showtab="{{vm.dataLoadBalancers != 0}}" ng-if="vm.dataLoadBalancers != 0">
+                    <rs-tab tabtitle="CLB ({{vm.dataLoadBalancers}})" showtab="{{vm.dataLoadBalancers != 0}}" ng-if="vm.dataLoadBalancers != 0">
                         <rsrecommendationitem type="loadbalancers" filtervalue="vm.filteredValue"></rsrecommendationitem>
                     </rs-tab>
                     <rs-tab tabtitle="CBS ({{vm.dataVolume}})" showtab="{{vm.dataVolume != 0}}" name="volume" ng-if="vm.dataVolume != 0">                        
