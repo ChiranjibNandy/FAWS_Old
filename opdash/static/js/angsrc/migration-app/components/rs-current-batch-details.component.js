@@ -34,6 +34,15 @@
                 vm.progressFlag = false;
                 vm.downloadPath = 'static/Rackspace-Migration-Manager-User_Guide.pdf';
 
+                vm.toggleFunction = function(){
+                    $(".research tr:not(.accordion)").hide();
+                    $(".research tr:first-child").show();
+                    $(".innerTableBody tr").show();    
+                    $(".research tr.accordion").click(function(){
+                        $(this).nextAll("tr").fadeToggle(500);
+                    }).eq(0).trigger('click');
+                };
+
                 /**
                 * @ngdoc method
                 * @name getBatchDetails
@@ -56,6 +65,7 @@
                         vm.getAllBatchTasks(vm.job_id);
                         dashboardService.getCurrentBatcheForJobId(vm.job_id)
                             .then(function (job) {
+                                vm.toggleFunction();
                                 vm.job = job;
                                 vm.equipmentContent.tableBody.server = vm.job.instances;
                                 vm.equipmentContent.tableBody.network = vm.job.networks;
@@ -196,12 +206,13 @@
                     dashboardService.getBatchTasks(job_id).then(function (result) {
                         if (result) {
                             vm.loadingBatchTasks = false;
-                            for (var i = 0; i < result["job-tasks"].length; i++) {
-                                if (result["job-tasks"][i].section === "start_workflow") {
-                                    vm.batchTasks = result["job-tasks"][i].tasks;
-                                    break;
-                                }
-                            }
+                            // for (var i = 0; i < result["job-tasks"].length; i++) {
+                            //     if (result["job-tasks"][i].section === "start_workflow") {
+                            //         vm.batchTasks = result["job-tasks"][i].tasks;
+                            //         break;
+                            //     }
+                            // }
+                            vm.batchTasks = result.resources;
                         } else {
                             vm.loadingBatchTasks = true;
                         }

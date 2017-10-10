@@ -705,3 +705,19 @@ span.fa-angle-left, span.fa-angle-right{
 .visibilityHidden{
     visibility: hidden;
 }
+
+.no-margin-bottom{
+    margin-bottom: 0px;
+}
+
+.tasksFirstColumn{
+    width: 40%;
+}
+
+.tasksSecondColumn{
+    width: 24%;
+}
+
+.tasksThirdColumn{
+    width: 36%;
+}

@@ -133,34 +133,69 @@
                 <br>
 
                 <div class="rs-facet-section-body" ng-if="!vm.isThisSavedMigration">
-                    <h3>Batch-Tasks</h3>
+                    <h3>Tasks</h3>
                     <div class="migration-status-list-container table-justify">
-                        <table class="rs-list-table no-truncate-td cell-center">
+                        <table class="rs-list-table no-truncate-td cell-center no-margin-bottom">
                             <thead>
+                                <tr>
+                                    <th colspan="2">Name</th>
+                                    <th>Id</th>
+                                    <th colspan="2">Type</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-show="!vm.loadingBatchTasks && vm.batchTasks.length===0">
+                                <tr>
+                                    <td colspan="4" class="empty-collection-info">You don't have any Tasks</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="rs-list-table no-truncate-td cell-center research no-margin-bottom" ng-repeat="task in vm.batchTasks" ng-show="!vm.loadingBatchTasks && vm.batchTasks.length>0">
+                            <thead style="display:none;">
                                 <tr>
                                     <th colspan="2">Name</th>
                                     <th>Status</th>
                                     <th colspan="2">Description</th>
                                 </tr>
                             </thead>
-                            <tbody ng-show="!vm.loadingBatchTasks && vm.batchTasks.length>0">
-                                <tr ng-repeat="task in vm.batchTasks">
-                                    <td colspan="2">{{task.name}}</td>
-                                    <td>
-                                        <span class="rs-status-error" ng-show="task.status==='error'">Error</span>
-                                        <span class="rs-status-ok" ng-show="task.status==='done'">Completed</span>
-                                        <span class="rs-status-ok" ng-show="task.status==='started'">Started</span>
-                                        <span class="rs-status-ok" ng-show="task.status==='in progress'">In Progress</span>
-                                        <span class="rs-status-warning" ng-show="task.status==='scheduled'">Scheduled</span>
-                                        <span class="rs-status-disabled capitalize" ng-show="task.status==='not available'">Not available</span>
-                                        <span class="rs-status-warning" ng-show="task.status==='paused'">Paused</span>
+                            <tbody>
+                                <tr class="accordion">
+                                    <td colspan="2" class="tasksFirstColumn">{{task['resource-name'] || "Resource Name"}}</td>
+                                    <td class="tasksSecondColumn">
+                                        <span>{{task["resource-id"]}}</span>
                                     </td>
-                                    <td colspan="2">{{task.details}}</td>
+                                    <td class="tasksThirdColumn capitalize" colspan="2">
+                                        <span>{{task["resource-type"]}}</span>
+                                    </td>
                                 </tr>
-                            </tbody>
-                            <tbody ng-show="!vm.loadingBatchTasks && vm.batchTasks.length===0">
                                 <tr>
-                                    <td colspan="4" class="empty-collection-info">You don't have any Tasks</td>
+                                    <td colspan="5">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Timestamp</th>
+                                                    <th>Status</th>
+                                                    <th>Details</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="innerTableBody">
+                                                <tr ng-repeat="tasks in task.tasks">
+                                                    <td>{{tasks.name}}</td>
+                                                    <td>{{tasks.timestamp}}</td>
+                                                    <td>
+                                                        <span class="rs-status-error" ng-show="tasks.status==='error'">Error</span>
+                                                        <span class="rs-status-ok" ng-show="tasks.status==='done'">Completed</span>
+                                                        <span class="rs-status-ok" ng-show="tasks.status==='started'">Started</span>
+                                                        <span class="rs-status-ok" ng-show="tasks.status==='in progress'">In Progress</span>
+                                                        <span class="rs-status-warning" ng-show="tasks.status==='scheduled'">Scheduled</span>
+                                                        <span class="rs-status-disabled capitalize" ng-show="tasks.status==='not available'">Not available</span>
+                                                        <span class="rs-status-warning" ng-show="tasks.status==='paused'">Paused</span>
+                                                    </td>
+                                                    <td>{{tasks.details}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
