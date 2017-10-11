@@ -451,6 +451,7 @@
                  */
                 vm.getPricingDetails = function(item){
                     vm.loadingPrice = true;
+                    var pricingContainsItem = true;
                     var url = '/api/ec2/get_all_ec2_prices/'+item.details.flavor_details.id+'/'+vm.awsRegion;
                     HttpWrapper.send(url,{"operation":'GET'}).then(function(pricingOptions){
                         vm.loadingPrice = false;
