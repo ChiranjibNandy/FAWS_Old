@@ -100,6 +100,7 @@
             };
             self.fileItems = [];
             self.dnsItems = [];
+            self.LoadBalancersItems = [];
             /**
              * @ngdoc property
              * @name selectedTime
@@ -473,16 +474,11 @@
                 if($window.localStorage.selectedResources != undefined){
                     // initialize with resource count
                     var migrationResourceCount = 0;
-                    if(JSON.parse($window.localStorage.selectedResources)['server'].length > 0)
-                        migrationResourceCount += JSON.parse($window.localStorage.selectedResources)['server'].length;//self.selectedItems.server.length + self.selectedItems.LoadBalancers.length;
-                    if(JSON.parse($window.localStorage.selectedResources)['volume'].length > 0)
-                        migrationResourceCount += JSON.parse($window.localStorage.selectedResources)['volume'].length;
-                    if(JSON.parse($window.localStorage.selectedResources)['service'].length > 0)
-                        migrationResourceCount += JSON.parse($window.localStorage.selectedResources)['service'].length;
-                    if(JSON.parse($window.localStorage.selectedResources)['file'].length > 0)
-                        migrationResourceCount += JSON.parse($window.localStorage.selectedResources)['file'].length;
-                    if(JSON.parse($window.localStorage.selectedResources)['dns'].length > 0)
-                        migrationResourceCount += JSON.parse($window.localStorage.selectedResources)['dns'].length;
+                    angular.forEach(JSON.parse($window.localStorage.selectedResources), function (items, type) {
+                        if(items.length > 0){
+                            migrationResourceCount += items.length;
+                        }
+                    });
                     
                     var resourcesCountArray = [];
                     

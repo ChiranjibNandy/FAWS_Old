@@ -24,6 +24,10 @@
                     <rs-tab tabtitle="Servers" showtab="true" name="server">
                         <rsmigrationitem type="server" filtervalue="vm.filterSearch"></rsmigrationitem>
                     </rs-tab>
+                    <rs-tab tabtitle="CLB" showtab="{{vm.featureFlags.clb.enabled}}" name="LoadBalancers">
+                        <!--LoadBalancers-->
+                        <rsmigrationitem type="LoadBalancers" filtervalue="vm.filterSearch"></rsmigrationitem>
+                    </rs-tab>
                     <rs-tab tabtitle="CBS" showtab="{{vm.featureFlags.cbs.enabled}}" name="volume">
                         <!--Volumes-->
                         <rsmigrationitem type="volume" filtervalue="vm.filterSearch"></rsmigrationitem>

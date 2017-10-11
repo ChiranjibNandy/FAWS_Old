@@ -254,8 +254,7 @@
                         vm.labels = [
                                         {field: "name", text: "CLB Name"},
                                         {field: "status", text: "CLB Status"},
-                                        {field: "id", text: "CLB Id"},
-                                        {field: "migrationStatus", text: "Migration Status"}
+                                        {field: "id", text: "CLB Id"}
                                     ];
                     }
                     

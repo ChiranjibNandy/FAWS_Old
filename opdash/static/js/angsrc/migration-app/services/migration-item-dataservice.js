@@ -8,7 +8,7 @@
      * This service acts as a facade which handles calling the specific service implementation for each resoource type (server, network etc).
      */
     angular.module("migrationApp")
-        .service("migrationitemdataservice", ["serverservice", "networkservice", "volumeservice", "contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q", "$window", "cdnservice", "fileservice", "dnsservice", function (serverService, networkService, volumeService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q, $window, cdnservice, fileService, dnsService) {
+        .service("migrationitemdataservice", ["serverservice", "networkservice", "volumeservice", "contactservice", "httpwrapper", '$filter', "authservice", "datastoreservice", "$q", "$window", "cdnservice", "fileservice", "dnsservice", "LoadBalancerservice", function (serverService, networkService, volumeService, contactService, HttpWrapper, $filter, authservice, dataStoreService, $q, $window, cdnservice, fileService, dnsService, LoadBalancerservice) {
             var loaded, loadbalancers, services, self = this,
                 currentTenant = null,
                 callInProgress = false,
@@ -44,6 +44,7 @@
                 var volumes = JSON.parse($window.localStorage.selectedResources)['volume'];
                 var file = JSON.parse($window.localStorage.selectedResources)['file'];
                 var dns = JSON.parse($window.localStorage.selectedResources)['dns'];
+                var LoadBalancers = JSON.parse($window.localStorage.selectedResources)['LoadBalancers'];
                 var names = {};
                 names.instances = {};
                 names.networks = {};
@@ -51,6 +52,7 @@
                 names.volumes = {};
                 names.file = {};
                 names.dns = {};
+                // names.LoadBalancers = {};
 
                 angular.forEach(servers, function (item) {
                     names.instances[item.id] = item.name;
@@ -92,14 +94,14 @@
                 } else if (type === "file") {
                     return fileService.getTrimmedList();
                 } else if (type === "LoadBalancers") {
-                    return self.getLoadBalancers();
+                    return LoadBalancerservice.getTrimmedList();
                 } else if (type === "service") {
                     return cdnservice.getServices();
                 } else if (type === "volume") {
                     return volumeService.getTrimmedList();
                 } else if (type === "dns") {
                     return dnsService.getDNS();
-                }
+                } 
             } //end of getTrimmedAllItems method
 
             /**
@@ -122,7 +124,7 @@
                 } else if (type === "file") {
                     return fileService.getTrimmedItem(item_id, item_region );
                 } else if (type === "LoadBalancers") {
-                    // return self.getLoadBalancers();
+                    return LoadBalancerservice.getTrimmedList();
                 } else if( type === "service") {
                     return cdnservice.getTrimmedItem(item_id);
                 } else if( type === "volume") {
@@ -149,7 +151,7 @@
                 } else if (type === "file") {
                     return fileService.getTrimmedList();
                 } else if (type === "LoadBalancers") {
-                    return networkService.getTrimmedList();
+                    return LoadBalancerservice.getTrimmedList();
                 } else if (type === "contactNumbers") {
                     return contactService.getContactNumbers();
                 }
@@ -204,6 +206,7 @@
                 var cloudfiles = fileService.prepareFilesList();
                 var networks = networkService.prepareNetworkList();
                 var dns = dnsService.prepareDNSList();
+                var clb = LoadBalancerservice.prepareClbList();
 
                 //add the resources to the job-spec if the list are not empty
                 if (servers.length > 0) {
@@ -330,57 +333,6 @@
 
             /**
              * @ngdoc method
-             * @name getLoadBalancers
-             * @methodOf migrationApp.service:migrationitemdataservice
-             * @returns {Promise} a promise to fetch all servers.
-             * @description
-             * Gets the entire list of load balancers in its raw JSON form, from the api.
-             */
-            this.getLoadBalancers = function () {
-                //var url = "/static/angassets/servers-list.json";
-                var url = "/api/clb/get_all";
-                var tenant_id = authservice.getAuth().tenant_id;
-
-                if (!loaded || (currentTenant !== tenant_id)) {
-
-                    return HttpWrapper.send(url, {
-                            "operation": 'GET'
-                        })
-                        .then(function (response) {
-                            loaded = true;
-                            currentTenant = tenant_id;
-                            loadbalancers = {
-                                labels: [{
-                                        field: "name",
-                                        text: "CLB Name"
-                                    },
-                                    {
-                                        field: "clb status",
-                                        text: "CLB Status"
-                                    },
-                                    {
-                                        field: "id",
-                                        text: "CLB ID"
-                                    },
-                                    {
-                                        field: "migration status",
-                                        text: "Migration Status"
-                                    }
-                                ],
-                                data: response
-                            };
-                            return loadbalancers;
-                        }, function (errorResponse) {
-                            return errorResponse;
-                        });
-
-                } else {
-                    return $q.when(loadbalancers);
-                }
-            }; //end of getLoadBalancers method
-
-            /**
-             * @ngdoc method
              * @name eligibilityPrecheck
              * @methodOf migrationApp.service:migrationitemdataservice
              * @description
@@ -388,7 +340,7 @@
              */
             this.eligibilityPrecheck = function (itemsArr, type) {
                 var tenant_id = authservice.getAuth().tenant_id;
-                var instance_type = (type == 'server' && "instances") || (type == 'volume' && "volumes") || (type == 'service' && "cdn") || (type == 'file' && "cloudfiles") || (type == 'dns' && "dns");
+                var instance_type = (type == 'server' && "instances") || (type == 'volume' && "volumes") || (type == 'service' && "cdn") || (type == 'file' && "cloudfiles") || (type == 'dns' && "dns") || (type == 'LoadBalancers' && "clb");
                 var requestObj = {
                     "source": {
                         "cloud": "rackspace",
