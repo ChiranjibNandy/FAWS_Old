@@ -421,9 +421,12 @@
     </div>
 </div>
 
-<div id="abort_continue" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSelect" aria-hidden="true">
-    <div class="modal-body" style="height: 150px">
-        <h3 style="margin-top: 40px; text-align: center">Migration for one or more resources in this batch has already been scheduled in another batch. Cannot continue.</h3>
+<div id="abort_continue" class="modal modal-warning hide animated fadeIn" tabindex="-1" role="dialog" aria-labelledby="ModalForNoSelect" aria-hidden="true">
+    <div class="modal-header">
+        <h3><i class="fa fa-warning"></i> One or more resources already Scheduled </h3>
+    </div>
+    <div class="modal-body">
+        <p><big>Migration for one or more resources in this batch has already been scheduled in another batch. Cannot continue.</big></p>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

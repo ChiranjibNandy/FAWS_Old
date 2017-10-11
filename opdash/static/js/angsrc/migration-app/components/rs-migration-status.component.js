@@ -287,7 +287,9 @@
                                     }
                                     if (validCompletedBatchStatus.indexOf(job.batch_status) >= 0){
                                         completedBatches.push(job);
-                                        job.completed_at = vm.convertUTCDateToLocalDate(new Date(job.completed_at));
+                                        if(typeof job.completed_at == "string") {
+                                            job.completed_at = new Date(job.completed_at.concat("+00:00"));
+                                        }
                                     }
                                 });
                         //Create an empty array that would hold the current batch details with a few newly assigned properties for paused and in progress batches
@@ -487,21 +489,6 @@
                     } 
                     $interval.cancel(vm.intervalPromise);
                     $interval.cancel(vm.mytimeout);
-                }
-                
-                /**
-                 * @ngdoc method
-                 * @name convertUTCDateToLocalDate
-                 * @methodOf migrationApp.controller:rsmigrationstatusCtrl
-                 * @description 
-                 * This Function helps to convert utc date time to local date time and will be used for converting completed batches time.
-                 */
-                vm.convertUTCDateToLocalDate = function(date) {
-                    var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
-                    var mins = (date.getHours()*60)+date.getMinutes() - date.getTimezoneOffset();
-                    newDate.setHours(mins/60);
-                    newDate.setMinutes(mins%60);
-                    return newDate;   
                 }
 
                 /**
