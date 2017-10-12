@@ -206,13 +206,17 @@
                     dashboardService.getBatchTasks(job_id).then(function (result) {
                         if (result) {
                             vm.loadingBatchTasks = false;
-                            // for (var i = 0; i < result["job-tasks"].length; i++) {
-                            //     if (result["job-tasks"][i].section === "start_workflow") {
-                            //         vm.batchTasks = result["job-tasks"][i].tasks;
-                            //         break;
-                            //     }
-                            // }
-                            vm.batchTasks = result.resources;
+                            vm.batchTasks = result["job-tasks"].filter(function(task){
+                                return task.section === "start_workflow";
+                            });
+                            vm.batchTasks = vm.batchTasks.concat(result.resources);
+                            vm.batchTasks.map(function(resource){
+                                resource.currentPage = 1;
+                                resource.pageSize = 5;
+                                resource.noOfPages = Math.ceil(resource.tasks.length / resource.pageSize);
+                                resource.pages = new Array(resource.noOfPages);    
+                            });
+                            
                         } else {
                             vm.loadingBatchTasks = true;
                         }

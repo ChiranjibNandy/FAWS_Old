@@ -711,7 +711,7 @@ span.fa-angle-left, span.fa-angle-right{
 }
 
 .tasksFirstColumn{
-    width: 40%;
+    width: 35.5%;
 }
 
 .tasksSecondColumn{
@@ -720,4 +720,16 @@ span.fa-angle-left, span.fa-angle-right{
 
 .tasksThirdColumn{
     width: 36%;
+}
+
+.tasksFourthColumn{
+    width: 4%;
+}
+
+.innerTableBody td:nth-child(1){
+    width: 26%;
+}
+
+.innerTableBody td:nth-child(2){
+    width: 18%;
 }
