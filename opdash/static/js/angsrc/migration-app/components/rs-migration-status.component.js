@@ -36,6 +36,7 @@
                         lastRefreshIntervalPromise,
                         totalCurrentBatches = null;
                         vm.downloadPath = 'static/Rackspace-Migration-Manager-User_Guide.pdf';
+                        
 
                 var isValidBatch = function (batch) {
                     var valid = true;
@@ -639,9 +640,9 @@
                         dataStoreService.storeDate('time',batch.schedulingTimeDate.time);
                         dataStoreService.storeDate('timezone',batch.schedulingTimeDate.timezone);
                     }
-                    //dataStoreService.setDontShowStatus(true);
-                    dataStoreService.selectedTime.migrationName = batch.batch_name || batch.instance_name;
-                    //$window.localStorage.migrationName = batch.batch_name || batch.instance_name;
+                    var scheduleMigrationName = dataStoreService.getScheduleMigration();
+                    scheduleMigrationName.migrationName = batch.batch_name || batch.instance_name;
+                    dataStoreService.setScheduleMigration(scheduleMigrationName);
                     dataStoreService.setSaveItems(batch.selected_resources);
                     $rootRouter.navigate([batch.step_name]);
                 };
