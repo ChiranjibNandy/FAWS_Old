@@ -74,7 +74,7 @@
      */
     window.oncontextmenu = function (event){
         var firstHalf = '',secondHalf='';
-        if((event.target.href && event.target.href.indexOf('#') === -1)&&(event.target.id!='migrstionManagerUSerGuide')){
+        if((event.target.href && event.target.href.indexOf('#') === -1)&&(event.target.id!='migrstionManagerUSerGuide') && (event.toElement.getAttribute('data-toggle') === null)){
             if(event.target.href.indexOf('8000')>0){
                 firstHalf = event.target.href.substr(0,event.target.href.indexOf('8000/')+5);
                 secondHalf = "#/"+event.target.href.substr(event.target.href.indexOf('8000/')+5,event.target.href.length);
