@@ -176,8 +176,8 @@
                             dataStoreService.setSelectedItems(selectedItems[type].concat(item), type)
                         }
                         $scope.$broadcast("ItemsModified");//make a function call to child component to enable checkobox for selected items.
-                    };
-                }
+                    }
+                };
 
                 /**
                  * @ngdoc method
@@ -372,17 +372,33 @@
                                     }
 
                                     vm.selectedItems.server = items;
-                                    dataStoreService.setSelectedItems(vm.selectedItems.server, 'server');                            
+                                    dataStoreService.setSelectedItems(vm.selectedItems.server, 'server');
+
                                     //Declare a tempItems array that would hold phase 2 resources
+                                    var tempItem = null;
                                     var tempItems = [];
+                                    //Loop through all the selected resources
                                     angular.forEach(JSON.parse($window.localStorage.selectedResources), function (items, type) {
+                                        //If the resources are not of type server, check to see if the selectedMapping object is already populated
                                         if(items.length > 0 && type != 'server'){
-                                            tempItems = vm.populatePhase2ResourcesArray(type,items);
-                                            items = items.concat(tempItems);
+                                            tempItems = [];
+                                            angular.forEach(items,function(item){
+                                                if(item.selectedMapping === undefined){
+                                                    //If not populate the selectedMapping object
+                                                    tempItem = vm.populatePhase2ResourcesArray(type,item);
+                                                    (tempItems.length == 0) ? tempItems.push(tempItem) : (tempItems = tempItems.concat(tempItem));
+                                                }
+                                                else {
+                                                    //Else just concatenate
+                                                    (tempItems.length == 0) ? tempItems.push(item) : (tempItems = tempItems.concat(item));
+                                                }
+                                            });
+                                            //Store the modified items array in localStorage
                                             vm.selectedItems[type] = tempItems;
                                             dataStoreService.setSelectedItems(vm.selectedItems[type],type);
                                         }
                                     });
+
                                     vm.continuing = false;
                                     dataStoreService.setDontShowNameModal(true);
                                     vm.selectedTime = {
@@ -544,18 +560,14 @@
                   * @description 
                   * Populates phase 2 resources array.
                 */
-                vm.populatePhase2ResourcesArray = function(type,items){
-                    var tempItems = JSON.parse($window.localStorage.selectedResources)[type];
-                    tempItems = tempItems.map(function(item){
-                        item.selectedMapping = {};
-                        item.selectedMapping.region = DEFAULT_VALUES.REGION;
-                        //If the resource type is volume, we need to build the object to hold selected zone and the zones array
-                        if(type === 'volume'){
-                            item.selectedMapping.zones = [];
-                        }
-                        return item;
-                    });
-                    return tempItems;
+                vm.populatePhase2ResourcesArray = function(type,item){
+                    item.selectedMapping = {};
+                    item.selectedMapping.region = DEFAULT_VALUES.REGION;
+                    //If the resource type is volume, we need to build the object to hold selected zone and the zones array
+                    if(type === 'volume'){
+                        item.selectedMapping.zones = [];
+                    }
+                    return item;
                 };
 
                 //look for tab click event and display continue and cancel migration buttons after resources are loaded.
