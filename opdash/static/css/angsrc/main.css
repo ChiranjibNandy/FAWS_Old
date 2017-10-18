@@ -705,3 +705,31 @@ span.fa-angle-left, span.fa-angle-right{
 .visibilityHidden{
     visibility: hidden;
 }
+
+.no-margin-bottom{
+    margin-bottom: 0px;
+}
+
+.tasksFirstColumn{
+    width: 35.5%;
+}
+
+.tasksSecondColumn{
+    width: 24%;
+}
+
+.tasksThirdColumn{
+    width: 36%;
+}
+
+.tasksFourthColumn{
+    width: 4%;
+}
+
+.innerTableBody td:nth-child(1){
+    width: 26%;
+}
+
+.innerTableBody td:nth-child(2){
+    width: 18%;
+}

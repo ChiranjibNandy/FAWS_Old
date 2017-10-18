@@ -133,34 +133,74 @@
                 <br>
 
                 <div class="rs-facet-section-body" ng-if="!vm.isThisSavedMigration">
-                    <h3>Batch-Tasks</h3>
+                    <h3>Tasks</h3>
                     <div class="migration-status-list-container table-justify">
-                        <table class="rs-list-table no-truncate-td cell-center">
+                        <table class="rs-list-table no-truncate-td cell-center no-margin-bottom">
                             <thead>
                                 <tr>
-                                    <th colspan="2">Name</th>
-                                    <th>Status</th>
-                                    <th colspan="2">Description</th>
+                                    <th class="tasksFourthColumn"></th>
+                                    <th class="tasksFirstColumn" colspan="2">Name</th>
+                                    <th class="tasksSecondColumn">Id</th>
+                                    <th class="tasksThirdColumn" colspan="2">Type</th>
                                 </tr>
                             </thead>
-                            <tbody ng-show="!vm.loadingBatchTasks && vm.batchTasks.length>0">
-                                <tr ng-repeat="task in vm.batchTasks">
-                                    <td colspan="2">{{task.name}}</td>
-                                    <td>
-                                        <span class="rs-status-error" ng-show="task.status==='error'">Error</span>
-                                        <span class="rs-status-ok" ng-show="task.status==='done'">Completed</span>
-                                        <span class="rs-status-ok" ng-show="task.status==='started'">Started</span>
-                                        <span class="rs-status-ok" ng-show="task.status==='in progress'">In Progress</span>
-                                        <span class="rs-status-warning" ng-show="task.status==='scheduled'">Scheduled</span>
-                                        <span class="rs-status-disabled capitalize" ng-show="task.status==='not available'">Not available</span>
-                                        <span class="rs-status-warning" ng-show="task.status==='paused'">Paused</span>
-                                    </td>
-                                    <td colspan="2">{{task.details}}</td>
-                                </tr>
-                            </tbody>
                             <tbody ng-show="!vm.loadingBatchTasks && vm.batchTasks.length===0">
                                 <tr>
                                     <td colspan="4" class="empty-collection-info">You don't have any Tasks</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="rs-list-table no-truncate-td cell-center research no-margin-bottom" ng-repeat="task in vm.batchTasks" ng-show="!vm.loadingBatchTasks && vm.batchTasks.length>0 && task.tasks.length>0">
+                            <tbody>
+                                <tr class="accordion">
+                                    <td class="tasksFourthColumn">
+                                            <i class='fa fa-chevron-down'></i>
+                                    </td>
+                                    <td colspan="2" class="tasksFirstColumn">{{task['resource-name'] || "N/A"}}</td>
+                                    <td class="tasksSecondColumn">
+                                        <span>{{task["resource-id"] || "N/A"}}</span>
+                                    </td>
+                                    <td class="tasksThirdColumn capitalize" colspan="2">
+                                        <span>{{task["resource-type"] || "Batch Task"}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Timestamp</th>
+                                                    <th>Status</th>
+                                                    <th>Details</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="innerTableBody">
+                                                <tr ng-repeat="tasks in task.tasks| limitTo : task.pageSize : (task.currentPage-1)*task.pageSize">
+                                                    <td>{{tasks.name}}</td>
+                                                    <td>{{tasks.timestamp}}</td>
+                                                    <td>
+                                                        <span class="rs-status-error" ng-show="tasks.status==='error'">Error</span>
+                                                        <span class="rs-status-ok" ng-show="tasks.status==='done'">Completed</span>
+                                                        <span class="rs-status-ok" ng-show="tasks.status==='started'">Started</span>
+                                                        <span class="rs-status-ok" ng-show="tasks.status==='in progress'">In Progress</span>
+                                                        <span class="rs-status-warning" ng-show="tasks.status==='scheduled'">Scheduled</span>
+                                                        <span class="rs-status-disabled capitalize" ng-show="tasks.status==='not available'">Not available</span>
+                                                        <span class="rs-status-warning" ng-show="tasks.status==='paused'">Paused</span>
+                                                    </td>
+                                                    <td>{{tasks.details}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="pagination pagination-mini" ng-show="task.tasks.length!==0">
+                                            <ul>
+                                                <li><span>Showing {{(task.currentPage == 1 ? task.currentPage : ((task.currentPage-1)*5)+1)}}-{{(task.currentPage == task.noOfPages ? task.tasks.length : task.currentPage*5)}} of {{task.tasks.length}}</span></li>
+                                                <li ng-class="{disabled: task.currentPage == 1}" ng-click="task.currentPage=task.currentPage-1"><a href="">Prev</a></li>
+                                                <li ng-repeat="n in task.pages track by $index" ng-click="task.currentPage = $index+1" ><a ng-class ="{current: task.currentPage == $index+1}" ng-style="{'background-color': task.currentPage == $index+1 ? '#D3D3D3' : 'white'}" href="">{{$index+1}}</a></li>
+                                                <li ng-class="{disabled: task.currentPage == task.noOfPages}" ng-click="task.currentPage=task.currentPage+1"><a href="">Next</a></li>
+                                            </ul>
+                                        </div>  
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
