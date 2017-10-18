@@ -123,7 +123,7 @@
          */
         self.getAll = function () {
             //var url = "/static/angassets/files-list.json";
-            var url = "/api/cloud_files/";
+            var url = "/api/cloud_files";
             var tenant_id = authservice.getAuth().tenant_id;
             if (callInProgress == false && datastoreservice.getResourceLoadingStatus("file") == false) {
                 callInProgress = true;
