@@ -80,7 +80,8 @@
                 if((this.user_type === 'customer' && this.username && this.password) ||
                    (this.user_type === 'racker' && this.username && this.rsa_token) ||
                    (this.user_type === 'impersonate' && this.username && this.sso_username && this.sso_pin)){
-                    document.getElementById("loginForm").submit();
+                       $window.localStorage.clear();
+                       document.getElementById("loginForm").submit();
                 }
               }
             }
