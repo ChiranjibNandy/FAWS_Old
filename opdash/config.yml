@@ -8,7 +8,7 @@
 
   # Location where the migrator service is running
 - API:
-    BASE_URL: https://api.ci2.migration.rackspace.net
+    BASE_URL: https://api.qe2.migration.rackspace.net
 
     # Timeout length for calls to the API (in seconds)
     PROXY_TIMEOUT: 60
