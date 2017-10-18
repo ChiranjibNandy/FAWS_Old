@@ -138,6 +138,14 @@
   <!-- END GOOGLE ANALYTICS AND TAG MANAGER - JB -->
 
   <script>
+    (function () {
+        if(!String.prototype.startsWith) {
+            String.prototype.startsWith = function(str, position) {
+              position = position || 0;
+              return this.indexOf(str, position) === position;
+            };
+        }
+    });
   var user_data = {
     // Selected Tenant
     {% if g.user_data %}

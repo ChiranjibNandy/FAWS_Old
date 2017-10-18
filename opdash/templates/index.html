@@ -9,13 +9,6 @@
   <script>
     (function () {
         "use strict";
-        if (!String.prototype.startsWith) {
-            String.prototype.startsWith = function(str, position) {
-              position = position || 0;
-              return this.indexOf(str, position) === position;
-            };
-        }
-
         // defining component to display all migration items
         angular.module("migrationApp")
             .component("rsmigrationindex", {
