@@ -116,16 +116,31 @@
         }
     }]);
 
-    migrationApp.filter('convertCase',function(){
-            return function(input){
-                var arrInput =[];
-                if(input){
-                    arrInput = input.split('-');
-                    return arrInput[0].toUpperCase()+'-'+arrInput[1][0].toUpperCase()+arrInput[1].substr(1).toLowerCase()+'-'+arrInput[2].toLowerCase();    
-                }else{
-                    return '';
+    migrationApp.filter('convertDateTimestampCase',function(){
+        return function(input){
+            if(input === undefined)
+                return;
+            else {
+                var inputArray = input.split(' ');
+                var hourFormatArray = [];
+                if(inputArray[2] !== undefined){
+                    hourFormatArray = inputArray[2].toUpperCase();
+                    return inputArray[0].concat(' ').concat(inputArray[1]).concat(' ').concat(hourFormatArray.split('').join(''));
                 }
             }
+        };
+    });
+
+    migrationApp.filter('convertCase',function(){
+        return function(input){
+            var arrInput =[];
+            if(input){
+                arrInput = input.split('-');
+                return arrInput[0].toUpperCase()+'-'+arrInput[1][0].toUpperCase()+arrInput[1].substr(1).toLowerCase()+'-'+arrInput[2].toLowerCase();    
+            }else{
+                return '';
+            }
+        };
     });
     migrationApp.constant('DEFAULT_VALUES', {
         "REGION":'us-east-1',
