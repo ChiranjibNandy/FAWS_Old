@@ -10,7 +10,7 @@
     angular.module("migrationApp")
            .factory("contactservice", ["httpwrapper", "$q", "authservice", function (HttpWrapper, $q, authservice) {
 
-            self = this;
+            var self = this;
 
             self.getContactNumbers = function(region){
 
