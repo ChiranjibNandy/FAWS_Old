@@ -2,6 +2,7 @@ import boto3
 import botocore.config
 import logging
 
+from botocore.exceptions import ClientError
 from urlparse import urlparse
 
 LOG = logging.getLogger(__name__)
@@ -24,8 +25,8 @@ class RemoteConfig(object):
                     aws_access_key_id=self._aws_access_key_id,
                     aws_secret_access_key=self._aws_secret_access_key)
             return self._s3_client
-        except:
-            LOG.debug("Unable to create Boto3 client to S3.")
+        except ClientError as e:
+            LOG.debug("Boto Client Error: {0}".format(e["Error"]["Code"]))
             raise
 
     def _load_from_stream(self, stream_obj):
@@ -38,10 +39,9 @@ class RemoteConfig(object):
             resp = s3_client.get_object(Bucket=bucket, Key=key)
             if resp.get("Body", None):
                 result = self._load_from_stream(resp['Body'])
-        except:
-            LOG.debug(
-                "Error loading from S3. Bucket:{0} -- Key:{1}".format(
-                    bucket, key))
+        except ClientError as e:
+            LOG.debug("S3 Error: Bucket:{0} - Key:{1} - Error:{2}".format(
+                bucket, key, e["Error"]["Code"]))
             raise
         return result
 
@@ -50,10 +50,10 @@ class RemoteConfig(object):
         try:
             with open(file_path, 'r') as f:
                 result = self._load_from_stream(f)
-        except:
+        except IOError as e:
             LOG.debug(
-                "Error while loading from file. Path:{0}".format(
-                    file_path))
+                "Error loading config from file. Path:{0} Error:{1}".format(
+                    file_path, e))
             raise
         return result
 
